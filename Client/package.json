@@ -11,9 +11,6 @@
     "dependencies": {
         "expo": "~47.0.12",
         "expo-status-bar": "~1.4.2",
-        "express": "^4.18.2",
-        "mongodb": "^4.13.0",
-        "mongoose": "^6.8.4",
         "prettier": "^2.5.1",
         "react": "18.1.0",
         "react-dom": "18.1.0",
