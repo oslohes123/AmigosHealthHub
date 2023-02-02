@@ -1,13 +1,16 @@
+/**Configuration */
 import { Response } from "express";
-
 const express = require("express");
-const dotenv = require("dotenv");
+const app = express();
 
+const dotenv = require("dotenv");
 dotenv.config();
 
-const app = express();
+
 const port = process.env.PORT;
 
+
+/**Routes */
 app.get("/", (req: Request, res: Response) => {
   res.send("Some text");
 });
