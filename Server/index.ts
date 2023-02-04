@@ -13,8 +13,8 @@ dotenv.config();
 
 const port = process.env.PORT;
 
-const supabase = require('../utils/userDatabase.ts');
-
+const supabase = require('../utils/supabaseSetUp.ts');
+const dbFunctions = require('../utils/supabaseInterface.js');
 
 /**---------------- Routes Start--------------- */
 //HomePage Route
@@ -32,8 +32,21 @@ app.use('/auth', authRouter);
 
 
 
+// function supabaseInsert(){
+//   dbFunctions.insert(supabase,'User', {firstName: "Jane",lastName:"Doe", email:"JaneDoe@gmail.com", password:"Password123", age:"30"})
+// }
 
+// async function supabaseDelete(){
+//   dbFunctions.delete(supabase,'User','email',"JaneDo@gmail.com")
+// }
+// async function supabaseTest2(){
+//   const { err } = await supabase
+//     .from('User')
+//     .delete()
+//     .eq('email', "JaneDo@gmail.com");
 
+//   if(err) console.error(err);
+// }
 async function supabaseTest(){
   const {data,error} = await supabase.rpc('hello');
   if(error) console.error(error);
