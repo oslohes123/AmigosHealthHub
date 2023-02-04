@@ -13,8 +13,8 @@ dotenv.config();
 
 const port = process.env.PORT;
 
-const supabase = require('../utils/supabaseSetUp.ts');
-const dbFunctions = require('../utils/supabaseInterface.js'); 
+const supabase = require('../dist/utils/supabaseSetUp.js');
+const supabaseQuery = require('../dist/utils/databaseInterface.js');
 
 /**---------------- Routes Start--------------- */
 //HomePage Route
@@ -23,7 +23,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 //Authentication Routes
-const authRouter = require('../routes/authentication.ts');
+const authRouter = require('../routes/authentication.js');
 app.use('/auth', authRouter);
 
 
