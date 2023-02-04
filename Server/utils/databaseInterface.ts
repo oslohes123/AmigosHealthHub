@@ -1,4 +1,4 @@
- interface dbInterface{
+interface dbInterface{
     //returns column of a table
     select: (db: any,table: string,column: any) => object;
 
@@ -18,80 +18,80 @@
  }
 
 
- class supabaseQuery implements dbInterface{
+class supabaseQuery implements dbInterface{
 
 
-async select(supabaseDb: any,table: string,column: any): Promise<object | undefined >{
-    try{
-        const { data, error } = await supabaseDb
-        .from(table)
-        .select(column);
-        
-        if(error) console.error(error);
-        else console.log({data});
+    async select(supabaseDb: any,table: string,column: any): Promise<object | undefined >{
+        try{
+            const { data, error } = await supabaseDb
+            .from(table)
+            .select(column);
+            
+            if(error) console.error(error);
+            else console.log({data});
 
-        return {data};
+            return {data};
+        }
+
+        catch(err: unknown){
+            console.error(err);
+        }
     }
 
-    catch(err: unknown){
-        console.error(err);
+    async insert(supabaseDb:any ,table: string, dataToBeInserted: object): Promise<object | undefined>{
+        try{
+            const {data, error} = await supabaseDb
+            .from(table)
+            .insert(dataToBeInserted)
+            .select();
+
+            if(error) console.error(error);
+            else console.log({data});
+            
+            return {data};
     }
-}
-
-async insert(supabaseDb:any ,table: string, dataToBeInserted: object): Promise<object | undefined>{
-    try{
-        const {data, error} = await supabaseDb
-        .from(table)
-        .insert(dataToBeInserted)
-        .select();
-
-        if(error) console.error(error);
-        else console.log({data});
-        
-        return {data};
-}
-    catch(err: unknown){
-        console.error(err);
-    }
-}
-
-
-async deleteFrom(supabaseDb:any ,table: string, column: string, value: any): Promise<void | undefined>{
-    try{
-        const { error } = await supabaseDb
-        .from(table)
-        .delete()
-        .eq(column, value);
-
-        if(error) console.error(error);
-
+        catch(err: unknown){
+            console.error(err);
+        }
     }
 
-    catch(err: unknown){
-        console.error(err);
-    }
 
-}
+    async deleteFrom(supabaseDb:any ,table: string, column: string, value: any): Promise<void | undefined>{
+        try{
+            const { error } = await supabaseDb
+            .from(table)
+            .delete()
+            .eq(column, value);
 
-async update(supabaseDb: any,table: string,updatingData: object, column: string, value: any): Promise<object | undefined>{
-    try{
-        const {data, error} = await supabaseDb
-        .from(table)
-        .update(updatingData)
-        .eq(column, value)
-        .select();
+            if(error) console.error(error);
 
-        if(error) console.error(error);
-        else{
-            console.log({data});
-            return {data}
+        }
+
+        catch(err: unknown){
+            console.error(err);
         }
 
     }
-    catch(err:unknown){
-        console.error(err);
+
+    async update(supabaseDb: any,table: string,updatingData: object, column: string, value: any): Promise<object | undefined>{
+        try{
+            const {data, error} = await supabaseDb
+            .from(table)
+            .update(updatingData)
+            .eq(column, value)
+            .select();
+
+            if(error) console.error(error);
+            else{
+                console.log({data});
+                return {data}
+            }
+
+        }
+        catch(err:unknown){
+            console.error(err);
+        }
     }
-}
 
 
 }
