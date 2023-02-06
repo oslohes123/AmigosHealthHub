@@ -15,6 +15,7 @@ const port = process.env.PORT;
 
 const supabase = require('../dist/utils/supabaseSetUp.js');
 const supabaseQuery = require('../dist/utils/databaseInterface.js');
+const info = new supabaseQuery()
 
 /**---------------- Routes Start--------------- */
 //HomePage Route
@@ -35,9 +36,19 @@ async function supabaseTest(){
   if(error) console.error(error);
   else console.log({data});
 }
+// async function supabaseTest2(){
+//   const {data,error} = await info.update(supabase, "Exercises", {Type:"Cardio", Name:"Run", Muscle:"", Difficulty:"Advanced", Instructions:"Run"}, "Muscle","");
+//   if(error) console.error(error);
+//   else console.log({data});
+// }
 
-
+async function supabaseTest3(){
+  const {data,error} = await info.update(supabase, "Exercises", {Type:"Cardio", Name:"Run", Muscle:"", Difficulty:"Advanced", Instructions:"Run"}, "Muscle","");
+  if(error) console.error(error);
+  else console.log({data});
+}
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
   supabaseTest(); // should have output: { data: 'hello_world' }
+  supabaseTest3();
 });
