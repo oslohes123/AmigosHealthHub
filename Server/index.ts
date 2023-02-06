@@ -26,8 +26,9 @@ app.get("/", (req: Request, res: Response) => {
 //Authentication Routes
 const authRouter = require('../routes/authentication.js');
 app.use('/auth', authRouter);
-
-
+//Exercises
+const exRouter = require('../routes/exercise.js');
+app.use('/exercises', exRouter);
 
 /**---------------- Routes End------------------ */
 
@@ -49,6 +50,6 @@ async function supabaseTest3(){
 }
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
-  supabaseTest(); // should have output: { data: 'hello_world' }
-  supabaseTest3();
+  // supabaseTest(); // should have output: { data: 'hello_world' }
+  // supabaseTest3();
 });
