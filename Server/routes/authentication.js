@@ -2,15 +2,12 @@
 // import { Request ,Response } from "express";
 const express = require('express');
 const authRouter = express.Router();
-
+authRouter.use(express.json());
+const userFunctions = require('../controllers/userController')
 
 //Routes
-authRouter.get('/login', (req,res) => 
-res.send("Login Page")
-);
+authRouter.post('/login', userFunctions.loginUser);
 
-authRouter.get('/sign_up', (req,res) => 
-res.send("Sign Up Page")
-);
+authRouter.post('/sign_up', userFunctions.signupUser);
 
 module.exports = authRouter;

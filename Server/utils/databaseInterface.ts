@@ -2,6 +2,9 @@ interface dbInterface{
     //returns column of a table
     select: (db: any,table: string,column: any) => object;
 
+    //returns rows of the table where the column has value toBeFound
+    selectWhere: (db: any,table: string,column: string, toBeFound:any) => object;
+
     //inserts a single record or bulk create into a table.
  
     insert: (db: any, table:string, data:object) => object;
@@ -26,6 +29,25 @@ class supabaseQuery implements dbInterface{
             const { data, error } = await supabaseDb
             .from(table)
             .select(column);
+            
+            if(error) console.error(error);
+            else console.log({data});
+
+            return {data};
+        }
+
+        catch(err: unknown){
+            console.error(err);
+        }
+    }
+
+    
+    async selectWhere(supabaseDb: any,table: string,column: string,toBeFound:any): Promise<object | undefined >{
+        try{
+            const { data, error } = await supabaseDb
+            .from(table)
+            .select()
+            .eq(column, toBeFound);
             
             if(error) console.error(error);
             else console.log({data});
