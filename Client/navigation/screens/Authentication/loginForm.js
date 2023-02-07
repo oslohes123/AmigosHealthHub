@@ -1,17 +1,25 @@
+
+
+const handleSubmit = async(e) =>{
+
+e.preventDefault(); //default Action is to refresh form once submitted
+
+} 
+
 const loginForm = () => {
 
-const[username, setUsername] = useState('');
+const[email, setEmail] = useState('');
 const[password, setPassword] = useState('');
 
     return (
-        <form className = "create">
+        <form className = "create" onSubmit = {handleSubmit}>
             <h3>Login Form</h3>
 
-            <label>Username: </label>
+            <label>Email: </label>
             <input 
-            type = "text"
-            onChange = {(e) => setUsername(e.target.value)}
-            value = {username}
+            type = "email"
+            onChange = {(e) => setEmail(e.target.value)}
+            value = {email}
             />
 
             <label>Password: </label>
@@ -25,3 +33,5 @@ const[password, setPassword] = useState('');
         </form>
     )
 }
+
+module.exports.loginForm = loginForm;
