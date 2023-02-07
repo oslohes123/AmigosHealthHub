@@ -3,11 +3,12 @@ async function searchDB(){
     const supabaseQuery = require('../dist/utils/databaseInterface.js');
     const checker = new supabaseQuery()
     var name = 'Incline Hammer Curls';
-    const {data,error} = await checker.select(supabase, "Exercises", "Name");
+    const {data,error} = await checker.findrow(supabase, "Exercises", "Name", name);
     if(error) console.error(error);
-    else if (data.includes(name)){
+    else if (data != null){
         console.log({data});
-        //Run Exercise
+        //return info on exercise
+        return data
     }
     else {
         const req = require('req');
@@ -27,7 +28,7 @@ async function searchDB(){
     if(error) console.error(error);
     else console.log({data})
     }
-    
+    return data
 }
 function fitnessMainPage(req,res){
     res.send("Fitness Page");
