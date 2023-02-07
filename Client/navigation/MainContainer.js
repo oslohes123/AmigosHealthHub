@@ -1,6 +1,3 @@
-import react from "react";
-import { SafeAreaView, Text } from "react-native";
-
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -21,7 +18,7 @@ export default function MainContainer() {
     return (
         <NavigationContainer>
             <Tab.Navigator
-                initialRouteName={fitnessName}
+                initialRouteName={dashboardName}
                 screenOptions={({ route }) => ({
                     tabBarIcon: ({ focused, color, size }) => {
                         let iconName;
