@@ -1,6 +1,3 @@
-import react from "react";
-import { SafeAreaView, Text } from "react-native";
-
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -11,7 +8,6 @@ import DietScreen from "./screens/Diet/DietScreen";
 
 //Screen Names
 const fitnessName = 'Fitness';
-const workoutPlansName = 'Workout Plans';
 const dashboardName = "Dashboard";
 const dietName = "Diet";
 

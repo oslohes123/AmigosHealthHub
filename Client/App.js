@@ -1,10 +1,27 @@
 import MainContainer from './navigation/MainContainer';
-import {AuthContextProvider} from './navigation/screens/Authentication/context/AuthContext'
-export default function App() {
-  return (
+import AuthContainer from './navigation/AuthContainer';
+import { AuthContextProvider } from './navigation/screens/Authentication/context/AuthContext';
+import { useAuthContext } from './navigation/screens/Authentication/context/AuthContext';
+import { createStackNavigator } from '@react-navigation/stack';
 
+const Stack = createStackNavigator();
+
+//Screen names
+const mainContainerName = "Main app"
+const authContainerName = "Auth screens"
+
+function App() {
+  const { user } = useAuthContext();
+  console.log(`Log state from app: ${user}`);
+  return (
+    user === null ? <AuthContainer /> : <MainContainer />
+  )
+}
+
+export default () => {
+  return (
     <AuthContextProvider>
-    <MainContainer />
+      <App />
     </AuthContextProvider>
   );
-}
+};
