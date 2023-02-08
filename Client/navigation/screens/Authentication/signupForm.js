@@ -2,13 +2,14 @@ import React from 'react';
 import {StyleSheet, Button, TextInput, View, Text } from 'react-native';
 import {Formik} from 'formik';
 import {globalStyles} from '../../../styles/global'
-import { signup, error, isLoading } from './hooks/useSignUp';
+import {useSignUp} from './hooks/useSignUp';
 // const handleSubmit = async(e) =>{
 
 //     e.preventDefault(); //default Action is to refresh form once submitted
     
 //     } 
 
+const {signup,isLoading, error} = useSignUp()
 export const formikSignUpForm = () =>{
 
         return(
@@ -72,4 +73,4 @@ export const formikSignUpForm = () =>{
 
             }
 
-    module.exports.signupForm = signupForm;
+    module.exports.signupForm = formikSignupForm;

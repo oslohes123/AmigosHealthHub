@@ -1,37 +1,53 @@
 
+import React from 'react';
+import {StyleSheet, Button, TextInput, View, Text } from 'react-native';
+import {Formik} from 'formik';
+import {globalStyles} from '../../../styles/global'
+import {useLogin} from './hooks/useLogin';
 
-const handleSubmit = async(e) =>{
 
-e.preventDefault(); //default Action is to refresh form once submitted
+const {login,isLoading, error} = useLogin()
+export const formikLoginForm = () =>{
 
-} 
+        return(
+            <View style= {globalStyles.container}>
+                <Formik
+                initialValues={{email: '',password:''}}
+                onSubmit={async(values) => {
+                        await login(values.email,values.password)
+                }}
+                >
 
-const loginForm = () => {
+                {(props) => (
 
-const[email, setEmail] = useState('');
-const[password, setPassword] = useState('');
+                    <View>
+                       
+                        <TextInput
+                        style= {globalStyles.input}
+                        placeholder='Email'
+                        onChangeText={props.handleChange('email')}
+                        value = {props.values.email}
+                        />
 
-    return (
-        <form className = "create" onSubmit = {handleSubmit}>
-            <h3>Login Form</h3>
+                        <TextInput
+                        style= {globalStyles.input}
+                        secureTextEntry={true}
+                        placeholder='Password'
+                        onChangeText={props.handleChange('password')}
+                        value = {props.values.password}
+                        />
 
-            <label>Email: </label>
-            <input 
-            type = "email"
-            onChange = {(e) => setEmail(e.target.value)}
-            value = {email}
-            />
+                        <Button title="Login" color="Green" onPress = {props.handleSubmit} disabled = {isLoading}/>
+                        {error && <div className = "error">{error}</div>}
+                    </View>
+                )
+                
+                }
 
-            <label>Password: </label>
-            <input 
-            type = "password"
-            onChange = {(e) => setPassword(e.target.value)}
-            value = {password}
-            />
+                </Formik>
+            </View>
+        )
 
-            <button>Login</button>
-        </form>
-    )
-}
+            }
 
-module.exports.loginForm = loginForm;
+    module.exports.loginForm = formikLoginForm;
