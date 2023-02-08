@@ -1,42 +1,68 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, SafeAreaView, TextInput, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { StyleSheet, Text, View, Button, SafeAreaView, TextInput, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native';
 
 export default function WorkoutPlansScreen({ navigation }) {
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-            <SafeAreaView style={styles.container}>
+        <SafeAreaView style={styles.container}>
 
-                <Text style={styles.title} onLongPress={() => {
-                    console.log("The user wants to see the workout plans that I have saved.")
-                }}>
-                    Workout Plans
-                </Text>
+            <Text style={styles.title} onLongPress={() => {
+                console.log("The user wants to see the workout plans that I have saved.")
+            }}>
+                Workout Plans
+            </Text>
 
-                <View style={styles.searchAndCreate}>
+            <View style={styles.searchAndCreate}>
 
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Search"
-                        keyboardType='default'
-                    />
+                <TextInput
+                    style={styles.textInput}
+                    placeholder="Search"
+                    keyboardType='default'
+                />
 
-                    <Button style={styles.button} title='+' onPress={() => {
-                        console.log("Create new workout plan.")
-                    }} />
+                <Button style={styles.button} title='+' onPress={() => {
+                    console.log("Create new workout plan.")
+                }} />
 
-                </View>
+            </View>
 
-                {/* <View style={styles.blankSpace}>
+            <View styke>
+                <Text>Custom Workouts</Text>
+                <ScrollView style={styles.scrollView}>
+                    <Text style={styles.testText}>Test text 1</Text>
+                    <Text style={styles.testText}>Test text 2</Text>
+                    <Text style={styles.testText}>Test text 3</Text>
+                    <Text style={styles.testText}>Test text 4</Text>
+                    <Text style={styles.testText}>Test text 5</Text>
+                    <Text style={styles.testText}>Test text 6</Text>
+                    <Text style={styles.testText}>Test text 7</Text>
+                    <Text style={styles.testText}>Test text 8</Text>
+                    <Text style={styles.testText}>Test text 9</Text>
+                    <Text style={styles.testText}>Test text 10</Text>
+                    <Text style={styles.testText}>Test text 11</Text>
+                    <Text style={styles.testText}>Test text 12</Text>
+                    <Text style={styles.testText}>Test text 13</Text>
+                    <Text style={styles.testText}>Test text 14</Text>
+                    <Text style={styles.testText}>Test text 15</Text>
+                    <Text style={styles.testText}>Test text 16</Text>
+                    <Text style={styles.testText}>Test text 17</Text>
+                    <Text style={styles.testText}>Test text 18</Text>
+                </ScrollView>
+            </View>
 
-                </View> */}
-
-                <StatusBar style="auto" />
-            </SafeAreaView>
-        </TouchableWithoutFeedback>
+            <StatusBar style="auto" />
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
+    testText: {
+        fontSize: 32
+    },
+    scrollView: {
+        backgroundColor: 'blue',
+        margin: 10,
+        padding: 10
+    },
     title: {
         fontSize: 32,
         fontWeight: "bold",
@@ -44,14 +70,13 @@ const styles = StyleSheet.create({
     },
     searchAndCreate: {
         flexDirection: 'row',
-        marginHorizontal: 12,
+        padding: 12,
     },
-    input: {
+    textInput: {
         borderWidth: 1,
         padding: 10,
         marginHorizontal: 12,
         flex: 1,
-        flexDirection: 'row',
     },
     container: {
         flex: 1,
@@ -65,7 +90,4 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderWidth: 1
     },
-    blankSpace: {
-        flex: 1,
-    }
 });

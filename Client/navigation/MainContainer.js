@@ -43,7 +43,6 @@ export default function MainContainer() {
                 <Tab.Screen name={fitnessName} component={FitnessScreen} />
             </Tab.Navigator>
         </NavigationContainer>
-
     )
 }
 
