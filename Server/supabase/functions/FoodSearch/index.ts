@@ -2,21 +2,62 @@
 // https://deno.land/manual/getting_started/setup_your_environment
 // This enables autocomplete, go to definition, etc.
 
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import {serve} from "https://deno.land/std@0.168.0/http/server.ts";
+
 const baseUrl = "https://trackapi.nutritionix.com/v2/";
 
-console.log("Hello from Functions!");
+async function instantSearch(food: string): Promise<JSON> {
+    try {
+        return (await fetch(baseUrl + "search/instant?query=" + food, {
+            method: "GET",
+            headers: {
+                "x-app-id": Deno.env.get('X_APP_ID') as string,
+                "x-app-key": Deno.env.get('X_APP_KEY') as string,
+            },
+        })).json();
+
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+
+async function brandedSearch(nix_item_id: string): Promise<JSON> {
+    try {
+        return (await fetch(baseUrl + "search/item?nix_item_id=" + nix_item_id, {
+            method: "GET",
+            headers: {
+                "x-app-id": Deno.env.get('X_APP_ID') as string,
+                "x-app-key": Deno.env.get('X_APP_KEY') as string,
+            },
+        })).json();
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+
+instantSearch("apple").then(
+    output => {
+        console.log(output[0].common)
+    }
+)
+
+
+
 
 
 serve(async (req) => {
-  const { name } = await req.json();
-  const data = {
-    message: `Hello my name is ${name}!`,
-  };
+    const {name} = await req.json();
+    const data = {
+        message: `Hello my name is ${name}!`,
+    };
 
-  return new Response(JSON.stringify(data), {
-    headers: { "Content-Type": "application/json" },
-  });
+    return new Response(JSON.stringify(data), {
+        headers: {"Content-Type": "application/json"},
+    });
 });
 
 // fetch(baseUrl + "search/instant?query=balls", {
@@ -29,7 +70,6 @@ serve(async (req) => {
 //     .then((response) => response.json())
 //     .then((response) => console.log(response))
 //     .catch((err) => console.log(err));
-
 
 
 // // To invoke:
