@@ -2,12 +2,12 @@
 import React from 'react';
 import { StyleSheet, Button, TextInput, View, Text } from 'react-native';
 import { Formik } from 'formik';
-import { globalStyles } from '../../../styles/global'
-import { useLogin } from './hooks/useLogin';
+import { globalStyles } from '../../../../styles/global'
+import { useLogin } from '../hooks/useLogin';
 
 
-const { login, isLoading, error } = useLogin()
 export const formikLoginForm = () => {
+    const { login, isLoading, error } = useLogin()
     return (
         <View style={globalStyles.container}>
             <Formik
@@ -49,4 +49,4 @@ export const formikLoginForm = () => {
 
 }
 
-module.exports.loginForm = formikLoginForm;
+// module.exports.loginForm = formikLoginForm;
