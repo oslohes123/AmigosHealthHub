@@ -46,25 +46,35 @@ const loginUser = async(req,res) => {
 const signupUser = async(req,res) => {
 // res.json({mssg: "signup user"})
 const {firstName, lastName, email, password, age} = req.body;
-
+console.log(req.body);
+console.log(`firstName: ${firstName}`);
+console.log(`lastName: ${lastName}`);
+console.log(`email: ${email}`);
+console.log(`password: ${password}`);
+console.log(`age: ${age}`);
 if(!email || !password ||!firstName ||!lastName ||!age){
-    res.status(400).json({mssg: "All Fields Must Be Filled"})
+    return res.status(400).json({mssg: "All Fields Must Be Filled"})
 }
 
 if(!validator.isEmail(email)){
-    res.status(400).json({mssg: "Invalid Email"})
+    console.log("Invalid Email")
+    return res.status(400).json({mssg: "Invalid Email"})
 }
 if(!validator.isStrongPassword(password)){
-    res.status(400).json({mssg: "Password Structure must have atleast 8 characters, 1 lower case,1 upper case, 1 number, 1 symbol"});
+    console.log("Password Structure must have atleast 8 characters, 1 lower case,1 upper case, 1 number, 1 symbol")
+    return res.status(400).json({mssg: "Password Structure must have atleast 8 characters, 1 lower case,1 upper case, 1 number, 1 symbol"});
 }
 
 const {data,error} = await supabaseQuery.selectWhere(supabase,'User','email',req.body.email);
 if(error){
     console.error(error);
-    res.status(400).json({mssg:error.message});
+    return res.status(400).json({mssg:error.message});
 }
 else{
-    if (data.length === 1) res.json({mssg: "User already exists!"});
+    if (data.length === 1)  {
+        console.log("Invalid Email")
+        return res.json({mssg: "User already exists!"});
+    }
 
     else{
         
@@ -82,11 +92,12 @@ else{
 
         if(error){
             console.error(error);
-            res.status(400).json({mssg:error.message});
+            return res.status(400).json({mssg:error.message});
         }
         else{ 
+            console.log("Successful Creation")
             const token = createJWToken(data[0].id);
-            res.status(200).json({email, token});
+            return res.status(200).json({email, token});
         }
     }
     }

@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useAuthContext } from '../context/AuthContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // const dotenv = require("dotenv");
 // dotenv.config();
-const port = process.env.PORT;
+const port = process.env['PORT'];
+const ip_address = process.env['IP_ADDRESS'];
 
 export const useLogin = () => {
     const [error, setError] = useState(null)
@@ -13,7 +15,7 @@ export const useLogin = () => {
         setIsLoading(true)
         setError(null)
 
-        const response = await fetch(`http://10.0.2.2:3030/:${port}/api/user/login`, {
+        const response = await fetch(`http://${ip_address}:${port}/api/user/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })
@@ -26,13 +28,18 @@ export const useLogin = () => {
             setError(json.error)
         }
         if (response.ok) {
-            localStorage.setItem('user', JSON.stringify(json))
+            try{
+                await AsyncStorage.setItem('user', JSON.stringify(json))
             console.log(json)
 
             const { dispatch } = useAuthContext()
             dispatch({ type: 'LOGIN', payload: json })
 
             setIsLoading(false)
+            }
+            catch(error){
+                console.error(error);
+            }
         }
     }
 
