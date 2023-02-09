@@ -7,6 +7,7 @@ import { useLogin } from '../hooks/useLogin';
 import * as Yup from 'yup';
 
 
+const passwordRegex = /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*!=]).*$/;
 const loginSchema = Yup.object().shape({
 
     email: Yup.string().email('Invalid email').required('Required'),

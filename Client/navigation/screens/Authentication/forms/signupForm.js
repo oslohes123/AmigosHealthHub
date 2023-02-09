@@ -3,6 +3,7 @@ import { StyleSheet, Button, TextInput, View, Text } from 'react-native';
 import { Formik } from 'formik';
 import { globalStyles } from '../../../../styles/global'
 import { useSignUp } from '../hooks/useSignUp';
+
 import * as Yup from 'yup';
 
 
@@ -18,7 +19,9 @@ const SignupSchema = Yup.object().shape({
     password: Yup.string()
     .required('No password provided.') 
     .min(8, 'Password is too short - should be 8 chars minimum.')
-    .matches(passwordRegex,"Password must contain atleast 1 lowercase letter, 1 uppercase letter and 1 special character (eg. @, #, $, %, ^, &, +, *, !, =)"),
+    .matches(passwordRegex
+    ,"Password must contain atleast 1 lowercase letter, 1 uppercase letter and 1 special character (eg. @, #, $, %, ^, &, +, *, !, =)"
+    ),
 
     age: Yup.number().positive("Age must be positive")
   });
@@ -58,6 +61,7 @@ export const formikSignUpForm = () => {
                         <Text>{props.errors.lastName}</Text>
 
 
+
                         <TextInput
                             style={globalStyles.input}
                             placeholder='Email'
@@ -65,6 +69,7 @@ export const formikSignUpForm = () => {
                             value={props.values.email}
                         />
                         <Text>{props.errors.email}</Text>
+
 
                         <TextInput
                             style={globalStyles.input}

@@ -39,6 +39,21 @@ export const useAuthContext = () => {
     return stateAndDispatch;
 }
 
+const useEffectCheckToken = () => {
+    useEffect(()=>{
+
+        async function getItem(){
+       const token =  JSON.parse(await AsyncStorage.getItem('user'))
+       
+        console.log(`token: ${token}`);
+        //if token exists, then update user state
+        if(token){
+            dispatch({type:'LOGIN', payload:token})
+        }
+        }
+        getItem()
+    }, [])
+}
 /**
  * Creating provider to wrap children who need the values provided
  */
@@ -59,19 +74,7 @@ export const AuthContextProvider = ({ children }) => {
 
     //At the very beginning of app, check if there exists 
     // 'user' in AsyncStorage, if so, set user state to
-    useEffect(()=>{
-
-        async function getItem(){
-       const token =  JSON.parse(await AsyncStorage.getItem('user'))
-       
-        console.log(`token: ${token}`);
-        //if token exists, then update user state
-        if(token){
-            dispatch({type:'LOGIN', payload:token})
-        }
-        }
-        getItem()
-    }, [])
+    useEffectCheckToken();
     return (
         //All children can use state and dispatch
         // <AuthContext.Provider value={useAuthContext()}>
