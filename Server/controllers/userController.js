@@ -72,15 +72,15 @@ if(!validator.isStrongPassword(password)){
     return res.status(400).json({mssg: "Password Structure must have atleast 8 characters, 1 lower case,1 upper case, 1 number, 1 symbol"});
 }
 
-const {data,error} = await supabaseQuery.selectWhere(supabase,'User','email',req.body.email);
+const {data,error} = await supabaseQuery.selectWhere(supabase,'User','email',req.body.email,'email');
 if(error){
     console.error(error);
     return res.status(400).json({mssg:error.message});
 }
 else{
     if (data.length === 1)  {
-        console.log("Invalid Email")
-        return res.json({mssg: "User already exists!"});
+        console.error("User already exists!")
+        return res.status(400).json({mssg: "User already exists!"});
     }
 
     else{

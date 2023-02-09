@@ -37,7 +37,8 @@ export const useSignUp = () => {
         console.log(`json: ${json}`);
         if (!response.ok) {
             setIsLoading(false)
-            setError(json.error)
+            setError(json.mssg)
+            console.log(error)
         }
         if (response.ok) {
             try{
@@ -50,6 +51,8 @@ export const useSignUp = () => {
 
             }
             catch(error){
+                setError(error);
+                setIsLoading(false);
                 console.error(error);
             }
         }

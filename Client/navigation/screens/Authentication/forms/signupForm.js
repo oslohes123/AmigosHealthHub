@@ -89,7 +89,7 @@ export const formikSignUpForm = () => {
                         <Text>{props.errors.password}</Text>
 
                         <Button title="Sign Up" color="Green" onPress={props.handleSubmit} disabled={isLoading} />
-                        {error && <div className="error">{error}</div>}
+                        {error && <Text className="error">{error}</Text>}
                     </View>
                 )
 
