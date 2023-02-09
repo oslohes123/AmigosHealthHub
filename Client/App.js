@@ -12,7 +12,6 @@ const authContainerName = "Auth screens"
 
 function App() {
   const { user } = useAuthContext();
-  console.log(`Log state from app: ${user}`);
   return (
     user === null ? <AuthContainer /> : <MainContainer />
   )

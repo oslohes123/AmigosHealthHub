@@ -16,9 +16,11 @@ function createJWToken(id){
 const loginUser = async(req,res) => {
 
     const {email, password} = req.body;
-
+    console.log(req.body);
+    console.log(`email: ${email}`);
+    console.log(`password: ${password}`);
     if(!email || !password){
-        res.status(400).json({mssg: "All Fields Must Be Filled"})
+        return res.status(400).json({mssg: "All Fields Must Be Filled"})
     }
 
     const{data, error} = await supabaseQuery.selectWhere(supabase,'User'
@@ -26,19 +28,24 @@ const loginUser = async(req,res) => {
 
     if(error){
         console.error(error);
-        res.status(400).json({mssg: error.message});
+        return res.status(400).json({mssg: error.message});
        }
     
     if(data.length === 0){
-        res.status(400).json({mssg: "Incorrect Email"})
+        console.log("Incorrect Email");
+        return res.status(400).json({mssg: "Incorrect Email"})
     }
 
     const match = await bcrypt.compare(password, data[0].password);
    if(match){
     const token = createJWToken(data[0].id);
-    res.status(200).json({email: data[0].email, token, mssg:"Successful Login"});
+    console.log(`token: ${token}`);
+    return res.status(200).json({email: data[0].email, token, mssg:"Successful Login"});
    }
-   else res.status(400).json({mssg:"Incorrect Password"});
+   else {
+    console.log("Incorrect Password");
+    return res.status(400).json({mssg:"Incorrect Password"});
+    }
 
 }
 

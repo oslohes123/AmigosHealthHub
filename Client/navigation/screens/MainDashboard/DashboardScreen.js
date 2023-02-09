@@ -1,8 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
 import react from "react";
 import { StyleSheet, Text, View, Button, SafeAreaView, Image } from 'react-native';
+import { useLogout } from '../Authentication/hooks/useLogOut';
 
 export default function DashboardScreen({ navigation }) {
+
+    const { logout } = useLogout()
+
+    const handleClick = () => {
+        logout()
+     }
+
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.title} onLongPress={() => {
@@ -10,6 +18,7 @@ export default function DashboardScreen({ navigation }) {
             }}>
                 DASHBOARD
             </Text>
+            <Button title = {"LogOut"} onPress={handleClick}/>
             <View style={styles.blankSpace}>
                 {/* <Image style={styles.mainImage} source={require('assets/favicon.png')} /> */}
             </View>

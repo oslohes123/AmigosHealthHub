@@ -1,4 +1,5 @@
-import { createContext, useReducer, useContext } from "react";
+import { createContext, useReducer, useContext, useEffect } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { useAuthContext } from "../hooks/useAuthContext";
 
 
@@ -54,8 +55,23 @@ export const AuthContextProvider = ({ children }) => {
 
     const [state, dispatch] = useReducer(authReducer, { user: null })
 
-    console.log(`AuthContext state: ${state}`);
+    console.log(`AuthContext state of user: ${state.user}`);
 
+    //At the very beginning of app, check if there exists 
+    // 'user' in AsyncStorage, if so, set user state to
+    useEffect(()=>{
+
+        async function getItem(){
+       const token =  JSON.parse(await AsyncStorage.getItem('user'))
+       
+        console.log(`token: ${token}`);
+        //if token exists, then update user state
+        if(token){
+            dispatch({type:'LOGIN', payload:token})
+        }
+        }
+        getItem()
+    }, [])
     return (
         //All children can use state and dispatch
         // <AuthContext.Provider value={useAuthContext()}>
