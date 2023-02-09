@@ -22,7 +22,7 @@ serve(async (req) => {
             data = await brandedSearch(inputData)
             break;
         default:
-            data = `The code was incorrect as ${code}`
+            data = `The code was incorrect as ${code} use literal searchMethods for correct code`
     }
 
 
