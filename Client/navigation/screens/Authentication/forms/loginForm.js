@@ -41,6 +41,7 @@ export const formikLoginForm = () => {
                             placeholder='Email'
                             onChangeText={props.handleChange('email')}
                             value={props.values.email}
+                            keyboardType = 'email-address'
                         />
                         <Text>{props.errors.email}</Text>
 
