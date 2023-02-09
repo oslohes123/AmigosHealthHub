@@ -20,12 +20,13 @@ export const useLogin = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })
         })
-        console.log(response);
+        
         const json = await response.json()
-
+        console.log(json)
         if (!response.ok) {
             setIsLoading(false)
-            setError(json.error)
+            setError(json.mssg)
+            console.log(error);
         }
         if (response.ok) {
             try{
@@ -39,6 +40,8 @@ export const useLogin = () => {
             setIsLoading(false)
             }
             catch(error){
+                setError(error);
+                setIsLoading(false);
                 console.error(error);
             }
         }

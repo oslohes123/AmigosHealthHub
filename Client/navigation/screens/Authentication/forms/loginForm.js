@@ -28,12 +28,14 @@ export const formikLoginForm = () => {
                     await login(values.email, values.password)
                 }}
                 validationSchema = {loginSchema}
-            >
+                        >
 
                 {(props) => (
 
                     <View>
 
+                        {console.log(`error: ${error}`)}
+                        {console.log(`isLoading: ${isLoading}`)}
                         <TextInput
                             style={globalStyles.input}
                             placeholder='Email'
@@ -53,7 +55,7 @@ export const formikLoginForm = () => {
                         <Text>{props.errors.password}</Text>
                         
                         <Button title="Login" color="Green" onPress={props.handleSubmit} disabled={isLoading} />
-                        {error && <div className="error">{error}</div>}
+                        {error && <Text className="error">{error}</Text>}
                     </View>
                 )
 
