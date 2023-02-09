@@ -30,11 +30,9 @@ export const useSignUp = () => {
         //     body: JSON.stringify({"email":"sadasds23ad@gmail.com","firstName":"asdasdsad","lastName":"asdasdsadsa","age":"23","password":"Password123!"})
         // })
 
-    
-         console.log(response);
 
         const json = await response.json();
-        console.log(`json: ${json}`);
+      
         if (!response.ok) {
             setIsLoading(false)
             setError(json.mssg)
