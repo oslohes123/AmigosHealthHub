@@ -1,5 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, SafeAreaView, Image } from 'react-native';
+import GreenButton from '../../components/GreenButton';
+import RedButton from '../../components/RedButton';
+
 
 //Screen Names
 const trackWorkoutName = 'Workout Plans'
@@ -25,6 +28,10 @@ export default function FitnessScreen({ navigation }) {
                 <Button title="Track Exercises" onPress={() => {
                     console.log("The user wants to track a single exercise.")
                 }} />
+            </View>
+            <View>
+                {GreenButton({})}
+                {RedButton({})}
             </View>
             <StatusBar style="auto" />
         </SafeAreaView>

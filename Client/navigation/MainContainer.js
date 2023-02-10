@@ -37,8 +37,10 @@ export default function MainContainer() {
 
                         return <Ionicons name={iconName} size={size} colour={color} />
                     },
-                    // headerShown: true,
-                    headerTitleStyle: styles.header
+                    headerShown: false,
+                    headerTitleStyle: styles.header,
+                    tabBarShowLabel: false,
+                    tabBarStyle: {paddingTop: 10, backgroundColor: '#3eda9b'}
                 })}>
 
                 <Tab.Screen name={dietName} component={DietNavigationStack} />

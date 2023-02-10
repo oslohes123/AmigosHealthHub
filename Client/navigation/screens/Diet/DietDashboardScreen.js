@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Button, ScrollView, TextInput } from 'react-native';
-import Header from '../../components/Header';
+import { StyleSheet, SafeAreaView, View, Text, TouchableOpacity, Button, ScrollView, TextInput } from 'react-native';
+import Header from './components/Header';
 import NavBar from '../../components/NavBar';
 //import NutrientsButton from '../components/NutrientsButton';
 import { Feather } from '@expo/vector-icons';
 //import Pie from 'react-native-pie';
 //import Pie from 'react-native-pie';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function DietDashboardScreen({ navigation }) {
 
@@ -86,7 +87,6 @@ export default function DietDashboardScreen({ navigation }) {
   }
 
   const pressHandler2 = (name, calories, Protein, Carbs, Fat, Sugars, Vitamins, Fibre) => {
-    navigation
     navigation.navigate('Food Details', { name, calories, Protein, Carbs, Fat, Sugars, Vitamins, Fibre });
   }
 
@@ -97,7 +97,7 @@ export default function DietDashboardScreen({ navigation }) {
   // }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header />
       <View style={styles.icon}>
         <TouchableOpacity>
@@ -124,7 +124,10 @@ export default function DietDashboardScreen({ navigation }) {
             {filteredData.length > 0 && filteredData.map(item => (
               <TouchableOpacity onPress={() => pressHandler2(item.name, item.calories, item.Protein, item.Carbs, item.Fat, item.Sugars, item.Vitamins, item.Fibre)}
                 style={styles.textContainer} key={item.name}>
-                <Text style={styles.textData} key={item.name}>{item.name}</Text>
+                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                  <Text style={styles.textData} key={item.name}>{item.name}</Text>
+                  <Ionicons name={'chevron-forward-outline'} size={'32px'} color={'white'} />
+                </View>
               </TouchableOpacity>
             ))}
           </ScrollView>
@@ -149,15 +152,14 @@ export default function DietDashboardScreen({ navigation }) {
       <View>
         {/* <NavBar /> */}
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:
-      '#0C1E3F',
+    backgroundColor: '#203038',
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
@@ -228,18 +230,20 @@ const styles = StyleSheet.create({
   },
   textData: {
     fontSize: 25,
-    color: 'black',
-    marginLeft: 20,
+    color: 'white',
+    // marginLeft: 20,
     //marginTop: 1,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    alignSelf: 'flex-start',
+    
   },
   textContainer: {
-    backgroundColor: '#48D1CC',
-    borderRadius: 5,
-    padding: 10,
-    height: 50,
+    backgroundColor: '#3eda9b',
+    borderRadius: 15,
+    padding: 20,
+    // height: 50,
     marginVertical: 10,
-    width: 330,
+    width: '80%',
     alignSelf: 'center',
     marginHorizontal: 10
   },
@@ -249,7 +253,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     marginLeft: 40,
     marginTop: -120,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    // textAlign: 'flex-start',
+    flex: 1,
+    width: '100%'
   },
   // surr: {
   //   borderWidth: 2,
