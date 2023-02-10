@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import react from "react";
 import { StyleSheet, Text, View, Button, SafeAreaView, Image } from 'react-native';
 import { useLogout } from '../Authentication/hooks/useLogOut';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function DashboardScreen({ navigation }) {
 
@@ -9,7 +10,9 @@ export default function DashboardScreen({ navigation }) {
 
     const handleClick = () => {
         logout()
-     }
+    }
+
+
 
     return (
         <SafeAreaView style={styles.container}>
@@ -18,6 +21,9 @@ export default function DashboardScreen({ navigation }) {
             }}>
                 DASHBOARD
             </Text>
+            <View style={styles.settings}>
+                <Ionicons name={'cog'} size={50} colour={'white'} onPress={() => console.log("Settings pressed.")}></Ionicons>
+            </View>
             <Button title = {"LogOut"} onPress={handleClick}/>
             <View style={styles.blankSpace}>
                 {/* <Image style={styles.mainImage} source={require('assets/favicon.png')} /> */}
@@ -29,9 +35,17 @@ export default function DashboardScreen({ navigation }) {
 
 const styles = StyleSheet.create({
     title: {
+        alignSelf: 'flex-start',
         fontSize: 32,
         fontWeight: "bold",
-        padding: 40,
+        padding: 15,
+    },
+    settings: {
+        flex: 1,
+        alignSelf: 'flex-start',
+        position: 'absolute',
+        top: 10,
+        right: 10,
     },
     blankSpace: {
         flex: 1,
@@ -52,5 +66,5 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         alignItems: 'flex-end',
         justifyContent: 'center',
-    }
+    },
 });

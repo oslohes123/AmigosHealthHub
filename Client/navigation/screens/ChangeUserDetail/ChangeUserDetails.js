@@ -1,6 +1,33 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Button } from 'react-native';
-import UpdateUserData from './UpdateUserData';
+import { Client } from '@supabase/supabase-js';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+const supabase = new Client({
+  apiKey: '<API_KEY>',
+  uid: '<UID>',
+  databaseURL: '<DATABASE_URL>'
+});
+
+const UpdateUserData = async ({ supabase, userId, initialData }) => {
+  const { firstName, lastName, email, weight, height } = initialData;
+  const query = `
+    UPDATE users
+    SET first_name = '${firstName}',
+        last_name = '${lastName}',
+        email = '${email}',
+        weight = '${weight}',
+        height = '${height}'
+    WHERE id = '${userId}'
+  `;
+
+  try {
+    const result = await supabase.raw(query);
+    console.log(result);
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const EditDetailsScreen = ({ supabase, userId, initialData }) => {
   const [firstName, setFirstName] = useState(initialData.firstName);
@@ -55,24 +82,7 @@ const EditDetailsScreen = ({ supabase, userId, initialData }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 20,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  label: {
-    fontSize: 18,
-    marginTop: 20,
-    textAlign: 'left'
-  },
-  input: {
-    height: 40,
-    width: '100%',
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginTop: 10,
-    padding: 10
+    flex: 1
   }
-});
 
-export default EditDetailsScreen;
+
