@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Button, ScrollView, TextInput } from 'react-native';
-import Header from '../components/Header';
-import NavBar from '../components/NavBar';
+import Header from '../../components/Header';
+import NavBar from '../../components/NavBar';
 //import NutrientsButton from '../components/NutrientsButton';
 import { Feather } from '@expo/vector-icons';
 //import Pie from 'react-native-pie';
 //import Pie from 'react-native-pie';
 
-export default function Home({ navigation }) {
+export default function DietDashboardScreen({ navigation }) {
 
   const pieData = [
     {

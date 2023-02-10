@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import Search from '../components/Search';
+import Search from '../../components/Search';
 
 export default function FoodSearch() {
 

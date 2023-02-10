@@ -7,7 +7,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import FitnessNavigationScreen from './screens/Fitness/FitnessNavigation';
 import DashboardScreen from "./screens/MainDashboard/DashboardScreen";
-import DietNavigationStack from "./screens/Diet/routes/Stack"
+import DietNavigationStack from "./screens/Diet/DietNavigation"
 
 //Screen Names
 const fitnessName = 'Fitness';

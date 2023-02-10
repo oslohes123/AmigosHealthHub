@@ -1,13 +1,13 @@
 import React from 'react';
 import { StyleSheet, View, Text, } from 'react-native';
-import NavBar from '../components/NavBar';
+import NavBar from '../../components/NavBar';
 
 export default function Settings() {
-    
+
     return (
-        <View style={styles.container}> 
+        <View style={styles.container}>
             <View style={styles.nav}>
-                <NavBar/>
+                <NavBar />
             </View>
         </View>
     );
@@ -15,9 +15,9 @@ export default function Settings() {
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: 
-       '#0C1E3F',
+        flex: 1,
+        backgroundColor:
+            '#0C1E3F',
     },
     nav: {
         position: 'absolute',
