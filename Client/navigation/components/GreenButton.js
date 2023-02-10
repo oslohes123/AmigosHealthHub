@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
-import Ionicons from 'react-native-vector-icons/Ionicons';
+// import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 export default function GreenButton({fontSize = 16, height = 50, width = 50, text = 'Submit', buttonFunction}) {
@@ -9,6 +9,7 @@ export default function GreenButton({fontSize = 16, height = 50, width = 50, tex
             fontSize: fontSize,
             color: 'white',
             fontWeight: 'bold',
+            alignSelf: 'center'
           },
           textContainer: {
             backgroundColor: '#3eda9b',
@@ -25,7 +26,7 @@ export default function GreenButton({fontSize = 16, height = 50, width = 50, tex
     <TouchableOpacity onPress={buttonFunction} style={styles.textContainer}>
         <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Text style={styles.textData}>{text}</Text>
-            <Ionicons name={'chevron-forward-outline'} size={`${fontSize}px`} color={'white'} />
+            {/* <Ionicons name={'chevron-forward-outline'} size={`${fontSize}px`} color={'white'} /> */}
         </View>
     </TouchableOpacity>
   )

@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, } from 'react-native';
+import GreenButton from '../../components/GreenButton';
 
 export default function FoodDetails({ route, navigation }) {
 
@@ -37,6 +38,9 @@ export default function FoodDetails({ route, navigation }) {
                 <Text style={styles.text}>Fibre</Text>
                 <Text style={styles.values}>{Fibre}</Text>
             </View>
+            <View style={styles.buttonContainer}>
+                <GreenButton fontSize={20} height={30} width={70} text={'Add Food'}/>
+            </View>
         </View>
     );
 }
@@ -44,7 +48,7 @@ export default function FoodDetails({ route, navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#0C1E3F',
+        backgroundColor: '#203038',
     },
     header: {
         color: 'white',
@@ -55,7 +59,7 @@ const styles = StyleSheet.create({
     },
     box: {
         flexDirection: 'row',
-        marginTop: 50,
+        marginTop: 30,
         marginLeft: 30,
     },
     text: {
@@ -72,6 +76,9 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         position: 'absolute',
         right: 30
+    },
+    buttonContainer: {
+        marginTop: 40,
     },
 })
 
