@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import react from "react";
 import { StyleSheet, Text, View, Button, SafeAreaView, Image } from 'react-native';
 import { useLogout } from '../Authentication/hooks/useLogOut';
+import { useAuthContext } from '../Authentication/context/AuthContext';
 
 export default function DashboardScreen({ navigation }) {
 
@@ -10,13 +11,16 @@ export default function DashboardScreen({ navigation }) {
     const handleClick = () => {
         logout()
      }
+     const { user } = useAuthContext();
+     const welcomeMessage = `Welcome to your Dashboard,${user.firstName} `;
 
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.title} onLongPress={() => {
                 console.log("The user wants to see info about the dashboard.")
             }}>
-                DASHBOARD
+               
+                {welcomeMessage}
             </Text>
             <Button title = {"LogOut"} onPress={handleClick}/>
             <View style={styles.blankSpace}>

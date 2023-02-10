@@ -5,10 +5,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FitnessScreen from './screens/Fitness/FitnessNavigation';
 import DashboardScreen from "./screens/MainDashboard/DashboardScreen";
 import DietScreen from "./screens/Diet/DietScreen";
-
+// import { useAuthContext } from './screens/Authentication/context/AuthContext';
 //Screen Names
+
 const fitnessName = 'Fitness';
-const dashboardName = "Dashboard";
+const dashboardName = `Dashboard`;
 const dietName = "Diet";
 
 const Tab = createBottomTabNavigator();
