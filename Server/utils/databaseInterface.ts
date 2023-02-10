@@ -15,7 +15,10 @@ interface dbInterface{
  //Update table with updatingData where a given column has some value
  
     update: (db: any, table: string, updatingData: object, column: string, value: any) => object;
- }
+ 
+ //returns specific row of a table
+    findrow: (db: any, table: string, column: string, value: any) => object;
+}
 
 
 class supabaseQuery implements dbInterface{
@@ -92,6 +95,25 @@ class supabaseQuery implements dbInterface{
             console.error(err);
         }
     }
+    async findrow(supabaseDb: any, table: string, row: string, value: any): Promise<object | undefined>{
+        try{
+            const {data, error} = await supabaseDb
+            .from(table)
+            .select("*")
+            .eq(row, value)
+
+            if(error) console.error(error);
+            else{
+                console.log({data});
+                return {data}
+            }
+
+        }
+        catch(err:unknown){
+            console.error(err);
+        }
+    }
+
 
 
 }
