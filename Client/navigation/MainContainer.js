@@ -5,9 +5,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import FitnessScreen from './screens/Fitness/FitnessNavigation';
+import FitnessNavigationScreen from './screens/Fitness/FitnessNavigation';
 import DashboardScreen from "./screens/MainDashboard/DashboardScreen";
-import DietScreen from "./screens/Diet/DietScreen";
+import DietNavigationStack from "./screens/Diet/routes/Stack"
 
 //Screen Names
 const fitnessName = 'Fitness';
@@ -41,9 +41,9 @@ export default function MainContainer() {
                     headerTitleStyle: styles.header
                 })}>
 
-                <Tab.Screen name={dietName} component={DietScreen} />
+                <Tab.Screen name={dietName} component={DietNavigationStack} />
                 <Tab.Screen name={dashboardName} component={DashboardScreen} />
-                <Tab.Screen name={fitnessName} component={FitnessScreen} />
+                <Tab.Screen name={fitnessName} component={FitnessNavigationScreen} />
             </Tab.Navigator>
         </NavigationContainer>
 

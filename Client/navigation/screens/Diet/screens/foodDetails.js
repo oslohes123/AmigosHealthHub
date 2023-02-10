@@ -1,38 +1,41 @@
 import React from 'react';
 import { StyleSheet, View, Text, } from 'react-native';
 
-export default function foodDetails({navigation}) {
-    
+export default function FoodDetails({ route, navigation }) {
+
+    const { name, calories, Protein, Carbs, Fat, Sugars, Vitamins, Fibre } = route.params
+    console.log(route)
+
     return (
-        <View style={styles.container}> 
-            <Text style={styles.header}>{navigation.getParam('name')}</Text>
+        <View style={styles.container}>
+            <Text style={styles.header}>{name}</Text>
             <View style={styles.box}>
                 <Text style={styles.text}>Calories</Text>
-                <Text style={styles.values}>{navigation.getParam('calories')}</Text>
+                <Text style={styles.values}>{calories}</Text>
             </View>
             <View style={styles.box}>
                 <Text style={styles.text}>Protein</Text>
-                <Text style={styles.values}>{navigation.getParam('Protein')}</Text>
+                <Text style={styles.values}>{Protein}</Text>
             </View>
             <View style={styles.box}>
                 <Text style={styles.text}>Carbs</Text>
-                <Text style={styles.values}>{navigation.getParam('Carbs')}</Text>
+                <Text style={styles.values}>{Carbs}</Text>
             </View>
             <View style={styles.box}>
                 <Text style={styles.text}>Fat</Text>
-                <Text style={styles.values}>{navigation.getParam('Fat')}</Text>
+                <Text style={styles.values}>{Fat}</Text>
             </View>
             <View style={styles.box}>
                 <Text style={styles.text}>Sugars</Text>
-                <Text style={styles.values}>{navigation.getParam('Sugars')}</Text>
+                <Text style={styles.values}>{Sugars}</Text>
             </View>
             <View style={styles.box}>
                 <Text style={styles.text}>Vitamins</Text>
-                <Text style={styles.values}>{navigation.getParam('Vitamins')}</Text>
+                <Text style={styles.values}>{Vitamins}</Text>
             </View>
             <View style={styles.box}>
                 <Text style={styles.text}>Fibre</Text>
-                <Text style={styles.values}>{navigation.getParam('Fibre')}</Text>
+                <Text style={styles.values}>{Fibre}</Text>
             </View>
         </View>
     );
@@ -40,8 +43,8 @@ export default function foodDetails({navigation}) {
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: '#0C1E3F',
+        flex: 1,
+        backgroundColor: '#0C1E3F',
     },
     header: {
         color: 'white',

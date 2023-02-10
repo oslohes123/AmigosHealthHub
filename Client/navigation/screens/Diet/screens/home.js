@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Button, ScrollView, TextInput } from 'react-native';
-import Header from '../components/Header'; 
+import Header from '../components/Header';
 import NavBar from '../components/NavBar';
 //import NutrientsButton from '../components/NutrientsButton';
-import { Feather } from '@expo/vector-icons'; 
+import { Feather } from '@expo/vector-icons';
 //import Pie from 'react-native-pie';
 //import Pie from 'react-native-pie';
 
-export default function Home({navigation}) {
-  
+export default function Home({ navigation }) {
+
   const pieData = [
     {
       value: 20,
@@ -31,64 +31,65 @@ export default function Home({navigation}) {
   ]
 
   const [data] = useState([
-    { name: 'Apple', calories: '50 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Banana', calories: '20 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Bacon', calories: '30 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Bagel', calories: '70 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Basil', calories: '90 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Bacon Bits', calories: '25 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Beef', calories: '45 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Bread', calories: '47 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Butter', calories: '74 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Broccoli', calories: '53 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Brownie', calories: '58 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Cherry', calories: '59 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Date', calories: '65 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Elderberry', calories: '47 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Fig', calories: '94 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Grape', calories: '41 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Honeydew', calories: '222 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Iced watermelon', calories: '120 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Jackfruit', calories: '450 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Kiwi', calories: '61 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Lemon', calories: '11 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Mango', calories: '4 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Nectarine', calories: '96 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Orange', calories: '68 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Papaya', calories: '16 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Quince', calories: '17 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Raspberry', calories: '518 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Strawberry', calories: '18 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Tangerine', calories: '9 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Ugli fruit', calories: '3 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Vegetable juice', calories: '89 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Watermelon', calories: '32 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Xigua', calories: '98 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Yellow watermelon', calories: '32 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'},
-    { name: 'Zucchini', calories: '45 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g'}
-    ]);
+    { name: 'Apple', calories: '50 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Banana', calories: '20 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Bacon', calories: '30 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Bagel', calories: '70 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Basil', calories: '90 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Bacon Bits', calories: '25 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Beef', calories: '45 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Bread', calories: '47 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Butter', calories: '74 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Broccoli', calories: '53 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Brownie', calories: '58 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Cherry', calories: '59 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Date', calories: '65 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Elderberry', calories: '47 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Fig', calories: '94 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Grape', calories: '41 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Honeydew', calories: '222 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Iced watermelon', calories: '120 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Jackfruit', calories: '450 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Kiwi', calories: '61 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Lemon', calories: '11 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Mango', calories: '4 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Nectarine', calories: '96 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Orange', calories: '68 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Papaya', calories: '16 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Quince', calories: '17 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Raspberry', calories: '518 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Strawberry', calories: '18 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Tangerine', calories: '9 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Ugli fruit', calories: '3 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Vegetable juice', calories: '89 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Watermelon', calories: '32 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Xigua', calories: '98 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Yellow watermelon', calories: '32 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
+    { name: 'Zucchini', calories: '45 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' }
+  ]);
 
-    const [text, setText] = useState('');
+  const [text, setText] = useState('');
 
   const filteredData = data.filter(item => item.name.toLowerCase().startsWith(text.toLowerCase()));
 
 
-    const pressHandler = () => {
-      navigation.navigate('Nutrients');
-    }
+  const pressHandler = () => {
+    navigation.navigate('Nutrients');
+  }
 
-    // const newPressHandler = () => {
-    //   navigation.navigate('foodSearch');
-    // }
+  // const newPressHandler = () => {
+  //   navigation.navigate('foodSearch');
+  // }
 
-    const pressHandler1 = () => {
-      navigation.navigate('Settings');
-    }
+  const pressHandler1 = () => {
+    navigation.navigate('Settings');
+  }
 
-    const pressHandler2 = (name, calories, Protein, Carbs, Fat, Sugars, Vitamins, Fibre) => {
-      navigation.navigate('foodDetails', {name, calories, Protein, Carbs, Fat, Sugars, Vitamins, Fibre});
-    }
-  
+  const pressHandler2 = (name, calories, Protein, Carbs, Fat, Sugars, Vitamins, Fibre) => {
+    navigation
+    navigation.navigate('Food Details', { name, calories, Protein, Carbs, Fat, Sugars, Vitamins, Fibre });
+  }
+
   // const [text, setText] = useState('')
 
   // const submitHandler = (inputText) => {
@@ -97,10 +98,10 @@ export default function Home({navigation}) {
 
   return (
     <View style={styles.container}>
-      <Header /> 
+      <Header />
       <View style={styles.icon}>
         <TouchableOpacity>
-        <Feather name="settings" size={24} color="white" onPress={pressHandler1}/>
+          <Feather name="settings" size={24} color="white" onPress={pressHandler1} />
         </TouchableOpacity>
       </View>
       {/* <View>
@@ -112,31 +113,31 @@ export default function Home({navigation}) {
       </View> */}
       {/* </TouchableOpacity> */}
 
-      <View> 
-          <TextInput 
+      <View>
+        <TextInput
           value={text}
-          onChangeText = {(value) => setText(value)} 
-          style={styles.input} 
-          placeholder='Find food...'/>
-          {text.length > 0 && (
-          <ScrollView style={styles.scroll}> 
-          {filteredData.length > 0 && filteredData.map(item => ( 
-          <TouchableOpacity onPress={() => pressHandler2(item.name, item.calories, item.Protein, item.Carbs, item.Fat, item.Sugars, item.Vitamins, item.Fibre)}
-          style={styles.textContainer} key={item.name}>
-            <Text style={styles.textData} key={item.name}>{item.name}</Text>
-          </TouchableOpacity> 
-          ))}
+          onChangeText={(value) => setText(value)}
+          style={styles.input}
+          placeholder='Find food...' />
+        {text.length > 0 && (
+          <ScrollView style={styles.scroll}>
+            {filteredData.length > 0 && filteredData.map(item => (
+              <TouchableOpacity onPress={() => pressHandler2(item.name, item.calories, item.Protein, item.Carbs, item.Fat, item.Sugars, item.Vitamins, item.Fibre)}
+                style={styles.textContainer} key={item.name}>
+                <Text style={styles.textData} key={item.name}>{item.name}</Text>
+              </TouchableOpacity>
+            ))}
           </ScrollView>
-          )}
-          {/* <Pie 
+        )}
+        {/* <Pie 
            radius={70}
            innerRadius={45}
            sections={pieData}
            backgroundColor="#ddd"
           /> */}
-          </View>
-          <View style = {styles.button}>
-          <Button title = "View Stats" onPress={pressHandler} color='white' />
+      </View>
+      <View style={styles.button}>
+        <Button title="View Stats" onPress={pressHandler} color='white' />
       </View>
       {/* 
       <TouchableOpacity onPress={newPressHandler}>
@@ -146,7 +147,7 @@ export default function Home({navigation}) {
       </View>
       </TouchableOpacity> */}
       <View>
-        <NavBar/>
+        {/* <NavBar /> */}
       </View>
     </View>
   );
@@ -155,8 +156,8 @@ export default function Home({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 
-     '#0C1E3F',
+    backgroundColor:
+      '#0C1E3F',
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
@@ -174,7 +175,7 @@ const styles = StyleSheet.create({
     width: 200,
     alignSelf: 'center',
     borderRadius: 50,
-    padding: 10, 
+    padding: 10,
     marginTop: 10,
     marginBottom: -180,
     backgroundColor: '#48D1CC',
@@ -247,7 +248,7 @@ const styles = StyleSheet.create({
     height: 300,
     position: 'absolute',
     marginLeft: 40,
-    marginTop: -120, 
+    marginTop: -120,
     alignSelf: 'center'
   },
   // surr: {
