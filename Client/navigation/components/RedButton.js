@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-export default function RedButton({fontSize = 16, height = 50, width = 50, text = 'Submit', buttonFunction}) {
+export default function RedButton({fontSize = 16, height = 50, width = 50, text = 'Cancel', buttonFunction}) {
     const styles = {
         textData: {
             fontSize: fontSize,
