@@ -38,6 +38,25 @@ output.foods[0]
 ```
 
 
-
-
 Add this to the function and run
+
+
+# Invoking functions through curl
+
+```shell
+// To invoke:
+curl -i --location --request POST 'http://localhost:54321/functions/v1/' \
+  --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0' \
+  --header 'Content-Type: application/json' \
+  --data '{"value":"ban","code":0}'
+// For the edge function created on supabase
+
+curl -L -X POST 'https://lnittdgflsxwbofnrpul.functions.supabase.co/FoodSearch'
+-H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxuaXR0ZGdmbHN4d2JvZm5ycHVsIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzUwOTQ5NzMsImV4cCI6MTk5MDY3MDk3M30.3XFoAVUDDzaoDq7AqkZ3D1lGcnTsIOpzuPQ8fk0J6w0'
+--data '{"value":"banana,"code":1}'
+```
+
+
+
+
+
