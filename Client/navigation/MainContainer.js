@@ -2,8 +2,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import FitnessScreen from './screens/Fitness/FitnessNavigation';
-import DashboardScreen from "./screens/MainDashboard/DashboardScreen";
+import FitnessNavigationScreen from './screens/Fitness/FitnessNavigation';
+import DashboardNavigationScreen from "./screens/MainDashboard/DashboardNavigation";
 import DietScreen from "./screens/Diet/DietScreen";
 
 //Screen Names
@@ -38,8 +38,8 @@ export default function MainContainer() {
                 })}>
 
                 <Tab.Screen name={dietName} component={DietScreen} />
-                <Tab.Screen name={dashboardName} component={DashboardScreen} />
-                <Tab.Screen name={fitnessName} component={FitnessScreen} />
+                <Tab.Screen name={dashboardName} component={DashboardNavigationScreen} />
+                <Tab.Screen name={fitnessName} component={FitnessNavigationScreen} />
             </Tab.Navigator>
         </NavigationContainer>
 

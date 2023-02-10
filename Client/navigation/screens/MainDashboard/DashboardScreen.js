@@ -12,9 +12,10 @@ export default function DashboardScreen({ navigation }) {
         logout()
     }
 
-
+    const settingsName = "Settings";
 
     return (
+
         <SafeAreaView style={styles.container}>
             <Text style={styles.title} onLongPress={() => {
                 console.log("The user wants to see info about the dashboard.")
@@ -22,7 +23,10 @@ export default function DashboardScreen({ navigation }) {
                 DASHBOARD
             </Text>
             <View style={styles.settings}>
-                <Ionicons name={'cog'} size={50} colour={'white'} onPress={() => console.log("Settings pressed.")}></Ionicons>
+                <Ionicons name={'cog'} size={50} onPress={() => {
+                    console.log("Settings pressed.");
+                    navigation.navigate("Settings")
+                }}/>
             </View>
             <Button title = {"LogOut"} onPress={handleClick}/>
             <View style={styles.blankSpace}>
