@@ -14,6 +14,7 @@ const checkToken = async(req, res,next) => {
 
 //Check user making request is authenticated
  const {authorization} = req.headers
+ console.log(req.headers)
  //NO authorisation header
  if(!authorization){    
     return res.status(401).json({error: "No Authorisation Header"})
@@ -21,6 +22,7 @@ const checkToken = async(req, res,next) => {
 
  //Extract token from bearer token
  const token = authorization.split(' ')[1];
+ console.log(`token: ${token}`);
 
  try{
    const {id} =  jwtToken.verify(token, process.env.JWTSECRET);

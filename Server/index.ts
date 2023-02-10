@@ -22,7 +22,9 @@ app.get("/", (req: Request, res: Response) => {
 const authRouter = require('../routes/authentication.js');
 app.use('/api/user', authRouter);
 
-
+//Change Profile Details Routes
+const changeProfileDetailsRouter = require('../routes/changeProfileDetails.js');
+app.use('/api/user', changeProfileDetailsRouter);
 
 /**---------------- Routes End------------------ */
 
