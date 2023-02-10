@@ -1,7 +1,7 @@
-import instantSearchResult from "../interfaces/instantFoodSearchInterface.ts";
+import instantSearchInterface from "../interfaces/instantFoodSearchInterface.ts";
 import {baseUrl} from "../constants.ts";
 
-export default async function instantSearch(food: string): Promise<instantSearchResult> {
+export default async function instantSearch(food: string): Promise<instantSearchInterface> {
     return (await fetch(baseUrl + "search/instant?query=" + food, {
         method: "GET",
         headers: {
