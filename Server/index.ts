@@ -13,8 +13,8 @@ dotenv.config();
 
 const port = process.env.PORT;
 
-const supabase = require('../utils/userDatabase.ts');
-
+const supabase = require('../dist/utils/supabaseSetUp.js');
+const supabaseQuery = require('../dist/utils/databaseInterface.js');
 
 /**---------------- Routes Start--------------- */
 //HomePage Route
@@ -23,22 +23,19 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 //Authentication Routes
-const authRouter = require('../routes/authentication.ts');
+const authRouter = require('../routes/authentication.js');
 app.use('/auth', authRouter);
 
 
 
 /**---------------- Routes End------------------ */
 
-
-
-
-
 async function supabaseTest(){
   const {data,error} = await supabase.rpc('hello');
   if(error) console.error(error);
   else console.log({data});
 }
+
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
