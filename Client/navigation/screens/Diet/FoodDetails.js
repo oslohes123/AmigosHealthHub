@@ -4,6 +4,10 @@ import GreenButton from '../../components/GreenButton';
 
 export default function FoodDetails({ route, navigation }) {
 
+    const pressHandler = () => {
+        navigation.navigate('Diet Dashboard');
+      }
+
     const { name, calories, Protein, Carbs, Fat, Sugars, Vitamins, Fibre } = route.params
     console.log(route)
 
@@ -39,7 +43,7 @@ export default function FoodDetails({ route, navigation }) {
                 <Text style={styles.values}>{Fibre}</Text>
             </View>
             <View style={styles.buttonContainer}>
-                <GreenButton iconName='add-outline' fontSize={23} height={32} width={70} text={'Add Food'}/>
+                <GreenButton buttonFunction={pressHandler} iconName='add-outline' fontSize={23} height={32} width={70} text={'Add Food'}/>
             </View>
         </View>
     );
