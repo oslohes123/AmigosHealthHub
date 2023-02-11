@@ -39,7 +39,7 @@ export default function FoodDetails({ route, navigation }) {
                 <Text style={styles.values}>{Fibre}</Text>
             </View>
             <View style={styles.buttonContainer}>
-                <GreenButton fontSize={20} height={30} width={70} text={'Add Food'}/>
+                <GreenButton iconName='add-outline' fontSize={23} height={32} width={70} text={'Add Food'}/>
             </View>
         </View>
     );

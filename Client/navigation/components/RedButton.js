@@ -1,8 +1,8 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
-// import Ionicons from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-export default function RedButton({fontSize = 16, height = 50, width = 50, text = 'Cancel', buttonFunction}) {
+export default function RedButton({iconName = 'chevron-forward-outline', fontSize = 16, height = 50, width = 50, text = 'Cancel', buttonFunction}) {
     const styles = {
         textData: {
             fontSize: fontSize,
@@ -24,7 +24,7 @@ export default function RedButton({fontSize = 16, height = 50, width = 50, text 
     <TouchableOpacity onPress={buttonFunction} style={styles.textContainer}>
         <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Text style={styles.textData}>{text}</Text>
-            {/* <Ionicons name={'chevron-forward-outline'} size={`${fontSize}px`} color={'white'} /> */}
+            <Ionicons name={`${iconName}`} size={`${fontSize}px`} color={'white'} />
         </View>
     </TouchableOpacity>
   )
