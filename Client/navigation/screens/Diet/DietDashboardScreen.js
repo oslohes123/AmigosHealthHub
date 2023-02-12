@@ -126,7 +126,7 @@ export default function DietDashboardScreen({ navigation }) {
                 style={styles.textContainer} key={item.name}>
                 <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
                   <Text style={styles.textData} key={item.name}>{item.name}</Text>
-                  <Ionicons name={'chevron-forward-outline'} size={'32px'} color={'white'} />
+                  <Ionicons name={'chevron-forward-outline'} size={'32px'} color={'black'} />
                 </View>
               </TouchableOpacity>
             ))}
@@ -140,7 +140,7 @@ export default function DietDashboardScreen({ navigation }) {
           /> */}
       </View>
       <View style={styles.button}>
-        <Button title="View Stats" onPress={pressHandler} color='white' />
+        <Button title="View Stats" onPress={pressHandler} color='black' />
       </View>
       {/* 
       <TouchableOpacity onPress={newPressHandler}>
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
   },
   textData: {
     fontSize: 25,
-    color: 'white',
+    color: 'black',
     // marginLeft: 20,
     //marginTop: 1,
     fontWeight: 'bold',
