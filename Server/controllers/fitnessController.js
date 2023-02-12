@@ -33,18 +33,37 @@ async function searchDB(){
 function addExercise(){
 
 }
+function getOccurrence(arr, v) {
+    var count = 0;
+    arr.forEach((elem) => (elem === v && count++));
+    return count;
+}
 async function returnexercises(data){
+    const ids = []
+    const finalIDs = []
     var result = JSON.parse(data);
-    var dict = {};
-
-for (var i = 0, thisresult; i < result.length; i++) {
-   thisresult = result[i];
-   dict[ thisresult.CompleteWorkoutsID ] = thisresult;
+    for (const prop in result) {
+        ids.push(prop["CompleteWorkoutID"])
+    }
+    for (const id in ids) {
+        if (getOccurrence(ids, id) == 1){
+            finalIDs.push(id)
+        }
+    }
+    for (const elem in result){
+        if (finalIDs.includes(elem["CompleteWorkoutID"])){
+            pass
+        }
+        else{
+            result.delete(elem)
+        }
+    }
+    return JSON.stringify(result)
 }
 //for (var i = 0; i < dict.length-1; i++) {
 //    if dict[i] 
 //}
-}
+
     //const { data, error } = await supabase
    // .select('CompleteWorkoutsID')
  //   .eq('CompleteWorkoutsID(count)', 1) 
