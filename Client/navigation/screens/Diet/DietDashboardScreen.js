@@ -4,32 +4,48 @@ import Header from './components/Header';
 import NavBar from '../../components/NavBar';
 //import NutrientsButton from '../components/NutrientsButton';
 import { Feather } from '@expo/vector-icons';
-//import Pie from 'react-native-pie';
-//import Pie from 'react-native-pie';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {PieChart} from "react-native-chart-kit";
 
 export default function DietDashboardScreen({ navigation }) {
 
-  const pieData = [
+  const Piedata = [
     {
-      value: 20,
-      color: 'red',
-      name: 'red',
+      name: "Protein",
+      population: 21500000,
+      color: "rgba(131, 167, 234, 1)",
+      legendFontColor: "#7F7F7F",
       legendFontSize: 15
     },
     {
-      value: 30,
-      color: 'blue',
-      name: 'blue',
+      name: "Carbs",
+      population: 2800000,
+      color: "#F00",
+      legendFontColor: "#7F7F7F",
       legendFontSize: 15
     },
     {
-      value: 60,
-      color: 'green',
-      name: 'green',
+      name: "Fat",
+      population: 527612,
+      color: "yellow",
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 15
+    },
+    {
+      name: "Vitamins",
+      population: 8538000,
+      color: "#ffffff",
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 15
+    },
+    {
+      name: "Fibre",
+      population: 11920000,
+      color: "rgb(0, 0, 255)",
+      legendFontColor: "#7F7F7F",
       legendFontSize: 15
     }
-  ]
+  ];
 
   const [data] = useState([
     { name: 'Apple', calories: '50 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
@@ -97,7 +113,9 @@ export default function DietDashboardScreen({ navigation }) {
   // }
 
   return (
+    
     <SafeAreaView style={styles.container}>
+      
       <Header />
       <View style={styles.icon}>
         <TouchableOpacity>
@@ -112,13 +130,40 @@ export default function DietDashboardScreen({ navigation }) {
         {text ? <Text style={styles.text}>{text}</Text> : null}
       </View> */}
       {/* </TouchableOpacity> */}
-
+      {/* <ScrollView style={styles.fullScroll}> */}
       <View>
         <TextInput
           value={text}
           onChangeText={(value) => setText(value)}
           style={styles.input}
           placeholder='Find food...' />
+        <View style={styles.chart}>
+        {text.length == 0 && (
+          <PieChart
+          data={Piedata}
+          width={385}
+          height={240}
+          chartConfig={{
+            backgroundColor: "#e26a00",
+            backgroundGradientFrom: "#fb8c00",
+            backgroundGradientTo: "#ffa726",
+            decimalPlaces: 2,
+            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+            style: {
+              borderRadius: 16,
+            },
+            propsForDots: {
+              r: "6",
+              strokeWidth: "2",
+              stroke: "#ffa726"
+            }
+          }}
+          accessor="population"
+          backgroundColor="transparent"
+        />
+        )}
+        </View>
         {text.length > 0 && (
           <ScrollView style={styles.scroll}>
             {filteredData.length > 0 && filteredData.map(item => (
@@ -132,13 +177,13 @@ export default function DietDashboardScreen({ navigation }) {
             ))}
           </ScrollView>
         )}
+        </View>
         {/* <Pie 
            radius={70}
            innerRadius={45}
            sections={pieData}
            backgroundColor="#ddd"
           /> */}
-      </View>
       <View style={styles.button}>
         <Button title="View Stats" onPress={pressHandler} color='black' />
       </View>
@@ -267,4 +312,10 @@ const styles = StyleSheet.create({
   //   // right: 1,
   //   // width: 380
   // }
+  chart: {
+    alignSelf: 'center',
+    flex: 1,
+    marginTop: -90,
+    marginLeft: 40
+  }
 });
