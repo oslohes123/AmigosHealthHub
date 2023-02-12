@@ -1,9 +1,8 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { TouchableOpacity, Text, View } from 'react-native'
 import React from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-
-export default function GreenButton({iconName = 'chevron-forward-outline', fontSize = 16, height = 50, width = 50, text = 'Submit', buttonFunction}) {
+export default function widget({iconName = 'chevron-forward-outline', widgetText = "Widget Title", fontSize = 16, height = 50, width = 50, buttonFunction, widgetColor = "yellow"}) {
     const styles = {
         textData: {
           fontSize: fontSize,
@@ -22,13 +21,13 @@ export default function GreenButton({iconName = 'chevron-forward-outline', fontS
           marginHorizontal: 10
         }
     }
+
   return (
     <TouchableOpacity onPress={buttonFunction} style={styles.textContainer}>
         <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Text style={styles.textData}>{text}</Text>
-            <Ionicons name={`${iconName}`} size={`${fontSize}px`} color={'white'} />
+                <Text style={styles.textData}>{widgetText}</Text>
+            <Ionicons name={`${iconName}`} size={`${fontSize}px`} color={widgetColor} />
         </View>
     </TouchableOpacity>
   )
 }
-
