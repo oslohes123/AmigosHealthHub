@@ -1,7 +1,7 @@
-import { createContext, useReducer, useContext, useEffect } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { useAuthContext } from "../hooks/useAuthContext";
-
 
 export const AuthContext = createContext();
 
@@ -70,7 +70,7 @@ export const AuthContextProvider = ({ children }) => {
 
     const [state, dispatch] = useReducer(authReducer, { user: null })
 
-    console.log(`AuthContext state of user: ${state.user}`);
+    console.log(`${state.user}`);
     useEffect(()=>{
 
         async function getItem(){

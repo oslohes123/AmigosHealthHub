@@ -32,7 +32,7 @@ interface dbInterface {
 }
 
 /**
- * Fore more information, look at the supabase JS client library: https://supabase.com/docs/reference/javascript/installing
+ * For more information, look at the supabase JS client library: https://supabase.com/docs/reference/javascript/installing
  */
 class supabaseQuery implements dbInterface {
   async select(
@@ -132,6 +132,14 @@ class supabaseQuery implements dbInterface {
       console.error(err);
     }
   }
+
+  //   update: (
+  //     db: any,
+  //     table: string,
+  //     updatingData: object,
+  //     column: string,
+  //     value: any
+  //   ) => object;
 }
 
 module.exports = supabaseQuery;

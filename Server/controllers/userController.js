@@ -12,7 +12,13 @@ function createJWToken(id){
     return jwttoken.sign({id},process.env.JWTSECRET,{expiresIn: '3d'});
 }
 
+async function getUser(databaseQuery, email){
+    const userRows = await databaseQuery.selectWhere(supabase,'User'
+    ,'email',email);
 
+    return userRows
+
+}
 const loginUser = async(req,res) => {
 
     const {email, password} = req.body;
@@ -23,8 +29,9 @@ const loginUser = async(req,res) => {
         return res.status(400).json({mssg: "All Fields Must Be Filled"})
     }
 
-    const{data, error} = await supabaseQuery.selectWhere(supabase,'User'
-    ,'email',email);
+    // const{data, error} = await supabaseQuery.selectWhere(supabase,'User'
+    // ,'email',email);
+    const {data,error} = await getUser(supabaseQuery,email);
 
     if(error){
         console.error(error);
@@ -40,7 +47,7 @@ const loginUser = async(req,res) => {
    if(match){
     const token = createJWToken(data[0].id);
     console.log(`token: ${token}`);
-    return res.status(200).json({email: data[0].email, token, mssg:"Successful Login"});
+    return res.status(200).json({firstName: data[0].firstName,email: data[0].email, token, mssg:"Successful Login"});
    }
    else {
     console.log("Incorrect Password");
@@ -104,7 +111,7 @@ else{
         else{ 
             console.log("Successful Creation")
             const token = createJWToken(data[0].id);
-            return res.status(200).json({email, token});
+            return res.status(200).json({firstName,email, token});
         }
     }
     }
@@ -113,3 +120,40 @@ else{
 
 module.exports.loginUser = loginUser;
 module.exports.signupUser = signupUser;
+
+// const loginUser = async(req,res,databaseQuery) => {
+
+//     const {email, password} = req.body;
+//     console.log(req.body);
+//     console.log(`email: ${email}`);
+//     console.log(`password: ${password}`);
+//     if(!email || !password){
+//         return res.status(400).json({mssg: "All Fields Must Be Filled"})
+//     }
+
+//     // const{data, error} = await supabaseQuery.selectWhere(supabase,'User'
+//     // ,'email',email);
+//     const {data,error} = await getUser(databaseQuery,email);
+
+//     if(error){
+//         console.error(error);
+//         return res.status(400).json({mssg: error.message});
+//        }
+    
+//     if(data.length === 0){
+//         console.log("Incorrect Email");
+//         return res.status(400).json({mssg: "Incorrect Email"})
+//     }
+
+//     const match = await bcrypt.compare(password, data[0].password);
+//    if(match){
+//     const token = createJWToken(data[0].id);
+//     console.log(`token: ${token}`);
+//     return res.status(200).json({email: data[0].email, token, mssg:"Successful Login"});
+//    }
+//    else {
+//     console.log("Incorrect Password");
+//     return res.status(400).json({mssg:"Incorrect Password"});
+//     }
+
+// }

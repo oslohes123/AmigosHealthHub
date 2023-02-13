@@ -1,14 +1,14 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-
-import FitnessNavigationScreen from './screens/Fitness/FitnessNavigation';
 import DashboardNavigationScreen from "./screens/MainDashboard/DashboardNavigation";
 import DietScreen from "./screens/Diet/DietScreen";
+import FitnessNavigationScreen from './screens/Fitness/FitnessNavigation';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 //Screen Names
+
 const fitnessName = 'Fitness';
-const dashboardName = "Dashboard";
+const dashboardName = `Dashboard`;
 const dietName = "Diet";
 
 const Tab = createBottomTabNavigator();

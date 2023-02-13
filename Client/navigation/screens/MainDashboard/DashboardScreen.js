@@ -3,6 +3,7 @@ import react from "react";
 import { StyleSheet, Text, View, Button, SafeAreaView, Image } from 'react-native';
 import { useLogout } from '../Authentication/hooks/useLogOut';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useAuthContext } from '../Authentication/context/AuthContext';
 
 export default function DashboardScreen({ navigation }) {
 
@@ -11,29 +12,24 @@ export default function DashboardScreen({ navigation }) {
     const handleClick = () => {
         logout()
     }
+     }
+     const { user } = useAuthContext();
+     const welcomeMessage = `Welcome to your Dashboard,${user.firstName} `;
 
-    // const settingsName = "Settings";
-
-  return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.title} onLongPress={() => {
-        console.log("The user wants to see info about the dashboard.")
-      }}>
-        DASHBOARD
-      </Text>
-      <View style={styles.settings}>
-        <Ionicons name={'cog'} size={50} onPress={() => {
-          console.log("Settings pressed.");
-          navigation.navigate("Settings")
-        }}/>
-      </View>
-      <Button title = {"LogOut"} onPress={handleClick}/>
-      <View style={styles.blankSpace}>
-        {/* <Image style={styles.mainImage} source={require('assets/favicon.png')} /> */}
-      </View>
-      <StatusBar style="auto" />
-    </SafeAreaView>
-  );
+    return (
+        <SafeAreaView style={styles.container}>
+            <Text style={styles.title} onLongPress={() => {
+                console.log("The user wants to see info about the dashboard.")
+            }}>
+                {welcomeMessage}
+            </Text>
+            <Button title = {"LogOut"} onPress={handleClick}/>
+            <View style={styles.blankSpace}>
+                {/* <Image style={styles.mainImage} source={require('assets/favicon.png')} /> */}
+            </View>
+            <StatusBar style="auto" />
+        </SafeAreaView>
+    );
 }
 
 const styles = StyleSheet.create({
