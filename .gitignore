@@ -720,3 +720,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+#Prettier
+.prettierrc
