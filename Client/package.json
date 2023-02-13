@@ -21,8 +21,7 @@
     "react-native-chart-kit": "^6.12.0",
     "react-native-pie": "^1.1.2",
     "react-native-table-component": "^1.2.2",
-    "react-native-web": "~0.18.9",
-    "react-native-svg": "13.4.0"
+    "react-native-web": "~0.18.9"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
