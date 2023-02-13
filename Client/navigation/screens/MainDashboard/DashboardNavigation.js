@@ -1,8 +1,7 @@
-import { createStackNavigator } from '@react-navigation/stack';
-
-import SettingsScreen from './SettingsScreen';
-import DashboardScreen from './DashboardScreen';
 import ChangeUserDetailsScreen from '../ChangeUserDetail/ChangeUserDetailsScreen';
+import DashboardScreen from './DashboardScreen';
+import SettingsScreen from './SettingsScreen';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
 
