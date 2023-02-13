@@ -12,38 +12,38 @@ export default function DietDashboardScreen({ navigation }) {
   const Piedata = [
     {
       name: "Protein",
-      population: 21500000,
-      color: "rgba(131, 167, 234, 1)",
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15
+      amount: 60,
+      color: "orange",
+      legendFontColor: "white",
+      legendFontSize: 18
     },
     {
       name: "Carbs",
-      population: 2800000,
-      color: "#F00",
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15
+      amount: 120,
+      color: "green",
+      legendFontColor: "white",
+      legendFontSize: 18
     },
     {
       name: "Fat",
-      population: 527612,
+      amount: 25,
       color: "yellow",
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15
+      legendFontColor: "white",
+      legendFontSize: 18
     },
     {
       name: "Vitamins",
-      population: 8538000,
-      color: "#ffffff",
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15
+      amount: 55,
+      color: "blue",
+      legendFontColor: "white",
+      legendFontSize: 18
     },
     {
       name: "Fibre",
-      population: 11920000,
-      color: "rgb(0, 0, 255)",
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15
+      amount: 34,
+      color: "red",
+      legendFontColor: "white",
+      legendFontSize: 18
     }
   ];
 
@@ -141,25 +141,25 @@ export default function DietDashboardScreen({ navigation }) {
         {text.length == 0 && (
           <PieChart
           data={Piedata}
-          width={385}
-          height={240}
+          width={360}
+          height={220}
           chartConfig={{
-            backgroundColor: "#e26a00",
-            backgroundGradientFrom: "#fb8c00",
-            backgroundGradientTo: "#ffa726",
-            decimalPlaces: 2,
+            //backgroundColor: "#e26a00",
+            //backgroundGradientFrom: "#fb8c00",
+            //backgroundGradientTo: "#ffa726",
+            //decimalPlaces: 2,
             color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+            //labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
             style: {
               borderRadius: 16,
             },
-            propsForDots: {
-              r: "6",
-              strokeWidth: "2",
-              stroke: "#ffa726"
-            }
+            // propsForDots: {
+            //   r: "6",
+            //   strokeWidth: "2",
+            //   stroke: "#ffa726"
+            // }
           }}
-          accessor="population"
+          accessor="amount"
           backgroundColor="transparent"
         />
         )}
@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
   chart: {
     alignSelf: 'center',
     flex: 1,
-    marginTop: -90,
-    marginLeft: 40
+    marginTop: -70,
+    marginLeft: 40,
   }
 });
