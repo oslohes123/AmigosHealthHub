@@ -10,6 +10,8 @@ const changeStats = async(req,res) => {
 
     const {firstName, lastName, prevEmail, newEmail, age} = req.body;
 
+    console.log(JSON.stringify(req.body));
+    
     if(!firstName || !lastName || !prevEmail||!newEmail||!age){
         return res.status(400).json({mssg:"All Fields Must Be Filled"});
     }
@@ -71,27 +73,34 @@ const changePassword = async(req,res) => {
     const{data, error} = await supabaseQuery.selectWhere(supabase,'User'
     ,'email',email);
 
+   
+
     if(error){
         return res.status(500).json({mssg: error.message});
     }
+    if(data.length > 0){
+        const match = await bcrypt.compare(oldPassword, data[0].password);
+        if(!match){
+            console.log("Old password doesn't match!")
+            return res.status(400).json({mssg: "Old password doesn't match!"})
+        }
+        else{
+            console.log("New Password Set!")
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(newPassword, salt);
 
-    const match = await bcrypt.compare(oldPassword, data[0].password);
-    if(!match){
-        console.log("Old password doesn't match!")
-        return res.status(400).json({mssg: "Old password doesn't match!"})
+            const {data, error} = await supabaseQuery.update(supabase, 'User', {
+                password: hashedPassword}, 'email', email);
+
+                if(error){
+                    return res.status(500).json({mssg: error.message});
+                }
+            return res.status(200).json({mssg: "New Password Set!"})
+        }
     }
+
     else{
-        console.log("New Password Set!")
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(newPassword, salt);
-
-        const {data, error} = await supabaseQuery.update(supabase, 'User', {
-            password: hashedPassword}, 'email', email);
-
-            if(error){
-                return res.status(500).json({mssg: error.message});
-            }
-        return res.status(200).json({mssg: "New Password Set!"})
+        return res.status(400).json({mssg: "Email doesn't exist in our db"});
     }
 }
 
