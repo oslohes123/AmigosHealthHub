@@ -1,4 +1,4 @@
-import ChangeUserDetailsScreen from '../ChangeUserDetail/ChangeUserDetailsScreen';
+import ChangeUserDetailsScreen from '../ChangeUserDetail/screens/ChangeUserDetailsScreen';
 import DashboardScreen from './DashboardScreen';
 import SettingsScreen from './SettingsScreen';
 import { createStackNavigator } from '@react-navigation/stack';

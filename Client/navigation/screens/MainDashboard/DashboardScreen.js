@@ -1,9 +1,10 @@
+import { Button, Image, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { StatusBar } from 'expo-status-bar';
 import react from "react";
-import { StyleSheet, Text, View, Button, SafeAreaView, Image } from 'react-native';
-import { useLogout } from '../Authentication/hooks/useLogOut';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useAuthContext } from '../Authentication/context/AuthContext';
+import { useLogout } from '../Authentication/hooks/useLogOut';
 
 export default function DashboardScreen({ navigation }) {
 
@@ -12,9 +13,9 @@ export default function DashboardScreen({ navigation }) {
     const handleClick = () => {
         logout()
     }
-     }
-     const { user } = useAuthContext();
-     const welcomeMessage = `Welcome to your Dashboard,${user.firstName} `;
+    
+    const { user } = useAuthContext();
+    const welcomeMessage = `Welcome to your Dashboard,${user.firstName} `;
 
     return (
         <SafeAreaView style={styles.container}>
@@ -23,6 +24,9 @@ export default function DashboardScreen({ navigation }) {
             }}>
                 {welcomeMessage}
             </Text>
+            <View style={styles.settings}>
+                <Ionicons name={'cog'} size={50} colour={'white'} onPress={() => navigation.navigate("Settings")}></Ionicons>
+            </View>
             <Button title = {"LogOut"} onPress={handleClick}/>
             <View style={styles.blankSpace}>
                 {/* <Image style={styles.mainImage} source={require('assets/favicon.png')} /> */}
@@ -31,6 +35,7 @@ export default function DashboardScreen({ navigation }) {
         </SafeAreaView>
     );
 }
+
 
 const styles = StyleSheet.create({
     title: {
@@ -65,5 +70,12 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         alignItems: 'flex-end',
         justifyContent: 'center',
+    },
+    settings: {
+        flex: 1,
+        alignSelf: 'flex-start',
+        position: 'absolute',
+        top: 10,
+        right: 10,
     },
 });

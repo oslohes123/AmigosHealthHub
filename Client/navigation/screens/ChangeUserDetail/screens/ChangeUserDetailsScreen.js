@@ -1,5 +1,5 @@
-import { SafeAreaView, Button } from 'react-native'
-import { View, Text, TextInput, StyleSheet, Button } from 'react-native';
+import { Button, SafeAreaView, StyleSheet } from 'react-native';
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function ChangeUserDetailsScreen({ navigation }) {
