@@ -8,9 +8,9 @@ const supabaseQuery = new supabaseQueryClass();
 
 const changeStats = async(req,res) => {
 
-    const {firstName, lastName, prevEmail, newEmail} = req.body;
+    const {firstName, lastName, prevEmail, newEmail, age} = req.body;
 
-    if(!firstName || !lastName || !prevEmail||!newEmail){
+    if(!firstName || !lastName || !prevEmail||!newEmail||!age){
         return res.status(400).json({mssg:"All Fields Must Be Filled"});
     }
 
@@ -19,6 +19,7 @@ const changeStats = async(req,res) => {
             console.log("Invalid New Email")
             return res.status(400).json({mssg: "Invalid New Email"})
         }
+
 
         //Check that new email is available
         const{data, error} = await supabaseQuery.selectWhere(supabase,'User'
@@ -33,7 +34,7 @@ const changeStats = async(req,res) => {
             console.log("New Email Available");
             //Update user details
             const {data, error} = await supabaseQuery.update(supabase, 'User', {firstName, lastName, 
-            email: newEmail}, 'email', prevEmail)
+            email: newEmail}, 'email', prevEmail, age)
             if(error){
                 return res.status(500).json({mssg: error.message});
             }
@@ -49,7 +50,7 @@ const changeStats = async(req,res) => {
 
     //As new email == previous email, update the other fields
     else{
-        const {data, error} = await supabaseQuery.update(supabase, 'User', {firstName, lastName}
+        const {data, error} = await supabaseQuery.update(supabase, 'User', {firstName, lastName, age}
         , 'email', prevEmail)
         if(error){
             return res.status(500).json({mssg: error.message});
