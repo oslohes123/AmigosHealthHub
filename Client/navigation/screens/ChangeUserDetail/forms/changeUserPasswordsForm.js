@@ -6,10 +6,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Formik } from 'formik';
 import React from 'react';
 import { globalStyles } from '../../../../styles/global';
-import { useChangeProfileDetails } from '../hooks/useChangeProfileDetails'; //change hook location
+import { useChangeUserPassword } from '../hooks/useChangeUserPassword'; //change hook location
 
 const passwordRegex = /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*!=]).*$/;
-const ChangeUserDetailsSchema = Yup.object().shape({
+const ChangeUserPasswordSchema = Yup.object().shape({
     firstName: Yup.string().required('Required'),
 
     lastName: Yup.string().required('Required'),
@@ -26,7 +26,7 @@ async function getUserDetails() {
 }
 
 export const formikChangeUserDetailsForm = () => {
-    const { changeStats, isLoading, error } = useChangeProfileDetails();
+    const { changeStats, isLoading, error } = useChangeUserPassword();
     const userDetails = getUserDetails();
     return (
         <View style={globalStyles.container}>
@@ -45,7 +45,7 @@ export const formikChangeUserDetailsForm = () => {
                         values.age
                     );
                 }}
-                validationSchema={ChangeUserDetailsSchema}
+                validationSchema={ChangePasswordDetailsSchema}
             >
                 {(props) => (
                     <View>
