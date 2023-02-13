@@ -23,7 +23,6 @@ export const useSignUp = () => {
             body: JSON.stringify({ email, firstName, lastName, age, password })
         })
 
-   
         // const response = await fetch(`http://192.168.0.17:3001/api/user/sign_up`, {
         //     method: 'POST',
         //     headers: { 'Content-Type': 'application/json' },

@@ -12,29 +12,28 @@ export default function DashboardScreen({ navigation }) {
         logout()
     }
 
-    const settingsName = "Settings";
+    // const settingsName = "Settings";
 
-    return (
-
-        <SafeAreaView style={styles.container}>
-            <Text style={styles.title} onLongPress={() => {
-                console.log("The user wants to see info about the dashboard.")
-            }}>
-                DASHBOARD
-            </Text>
-            <View style={styles.settings}>
-                <Ionicons name={'cog'} size={50} onPress={() => {
-                    console.log("Settings pressed.");
-                    navigation.navigate("Settings")
-                }}/>
-            </View>
-            <Button title = {"LogOut"} onPress={handleClick}/>
-            <View style={styles.blankSpace}>
-                {/* <Image style={styles.mainImage} source={require('assets/favicon.png')} /> */}
-            </View>
-            <StatusBar style="auto" />
-        </SafeAreaView>
-    );
+  return (
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.title} onLongPress={() => {
+        console.log("The user wants to see info about the dashboard.")
+      }}>
+        DASHBOARD
+      </Text>
+      <View style={styles.settings}>
+        <Ionicons name={'cog'} size={50} onPress={() => {
+          console.log("Settings pressed.");
+          navigation.navigate("Settings")
+        }}/>
+      </View>
+      <Button title = {"LogOut"} onPress={handleClick}/>
+      <View style={styles.blankSpace}>
+        {/* <Image style={styles.mainImage} source={require('assets/favicon.png')} /> */}
+      </View>
+      <StatusBar style="auto" />
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({

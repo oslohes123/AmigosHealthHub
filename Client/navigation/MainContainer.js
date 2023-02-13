@@ -33,7 +33,7 @@ export default function MainContainer() {
 
                         return <Ionicons name={iconName} size={size} colour={color} />
                     },
-                    // headerShown: true,
+                    headerShown: true,
                     headerTitleStyle: styles.header
                 })}>
 
@@ -42,7 +42,6 @@ export default function MainContainer() {
                 <Tab.Screen name={fitnessName} component={FitnessNavigationScreen} />
             </Tab.Navigator>
         </NavigationContainer>
-
     )
 }
 
