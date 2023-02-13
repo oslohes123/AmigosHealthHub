@@ -11,7 +11,7 @@ export const useChangeProfilePassword = () => {
     const [error, setError] = useState<JSON|null|boolean>(null)
     const [isLoading, setIsLoading] = useState<Boolean|null>(null) 
     const { dispatch, user } = useAuthContext()
-    console.log("In useSignUp");
+    console.log("In changePassword");
     
     const changePassword = async (a_Email:string, old_password:string , new_password:string) => {
         setIsLoading(true)

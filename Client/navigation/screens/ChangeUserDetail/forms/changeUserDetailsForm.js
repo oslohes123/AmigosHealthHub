@@ -27,7 +27,7 @@ const ChangeUserDetailsSchema = Yup.object().shape({
 
 export const formikChangeUserDetailsForm = () => {
     const { changeStats, isLoading, error } = useChangeProfileDetails();
-    const userDetails = getUserDetails();
+    // const userDetails = getUserDetails();
     
     return (
         <View style={globalStyles.container}>

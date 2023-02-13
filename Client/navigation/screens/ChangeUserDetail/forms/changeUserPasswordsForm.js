@@ -10,7 +10,15 @@ import { useChangeProfilePassword } from '../hooks/useChangeProfilePassword';
 
 const passwordRegex = /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*!=]).*$/;
 const ChangeUserPasswordSchema = Yup.object().shape({
-    new_password,old_password: Yup.string()
+   old_password: Yup.string()
+    .required('No password provided.')
+    .min(8, 'Password is too short - should be 8 chars minimum.')
+    .matches(
+        passwordRegex,
+        'Password must contain atleast 1 lowercase letter, 1 uppercase letter and 1 special character (eg. @, #, $, %, ^, &, +, *, !, =)'
+    ),
+
+    new_password: Yup.string()
     .required('No password provided.')
     .min(8, 'Password is too short - should be 8 chars minimum.')
     .matches(
@@ -44,6 +52,7 @@ export const formikChangeUserPasswordForm = () => {
                     );
                 }}
                 validationSchema={ChangeUserPasswordSchema}
+
             >
                 {(props) => (
                     <View>
