@@ -7,12 +7,12 @@ const Stack = createStackNavigator();
 
 //Screen Names
 const settingsName = 'Settings'
-const dashboardName = 'Dashboard'
+const dashboardName = 'DashboardWelcome'
 const changeUserDetailsName = 'ChangeUserDetails'
 
 export default function DashboardNavigationScreen({ navigation }) {
     return (
-        <Stack.Navigator initialRouteName= 'Dashboard' screenOptions={{ headerShown: false, headerTitleStyle: styles.header }}>
+        <Stack.Navigator initialRouteName= {dashboardName} screenOptions={{ headerShown: false, headerTitleStyle: styles.header }}>
             <Stack.Screen name={settingsName} component={SettingsScreen} />
             <Stack.Screen name={dashboardName} component={DashboardScreen} />
             <Stack.Screen name={changeUserDetailsName} component={ChangeUserDetailsScreen} />
