@@ -1,5 +1,5 @@
 import react from "react";
-import { SafeAreaView, Text } from "react-native";
+import { SafeAreaView, Text, TouchableWithoutFeedback, Keyboard, View } from "react-native";
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -19,36 +19,39 @@ const Tab = createBottomTabNavigator();
 
 export default function MainContainer() {
     return (
-        <NavigationContainer>
-            <Tab.Navigator
-                initialRouteName={fitnessName}
-                screenOptions={({ route }) => ({
-                    tabBarIcon: ({ focused, color, size }) => {
-                        let iconName;
-                        let routeName = route.name;
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <View style={{flex: 1}}>
+            <NavigationContainer>
+                <Tab.Navigator
+                    initialRouteName={fitnessName}
+                    screenOptions={({ route }) => ({
+                        tabBarIcon: ({ focused, color, size }) => {
+                            let iconName;
+                            let routeName = route.name;
 
-                        if (routeName === fitnessName) {
-                            iconName = focused ? 'pulse' : 'pulse-outline'
-                        } else if (routeName === dashboardName) {
-                            iconName = focused ? 'home' : 'home-outline'
-                        } else if (routeName === dietName) {
-                            iconName = focused ? 'pizza' : 'pizza-outline'
-                        }
+                            if (routeName === fitnessName) {
+                                iconName = focused ? 'pulse' : 'pulse-outline'
+                            } else if (routeName === dashboardName) {
+                                iconName = focused ? 'home' : 'home-outline'
+                            } else if (routeName === dietName) {
+                                iconName = focused ? 'pizza' : 'pizza-outline'
+                            }
 
-                        return <Ionicons name={iconName} size={size} colour={color} />
-                    },
-                    headerShown: false,
-                    headerTitleStyle: styles.header,
-                    tabBarShowLabel: false,
-                    tabBarStyle: {paddingTop: 10, backgroundColor: '#3eda9b'}
-                })}>
+                            return <Ionicons name={iconName} size={size} colour={color} />
+                        },
+                        headerShown: false,
+                        headerTitleStyle: styles.header,
+                        tabBarShowLabel: false,
+                        tabBarStyle: {paddingTop: 10, backgroundColor: '#3eda9b'}
+                    })}>
 
-                <Tab.Screen name={dietName} component={DietNavigationStack} />
-                <Tab.Screen name={dashboardName} component={DashboardScreen} />
-                <Tab.Screen name={fitnessName} component={FitnessNavigationScreen} />
-            </Tab.Navigator>
-        </NavigationContainer>
-
+                    <Tab.Screen name={dietName} component={DietNavigationStack} />
+                    <Tab.Screen name={dashboardName} component={DashboardScreen} />
+                    <Tab.Screen name={fitnessName} component={FitnessNavigationScreen} />
+                </Tab.Navigator>
+            </NavigationContainer>
+        </View>
+    </TouchableWithoutFeedback>
     )
 }
 
