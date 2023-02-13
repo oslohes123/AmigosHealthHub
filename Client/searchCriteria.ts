@@ -1,7 +1,7 @@
 import {searchMethods} from "./constants.ts";
 
 
-export interface searchInterface{
+export interface SearchCriteria {
     value:String,
     code: searchMethods
 }
