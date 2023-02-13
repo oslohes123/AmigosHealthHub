@@ -133,6 +133,7 @@ export default function DietDashboardScreen({ navigation }) {
       {/* <ScrollView style={styles.fullScroll}> */}
       <View>
         <TextInput
+          clearButtonMode='always'
           value={text}
           onChangeText={(value) => setText(value)}
           style={styles.input}
