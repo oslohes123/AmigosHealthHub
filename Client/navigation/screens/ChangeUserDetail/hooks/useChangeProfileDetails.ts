@@ -1,70 +1,86 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useAuthContext } from '../../Authentication/context/AuthContext';
 // import { useAuthContext } from "../hooks/useAuthContext";
 import { useState } from 'react';
-import { useAuthContext } from '../../Authentication/context/AuthContext'
 const port = process.env['PORT'];
 const ip_address = process.env['IP_ADDRESS'];
 
-
 export const useChangeProfileDetails = () => {
-    console.log(`port: ${port}`)
-    const [error, setError] = useState<JSON|null|boolean>(null)
-    const [isLoading, setIsLoading] = useState<Boolean|null>(null) 
-    const { dispatch, user } = useAuthContext()
-    console.log("In useSignUp");
-    
-    const changeStats = async (a_firstName:string, a_lastName:string, a_newEmail:string, a_age:number, a_password:string) => {
-        setIsLoading(true)
-        setError(null)
-        console.log("In changeStats");
-        console.log(`body Of changeStats: ${JSON.stringify({ a_firstName, a_lastName, a_newEmail, a_age, a_password })}`)
+    console.log(`port: ${port}`);
+    const [error, setError] = useState<JSON | null | boolean>(null);
+    const [isLoading, setIsLoading] = useState<Boolean | null>(null);
+    const { dispatch, user } = useAuthContext();
+    console.log('In useSignUp');
 
-        try{
-            //AsyncStorage contains: firstName, email and token 
-             const {email, token}= JSON.parse(await AsyncStorage.getItem('user') as string)
-             const response = await fetch(`http://${ip_address}:${port}/api/user/changeProfileDetails/stats`, {
-                method: 'POST',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'authorization': `Bearer ${token}`
-             },
-                body: JSON.stringify({ newEmail:a_newEmail, firstName:a_firstName, lastName:a_lastName, age:a_age, prevEmail:email })
-            })
+    // const changeStats = async (a_firstName:string, a_lastName:string, a_newEmail:string, a_age:number, a_password:string) => {
+    const changeStats = async (
+        a_firstName: string,
+        a_lastName: string,
+        a_newEmail: string,
+        a_age: number
+    ) => {
+        setIsLoading(true);
+        setError(null);
+        console.log('In changeStats');
+        console.log(
+            `body Of changeStats: ${JSON.stringify({
+                a_firstName,
+                a_lastName,
+                a_newEmail,
+                a_age
+            })}`
+        );
 
+        try {
+            //AsyncStorage contains: firstName, email and token
+            const { email, token } = JSON.parse(
+                (await AsyncStorage.getItem('user')) as string
+            );
+            const response = await fetch(
+                `http://${ip_address}:${port}/api/user/changeProfileDetails/stats`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        authorization: `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        newEmail: a_newEmail,
+                        firstName: a_firstName,
+                        lastName: a_lastName,
+                        age: a_age,
+                        prevEmail: email
+                    })
+                }
+            );
 
             const json = await response.json();
-      
+
             if (!response.ok) {
-                setIsLoading(false)
-                setError(json.mssg)
-                console.log(error)
+                setIsLoading(false);
+                setError(json.mssg);
+                console.log(error);
             }
             if (response.ok) {
-                try{
-               //Log the user out if change details is successful
-    
-                setIsLoading(false)
-                dispatch({ type: 'LOGOUT'})
-                }
-                catch(error){
+                try {
+                    //Log the user out if change details is successful
+
+                    setIsLoading(false);
+                    dispatch({ type: 'LOGOUT' });
+                } catch (error) {
                     setError(true);
                     setIsLoading(false);
                     console.error(error);
                 }
             }
-        }
-    
-        catch(error){
+        } catch (error) {
             console.error(error);
         }
-       
-        return { changeStats, isLoading, error }
-        }
-        // const response = await fetch(`http://192.168.0.17:3001/api/user/sign_up`, {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({"email":"sadasds23ad@gmail.com","firstName":"asdasdsad","lastName":"asdasdsadsa","age":"23","password":"Password123!"})
-        // })
-
-
-}
+    };
+    return { changeStats, isLoading, error };
+    // const response = await fetch(`http://192.168.0.17:3001/api/user/sign_up`, {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({"email":"sadasds23ad@gmail.com","firstName":"asdasdsad","lastName":"asdasdsadsa","age":"23","password":"Password123!"})
+    // })
+};

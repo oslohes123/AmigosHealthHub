@@ -8,7 +8,6 @@ import React from 'react';
 import { globalStyles } from '../../../../styles/global';
 import { useChangeProfileDetails } from '../hooks/useChangeProfileDetails'; //change hook location
 
-const passwordRegex = /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*!=]).*$/;
 const ChangeUserDetailsSchema = Yup.object().shape({
     firstName: Yup.string().required('Required'),
 
@@ -20,8 +19,12 @@ const ChangeUserDetailsSchema = Yup.object().shape({
 });
 
 async function getUserDetails() {
-    const userDetails = await AsyncStorage.getItem('user');
-    console.log(userDetails.keys);
+    const jsonData = await AsyncStorage.getItem('user');
+    const userDetails = JSON.stringify(jsonData);
+    // console.log('We are in change user details');
+    console.log('this is the json stuf:');
+    console.log(`This is the JSON data: ${userDetails}`);
+    // console.log(`token2: ${userDetails.token}`);
     return userDetails;
 }
 
@@ -38,7 +41,7 @@ export const formikChangeUserDetailsForm = () => {
                     age: ''
                 }}
                 onSubmit={async (values) => {
-                    await changeUserDetails(
+                    await changeStats(
                         values.email,
                         values.firstName,
                         values.lastName,
