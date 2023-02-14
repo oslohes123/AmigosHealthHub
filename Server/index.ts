@@ -28,8 +28,8 @@ const changeProfileDetailsRouter = require('../routes/changeProfileDetails.js');
 app.use('/api/user', changeProfileDetailsRouter);
 
 //Get User Details Routes
-// const getUserInfo = require('../routes/getUserInfo.js');
-// app.use('/api/user', getUserInfo);
+const getUserInfo = require('../routes/getUserInfo.js');
+app.use('/api/user', getUserInfo);
 
 /**---------------- Routes End------------------ */
 

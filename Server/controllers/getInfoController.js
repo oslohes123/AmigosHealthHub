@@ -1,5 +1,6 @@
 const express = require('express');
 const userInfoRouter = express.Router();
+const supabase = require("../dist/utils/supabaseSetUp")
 userInfoRouter.use(express.json());
 const supabaseQueryClass = require('../dist/utils/databaseInterface');
 const supabaseQuery = new supabaseQueryClass();
@@ -9,7 +10,8 @@ async function getUser(databaseQuery, email) {
         supabase,
         'User',
         'email',
-        email
+        email,
+        'firstName, lastName, email, age'
     );
 
     return userRows;
@@ -31,3 +33,5 @@ const getInfo = async (req, res) => {
     }
     return res.status(200).json({ user: data[0] });
 };
+
+module.exports.getInfo = getInfo 
