@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
-
+// const jwttoken = require('jsonwebtoken');
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { useAuthContext } from "../hooks/useAuthContext";
 
@@ -80,6 +80,9 @@ export const AuthContextProvider = ({ children }) => {
         //if token exists, then update user state
         if(token){
             dispatch({type:'LOGIN', payload:token})
+        }
+        else{
+            dispatch({type:'LOGOUT'})
         }
         }
         getItem()

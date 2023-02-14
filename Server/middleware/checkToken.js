@@ -8,6 +8,9 @@ const supabaseQuery = new supabaseQueryClass();
 
 /**
  * Middleware that checks that every request has an authenticated user
+ * 
+ * - Extract jwtToken from authorization header in the request, and if the jwtToken is verified, pass on 
+ * the request. 
  */
 
 const checkToken = async(req, res,next) => {
@@ -25,6 +28,7 @@ const checkToken = async(req, res,next) => {
  console.log(`token: ${token}`);
 
  try{
+   console.log(`In checkToken, ${JSON.stringify(jwtToken.verify(token, process.env.JWTSECRET))}`)
    const {id} =  jwtToken.verify(token, process.env.JWTSECRET);
 
    req.user = await supabaseQuery.selectWhere(supabase, 'User','id', id, 'id');
@@ -32,7 +36,7 @@ const checkToken = async(req, res,next) => {
     next();
  }
  catch(error){
-    console.error(error);
+    console.error(`Error caught by me, ${error}`);
     return res.status(401).json({error:"Request Failed due to Authentication"})
  }
 }

@@ -21,7 +21,9 @@ export const useChangeProfilePassword = () => {
 
         try{
             //AsyncStorage contains: firstName, email and token 
-             const {email, token}= JSON.parse(await AsyncStorage.getItem('user') as string)
+            const email = user.email;
+            console.log(`in changePassword, email: ${email}`);
+             const {token}= JSON.parse(await AsyncStorage.getItem('user') as string)
              const response = await fetch(`http://${ip_address}:${port}/api/user/changeProfileDetails/password`, {
                 method: 'POST',
                 headers: { 
@@ -49,6 +51,7 @@ export const useChangeProfilePassword = () => {
                 catch(error){
                     setError(true);
                     setIsLoading(false);
+                    console.error("Error Caught By Me!")
                     console.error(error);
                 }
             }

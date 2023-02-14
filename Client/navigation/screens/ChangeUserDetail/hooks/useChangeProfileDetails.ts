@@ -33,7 +33,9 @@ export const useChangeProfileDetails = () => {
 
         try {
             //AsyncStorage contains: firstName, email and token
-            const { email, token } = JSON.parse(
+            const email = user.email;
+            
+            const {token } = JSON.parse(
                 (await AsyncStorage.getItem('user')) as string
             );
             console.log(`In useChangeProfileDetails, email: ${email}, token:${token}`);

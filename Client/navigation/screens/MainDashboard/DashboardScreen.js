@@ -22,7 +22,7 @@ export default function DashboardScreen({ navigation }) {
             <Text style={styles.title} onLongPress={() => {
                 console.log("The user wants to see info about the dashboard.")
             }}>
-                {welcomeMessage}
+                <Text>Welcome to your Dashboard,${user.firstName}</Text>
             </Text>
             <View style={styles.settings}>
                 <Ionicons name={'cog'} size={50} colour={'white'} onPress={() => navigation.navigate("Settings")}></Ionicons>
