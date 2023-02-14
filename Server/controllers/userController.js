@@ -22,7 +22,7 @@ async function getUser(databaseQuery, email){
 const loginUser = async(req,res) => {
 
     const {email, password} = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     console.log(`email: ${email}`);
     console.log(`password: ${password}`);
     if(!email || !password){
@@ -60,7 +60,7 @@ const loginUser = async(req,res) => {
 const signupUser = async(req,res) => {
 // res.json({mssg: "signup user"})
 const {firstName, lastName, email, password, age} = req.body;
-console.log(req.body);
+// console.log(req.body);
 console.log(`firstName: ${firstName}`);
 console.log(`lastName: ${lastName}`);
 console.log(`email: ${email}`);

@@ -27,16 +27,16 @@ const ChangeUserPasswordSchema = Yup.object().shape({
     )
 });
 
-async function getUserDetails() {
-    const jsonData = await AsyncStorage.getItem('user');
-    const userEmail = JSON.parse(jsonData);
-    console.log(`Email: ${userEmail}`);
-    return userEmail;
-}
+// async function getUserDetails() {
+//     const jsonData = await AsyncStorage.getItem('user');
+//     const userEmail = JSON.parse(jsonData);
+//     console.log(`Email: ${userEmail}`);
+//     return userEmail;
+// }
 
 export const formikChangeUserPasswordForm = () => {
     const {changePassword, isLoading, error } = useChangeProfilePassword();
-    const userEmail = getUserDetails();
+    // const userEmail = getUserDetails();
     return (
         <View style={globalStyles.container}>
             <Formik
@@ -46,7 +46,6 @@ export const formikChangeUserPasswordForm = () => {
                 }}
                 onSubmit={async (values) => {
                     await changePassword(
-                        userEmail,
                         values.old_password,
                         values.new_password
                     );
@@ -58,6 +57,7 @@ export const formikChangeUserPasswordForm = () => {
                     <View>
                         <TextInput
                             style={globalStyles.input}
+                            secureTextEntry={true}
                             placeholder="Current password:"
                             onChangeText={props.handleChange('old_password')}
                             value={props.values.old_password}
@@ -66,6 +66,7 @@ export const formikChangeUserPasswordForm = () => {
 
                         <TextInput
                             style={globalStyles.input}
+                            secureTextEntry={true}
                             placeholder="New password"
                             onChangeText={props.handleChange('new_password')}
                             value={props.values.new_password}

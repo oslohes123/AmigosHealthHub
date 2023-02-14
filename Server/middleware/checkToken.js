@@ -14,7 +14,7 @@ const checkToken = async(req, res,next) => {
 
 //Check user making request is authenticated
  const {authorization} = req.headers
- console.log(req.headers)
+//  console.log(req.headers)
  //NO authorisation header
  if(!authorization){    
     return res.status(401).json({error: "No Authorisation Header"})

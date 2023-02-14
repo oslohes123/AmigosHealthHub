@@ -65,6 +65,7 @@ const changeStats = async(req,res) => {
 const changePassword = async(req,res) => {
     const {email, oldPassword , newPassword} = req.body;
 
+    console.log(JSON.stringify(req.body));
     if(!validator.isStrongPassword(newPassword)){
         console.log("Password Structure must have atleast 8 characters, 1 lower case,1 upper case, 1 number, 1 symbol")
         return res.status(400).json({mssg: "Password Structure must have atleast 8 characters, 1 lower case,1 upper case, 1 number, 1 symbol"});
@@ -73,12 +74,13 @@ const changePassword = async(req,res) => {
     const{data, error} = await supabaseQuery.selectWhere(supabase,'User'
     ,'email',email);
 
-   
+    console.log(`data in changePassword: ${JSON.stringify(data)}`)
 
     if(error){
         return res.status(500).json({mssg: error.message});
     }
     if(data.length > 0){
+        console.log("data.length>0 in changeProfileDetails")
         const match = await bcrypt.compare(oldPassword, data[0].password);
         if(!match){
             console.log("Old password doesn't match!")
@@ -100,6 +102,7 @@ const changePassword = async(req,res) => {
     }
 
     else{
+        console.log("data.length<0 in changeProfileDetails")
         return res.status(400).json({mssg: "Email doesn't exist in our db"});
     }
 }
