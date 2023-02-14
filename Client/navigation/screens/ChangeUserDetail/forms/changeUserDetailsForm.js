@@ -31,36 +31,38 @@ const ChangeUserDetailsSchema = Yup.object().shape({
 
 export const formikChangeUserDetailsForm = () => {
     const { changeStats, isLoading, error } = useChangeProfileDetails();
-    // const userDetails = getUserDetails();
-    const { user } = useAuthContext();
-    // useEffect(() => {
-    //     async function effectGetInfo() {
-    //         await getUserInfo.getUserInfo();
-    //     }
-    //     effectGetInfo();
-    // }, []);
-    console.log(getUserInfo.getUserInfo());
-    console.log(
-        `user information: ${user.firstName}, ${user.lastName}, ${user.email}, ${user.age}`
-    );
-
+ async function myfunction(){
+    console.log(await getUserInfo.getUserInfo())
+    console.log(`getItem: ${JSON.stringify(await AsyncStorage.getItem('user'))}`);
+    const initialValues = await AsyncStorage.getItem('user')
+    console.log(JSON.stringify(initialValues))
+    const initialEmail =  initialValues.email;
+    const initialFirstName =  initialValues.firstName;
+    const initialLastName =  initialValues.lastName;
+    const initialAge =  initialValues.age;
+ }  
+myfunction();
+   
     return (
         <View style={globalStyles.container}>
             <Formik
                 initialValues={{
-                    email: `${user.email}`,
-                    firstName: `${user.firstName}`,
-                    lastName: `${user.lastName}`,
-                    age: `${user.age}`
+                    email: ``,
+                    firstName: ``,
+                    lastName: ``,
+                    age: ``
+
                 }}
-                onSubmit={async (values) => {
+                onSubmit={
+                    async (values) => {
                     await changeStats(
                         values.firstName,
                         values.lastName,
                         values.email,
                         values.age
                     );
-                }}
+                }
+            }
                 validationSchema={ChangeUserDetailsSchema}
             >
                 {(props) => (

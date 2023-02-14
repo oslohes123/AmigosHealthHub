@@ -19,6 +19,7 @@ async function getUser(databaseQuery, email) {
 
 const getInfo = async (req, res) => {
     const { email } = req.body;
+    console.log(`in getInfo controller:${JSON.stringify(req.body)}`)
     if (!email) {
         return res.status(400).json({ mssg: 'Email must be provided' });
     }

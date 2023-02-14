@@ -4,10 +4,15 @@ const port = process.env['PORT'];
 const ip_address = process.env['IP_ADDRESS'];
 
 const getUserInfo = async () => {
-    const { user, dispatch } = useAuthContext();
+    const {user, dispatch } = useAuthContext();
     const { email, token } = JSON.parse(
         (await AsyncStorage.getItem('user')) as string
     );
+    console.log(`getUserInfo : ${email}`)
+    console.log(`full getUserInfo: ${JSON.stringify(getUserInfo)}`)
+    console.log(`getUserInfo user : ${user.user.email}`)
+     const userEmail= user.user.email
+    console.log(`full getUserInfo user: ${JSON.stringify(user)}`)
     const response = await fetch(
         `http://${ip_address}:${port}/api/user/getInfo`,
         {
@@ -16,7 +21,7 @@ const getUserInfo = async () => {
                 'Content-Type': 'application/json',
                 authorization: `Bearer ${token}`
             },
-            body: JSON.stringify({ email: email })
+            body: JSON.stringify({email: userEmail})
         }
     );
     if (!response.ok) {
@@ -25,9 +30,10 @@ const getUserInfo = async () => {
         );
     }
     const responseJSON = await response.json();
-    console.log(`response json: ${JSON.stringify(responseJSON)}`);
-    console.log(JSON.stringify(user));
-    dispatch({ type: 'LOGIN', payload: responseJSON });
+    // console.log(`response json: ${JSON.stringify(responseJSON)}`);
+    // console.log(JSON.stringify(user));
+    // AsyncStorage.setItem('user',JSON.stringify(responseJSON))
+    return responseJSON;
 };
 
 module.exports.getUserInfo = getUserInfo;
