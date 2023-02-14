@@ -30,10 +30,7 @@ async function searchDB(){
     }
     return data
 }
-function addExercise(){
-
-}
-function getOccurrence(arr, v) {
+function getOccurrences(arr, v) {
     var count = 0;
     arr.forEach((elem) => (elem === v && count++));
     return count;
@@ -83,10 +80,14 @@ async function mostRecent(){
     if(error) console.error(error);
     else{
     console.log({data});
-        
-        return data
+    return returnexercises(data)
     }
 }
+const workout = []
+function addExercise(data){
+    workout.push(data)
+}
+
 function fitnessMainPage(req,res){
     res.send("Fitness Page");
 }
@@ -101,3 +102,4 @@ function workoutPlans(req, res){
 module.exports.fitnessMainPage = fitnessMainPage;
 module.exports.trackExercises = trackExercises;
 module.exports.workoutPlans = workoutPlans;
+module.exports.getOccurrences = getOccurrences;
