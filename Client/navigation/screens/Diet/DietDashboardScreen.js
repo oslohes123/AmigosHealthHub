@@ -186,7 +186,7 @@ export default function DietDashboardScreen({ navigation }) {
            backgroundColor="#ddd"
           /> */}
       <View style={styles.button}>
-        <Button title="View Stats" onPress={pressHandler} color='black' />
+        <Button title="View Food History" onPress={pressHandler} color='black' />
       </View>
       {/* 
       <TouchableOpacity onPress={newPressHandler}>
