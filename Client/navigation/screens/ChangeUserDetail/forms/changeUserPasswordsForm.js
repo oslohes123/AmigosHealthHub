@@ -24,7 +24,11 @@ const ChangeUserPasswordSchema = Yup.object().shape({
     .matches(
         passwordRegex,
         'Password must contain atleast 1 lowercase letter, 1 uppercase letter and 1 special character (eg. @, #, $, %, ^, &, +, *, !, =)'
-    )
+    ),
+    confirm_new_password: Yup.string()
+    .required('Confirm your new password')
+    .oneOf([Yup.ref('new_password'), null], "Passwords don't match!")
+
 });
 
 // async function getUserDetails() {
@@ -72,6 +76,15 @@ export const formikChangeUserPasswordForm = () => {
                             value={props.values.new_password}
                         />
                         <Text>{props.errors.new_password}</Text>
+
+                        <TextInput
+                            style={globalStyles.input}
+                            secureTextEntry={true}
+                            placeholder="Confirm New Password"
+                            onChangeText={props.handleChange('confirm_new_password')}
+                            value={props.values.confirm_new_password}
+                        />
+                        <Text>{props.errors.confirm_new_password}</Text>
 
                         <Button
                             title="Save details"
