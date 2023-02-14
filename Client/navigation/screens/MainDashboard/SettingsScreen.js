@@ -20,7 +20,7 @@ export default function SettingsScreen({ navigation }) {
                 style={styles.button}
                 onPress={() => {
                     console.log('Change password Pressed');
-                    navigation.navigate('ChangeUserDetails');
+                    navigation.navigate('ChangeUserPassword');
                 }}
             >
                 <Text style={styles.buttonText}>Change password</Text>

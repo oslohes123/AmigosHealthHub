@@ -1,5 +1,5 @@
 //Configuration
-// import { Request ,Response } from "express";
+import { Request, Response } from 'express';
 const express = require('express');
 const userInfoRouter = express.Router();
 userInfoRouter.use(express.json());
