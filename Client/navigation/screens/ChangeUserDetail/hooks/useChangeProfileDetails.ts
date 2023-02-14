@@ -10,7 +10,7 @@ export const useChangeProfileDetails = () => {
     const [error, setError] = useState<JSON | null | boolean>(null);
     const [isLoading, setIsLoading] = useState<Boolean | null>(null);
     const { dispatch, user } = useAuthContext();
-    console.log('In useSignUp');
+    console.log('In changeProfile');
 
     // const changeStats = async (a_firstName:string, a_lastName:string, a_newEmail:string, a_age:number, a_password:string) => {
     const changeStats = async (
@@ -36,6 +36,7 @@ export const useChangeProfileDetails = () => {
             const { email, token } = JSON.parse(
                 (await AsyncStorage.getItem('user')) as string
             );
+            console.log(`In useChangeProfileDetails, email: ${email}, token:${token}`);
             const response = await fetch(
                 `http://${ip_address}:${port}/api/user/changeProfileDetails/stats`,
                 {

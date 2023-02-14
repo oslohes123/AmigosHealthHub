@@ -6,81 +6,71 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Formik } from 'formik';
 import React from 'react';
 import { globalStyles } from '../../../../styles/global';
-import { useChangeUserPassword } from '../hooks/useChangeUserPassword'; //change hook location
+import { useChangeProfilePassword } from '../hooks/useChangeProfilePassword'; 
 
 const passwordRegex = /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*!=]).*$/;
 const ChangeUserPasswordSchema = Yup.object().shape({
-    firstName: Yup.string().required('Required'),
+   old_password: Yup.string()
+    .required('No password provided.')
+    .min(8, 'Password is too short - should be 8 chars minimum.')
+    .matches(
+        passwordRegex,
+        'Password must contain atleast 1 lowercase letter, 1 uppercase letter and 1 special character (eg. @, #, $, %, ^, &, +, *, !, =)'
+    ),
 
-    lastName: Yup.string().required('Required'),
-
-    email: Yup.string().email('Invalid email').required('Required'),
-
-    age: Yup.number().positive('Age must be positive')
+    new_password: Yup.string()
+    .required('No password provided.')
+    .min(8, 'Password is too short - should be 8 chars minimum.')
+    .matches(
+        passwordRegex,
+        'Password must contain atleast 1 lowercase letter, 1 uppercase letter and 1 special character (eg. @, #, $, %, ^, &, +, *, !, =)'
+    )
 });
 
 async function getUserDetails() {
-    const userDetails = await AsyncStorage.getItem('user');
-    console.log(userDetails.keys);
-    return userDetails;
+    const jsonData = await AsyncStorage.getItem('user');
+    const userEmail = JSON.parse(jsonData);
+    console.log(`Email: ${userEmail}`);
+    return userEmail;
 }
 
-export const formikChangeUserDetailsForm = () => {
-    const { changeStats, isLoading, error } = useChangeUserPassword();
-    const userDetails = getUserDetails();
+export const formikChangeUserPasswordForm = () => {
+    const {changePassword, isLoading, error } = useChangeProfilePassword();
+    const userEmail = getUserDetails();
     return (
         <View style={globalStyles.container}>
             <Formik
                 initialValues={{
-                    email: '',
-                    firstName: '',
-                    lastName: '',
-                    age: ''
+                    old_password: '',
+                    new_password: ''
                 }}
                 onSubmit={async (values) => {
-                    await changeUserDetails(
-                        values.email,
-                        values.firstName,
-                        values.lastName,
-                        values.age
+                    await changePassword(
+                        userEmail,
+                        values.old_password,
+                        values.new_password
                     );
                 }}
-                validationSchema={ChangePasswordDetailsSchema}
+                validationSchema={ChangeUserPasswordSchema}
+
             >
                 {(props) => (
                     <View>
                         <TextInput
                             style={globalStyles.input}
-                            placeholder="First Name"
-                            onChangeText={props.handleChange('firstName')}
-                            value={props.values.firstName}
+                            placeholder="Current password:"
+                            onChangeText={props.handleChange('old_password')}
+                            value={props.values.old_password}
                         />
-                        <Text>{props.errors.firstName}</Text>
+                        <Text>{props.errors.old_password}</Text>
 
                         <TextInput
                             style={globalStyles.input}
-                            placeholder="Last Name"
-                            onChangeText={props.handleChange('lastName')}
-                            value={props.values.lastName}
+                            placeholder="New password"
+                            onChangeText={props.handleChange('new_password')}
+                            value={props.values.new_password}
                         />
-                        <Text>{props.errors.lastName}</Text>
-
-                        <TextInput
-                            style={globalStyles.input}
-                            placeholder="Email"
-                            onChangeText={props.handleChange('email')}
-                            value={props.values.email}
-                            keyboardType="email-address"
-                        />
-                        <Text>{props.errors.email}</Text>
-
-                        <TextInput
-                            style={globalStyles.input}
-                            placeholder="Age"
-                            onChangeText={props.handleChange('age')}
-                            value={props.values.age}
-                        />
-                        <Text>{props.errors.age}</Text>
+                        <Text>{props.errors.new_password}</Text>
 
                         <Button
                             title="Save details"

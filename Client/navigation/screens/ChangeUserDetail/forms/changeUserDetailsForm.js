@@ -18,19 +18,17 @@ const ChangeUserDetailsSchema = Yup.object().shape({
     age: Yup.number().positive('Age must be positive')
 });
 
-async function getUserDetails() {
-    const jsonData = await AsyncStorage.getItem('user');
-    const userDetails = JSON.stringify(jsonData);
-    // console.log('We are in change user details');
-    console.log('this is the json stuf:');
-    console.log(`This is the JSON data: ${userDetails}`);
-    // console.log(`token2: ${userDetails.token}`);
-    return userDetails;
-}
+// async function getUserDetails() {
+//     const jsonData = await AsyncStorage.getItem('user');
+//     const userEmail = JSON.parse(jsonData);
+//     console.log(`Email: ${userEmail}`);
+//     return userEmail;
+// }
 
 export const formikChangeUserDetailsForm = () => {
     const { changeStats, isLoading, error } = useChangeProfileDetails();
-    const userDetails = getUserDetails();
+    // const userDetails = getUserDetails();
+    
     return (
         <View style={globalStyles.container}>
             <Formik
@@ -42,9 +40,9 @@ export const formikChangeUserDetailsForm = () => {
                 }}
                 onSubmit={async (values) => {
                     await changeStats(
-                        values.email,
                         values.firstName,
                         values.lastName,
+                        values.email,
                         values.age
                     );
                 }}

@@ -33,7 +33,7 @@ export const formikLoginForm = () => {
             >
                 {(props) => (
                     <View>
-                        {console.log(`error: ${error}`)}
+                        {/* {console.log(`error: ${error}`)} */}
                         {/* {console.log(`isLoading: ${isLoading}`)} */}
                         <TextInput
                             style={globalStyles.input}
