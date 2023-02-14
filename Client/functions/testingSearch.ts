@@ -1,7 +1,8 @@
-import {nurtitionSearch} from "./searchFunction";
+import {nutritionIX} from "./nutritionIX";
 async function getData(){
-    let a = await nurtitionSearch("apple")
-    console.log(a.foods[0].full_nutrients[0].value)
+    let x = new nutritionIX();
+    let a = await x.instantSearch("apple")
+    console.log(a.common)
 }
 
 getData()

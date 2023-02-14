@@ -1,4 +1,4 @@
-export default interface instantSearchInterface {
+export default interface InstantSearchInterface {
     common: Common[];
     branded: Branded[];
 }
