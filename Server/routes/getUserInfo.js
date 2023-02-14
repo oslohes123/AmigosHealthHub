@@ -6,6 +6,6 @@ userInfoRouter.use(express.json());
 const userFunctions = require('../controllers/getInfoController');
 
 //Routes
-userInfoRouter.post('/', userFunctions.getInfo);
+userInfoRouter.post('/getInfo', userFunctions.getInfo);
 
 module.exports = userInfoRouter;
