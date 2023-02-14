@@ -24,19 +24,23 @@ const ChangeUserPasswordSchema = Yup.object().shape({
     .matches(
         passwordRegex,
         'Password must contain atleast 1 lowercase letter, 1 uppercase letter and 1 special character (eg. @, #, $, %, ^, &, +, *, !, =)'
-    )
+    ),
+    confirm_new_password: Yup.string()
+    .required('Confirm your new password')
+    .oneOf([Yup.ref('new_password'), null], "Passwords don't match!")
+
 });
 
-async function getUserDetails() {
-    const jsonData = await AsyncStorage.getItem('user');
-    const userEmail = JSON.parse(jsonData);
-    console.log(`Email: ${userEmail}`);
-    return userEmail;
-}
+// async function getUserDetails() {
+//     const jsonData = await AsyncStorage.getItem('user');
+//     const userEmail = JSON.parse(jsonData);
+//     console.log(`Email: ${userEmail}`);
+//     return userEmail;
+// }
 
 export const formikChangeUserPasswordForm = () => {
     const {changePassword, isLoading, error } = useChangeProfilePassword();
-    const userEmail = getUserDetails();
+    // const userEmail = getUserDetails();
     return (
         <View style={globalStyles.container}>
             <Formik
@@ -46,7 +50,6 @@ export const formikChangeUserPasswordForm = () => {
                 }}
                 onSubmit={async (values) => {
                     await changePassword(
-                        userEmail,
                         values.old_password,
                         values.new_password
                     );
@@ -58,6 +61,7 @@ export const formikChangeUserPasswordForm = () => {
                     <View>
                         <TextInput
                             style={globalStyles.input}
+                            secureTextEntry={true}
                             placeholder="Current password:"
                             onChangeText={props.handleChange('old_password')}
                             value={props.values.old_password}
@@ -66,11 +70,21 @@ export const formikChangeUserPasswordForm = () => {
 
                         <TextInput
                             style={globalStyles.input}
+                            secureTextEntry={true}
                             placeholder="New password"
                             onChangeText={props.handleChange('new_password')}
                             value={props.values.new_password}
                         />
                         <Text>{props.errors.new_password}</Text>
+
+                        <TextInput
+                            style={globalStyles.input}
+                            secureTextEntry={true}
+                            placeholder="Confirm New Password"
+                            onChangeText={props.handleChange('confirm_new_password')}
+                            value={props.values.confirm_new_password}
+                        />
+                        <Text>{props.errors.confirm_new_password}</Text>
 
                         <Button
                             title="Save details"

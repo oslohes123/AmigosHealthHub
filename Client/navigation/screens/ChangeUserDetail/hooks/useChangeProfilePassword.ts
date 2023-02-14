@@ -13,11 +13,11 @@ export const useChangeProfilePassword = () => {
     const { dispatch, user } = useAuthContext()
     console.log("In changePassword");
     
-    const changePassword = async (a_Email:string, old_password:string , new_password:string) => {
+    const changePassword = async (old_password:string , new_password:string) => {
         setIsLoading(true)
         setError(null)
         console.log("In changePassword");
-        console.log(`body Of changePassword: ${JSON.stringify({ a_Email, old_password, new_password})}`)
+        console.log(`body Of changePassword: ${JSON.stringify({old_password, new_password})}`)
 
         try{
             //AsyncStorage contains: firstName, email and token 
@@ -28,7 +28,7 @@ export const useChangeProfilePassword = () => {
                     'Content-Type': 'application/json',
                     'authorization': `Bearer ${token}`
              },
-                body: JSON.stringify({ email:a_Email, oldPassword:old_password, newPassword:new_password})
+                body: JSON.stringify({ email, oldPassword:old_password, newPassword:new_password})
             })
 
 

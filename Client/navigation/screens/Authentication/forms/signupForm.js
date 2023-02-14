@@ -22,6 +22,9 @@ const SignupSchema = Yup.object().shape({
     .matches(passwordRegex
     ,"Password must contain atleast 1 lowercase letter, 1 uppercase letter and 1 special character (eg. @, #, $, %, ^, &, +, *, !, =)"
     ),
+    confirm_password: Yup.string()
+    .required('Confirm your new password')
+    .oneOf([Yup.ref('password'), null], "Passwords don't match!"),
 
     age: Yup.number().positive("Age must be positive")
   });
@@ -88,6 +91,16 @@ export const formikSignUpForm = () => {
                             value={props.values.password}
                         />
                         <Text>{props.errors.password}</Text>
+
+                        <TextInput
+                            style={globalStyles.input}
+                            secureTextEntry={true}
+                            placeholder="Confirm Password"
+                            onChangeText={props.handleChange('confirm_password')}
+                            value={props.values.confirm_password}
+                        />
+                        <Text>{props.errors.confirm_password}</Text>
+
 
                         <Button title="Sign Up" onPress={props.handleSubmit} disabled={isLoading} />
                         {error && <Text className="error">{error}</Text>}

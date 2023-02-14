@@ -67,7 +67,7 @@ export const useChangeProfileDetails = () => {
                     //Log the user out if change details is successful
 
                     setIsLoading(false);
-                    dispatch({ type: 'LOGOUT' });
+                    dispatch({ type: 'LOGOUT'});
                 } catch (error) {
                     setError(true);
                     setIsLoading(false);
