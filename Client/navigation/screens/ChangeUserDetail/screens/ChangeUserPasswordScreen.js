@@ -12,9 +12,7 @@ export default function ChangeUserPasswordScreen({ navigation }) {
                     justifyContent: 'center',
                     alignItems: 'center'
                 }}
-            >
-                <Text> Hello</Text>
-            </SafeAreaView>
+            ></SafeAreaView>
         </>
     );
 }
