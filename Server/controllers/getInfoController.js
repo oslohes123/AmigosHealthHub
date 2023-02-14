@@ -1,6 +1,6 @@
 const express = require('express');
 const userInfoRouter = express.Router();
-const supabase = require("../dist/utils/supabaseSetUp")
+const supabase = require('../dist/utils/supabaseSetUp');
 userInfoRouter.use(express.json());
 const supabaseQueryClass = require('../dist/utils/databaseInterface');
 const supabaseQuery = new supabaseQueryClass();
@@ -31,7 +31,8 @@ const getInfo = async (req, res) => {
         console.log('User not found');
         return res.status(400).json({ mssg: 'User not found' });
     }
+    console.log(`in info controller: ${JSON.stringify(data)}`);
     return res.status(200).json({ user: data[0] });
 };
 
-module.exports.getInfo = getInfo 
+module.exports.getInfo = getInfo;

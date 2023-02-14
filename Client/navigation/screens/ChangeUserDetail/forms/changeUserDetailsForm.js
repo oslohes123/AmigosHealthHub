@@ -1,12 +1,16 @@
 import * as Yup from 'yup';
 
 import { Button, Text, TextInput, View } from 'react-native';
+import React, { useEffect } from 'react';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Formik } from 'formik';
-import React from 'react';
 import { globalStyles } from '../../../../styles/global';
-import { useChangeProfileDetails } from '../hooks/useChangeProfileDetails'; //change hook location
+import { useAuthContext } from '../../Authentication/context/AuthContext';
+import { useChangeProfileDetails } from '../hooks/useChangeProfileDetails';
+
+// import { getUserInfo } from '../hooks/getUserInfo';
+const getUserInfo = require('../hooks/getUserInfo');
 
 const ChangeUserDetailsSchema = Yup.object().shape({
     firstName: Yup.string().required('Required'),
@@ -28,15 +32,26 @@ const ChangeUserDetailsSchema = Yup.object().shape({
 export const formikChangeUserDetailsForm = () => {
     const { changeStats, isLoading, error } = useChangeProfileDetails();
     // const userDetails = getUserDetails();
-    
+    const { user } = useAuthContext();
+    // useEffect(() => {
+    //     async function effectGetInfo() {
+    //         await getUserInfo.getUserInfo();
+    //     }
+    //     effectGetInfo();
+    // }, []);
+    console.log(getUserInfo.getUserInfo());
+    console.log(
+        `user information: ${user.firstName}, ${user.lastName}, ${user.email}, ${user.age}`
+    );
+
     return (
         <View style={globalStyles.container}>
             <Formik
                 initialValues={{
-                    email: '',
-                    firstName: '',
-                    lastName: '',
-                    age: ''
+                    email: `${user.email}`,
+                    firstName: `${user.firstName}`,
+                    lastName: `${user.lastName}`,
+                    age: `${user.age}`
                 }}
                 onSubmit={async (values) => {
                     await changeStats(
