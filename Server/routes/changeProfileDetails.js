@@ -12,5 +12,7 @@ changeProfileDetailsRouter.post('/changeProfileDetails/stats', userFunctions.cha
 
 changeProfileDetailsRouter.post('/changeProfileDetails/password', userFunctions.changePassword)
 
+changeProfileDetailsRouter.post('/deleteAccount', userFunctions.deleteAccount)
+
 
 module.exports = changeProfileDetailsRouter;
