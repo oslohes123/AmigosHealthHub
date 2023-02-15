@@ -31,55 +31,51 @@ const ChangeUserDetailsSchema = Yup.object().shape({
 
 export const formikChangeUserDetailsForm = () => {
     // useEffect(() => {
-       
+
     //     myfunction();
     //     },[])
-    const[email, setEmail] = useState(null);
-    const[firstName, setfirstName] = useState(null);
-    const[lastName, setlastName] = useState(null);
-    const[age, setage] = useState(null);
+    const [email, setEmail] = useState(null);
+    const [firstName, setfirstName] = useState(null);
+    const [lastName, setlastName] = useState(null);
+    const [age, setage] = useState(null);
     const { changeStats, isLoading, error } = useChangeProfileDetails();
-    async function setInitialValues(){
+    async function setInitialValues() {
         const userInfo = await getUserInfo.getUserInfo();
-        console.log(`userInfo: ${JSON.stringify(userInfo)}`)
-        console.log(`userInfo: ${JSON.stringify(userInfo.user.email)}`)
-       setEmail(userInfo.user.email);
+        console.log(`userInfo: ${JSON.stringify(userInfo)}`);
+        console.log(`userInfo: ${JSON.stringify(userInfo.user.email)}`);
+        setEmail(userInfo.user.email);
         setfirstName(userInfo.user.firstName);
-       setlastName(userInfo.user.lastName);
-       setage(userInfo.user.age);
-
-    }  
-    setInitialValues()
-    console.log(`email: ${email}`)
-    console.log(`age: ${age}`)
+        setlastName(userInfo.user.lastName);
+        setage(userInfo.user.age);
+    }
+    setInitialValues();
+    console.log(`email: ${email}`);
+    console.log(`age: ${age}`);
     //  const initialEmail =  userInfo.email;
     //  const initialFirstName =  userInfo.firstName;
     //  const initialLastName =  userInfo.lastName;
     //  const initialAge =  userInfo.age;
     //  console.log(`userInfo: ${JSON.stringify(userInfo)}`)
     //  console.log(`initialEmail: ${initialEmail}`)
-   
+
     return (
         <View style={globalStyles.container}>
             <Formik
-                enableReinitialize= {true}
+                enableReinitialize={true}
                 initialValues={{
                     email: email,
                     firstName: firstName,
                     lastName: lastName,
-                    age: ""+age,
-
+                    age: '' + age
                 }}
-                onSubmit={
-                    async (values) => {
+                onSubmit={async (values) => {
                     await changeStats(
                         values.firstName,
                         values.lastName,
                         values.email,
                         values.age
                     );
-                }
-            }
+                }}
                 validationSchema={ChangeUserDetailsSchema}
             >
                 {(props) => (
