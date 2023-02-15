@@ -1,6 +1,7 @@
 import ChangeUserDetailsScreen from '../ChangeUserDetail/screens/ChangeUserDetailsScreen';
 import ChangeUserPasswordScreen from '../ChangeUserDetail/screens/ChangeUserPasswordScreen';
 import DashboardScreen from './DashboardScreen';
+import DeleteAccountScreen from '../ChangeUserDetail/screens/DeleteAccountScreen';
 import SettingsScreen from './SettingsScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -11,6 +12,7 @@ const settingsName = 'Settings';
 const dashboardName = 'DashboardWelcome';
 const changeUserDetailsName = 'ChangeUserDetails';
 const changeUserPasswordName = 'ChangeUserPassword';
+const deleteAccount = 'DeleteAccount';
 
 export default function DashboardNavigationScreen({ navigation }) {
     return (
@@ -30,6 +32,10 @@ export default function DashboardNavigationScreen({ navigation }) {
             <Stack.Screen
                 name={changeUserPasswordName}
                 component={ChangeUserPasswordScreen}
+            />
+            <Stack.Screen
+                name={deleteAccount}
+                component={DeleteAccountScreen}
             />
         </Stack.Navigator>
     );

@@ -26,6 +26,17 @@ export default function SettingsScreen({ navigation }) {
                 <Text style={styles.buttonText}>Change password</Text>
                 <Ionicons name="ios-arrow-forward" size={16} color="white" />
             </TouchableOpacity>
+
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => {
+                    console.log('Delete account');
+                    navigation.navigate('DeleteAccount');
+                }}
+            >
+                <Text style={styles.buttonText}>Delete Account</Text>
+                <Ionicons name="ios-arrow-forward" size={16} color="white" />
+            </TouchableOpacity>
         </SafeAreaView>
     );
 }
