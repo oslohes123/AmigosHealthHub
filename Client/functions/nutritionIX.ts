@@ -3,7 +3,7 @@ import {anonKey, searchMethods, supabaseURL} from "../constants";
 import instantSearchInterface from "../interfaces/instantFoodSearchInterface";
 import BrandedSearchInterface from "../interfaces/brandedSearchInterface";
 import NutrientSearchInterface from "../interfaces/nutrientSearchInterface";
-import SearchInterface from "./searchInterface";
+import SearchInterface from "../interfaces/searchInterface";
 
 
 // Create a single supabase client for interacting with your database
