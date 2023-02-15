@@ -67,7 +67,7 @@ export const formikChangeUserDetailsForm = () => {
                     email: email,
                     firstName: firstName,
                     lastName: lastName,
-                    age: 5,
+                    age: ""+age,
 
                 }}
                 onSubmit={
@@ -114,6 +114,7 @@ export const formikChangeUserDetailsForm = () => {
                             placeholder="Age"
                             onChangeText={props.handleChange('age')}
                             value={props.values.age}
+                            keyboardType="number-pad"
                         />
                         <Text>{props.errors.age}</Text>
 
