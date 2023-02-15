@@ -10,13 +10,13 @@ import { useAuthContext } from '../../Authentication/context/AuthContext';
 
 const passwordRegex = /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*!=]).*$/;
 const deleteAccountSchema = Yup.object().shape({
-    old_password: Yup.string()
+    current_password: Yup.string()
         .required('No password provided.')
         .min(8, 'Password is too short - should be 8 chars minimum.')
         .matches(
             passwordRegex,
             'Password must contain atleast 1 lowercase letter, 1 uppercase letter and 1 special character (eg. @, #, $, %, ^, &, +, *, !, =)'
-        )
+        ),
 });
 
 export const deleteAccountForm = () => {
@@ -27,9 +27,7 @@ export const deleteAccountForm = () => {
         <View style={globalStyles.container}>
             <Text>Email: {user.email}</Text>
             <Formik
-                initialValues={{
-                    current_password: ''
-                }}
+                initialValues={{current_password: ''}}
                 onSubmit={async (values) => {
                     await deleteAccount(values.current_password);
                 }}
@@ -41,7 +39,7 @@ export const deleteAccountForm = () => {
                             style={globalStyles.input}
                             secureTextEntry={true}
                             placeholder="Your password:"
-                            onChangeText={props.handleChange('old_password')}
+                            onChangeText={props.handleChange('current_password')}
                             value={props.values.current_password}
                         />
                         <Text>{props.errors.current_password}</Text>
