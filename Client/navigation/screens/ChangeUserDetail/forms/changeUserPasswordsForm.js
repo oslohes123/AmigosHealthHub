@@ -19,7 +19,6 @@ const ChangeUserPasswordSchema = Yup.object().shape({
             passwordRegex,
             'Password must contain atleast 1 lowercase letter, 1 uppercase letter and 1 special character (eg. @, #, $, %, ^, &, +, *, !, =)'
         ),
-
     new_password: Yup.string()
         .required('No password provided.')
         .min(8, 'Password is too short - should be 8 chars minimum.')
@@ -32,12 +31,35 @@ const ChangeUserPasswordSchema = Yup.object().shape({
         .oneOf([Yup.ref('new_password'), null], "Passwords don't match!")
 });
 
-// async function getUserDetails() {
-//     const jsonData = await AsyncStorage.getItem('user');
-//     const userEmail = JSON.parse(jsonData);
-//     console.log(`Email: ${userEmail}`);
-//     return userEmail;
-// }
+const PasswordInput = ({
+    value,
+    onChange,
+    label,
+    showPassword,
+    setShowPassword
+}) => {
+    return (
+        <View>
+            <TextInput
+                style={globalStyles.input}
+                placeholder={label}
+                secureTextEntry={!showPassword}
+                value={value}
+                onChangeText={onChange}
+            />
+            <TouchableOpacity
+                onPress={() => setShowPassword(!showPassword)}
+                style={{ position: 'absolute', right: 10, top: 10 }}
+            >
+                <FontAwesome
+                    name={showPassword ? 'eye-slash' : 'eye'}
+                    size={24}
+                    color="black"
+                />
+            </TouchableOpacity>
+        </View>
+    );
+};
 
 export const formikChangeUserPasswordForm = () => {
     const { changePassword, isLoading, error } = useChangeProfilePassword();
@@ -64,91 +86,57 @@ export const formikChangeUserPasswordForm = () => {
             >
                 {(props) => (
                     <View>
-                        <TextInput
-                            style={globalStyles.input}
-                            placeholder="Old Password"
-                            secureTextEntry={!showPassword1}
-                            onChangeText={props.handleChange('old_password')}
+                        <PasswordInput
+                            label="Old Password"
                             value={props.values.old_password}
+                            onChange={props.handleChange('old_password')}
+                            showPassword={showPassword1}
+                            setShowPassword={setShowPassword1}
                         />
-                        <TouchableOpacity
-                            onPress={() => setShowPassword1(!showPassword1)}
-                            style={{ position: 'absolute', right: 10, top: 10 }}
-                        >
-                            <FontAwesome
-                                name={showPassword1 ? 'eye-slash' : 'eye'}
-                                size={24}
-                                color="black"
-                            />
-                        </TouchableOpacity>
-
                         {props.errors.old_password && (
                             <Text style={globalStyles.errorText}>
-                                {props.touched.old_password &&
-                                    props.errors.old_password}
+                                {props.errors.old_password}
                             </Text>
                         )}
 
-                        <TextInput
-                            style={globalStyles.input}
-                            placeholder="New Password"
-                            secureTextEntry={!showPassword2}
-                            onChangeText={props.handleChange('new_password')}
+                        <PasswordInput
+                            label="New Password"
                             value={props.values.new_password}
+                            onChange={props.handleChange('new_password')}
+                            showPassword={showPassword2}
+                            setShowPassword={setShowPassword2}
                         />
-                        <TouchableOpacity
-                            onPress={() => setShowPassword2(!showPassword2)}
-                            style={{ position: 'absolute', right: 10, top: 10 }}
-                        >
-                            <FontAwesome
-                                name={showPassword2 ? 'eye-slash' : 'eye'}
-                                size={24}
-                                color="black"
-                            />
-                        </TouchableOpacity>
-
                         {props.errors.new_password && (
                             <Text style={globalStyles.errorText}>
-                                {props.touched.new_password &&
-                                    props.errors.new_password}
+                                {props.errors.new_password}
                             </Text>
                         )}
 
-                        <TextInput
-                            style={globalStyles.input}
-                            placeholder="Confirm New Password"
-                            secureTextEntry={!showPassword3}
-                            onChangeText={props.handleChange(
+                        <PasswordInput
+                            label="Confirm New Password"
+                            value={props.values.confirm_new_password}
+                            onChange={props.handleChange(
                                 'confirm_new_password'
                             )}
-                            value={props.values.confirm_new_password}
+                            showPassword={showPassword3}
+                            setShowPassword={setShowPassword3}
                         />
-                        <TouchableOpacity
-                            onPress={() => setShowPassword3(!showPassword3)}
-                            style={{ position: 'absolute', right: 10, top: 10 }}
-                        >
-                            <FontAwesome
-                                name={showPassword3 ? 'eye-slash' : 'eye'}
-                                size={24}
-                                color="black"
-                            />
-                        </TouchableOpacity>
-
                         {props.errors.confirm_new_password && (
                             <Text style={globalStyles.errorText}>
-                                {props.touched.confirm_new_password &&
-                                    props.errors.confirm_new_password}
+                                {props.errors.confirm_new_password}
                             </Text>
                         )}
 
-                        <Button
-                            title={isLoading ? 'Loading...' : 'Save details'}
-                            onPress={props.handleSubmit}
-                            disabled={isLoading}
-                        />
                         {error && (
-                            <Text style={globalStyles.errorText}>{error}</Text>
+                            <Text style={globalStyles.errorText}>
+                                {error.message}
+                            </Text>
                         )}
+                        <Button
+                            title="Save"
+                            onPress={props.handleSubmit}
+                            disabled={!props.isValid || isLoading}
+                        />
                     </View>
                 )}
             </Formik>
