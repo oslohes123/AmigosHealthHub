@@ -102,10 +102,55 @@ const changePassword = async(req,res) => {
     }
 
     else{
-        console.log("data.length<0 in changeProfileDetails")
+        console.log("data.length<1 in changeProfileDetails")
         return res.status(400).json({mssg: "Email doesn't exist in our db"});
     }
 }
 
+
+const deleteAccount = async(req, res) =>{
+     const {email, password}= req.body;
+     if(!email || !password){
+        res.status(400).json({mssg:"Email or Password are empty!"})
+     }
+
+    const{data, error} = await supabaseQuery.selectWhere(supabase,'User'
+    ,'email',email);
+
+     if(error){
+        res.status(400).json({error})
+     }
+     console.log(`data: ${JSON.stringify(data)}`);
+     console.log(`data.length: ${data.length}`);
+    if(data.length <1){
+        res.status(400).json({mssg:"Incorrect Email!"})
+    }
+
+    else{
+        //email is present in database, check if email & password are correct
+        const match = await bcrypt.compare(password, data[0].password);
+        if(match){
+                //delete account
+                const {error} = supabaseQuery.deleteFrom(supabase, 'User','email',email);
+                if(error){
+                    console.log("Failed to delete account!")
+                    res.status(400).json({mssg:"Failed to delete account!"})
+                }
+                else {
+                    console.log("Account Deleted!")
+                    res.status(200).json({mssg:"Account Deleted!"})
+                }
+           }
+           else {
+            console.log("Incorrect Password");
+            return res.status(400).json({mssg:"Incorrect Password"});
+            }
+        
+
+    }
+
+}
+
 module.exports.changeStats = changeStats;
 module.exports.changePassword = changePassword;
+module.exports.deleteAccount = deleteAccount;

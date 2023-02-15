@@ -15,6 +15,7 @@ const supabaseQuery = new supabaseQueryClass();
 
 const checkToken = async(req, res,next) => {
 
+   console.log("Middleware Executed!")
 //Check user making request is authenticated
  const {authorization} = req.headers
 //  console.log(req.headers)
