@@ -14,35 +14,35 @@ export default function DietDashboardScreen({ navigation }) {
       name: "Protein",
       amount: 60,
       color: "orange",
-      legendFontColor: "white",
+      legendFontColor: "black",
       legendFontSize: 18
     },
     {
       name: "Carbs",
       amount: 120,
       color: "green",
-      legendFontColor: "white",
+      legendFontColor: "black",
       legendFontSize: 18
     },
     {
       name: "Fat",
       amount: 25,
       color: "yellow",
-      legendFontColor: "white",
+      legendFontColor: "black",
       legendFontSize: 18
     },
     {
       name: "Vitamins",
       amount: 55,
       color: "blue",
-      legendFontColor: "white",
+      legendFontColor: "black",
       legendFontSize: 18
     },
     {
       name: "Fibre",
       amount: 34,
       color: "red",
-      legendFontColor: "white",
+      legendFontColor: "black",
       legendFontSize: 18
     }
   ];
@@ -140,6 +140,7 @@ export default function DietDashboardScreen({ navigation }) {
           placeholder='Find food...' />
         <View style={styles.chart}>
         {text.length == 0 && (
+          <TouchableOpacity style={styles.pieWidget} onPress={pressHandler}>
           <PieChart
           data={Piedata}
           width={360}
@@ -149,11 +150,11 @@ export default function DietDashboardScreen({ navigation }) {
             //backgroundGradientFrom: "#fb8c00",
             //backgroundGradientTo: "#ffa726",
             //decimalPlaces: 2,
-            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-            //labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-            style: {
-              borderRadius: 16,
-            },
+            color: () => "black",
+            // labelColor: () => 'black',
+            // style: {
+            //   borderRadius: 16,
+            // },
             // propsForDots: {
             //   r: "6",
             //   strokeWidth: "2",
@@ -163,6 +164,7 @@ export default function DietDashboardScreen({ navigation }) {
           accessor="amount"
           backgroundColor="transparent"
         />
+        </TouchableOpacity>
         )}
         </View>
         {text.length > 0 && (
@@ -317,6 +319,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     flex: 1,
     marginTop: -70,
-    marginLeft: 40,
-  }
+    //marginLeft: 10,
+  },
+  pieWidget: {
+    backgroundColor: '#3eda9b',
+    borderRadius: 25,
+  },
 });
