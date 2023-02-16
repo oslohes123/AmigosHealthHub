@@ -5,6 +5,7 @@ import DietDashboardScreen from './DietDashboardScreen';
 // import FoodSearch from './FoodSearch';
 import FoodDetails from './FoodDetails';
 import Settings from './Settings';
+import FoodHistory from './FoodHistory';
 
 const Stack = createStackNavigator();
 
@@ -14,6 +15,7 @@ const nutrientsName = 'Nutrients'
 const settingsName = 'Settings'
 const foodSearchName = 'Food Search'
 const foodDetailsName = 'Food Details'
+const foodHistoryName = 'Food History'
 
 export default function DietNavigation({ navigation }) {
     return (
@@ -23,6 +25,7 @@ export default function DietNavigation({ navigation }) {
             <Stack.Screen name={settingsName} component={Settings} />
             {/* <Stack.Screen name={foodSearchName} component={FoodSearch} /> */}
             <Stack.Screen name={foodDetailsName} component={FoodDetails} />
+            <Stack.Screen name={foodHistoryName} component={FoodHistory} />
         </Stack.Navigator>
     );
 }
