@@ -146,8 +146,8 @@ export default function DietDashboardScreen({ navigation }) {
           <TouchableOpacity style={styles.pieWidget} onPress={pressHandler}>
           <PieChart
           data={Piedata}
-          width={360}
-          height={225}
+          width={340}
+          height={210}
           chartConfig={{
             //backgroundColor: "#e26a00",
             //backgroundGradientFrom: "#fb8c00",
@@ -322,11 +322,13 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     flex: 1,
     marginTop: -70,
-    //marginLeft: 10,
+    width: '90%',
   },
   pieWidget: {
     backgroundColor: '#3eda9b',
     borderRadius: 25,
-    padding: 10,
+    alignSelf: 'center',
+    padding: 5
+
   },
 });
