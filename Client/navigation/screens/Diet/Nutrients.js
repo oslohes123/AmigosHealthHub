@@ -2,18 +2,19 @@ import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { Table, Row, Rows } from 'react-native-table-component';
 
-const header = ['Nutrient', 'Amount'];
-const data = [
-  ['Protein', '82g'],
-  ['Carbohydrate', '65g'],
-  ['Fat', '22g'],
-  ['Energy', '46g'],
-  ['Sugars', '15g'],
-  ['Fibre', '49g'],
-  ['Vitamins', '60g'],
+export default function Nutrients() {
+
+  const header = ['Nutrient', 'Amount'];
+  const data = [
+    ['Protein', '82g'],
+    ['Carbs', '65g'],
+    ['Fat', '22g'],
+    ['Energy', '46g'],
+    ['Sugars', '15g'],
+    ['Fibre', '49g'],
+    ['Vitamins', '60g'],
 ];
 
-export default function Nutrients() {
   return (
     <View style={styles.container}>
       <View style={styles.tableContainer}>
@@ -28,15 +29,12 @@ export default function Nutrients() {
         </Table>
       </View>
     </View>
-    // <View style={styles.container}>
-    //   <Text style={styles.header}>Food Consumed</Text>
-    // </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#0C1E3F',
+    backgroundColor: '#203038',
     flex: 1,
   },
   tableContainer: {
