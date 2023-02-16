@@ -89,7 +89,6 @@ export default function DietDashboardScreen({ navigation }) {
 
   const filteredData = data.filter(item => item.name.toLowerCase().startsWith(text.toLowerCase()));
 
-
   const pressHandler = () => {
     navigation.navigate('Nutrients');
   }
@@ -104,6 +103,10 @@ export default function DietDashboardScreen({ navigation }) {
 
   const pressHandler2 = (name, calories, Protein, Carbs, Fat, Sugars, Vitamins, Fibre) => {
     navigation.navigate('Food Details', { name, calories, Protein, Carbs, Fat, Sugars, Vitamins, Fibre });
+  }
+
+  const pressHandler3 = () => {
+    navigation.navigate('Food History');
   }
 
   // const [text, setText] = useState('')
@@ -144,7 +147,7 @@ export default function DietDashboardScreen({ navigation }) {
           <PieChart
           data={Piedata}
           width={360}
-          height={220}
+          height={225}
           chartConfig={{
             //backgroundColor: "#e26a00",
             //backgroundGradientFrom: "#fb8c00",
@@ -188,7 +191,7 @@ export default function DietDashboardScreen({ navigation }) {
            backgroundColor="#ddd"
           /> */}
       <View style={styles.button}>
-        <Button title="View Food History" onPress={pressHandler} color='black' />
+        <Button title="View Food History" onPress={pressHandler3} color='black' />
       </View>
       {/* 
       <TouchableOpacity onPress={newPressHandler}>
@@ -324,5 +327,6 @@ const styles = StyleSheet.create({
   pieWidget: {
     backgroundColor: '#3eda9b',
     borderRadius: 25,
+    padding: 10,
   },
 });
