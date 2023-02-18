@@ -42,16 +42,19 @@ interface Food {
     lat: number | null;
     lng: number | null;
     meal_type: number;
-    photo: {
-        thumb: string;
-        highres: string;
-        is_user_uploaded: boolean;
-    };
+    photo: Photo;
     sub_recipe: string | null;
     class_code: string | null;
     brick_code: string | null;
     tag_id: string | null;
 }
+
+interface Photo {
+    thumb: string;
+    highres?: any;
+    is_user_uploaded: boolean;
+}
+
 
 interface fullNutrient {
     attr_id: number;
