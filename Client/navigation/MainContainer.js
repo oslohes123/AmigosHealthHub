@@ -9,8 +9,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FitnessNavigationScreen from './screens/Fitness/FitnessNavigation';
 import DashboardScreen from "./screens/MainDashboard/DashboardScreen";
 
-import DietScreen from "./screens/Diet/DietScreen";
+// import DietScreen from "./screens/Diet/DietScreen";
+import DietDashboardScreen from "./screens/Diet/DietDashboardScreen";
 import MentalScreen from './screens/Mental/manager'
+import FitnessScreen from "./screens/Fitness/FitnessDashboardScreen";
 
 import DietNavigationStack from "./screens/Diet/DietNavigation"
 
@@ -63,12 +65,12 @@ export default function MainContainer() {
                         return <Ionicons name={iconName} size={size} colour={color} />
                     },
                     // headerShown: true,
-                    headerTitleStyle: styles.header
+                    headerTitleStyle: styles.header,
                     tabBarShowLabel: false,
                     tabBarStyle: {paddingTop: 10, backgroundColor: '#3eda9b'}
                 })}>
 
-                <Tab.Screen name={dietName} component={DietScreen} />
+                <Tab.Screen name={dietName} component={DietDashboardScreen} />
                 <Tab.Screen name={dashboardName} component={DashboardScreen} />
                 <Tab.Screen name={fitnessName} component={FitnessScreen} />
                 <Tab.Screen name={mentalName} component={MentalScreen} />
