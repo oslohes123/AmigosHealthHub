@@ -14,7 +14,7 @@ import DietDashboardScreen from "./screens/Diet/DietDashboardScreen";
 import MentalScreen from './screens/Mental/manager'
 import FitnessScreen from "./screens/Fitness/FitnessDashboardScreen";
 
-import DietNavigationStack from "./screens/Diet/DietNavigation"
+import DietNavigation from "./screens/Diet/DietNavigation"
 
 import theme from "./theme/theme";
 import themeContext from "./theme/themeContext";
@@ -64,13 +64,13 @@ export default function MainContainer() {
 
                         return <Ionicons name={iconName} size={size} colour={color} />
                     },
-                    // headerShown: true,
+                    headerShown: false,
                     headerTitleStyle: styles.header,
                     tabBarShowLabel: false,
                     tabBarStyle: {paddingTop: 10, backgroundColor: '#3eda9b'}
                 })}>
 
-                <Tab.Screen name={dietName} component={DietDashboardScreen} />
+                <Tab.Screen name={dietName} component={DietNavigation} />
                 <Tab.Screen name={dashboardName} component={DashboardScreen} />
                 <Tab.Screen name={fitnessName} component={FitnessScreen} />
                 <Tab.Screen name={mentalName} component={MentalScreen} />
