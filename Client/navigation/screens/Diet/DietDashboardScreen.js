@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, SafeAreaView, View, Text, TouchableOpacity, Button, ScrollView, TextInput } from 'react-native';
 import Header from './components/Header';
 import NavBar from '../../components/NavBar';
@@ -6,8 +6,11 @@ import NavBar from '../../components/NavBar';
 import { Feather } from '@expo/vector-icons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {PieChart} from "react-native-chart-kit";
+import themeContext from '../../theme/themeContext';
 
 export default function DietDashboardScreen({ navigation }) {
+
+  const theme = useContext(themeContext)
 
   const Piedata = [
     {
@@ -117,12 +120,12 @@ export default function DietDashboardScreen({ navigation }) {
 
   return (
     
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, {backgroundColor:theme.background}]}>
       
       <Header />
       <View style={styles.icon}>
         <TouchableOpacity>
-          <Feather name="settings" size={24} color="white" onPress={pressHandler1} />
+          <Feather name="settings" size={24} color={theme.color} onPress={pressHandler1} />
         </TouchableOpacity>
       </View>
       {/* <View>
@@ -139,8 +142,9 @@ export default function DietDashboardScreen({ navigation }) {
           clearButtonMode='always'
           value={text}
           onChangeText={(value) => setText(value)}
-          style={styles.input}
-          placeholder='Find food...' />
+          style={[styles.input, {backgroundColor:theme.color}]}
+          placeholder='Find food...' 
+          placeholderTextColor={theme.background}/>
         <View style={styles.chart}>
         {text.length == 0 && (
           <TouchableOpacity style={styles.pieWidget} onPress={pressHandler}>
@@ -266,7 +270,7 @@ const styles = StyleSheet.create({
     //borderBottomColor: '#ddd',
     width: 350,
     alignSelf: 'center',
-    backgroundColor: '#FFFFFF',
+    //backgroundColor: '#FFFFFF',
     borderRadius: 25,
     paddingHorizontal: 16,
     fontSize: 16,

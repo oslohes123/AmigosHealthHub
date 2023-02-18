@@ -1,13 +1,16 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 // import { Feather } from '@expo/vector-icons';
+import themeContext from '../../../theme/themeContext';
 
 export default function Header() {
 
+  const theme = useContext(themeContext)
+
   return (
     <View >
-      <Text style={styles.title}>Calories Remaining</Text>
-      <Text style={styles.number}>35</Text>
+      <Text style={[styles.title, {color:theme.color}]}>Calories Remaining</Text>
+      <Text style={[styles.number, {color:theme.color}, {borderColor:theme.color}]}>35</Text>
       {/* <View style={styles.icon}>
         <TouchableOpacity>
         <Feather name="settings" size={24} color="white" onPress={pressHandler}/>
@@ -39,7 +42,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: 'bold',
     paddingTop: 10,
-    borderColor: 'white',
+    // borderColor: 'white',
     borderStyle: 'solid',
     borderWidth: 2,
     paddingBottom: 5,
