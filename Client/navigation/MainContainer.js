@@ -8,12 +8,16 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FitnessScreen from './screens/Fitness/FitnessNavigation';
 import DashboardScreen from "./screens/MainDashboard/DashboardScreen";
 import DietScreen from "./screens/Diet/DietScreen";
+import MentalScreen from './screens/Mental/manager'
+
+
 
 //Screen Names
 const fitnessName = 'Fitness';
 const workoutPlansName = 'Workout Plans';
 const dashboardName = "Dashboard";
 const dietName = "Diet";
+const mentalName = "Mental"
 
 const Tab = createBottomTabNavigator();
 
@@ -44,6 +48,7 @@ export default function MainContainer() {
                 <Tab.Screen name={dietName} component={DietScreen} />
                 <Tab.Screen name={dashboardName} component={DashboardScreen} />
                 <Tab.Screen name={fitnessName} component={FitnessScreen} />
+                <Tab.Screen name={mentalName} component={MentalScreen} />
             </Tab.Navigator>
         </NavigationContainer>
 
