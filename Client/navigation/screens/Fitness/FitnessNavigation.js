@@ -11,7 +11,7 @@ const fitnessDashboardName = 'Fitness Dashboard'
 
 export default function FitnessNavigationScreen({ navigation }) {
     return (
-        <Stack.Navigator screenOptions={{ headerShown: false, headerTitleStyle: styles.header }}>
+        <Stack.Navigator screenOptions={{ headerShown: true, headerTitleStyle: styles.header, headerStyle: {backgroundColor: '#3eda9b'},}}>
             <Stack.Screen name={fitnessDashboardName} component={FitnessDashboardScreen} />
             <Stack.Screen name={workoutPlansName} component={WorkoutPlansScreen} />
         </Stack.Navigator>

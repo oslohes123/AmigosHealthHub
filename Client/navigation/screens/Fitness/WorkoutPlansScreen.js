@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import react from "react";
 import { StyleSheet, Text, View, Button, SafeAreaView, TextInput } from 'react-native';
+import Search_copy from '../../components/SearchBar';
 
 export default function WorkoutPlansScreen({ navigation }) {
     return (
@@ -13,14 +14,15 @@ export default function WorkoutPlansScreen({ navigation }) {
             </Text>
 
             <View style={styles.blankSpace}>
-                <TextInput
+                {/* <TextInput
                     style={styles.input}
                     placeholder="Search"
                     keyboardType='default'
-                />
-                <Button title='+' onPress={() => {
+                /> */}
+                {Search_copy({})}
+                {/* <Button title='+' onPress={() => {
                     console.log("Create new workout plan.")
-                }} />
+                }} /> */}
             </View>
 
             <View style={styles.button}>
@@ -38,7 +40,7 @@ const styles = StyleSheet.create({
         padding: 40,
     },
     blankSpace: {
-        flex: 1,
+        // flex: 1,
         flexDirection: 'row',
         justifyContent: 'centre',
         paddingHorizontal: 10,

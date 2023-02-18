@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import react from "react";
 import { StyleSheet, Text, View, Button, SafeAreaView, Image } from 'react-native';
+import widget from '../../components/widget';
 
 export default function DashboardScreen({ navigation }) {
     return (
@@ -12,6 +13,7 @@ export default function DashboardScreen({ navigation }) {
             </Text>
             <View style={styles.blankSpace}>
                 {/* <Image style={styles.mainImage} source={require('assets/favicon.png')} /> */}
+                {widget({})}
             </View>
             <StatusBar style="auto" />
         </SafeAreaView>
