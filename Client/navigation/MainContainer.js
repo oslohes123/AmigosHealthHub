@@ -1,13 +1,17 @@
-import react from "react";
+import react, {useEffect, useState} from "react";
 import { SafeAreaView, Text, TouchableWithoutFeedback, Keyboard, View } from "react-native";
+import { EventRegister } from 'react-native-event-listeners'
 
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DarkTheme, DefaultTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import FitnessNavigationScreen from './screens/Fitness/FitnessNavigation';
 import DashboardScreen from "./screens/MainDashboard/DashboardScreen";
 import DietNavigationStack from "./screens/Diet/DietNavigation"
+
+import theme from "./theme/theme";
+import themeContext from "./theme/themeContext";
 
 //Screen Names
 const fitnessName = 'Fitness';
@@ -18,10 +22,23 @@ const dietName = "Diet";
 const Tab = createBottomTabNavigator();
 
 export default function MainContainer() {
+
+    const [darkMode, setDarkMode] = useState(false)
+
+    useEffect(() => {
+        const listener = EventRegister.addEventListener('ChangeTheme', (data) => {
+            setDarkMode(data)
+        })
+        return () => {
+            EventRegister.removeAllListeners(listener)
+        }
+    }, [darkMode])
+
     return (
+    <themeContext.Provider value={darkMode === true ? theme.dark : theme.light}>
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={{flex: 1}}>
-            <NavigationContainer>
+            <NavigationContainer theme={darkMode === true ? DarkTheme : DefaultTheme}>
                 <Tab.Navigator
                     initialRouteName={fitnessName}
                     screenOptions={({ route }) => ({
@@ -52,6 +69,7 @@ export default function MainContainer() {
             </NavigationContainer>
         </View>
     </TouchableWithoutFeedback>
+    </themeContext.Provider>
     )
 }
 
