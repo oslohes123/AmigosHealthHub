@@ -4,14 +4,12 @@ import { Request, Response } from 'express';
 import { createToken, loginUser, signupUser } from '../../controllers/userController';
 const jwt = require('jsonwebtoken');
 import {v4 as uuidv4} from 'uuid';
-import { response } from 'express';
-import { R } from 'chart.js/dist/chunks/helpers.core';
 // import { beforeEach } from 'node:test';
 require('dotenv').config();
 
-test('test',() => {
-    expect(3).toBe(3)
-})
+import supabase from '../../utils/supabaseSetUp';
+import { supabaseQueryClass } from '../../utils/databaseInterface';
+const supabaseQuery = new supabaseQueryClass();
 
 //test createJWToken, then verify with correct and incorrect secret
 describe('testing createToken',() => {
@@ -47,22 +45,21 @@ describe('testing createToken',() => {
 //test with no email
 //test with no password
 //test with no password and no email
+describe("Test Login form", () => {
 
-describe("login form with missing fields", () => {
-	
-	let mockRequest: Partial<Request>;
-	let mockResponse: Partial<Response>;
+    let mockRequest: Partial<Request>;
+    let mockResponse: Partial<Response>;
 
-	let resultJson = {};
-	let resultStatus = {};
+    let resultJson = {};
+    let resultStatus = {};
 
-	beforeEach( () => {
+    beforeEach( () => {
 
         mockRequest = {};
-		mockResponse = {};
+        mockResponse = {};
 
-		resultJson = {};
-		resultStatus = {};
+        resultJson = {};
+        resultStatus = {};
 
         mockResponse = {
             status : jest.fn().mockImplementation((result) => {
@@ -76,59 +73,122 @@ describe("login form with missing fields", () => {
 
         }
         
-	});
-    
-	test("Login with missing email", async () => {
+    });
+        describe("login form with missing fields", () => {
+            
+            test("Login with missing email", async () => {
 
-        mockRequest = {
-            body:{password:"Password123"}
+                mockRequest = {
+                    body:{password:"Password123"}
 
-        };
+                };
+                
+                await loginUser(mockRequest as Request, mockResponse as Response)
+                expect(resultStatus).toBe(400);
+                // when the res.json is called we expect it to have the body json from the controller
+                expect(resultJson).toEqual({mssg: "All Fields Must Be Filled"});
+            });
+
+            test("Login with missing password", async () => {
+            
+                mockRequest = {
+                    body:{email:"testemail@gmail.com"}
+
+                };
+                
+                await loginUser(mockRequest as Request, mockResponse as Response)
+                expect(resultStatus).toBe(400);
+                // when the res.json is called we expect it to have the body json from the controller
+                expect(resultJson).toEqual({mssg: "All Fields Must Be Filled"});
+            });
+
+            test("Login with missing password and email", async () => {
+            
+                mockRequest = {
+                    body:{}
+
+                };
+                
+                await loginUser(mockRequest as Request, mockResponse as Response)
+                expect(resultStatus).toBe(400);
+                // when the res.json is called we expect it to have the body json from the controller
+                expect(resultJson).toEqual({mssg: "All Fields Must Be Filled"});
+            });
+        });
+
+
+        //test with email that doesn't exist in database
+        //test with correct email, but wrong password
+        //test with correct email, but correct password
+        // describe("Login form with incorrect credentials", () => {
+
+
+        //     test("Login with non-existent email", async () => {
+            
+        //         mockRequest = {
+        //             body:{
+        //                 email: `${uuidv4()}@gmail.com`,
+        //                 password:`Password123`
+        //             }
+            
+        //         };
+                
+        //         await loginUser(mockRequest as Request, mockResponse as Response)
+                
+        //         expect(resultStatus).toBe(400);
+        //         // when the res.json is called we expect it to have the body json from the controller
+        //         expect(resultJson).toEqual({mssg: "Incorrect Email"});
+                
+        //     });
+        // })
+
+
+//         describe("Login Form with correct email but wrong and correct passwords", () => {
+
+//             let randomEmail:string;
+
+//             beforeAll(async () => {
+//                 const uuid = uuidv4();
+//                 randomEmail = `${uuid}@gmail.com`
+//                 try{
+//                 await supabaseQuery.insert(supabase, 'Users',{firstName: "TEST", lastName:"TEST", 
+//                 email:randomEmail, password:"CorrectPassword123!" });
+//                 }
+//                 catch(error){
+//                     fail(error);
+//                 }
+//                 // if(error){
+//                 //     fail(error);
+//                 // }
+//             })
+
+//         //     afterAll(async() => {
+//         //         await supabaseQuery.deleteFrom(supabase, 'User', 'email', randomEmail);
+              
+//         //     })
+            
+//         //     test("Login with existent email but wrong password", async () => {
+
+//         //         mockRequest = {
+//         //             body:{
+//         //                 email: randomEmail,
+//         //                 password:`WrongPassword123!`
+//         //             }
+            
+//         //         };
+                
+//         //         await loginUser(mockRequest as Request, mockResponse as Response)
+//         //         expect(resultStatus).toBe(400);
+//         //         // when the res.json is called we expect it to have the body json from the controller
+//         //         expect(resultJson).toEqual({mssg: "Incorrect Password"});
+//         //     });
+
+
+//         // })
+            
+
         
-        await loginUser(mockRequest as Request, mockResponse as Response)
-		expect(resultStatus).toBe(400);
-		// when the res.json is called we expect it to have the body json from the controller
-		expect(resultJson).toEqual({mssg: "All Fields Must Be Filled"});
-	});
-
-    test("Login with missing password", async () => {
-       
-        mockRequest = {
-            body:{email:"testemail@gmail.com"}
-
-        };
-        
-        await loginUser(mockRequest as Request, mockResponse as Response)
-		expect(resultStatus).toBe(400);
-		// when the res.json is called we expect it to have the body json from the controller
-		expect(resultJson).toEqual({mssg: "All Fields Must Be Filled"});
-	});
-
-    test("Login with missing password and email", async () => {
-      
-        mockRequest = {
-            body:{}
-
-        };
-        
-        await loginUser(mockRequest as Request, mockResponse as Response)
-		expect(resultStatus).toBe(400);
-		// when the res.json is called we expect it to have the body json from the controller
-		expect(resultJson).toEqual({mssg: "All Fields Must Be Filled"});
-	});
-
-
-
-
-});
-
-
-//test with email that doesn't exist in database
-//test with correct email, but wrong password
-//test with correct email, but correct password
-//test with wrong email, but correct password
-
-
+})
 
 
 //test signup
