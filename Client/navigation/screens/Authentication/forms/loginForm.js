@@ -7,7 +7,7 @@ import React from 'react';
 import { globalStyles } from '../../../../styles/global';
 import { useLogin } from '../hooks/useLogin';
 
-const passwordRegex = /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*!=]).*$/;
+
 const loginSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Required'),
 

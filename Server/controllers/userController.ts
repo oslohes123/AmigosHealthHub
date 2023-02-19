@@ -9,7 +9,7 @@ const supabaseQuery = new supabaseQueryClass();
 
 
 //Create jwtToken
-export function createJWToken(id:string, secret=process.env.JWTSECRET){
+export function createToken(id:string, secret=process.env.JWTSECRET){
     return jwttoken.sign({id},secret,{expiresIn: '1h'});
 }
 
@@ -21,8 +21,12 @@ async function getUser(databaseQuery: any, email: string){
 
 }
 export const loginUser = async(req:Request,res:Response) => {
-
+    console.log(req);
+    console.log(JSON.stringify(req.body));
+   
     const {email, password} = req.body;
+     const consoleEmail= console.log(req.body.email)
+     console.log(`Here: ${consoleEmail}`);
     // console.log(req.body);
     console.log(`email: ${email}`);
     console.log(`password: ${password}`);
@@ -46,7 +50,7 @@ export const loginUser = async(req:Request,res:Response) => {
 
     const match = await bcrypt.compare(password, data[0].password);
    if(match){
-    const token = createJWToken(data[0].id);
+    const token = createToken(data[0].id);
     console.log(`token: ${token}`);
     return res.status(200).json({firstName: data[0].firstName,email: data[0].email, token, mssg:"Successful Login"});
    }
@@ -111,7 +115,7 @@ else{
         }
         else{ 
             console.log("Successful Creation")
-            const token = createJWToken(data[0].id);
+            const token = createToken(data[0].id);
             return res.status(200).json({firstName,email, token});
         }
     }

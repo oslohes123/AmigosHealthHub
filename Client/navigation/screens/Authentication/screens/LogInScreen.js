@@ -13,13 +13,6 @@ export default function LogInScreen({ navigation }) {
                     alignItems: 'center'
                 }}
             >
-                {/* <Button
-                    title={'Sign Up'}
-                    onPress={() => {
-                        console.log('go to sign up screen.');
-                        navigation.navigate('Sign Up');
-                    }}
-                /> */}
             </SafeAreaView>
         </>
     );

@@ -1,6 +1,6 @@
-import instantSearch from "./instantFoodSearch.ts";
+import instantSearch from "./instantFoodSearch";
 import {describe, it} from "node:test";
-import {chickenInstantSearchResult} from "./testdata.ts";
+import {chickenInstantSearchResult} from "./testdata";
 
 
 
