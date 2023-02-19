@@ -77,7 +77,7 @@ export const AuthContextProvider = ({ children }) => {
        const token =  JSON.parse(await AsyncStorage.getItem('user'))
        
         console.log(`token: ${token}`);
-        //if token exists, then update user state
+        //if token exists, then update user state with the token
         if(token){
             dispatch({type:'LOGIN', payload:token})
         }

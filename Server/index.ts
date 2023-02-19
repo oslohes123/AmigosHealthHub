@@ -1,7 +1,7 @@
 //Configuration
-import { Request, Response } from 'express';
+// import { Request, Response } from 'express';
 
-import { request } from 'http';
+// import { request } from 'http';
 
 const express = require('express');
 const app = express();
@@ -9,27 +9,30 @@ const app = express();
 const cors = require('cors');
 app.use(cors());
 
-const supabase = require('../dist/utils/supabaseSetUp.js');
-const supabaseQueryClass = require('../dist/utils/databaseInterface.js');
+import supabase from "./utils/supabaseSetUp";
+import { supabaseQueryClass } from "./utils/databaseInterface";
 const supabaseQuery = new supabaseQueryClass();
 
 /**---------------- Routes Start--------------- */
 //HomePage Route
-app.get('/', (req: Request, res: Response) => {
-    res.send('Homepage');
-});
+// app.get('/', (req, res) => {
+//     res.send('Homepage');
+// });
 
 //Authentication Routes
-const authRouter = require('../routes/authentication.js');
+// const authRouter = require('./routes/authentication')
+import authRouter from "./routes/authentication";
 app.use('/api/user', authRouter);
 
 //Change Profile Details Routes
-const changeProfileDetailsRouter = require('../routes/changeProfileDetails.js');
+// const changeProfileDetailsRouter = require('../routes/changeProfileDetails.js');
+import changeProfileDetailsRouter from "./routes/changeProfileDetails";
 app.use('/api/user', changeProfileDetailsRouter);
 
 //Get User Details Routes
-const getUserInfo = require('../routes/getUserInfo.js');
-app.use('/api/user', getUserInfo);
+// const getUserInfo = require('../routes/getUserInfo.js');
+import userInfoRouter from "./routes/getUserInfo";
+app.use('/api/user', userInfoRouter);
 
 /**---------------- Routes End------------------ */
 

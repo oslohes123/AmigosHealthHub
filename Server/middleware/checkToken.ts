@@ -1,9 +1,10 @@
 const jwtToken = require('jsonwebtoken');
 const dotenv = require("dotenv");
+import{Request, Response, NextFunction} from 'express'
 dotenv.config();
 
-const supabase = require("../dist/utils/supabaseSetUp")
-const supabaseQueryClass = require("../dist/utils/databaseInterface")
+import supabase from '../utils/supabaseSetUp';
+import { supabaseQueryClass } from '../utils/databaseInterface';
 const supabaseQuery = new supabaseQueryClass();
 
 /**
@@ -13,7 +14,7 @@ const supabaseQuery = new supabaseQueryClass();
  * the request. 
  */
 
-const checkToken = async(req, res,next) => {
+export const checkToken = async(req:Request, res:Response,next:NextFunction) => {
 
    console.log("Middleware Executed!")
 //Check user making request is authenticated
@@ -32,7 +33,7 @@ const checkToken = async(req, res,next) => {
    console.log(`In checkToken, ${JSON.stringify(jwtToken.verify(token, process.env.JWTSECRET))}`)
    const {id} =  jwtToken.verify(token, process.env.JWTSECRET);
 
-   req.user = await supabaseQuery.selectWhere(supabase, 'User','id', id, 'id');
+   await supabaseQuery.selectWhere(supabase, 'User','id', id, 'id');
 
     next();
  }
@@ -42,5 +43,5 @@ const checkToken = async(req, res,next) => {
  }
 }
 
-
-module.exports = checkToken;
+export {};
+// module.exports = checkToken;

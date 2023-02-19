@@ -1,12 +1,13 @@
 require('dotenv').config()
-const supabase = require("../dist/utils/supabaseSetUp")
-const supabaseQueryClass = require("../dist/utils/databaseInterface")
+import { Request, Response } from 'express';
+import supabase from '../utils/supabaseSetUp'
+import {supabaseQueryClass} from '../utils/databaseInterface'
 const bcrypt = require('bcrypt');
 const validator = require('validator');
 const supabaseQuery = new supabaseQueryClass();
 
 
-const changeStats = async(req,res) => {
+export const changeStats = async(req:Request,res:Response) => {
 
     const {firstName, lastName, prevEmail, newEmail, age} = req.body;
 
@@ -24,8 +25,8 @@ const changeStats = async(req,res) => {
 
 
         //Check that new email is available
-        const{data, error} = await supabaseQuery.selectWhere(supabase,'User'
-        ,'email',newEmail);
+        const{data, error}:any = await supabaseQuery.selectWhere(supabase,'User'
+        ,'email',newEmail,'*');
 
         if(error){
             console.error(error);
@@ -35,8 +36,8 @@ const changeStats = async(req,res) => {
         if(data.length === 0){
             console.log("New Email Available");
             //Update user details
-            const {data, error} = await supabaseQuery.update(supabase, 'User', {firstName, lastName, 
-            email: newEmail}, 'email', prevEmail, age)
+            const {data, error}:any = await supabaseQuery.update(supabase, 'User', {firstName, lastName, 
+            email: newEmail, age}, 'email', prevEmail)
             if(error){
                 return res.status(500).json({mssg: error.message});
             }
@@ -52,7 +53,7 @@ const changeStats = async(req,res) => {
 
     //As new email == previous email, update the other fields
     else{
-        const {data, error} = await supabaseQuery.update(supabase, 'User', {firstName, lastName, age}
+        const {data, error}:any = await supabaseQuery.update(supabase, 'User', {firstName, lastName, age}
         , 'email', prevEmail)
         if(error){
             return res.status(500).json({mssg: error.message});
@@ -62,7 +63,7 @@ const changeStats = async(req,res) => {
 
 }
 
-const changePassword = async(req,res) => {
+export const changePassword = async(req:Request,res:Response) => {
     const {email, oldPassword , newPassword} = req.body;
 
     console.log(JSON.stringify(req.body));
@@ -71,8 +72,8 @@ const changePassword = async(req,res) => {
         return res.status(400).json({mssg: "Password Structure must have atleast 8 characters, 1 lower case,1 upper case, 1 number, 1 symbol"});
     }
 
-    const{data, error} = await supabaseQuery.selectWhere(supabase,'User'
-    ,'email',email);
+    const{data, error}:any = await supabaseQuery.selectWhere(supabase,'User'
+    ,'email',email,'*');
 
     console.log(`data in changePassword: ${JSON.stringify(data)}`)
 
@@ -91,7 +92,7 @@ const changePassword = async(req,res) => {
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(newPassword, salt);
 
-            const {data, error} = await supabaseQuery.update(supabase, 'User', {
+            const {data, error}:any = await supabaseQuery.update(supabase, 'User', {
                 password: hashedPassword}, 'email', email);
 
                 if(error){
@@ -108,14 +109,14 @@ const changePassword = async(req,res) => {
 }
 
 
-const deleteAccount = async(req, res) =>{
+export const deleteAccount = async(req:Request, res:Response) =>{
      const {email, password}= req.body;
      if(!email || !password){
         res.status(400).json({mssg:"Email or Password are empty!"})
      }
 
-    const{data, error} = await supabaseQuery.selectWhere(supabase,'User'
-    ,'email',email);
+    const{data, error}:any = await supabaseQuery.selectWhere(supabase,'User'
+    ,'email',email,'*');
 
      if(error){
         res.status(400).json({error})
@@ -131,7 +132,7 @@ const deleteAccount = async(req, res) =>{
         const match = await bcrypt.compare(password, data[0].password);
         if(match){
                 //delete account
-                const {error} = supabaseQuery.deleteFrom(supabase, 'User','email',email);
+                const {error}:any = supabaseQuery.deleteFrom(supabase, 'User','email',email);
                 if(error){
                     console.log("Failed to delete account!")
                     res.status(400).json({mssg:"Failed to delete account!"})
@@ -151,6 +152,7 @@ const deleteAccount = async(req, res) =>{
 
 }
 
-module.exports.changeStats = changeStats;
-module.exports.changePassword = changePassword;
-module.exports.deleteAccount = deleteAccount;
+// module.exports.changeStats = changeStats;
+// module.exports.changePassword = changePassword;
+// module.exports.deleteAccount = deleteAccount;
+export {};
