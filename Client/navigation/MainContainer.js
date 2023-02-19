@@ -2,7 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import FitnessScreen from './screens/Fitness/FitnessNavigation';
+import FitnessScreen from './screens/Fitness/routes/FitnessNavigation';
 import DashboardScreen from "./screens/MainDashboard/DashboardScreen";
 import DietScreen from "./screens/Diet/DietScreen";
 

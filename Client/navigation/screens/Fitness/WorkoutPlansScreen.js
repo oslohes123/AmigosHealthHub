@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, SafeAreaView, TextInput, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Button, SafeAreaView, TextInput, ScrollView } from 'react-native';
 
 export default function WorkoutPlansScreen({ navigation }) {
     return (
