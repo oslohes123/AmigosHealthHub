@@ -6,7 +6,7 @@ import { NavigationContainer, DarkTheme, DefaultTheme } from '@react-navigation/
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import FitnessNavigationScreen from './screens/Fitness/FitnessNavigation';
+import FitnessNavigationScreen from './screens/Fitness//routes/FitnessNavigation';
 import DashboardScreen from "./screens/MainDashboard/DashboardScreen";
 
 // import DietScreen from "./screens/Diet/DietScreen";
