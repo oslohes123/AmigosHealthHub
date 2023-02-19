@@ -1,4 +1,4 @@
-export default interface instantSearchInterface {
+export default interface InstantSearchInterface {
     common: Common[];
     branded: Branded[];
 }
@@ -31,4 +31,7 @@ interface Branded {
 
 interface Photo {
     thumb: string;
+    highres?: any;
+    is_user_uploaded?: boolean;
 }
+
