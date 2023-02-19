@@ -47,7 +47,7 @@ export default function MainContainer() {
         <View style={{flex: 1}}>
             <NavigationContainer theme={darkMode === true ? DarkTheme : DefaultTheme}>
                 <Tab.Navigator
-                    initialRouteName={fitnessName}
+                    initialRouteName={dashboardName}
                     screenOptions={({ route }) => ({
                         tabBarIcon: ({ focused, color, size }) => {
                             let iconName;
@@ -76,9 +76,11 @@ export default function MainContainer() {
                 <Tab.Screen name={mentalName} component={MentalScreen} />
             </Tab.Navigator>
         </NavigationContainer>
+
         </View>
     </TouchableWithoutFeedback>
     </themeContext.Provider>
+
     )
 }
 

@@ -1,15 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
-
 import { StyleSheet, Text, View, Button, SafeAreaView, TextInput, ScrollView } from 'react-native';
 
-export default function WorkoutPlansScreen({ navigation }) {
+export default function TrackExerciseScreen({ navigation }) {
     return (
         <SafeAreaView style={styles.container}>
 
             <Text style={styles.title} onLongPress={() => {
                 console.log("The user wants to see the workout plans that I have saved.")
             }}>
-                Workout Plans
+                Track Exercise
             </Text>
 
             <View style={styles.searchAndCreate}>
@@ -23,37 +22,33 @@ export default function WorkoutPlansScreen({ navigation }) {
 
                 <Button title='+' onPress={() => {
                     console.log("Create new workout plan.")
-                    navigation.navigate('Create New Workout')
                 }} />
 
             </View>
 
-                <Text style={styles.customWorkout}>Custom Workouts</Text>
+                <Text style={styles.customWorkout}>Exercises</Text>
         
             <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false} alignItems={'center'}>
-                <Text style={styles.testText}>Test text 1</Text>
-                <Text style={styles.testText}>Test text 2</Text>
-                <Text style={styles.testText}>Test text 3</Text>
-                <Text style={styles.testText}>Test text 4</Text>
-                <Text style={styles.testText}>Test text 5</Text>
-                <Text style={styles.testText}>Test text 6</Text>
-                <Text style={styles.testText}>Test text 7</Text>
-                <Text style={styles.testText}>Test text 8</Text>
-                <Text style={styles.testText}>Test text 9</Text>
-                <Text style={styles.testText}>Test text 10</Text>
-                <Text style={styles.testText}>Test text 11</Text>
-                <Text style={styles.testText}>Test text 12</Text>
-                <Text style={styles.testText}>Test text 13</Text>
-                <Text style={styles.testText}>Test text 14</Text>
-                <Text style={styles.testText}>Test text 15</Text>
-                <Text style={styles.testText}>Test text 16</Text>
-                <Text style={styles.testText}>Test text 17</Text>
-                <Text style={styles.testText}>Test text 18</Text>
+                <Text style={styles.testText}>Run (5K)</Text>
+                <Text style={styles.testText}>Sprint (100m)</Text>
+                <Text style={styles.testText}>Swim (Freestyle)</Text>
+                <Text style={styles.testText}>Swim (Butterfly)</Text>
+                <Text style={styles.testText}>Cycle (10K)</Text>
+                <Text style={styles.testText}>Run (5K)</Text>
+                <Text style={styles.testText}>Sprint (100m)</Text>
+                <Text style={styles.testText}>Swim (Freestyle)</Text>
+                <Text style={styles.testText}>Swim (Butterfly)</Text>
+                <Text style={styles.testText}>Run (5K)</Text>
+                <Text style={styles.testText}>Sprint (100m)</Text>
+                <Text style={styles.testText}>Swim (Freestyle)</Text>
+                <Text style={styles.testText}>Swim (Butterfly)</Text>
+                <Text style={styles.testText}>Cycle (10K)</Text>
+                <Text style={styles.testText}>Run (5K)</Text>
+                <Text style={styles.testText}>Sprint (100m)</Text>
+                <Text style={styles.testText}>Swim (Freestyle)</Text>
+                <Text style={styles.testText}>Swim (Butterfly)</Text>
+                <Text style={styles.testText}>Cycle (10K)</Text>
             </ScrollView>
-
-            <Button title='TEST Workout Info' onPress={ () => {
-                navigation.navigate("Workout Info")
-            }} />
             <StatusBar style="auto" />
         </SafeAreaView>
     );
