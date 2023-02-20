@@ -70,9 +70,6 @@ describe('testing createToken',() => {
     let resultStatus = {};
 
 
-
-describe("test login backend", () => {
-
     afterEach(() => 
     {server.close()})
 
@@ -86,6 +83,8 @@ describe("test login backend", () => {
 		resultStatus = {};
         
 	});
+
+describe("test login backend", () => {
 
     describe("Login with missing fields", () => {
         test("Login with missing email", async () => {
@@ -240,14 +239,71 @@ describe("test login backend", () => {
 
 describe("test sign up backend", () => {
 
+    describe("sign up with missing fields", () => {
+        test("sign up with no email", async () => {
+            mockRequest.body = {
+                firstName: "John",
+                lastName: "Doe",
+                password: "CorrectPassword123",
+                age: 0
+            }
 
-    // test()
+            await signupUser(mockRequest as Request, mockResponse as Response);
+            expect(resultStatus).toEqual(400)
+            expect(resultJson).toEqual({mssg:"All Fields Must Be Filled"})
+        })
+        test("sign up with no password", async () => {
+            mockRequest.body = {
+                firstName: "John",
+                lastName: "Doe",
+                email:"johndoe@gmail.com",
+                age: 0
+            }
 
+            await signupUser(mockRequest as Request, mockResponse as Response);
+            expect(resultStatus).toEqual(400)
+            expect(resultJson).toEqual({mssg:"All Fields Must Be Filled"})
+        })
 
+        test("sign up with no lastName", async () => {
+            mockRequest.body = {
+                firstName: "John",
+                email:"johndoe@gmail.com",
+                password: "CorrectPassword123",
+                age: 0
+            }
 
+            await signupUser(mockRequest as Request, mockResponse as Response);
+            expect(resultStatus).toEqual(400)
+            expect(resultJson).toEqual({mssg:"All Fields Must Be Filled"})
+        })
+        test("sign up with no firstName", async () => {
+            mockRequest.body = {
+                email:"johndoe@gmail.com",
+                lastName: "Doe",
+                password: "CorrectPassword123",
+                age: 0
+            }
 
+            await signupUser(mockRequest as Request, mockResponse as Response);
+            expect(resultStatus).toEqual(400)
+            expect(resultJson).toEqual({mssg:"All Fields Must Be Filled"})
+        })
+        test("sign up with no age", async () => {
+            mockRequest.body = {
+                firstName: "John",
+                lastName: "Doe",
+                password: "CorrectPassword123",
+                email:"johndoe@gmail.com",
+            }
 
+            await signupUser(mockRequest as Request, mockResponse as Response);
+            expect(resultStatus).toEqual(400)
+            expect(resultJson).toEqual({mssg:"All Fields Must Be Filled"})
+        })
 
+    })
+        
 
 })
 
