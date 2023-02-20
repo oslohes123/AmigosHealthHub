@@ -2,7 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import WorkoutPlansScreen from "../WorkoutPlansScreen";
 import TrackExerciseScreen from "../TrackExerciseScreen";
 import FitnessDashboardScreen from "../FitnessDashboardScreen";
-import CreateNewWorkout from "../CreateNewWorkoutScreen";
+import CreateNewWorkoutScreen from "../CreateNewWorkoutScreen";
 import ExerciseScreen from "../ExerciseScreen";
 import WorkoutInfoScreen from "../WorkoutPlanInfoScreen";
 import FitnessStatsScreen from "../FitnessStatsScreen";
@@ -25,7 +25,7 @@ export default function FitnessNavigationScreen({ navigation }) {
             <Stack.Screen name={fitnessDashboardName} component={FitnessDashboardScreen} />
             <Stack.Screen name={workoutPlansName} component={WorkoutPlansScreen} />
             <Stack.Screen name={trackExerciseName} component={TrackExerciseScreen} />
-            <Stack.Screen name={createNewWorkoutName} component={CreateNewWorkout} />
+            <Stack.Screen name={createNewWorkoutName} component={CreateNewWorkoutScreen} />
             <Stack.Screen name={exerciseName} component={ExerciseScreen} />
             <Stack.Screen name={workoutInfoName} component={WorkoutInfoScreen} />
             <Stack.Screen name={statsName} component={FitnessStatsScreen} />

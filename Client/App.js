@@ -7,22 +7,22 @@ export default function App() {
   const [showMainPage, setShowMainPage] = useState(false);
 
   return (
-    <View style={{flex: 1}}>
-      {showMainPage ? (<MainContainer />) :
-      (
-        <View style={styles.animation}>
-          <LottieView 
-            source={require('./assets/animation.json')} 
-            autoPlay 
-            loop={false}
-            speed={2}
-            onAnimationFinish={() => setShowMainPage(true)} 
-          />
-          <Text style={styles.text}>HEALTH HUB</Text>
-        </View>
-      )}
-    </View>
-    // <MainContainer />
+    // <View style={{flex: 1}}>
+    //   {showMainPage ? (<MainContainer />) :
+    //   (
+    //     <View style={styles.animation}>
+    //       <LottieView 
+    //         source={require('./assets/animation.json')} 
+    //         autoPlay 
+    //         loop={false}
+    //         speed={2}
+    //         onAnimationFinish={() => setShowMainPage(true)} 
+    //       />
+    //       <Text style={styles.text}>HEALTH HUB</Text>
+    //     </View>
+    //   )}
+    // </View>
+    <MainContainer />
   );
   
 }
