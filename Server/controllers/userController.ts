@@ -121,7 +121,7 @@ else{
         else{ 
             console.log("Successful Creation")
             const token = createToken(data[0].id);
-            return res.status(200).json({firstName,email, token});
+            return res.status(200).json({firstName,email, token, mssg: "Successful sign up!"});
         }
     }
     }

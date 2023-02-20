@@ -189,6 +189,65 @@ describe("test sign up backend", () => {
             expect(resultJson).toEqual({mssg:"Password Structure must have atleast 8 characters, 1 lower case,1 upper case, 1 number, 1 symbol"})
         })
     })
+
+
+    describe("sign up correct fields", () => {
+        let randomEmail:string;
+        let hashedPassword: string
+        beforeAll(async () => {
+            const uuid = uuidv4();
+            randomEmail = `${uuid}@gmail.com`
+    
+            const salt = await bcrypt.genSalt(10);
+            hashedPassword = await bcrypt.hash("CorrectPassword123!", salt);
+    
+            const {data, error}:any = await supabaseQuery.insert(supabase, 'User',{firstName: "firstName", lastName:"lastName", 
+            email:randomEmail, password: hashedPassword});
+            
+            if(error){
+                fail(error);
+            }
+        })
+        afterEach(async() => {
+            await supabaseQuery.deleteFrom(supabase, 'User', 'email', randomEmail);
+    
+        })
+        test("sign up with already existing email", async () => {
+            mockRequest = {
+                body:{
+                    firstName: "John",
+                    lastName: "Doe",
+                    password: hashedPassword,
+                    email: randomEmail,
+                    age:30
+                }
+            }
+
+            await signupUser(mockRequest as Request, mockResponse as Response);
+            expect(resultStatus).toEqual(400);
+            expect(resultJson).toEqual({mssg: "User already exists!"});
+
+        })
+        test("successful sign up with correct details", async () => {
+            mockRequest = {
+                body:{
+                    firstName: "John",
+                    lastName: "Doe",
+                    password: hashedPassword,
+                    email: randomEmail,
+                    age:30
+                }
+            }
+
+            await signupUser(mockRequest as Request, mockResponse as Response);
+            expect(resultStatus).toEqual(200);
+            expect(resultJson.mssg).toEqual("Successful sign up!");
+            expect(resultJson.email).toEqual(randomEmail);
+            expect(resultJson.firstName).toEqual("John");
+        })
+
+
+    })
 })
 
 //get user
