@@ -96,7 +96,7 @@ if(error){
 }
 else{
     if (data.length === 1)  {
-        console.error("User already exists!")
+        console.log("User already exists!")
         return res.status(400).json({mssg: "User already exists!"});
     }
 
