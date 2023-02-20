@@ -6,14 +6,9 @@ import { NavigationContainer, DarkTheme, DefaultTheme } from '@react-navigation/
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import FitnessNavigationScreen from './screens/Fitness//routes/FitnessNavigation';
+import FitnessNavigationScreen from './screens/Fitness/routes/FitnessNavigation';
 import DashboardScreen from "./screens/MainDashboard/DashboardScreen";
-
-// import DietScreen from "./screens/Diet/DietScreen";
-import DietDashboardScreen from "./screens/Diet/DietDashboardScreen";
 import MentalScreen from './screens/Mental/manager'
-import FitnessScreen from "./screens/Fitness/FitnessDashboardScreen";
-
 import DietNavigation from "./screens/Diet/DietNavigation"
 
 import theme from "./theme/theme";
@@ -21,7 +16,6 @@ import themeContext from "./theme/themeContext";
 
 //Screen Names
 const fitnessName = 'Fitness';
-const workoutPlansName = 'Workout Plans';
 const dashboardName = "Dashboard";
 const dietName = "Diet";
 const mentalName = "Mental"
@@ -58,7 +52,9 @@ export default function MainContainer() {
                             } else if (routeName === dashboardName) {
                                 iconName = focused ? 'home' : 'home-outline'
                             } else if (routeName === dietName) {
-                                iconName = focused ? 'pizza' : 'pizza-outline'
+                                iconName = focused ? 'nutrition' : 'nutrition-outline'
+                            } else if (routeName === mentalName) {
+                                iconName = focused ? 'happy' : 'happy-outline'
                             }
 
 
@@ -72,7 +68,7 @@ export default function MainContainer() {
 
                 <Tab.Screen name={dietName} component={DietNavigation} />
                 <Tab.Screen name={dashboardName} component={DashboardScreen} />
-                <Tab.Screen name={fitnessName} component={FitnessScreen} />
+                <Tab.Screen name={fitnessName} component={FitnessNavigationScreen} />
                 <Tab.Screen name={mentalName} component={MentalScreen} />
             </Tab.Navigator>
         </NavigationContainer>
