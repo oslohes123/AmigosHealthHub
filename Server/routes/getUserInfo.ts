@@ -4,14 +4,15 @@ const express = require('express');
 const userInfoRouter = express.Router();
 userInfoRouter.use(express.json());
 const userFunctions = require('../controllers/getInfoController');
-
-const checkToken = require('../middleware/checkToken');
+import { getInfo } from "../controllers/getInfoController";
+import { checkToken } from "../middleware/checkToken";
 userInfoRouter.use(checkToken);
 /**
  * All these routes start with /api/user
  */
 
 //Routes
-userInfoRouter.post('/getInfo', userFunctions.getInfo);
+userInfoRouter.post('/getInfo', getInfo);
 
-module.exports = userInfoRouter;
+export default userInfoRouter;
+// module.exports = userInfoRouter;

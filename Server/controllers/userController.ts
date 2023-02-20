@@ -1,6 +1,7 @@
 require('dotenv').config()
-const supabase = require("../dist/utils/supabaseSetUp")
-const supabaseQueryClass = require("../dist/utils/databaseInterface")
+import { Request, Response } from 'express';
+import supabase from '../utils/supabaseSetUp'
+import {supabaseQueryClass} from '../utils/databaseInterface'
 const bcrypt = require('bcrypt');
 const validator = require('validator');
 const jwttoken = require('jsonwebtoken');
@@ -8,20 +9,24 @@ const supabaseQuery = new supabaseQueryClass();
 
 
 //Create jwtToken
-function createJWToken(id){
-    return jwttoken.sign({id},process.env.JWTSECRET,{expiresIn: '3d'});
+export function createToken(id:string, secret=process.env.JWTSECRET){
+    return jwttoken.sign({id},secret,{expiresIn: '1h'});
 }
 
-async function getUser(databaseQuery, email){
+async function getUser(databaseQuery: any, email: string){
     const userRows = await databaseQuery.selectWhere(supabase,'User'
     ,'email',email);
 
     return userRows
 
 }
-const loginUser = async(req,res) => {
-
+export const loginUser = async(req:Request,res:Response) => {
+    console.log(req);
+    console.log(JSON.stringify(req.body));
+   
     const {email, password} = req.body;
+     const consoleEmail= console.log(req.body.email)
+     console.log(`Here: ${consoleEmail}`);
     // console.log(req.body);
     console.log(`email: ${email}`);
     console.log(`password: ${password}`);
@@ -44,8 +49,9 @@ const loginUser = async(req,res) => {
     }
 
     const match = await bcrypt.compare(password, data[0].password);
+    console.log(`password: ${password}`)
    if(match){
-    const token = createJWToken(data[0].id);
+    const token = createToken(data[0].id);
     console.log(`token: ${token}`);
     return res.status(200).json({firstName: data[0].firstName,email: data[0].email, token, mssg:"Successful Login"});
    }
@@ -57,7 +63,7 @@ const loginUser = async(req,res) => {
 }
 
 
-const signupUser = async(req,res) => {
+export const signupUser = async(req:Request,res:Response) => {
 // res.json({mssg: "signup user"})
 const {firstName, lastName, email, password, age} = req.body;
 // console.log(req.body);
@@ -79,7 +85,7 @@ if(!validator.isStrongPassword(password)){
     return res.status(400).json({mssg: "Password Structure must have atleast 8 characters, 1 lower case,1 upper case, 1 number, 1 symbol"});
 }
 
-const {data,error} = await supabaseQuery.selectWhere(supabase,'User','email',req.body.email,'email');
+const {data,error}:any = await supabaseQuery.selectWhere(supabase,'User','email',req.body.email,'email');
 if(error){
     console.error(error);
     return res.status(400).json({mssg:error.message});
@@ -98,7 +104,7 @@ else{
 
         console.log(`hashedPassword: ${hashedPassword}`);
 
-        const {data, error} = await supabaseQuery.insert(supabase,'User',{firstName, lastName, 
+        const {data, error}:any = await supabaseQuery.insert(supabase,'User',{firstName, lastName, 
             email,password: hashedPassword, age});
     
         
@@ -110,7 +116,7 @@ else{
         }
         else{ 
             console.log("Successful Creation")
-            const token = createJWToken(data[0].id);
+            const token = createToken(data[0].id);
             return res.status(200).json({firstName,email, token});
         }
     }
@@ -118,9 +124,10 @@ else{
     
 }
 
-module.exports.loginUser = loginUser;
-module.exports.signupUser = signupUser;
-
+// module.exports.loginUser = loginUser;
+// module.exports.signupUser = signupUser;
+// module.exports.createJWToken = createJWToken;
+export {};
 // const loginUser = async(req,res,databaseQuery) => {
 
 //     const {email, password} = req.body;

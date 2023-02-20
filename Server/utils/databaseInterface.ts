@@ -34,7 +34,7 @@ interface dbInterface {
 /**
  * For more information, look at the supabase JS client library: https://supabase.com/docs/reference/javascript/installing
  */
-class supabaseQuery implements dbInterface {
+export class supabaseQueryClass implements dbInterface {
   async select(
     supabaseDb: any,
     table: string,
@@ -142,4 +142,5 @@ class supabaseQuery implements dbInterface {
   //   ) => object;
 }
 
-module.exports = supabaseQuery;
+// module.exports = supabaseQuery;
+export {};

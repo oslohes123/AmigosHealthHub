@@ -1,8 +1,11 @@
 const express = require('express');
 const userInfoRouter = express.Router();
-const supabase = require('../dist/utils/supabaseSetUp');
+
+import { Request, Response } from 'express';
+
+import supabase from '../utils/supabaseSetUp';
+import { supabaseQueryClass } from '../utils/databaseInterface';
 userInfoRouter.use(express.json());
-const supabaseQueryClass = require('../dist/utils/databaseInterface');
 const supabaseQuery = new supabaseQueryClass();
 
 // async function getUser(databaseQuery, email) {
@@ -17,13 +20,13 @@ const supabaseQuery = new supabaseQueryClass();
 //     return userRows;
 // }
 
-const getInfo = async (req, res) => {
+export const getInfo = async (req: Request, res: Response) => {
     const { email } = req.body;
     console.log(`in getInfo controller:${JSON.stringify(req.body)}`);
     if (!email) {
         return res.status(400).json({ mssg: 'Email must be provided' });
     }
-    const { data, error } = await supabaseQuery.selectWhere(
+    const { data, error }: any = await supabaseQuery.selectWhere(
         supabase,
         'User',
         'email',
@@ -42,4 +45,5 @@ const getInfo = async (req, res) => {
     return res.status(200).json({ user: data[0] });
 };
 
-module.exports.getInfo = getInfo;
+// module.exports.getInfo = getInfo;
+export {};

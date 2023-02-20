@@ -7,17 +7,17 @@ import React from 'react';
 import { globalStyles } from '../../../../styles/global';
 import { useLogin } from '../hooks/useLogin';
 
-const passwordRegex = /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*!=]).*$/;
+
 const loginSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Required'),
 
-    password: Yup.string()
-        .required('No password provided.')
-        .min(8, 'Password is too short - should be 8 chars minimum.')
-        .matches(
-            passwordRegex,
-            'Password must contain atleast 1 lowercase letter, 1 uppercase letter and 1 special character (eg. @, #, $, %, ^, &, +, *, !, =)'
-        )
+    // password: Yup.string()
+    //     .required('No password provided.')
+    //     .min(8, 'Password is too short - should be 8 chars minimum.')
+    //     .matches(
+    //         passwordRegex,
+    //         'Password must contain atleast 1 lowercase letter, 1 uppercase letter and 1 special character (eg. @, #, $, %, ^, &, +, *, !, =)'
+    //     )
 });
 
 export const formikLoginForm = () => {
