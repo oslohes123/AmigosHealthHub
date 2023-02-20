@@ -118,7 +118,7 @@ function trackExercises(req, res){
 }
 function workoutPlans(req, res){
     res.send("Workout Plans")
-    addExercise(searchExercise(req, res))
+    res.json(addExercise(searchExercise(req, res)))
 }
 function searchExercise(req, res){
     var isValid = true
