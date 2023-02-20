@@ -19,14 +19,17 @@ const supabaseQuery = new supabaseQueryClass();
 
 const getInfo = async (req, res) => {
     const { email } = req.body;
-    console.log(`in getInfo controller:${JSON.stringify(req.body)}`)
+    console.log(`in getInfo controller:${JSON.stringify(req.body)}`);
     if (!email) {
         return res.status(400).json({ mssg: 'Email must be provided' });
     }
-    const { data, error } = await supabaseQuery.selectWhere(supabase,'User','email',email,
+    const { data, error } = await supabaseQuery.selectWhere(
+        supabase,
+        'User',
+        'email',
+        email,
         'firstName, lastName, email, age'
     );
-;
     if (error) {
         console.error(error);
         return res.status(400).json({ mssg: error });
