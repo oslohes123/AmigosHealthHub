@@ -8,6 +8,7 @@ import {v4 as uuidv4} from 'uuid';
 import { response } from 'express';
 import { R } from 'chart.js/dist/chunks/helpers.core';
 import { after } from 'node:test';
+const bcrypt = require('bcrypt');
 import supabase from '../../../utils/supabaseSetUp';
 import { supabaseQueryClass } from '../../../utils/databaseInterface';
 const supabaseQuery = new supabaseQueryClass();
@@ -51,17 +52,26 @@ describe("login form with missing fields", () => {
 	let mockRequest: Partial<Request>;
 	let mockResponse: Partial<Response>;
 
-	let resultJson = {};
+	let resultJson = {
+        firstName: null,
+            email: null,
+            mssg: null,
+    };
 	let resultStatus = {};
 
     afterEach(() => 
     {server.close()})
+
 	beforeEach( () => {
 
         mockRequest = {};
 		mockResponse = {};
 
-		resultJson = {};
+		resultJson = {
+            firstName: null,
+            email: null,
+            mssg: null,
+        };
 		resultStatus = {};
 
         mockResponse = {
@@ -131,6 +141,7 @@ describe("login form with missing fields", () => {
 	});
 
     describe("Login with non-existent email", () => {
+
             test("non-existent email results in incorrect email message", async () => {
 
                 mockRequest = {
@@ -153,20 +164,26 @@ describe("login form with missing fields", () => {
 
     describe("Login Form with correct email but wrong and correct passwords", () => {
 
-                    let randomEmail:string;
+            let randomEmail:string;
 
             beforeAll(async () => {
                 const uuid = uuidv4();
                 randomEmail = `${uuid}@gmail.com`
-                console.log(`randomEmail: ${randomEmail}`)
-                const {data, error}:any = await supabaseQuery.insert(supabase, 'User',{firstName: "TEST", lastName:"TEST", 
-                email:randomEmail, password:"CorrectPassword123!" });
+
+                const salt = await bcrypt.genSalt(10);
+                const hashedPassword = await bcrypt.hash("CorrectPassword123!", salt);
+        
+                const {data, error}:any = await supabaseQuery.insert(supabase, 'User',{firstName: "firstName", lastName:"lastName", 
+                email:randomEmail, password: hashedPassword});
                 
                 if(error){
                     fail(error);
                 }
             })
+            afterAll(async() => {
+                await supabaseQuery.deleteFrom(supabase, 'User', 'email', randomEmail);
 
+            })
             
             test("Login with existent email but wrong password", async () => {
 
@@ -184,10 +201,26 @@ describe("login form with missing fields", () => {
                 expect(resultJson).toEqual({mssg: "Incorrect Password"});
             });
 
-            afterAll(async() => {
-                await supabaseQuery.deleteFrom(supabase, 'User', 'email', randomEmail);
+            test("Login with correct email and correct password", async () => {
+                
+                mockRequest = {
+                    body:{
+                        email: randomEmail,
+                        password:"CorrectPassword123!"
+                    }
 
-            })
+                };
+
+                await loginUser(mockRequest as Request, mockResponse as Response)
+                
+                expect(resultStatus).toBe(200);
+                expect(resultJson.mssg).toEqual("Successful Login");
+                expect(resultJson.firstName).toEqual("firstName");
+                expect(resultJson.email).toEqual(randomEmail);
+                // expect(resultJson.mssg).toEqual("Succesful Login");
+
+            });
+            
 
 
     })
@@ -196,7 +229,6 @@ describe("login form with missing fields", () => {
 //test with email that doesn't exist in database
 //test with correct email, but wrong password
 //test with correct email, but correct password
-//test with wrong email, but correct password
 
 
 

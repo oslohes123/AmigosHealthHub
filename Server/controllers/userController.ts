@@ -49,6 +49,7 @@ export const loginUser = async(req:Request,res:Response) => {
     }
 
     const match = await bcrypt.compare(password, data[0].password);
+    console.log(`password: ${password}`)
    if(match){
     const token = createToken(data[0].id);
     console.log(`token: ${token}`);
