@@ -80,6 +80,10 @@ if(!validator.isEmail(email)){
     console.log("Invalid Email")
     return res.status(400).json({mssg: "Invalid Email"})
 }
+if(!(validator.isAlpha(firstName) && validator.isAlpha(lastName))){
+    console.log("First name and last name must only contains letters a-z or A-Z")
+    return res.status(400).json({mssg: "First name and last name must only contains letters a-z or A-Z"});
+}
 if(!validator.isStrongPassword(password)){
     console.log("Password Structure must have atleast 8 characters, 1 lower case,1 upper case, 1 number, 1 symbol")
     return res.status(400).json({mssg: "Password Structure must have atleast 8 characters, 1 lower case,1 upper case, 1 number, 1 symbol"});

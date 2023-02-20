@@ -244,7 +244,7 @@ describe("test sign up backend", () => {
             mockRequest.body = {
                 firstName: "John",
                 lastName: "Doe",
-                password: "CorrectPassword123",
+                password: "CorrectPassword123!",
                 age: 0
             }
 
@@ -269,7 +269,7 @@ describe("test sign up backend", () => {
             mockRequest.body = {
                 firstName: "John",
                 email:"johndoe@gmail.com",
-                password: "CorrectPassword123",
+                password: "CorrectPassword123!",
                 age: 0
             }
 
@@ -281,7 +281,7 @@ describe("test sign up backend", () => {
             mockRequest.body = {
                 email:"johndoe@gmail.com",
                 lastName: "Doe",
-                password: "CorrectPassword123",
+                password: "CorrectPassword123!",
                 age: 0
             }
 
@@ -293,7 +293,7 @@ describe("test sign up backend", () => {
             mockRequest.body = {
                 firstName: "John",
                 lastName: "Doe",
-                password: "CorrectPassword123",
+                password: "CorrectPassword123!",
                 email:"johndoe@gmail.com",
             }
 
@@ -304,6 +304,67 @@ describe("test sign up backend", () => {
 
     })
         
+    describe("test sign up with unacceptable inputs", () => {
+
+
+        test("sign up with invalid email", async() => {
+            mockRequest.body = {
+                firstName: "John",
+                lastName: "Doe",
+                password: "CorrectPassword123!",
+                email:"johndoegmail.com",
+                age:30
+            }
+
+            await signupUser(mockRequest as Request, mockResponse as Response);
+            expect(resultStatus).toEqual(400)
+            expect(resultJson).toEqual({mssg:"Invalid Email"})
+        })
+
+        test("sign up with name containing numbers", async() => {
+            mockRequest.body = {
+                firstName: "John123",
+                lastName: "Doe123",
+                password: "CorrectPassword123!",
+                email:"johndoe@gmail.com",
+                age:30
+            }
+
+            await signupUser(mockRequest as Request, mockResponse as Response);
+            expect(resultStatus).toEqual(400)
+            expect(resultJson).toEqual({mssg:"First name and last name must only contains letters a-z or A-Z"})
+        })
+
+        test("sign up with name containing numbers", async() => {
+            mockRequest.body = {
+                firstName: "John123",
+                lastName: "Doe123",
+                password: "CorrectPassword123!",
+                email:"johndoe@gmail.com",
+                age:30
+            }
+
+            await signupUser(mockRequest as Request, mockResponse as Response);
+            expect(resultStatus).toEqual(400)
+            expect(resultJson).toEqual({mssg:"First name and last name must only contains letters a-z or A-Z"})
+        })
+
+        test("sign up with a not secure password", async() => {
+            mockRequest.body = {
+                firstName: "John",
+                lastName: "Doe",
+                password: "insecurePassword123",
+                email:"johndoe@gmail.com",
+                age:30
+            }
+
+            await signupUser(mockRequest as Request, mockResponse as Response);
+            expect(resultStatus).toEqual(400)
+            expect(resultJson).toEqual({mssg:"Password Structure must have atleast 8 characters, 1 lower case,1 upper case, 1 number, 1 symbol"})
+        })
+    })
+
+
 
 })
 
