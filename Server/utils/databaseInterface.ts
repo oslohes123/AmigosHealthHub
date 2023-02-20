@@ -18,6 +18,15 @@ interface dbInterface{
  
  //returns specific row of a table
     findrow: (db: any, table: string, column: string, value: any) => object;
+
+    //returns last 5 rows inserted in table
+    mostRecent: (db: any) => object;
+
+    //removes exercises with duplicates
+    returnexercises: (data: JSON) => string
+
+    //returns the count of a certain value in an array
+    getOccurences: (arr: Array<any>, val: any) => BigInteger
 }
 
 
@@ -114,8 +123,54 @@ class supabaseQuery implements dbInterface{
         }
     }
 
+    getOccurrences(arr: Array<any>, v: any) {
+        var count = 0;
+        arr.forEach((elem) => (elem === v && count++));
+        return count;
+    }
+
+    returnexercises(data: JSON){
+        const ids = []
+        const finalIDs = []
+        var count = 0
+        var result = JSON.stringify(data).split('},');
+        for (const prop in result) {
+            ids.push(prop[0])
+        }
+        for (const id in ids) {
+            if (this.getOccurrences(ids, id) == 1){
+                finalIDs.push(id)
+            }
+        }
+        for (const elem in result){
+            if (finalIDs.includes(elem[0])){
+                // do nothing
+            }
+            else{
+                result.pop(0)
+            }
+            count ++ 
+        }
+        let answer = result.toString
+        return JSON.parse(answer)
+    }
+
+    async mostRecent(supabaseDb: any): Promise<object | undefined>{
+        const { data, error } = await supabaseDb
+            .from('CompleteWorkouts')
+            .select('CompleteWorkoutsID', 'Timestamp')
+            .order('Timestamp', { ascending: false })
+            .range(0, 4)
+        if(error) console.error(error);
+        else{
+        console.log({data});
+        return this.returnexercises(data)
+        }
+    }
+
 
 
 }
 
 module.exports = supabaseQuery;
+

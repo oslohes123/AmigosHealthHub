@@ -50,6 +50,6 @@ async function supabaseTest3(){
 }
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
-  // supabaseTest(); // should have output: { data: 'hello_world' }
+  supabaseTest(); // should have output: { data: 'hello_world' }
   // supabaseTest3();
 });

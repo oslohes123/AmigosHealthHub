@@ -1,4 +1,6 @@
-const fitnessFunctions = require('../controllers/fitnessController');
+const supabase = require('../dist/utils/supabaseSetUp.js');
+const supabaseQuery = require('../dist/utils/databaseInterface.js');
+const info = new supabaseQuery()
 
 test('Check count of 4', () => {
     expect(fitnessFunctions.getOccurrences([2, 3, 4, 2, 3, 1, 5], 4)).toBe(1);
@@ -13,6 +15,23 @@ test('Check count of 3', () => {
     expect(fitnessFunctions.getOccurrences([2, 3, 4, 2, 3, 1, 5], 3)).toBe(2);
   });
 
-test('Most Recent Workouts', () => {
-    expect(fitnessFunctions.mostRecent()).toBe();
+
+//test('Most Recent Workouts', async () => {
+ // const data = await info.supabaseQuery.mostRecent();
+ // expect(data).toBe('peanut butter');
+ // });
+  const supabaseQuery = require('../path/to/supabaseQuery');
+
+  describe('mostRecent', () => {
+    it('returns the 5 most recent records from the CompleteWorkouts table', async () => {
+      
+      const query = new supabaseQuery();
+      const supabase = require('../dist/utils/supabaseSetUp.js');
+      const result = await query.mostRecent(supabase);
+      // Assert that the result is an array with 5 elements, and that each element has the expected properties
+      expect(result).toHaveLength(5);
+      expect(result[0]).toHaveProperty('CompleteWorkoutsID');
+      expect(result[0]).toHaveProperty('Timestamp');
+      // Add additional assertions for other expected properties
+    });
   });
