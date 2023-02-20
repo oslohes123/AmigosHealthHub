@@ -1,13 +1,11 @@
 // Configuration
 // import { Request, Response } from "express";
 const express = require('express');
-const exRouter = express.Router();
+const fitnessRouter = express.Router();
 const fitnessFunctions = require('../controllers/fitnessController.js');
 
-exRouter.get('/fitnessMain', fitnessFunctions.fitnessMainPage)
-exRouter.get('/trackExercises', fitnessFunctions.trackExercises)
-exRouter.get('/workoutPlans', fitnessFunctions.workoutPlans)
+fitnessRouter.get('/fitnessMain', fitnessFunctions.fitnessMainPage)
+fitnessRouter.get('/trackExercises', fitnessFunctions.trackExercises)
+fitnessRouter.get('/workoutPlans', fitnessFunctions.workoutPlans)
 
-
-
-module.exports = exRouter;
+module.exports = fitnessRouter;

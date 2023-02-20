@@ -27,8 +27,8 @@ app.get("/", (req: Request, res: Response) => {
 const authRouter = require('../routes/authentication.js');
 app.use('/auth', authRouter);
 //Fitness
-const exRouter = require('../routes/fitness.js');
-app.use('/fitness', exRouter);
+const fitnessRouter = require('../routes/fitness.js');
+app.use('/fitness', fitnessRouter);
 
 /**---------------- Routes End------------------ */
 
