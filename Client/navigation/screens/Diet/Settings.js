@@ -10,6 +10,7 @@ export default function Settings() {
     
     return (
         <SafeAreaView style={[styles.container, {backgroundColor:theme.background}]}>
+            
             <View style={styles.themeView}>
                 <Text style={[styles.text, {color:theme.color}]}>Dark Mode</Text>
                     <Switch
@@ -20,6 +21,11 @@ export default function Settings() {
                         }}
                     />
             </View>
+            
+            <View style={styles.CalorieView}>
+                <Text style={[styles.text, {color:theme.color}]}>Calories to goal</Text>
+                <Switch/>
+            </View>
         </SafeAreaView>
     );
 }
@@ -27,13 +33,16 @@ export default function Settings() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // alignItems: 'center',
-        // justifyContent: 'center'
     },
     themeView: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         padding: '10%'
+    },
+    CalorieView: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: '10%'
     },
     text: {
         fontSize: 30
