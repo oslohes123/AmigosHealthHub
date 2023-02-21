@@ -1,8 +1,6 @@
-const express = require('express');
-const userInfoRouter = express.Router();
+require('dotenv').config()
 import { Request, Response } from 'express';
 import supabase from '../utils/supabaseSetUp'
-userInfoRouter.use(express.json());
 import {supabaseQueryClass} from '../utils/databaseInterface'
 const supabaseQuery = new supabaseQueryClass();
 
@@ -19,8 +17,8 @@ const supabaseQuery = new supabaseQueryClass();
 // }
 
 export const getInfo = async (req:Request, res:Response) => {
-    const { email } = req.body;
-    console.log(`in getInfo controller:${JSON.stringify(req.body)}`)
+    const { email } = req.headers;
+    console.log(`in getInfo controller:${JSON.stringify(req.headers)}`)
     if (!email) {
         return res.status(400).json({ mssg: 'Email must be provided' });
     }
@@ -30,11 +28,11 @@ export const getInfo = async (req:Request, res:Response) => {
 ;
     if (error) {
         console.error(error);
-        return res.status(400).json({ mssg: error });
+        return res.status(400).json({ mssg: error.message });
     }
     if (data.length === 0) {
         console.log('User not found');
-        return res.status(400).json({ mssg: 'User not found' });
+        return res.status(400).json({ mssg: 'User not found!' });
     }
     console.log(`in info controller: ${JSON.stringify(data)}`);
     return res.status(200).json({ user: data[0] });

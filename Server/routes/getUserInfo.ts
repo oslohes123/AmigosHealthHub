@@ -12,7 +12,7 @@ userInfoRouter.use(checkToken);
  */
 
 //Routes
-userInfoRouter.post('/getInfo', getInfo);
+userInfoRouter.get('/getInfo', getInfo);
 
 export default userInfoRouter;
 // module.exports = userInfoRouter;

@@ -31,8 +31,8 @@ app.use('/api/user', changeProfileDetailsRouter);
 
 //Get User Details Routes
 // const getUserInfo = require('../routes/getUserInfo.js');
-import userInfoRouter from "./routes/getUserInfo";
-app.use('/api/user', userInfoRouter);
+// import userInfoRouter from "./routes/getUserInfo";
+// app.use('/api/user', userInfoRouter);
 
 /**---------------- Routes End------------------ */
 

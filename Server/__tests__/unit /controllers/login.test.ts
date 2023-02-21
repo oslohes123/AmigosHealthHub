@@ -1,19 +1,21 @@
 require('dotenv').config();
 import server from '../../../server';
-const request = require('supertest')
+// const request = require('supertest')
 import { Request, Response } from 'express';
-import { createToken, loginUser, signupUser } from '../../../controllers/userController';
-const jwt = require('jsonwebtoken');
+import {loginUser } from '../../../controllers/userController';
+// const jwt = require('jsonwebtoken');
 import {v4 as uuidv4} from 'uuid';
-import { response } from 'express';
-import { R } from 'chart.js/dist/chunks/helpers.core';
-import { after } from 'node:test';
+// import { response } from 'express';
+// import { R } from 'chart.js/dist/chunks/helpers.core';
+// import { after } from 'node:test';
 const bcrypt = require('bcrypt');
 import supabase from '../../../utils/supabaseSetUp';
 import { supabaseQueryClass } from '../../../utils/databaseInterface';
 const supabaseQuery = new supabaseQueryClass();
 //test createJWToken, then verify with correct and incorrect secret
 
+//messy closure
+//
 let mockRequest: Partial<Request>;
 let mockResponse: Partial<Response>;
 
@@ -194,3 +196,4 @@ describe("Login Form with correct email but wrong and correct passwords", () => 
 
 })
 })
+export {};
