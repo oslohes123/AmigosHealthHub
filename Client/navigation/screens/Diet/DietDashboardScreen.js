@@ -181,7 +181,7 @@ export default function DietDashboardScreen({ navigation }) {
                 style={styles.textContainer} key={item.name}>
                 <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
                   <Text style={styles.textData} key={item.name}>{item.name}</Text>
-                  <Ionicons name={'chevron-forward-outline'} size={'32px'} color={'black'} />
+                  <Ionicons name={'chevron-forward-outline'} size={32} color={'black'} />
                 </View>
               </TouchableOpacity>
             ))}

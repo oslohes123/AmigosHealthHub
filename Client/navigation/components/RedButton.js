@@ -24,7 +24,7 @@ export default function RedButton({iconName = 'chevron-forward-outline', fontSiz
     <TouchableOpacity onPress={buttonFunction} style={styles.textContainer}>
         <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Text style={styles.textData}>{text}</Text>
-            <Ionicons name={`${iconName}`} size={`${fontSize}px`} color={'white'} />
+            <Ionicons name={`${iconName}`} size={fontSize} color={'white'} />
         </View>
     </TouchableOpacity>
   )

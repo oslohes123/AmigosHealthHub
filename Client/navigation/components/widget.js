@@ -26,7 +26,7 @@ export default function widget({iconName = 'chevron-forward-outline', widgetText
     <TouchableOpacity onPress={buttonFunction} style={styles.textContainer}>
         <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Text style={styles.textData}>{widgetText}</Text>
-            <Ionicons name={`${iconName}`} size={`${fontSize}px`} color={widgetColor} />
+            <Ionicons name={`${iconName}`} size={fontSize} color={widgetColor} />
         </View>
     </TouchableOpacity>
   )

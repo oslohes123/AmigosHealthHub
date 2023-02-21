@@ -1,7 +1,7 @@
 import { View, Text, TextInput } from 'react-native'
 import React from 'react'
 
-export default function Search_copy({ placeholder = 'Search', customStyle = styles.search_bar, textAlign = 'center' }) {
+export default function SearchBar({ placeholder = 'Search', customStyle = styles.search_bar, textAlign = 'center' }) {
   return (
     <TextInput style={customStyle} placeholder={placeholder} textAlign={textAlign} />
   )
