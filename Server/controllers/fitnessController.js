@@ -25,6 +25,16 @@ async function workoutPlanNameFind(name){
     else return {mssg: "This name has not been saved"}
 }
 
+async function addTrackedWorkout(name, type, muscle, difficulty, instructions){
+    const supabase = require('../dist/utils/supabaseSetUp.js');
+    const supabaseQueryClass = require('../dist/utils/databaseInterface.js');
+    const supabaseQuery = new supabaseQueryClass()
+    const {data: insertData, error: insertError} = await supabaseQuery.insert(supabase, "Completed Workouts", {Type: type, Name:name, Muscle:muscle, Difficulty: difficulty, Instructions: instructions});
+    if(insertError) console.error(insertError);
+    else console.log({insertData})
+    return data
+}
+
 async function searchDB(name){
     const supabase = require('../dist/utils/supabaseSetUp.js');
     const supabaseQueryClass = require('../dist/utils/databaseInterface.js');
@@ -150,7 +160,7 @@ function workoutPlans(req, res){
 }
 function searchExercise(req, res){
     var isValid = true
-    if (searchDB(req.exercise) == error){
+    if (searchDB(req.exercise) == ""){
         isValid = false
     }
     if(isValid){
