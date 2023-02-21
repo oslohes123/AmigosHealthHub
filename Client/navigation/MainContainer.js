@@ -7,7 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import FitnessNavigationScreen from './screens/Fitness/routes/FitnessNavigation';
-import DashboardScreen from "./screens/MainDashboard/DashboardScreen";
+import DashboardNavigationScreen from "./screens/MainDashboard/routes/DashboardNavigation";
 import MentalScreen from './screens/Mental/manager'
 import DietNavigation from "./screens/Diet/DietNavigation"
 
@@ -67,7 +67,7 @@ export default function MainContainer() {
                 })}>
 
                 <Tab.Screen name={dietName} component={DietNavigation} />
-                <Tab.Screen name={dashboardName} component={DashboardScreen} />
+                <Tab.Screen name={dashboardName} component={DashboardNavigationScreen} />
                 <Tab.Screen name={fitnessName} component={FitnessNavigationScreen} />
                 <Tab.Screen name={mentalName} component={MentalScreen} />
             </Tab.Navigator>
