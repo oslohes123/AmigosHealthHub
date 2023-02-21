@@ -100,9 +100,9 @@ export default function DietDashboardScreen({ navigation }) {
   //   navigation.navigate('foodSearch');
   // }
 
-  const pressHandler1 = () => {
-    navigation.navigate('Settings');
-  }
+  // const pressHandler1 = () => {
+  //   navigation.navigate('Settings');
+  // }
 
   const pressHandler2 = (name, calories, Protein, Carbs, Fat, Sugars, Vitamins, Fibre) => {
     navigation.navigate('Food Details', { name, calories, Protein, Carbs, Fat, Sugars, Vitamins, Fibre });
@@ -123,11 +123,11 @@ export default function DietDashboardScreen({ navigation }) {
     <SafeAreaView style={[styles.container, {backgroundColor:theme.background}]}>
       
       <Header />
-      <View style={styles.icon}>
+      {/* <View style={styles.icon}>
         <TouchableOpacity>
           <Feather name="settings" size={24} color={theme.color} onPress={pressHandler1} />
         </TouchableOpacity>
-      </View>
+      </View> */}
       {/* <View>
         <Search submitHandler={submitHandler} />
       </View> */}
@@ -253,11 +253,11 @@ const styles = StyleSheet.create({
   //   flexDirection: 'row',
   //   marginTop: 250,
   // },
-  icon: {
-    position: 'absolute',
-    top: 27,
-    right: 20,
-  },
+  // icon: {
+  //   position: 'absolute',
+  //   top: 27,
+  //   right: 20,
+  // },
 
 
   input: {
