@@ -25,6 +25,17 @@ async function workoutPlanNameFind(name){
     else return {mssg: "This name has not been saved"}
 }
 
+async function trackWeightWork(req, res){
+    const supabase = require('../dist/utils/supabaseSetUp.js');
+    const supabaseQueryClass = require('../dist/utils/databaseInterface.js');
+    const supabaseQuery = new supabaseQueryClass()
+    const {data: insertData, error: insertError} = await supabaseQuery.insert(supabase, "Completed Workouts", {Type: req.type, Name:req.name, Muscle:req.muscle, Difficulty: req.difficulty, Instructions: req.instructions});
+    if(insertError) console.error(insertError);
+    else console.log({insertData})
+    
+    return res.json({'search': data})
+}
+
 async function addTrackedWorkout(name, type, muscle, difficulty, instructions){
     const supabase = require('../dist/utils/supabaseSetUp.js');
     const supabaseQueryClass = require('../dist/utils/databaseInterface.js');
@@ -33,6 +44,19 @@ async function addTrackedWorkout(name, type, muscle, difficulty, instructions){
     if(insertError) console.error(insertError);
     else console.log({insertData})
     return data
+    // do a for loop here
+}
+
+
+async function addCustomExercise(name, type, muscle, difficulty, instructions){
+    const supabase = require('../dist/utils/supabaseSetUp.js');
+    const supabaseQueryClass = require('../dist/utils/databaseInterface.js');
+    const supabaseQuery = new supabaseQueryClass()
+    const {data: insertData, error: insertError} = await supabaseQuery.insert(supabase, "Exercises", {Type: type, Name:name, Muscle:muscle, Difficulty: difficulty, Instructions: instructions});
+    if(insertError) console.error(insertError);
+    else console.log({insertData})
+    return data
+    // do a for loop here
 }
 
 async function searchDB(name){
