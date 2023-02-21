@@ -17,12 +17,12 @@ const getUserInfo = async () => {
     const response = await fetch(
         `http://${ip_address}:${port}/api/user/getInfo`,
         {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                authorization: `Bearer ${token}`
+                authorization: `Bearer ${token}`,
+                email: email,
             },
-            body: JSON.stringify({ email })
         }
     );
     if (!response.ok) {
