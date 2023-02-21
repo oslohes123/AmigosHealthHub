@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react';
-import { StyleSheet, View, Text, Switch} from 'react-native';
+import { StyleSheet, View, Text, Switch, SafeAreaView} from 'react-native';
 // import NavBar from '../../components/NavBar';
 import { EventRegister } from 'react-native-event-listeners'
 import themeContext from '../../theme/themeContext';
@@ -9,27 +9,31 @@ export default function Settings() {
     const [darkMode, setDarkMode] = useState(false)
     
     return (
-        <View style={[styles.container, {backgroundColor:theme.background}]}>
-            <Text style={[styles.text, {color:theme.color}]}>Dark Mode</Text>
-                <Switch
-                    value={darkMode}
-                    onValueChange={(value) => {
-                        setDarkMode(value);
-                        EventRegister.emit('ChangeTheme', value)
-                    }}
-                />
-            {/* <View style={styles.nav}>
-                <NavBar />
-            </View> */}
-        </View>
+        <SafeAreaView style={[styles.container, {backgroundColor:theme.background}]}>
+            <View style={styles.themeView}>
+                <Text style={[styles.text, {color:theme.color}]}>Dark Mode</Text>
+                    <Switch
+                        value={darkMode}
+                        onValueChange={(value) => {
+                            setDarkMode(value);
+                            EventRegister.emit('ChangeTheme', value)
+                        }}
+                    />
+            </View>
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
+        // alignItems: 'center',
+        // justifyContent: 'center'
+    },
+    themeView: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: '10%'
     },
     text: {
         fontSize: 30
