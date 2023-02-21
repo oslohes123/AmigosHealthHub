@@ -10,6 +10,7 @@ import FitnessNavigationScreen from './screens/Fitness/routes/FitnessNavigation'
 import DashboardScreen from "./screens/MainDashboard/DashboardScreen";
 import MentalScreen from './screens/Mental/manager'
 import DietNavigation from "./screens/Diet/DietNavigation"
+import Settings from "./screens/Diet/Settings";
 
 import theme from "./theme/theme";
 import themeContext from "./theme/themeContext";
@@ -19,6 +20,7 @@ const fitnessName = 'Fitness';
 const dashboardName = "Dashboard";
 const dietName = "Diet";
 const mentalName = "Mental"
+const settingsName = "Settings"
 
 const Tab = createBottomTabNavigator();
 
@@ -55,6 +57,8 @@ export default function MainContainer() {
                                 iconName = focused ? 'nutrition' : 'nutrition-outline'
                             } else if (routeName === mentalName) {
                                 iconName = focused ? 'happy' : 'happy-outline'
+                            } else if (routeName === settingsName) {
+                                iconName = focused ? 'settings' : 'settings-outline'
                             }
 
 
@@ -67,9 +71,10 @@ export default function MainContainer() {
                 })}>
 
                 <Tab.Screen name={dietName} component={DietNavigation} />
-                <Tab.Screen name={dashboardName} component={DashboardScreen} />
                 <Tab.Screen name={fitnessName} component={FitnessNavigationScreen} />
+                <Tab.Screen name={dashboardName} component={DashboardScreen} />
                 <Tab.Screen name={mentalName} component={MentalScreen} />
+                <Tab.Screen name={settingsName} component={Settings} />
             </Tab.Navigator>
         </NavigationContainer>
 
