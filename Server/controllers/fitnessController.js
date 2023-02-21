@@ -1,5 +1,3 @@
-const supabase = require('../dist/utils/supabaseSetUp.js');
-
 const port = process.env.PORT;
 const ipaddress = process.env.IP_ADDRESS;
 function APIcallToArray(data){
@@ -12,11 +10,26 @@ function APIcallToArray(data){
     }
     return arr
 }
+
+async function workoutPlanNameFind(name){
+    const supabase = require('../dist/utils/supabaseSetUp.js');
+    const supabaseQueryClass = require('../dist/utils/databaseInterface.js');
+    const supabaseQuery = new supabaseQueryClass()
+    const {data,error} = await supabaseQuery.findrow(supabase, "WorkoutPlans", "WorkoutPlanName", name); //search Supabase database for exercise
+    if(error) console.error(error);
+    else if (data != null){
+        console.log({data});
+        //return info on exercise
+        return data
+    }
+    else return {mssg: "This name has not been saved"}
+}
+
 async function searchDB(name){
     const supabase = require('../dist/utils/supabaseSetUp.js');
     const supabaseQueryClass = require('../dist/utils/databaseInterface.js');
     const supabaseQuery = new supabaseQueryClass()
-    const {data,error} = await checker.findrow(supabase, "Exercises", "Name", name); //search Supabase database for exercise
+    const {data,error} = await supabaseQuery.findrow(supabase, "Exercises", "Name", name); //search Supabase database for exercise
     if(error) console.error(error);
     else if (data != null){
         console.log({data});
@@ -24,25 +37,39 @@ async function searchDB(name){
         return data
     }
     else {
-        const req = require('req');
+        const res = await fetch(`https://api.api-ninjas.com/v1/exercises?name=${name}`, {
+            method: 'GET',
+            headers: {
+                'X-Api-key': 'MJIJot8zJvjqN881cfM7/A==uUVjsJou0izgtlB5',
+                'Content-Type': 'application/json'
+            }      
+        })
+        if (res.ok){
+        const resjson = await res.json()
+        return resjson
+        }
+        else{
+            return {mssg: "The request for the Exercise API failed"}
+        }
+//         req.get({
+//         url: `https://api.api-ninjas.com/v1/exercises?name=${name}`, //API call
+//         headers: {
+//     'X-Api-Key': 'YOUR_API_KEY'
+//   },
+}
 
-        req.get({
-        url: 'https://api.api-ninjas.com/v1/exercises?name=' + name, //API call
-        headers: {
-    'X-Api-Key': 'YOUR_API_KEY'
-  },
-},
-  function(error, response, body) {
-    if(error) return console.error('Request failed:', error);
-    else if(response.statusCode != 200) return console.error('Error:', response.statusCode, body.toString('utf8'));
-    else console.log(body)
-});
-    const {data: insertData, error: insertError} = await supabaseQuery.insert(supabase, "Exercises", {Type: APIcallToArray(data)[1], Name:name, Muscle:APIcallToArray(data)[2], Difficulty: APIcallToArray(data)[4], Instructions: APIcallToArray(data[5])});
+//   function(error, response, body) {
+//     if(error) return console.error('Request failed:', error);
+//     else if(response.statusCode != 200) return console.error('Error:', response.statusCode, body.toString('utf8'));
+//     else console.log(body)
+// });
+    const {data: insertData, error: insertError} = await supabaseQuery.insert(supabase, "Exercises", {Type: APIcallToArray(resjson)[1], Name:name, Muscle:APIcallToArray(resjson)[2], Difficulty: APIcallToArray(resjson)[4], Instructions: APIcallToArray(resjson[5])});
     if(insertError) console.error(insertError);
     else console.log({insertData})
-    }
+    
     return data
 }
+
 
 
 //for (var i = 0; i < dict.length-1; i++) {
@@ -60,9 +87,10 @@ async function searchDB(name){
 //}
 //}
 
-const workout = []
-function addExercise(data){
-    workout.push(data)
+
+function addExercise(req, res, data){
+    const workoutlist = req.workout
+    return res.workoutlist.push(data)
 }
 
 function getOccurrences(arr, v){
@@ -98,6 +126,9 @@ function returnexercises(data){
 }
 
 function mostRecentData(){
+    const supabase = require('../dist/utils/supabaseSetUp.js');
+    const supabaseQueryClass = require('../dist/utils/databaseInterface.js');
+    const supabaseQuery = new supabaseQueryClass()
     const {data, error} = supabaseQuery.mostRecent(supabase)
     if (data){
         return returnexercises(data)
@@ -108,17 +139,14 @@ function mostRecentData(){
 }
 
 function fitnessMainPage(req,res){
-    res.send("Fitness Page")
-    res.send("Over here you can track a single exercise or create a workout plan.")
+    return res.status(200).json({'mssg': "Fitness Page. Over here you can track a single exercise or create a workout plan."})
 }
 function trackExercises(req, res){
-    res.send("Track Exercises")
-    res.send("Select a single exercise to track")
-    res.json(mostRecentData)
+    return res.status(200).json({'mssg': "Track Exercises. Over here you can track a single exercise.", 'search': mostRecentData()})
 }
 function workoutPlans(req, res){
-    res.send("Workout Plans")
-    res.json(addExercise(searchExercise(req, res)))
+    return res.status(200).json({'mssg': 'Workout Plans. Over here you can access your own workout plans.', 'search': addExercise(searchExercise(req, res))})
+    
 }
 function searchExercise(req, res){
     var isValid = true
