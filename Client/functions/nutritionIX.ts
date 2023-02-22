@@ -1,5 +1,6 @@
 import {createClient} from '@supabase/supabase-js'
 import {anonKey, searchMethods, supabaseURL} from "../constants";
+import 'react-native-url-polyfill/auto';
 import instantSearchInterface from "../interfaces/instantFoodSearchInterface";
 import BrandedSearchInterface from "../interfaces/brandedSearchInterface";
 import NutrientSearchInterface from "../interfaces/nutrientSearchInterface";
