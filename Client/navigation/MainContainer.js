@@ -33,7 +33,7 @@ export default function MainContainer() {
             setDarkMode(data)
         })
         return () => {
-            EventRegister.removeAllListeners(listener)
+            EventRegister.removeEventListener(listener)
         }
     }, [darkMode])
 
