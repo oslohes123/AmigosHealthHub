@@ -7,6 +7,8 @@ import themeContext from '../../theme/themeContext';
 export default function Settings() {
     const theme = useContext(themeContext)
     const [darkMode, setDarkMode] = useState(false)
+
+    const [showHeader, setShowHeader] = useState(false) 
     
     return (
         <SafeAreaView style={[styles.container, {backgroundColor:theme.background}]}>
@@ -24,7 +26,13 @@ export default function Settings() {
             
             <View style={styles.CalorieView}>
                 <Text style={[styles.text, {color:theme.color}]}>Calories to goal</Text>
-                <Switch/>
+                <Switch
+                    value={showHeader}
+                    onValueChange={(value) => {
+                        setShowHeader(value);
+                        EventRegister.emit('ChangeHeader', value)
+                    }}
+                />
             </View>
         </SafeAreaView>
     );
