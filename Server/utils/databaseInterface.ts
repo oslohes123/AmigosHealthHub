@@ -85,7 +85,10 @@ export class supabaseQueryClass implements dbInterface {
         .insert(dataToBeInserted)
         .select();
 
-      if (error) console.error(error);
+      if (error){ 
+        console.error(error);
+        return {error}
+      }
       else console.log({ data });
 
       return { data };

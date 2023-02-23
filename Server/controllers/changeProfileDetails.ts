@@ -13,7 +13,7 @@ export const changeStats = async(req:Request,res:Response) => {
 
     console.log(JSON.stringify(req.body));
     
-    if(!firstName || !lastName || !prevEmail||!newEmail||!age){
+    if(!firstName || !lastName ||!newEmail||!age){
         return res.status(400).json({mssg:"All Fields Must Be Filled"});
     }
 
