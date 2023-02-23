@@ -1,19 +1,19 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react'
 import DashboardScreen from '../DashboardScreen';
-import SleepScreen from '../../Sleep/SleepScreen';
+// import SleepScreen from '../../Sleep/SleepScreen';
 
 const Stack = createStackNavigator()
 
 //Screen Names
 const dashboardName = 'Dashboard Home'
-const sleepName = 'Sleep'
+// const sleepName = 'Sleep'
 
 export default function DashboardNavigation({ navigation }) {
   return (
     <Stack.Navigator initialRouteName={dashboardName} screenOptions={{ headerShown: false, headerTitleStyle: styles.header }}>
         <Stack.Screen name={dashboardName} component={DashboardScreen} />
-        <Stack.Screen name={sleepName} component={SleepScreen} />
+        {/* <Stack.Screen name={sleepName} component={SleepScreen} /> */}
     </Stack.Navigator>
   )
 }
