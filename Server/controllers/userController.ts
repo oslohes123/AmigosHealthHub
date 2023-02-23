@@ -20,6 +20,7 @@ async function getUser(databaseQuery: any, email: string){
     return userRows
 
 }
+
 export const loginUser = async(req:Request,res:Response) => {
     console.log(req);
     console.log(JSON.stringify(req.body));
@@ -51,15 +52,15 @@ export const loginUser = async(req:Request,res:Response) => {
     const match = await bcrypt.compare(password, data[0].password);
     console.log(`password: ${password}`)
    if(match){
-    const token = createToken(data[0].id);
-    console.log(`token: ${token}`);
-    return res.status(200).json({firstName: data[0].firstName,email: data[0].email, token, mssg:"Successful Login"});
+                
+            const token = createToken(data[0].id);
+            console.log(`token: ${token}`);
+            return res.status(200).json({firstName: data[0].firstName,email: data[0].email, token, mssg:"Successful Login"});
    }
    else {
     console.log("Incorrect Password");
     return res.status(400).json({mssg:"Incorrect Password"});
     }
-
 }
 
 
@@ -154,39 +155,3 @@ export const getInfo = async (req:Request, res:Response) => {
 // module.exports.signupUser = signupUser;
 // module.exports.createJWToken = createJWToken;
 export {};
-// const loginUser = async(req,res,databaseQuery) => {
-
-//     const {email, password} = req.body;
-//     console.log(req.body);
-//     console.log(`email: ${email}`);
-//     console.log(`password: ${password}`);
-//     if(!email || !password){
-//         return res.status(400).json({mssg: "All Fields Must Be Filled"})
-//     }
-
-//     // const{data, error} = await supabaseQuery.selectWhere(supabase,'User'
-//     // ,'email',email);
-//     const {data,error} = await getUser(databaseQuery,email);
-
-//     if(error){
-//         console.error(error);
-//         return res.status(400).json({mssg: error.message});
-//        }
-    
-//     if(data.length === 0){
-//         console.log("Incorrect Email");
-//         return res.status(400).json({mssg: "Incorrect Email"})
-//     }
-
-//     const match = await bcrypt.compare(password, data[0].password);
-//    if(match){
-//     const token = createJWToken(data[0].id);
-//     console.log(`token: ${token}`);
-//     return res.status(200).json({email: data[0].email, token, mssg:"Successful Login"});
-//    }
-//    else {
-//     console.log("Incorrect Password");
-//     return res.status(400).json({mssg:"Incorrect Password"});
-//     }
-
-// }

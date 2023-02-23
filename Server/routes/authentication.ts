@@ -14,6 +14,6 @@ import {loginUser, signupUser, getInfo} from '../controllers/userController'
 authRouter.post('/login', loginUser);
 
 authRouter.post('/sign_up', signupUser);
-authRouter.get('/getInfo', getInfo);
+// authRouter.get('/getInfo', getInfo);
 export default authRouter;
 export {}

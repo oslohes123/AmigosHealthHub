@@ -108,6 +108,9 @@ export const changePassword = async(req:Request,res:Response) => {
     }
 }
 
+/**
+ * Implementation needs to change to delete this user from all tables
+ */
 
 export const deleteAccount = async(req:Request, res:Response) =>{
      const {email, password}= req.body;
