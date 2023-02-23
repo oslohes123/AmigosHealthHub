@@ -10,7 +10,19 @@ export default function Settings() {
     const theme = useContext(themeContext)
     const [darkMode, setDarkMode] = useState(false)
 
-    const [showHeader, setShowHeader] = useState(false) 
+    const [showHeader, setShowHeader] = useState(false)
+    
+    const [goal, setGoal] = useState('');
+
+    const handleButtonPress = () => {
+        if (goal === '') {
+            alert('Please enter new calorie goal');
+        } else if (isNaN(goal)) {
+            alert('Calorie should be a number');
+        } else {
+            setGoal('');
+        }
+    }
     
     return (
         <SafeAreaView style={[styles.container, {backgroundColor:theme.background}]}>
@@ -42,8 +54,12 @@ export default function Settings() {
                     placeholder='Add new calorie goal'
                     placeholderTextColor={theme.color}
                     style={[styles.input, {borderColor: theme.color}, {color: theme.color}]}
+                    keyboardType="numeric"
+                    value={goal}
+                    onChangeText={setGoal}
+                    clearButtonMode='always'
                 />
-                <GreenButton height={'23%'} width={'50%'}/>
+                <GreenButton text='Set Goal' buttonFunction={handleButtonPress} height={60} width={220}/>
             </View>
         </SafeAreaView>
     );
