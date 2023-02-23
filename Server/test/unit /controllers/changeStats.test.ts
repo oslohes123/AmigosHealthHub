@@ -213,7 +213,7 @@ const mockResponse = () => {
 
     t.true(res.status.calledWith(200))
     t.true(res.json.calledWith({mssg: "Successful New Email"}));
-    t.true(data[0].email == newEmail);
+    t.true(data[0].email === newEmail);
     
 
   

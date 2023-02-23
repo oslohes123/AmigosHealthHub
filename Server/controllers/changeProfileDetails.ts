@@ -66,6 +66,10 @@ export const changeStats = async(req:Request,res:Response) => {
 export const changePassword = async(req:Request,res:Response) => {
     const {email, oldPassword , newPassword} = req.body;
 
+    if(!email || !oldPassword ||!newPassword){
+        return res.status(400).json({mssg:"All Fields Must Be Filled"});
+    }
+
     console.log(JSON.stringify(req.body));
     if(!validator.isStrongPassword(newPassword)){
         console.log("Password Structure must have atleast 8 characters, 1 lower case,1 upper case, 1 number, 1 symbol")
@@ -104,7 +108,7 @@ export const changePassword = async(req:Request,res:Response) => {
 
     else{
         console.log("data.length<1 in changeProfileDetails")
-        return res.status(400).json({mssg: "Email doesn't exist in our db"});
+        return res.status(400).json({mssg: "Email doesn't exist in our database"});
     }
 }
 
