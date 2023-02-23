@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, Switch, SafeAreaView, TextInput} from 'react-na
 // import NavBar from '../../components/NavBar';
 import { EventRegister } from 'react-native-event-listeners'
 import themeContext from '../../theme/themeContext';
+import GreenButton from '../../components/GreenButton';
 import theme from '../../theme/theme';
 
 export default function Settings() {
@@ -42,6 +43,7 @@ export default function Settings() {
                     placeholderTextColor={theme.color}
                     style={[styles.input, {borderColor: theme.color}, {color: theme.color}]}
                 />
+                <GreenButton height={'23%'} width={'50%'}/>
             </View>
         </SafeAreaView>
     );
