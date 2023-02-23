@@ -156,9 +156,9 @@ export default function DietDashboardScreen({ navigation }) {
           clearButtonMode='always'
           value={text}
           onChangeText={(value) => setText(value)}
-          style={[styles.input, {backgroundColor:theme.color}]}
+          style={[styles.input, {borderColor: theme.color}, {color: theme.color}]}
           placeholder='Find food...' 
-          placeholderTextColor={theme.background}/>
+          placeholderTextColor={theme.color}/>
         <View style={styles.chart}>
         {text.length == 0 && (
           <TouchableOpacity style={styles.pieWidget} onPress={pressHandler}>
@@ -294,6 +294,7 @@ const styles = StyleSheet.create({
     marginTop: -190,
     marginBottom: 20,
     position: 'absolute',
+    borderWidth: 1
     //borderWidth: 1,
     //borderColor: '#CCCCCC',
   },
