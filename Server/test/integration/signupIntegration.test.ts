@@ -1,13 +1,13 @@
 import app from "../../index";
 const request = require('supertest');
 const test = require('ava');
-import { signupUser } from "../../controllers/userController";
 import {v4 as uuidv4} from 'uuid';
 const bcrypt = require('bcrypt');
 import supabase from "../../utils/supabaseSetUp";
 import { supabaseQueryClass } from "../../utils/databaseInterface";
 const supabaseQuery = new supabaseQueryClass();
 
+const signupRoute = '/api/user/sign_up'
 
 let alreadyExistsEmail: string;
 let hashedPassword: string;
@@ -31,10 +31,30 @@ test.after(async(t: any) => {
   await supabaseQuery.deleteFrom(supabase, 'User', 'email', alreadyExistsEmail);
 })
 
+// interface userFields {
+//   firstName:string,
+//   lastName: string,
+//   email: string,
+//   password: string,
+//   age: number
+// }
+
+// let testUser: userFields = {
+//       firstName: "John",
+//       lastName: "Doe",
+//       email:"johndoe@gmail.com",
+//       password: "CorrectPassword123!",
+//       age: 0,
+// };
+// function testUserObj(unwantedField){
+//   const {testUser, ...newObj} = testUser;
+//   return newObj;
+// }
+
 
 test("POST /api/user/sign_up with no fields", async (t: any) => {
     const response = await request(app)
-   .post('/api/user/sign_up')
+   .post(signupRoute)
    .send({});
  
    t.true(response.status === 400)
@@ -44,7 +64,7 @@ test("POST /api/user/sign_up with no fields", async (t: any) => {
 
  test("POST /api/user/sign_up with missing email", async (t: any) => {
     const response = await request(app)
-   .post('/api/user/sign_up')
+   .post(signupRoute)
    .send({
     firstName: "John",
       lastName: "Doe",
@@ -59,7 +79,7 @@ test("POST /api/user/sign_up with no fields", async (t: any) => {
 
  test("POST /api/user/sign_up with missing password", async (t: any) => {
     const response = await request(app)
-   .post('/api/user/sign_up')
+   .post(signupRoute)
    .send({
     firstName: "John",
       lastName: "Doe",
@@ -74,7 +94,7 @@ test("POST /api/user/sign_up with no fields", async (t: any) => {
 
  test("POST /api/user/sign_up with missing last name", async (t: any) => {
     const response = await request(app)
-   .post('/api/user/sign_up')
+   .post(signupRoute)
    .send({
     firstName: "John",
       email:"johndoe@gmail.com",
@@ -89,7 +109,7 @@ test("POST /api/user/sign_up with no fields", async (t: any) => {
 
  test("POST /api/user/sign_up with missing first name", async (t: any) => {
     const response = await request(app)
-   .post('/api/user/sign_up')
+   .post(signupRoute)
    .send({
     email:"johndoe@gmail.com",
     lastName: "Doe",
@@ -104,7 +124,7 @@ test("POST /api/user/sign_up with no fields", async (t: any) => {
 
  test("POST /api/user/sign_up with missing age", async (t: any) => {
     const response = await request(app)
-   .post('/api/user/sign_up')
+   .post(signupRoute)
    .send({
       firstName: "John",
       lastName: "Doe",
@@ -121,7 +141,7 @@ test("POST /api/user/sign_up with no fields", async (t: any) => {
 
  test("POST /api/user/sign_up with invalid email structure", async (t: any) => {
     const response = await request(app)
-   .post('/api/user/sign_up')
+   .post(signupRoute)
    .send({
     firstName: 'John',
     lastName: 'Doe',
@@ -137,7 +157,7 @@ test("POST /api/user/sign_up with no fields", async (t: any) => {
 
  test("POST /api/user/sign_up with  first or last name containing non-letter characters", async (t: any) => {
     const response = await request(app)
-   .post('/api/user/sign_up')
+   .post(signupRoute)
    .send({
     firstName: 'John1',
       lastName: 'Doe2',
@@ -153,7 +173,7 @@ test("POST /api/user/sign_up with no fields", async (t: any) => {
 
  test("POST /api/user/sign_up with weak password", async (t: any) => {
     const response = await request(app)
-   .post('/api/user/sign_up')
+   .post(signupRoute)
    .send({
     firstName: 'John',
       lastName: 'Doe',
@@ -169,7 +189,7 @@ test("POST /api/user/sign_up with no fields", async (t: any) => {
 
  test("POST /api/user/sign_up with already existing email", async (t: any) => {
     const response = await request(app)
-   .post('/api/user/sign_up')
+   .post(signupRoute)
    .send({
     firstName: "Different",
       lastName: "Name",
@@ -188,7 +208,7 @@ test("POST /api/user/sign_up with no fields", async (t: any) => {
     const randomEmail = `${uuid}@gmail.com`
 
     const response = await request(app)
-   .post('/api/user/sign_up')
+   .post(signupRoute)
    .send({
     firstName: "Jane",
       lastName: "Doe",
@@ -202,4 +222,6 @@ test("POST /api/user/sign_up with no fields", async (t: any) => {
    t.true(response.body['email'] == randomEmail)
    t.true(response.body['firstName'] === "Jane" )
    t.true(response.body['mssg'] === "Successful sign up!")
+
+   await supabaseQuery.deleteFrom(supabase, 'User', 'email', randomEmail);
  })

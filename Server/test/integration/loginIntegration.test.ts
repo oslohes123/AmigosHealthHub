@@ -7,7 +7,10 @@ const bcrypt = require('bcrypt');
 import supabase from "../../utils/supabaseSetUp";
 import { supabaseQueryClass } from "../../utils/databaseInterface";
 const supabaseQuery = new supabaseQueryClass();
-
+/**
+ * Refactor using objects, interfaces to prevent repeated code. 
+ */
+const loginRoute = '/api/user/login'
 let randomEmail:string;
 
 test.before(async (t : any) => {
@@ -31,7 +34,7 @@ test.after(async() => {
 
 test("POST /api/user/login with missing email", async (t: any) => {
     const response = await request(app)
-   .post('/api/user/login')
+   .post(loginRoute)
    .send({password: "Password123"});
  
    t.true(response.status === 400)
@@ -42,7 +45,7 @@ test("POST /api/user/login with missing email", async (t: any) => {
 
 test("POST /api/user/login with missing password", async (t: any) => {
     const response = await request(app)
-   .post('/api/user/login')
+   .post(loginRoute)
    .send({email:"testemail@gmail.com"});
  
    t.true(response.status === 400)
@@ -52,7 +55,7 @@ test("POST /api/user/login with missing password", async (t: any) => {
 
  test("POST /api/user/login with missing password and email", async (t: any) => {
     const response = await request(app)
-   .post('/api/user/login')
+   .post(loginRoute)
    .send({});
  
    t.true(response.status === 400)
@@ -63,7 +66,7 @@ test("POST /api/user/login with missing password", async (t: any) => {
 
  test("POST /api/user/login with non-existent email", async (t: any) => {
     const response = await request(app)
-   .post('/api/user/login')
+   .post(loginRoute)
    .send({
     email: `${uuidv4()}@gmail.com`,
     password:`CorrectPassword123!`
@@ -76,7 +79,7 @@ test("POST /api/user/login with missing password", async (t: any) => {
 
  test("POST /api/user/login with correct email and password", async (t: any) => {
     const response = await request(app)
-   .post('/api/user/login')
+   .post(loginRoute)
    .send({
     email: randomEmail,
     password:`CorrectPassword123!`

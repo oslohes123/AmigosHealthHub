@@ -11,6 +11,7 @@ import supabase from "../../utils/supabaseSetUp";
 import { supabaseQueryClass } from "../../utils/databaseInterface"; 
 const supabaseQuery = new supabaseQueryClass();
 
+const getInfoRoute = '/api/user/getInfo'
 
 let existingEmail: string;
 let hashedPassword: string;
@@ -46,7 +47,7 @@ test.after(async(t: any) => {
 
 test("GET /api/user/getInfo with no fields", async (t: any) => {
     const response = await request(app)
-   .get('/api/user/getInfo')
+   .get(getInfoRoute)
    .set("authorization", token)
    .send({});
  
@@ -60,7 +61,7 @@ test("GET /api/user/getInfo with no fields", async (t: any) => {
  test("GET /api/user/getInfo with existing user", async (t: any) => {
     const randomEmail = `${uuidv4()}@gmail.com`
     const response = await request(app)
-   .get('/api/user/getInfo')
+   .get(getInfoRoute)
    .set({"authorization": token, "email": existingEmail})
     const expectedResponse = JSON.stringify({
         "firstName": "Already",
