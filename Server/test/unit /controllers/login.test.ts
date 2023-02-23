@@ -81,7 +81,7 @@ const mockResponse = () => {
             
         const req = mockRequest({
             email: `${uuidv4()}@gmail.com`,
-            password:`Password123`
+            password:`CorrectPassword123!`
         });
         const res = mockResponse();
 
