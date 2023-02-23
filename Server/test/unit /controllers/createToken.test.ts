@@ -3,12 +3,11 @@ const test = require('ava');
 import { createToken } from '../../../controllers/userController';
 const jwt = require('jsonwebtoken');
 import {v4 as uuidv4} from 'uuid';
-const sinon = require('sinon');
 
 test('createToken results in legitimate token',(t: any) => {
 
     const uuid = uuidv4();
-    const token = createToken(uuid); //default value is correct secret in .env
+    const token = createToken(uuid); //default second param is correct secret in .env
     
     try{
        //if jwt doesn't verify, it throws an error

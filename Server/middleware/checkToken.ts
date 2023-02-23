@@ -22,25 +22,40 @@ export const checkToken = async(req:Request, res:Response,next:NextFunction) => 
 //  console.log(req.headers)
  //NO authorisation header
  if(!authorization){    
-    return res.status(401).json({error: "No Authorisation Header"})
+    return res.status(401).json({mssg: "No Authorization Header"})
  }
+ console.log(`authorization: ${authorization}`)
+ console.log(`authorization.indexOf(' '): ${authorization.indexOf(' ')}`)
+ console.log(`authorization.includes("bearer"): ${authorization.includes("bearer")}`)
 
- //Extract token from bearer token
- const token = authorization.split(' ')[1];
- console.log(`token: ${token}`);
-
- try{
-   console.log(`In checkToken, ${JSON.stringify(jwtToken.verify(token, process.env.JWTSECRET))}`)
-   const {id} =  jwtToken.verify(token, process.env.JWTSECRET);
-
-   await supabaseQuery.selectWhere(supabase, 'User','id', id, 'id');
-
-    next();
+ if((authorization.indexOf(' ') === -1)  || (!authorization.includes("bearer"))){
+   return res.status(400).json({mssg: "Authorization header must have format 'bearer token'."})
  }
- catch(error){
-    console.error(`Error caught by me, ${error}`);
-    return res.status(401).json({error:"Request Failed due to Authentication"})
- }
+ 
+ else{
+   //Extract token from bearer token
+   const token = authorization.split(' ')[1];
+   console.log(`token: ${token}`);
+
+   try{
+      console.log(`In checkToken, ${JSON.stringify(jwtToken.verify(token, process.env.JWTSECRET))}`)
+      const {id} =  jwtToken.verify(token, process.env.JWTSECRET);
+
+     const {data, error}: any =  await supabaseQuery.selectWhere(supabase, 'User','id', id, 'id');
+
+      if(data.length === 0){
+         return res.status(401).json({mssg:"Request Failed due to Authentication"})
+      }
+      else{
+         console.log("IN NEXT LN50")
+      next();
+      }
+   }
+   catch(error){
+      console.error(`Error caught by me, ${error}`);
+      return res.status(401).json({mssg:"Request Failed due to Authentication"})
+   }
+}
 }
 
 export {};
