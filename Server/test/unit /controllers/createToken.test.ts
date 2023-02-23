@@ -7,7 +7,7 @@ import {v4 as uuidv4} from 'uuid';
 test('createToken results in legitimate token',(t: any) => {
 
     const uuid = uuidv4();
-    const token = createToken(uuid); //default second param is correct secret in .env
+    const token = createToken(uuid).split(' ')[1]; //default second param is correct secret in .env
     
     try{
        //if jwt doesn't verify, it throws an error
@@ -22,7 +22,7 @@ test('createToken results in legitimate token',(t: any) => {
 test('createToken with incorrect secret results in illegitimate token ',(t: any) => {
    const uuid = uuidv4();
    const secret = uuidv4();
-   const token = createToken(uuid, secret);
+   const token = createToken(uuid, secret).split(' ')[1];
    
    t.throws(() => {
     jwt.verify(token, process.env.JWTSECRET)

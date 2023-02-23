@@ -10,7 +10,7 @@ const supabaseQuery = new supabaseQueryClass();
 
 //Create jwtToken
 export function createToken(id:string, secret=process.env.JWTSECRET){
-    return jwttoken.sign({id},secret,{expiresIn: '1h'});
+    return 'bearer ' + jwttoken.sign({id},secret,{expiresIn: '1h'});
 }
 
 async function getUser(databaseQuery: any, email: string){

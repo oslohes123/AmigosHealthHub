@@ -92,7 +92,7 @@ test('checkToken with missing authorization header results in error', async (t: 
     const token = createToken(uuid)
   
     const req = mockRequest({
-        authorization: `bearer ${token}`
+        authorization: token
     });
     const res = mockResponse();
     const next = sinon.fake()
@@ -126,7 +126,7 @@ test('checkToken with missing authorization header results in error', async (t: 
     console.log(`data[0].id : ${data[0].id}`)
     const token = createToken(data[0].id)
     const req = mockRequest({
-        authorization: `bearer ${token}`
+        authorization: token
     });
     const res = mockResponse();
     const next = sinon.fake()
