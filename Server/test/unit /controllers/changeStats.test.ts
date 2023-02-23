@@ -129,7 +129,7 @@ const mockResponse = () => {
     t.true(res.json.calledWith({mssg: 'All Fields Must Be Filled'}));
   
   });
-  test('sign up with missing newEmail should return error', async (t: any) => {
+  test('changeStats with missing newEmail should return error', async (t: any) => {
     const req = mockRequest({
         firstName: "John",
         lastName: "Doe",
@@ -195,7 +195,7 @@ const mockResponse = () => {
   
   });
 
-  test('changeStats with new available email results in ', async (t: any) => {
+  test('changeStats with new available email results in success', async (t: any) => {
     const req = mockRequest({
         firstName:"Second",
         lastName: "User",
