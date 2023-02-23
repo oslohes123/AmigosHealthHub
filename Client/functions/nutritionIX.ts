@@ -1,14 +1,14 @@
 import {createClient} from '@supabase/supabase-js'
 import {anonKey, searchMethods, supabaseURL} from "../constants";
-import 'react-native-url-polyfill/auto';
 import instantSearchInterface from "../interfaces/instantFoodSearchInterface";
 import BrandedSearchInterface from "../interfaces/brandedSearchInterface";
 import NutrientSearchInterface from "../interfaces/nutrientSearchInterface";
 import SearchInterface from "../interfaces/searchInterface";
 
 
+
 // Create a single supabase client for interacting with your database
-const supabase = createClient(supabaseURL, anonKey)
+export const supabase = createClient(supabaseURL, anonKey)
 
 export class nutritionIX implements SearchInterface{
     public async instantSearch(input:string):Promise<instantSearchInterface>{
