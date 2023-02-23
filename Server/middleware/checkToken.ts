@@ -2,14 +2,12 @@ const jwtToken = require('jsonwebtoken');
 const dotenv = require("dotenv");
 import{Request, Response, NextFunction} from 'express'
 dotenv.config();
-
 import supabase from '../utils/supabaseSetUp';
 import { supabaseQueryClass } from '../utils/databaseInterface';
 const supabaseQuery = new supabaseQueryClass();
 
 /**
  * Middleware that checks that every request has an authenticated user
- * 
  * - Extract jwtToken from authorization header in the request, and if the jwtToken is verified, pass on 
  * the request. 
  */
