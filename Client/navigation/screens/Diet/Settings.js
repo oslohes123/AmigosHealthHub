@@ -1,8 +1,9 @@
 import React, {useState, useContext} from 'react';
-import { StyleSheet, View, Text, Switch, SafeAreaView} from 'react-native';
+import { StyleSheet, View, Text, Switch, SafeAreaView, TextInput} from 'react-native';
 // import NavBar from '../../components/NavBar';
 import { EventRegister } from 'react-native-event-listeners'
 import themeContext from '../../theme/themeContext';
+import theme from '../../theme/theme';
 
 export default function Settings() {
     const theme = useContext(themeContext)
@@ -34,6 +35,14 @@ export default function Settings() {
                     }}
                 />
             </View>
+
+            <View styles={styles.changeGoal}>
+                <TextInput
+                    placeholder='Add new calorie goal'
+                    placeholderTextColor={theme.color}
+                    style={[styles.input, {borderColor: theme.color}, {color: theme.color}]}
+                />
+            </View>
         </SafeAreaView>
     );
 }
@@ -55,9 +64,16 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 30
     },
-    // nav: {
-    //     position: 'absolute',
-    //     top: 700,
-    //     alignSelf: 'center'
-    // }
+    changeGoal: {
+        
+    },
+    input: {
+        alignSelf: 'center',
+        marginTop: '15%',
+        fontSize: 16,
+        borderWidth: 1,
+        padding: '3%',
+        width: '70%',
+        borderRadius: 25,
+    }
 })
