@@ -25,6 +25,20 @@ async function workoutPlanNameFind(name){
     else return {mssg: "This name has not been saved"}
 }
 
+async function trackedWorkoutsnNameFind(name){
+    const supabase = require('../dist/utils/supabaseSetUp.js');
+    const supabaseQueryClass = require('../dist/utils/databaseInterface.js');
+    const supabaseQuery = new supabaseQueryClass()
+    const {data,error} = await supabaseQuery.findrow(supabase, "CompleteWorkouts", "WorkoutPlanName", name); //search Supabase database for exercise
+    if(error) console.error(error);
+    else if (data != null){
+        console.log({data});
+        //return info on exercise
+        return data
+    }
+    else return {mssg: "This name has not been saved"}
+}
+
 async function trackWeightWork(req, res){
     const supabase = require('../dist/utils/supabaseSetUp.js');
     const supabaseQueryClass = require('../dist/utils/databaseInterface.js');
@@ -56,7 +70,6 @@ async function addCustomExercise(name, type, muscle, difficulty, instructions){
     if(insertError) console.error(insertError);
     else console.log({insertData})
     return data
-    // do a for loop here
 }
 
 async function searchDB(name){
