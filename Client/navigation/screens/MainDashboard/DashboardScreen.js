@@ -1,18 +1,60 @@
 import { StatusBar } from 'expo-status-bar';
-import { View, Text, SafeAreaView, Dimensions } from 'react-native';
+import { View, Text, SafeAreaView, Dimensions, Button, TextInput, Modal } from 'react-native';
 import widget from '../../components/widget';
 import { BarChart } from 'react-native-chart-kit';
+import { useState, useContext } from 'react';
 
+import themeContext from '../../theme/themeContext';
 
 export default function DashboardScreen({ navigation }) {
+
+    const [modalVisible, setModalVisible] = useState(false);
+    const theme = useContext(themeContext)
+
     return (
-        <SafeAreaView style={styles.container}>
-            <Text style={styles.title} onLongPress={() => {
-                console.log("The user wants to see info about the dashboard.")
-            }}>
-                DASHBOARD
-            </Text>
-                {widget({interactive: false, widgetText: 'Sleep', widgetColor: '#01009c', iconName: 'bed', mainComponent: avgSleepRating(), width: screenWidth * 0.9})}
+        <SafeAreaView style={[styles.container, {backgroundColor: theme.background}]}>
+
+            <Text style={[styles.title, {color: theme.color}]}> DASHBOARD </Text>
+
+            {/*Sleep Modal*/}
+            <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { setModalVisible(!modalVisible)}}>
+                <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems:'center'}}>
+                    <View style={[modalStyle.modalMain, {backgroundColor: theme.secondary}]}>
+                        <Text style={[modalStyle.modalText, {color: theme.color}]}> Track Sleep </Text>
+                        <View style={{width: screenWidth * 0.3, flexDirection: 'row', justifyContent: 'space-evenly', alignContent: 'center'}}>
+                            <TextInput 
+                                style={[modalStyle.textInput, {borderColor: theme.color}]} 
+                                placeholder='Hours' 
+                                placeholderTextColor={theme.color} 
+                                keyboardType={'numeric'} 
+                                textAlign={'center'}
+                            />
+                            <TextInput 
+                                style={[modalStyle.textInput, {borderColor: theme.color}]} 
+                                placeholder='Rating' 
+                                placeholderTextColor={theme.color} 
+                                keyboardType={'numeric'} 
+                                textAlign={'center'}
+                            />
+                        </View>
+                        <View style={{width: screenWidth * 0.4, flexDirection: 'row', justifyContent: 'space-evenly'}}>
+                            <Button title='Dismiss' onPress={() => {setModalVisible(!modalVisible)}}/>
+                            <Button title='Track' onPress={() => {setModalVisible(!modalVisible)}}/>
+                        </View>
+                    </View>
+                </SafeAreaView>
+            </Modal>
+
+            {widget({
+                widgetPress: () => {setModalVisible(!modalVisible)}, 
+                interactive: true, 
+                widgetText: 'Sleep', 
+                widgetColor: '#01009c', 
+                iconName: 'bed', 
+                mainComponent: avgSleepRating(),
+                width: screenWidth * 0.9
+            })}
+
             <StatusBar style="auto" />
         </SafeAreaView>
     );
@@ -49,6 +91,7 @@ function avgSleepRating() {
   )
 }
 
+
 const data = {
     labels: ["Tues", "Weds", "Thur"],
     datasets: [
@@ -69,9 +112,31 @@ const styles = {
     },
     container: {
         flex: 1,
-        backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'space-between',
+    },
+}
+
+const modalStyle = {
+    modalMain: {
+        justifyContent: 'space-between', 
+        alignItems:'center', 
+        height: screenHeight * 0.3, 
+        width: screenWidth * 0.6, 
+        borderRadius: 26, 
+        padding: 40,
+        borderWidth: 3
+    },
+    modalText: {
+        fontSize: 26, 
+        fontWeight: 'bold', 
+    },
+    textInput: { 
+        borderRadius: 10, 
+        borderWidth: 1, 
+        width: screenWidth * 0.12, 
+        height: screenHeight * 0.05,
+        fontWeight: 'bold'
     },
 }
 
