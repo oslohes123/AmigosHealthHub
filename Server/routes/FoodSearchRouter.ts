@@ -1,13 +1,14 @@
 const express = require('express');
 const FoodSearchRouter = express.Router();
 FoodSearchRouter.use(express.json());
-import{checkToken} from '../middleware/checkToken'
+// import{checkToken} from '../middleware/checkToken'
 import {generalSearch} from "../controllers/FoodSearchController.ts";
-FoodSearchRouter.use(checkToken); //Routes are protected.
+
+// FoodSearchRouter.use(checkToken); //Routes are protected.
 /**
- * All these routes start with /api/user
+ * All these routes start with /edgefunctions/
  */
-FoodSearchRouter.post('/foodsearch',generalSearch )
+FoodSearchRouter.get('/foodsearch/:code.:value',generalSearch)
 
 
 // module.exports = changeProfileDetailsRouter;
