@@ -28,7 +28,7 @@ export const useChangeProfilePassword = () => {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',
-                    'authorization': `Bearer ${token}`
+                    'authorization': token
              },
                 body: JSON.stringify({ email, oldPassword:old_password, newPassword:new_password})
             })

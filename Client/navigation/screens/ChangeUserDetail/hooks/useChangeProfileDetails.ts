@@ -45,7 +45,7 @@ export const useChangeProfileDetails = () => {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        authorization: `Bearer ${token}`
+                        authorization: token
                     },
                     body: JSON.stringify({
                         newEmail: a_newEmail,

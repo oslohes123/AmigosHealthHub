@@ -20,7 +20,7 @@ const getUserInfo = async () => {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                authorization: `Bearer ${token}`,
+                authorization: token,
                 email: email,
             },
         }
