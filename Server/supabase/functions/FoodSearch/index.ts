@@ -2,13 +2,13 @@
 // https://deno.land/manual/getting_started/setup_your_environment
 // This enables autocomplete, go to definition, etc.
 
-import {serve} from "https://deno.land/std@0.168.0/http/server.ts";
-import {searchMethods} from "./constants.ts";
-import instantSearch from "./searches/instantFoodSearch.ts";
-import brandedSearch from "./searches/brandedSearch.ts";
-import nutrientSearch from "./searches/nutrientSearch.ts";
+import {serve} from "https://deno.land/std@0.168.0/http/server";
+import {searchMethods} from "./constants";
+import instantSearch from "./searches/instantFoodSearch";
+import brandedSearch from "./searches/brandedSearch";
+import nutrientSearch from "./searches/nutrientSearch";
 
-serve(async (req) => {
+serve(async (req:Request) => {
     const {value:inputData, code} = await req.json();
     let data;
     switch (code) {
