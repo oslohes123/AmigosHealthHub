@@ -1,11 +1,11 @@
 require('dotenv').config()
 import { Request, Response } from 'express';
 import supabase from '../utils/supabaseSetUp'
-import {SearchCriteria} from "../supabase/functions/FoodSearch/constants.ts";
+import {SearchCriteria} from "../supabase/functions/FoodSearch/constants";
 
 
 export const generalSearch = async(req:Request,res:Response) =>{
-const {value,code}:SearchCriteria = req.body
+const {value,code}:SearchCriteria = req.params
     const {data, error} = await supabase.functions.invoke("FoodSearch", {
         body: {value:value,code:code},
     })
