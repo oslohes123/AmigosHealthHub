@@ -26,6 +26,8 @@ app.get("/", (req: Request, res: Response) => {
 const authRouter = require('../routes/authentication.js');
 app.use('/auth', authRouter);
 
+import foodSearchRouter from "./routes/FoodSearchRouter";
+app.use('/api/food',foodSearchRouter)
 
 
 /**---------------- Routes End------------------ */
