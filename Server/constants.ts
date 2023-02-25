@@ -6,6 +6,6 @@ export const enum searchMethods  {
     brandedSearch= 2,
 }
 export interface SearchCriteria {
-    value:String,
+    value:string,
     code:searchMethods,
 }
