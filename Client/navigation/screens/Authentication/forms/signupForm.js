@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Button, TextInput, View, Text } from 'react-native';
-import { Formik } from 'formik';
+import { Formik} from 'formik';
 import { globalStyles } from '../../../../styles/global'
 import { useSignUp } from '../hooks/useSignUp';
 

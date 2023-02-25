@@ -41,7 +41,7 @@ export const useSignUp = () => {
             try{
                 // console.log(`in useSignUp, json:${JSON.stringify(json)}`)
                 // console.log(`in useSignUp, json:${JSON.stringify(json.token)}`)
-            await AsyncStorage.setItem('user', JSON.stringify(json.token))
+            await AsyncStorage.setItem('user', JSON.stringify(json))
 
             
             dispatch({ type: 'LOGIN', payload: json })
