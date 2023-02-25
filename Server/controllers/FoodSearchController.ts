@@ -1,18 +1,30 @@
 require('dotenv').config()
 import { Request, Response } from 'express';
-import supabase from '../utils/supabaseSetUp'
-import {SearchCriteria} from "../supabase/functions/FoodSearch/constants";
+import {SearchCriteria, searchMethods} from "../constants";
+import brandedSearch from "../searches/brandedSearch";
+import nutrientSearch from "../searches/nutrientSearch";
+import instantSearch from "../searches/instantFoodSearch";
 
 
 export const generalSearch = async(req:Request,res:Response) =>{
-const {value,code}:SearchCriteria = req.params
-    const {data, error} = await supabase.functions.invoke("FoodSearch", {
-        body: {value:value,code:code},
-    })
-    if (!data || error) {
-        console.log("An error has occurred "+ error?.error)
-        return error;
-    } else {
-        return data;
+const {value:inputData,code}:SearchCriteria = req.params
+    let data;
+    switch (code) {
+        case searchMethods.instantSearch:
+            data = await instantSearch(inputData)
+            break;
+        case searchMethods.nutrientSearch:
+            data = await nutrientSearch(inputData)
+            break;
+        case searchMethods.brandedSearch:
+            data = await brandedSearch(inputData)
+            break;
+        default:
+            data = `The code was incorrect as ${code} use literal searchMethods for correct code`
     }
+
+
+    return new Response(JSON.stringify(data), {
+        headers: {"Content-Type": "application/json"},
+    });
 }
