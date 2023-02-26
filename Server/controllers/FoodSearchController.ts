@@ -1,9 +1,9 @@
 require('dotenv').config()
 import { Request, Response } from 'express';
-import {SearchCriteria, searchMethods} from "../constants";
+import { SearchCriteria, searchMethods } from "../constants";
 import brandedSearch from "../searches/brandedSearch";
-import nutrientSearch from "../searches/nutrientSearch";
 import instantSearch from "../searches/instantFoodSearch";
+import nutrientSearch from "../searches/nutrientSearch";
 
 
 export const generalSearch = async(req:Request,res:Response) =>{
