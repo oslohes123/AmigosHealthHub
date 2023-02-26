@@ -4,36 +4,52 @@ import themeContext from '../../theme/themeContext';
 import { EventRegister } from 'react-native-event-listeners'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-export default function SettingsDashboard() {
+export default function SettingsDashboard({ navigation }) {
 
   const theme = useContext(themeContext)
   const [darkMode, setDarkMode] = useState(false)
 
+  const pressHandler1 = () => {
+    navigation.navigate('Diet Settings');
+  }
+
+  const pressHandler2 = () => {
+    navigation.navigate('Exercise Settings');
+  }
+
+  const pressHandler3 = () => {
+    navigation.navigate('Sleep Settings');
+  }
+
+  const pressHandler4 = () => {
+    navigation.navigate('Health Settings');
+  }
+
   return (
     <SafeAreaView style={[styles.container, {backgroundColor:theme.background}]}>
       
-      <TouchableOpacity style={styles.dietView}>
+      <TouchableOpacity style={styles.dietView} onPress={pressHandler1}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '95%'}}>
           <Text style={styles.navText}>Diet</Text>
           <Ionicons name={'chevron-forward-outline'} size={32} color={'black'} />
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.middleView}>
+      <TouchableOpacity style={styles.middleView } onPress={pressHandler3}>
       <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '95%'}}>
         <Text style={styles.navText}>Sleep</Text>
         <Ionicons name={'chevron-forward-outline'} size={32} color={'black'} />
       </View>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.middleView}>
+      <TouchableOpacity style={styles.middleView} onPress={pressHandler2}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '95%'}}>
           <Text style={styles.navText}>Exercise</Text>
           <Ionicons name={'chevron-forward-outline'} size={32} color={'black'} />
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.healthView}>
+      <TouchableOpacity style={styles.healthView} onPress={pressHandler4}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '95%'}}>
           <Text style={styles.navText}>Health</Text>
           <Ionicons name={'chevron-forward-outline'} size={32} color={'black'} />
