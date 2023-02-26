@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { View, Text, SafeAreaView, Dimensions, Button, TextInput, Modal, TouchableWithoutFeedback, Keyboard, TouchableOpacity } from 'react-native';
+import { View, Text, SafeAreaView, Dimensions, Button, TextInput, Modal, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import widget from '../../components/widget';
 import { BarChart } from 'react-native-chart-kit';
 import { useState, useContext } from 'react';
