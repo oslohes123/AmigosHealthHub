@@ -7,7 +7,9 @@ import instantSearch from "../searches/instantFoodSearch";
 
 
 export const generalSearch = async(req:Request,res:Response) =>{
-const {value:inputData,code}:SearchCriteria = req.params
+// const {value:inputData,code}:SearchCriteria = req.query.value
+    const inputData = req.params.value
+    const code = parseInt(req.params.code)
     let data;
     switch (code) {
         case searchMethods.instantSearch:
@@ -23,8 +25,7 @@ const {value:inputData,code}:SearchCriteria = req.params
             data = `The code was incorrect as ${code} use literal searchMethods for correct code`
     }
 
-
-    return new Response(JSON.stringify(data), {
-        headers: {"Content-Type": "application/json"},
-    });
+    res.json(data);
 }
+
+
