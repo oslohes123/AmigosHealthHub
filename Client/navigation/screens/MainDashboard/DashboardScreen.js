@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { View, Text, SafeAreaView, Dimensions, Button, TextInput, Modal } from 'react-native';
+import { View, Text, SafeAreaView, Dimensions, Button, TextInput, Modal, TouchableWithoutFeedback, Keyboard, TouchableOpacity } from 'react-native';
 import widget from '../../components/widget';
 import { BarChart } from 'react-native-chart-kit';
 import { useState, useContext } from 'react';
@@ -18,31 +18,33 @@ export default function DashboardScreen({ navigation }) {
 
             {/*Sleep Modal*/}
             <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { setModalVisible(!modalVisible)}}>
-                <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems:'center'}}>
-                    <View style={[modalStyle.modalMain, {backgroundColor: theme.secondary}]}>
-                        <Text style={[modalStyle.modalText, {color: theme.color}]}> Track Sleep </Text>
-                        <View style={{width: screenWidth * 0.3, flexDirection: 'row', justifyContent: 'space-evenly', alignContent: 'center'}}>
-                            <TextInput 
-                                style={[modalStyle.textInput, {borderColor: theme.color}]} 
-                                placeholder='Hours' 
-                                placeholderTextColor={theme.color} 
-                                keyboardType={'numeric'} 
-                                textAlign={'center'}
-                            />
-                            <TextInput 
-                                style={[modalStyle.textInput, {borderColor: theme.color}]} 
-                                placeholder='Rating' 
-                                placeholderTextColor={theme.color} 
-                                keyboardType={'numeric'} 
-                                textAlign={'center'}
-                            />
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems:'center'}}>
+                        <View style={[modalStyle.modalMain, {backgroundColor: theme.secondary}]}>
+                            <Text style={[modalStyle.modalText, {color: theme.color}]}> Track Sleep </Text>
+                            <View style={{width: screenWidth * 0.3, flexDirection: 'row', justifyContent: 'space-evenly', alignContent: 'center'}}>
+                                <TextInput 
+                                    style={[modalStyle.textInput, {borderColor: theme.color}]} 
+                                    placeholder='Hours' 
+                                    placeholderTextColor={theme.color} 
+                                    keyboardType={'numeric'} 
+                                    textAlign={'center'}
+                                    />
+                                <TextInput 
+                                    style={[modalStyle.textInput, {borderColor: theme.color}]} 
+                                    placeholder='Rating' 
+                                    placeholderTextColor={theme.color} 
+                                    keyboardType={'numeric'} 
+                                    textAlign={'center'}
+                                    />
+                            </View>
+                            <View style={{width: screenWidth * 0.4, flexDirection: 'row', justifyContent: 'space-evenly'}}>
+                                <Button title='Dismiss' onPress={() => {setModalVisible(!modalVisible)}}/>
+                                <Button title='Track' onPress={() => {setModalVisible(!modalVisible)}}/>
+                            </View>
                         </View>
-                        <View style={{width: screenWidth * 0.4, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-                            <Button title='Dismiss' onPress={() => {setModalVisible(!modalVisible)}}/>
-                            <Button title='Track' onPress={() => {setModalVisible(!modalVisible)}}/>
-                        </View>
-                    </View>
-                </SafeAreaView>
+                    </SafeAreaView>
+                </TouchableWithoutFeedback>
             </Modal>
 
             {widget({
