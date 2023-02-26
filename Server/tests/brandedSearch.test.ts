@@ -1,6 +1,6 @@
 // Import jest-fetch-mock and instantSearch
 import fetchMock from 'jest-fetch-mock';
-import brandedSearch from "../supabase/functions/FoodSearch/searches/brandedSearch";
+import brandedSearch from "../searches/brandedSearch";
 import {bigMacBrandedTestData} from "./testdata";
 
 

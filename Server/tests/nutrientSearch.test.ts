@@ -1,6 +1,6 @@
 import fetchMock from 'jest-fetch-mock';
 import {steakNutritionTestData} from "./testdata";
-import nutrientSearch from "../supabase/functions/FoodSearch/searches/nutrientSearch";
+import nutrientSearch from "../searches/nutrientSearch";
 
 
 // Enable fetch mocking

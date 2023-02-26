@@ -1,6 +1,6 @@
 // Import jest-fetch-mock and instantSearch
 import fetchMock from 'jest-fetch-mock';
-import instantSearch from "../supabase/functions/FoodSearch/searches/instantFoodSearch";
+import instantSearch from "../searches/instantFoodSearch";
 import {chickenInstantSearchTestData} from "./testdata";
 
 // Enable fetch mocking
