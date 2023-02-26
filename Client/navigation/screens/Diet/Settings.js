@@ -21,6 +21,7 @@ export default function Settings() {
             alert('Calorie should be a number');
         } else {
             setGoal('');
+            alert('Calorie goal successfully added');
         }
     }
     
