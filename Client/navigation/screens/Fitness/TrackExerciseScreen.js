@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, SafeAreaView, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Button, SafeAreaView, TextInput, ScrollView, TouchableOpacity } from 'react-native';
 
 export default function TrackExerciseScreen({ navigation }) {
     return (
@@ -28,26 +28,52 @@ export default function TrackExerciseScreen({ navigation }) {
 
                 <Text style={styles.customWorkout}>Exercises</Text>
         
-            <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false} alignItems={'center'}>
-                <Text style={styles.testText}>Run (5K)</Text>
-                <Text style={styles.testText}>Sprint (100m)</Text>
-                <Text style={styles.testText}>Swim (Freestyle)</Text>
-                <Text style={styles.testText}>Swim (Butterfly)</Text>
-                <Text style={styles.testText}>Cycle (10K)</Text>
-                <Text style={styles.testText}>Run (5K)</Text>
-                <Text style={styles.testText}>Sprint (100m)</Text>
-                <Text style={styles.testText}>Swim (Freestyle)</Text>
-                <Text style={styles.testText}>Swim (Butterfly)</Text>
-                <Text style={styles.testText}>Run (5K)</Text>
-                <Text style={styles.testText}>Sprint (100m)</Text>
-                <Text style={styles.testText}>Swim (Freestyle)</Text>
-                <Text style={styles.testText}>Swim (Butterfly)</Text>
-                <Text style={styles.testText}>Cycle (10K)</Text>
-                <Text style={styles.testText}>Run (5K)</Text>
-                <Text style={styles.testText}>Sprint (100m)</Text>
-                <Text style={styles.testText}>Swim (Freestyle)</Text>
-                <Text style={styles.testText}>Swim (Butterfly)</Text>
-                <Text style={styles.testText}>Cycle (10K)</Text>
+            <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false} alignItems={'center'}>          
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Cycle (10K)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Swim (Butterfly)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Swim (Freestyle)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Sprint (100m)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Run (5K)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Cycle (10K)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Swim (Butterfly)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Swim (Freestyle)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Sprint (100m)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Run (5K)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Cycle (10K)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Swim (Butterfly)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Swim (Freestyle)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Sprint (100m)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Run (5K)</Text>
+                </TouchableOpacity>
             </ScrollView>
             <StatusBar style="auto" />
         </SafeAreaView>

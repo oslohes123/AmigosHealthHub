@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 
-import { StyleSheet, Text, View, Button, SafeAreaView, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Button, SafeAreaView, TextInput, ScrollView, TouchableOpacity } from 'react-native';
 
 export default function WorkoutPlansScreen({ navigation }) {
     return (
@@ -31,24 +31,60 @@ export default function WorkoutPlansScreen({ navigation }) {
                 <Text style={styles.customWorkout}>Custom Workouts</Text>
         
             <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false} alignItems={'center'}>
-                <Text style={styles.testText}>Test text 1</Text>
-                <Text style={styles.testText}>Test text 2</Text>
-                <Text style={styles.testText}>Test text 3</Text>
-                <Text style={styles.testText}>Test text 4</Text>
-                <Text style={styles.testText}>Test text 5</Text>
-                <Text style={styles.testText}>Test text 6</Text>
-                <Text style={styles.testText}>Test text 7</Text>
-                <Text style={styles.testText}>Test text 8</Text>
-                <Text style={styles.testText}>Test text 9</Text>
-                <Text style={styles.testText}>Test text 10</Text>
-                <Text style={styles.testText}>Test text 11</Text>
-                <Text style={styles.testText}>Test text 12</Text>
-                <Text style={styles.testText}>Test text 13</Text>
-                <Text style={styles.testText}>Test text 14</Text>
-                <Text style={styles.testText}>Test text 15</Text>
-                <Text style={styles.testText}>Test text 16</Text>
-                <Text style={styles.testText}>Test text 17</Text>
-                <Text style={styles.testText}>Test text 18</Text>
+            <TouchableOpacity>
+                    <Text style={styles.testText}>Test text 1</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Test text 2</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Test text 3</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Test text 4</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Test text 5</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Test text 6</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Test text 7</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Test text 8</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Test text 9</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Test text 10</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Test text 11</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Test text 12</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Test text 13</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Test text 14</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Test text 15</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Test text 16</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Test text 17</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.testText}>Test text 18</Text>
+                </TouchableOpacity>
             </ScrollView>
 
             <Button title='TEST Workout Info' onPress={ () => {
