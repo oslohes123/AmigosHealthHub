@@ -1,4 +1,4 @@
-import brandedSearchInterface from '../interfaces/brandedSearchInterface'
+import brandedSearchInterface from "../api_interfaces/brandedSearchInterface"
 import {baseUrl} from "../constants";
 import authHeaders from './headersObject';
 export default async function brandedSearch(nix_item_id: string): Promise<brandedSearchInterface> {
