@@ -39,15 +39,14 @@ async function trackedWorkoutsnNameFind(name){
     else return {mssg: "This name has not been saved"}
 }
 
-async function trackWeightWork(req, res){
+async function trackOneExercise(req, res){
     const supabase = require('../dist/utils/supabaseSetUp.js');
     const supabaseQueryClass = require('../dist/utils/databaseInterface.js');
     const supabaseQuery = new supabaseQueryClass()
-    const {data: insertData, error: insertError} = await supabaseQuery.insert(supabase, "Completed Workouts", {Type: req.type, Name:req.name, Muscle:req.muscle, Difficulty: req.difficulty, Instructions: req.instructions});
+    const {data: insertData, error: insertError} = await supabaseQuery.insert(supabase, "Completed Workouts", {Reps: req.reps, Sets: req.sets, Duration: req.duration, Distance: req.distance});
     if(insertError) console.error(insertError);
     else console.log({insertData})
-    
-    return res.json({'search': data})
+    return res.json({'search': insertData})
 }
 
 async function addTrackedWorkout(name, type, muscle, difficulty, instructions){
@@ -57,27 +56,21 @@ async function addTrackedWorkout(name, type, muscle, difficulty, instructions){
     const {data: insertData, error: insertError} = await supabaseQuery.insert(supabase, "Completed Workouts", {Type: type, Name:name, Muscle:muscle, Difficulty: difficulty, Instructions: instructions});
     if(insertError) console.error(insertError);
     else console.log({insertData})
-    return data
+    return insertData
     // do a for loop here
 }
 
 
-async function addCustomExercise(name, type, muscle, difficulty, instructions){
-    const supabase = require('../dist/utils/supabaseSetUp.js');
-    const supabaseQueryClass = require('../dist/utils/databaseInterface.js');
-    const supabaseQuery = new supabaseQueryClass()
-    const {data: insertData, error: insertError} = await supabaseQuery.insert(supabase, "Exercises", {Type: type, Name:name, Muscle:muscle, Difficulty: difficulty, Instructions: instructions});
-    if(insertError) console.error(insertError);
-    else console.log({insertData})
-    return data
-}
+
+
 
 async function searchDB(name){
     const supabase = require('../dist/utils/supabaseSetUp.js');
     const supabaseQueryClass = require('../dist/utils/databaseInterface.js');
     const supabaseQuery = new supabaseQueryClass()
     const {data,error} = await supabaseQuery.findrow(supabase, "Exercises", "Name", name); //search Supabase database for exercise
-    if(error) console.error(error);
+    if(error) return null;
+    // console.error(error)
     else if (data != null){
         console.log({data});
         //return info on exercise
@@ -185,28 +178,38 @@ function mostRecentData(){
     }
 }
 
+async function addCustomExercise(req, res){
+    const supabase = require('../dist/utils/supabaseSetUp.js');
+    const supabaseQueryClass = require('../dist/utils/databaseInterface.js');
+    const supabaseQuery = new supabaseQueryClass()
+    const {data: insertData, error: insertError} = await supabaseQuery.insert(supabase, "Exercises", {Type: req.type, Name:req.name, Muscle:req.muscle, Difficulty: req.difficulty, Instructions: req.instructions});
+    if(insertError) console.error(insertError);
+    else console.log({insertData})
+    return res.json({'search': insertData})
+}
+
 function fitnessMainPage(req,res){
     return res.status(200).json({'mssg': "Fitness Page. Over here you can track a single exercise or create a workout plan."})
 }
 function trackExercises(req, res){
-    return res.status(200).json({'mssg': "Track Exercises. Over here you can track a single exercise.", 'search': mostRecentData()})
+    return res.status(200).json({'mssg': "Track Exercises. Over here you can track a single exercise.", 'search': mostRecentData(), 'addEx': addCustomExercise(req, res)})
 }
 function workoutPlans(req, res){
-    return res.status(200).json({'mssg': 'Workout Plans. Over here you can access your own workout plans.', 'search': addExercise(searchExercise(req, res))})
-    
+    return res.status(200).json({'mssg': 'Workout Plans. Over here you can access your own workout plans.', 'search': addExercise(searchExercise(req, res)), 'workoutlist':req.workoutlist})    
 }
 function searchExercise(req, res){
     var isValid = true
-    if (searchDB(req.exercise) == ""){
+    if (searchDB(req.exercise) == null){
         isValid = false
     }
     if(isValid){
         res.send(searchDB(req.exercise))
     }
     else{
-        res.send("Input a valid exercise")
+        res.json('Input a valid exercise')
     }
 }
+
 
 
 

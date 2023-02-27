@@ -35,3 +35,36 @@ test('Check count of 3', () => {
       // Add additional assertions for other expected properties
     });
   });
+
+  describe('getOccurrences', () => {
+    test('returns the correct count when value is present in array', () => {
+      const arr = [1, 2, 3, 4, 2, 2];
+      const v = 2;
+      expect(getOccurrences(arr, v)).toBe(3);
+    });
+  
+    test('returns 0 when value is not present in array', () => {
+      const arr = [1, 2, 3, 4, 2, 2];
+      const v = 5;
+      expect(getOccurrences(arr, v)).toBe(0);
+    });
+  
+    test('returns 0 when array is empty', () => {
+      const arr = [];
+      const v = 2;
+      expect(getOccurrences(arr, v)).toBe(0);
+    });
+  
+    test('returns 0 when array is null or undefined', () => {
+      const v = 2;
+      expect(getOccurrences(null, v)).toBe(0);
+      expect(getOccurrences(undefined, v)).toBe(0);
+    });
+  
+    test('returns the correct count when all elements of the array match the value', () => {
+      const arr = [2, 2, 2, 2];
+      const v = 2;
+      expect(getOccurrences(arr, v)).toBe(4);
+    });
+  });
+  
