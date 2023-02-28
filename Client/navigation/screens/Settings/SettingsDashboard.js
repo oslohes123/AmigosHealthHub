@@ -28,6 +28,18 @@ export default function SettingsDashboard({ navigation }) {
   return (
     <SafeAreaView style={[styles.container, {backgroundColor:theme.background}]}>
       
+      <TouchableOpacity style={styles.profileView}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '95%'}}>
+          <Ionicons name={'person-circle-outline'} size={80} color={'black'} />
+          <View>
+            <Text style={styles.username}>Shazeen</Text>
+            <Text style={styles.profileText}>+44 123456789</Text>
+            <Text style={styles.profileText}>shazeen@mail.mail</Text>
+          </View>
+          <Ionicons name={'chevron-forward-outline'} size={32} color={'black'} />
+        </View>
+      </TouchableOpacity>
+
       <TouchableOpacity style={styles.dietView} onPress={pressHandler1}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '95%'}}>
           <Text style={styles.navText}>Diet</Text>
@@ -125,6 +137,26 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       borderBottomLeftRadius: 15,
       borderBottomRightRadius: 15
+    },
+    profileView: {
+      flexDirection: 'row', 
+      width: '90%',
+      height: '15%',
+      alignSelf: 'center',
+      marginTop: '9%',
+      backgroundColor: '#3eda9b',
+      alignItems: 'center',
+      borderRadius: 15,
+      borderWidth: 1,
+      justifyContent: 'center',
+    },
+    profileText: {
+      fontSize: 20,
+      marginRight: '22%'
+    },
+    username: {
+      fontSize: 30,
+      fontWeight: 'bold'
     }
 })
 
