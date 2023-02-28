@@ -99,12 +99,12 @@ class supabaseQuery implements dbInterface{
             console.error(err);
         }
     }
-    async findrow(supabaseDb: any, table: string, row: string, value: any): Promise<object | undefined>{
+    async findrow(supabaseDb: any, table: string, column: string, value: any): Promise<object | undefined>{
         try{
             const {data, error} = await supabaseDb
             .from(table)
             .select("*")
-            .eq(row, value)
+            .eq(column, value)
 
             if(error) console.error(error);
             else{
