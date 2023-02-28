@@ -13,4 +13,12 @@ export interface Food{
     total_carbohydrates: number;
     sugar: number;
     Fiber: number;
+    alt_measures: AltMeasures[] | null;
+}
+
+export interface AltMeasures{
+    serving_weight: number;
+    measure: string;
+    seq: number | null;
+    qty: number;
 }
