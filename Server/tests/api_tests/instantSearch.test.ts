@@ -1,9 +1,9 @@
 // Import jest-fetch-mock and instantSearch
 import fetchMock from "jest-fetch-mock";
-import instantSearch from "../searches/instantFoodSearch";
+import instantSearch from "../../searches/instantFoodSearch";
 import { chickenInstantSearchTestData } from "./testdata";
-import { baseUrl } from "../constants";
-import authHeaders from "../searches/headersObject";
+import { baseUrl } from "../../constants";
+import authHeaders from "../../searches/headersObject";
 
 // Enable fetch mocking
 fetchMock.enableMocks();
