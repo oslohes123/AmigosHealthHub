@@ -31,8 +31,13 @@ export const generalSearch = async (req: Request, res: Response) => {
   let regex = /\d/;
   switch (clientCode) {
     case clientSearchMethods.genericSearch:
-      data = await instantSearch(inputData);
-      result = transformInstantSearchInterface(data);
+      try {
+        data = await instantSearch(inputData);
+        result = transformInstantSearchInterface(data);
+      } catch (error) {
+        console.log(error);
+      }
+
       break;
     case clientSearchMethods.specificSearch:
       // If the input data contains a number or is greater or equal to 24 characters, it is a branded search
@@ -48,7 +53,7 @@ export const generalSearch = async (req: Request, res: Response) => {
           data = await nutrientSearch(inputData);
           result = transformNutrientSearchInterface(data);
         } catch (error) {
-            console.log(error);
+          console.log(error);
         }
       }
       break;
