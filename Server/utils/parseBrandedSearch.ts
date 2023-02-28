@@ -15,6 +15,7 @@ export default function transformBrandedSearchInterface(data: BrandedSearchInter
         total_carbohydrates: food.nf_total_carbohydrate,
         sugar: food.nf_sugars,
         Fiber: food.nf_dietary_fiber,
+        alt_measures: food.alt_measures || null,
       };
     });
   

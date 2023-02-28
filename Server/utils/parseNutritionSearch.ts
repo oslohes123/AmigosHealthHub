@@ -1,5 +1,5 @@
 import NutrientSearchInterface from '../api_interfaces/nutrientSearchInterface';
-import  specificFoodNutritionInterface, { Food } from '../interfaces/specificFoodNutritionInterface';
+import specificFoodNutritionInterface, { Food } from '../interfaces/specificFoodNutritionInterface';
 
 export default function transformNutrientSearchInterface(data: NutrientSearchInterface): specificFoodNutritionInterface {
     const transformedFoods: Food[] = data.foods.map(food => {
@@ -15,6 +15,7 @@ export default function transformNutrientSearchInterface(data: NutrientSearchInt
             total_carbohydrates: food.nf_total_carbohydrate,
             sugar: food.nf_sugars,
             Fiber: food.nf_dietary_fiber,
+            alt_measures: food.alt_measures,
         };
         return transformedFood;
     });
