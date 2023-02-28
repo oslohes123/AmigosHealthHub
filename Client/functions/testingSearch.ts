@@ -1,8 +1,7 @@
-import {nutritionIX} from "./nutritionIX";
+import {genericSearch} from "./nutritionIX";
 async function getData(){
-    let x = new nutritionIX();
-    let a = await x.instantSearch("apple")
-    console.log(a.common)
+    let a = await genericSearch("apple")
+    console.log(a)
 }
 
 getData()

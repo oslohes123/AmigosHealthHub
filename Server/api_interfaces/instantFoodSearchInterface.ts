@@ -3,7 +3,7 @@ export default interface InstantSearchInterface {
     branded: Branded[];
 }
 
-interface Common {
+export interface Common {
     food_name: string;
     serving_unit: string;
     tag_name: string;
@@ -14,7 +14,7 @@ interface Common {
     locale: string;
 }
 
-interface Branded {
+export interface Branded {
     food_name: string;
     serving_unit: string;
     nix_brand_id: string;
@@ -31,4 +31,7 @@ interface Branded {
 
 interface Photo {
     thumb: string;
+    highres?: any;
+    is_user_uploaded?: boolean;
 }
+

@@ -1,8 +1,8 @@
 export default interface BrandedSearchInterface{
-    foods:Food[]
+    foods:BrandFood[]
 }
 
-interface Food {
+export interface BrandFood {
     food_name: string;
     brand_name: string;
     serving_qty: number;

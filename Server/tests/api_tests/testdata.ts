@@ -1,6 +1,7 @@
-import InstantSearchInterface from "../supabase/functions/FoodSearch/interfaces/instantFoodSearchInterface";
-import BrandedSearchInterface from "../supabase/functions/FoodSearch/interfaces/brandedSearchInterface";
-import NutrientSearchInterface from "../supabase/functions/FoodSearch/interfaces/nutrientSearchInterface";
+import InstantSearchInterface from "../../api_interfaces/instantFoodSearchInterface";
+import BrandedSearchInterface from "../../api_interfaces/brandedSearchInterface";
+import NutrientSearchInterface from "../../api_interfaces/nutrientSearchInterface";
+
 export const chickenInstantSearchTestData:InstantSearchInterface = {
     "common": [
         {

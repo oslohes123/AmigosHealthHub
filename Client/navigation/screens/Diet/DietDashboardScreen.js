@@ -1,16 +1,29 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { StyleSheet, SafeAreaView, View, Text, TouchableOpacity, Button, ScrollView, TextInput } from 'react-native';
 import Header from './components/Header';
+import Header1 from './components/Header1';
 import NavBar from '../../components/NavBar';
 //import NutrientsButton from '../components/NutrientsButton';
 import { Feather } from '@expo/vector-icons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {PieChart} from "react-native-chart-kit";
 import themeContext from '../../theme/themeContext';
+import { EventRegister } from 'react-native-event-listeners'
 
 export default function DietDashboardScreen({ navigation }) {
 
   const theme = useContext(themeContext)
+
+  const [showHeader, setShowHeader] = useState(false);
+
+  useEffect(() => {
+    const HListener = EventRegister.addEventListener('ChangeHeader', (data) => {
+        setShowHeader(data)
+    })
+    return () => {
+        EventRegister.removeEventListener(HListener)
+    }
+    }, [showHeader])
 
   const Piedata = [
     {
@@ -122,7 +135,8 @@ export default function DietDashboardScreen({ navigation }) {
     
     <SafeAreaView style={[styles.container, {backgroundColor:theme.background}]}>
       
-      <Header />
+      {/* <Header /> */}
+      {showHeader ? <Header /> : <Header1 />}
       {/* <View style={styles.icon}>
         <TouchableOpacity>
           <Feather name="settings" size={24} color={theme.color} onPress={pressHandler1} />
@@ -142,9 +156,9 @@ export default function DietDashboardScreen({ navigation }) {
           clearButtonMode='always'
           value={text}
           onChangeText={(value) => setText(value)}
-          style={[styles.input, {backgroundColor:theme.color}]}
+          style={[styles.input, {borderColor: theme.color}, {color: theme.color}]}
           placeholder='Find food...' 
-          placeholderTextColor={theme.background}/>
+          placeholderTextColor={theme.color}/>
         <View style={styles.chart}>
         {text.length == 0 && (
           <TouchableOpacity style={styles.pieWidget} onPress={pressHandler}>
@@ -280,6 +294,7 @@ const styles = StyleSheet.create({
     marginTop: -190,
     marginBottom: 20,
     position: 'absolute',
+    borderWidth: 1
     //borderWidth: 1,
     //borderColor: '#CCCCCC',
   },

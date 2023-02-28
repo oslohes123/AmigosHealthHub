@@ -11,6 +11,7 @@ import DashboardScreen from "./screens/MainDashboard/DashboardScreen";
 import MentalScreen from './screens/Mental/manager'
 import DietNavigation from "./screens/Diet/DietNavigation"
 import Settings from "./screens/Diet/Settings";
+import SettingsNavigation from "./screens/Settings/SettingsNavigation";
 
 import theme from "./theme/theme";
 import themeContext from "./theme/themeContext";
@@ -33,7 +34,7 @@ export default function MainContainer() {
             setDarkMode(data)
         })
         return () => {
-            EventRegister.removeAllListeners(listener)
+            EventRegister.removeEventListener(listener)
         }
     }, [darkMode])
 
@@ -74,7 +75,7 @@ export default function MainContainer() {
                 <Tab.Screen name={fitnessName} component={FitnessNavigationScreen} />
                 <Tab.Screen name={dashboardName} component={DashboardScreen} />
                 <Tab.Screen name={mentalName} component={MentalScreen} />
-                <Tab.Screen name={settingsName} component={Settings} />
+                <Tab.Screen name={settingsName} component={SettingsNavigation} />
             </Tab.Navigator>
         </NavigationContainer>
 
