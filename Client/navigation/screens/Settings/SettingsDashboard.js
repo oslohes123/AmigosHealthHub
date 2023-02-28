@@ -25,10 +25,14 @@ export default function SettingsDashboard({ navigation }) {
     navigation.navigate('Health Settings');
   }
 
+  const pressHandler5 = () => {
+    navigation.navigate('Profile');
+  }
+
   return (
     <SafeAreaView style={[styles.container, {backgroundColor:theme.background}]}>
       
-      <TouchableOpacity style={styles.profileView}>
+      <TouchableOpacity style={styles.profileView} onPress={pressHandler5}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '95%'}}>
           <Ionicons name={'person-circle-outline'} size={80} color={'black'} />
           <View>
