@@ -9,5 +9,5 @@ export interface Item{
     serving_qty: number;
     calories?: number;
     brand_name?: string;
-    brand_id?:string;
+    item_id?:string;
 }
