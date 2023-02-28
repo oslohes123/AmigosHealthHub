@@ -1,10 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { StyleSheet, SafeAreaView, View, Text, TouchableOpacity, Button, ScrollView, TextInput } from 'react-native';
-import Header from './components/Header';
-import Header1 from './components/Header1';
-import NavBar from '../../components/NavBar';
+// import Header from './components/Header';
+// import Header1 from './components/Header1';
+// import NavBar from '../../components/NavBar';
 //import NutrientsButton from '../components/NutrientsButton';
-import { Feather } from '@expo/vector-icons';
+// import { Feather } from '@expo/vector-icons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {PieChart} from "react-native-chart-kit";
 import themeContext from '../../theme/themeContext';
@@ -134,9 +134,16 @@ export default function DietDashboardScreen({ navigation }) {
   return (
     
     <SafeAreaView style={[styles.container, {backgroundColor:theme.background}]}>
-      
+      <View style={styles.headerView}>
+        <Text style={[styles.title, {color:theme.color}]}>Calorie Goal-:</Text>
+        <Text style={[styles.number, {color:theme.color}, {borderColor:theme.color}]}>1000cal</Text>
+      </View>
+      <View style={styles.headerView1}>
+        <Text style={[styles.title, {color:theme.color}]}>Calories Remaining-:</Text>
+        <Text style={[styles.number, {color:theme.color}, {borderColor:theme.color}]}>250cal</Text>
+      </View>
       {/* <Header /> */}
-      {showHeader ? <Header /> : <Header1 />}
+      {/* {showHeader ? <Header /> : <Header1 />} */}
       {/* <View style={styles.icon}>
         <TouchableOpacity>
           <Feather name="settings" size={24} color={theme.color} onPress={pressHandler1} />
@@ -348,6 +355,38 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     alignSelf: 'center',
     padding: 5
-
   },
+  title: {
+    textAlign: 'center',
+    color: '#fff',
+    fontSize: 25,
+    fontWeight: 'bold',
+    paddingTop: 20,
+    paddingBottom: 10,
+    marginTop: 1,
+  },
+  number: {
+    textAlign: 'center',
+    color: '#fff',
+    fontSize: 25,
+    fontWeight: 'bold',
+    paddingTop: 10,
+    borderStyle: 'solid',
+    borderWidth: 2,
+    paddingBottom: 5,
+    width: '30%',
+    alignSelf: 'center',
+    borderRadius: 15
+  },
+  headerView: {
+    flexDirection: 'row', 
+    justifyContent: 'space-between',
+    margin: '7%'
+  },
+  headerView1: {
+    flexDirection: 'row', 
+    justifyContent: 'space-between',
+    marginTop: '-50%',
+    margin: '7%'
+  }
 });
