@@ -1,5 +1,5 @@
-const port = process.env.PORT;
-const ipaddress = process.env.IP_ADDRESS;
+// const port = process.env.PORT;
+// const ipaddress = process.env.IP_ADDRESS;
 function APIcallToArray(data){
     var result = JSON.parse(data);
     var arr = [];
@@ -45,11 +45,7 @@ async function searchDB(name){
         else{
             return {mssg: "The request for the Exercise API failed"}
         }
-//         req.get({
-//         url: `https://api.api-ninjas.com/v1/exercises?name=${name}`, //API call
-//         headers: {
-//     'X-Api-Key': 'YOUR_API_KEY'
-//   },
+
 }
 }
 
@@ -67,19 +63,7 @@ async function workoutPlanNameFind(name){
     else return {mssg: "This name has not been saved"}
 }
 
-// async function trackedWorkoutsnNameFind(name){
-//     const supabase = require('../dist/utils/supabaseSetUp.js');
-//     const supabaseQueryClass = require('../dist/utils/databaseInterface.js');
-//     const supabaseQuery = new supabaseQueryClass()
-//     const {data,error} = await supabaseQuery.findrow(supabase, "CompleteWorkouts", "WorkoutPlanName", name); //search Supabase database for exercise
-//     if(error) console.error(error);
-//     else if (data != null){
-//         console.log({data});
-//         //return info on exercise
-//         return data
-//     }
-//     else return {mssg: "This name has not been saved"}
-// }
+
 
 async function trackOneExercise(req, res){
     const supabase = require('../dist/utils/supabaseSetUp.js');
@@ -108,30 +92,6 @@ async function addTrackedWorkout(name, type, muscle, difficulty, instructions){
 
 
 
-//   function(error, response, body) {
-//     if(error) return console.error('Request failed:', error);
-//     else if(response.statusCode != 200) return console.error('Error:', response.statusCode, body.toString('utf8'));
-//     else console.log(body)
-// });
-
-
-
-//for (var i = 0; i < dict.length-1; i++) {
-//    if dict[i] 
-//}
-
-    //const { data, error } = await supabase
-   // .select('CompleteWorkoutsID')
- //   .eq('CompleteWorkoutsID(count)', 1) 
-//if(error) console.error(error);
-//else{
-//console.log({data});
-    
-//    return data
-//}
-//}
-
-
 function addExercise(req, res, data){
     if (data == null){
         return {mssg: 'We cannot add this exercise.'}
@@ -150,31 +110,7 @@ function getOccurrences(arr, v){
     return count;
 }
 
-// function returnexercises(data){
-//     const ids = []
-//     const finalIDs = []
-//     var count = 0
-//     var result = JSON.stringify(data).split('},');
-//     for (const prop in result) {
-//         ids.push(prop[0])
-//     }
-//     for (const id in ids) {
-//         if (this.getOccurrences(ids, id) == 1){
-//             finalIDs.push(id)
-//         }
-//     }
-//     for (const elem in result){
-//         if (finalIDs.includes(elem[0])){
-//             // do nothing
-//         }
-//         else{
-//             result.pop(0)
-//         }
-//         count ++ 
-// //     }
-//     let answer = result.toString
-//     return JSON.parse(answer)
-// }
+
 
 function mostRecentData(){
     const supabase = require('../dist/utils/supabaseSetUp.js');
@@ -232,3 +168,73 @@ module.exports.trackExercises = trackExercises;
 module.exports.workoutPlans = workoutPlans;
 module.exports.getOccurrences = getOccurrences;
 // module.exports.returnexercises = returnexercises;
+
+
+// function returnexercises(data){
+//     const ids = []
+//     const finalIDs = []
+//     var count = 0
+//     var result = JSON.stringify(data).split('},');
+//     for (const prop in result) {
+//         ids.push(prop[0])
+//     }
+//     for (const id in ids) {
+//         if (this.getOccurrences(ids, id) == 1){
+//             finalIDs.push(id)
+//         }
+//     }
+//     for (const elem in result){
+//         if (finalIDs.includes(elem[0])){
+//             // do nothing
+//         }
+//         else{
+//             result.pop(0)
+//         }
+//         count ++ 
+// //     }
+//     let answer = result.toString
+//     return JSON.parse(answer)
+// }
+
+
+
+//   function(error, response, body) {
+//     if(error) return console.error('Request failed:', error);
+//     else if(response.statusCode != 200) return console.error('Error:', response.statusCode, body.toString('utf8'));
+//     else console.log(body)
+// });
+
+
+
+//for (var i = 0; i < dict.length-1; i++) {
+//    if dict[i] 
+//}
+
+    //const { data, error } = await supabase
+   // .select('CompleteWorkoutsID')
+ //   .eq('CompleteWorkoutsID(count)', 1) 
+//if(error) console.error(error);
+//else{
+//console.log({data});
+    
+//    return data
+//}
+//}
+//         req.get({
+//         url: `https://api.api-ninjas.com/v1/exercises?name=${name}`, //API call
+//         headers: {
+//     'X-Api-Key': 'YOUR_API_KEY'
+//   },
+// async function trackedWorkoutsnNameFind(name){
+//     const supabase = require('../dist/utils/supabaseSetUp.js');
+//     const supabaseQueryClass = require('../dist/utils/databaseInterface.js');
+//     const supabaseQuery = new supabaseQueryClass()
+//     const {data,error} = await supabaseQuery.findrow(supabase, "CompleteWorkouts", "WorkoutPlanName", name); //search Supabase database for exercise
+//     if(error) console.error(error);
+//     else if (data != null){
+//         console.log({data});
+//         //return info on exercise
+//         return data
+//     }
+//     else return {mssg: "This name has not been saved"}
+// }
