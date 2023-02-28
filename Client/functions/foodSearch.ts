@@ -1,5 +1,5 @@
 import {createClient} from '@supabase/supabase-js'
-import {anonKey, searchMethods, supabaseURL} from "../constants";
+import {anonKey, apiSearchMethods, clientSearchMethods, supabaseURL} from "../constants";
 import specificFoodNutritionInterface from '../interfaces/specificFoodNutritionInterface';
 import genericSearchInterface from '../interfaces/genericSearchInterface';
 import axios, { AxiosError, AxiosResponse } from 'axios';
@@ -12,7 +12,7 @@ let port:string = '3001'
 
 
 export async function genericSearch(value:string):Promise<genericSearchInterface | AxiosError> {
-    let url:string = `http://${ip_address}:${port}/api/food/${searchMethods.genericSearch}.${value}`;
+    let url:string = `http://${ip_address}:${port}/api/food/${clientSearchMethods.genericSearch}.${value}`;
 
     let response:AxiosResponse;
     try {
@@ -29,7 +29,7 @@ export async function genericSearch(value:string):Promise<genericSearchInterface
 }
 
 export async function specificSearch(value:string):Promise<specificFoodNutritionInterface | AxiosError> {
-    let url:string = `http://${ip_address}:${port}/api/food/${searchMethods.specificSearch}.${value}`;
+    let url:string = `http://${ip_address}:${port}/api/food/${clientSearchMethods.specificSearch}.${value}`;
     let response:AxiosResponse;
     try {
         response = await axios.get(url);
