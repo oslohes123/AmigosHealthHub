@@ -1,7 +1,7 @@
 const test = require('ava');
 import { Request, Response, NextFunction } from 'express';
 const sinon = require('sinon');
-import { changeStats } from '../../../controllers/changeProfileDetails';
+import { changeStats } from '../../../routes/changeProfileDetails.controller';
 import {v4 as uuidv4} from 'uuid';
 const bcrypt = require('bcrypt');
 import { checkToken } from '../../../middleware/checkToken';
@@ -9,7 +9,7 @@ import supabase from '../../../utils/supabaseSetUp';
 import { supabaseQueryClass } from '../../../utils/databaseInterface';
 const supabaseQuery = new supabaseQueryClass();
 const jwtToken = require('jsonwebtoken');
-import { createToken } from '../../../controllers/userController';
+import { createToken } from '../../../utils/userFunctions';
 
 
 const mockResponse = () => {

@@ -2,7 +2,7 @@ const express = require('express');
 const changeProfileDetailsRouter = express.Router();
 changeProfileDetailsRouter.use(express.json());
 // const userFunctions = require('../controllers/changeProfileDetails');
-import { changeStats, changePassword, deleteAccount } from "../controllers/changeProfileDetails";
+import { changeStats, changePassword, deleteAccount } from "./changeProfileDetails.controller";
 import{checkToken} from '../middleware/checkToken'
 
 changeProfileDetailsRouter.use(checkToken); //Routes are protected. 

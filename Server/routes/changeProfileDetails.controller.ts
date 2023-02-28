@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import supabase from '../utils/supabaseSetUp'
 import {supabaseQueryClass} from '../utils/databaseInterface'
 const bcrypt = require('bcrypt');
-const validator = require('validator');
+import { isEmail, isStrongPassword } from '../utils/validators';
 const supabaseQuery = new supabaseQueryClass();
 
 
@@ -18,7 +18,7 @@ export const changeStats = async(req:Request,res:Response) => {
     }
 
     if(prevEmail !== newEmail){
-        if(!validator.isEmail(newEmail)){
+        if(!isEmail(newEmail)){
             console.log("Invalid New Email")
             return res.status(400).json({mssg: "Invalid New Email"})
         }
@@ -71,7 +71,7 @@ export const changePassword = async(req:Request,res:Response) => {
     }
 
     console.log(JSON.stringify(req.body));
-    if(!validator.isStrongPassword(newPassword)){
+    if(!isStrongPassword(newPassword)){
         console.log("Password Structure must have atleast 8 characters, 1 lower case,1 upper case, 1 number, 1 symbol")
         return res.status(400).json({mssg: "Password Structure must have atleast 8 characters, 1 lower case,1 upper case, 1 number, 1 symbol"});
     }

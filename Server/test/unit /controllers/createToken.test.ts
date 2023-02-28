@@ -1,6 +1,6 @@
 require('dotenv').config();
 const test = require('ava');
-import { createToken } from '../../../controllers/userController';
+import { createToken } from '../../../utils/userFunctions';
 const jwt = require('jsonwebtoken');
 import {v4 as uuidv4} from 'uuid';
 

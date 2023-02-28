@@ -2,6 +2,8 @@ import { createContext, useContext, useEffect, useReducer } from "react";
 // const jwttoken = require('jsonwebtoken');
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { useAuthContext } from "../hooks/useAuthContext";
+const port = process.env['PORT'];
+const ip_address = process.env['IP_ADDRESS'];
 
 export const AuthContext = createContext();
 
@@ -77,8 +79,16 @@ export const AuthContextProvider = ({ children }) => {
        const token =  JSON.parse(await AsyncStorage.getItem('user'))
        
         console.log(`token: ${token}`);
+        const response = await fetch(`http://${ip_address}:${port}/api/user/checkInitialToken`,
+        {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: token,
+            },
+        })
         //if token exists, then update user state with the token
-        if(token){
+        if(response.ok){
             dispatch({type:'LOGIN', payload:token})
         }
         else{

@@ -1,10 +1,10 @@
 import app from "../../index";
 const request = require('supertest');
 const test = require('ava');
-import { createToken } from "../../controllers/userController";
+import { createToken } from "../../utils/userFunctions";
 import { Request, Response } from 'express';
 const sinon = require('sinon');
-import { getInfo } from "../../controllers/userController"; 
+import { getInfo } from "../../routes/authentication.controller"; 
 import {v4 as uuidv4} from 'uuid';
 const bcrypt = require('bcrypt');
 import supabase from "../../utils/supabaseSetUp";

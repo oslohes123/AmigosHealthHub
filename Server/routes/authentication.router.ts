@@ -5,7 +5,7 @@ const authRouter = express.Router();
 authRouter.use(express.json());
 // const userFunctions = require('../dist/controllers/changeProfileDetails')
 // const userFunctions = require('../controllers/changeProfileDetails')
-import {loginUser, signupUser, getInfo} from '../controllers/userController'
+import {loginUser, signupUser} from './authentication.controller'
 //Routes
 /**
  * All these routes start with /api/user

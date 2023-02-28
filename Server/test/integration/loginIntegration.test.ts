@@ -2,7 +2,7 @@ import app from "../../index";
 const request = require('supertest');
 const test = require('ava');
 import {v4 as uuidv4} from 'uuid';
-import { loginUser } from "../../controllers/userController";
+import { loginUser } from "../../routes/authentication.controller";
 const bcrypt = require('bcrypt');
 import supabase from "../../utils/supabaseSetUp";
 import { supabaseQueryClass } from "../../utils/databaseInterface";

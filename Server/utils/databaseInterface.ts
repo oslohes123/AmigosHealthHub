@@ -65,7 +65,10 @@ export class supabaseQueryClass implements dbInterface {
         .select(toBeSelected)
         .eq(column, toBeFound);
 
-      if (error) console.error(error);
+      if (error){
+        console.error(error);
+        return {error}
+      }
       else console.log({ data });
 
       return { data };

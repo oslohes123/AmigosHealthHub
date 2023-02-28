@@ -5,8 +5,9 @@ import {v4 as uuidv4} from 'uuid';
 const bcrypt = require('bcrypt');
 import supabase from "../../utils/supabaseSetUp";
 import { supabaseQueryClass } from "../../utils/databaseInterface";
-import { createToken } from "../../controllers/userController";
+import { createToken } from "../../utils/userFunctions";
 const supabaseQuery = new supabaseQueryClass();
+
 const changePasswordRoute = '/api/user/changeProfileDetails/password';
 
 let testEmail: string;
@@ -125,8 +126,10 @@ test.before(async (t: any) => {
    const{data, error}:any = await supabaseQuery.selectWhere(supabase,'User'
             ,'email',testEmail,'password');
  
-    const match = await bcrypt.compare("OriginalPassword123!", data[0].password);
-    t.truthy(match);
+    const correctMatch = await bcrypt.compare("OriginalPassword123!", data[0].password);
+    const incorrectMatch = await bcrypt.compare("IncorrectPassword123!", data[0].password);
+    t.falsy(incorrectMatch)
+    t.truthy(correctMatch);
     t.true(response.status === 400)
     t.true(response.headers['content-type'] === "application/json; charset=utf-8")
     t.true(JSON.stringify(response.body) === JSON.stringify({mssg: "Old password doesn't match!"}));

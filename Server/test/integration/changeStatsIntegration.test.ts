@@ -3,12 +3,12 @@ import app from "../../index";
 const request = require('supertest');
 import { Request, Response } from 'express';
 const sinon = require('sinon');
-import { changeStats } from "../../controllers/changeProfileDetails"; 
+import { changeStats } from "../../routes/changeProfileDetails.controller"; 
 import {v4 as uuidv4} from 'uuid';
 const bcrypt = require('bcrypt');
 import supabase from "../../utils/supabaseSetUp";
 import { supabaseQueryClass } from "../../utils/databaseInterface"; 
-import { createToken } from "../../controllers/userController";
+import { createToken } from "../../utils/userFunctions";
 const supabaseQuery = new supabaseQueryClass();
 
 
