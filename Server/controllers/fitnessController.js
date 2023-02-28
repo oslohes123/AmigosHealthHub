@@ -30,23 +30,26 @@ async function searchDB(name){
         return data
     }
     else {
-        const res = await fetch(`https://api.api-ninjas.com/v1/exercises?name=${name}`, {
-            method: 'GET',
-            headers: {
-                'X-Api-key': 'MJIJot8zJvjqN881cfM7/A==uUVjsJou0izgtlB5',
-                'Content-Type': 'application/json'
-            }      
-        })
-        if (res.ok){
-        const resjson = await res.json()
-        APItodatabase(resjson)
-        return resjson
-        }
-        else{
-            return {mssg: "The request for the Exercise API failed"}
-        }
+//         const res = await fetch(`https://api.api-ninjas.com/v1/exercises?name=${name}`, {
+//             method: 'GET',
+//             headers: {
+//                 'X-Api-key': 'MJIJot8zJvjqN881cfM7/A==uUVjsJou0izgtlB5',
+//                 'Content-Type': 'application/json'
+//             }      
+//         })
+        const request = require('request');
+        request.get({
+        url: 'https://api.api-ninjas.com/v1/exercises?name=${name}',
+        headers: {
+            'X-Api-Key': 'MJIJot8zJvjqN881cfM7/A==uUVjsJou0izgtlB5'
+        },
+        }, function(error, response, body) {
+        if(error) return console.error('Request failed:', error);
+        else if(response.statusCode != 200) return console.error('Error:', response.statusCode, body.toString('utf8'));
+        else return body
+        });
 
-}
+    }
 }
 
 async function workoutPlanNameFind(name){
@@ -167,6 +170,7 @@ module.exports.fitnessMainPage = fitnessMainPage;
 module.exports.trackExercises = trackExercises;
 module.exports.workoutPlans = workoutPlans;
 module.exports.getOccurrences = getOccurrences;
+module.exports.APIcallToArray = APIcallToArray;
 // module.exports.returnexercises = returnexercises;
 
 
