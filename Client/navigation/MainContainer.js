@@ -10,7 +10,7 @@ import FitnessNavigationScreen from './screens/Fitness/routes/FitnessNavigation'
 import DashboardScreen from "./screens/MainDashboard/DashboardScreen";
 import MentalScreen from './screens/Mental/manager'
 import DietNavigation from "./screens/Diet/DietNavigation"
-import Settings from "./screens/Diet/Settings";
+// import Settings from "./screens/Diet/Settings";
 import SettingsNavigation from "./screens/Settings/SettingsNavigation";
 
 import theme from "./theme/theme";
