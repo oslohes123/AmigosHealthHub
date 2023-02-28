@@ -11,6 +11,10 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const port = process.env.PORT;
+if(port === undefined){
+  console.log("Please set the PORT environment variable.");
+}
+
 
 const supabase = require('../dist/utils/supabaseSetUp.js');
 const supabaseQuery = require('../dist/utils/databaseInterface.js');
