@@ -34,6 +34,23 @@ export const getUserByEmail = async (
   return { data, error };
 };
 
+export const getUserByID = async (
+  id: string,
+  toBeSelected = "*",
+  database = supabase,
+  table = "User"
+) => {
+  const { data, error }: any = await databaseQuery.selectWhere(
+    database,
+    table,
+    "id",
+    id,
+    toBeSelected
+  );
+
+  return { data, error };
+};
+
 export const updateUser = async(
   email: string,
   newInfo: Object,

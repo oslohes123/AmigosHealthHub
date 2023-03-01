@@ -18,20 +18,13 @@ export const changeStats = async(req:Request,res:Response) => {
     }
 
     if(prevEmail !== newEmail){
-        if(!isEmail(newEmail)){
-            console.log("Invalid New Email")
-            return res.status(400).json({mssg: "Invalid New Email"})
-        }
-
-
+        if(!isEmail(newEmail)) return res.status(400).json({mssg: "Invalid New Email"})
+    
         //Check that new email is available
         const {data, error}: any = await getUserByEmail(newEmail)
 
-        if(error){
-            console.error(error);
-            return res.status(500).json({mssg: error.message});
-        }
-
+        if(error) return res.status(500).json({mssg: error.message});
+    
         if(data.length === 0){
           
             const {data, error}: any = await updateUser(prevEmail, {firstName, lastName, 
@@ -101,7 +94,7 @@ export const changePassword = async(req:Request,res:Response) => {
 }
 
 /**
- * Implementation needs to change to delete this user from all tables
+ * Implementation needs to change to delete this user from all tables(cascade delete)
  */
 
 export const deleteAccount = async(req:Request, res:Response) =>{
