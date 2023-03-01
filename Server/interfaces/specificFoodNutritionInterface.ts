@@ -1,7 +1,4 @@
 export default interface specificFoodNutritionInterface {
-    foods: Food[];
-}
-export interface Food{
     food_name: string;
     brand_name: string | null;
     serving_qty: number;
