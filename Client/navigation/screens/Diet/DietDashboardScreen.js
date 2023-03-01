@@ -96,9 +96,18 @@ export default function DietDashboardScreen({ navigation }) {
   //   navigation.navigate('Settings');
   // }
 
-  const pressHandler2 = (name, calories, Protein, Carbs, Fat, Sugars, Vitamins, Fibre) => {
-    navigation.navigate('Food Details', { name, calories, Protein, Carbs, Fat, Sugars, Vitamins, Fibre });
+  async function foodPress (name = null,nix_item_id = null){
+    console.log(`name: ${name} nix_item_id: ${nix_item_id}`);
+    let data;
+    if(nix_item_id == null){
+      data = await specificSearch(name);
+    }else{
+      data = await specificSearch(nix_item_id);
+    }
+    navigation.navigate('Food Details', data);
   }
+
+
 
   const pressHandler3 = () => {
     navigation.navigate('Food History');
@@ -181,7 +190,7 @@ export default function DietDashboardScreen({ navigation }) {
         {text.length > 2 && (
           <ScrollView style={styles.scroll}>
             {foodNames.items && foodNames.items.map(item => (
-              <TouchableOpacity onPress={() => pressHandler2(item.food_name)}
+              <TouchableOpacity onPress={() => {item.item_id ? foodPress(null,item.item_id) : foodPress(item.food_name,null)}}
                 style={styles.textContainer} key={item.food_name}>
                 <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
                   <Text style={styles.textData} key={item.food_name}>{item.food_name} {item.item_id? ": Brand Item":null}</Text>
