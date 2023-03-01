@@ -30,13 +30,14 @@ async function searchDB(name){
         return data
     }
     else {
-//         const res = await fetch(`https://api.api-ninjas.com/v1/exercises?name=${name}`, {
+        //         const res = await fetch(`https://api.api-ninjas.com/v1/exercises?name=${name}`, {
 //             method: 'GET',
 //             headers: {
 //                 'X-Api-key': 'MJIJot8zJvjqN881cfM7/A==uUVjsJou0izgtlB5',
 //                 'Content-Type': 'application/json'
 //             }      
 //         })
+
         const request = require('request');
         request.get({
         url: 'https://api.api-ninjas.com/v1/exercises?name=${name}',
@@ -132,7 +133,7 @@ async function addCustomExercise(req, res){
     const supabase = require('../dist/utils/supabaseSetUp.js');
     const supabaseQueryClass = require('../dist/utils/databaseInterface.js');
     const supabaseQuery = new supabaseQueryClass()
-    const {data: insertData, error: insertError} = await supabaseQuery.insert(supabase, "Exercises", {Type: req.type, Name:req.name, Muscle:req.muscle, Difficulty: req.difficulty, Instructions: req.instructions});
+    const {data: insertData, error: insertError} = await supabaseQuery.insert(supabase, "Exercises", {Type: req.body.type, Name:req.body.name, Muscle:req.body.muscle, Difficulty: req.body.difficulty, Instructions: req.body.instructions});
     if(insertError) console.error(insertError);
     else console.log({insertData})
     return res.json({'search': insertData})
@@ -171,6 +172,7 @@ module.exports.trackExercises = trackExercises;
 module.exports.workoutPlans = workoutPlans;
 module.exports.getOccurrences = getOccurrences;
 module.exports.APIcallToArray = APIcallToArray;
+module.exports.searchDB = searchDB;
 // module.exports.returnexercises = returnexercises;
 
 

@@ -30,15 +30,15 @@ const info = new supabaseQuery()
 // //     expect(result).toEqual([1, 2, 3]);
 // //   });
 
-// test('convert JSON data to an array', () => {
-//   const data = '[1, 2, 3]';
-//   expect(fitnessFunctions.APIcallToArray([data])).toEqual([1, 2, 3]);
-// })
+test('convert JSON data to an array', () => {
+  const data = '[1, 2, 3]';
+  expect(fitnessFunctions.APIcallToArray([data])).toEqual([1, 2, 3]);
+})
 
-//   test('should return an empty array if JSON data is empty', () => {
-//     const data = '';
-//     expect(fitnessFunctions.APIcallToArray([data])).toEqual([])
-//   });
+  test('should return an empty array if JSON data is empty', () => {
+    const data = '';
+    expect(fitnessFunctions.APIcallToArray([data])).toEqual([])
+  });
 
 //   test('should throw an error if JSON data is invalid', () => {
 //     const data = 'invalid';
@@ -60,7 +60,6 @@ test('should convert JSON data to an array', (assert) => {
   const result = APIcallToArray(data);
   assert.deepEqual(result, [1, 2, 3]);
 });
-
 test('should return an empty array if JSON data is empty', (assert) => {
   const data = '';
   const result = APIcallToArray(data);
@@ -73,3 +72,61 @@ test('should throw an error if JSON data is invalid', (assert) => {
     APIcallToArray(data);
   });
 });
+const searchDB = require('../controllers/fitnessControllers.js');
+
+test('Search Exercises database for bicep curl', () => {
+  const obj = {
+    "ExerciseID" : "5681d626-faee-4277-be34-3346696433e6",
+    "Type" : "Weight",
+    "Name" : "Bicep Curl",
+    "Muscle" : "bicep",
+    "Difficulty" : "Beginner",
+    "Instructions" : "Curl the weight"
+  }      
+  expect(fitnessFunctions.searchDB('Bicep curl').toBe(obj));
+});
+
+test('Search Exercises database for chest press', () => {
+  const obj = {
+    "ExerciseID" : "78491fbb-818b-4f85-ac0a-592fbcfb0b2e",
+    "Type" : "Weight",
+    "Name" : "Bench Press",
+    "Muscle" : "Chest",
+    "Difficulty" : "Beginner",
+    "Instructions" : "CLay with back on bench and press bar upwards from chest height."
+  }      
+  expect(fitnessFunctions.searchDB('Bench Press').toBe(obj));
+});
+
+
+// jest.mock('../dist/utils/databaseInterface.js');
+
+// describe('searchDB', () => {
+//   it('returns null when given an invalid exercise name', async () => {
+//     const supabase = {};
+//     const name = 'invalid-exercise-name';
+//     const { data, error } = await searchDB(name);
+//     expect(error).toBe(null);
+//     expect(data).toBe(null);
+//   });
+
+//   it('returns the exercise data when given a valid exercise name', async () => {
+//     const supabase = {};
+//     const name = 'valid-exercise-name';
+//     const expectedData = { id: 1, name: 'valid-exercise-name', description: 'example description' };
+//     supabaseQueryClass.prototype.findrow.mockResolvedValueOnce({ data: expectedData, error: null });
+//     const { data, error } = await searchDB(name);
+//     expect(error).toBe(null);
+//     expect(data).toEqual(expectedData);
+//   });
+
+//   it('handles errors thrown during the Supabase query', async () => {
+//     const supabase = {};
+//     const name = 'valid-exercise-name';
+//     const expectedError = new Error('example error');
+//     supabaseQueryClass.prototype.findrow.mockResolvedValueOnce({ data: null, error: expectedError });
+//     const { data, error } = await searchDB(name);
+//     expect(error).toEqual(expectedError);
+//     expect(data).toBe(null);
+//   });
+// });
