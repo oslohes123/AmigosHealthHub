@@ -1,6 +1,5 @@
 require('dotenv').config()
 import { Request, Response } from 'express';
-
 import { createUser, getUserByEmail, verifyPassword, createHashedPassword, createToken} from '../utils/userFunctions';
 import { isEmail, isAlpha, isStrongPassword } from '../utils/validators';
 

@@ -34,6 +34,18 @@ export const getUserByEmail = async (
   return { data, error };
 };
 
+export const updateUser = async(
+  email: string,
+  newInfo: Object,
+  database = supabase,
+  table = "User"
+) => {
+  const {data, error}:any = await databaseQuery.update(database, table, newInfo, 
+    'email', email);
+
+    return {data, error}
+}
+
 export const verifyPassword = async (
   inputtedPassword: String,
   actualPassword: String
