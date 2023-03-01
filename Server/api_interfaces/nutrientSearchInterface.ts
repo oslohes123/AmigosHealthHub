@@ -38,7 +38,7 @@ interface Food {
         food_group: number;
         tag_id: number;
     };
-    alt_measures: altMeasures[];
+    alt_measures: altMeasures[] | null;
     lat: number | null;
     lng: number | null;
     meal_type: number;

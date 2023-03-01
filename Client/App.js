@@ -1,7 +1,10 @@
+import 'react-native-url-polyfill/auto';
 import MainContainer from './navigation/MainContainer';
 import LottieView from 'lottie-react-native';
 import { View, Text, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
+
+
 
 export default function App() {
   const [showMainPage, setShowMainPage] = useState(false);
@@ -11,12 +14,12 @@ export default function App() {
     //   {showMainPage ? (<MainContainer />) :
     //   (
     //     <View style={styles.animation}>
-    //       <LottieView 
-    //         source={require('./assets/animation.json')} 
-    //         autoPlay 
+    //       <LottieView
+    //         source={require('./assets/animation.json')}
+    //         autoPlay
     //         loop={false}
     //         speed={2}
-    //         onAnimationFinish={() => setShowMainPage(true)} 
+    //         onAnimationFinish={() => setShowMainPage(true)}
     //       />
     //       <Text style={styles.text}>HEALTH HUB</Text>
     //     </View>
@@ -24,7 +27,7 @@ export default function App() {
     // </View>
     <MainContainer />
   );
-  
+
 }
 
 const styles = StyleSheet.create({
@@ -35,8 +38,8 @@ const styles = StyleSheet.create({
   },
   animation: {
     flex: 1,
-    alignItems: 'center', 
-    justifyContent: 'center', 
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#00BFFF',
   }
 })

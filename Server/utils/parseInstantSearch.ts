@@ -9,7 +9,7 @@ function transformCommon(common: Common): Item {
     serving_qty: common.serving_qty,
     calories: undefined,
     brand_name: undefined,
-    brand_id: undefined,
+    item_id: undefined,
   };
 }
 
@@ -20,7 +20,7 @@ function transformBranded(branded: Branded): Item {
     serving_qty: branded.serving_qty,
     calories: branded.nf_calories,
     brand_name: branded.brand_name,
-    brand_id: branded.nix_brand_id,
+    item_id: branded.nix_item_id,
   };
 }
 
