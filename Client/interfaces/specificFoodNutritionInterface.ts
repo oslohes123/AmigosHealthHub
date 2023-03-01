@@ -1,7 +1,4 @@
 export default interface specificFoodNutritionInterface {
-    foods: Food[];
-}
-interface Food{
     food_name: string;
     brand_name: string | null;
     serving_qty: number;
@@ -13,4 +10,12 @@ interface Food{
     total_carbohydrates: number;
     sugar: number;
     Fiber: number;
+    alt_measures: AltMeasures[] | null;
+}
+
+export interface AltMeasures{
+    serving_weight: number;
+    measure: string;
+    seq: number | null;
+    qty: number;
 }
