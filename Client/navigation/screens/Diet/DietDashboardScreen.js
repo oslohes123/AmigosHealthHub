@@ -134,13 +134,15 @@ export default function DietDashboardScreen({ navigation }) {
   return (
     
     <SafeAreaView style={[styles.container, {backgroundColor:theme.background}]}>
-      <View style={styles.headerView}>
-        <Text style={[styles.title, {color:theme.color}]}>Calorie Goal-:</Text>
+      <View style={{flexDirection: 'row', justifyContent: 'center', marginBottom: '-10%'}}>
+      <View style={[styles.headerView, {borderColor:theme.color}]}>
+        <Text style={[styles.title, {color:theme.color}]}>Calorie Goal</Text>
         <Text style={[styles.number, {color:theme.color}, {borderColor:theme.color}]}>1000cal</Text>
       </View>
-      <View style={styles.headerView1}>
-        <Text style={[styles.title, {color:theme.color}]}>Calories Remaining-:</Text>
+      <View style={[styles.headerView, {borderColor:theme.color}]}>
+        <Text style={[styles.title, {color:theme.color}]}>Calories Remaining</Text>
         <Text style={[styles.number, {color:theme.color}, {borderColor:theme.color}]}>250cal</Text>
+      </View>
       </View>
       {/* <Header /> */}
       {/* {showHeader ? <Header /> : <Header1 />} */}
@@ -320,7 +322,7 @@ const styles = StyleSheet.create({
     padding: 20,
     // height: 50,
     marginVertical: 10,
-    width: '80%',
+    width: '90%',
     alignSelf: 'center',
     marginHorizontal: 10
   },
@@ -359,34 +361,44 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     color: '#fff',
-    fontSize: 25,
+    fontSize: 15,
     fontWeight: 'bold',
-    paddingTop: 20,
-    paddingBottom: 10,
-    marginTop: 1,
+    //paddingTop: 20,
+    //paddingBottom: 10,
+    //marginTop: 1,
   },
   number: {
     textAlign: 'center',
     color: '#fff',
-    fontSize: 25,
+    fontSize: 15,
     fontWeight: 'bold',
     paddingTop: 10,
-    borderStyle: 'solid',
-    borderWidth: 2,
+    //borderStyle: 'solid',
+    //borderWidth: 2,
     paddingBottom: 5,
-    width: '30%',
+    //width: '30%',
     alignSelf: 'center',
-    borderRadius: 15
+    //borderRadius: 15
   },
   headerView: {
-    flexDirection: 'row', 
-    justifyContent: 'space-between',
-    margin: '7%'
+    //flexDirection: 'row', 
+    //justifyContent: 'space-between',
+    //margin: '7%'
+    borderWidth: 2,
+    borderRadius: 15,
+    width:'40%',
+    margin: '5%',
+    padding: 10
   },
   headerView1: {
-    flexDirection: 'row', 
-    justifyContent: 'space-between',
-    marginTop: '-50%',
-    margin: '7%'
+    //flexDirection: 'row', 
+    //justifyContent: 'space-between',
+    //marginTop: '-50%',
+    //margin: '7%'
+    borderWidth: 2,
+    borderRadius: 15,
+    width:'40%',
+    margin: '5%',
+    padding: 10
   }
 });
