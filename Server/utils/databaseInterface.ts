@@ -105,13 +105,15 @@ export class supabaseQueryClass implements dbInterface {
     table: string,
     column: string,
     value: any
-  ): Promise<void | undefined> {
+  ): Promise<object | undefined> {
     try {
       const { error } = await supabaseDb.from(table).delete().eq(column, value);
 
-      if (error) console.error(error);
+      if (error) return {error};
+      else return{error: null}
     } catch (err: unknown) {
       console.error(err);
+      return {error: err};
     }
   }
 

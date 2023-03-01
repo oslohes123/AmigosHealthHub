@@ -6,6 +6,7 @@ import {v4 as uuidv4} from 'uuid';
 const bcrypt = require('bcrypt');
 import supabase from '../../../utils/supabaseSetUp';
 import { supabaseQueryClass } from '../../../utils/databaseInterface';
+import { createHashedPassword, createUser } from '../../../utils/userFunctions';
 const supabaseQuery = new supabaseQueryClass();
 
 
@@ -23,11 +24,10 @@ test.before(async (t: any) => {
   const uuid1 = uuidv4();
   firstUserEmail = `${uuid1}@gmail.com`
 
-  const salt = await bcrypt.genSalt(10);
-  hashedPassword1  = await bcrypt.hash("User1Password123!", salt);
+  hashedPassword1 = await createHashedPassword("User1Password123!")
 
-  const {data, error}:any = await supabaseQuery.insert(supabase, 'User',{firstName: "First", lastName:"User", 
-  email:firstUserEmail, password: hashedPassword1, age: 31});
+  const {data, error}:any = await createUser({firstName: "First", lastName:"User", 
+  email:firstUserEmail, password: hashedPassword1, age: 31})
   
   if(error){
       t.fail("Inserting second user failed!");

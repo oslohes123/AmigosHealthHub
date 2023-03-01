@@ -2,7 +2,7 @@ require('dotenv').config()
 import { Request, Response } from 'express';
 import { createUser, getUserByEmail, verifyPassword, createHashedPassword, createToken} from '../utils/userFunctions';
 import { isEmail, isAlpha, isStrongPassword } from '../utils/validators';
-
+import { UserInterface } from '../utils/userInterface';
 export const loginUser = async(req:Request,res:Response) => {
 
     const {email, password} = req.body;
@@ -84,7 +84,8 @@ export const signupUser = async(req:Request,res:Response) => {
                     return res.status(400).json({mssg:"Sorry, something went wrong!", err: error.message});
                 }
 
-                const {data, error} = await createUser({firstName, lastName,email,password: hashedPassword, age})
+                const user: UserInterface = {firstName, lastName,email,password: hashedPassword, age}; 
+                const {data, error} = await createUser(user)
 
                 if(error) return res.status(400).json({mssg:"Sorry, something went wrong!", err:error.message});
                 else{ 

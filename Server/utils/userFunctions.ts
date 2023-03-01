@@ -3,9 +3,10 @@ import { supabaseQueryClass } from "./databaseInterface";
 const bcrypt = require("bcrypt");
 const jwttoken = require("jsonwebtoken");
 const databaseQuery = new supabaseQueryClass();
+import { UserInterface } from "./userInterface";
 
 export const createUser = async (
-  informationToInsert: Object,
+  informationToInsert: UserInterface,
   database = supabase,
   table = "User"
 ) => {
@@ -61,6 +62,17 @@ export const updateUser = async(
     'email', email);
 
     return {data, error}
+}
+
+
+export const deleteUserRow = async(
+  email: string,
+  database = supabase,
+  table = "User"
+) => {
+  const {error}:any = await databaseQuery.deleteFrom(database, table,'email',email)
+
+    return {error}
 }
 
 export const verifyPassword = async (
