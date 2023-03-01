@@ -9,7 +9,7 @@ export default interface specificFoodNutritionInterface {
     protein: number;
     total_carbohydrates: number;
     sugar: number;
-    Fiber: number;
+    fiber: number;
     alt_measures: AltMeasures[] | null;
 }
 

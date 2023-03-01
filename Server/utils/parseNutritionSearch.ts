@@ -14,7 +14,7 @@ export default function transformNutrientSearchInterface(data: NutrientSearchInt
             protein: food.nf_protein,
             total_carbohydrates: food.nf_total_carbohydrate,
             sugar: food.nf_sugars,
-            Fiber: food.nf_dietary_fiber,
+            fiber: food.nf_dietary_fiber,
             alt_measures: food.alt_measures,
 
     };
