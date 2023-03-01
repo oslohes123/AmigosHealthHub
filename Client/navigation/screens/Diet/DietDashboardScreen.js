@@ -97,7 +97,6 @@ export default function DietDashboardScreen({ navigation }) {
   // }
 
   async function foodPress (name = null,nix_item_id = null){
-    console.log(`name: ${name} nix_item_id: ${nix_item_id}`);
     let data;
     if(nix_item_id == null){
       data = await specificSearch(name);
