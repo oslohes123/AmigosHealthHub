@@ -56,7 +56,7 @@ class supabaseQuery implements dbInterface{
     }
 
 
-    async deleteFrom(supabaseDb:any ,table: string, column: string, value: any): Promise<void | undefined>{
+    async deleteFro(supabaseDb:any ,table: string, column: string, value: any): Promise<void | undefined>{
         try{
             const { error } = await supabaseDb
             .from(table)
