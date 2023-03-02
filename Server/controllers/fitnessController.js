@@ -1,5 +1,9 @@
 // const port = process.env.PORT;
 // const ipaddress = process.env.IP_ADDRESS;
+const supabase = require('../dist/utils/supabaseSetUp.js');
+const supabaseQueryClass = require('../dist/utils/databaseInterface.js');
+const supabaseQuery = new supabaseQueryClass()
+
 function objectToArray(obj) {
     const json = JSON.stringify(obj);
     const arr = [];
@@ -21,9 +25,6 @@ async function APItodatabase(data){
 
 
 async function searchDB(name){
-    const supabase = require('../dist/utils/supabaseSetUp.js');
-    const supabaseQueryClass = require('../dist/utils/databaseInterface.js');
-    const supabaseQuery = new supabaseQueryClass()
     const {data,error} = await supabaseQuery.findrow(supabase, "Exercises", "Name", name); //search Supabase database for exercise
     if(error){
         return null;
@@ -66,9 +67,6 @@ async function searchDB(name){
 }
 
 async function workoutPlanNameFind(name){
-    const supabase = require('../dist/utils/supabaseSetUp.js');
-    const supabaseQueryClass = require('../dist/utils/databaseInterface.js');
-    const supabaseQuery = new supabaseQueryClass()
     const {data,error} = await supabaseQuery.findrow(supabase, "WorkoutPlans", "WorkoutPlanName", name); //search Supabase database for exercise
     if(error) console.error(error);
     else if (data != null){
@@ -82,9 +80,6 @@ async function workoutPlanNameFind(name){
 
 
 async function trackOneExercise(req, res){
-    const supabase = require('../dist/utils/supabaseSetUp.js');
-    const supabaseQueryClass = require('../dist/utils/databaseInterface.js');
-    const supabaseQuery = new supabaseQueryClass()
     const {data: insertData, error: insertError} = await supabaseQuery.insert(supabase, "Completed Workouts", {Reps: req.reps, Sets: req.sets, Duration: req.duration, Distance: req.distance});
     if(insertError) {
         console.error(insertError);
@@ -95,9 +90,6 @@ async function trackOneExercise(req, res){
 }
 
 async function addTrackedWorkout(name, type, muscle, difficulty, instructions){
-    const supabase = require('../dist/utils/supabaseSetUp.js');
-    const supabaseQueryClass = require('../dist/utils/databaseInterface.js');
-    const supabaseQuery = new supabaseQueryClass()
     const {data: insertData, error: insertError} = await supabaseQuery.insert(supabase, "Completed Workouts", {Type: type, Name:name, Muscle:muscle, Difficulty: difficulty, Instructions: instructions});
     if(insertError) console.error(insertError);
     else console.log({insertData})
@@ -110,7 +102,7 @@ async function addTrackedWorkout(name, type, muscle, difficulty, instructions){
 
 function addExercise(req, res, data){
     if (data == null){
-        return {mssg: 'We cannot add this exercise.'}
+        return res.sendStatus(400).json({mssg: 'We cannot add this exercise.'})
     }
     else{
     const workoutlist = req.body.workout
@@ -129,9 +121,6 @@ function getOccurrences(arr, v){
 
 
 function mostRecentData(){
-    const supabase = require('../dist/utils/supabaseSetUp.js');
-    const supabaseQueryClass = require('../dist/utils/databaseInterface.js');
-    const supabaseQuery = new supabaseQueryClass()
     const {data, error} = supabaseQuery.mostRecent(supabase)
     if (data){
         return JSON.stringify(data)
@@ -142,13 +131,13 @@ function mostRecentData(){
 }
 
 async function addCustomExercise(req, res){
-    const supabase = require('../dist/utils/supabaseSetUp.js');
-    const supabaseQueryClass = require('../dist/utils/databaseInterface.js');
-    const supabaseQuery = new supabaseQueryClass()
     const {data: insertData, error: insertError} = await supabaseQuery.insert(supabase, "Exercises", {Type: req.body.type, Name:req.body.name, Muscle:req.body.muscle, Difficulty: req.body.difficulty, Instructions: req.body.instructions});
-    if(insertError) console.error(insertError);
+    if(insertError){
+        console.error(insertError);
+        return res.sendStatus(400).json({mssg : 'Request invalid'})
+    }
     else console.log({insertData})
-    return res.json({'search': insertData})
+    return res.sendStatus(200).json({'search': insertData})
 }
 
 function searchExercise(req, res){
