@@ -1,19 +1,67 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View , TextInput, Button, Image} from 'react-native';
+import { StyleSheet, Text, View , TextInput, Button, Image, ScrollView, SafeAreaView} from 'react-native';
 import Slider from '@react-native-community/slider'
 import React, { useState } from 'react';
 //npm install , npm install @react-native-community/slider --save
+const date = new Date();
 
 const moodImage = [require('../../../assets/Worst.png'), require('../../../assets/Sad.png'), require('../../../assets/Neutral.png'), require('../../../assets/Happy.png'), require('../../../assets/Perfect.png'),]
 
 export default function App({navigation}: {navigation: any}) {
+  //set initial picture in view
   const [moodI, setRangeI] = useState(require('../../../assets/Neutral.png'))
-  const back = () => {
-    navigation.goBack();
-  }
+
+  //use states to make sure variables can change when input or slider value changes
+  const [textInputValue, setTextInputValue] = useState('');
+  const [faceInputValue, setFaceValue] = useState(3);
+
+//make function to change text,face value variable if there is change in inputbox/slider
+  const handleTextInputChange = (value: string) => {
+    setTextInputValue(value);
+  };
+  const handleFaceInputChange = (value: number) => {
+    setFaceValue(value);
+    setRangeI(moodImage[value])
+  };
+  //when the user submits the information, check if its not empty and return to check value is correct
+  const handleButtonClick = () => {
+    if(textInputValue==''){
+      console.log(`Input can't be empty`);
+    }
+    else{
+      const date1 = new Date();
+      const date2 = new Date('1/03/2023');
+      if (date1.getDate().toString().length == 1 && date1.getMonth().toString().length == 1) {
+        console.log('0' + date1.getDate().toString() + '/0' + (date1.getMonth()+1).toString() + '/' + date1.getFullYear().toString());
+      } else if (date1.getDate().toString().length == 1) {
+        console.log('0' + date.getDate().toString() + '/' + (date.getMonth()+1).toString() + '/' + date.getFullYear().toString());
+      } else if (date1.getMonth().toString().length == 1){
+        console.log(date1.getDate().toString() + '/' + '0' + (date1.getMonth()+1).toString() + '/' + date1.getFullYear().toString());
+      } else {
+          console.log(date1.getDate().toString() +(date1.getMonth()+1).toString() + date1.getFullYear().toString());
+      }
+      console.log(`Text input value: ${textInputValue}`);
+      console.log(`Slider value: ${faceInputValue}`);
+      console.log(date1);
+      console.log(date2);
+      console.log(date1 > date2);
+    }
+
+
+  };
+
   return (
-    <View style={styles.container}>
-      <Image source = {moodI}/>
+    <SafeAreaView style={styles.container}>
+      <Text style = {styles.label}>Word:</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Input Your Word Of The Day Here"
+        value={textInputValue}
+        onChangeText={handleTextInputChange}
+      
+      />
+      <Text style = {styles.label}>Face:</Text>
+      <Image source = {moodI} style={styles.image}/>
       <Slider
         style = {{ width: 250, height: 40 }}
         minimumValue = {0}
@@ -23,16 +71,10 @@ export default function App({navigation}: {navigation: any}) {
         thumbTintColor = 'green'
         value = {3}
         step={1}
-        onValueChange = {(value: number) => setRangeI(moodImage[value])}
+        onValueChange = {(value: number) => handleFaceInputChange(value)}
         />
-      <TextInput
-        style={styles.input}
-        placeholder="Input Your Word Of The Day Here"
-      />
-      <Button title="Submit"></Button>      
-      <Button title="<--" onPress={back}></Button>      
-      <StatusBar style="auto" />
-    </View>
+      <Button title="Submit" onPress={handleButtonClick}></Button>      
+    </SafeAreaView>
   );
 }
 
@@ -41,12 +83,21 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
   },
   input: {
     height: 40,
     margin: 12,
     borderWidth: 1,
+    padding: 10,
+  },
+  image: {
+  },
+  button: {
+  },
+  scrollbar: {
+  },
+  label:{
+    fontSize: 24,
     padding: 10,
   },
 });

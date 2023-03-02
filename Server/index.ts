@@ -2,6 +2,7 @@
 //Configuration
 import { Request ,Response } from "express";
 import { request } from "http";
+import supabase from "supabaseSetup";
 const express = require("express");
 const app = express();
 
@@ -12,7 +13,6 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const port = process.env.PORT;
-
 const supabase = require('../dist/utils/supabaseSetUp.js');
 const supabaseQuery = require('../dist/utils/databaseInterface.js');
 
@@ -31,7 +31,7 @@ app.use('/auth', authRouter);
 /**---------------- Routes End------------------ */
 
 async function supabaseTest(){
-  const {data,error} = await supabase.rpc('hello');
+  const { data, error } = await supabase.from('User').select('firstName,lastName,email').eq('email', 'saathsatheesh@gmail.com'); 
   if(error) console.error(error);
   else console.log({data});
 }
