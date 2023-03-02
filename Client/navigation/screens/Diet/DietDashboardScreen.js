@@ -80,6 +80,8 @@ export default function DietDashboardScreen({ navigation }) {
     }
     if(text.length > 2){
       fetchData();
+    }else if(text.length < 3){
+      setFoodNames([])
     }
   }, [text]);
 
@@ -194,7 +196,7 @@ export default function DietDashboardScreen({ navigation }) {
               <TouchableOpacity onPress={() => {item.item_id ? foodPress(null,item.item_id) : foodPress(item.food_name,null)}}
                 style={styles.textContainer} key={item.food_name}>
                 <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-                  <Text style={styles.textData} key={item.food_name}>{item.food_name} {item.item_id? ": Brand Item":null}</Text>
+                  <Text style={styles.textData} key={item.food_name}>{item.food_name} {item.item_id?"From: " + item.brand_name:null}</Text>
                   <Ionicons name={'chevron-forward-outline'} size={32} color={'black'} />
                 </View>
               </TouchableOpacity>
