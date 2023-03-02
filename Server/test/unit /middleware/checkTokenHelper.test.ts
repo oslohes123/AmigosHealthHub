@@ -1,15 +1,12 @@
 const test = require('ava');
 import { Request, Response, NextFunction } from 'express';
 const sinon = require('sinon');
-import { changeStats } from '../../../routes/changeProfileDetails.controller';
 import {v4 as uuidv4} from 'uuid';
-const bcrypt = require('bcrypt');
-import { checkToken } from '../../../middleware/checkToken';
+import { checkTokenHelper } from '../../../utils/checkTokenHelpers';
 import supabase from '../../../utils/supabaseSetUp';
 import { supabaseQueryClass } from '../../../utils/databaseInterface';
 const supabaseQuery = new supabaseQueryClass();
-const jwtToken = require('jsonwebtoken');
-import { createToken } from '../../../utils/userFunctions';
+import { createHashedPassword, createToken } from '../../../utils/userFunctions';
 
 
 const mockResponse = () => {
@@ -25,12 +22,12 @@ return {
     };
 };
 
-test('checkToken with missing authorization header results in error', async (t: any) => {
+test('checkTokenHelper with missing authorization header results in error', async (t: any) => {
     const req = mockRequest({});
     const res = mockResponse();
     // const next = mockNext();
     const next = sinon.fake()
-    await checkToken(req as Request, res as Response, next as NextFunction);
+    await checkTokenHelper(req as Request, res as Response, next as NextFunction);
     // await signupUser(req, res);
     t.true(next.callCount === 0);
     t.true(res.status.calledWith(401))
@@ -46,7 +43,7 @@ test('checkToken with missing authorization header results in error', async (t: 
     const res = mockResponse();
     // const next = mockNext();
     const next = sinon.fake()
-    await checkToken(req as Request, res as Response, next as NextFunction);
+    await checkTokenHelper(req as Request, res as Response, next as NextFunction);
     // await signupUser(req, res);
     t.true(next.callCount === 0);
     t.true(res.status.calledWith(400))
@@ -61,7 +58,7 @@ test('checkToken with missing authorization header results in error', async (t: 
     const res = mockResponse();
     // const next = mockNext();
     const next = sinon.fake()
-    await checkToken(req as Request, res as Response, next as NextFunction);
+    await checkTokenHelper(req as Request, res as Response, next as NextFunction);
     // await signupUser(req, res);
     t.true(next.callCount === 0);
     t.true(res.status.calledWith(400))
@@ -76,7 +73,7 @@ test('checkToken with missing authorization header results in error', async (t: 
     const res = mockResponse();
     // const next = mockNext();
     const next = sinon.fake()
-    await checkToken(req as Request, res as Response, next as NextFunction);
+    await checkTokenHelper(req as Request, res as Response, next as NextFunction);
     // await signupUser(req, res);
     t.true(next.callCount === 0);
     t.true(res.status.calledWith(401))
@@ -97,7 +94,7 @@ test('checkToken with missing authorization header results in error', async (t: 
     const res = mockResponse();
     const next = sinon.fake()
 
-    await checkToken(req as Request, res as Response, next as NextFunction);
+    await checkTokenHelper(req as Request, res as Response, next as NextFunction);
 
     t.true(next.callCount === 0);
     t.true(res.status.calledWith(401));
@@ -105,15 +102,12 @@ test('checkToken with missing authorization header results in error', async (t: 
   
   });
 
-  test('checkToken with legitimate token results in error', async (t: any) => {
+  test('checkToken with legitimate token results in next() if next exists', async (t: any) => {
     
     const uuid = uuidv4();
     const testUser = `${uuid}@gmail.com`;
 
-    const salt = await bcrypt.genSalt(10);
-    
-    const hashedPassword  = await bcrypt.hash("User1Password123!", salt);
-
+    const hashedPassword = await createHashedPassword("User1Password123!")
     await supabaseQuery.insert(supabase, 'User',{firstName: "Test", lastName:"User", 
     email:testUser, password: hashedPassword, age: 31});
     
@@ -130,9 +124,18 @@ test('checkToken with missing authorization header results in error', async (t: 
     });
     const res = mockResponse();
     const next = sinon.fake()
-    await checkToken(req as Request, res as Response, next as NextFunction);
+    await checkTokenHelper(req as Request, res as Response, next as NextFunction);
     // await signupUser(req, res);
     t.true(next.callCount === 1)
 
+    await checkTokenHelper(req as Request, res as Response, null);
+    t.true(res.status.calledWith(200));
+    t.true(res.json.calledWith({mssg: "Legitimate token"}));
+
     await supabaseQuery.deleteFrom(supabase, 'User', 'email', testUser);
   });
+
+
+  
+
+  

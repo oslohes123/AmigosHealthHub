@@ -8,7 +8,7 @@ import {v4 as uuidv4} from 'uuid';
 const bcrypt = require('bcrypt');
 import supabase from "../../utils/supabaseSetUp";
 import { supabaseQueryClass } from "../../utils/databaseInterface"; 
-import { createToken } from "../../utils/userFunctions";
+import { createHashedPassword, createToken } from "../../utils/userFunctions";
 const supabaseQuery = new supabaseQueryClass();
 
 
@@ -48,8 +48,7 @@ test.before( async (t:any) => {
     const uuid2 = uuidv4();
     secondUserEmail = `${uuid2}@gmail.com`
 
-    const salt = await bcrypt.genSalt(10);
-    hashedPassword2  = await bcrypt.hash("User2Password123!", salt);
+    hashedPassword2  = await createHashedPassword("User2Password123!")
     console.log("In second user creation")
     await supabaseQuery.insert(supabase, 'User',{firstName: "Second", lastName:"User", 
     email:secondUserEmail, password: hashedPassword2, age:30});

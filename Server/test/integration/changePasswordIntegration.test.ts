@@ -5,7 +5,7 @@ import {v4 as uuidv4} from 'uuid';
 const bcrypt = require('bcrypt');
 import supabase from "../../utils/supabaseSetUp";
 import { supabaseQueryClass } from "../../utils/databaseInterface";
-import { createToken } from "../../utils/userFunctions";
+import { createHashedPassword, createToken } from "../../utils/userFunctions";
 const supabaseQuery = new supabaseQueryClass();
 
 const changePasswordRoute = '/api/user/changeProfileDetails/password';
@@ -17,10 +17,8 @@ let token: string;
 test.before(async (t: any) => {
     const uuid = uuidv4();
     testEmail = `${uuid}@gmail.com`
-  
-    const salt = await bcrypt.genSalt(10);
-    hashedPassword  = await bcrypt.hash("OriginalPassword123!", salt);
-  
+ 
+    hashedPassword = await createHashedPassword("OriginalPassword123!")
     await supabaseQuery.insert(supabase, 'User',{firstName: "First", lastName:"User", 
     email:testEmail, password: hashedPassword, age: 31});
     
