@@ -1,17 +1,20 @@
 // const port = process.env.PORT;
 // const ipaddress = process.env.IP_ADDRESS;
-function APIcallToArray(data){
-    var result = JSON.parse(data);
-    var arr = [];
-    var temp = "";
-    for (var i = 0; i < result.length; i++){
-        temp = result[i];
-        arr[i] = temp;
+function objectToArray(obj) {
+    const json = JSON.stringify(obj);
+    const arr = [];
+    const result = JSON.parse(json);
+    for (const key in result) {
+      if (result.hasOwnProperty(key)) {
+        arr.push(result[key]);
+      }
     }
     return arr
-}
+  }
+  
+  
 async function APItodatabase(data){
-    const {data: insertData, error: insertError} = await supabaseQuery.insert(supabase, "Exercises", {Type: APIcallToArray(resjson)[1], Name:name, Muscle:APIcallToArray(resjson)[2], Difficulty: APIcallToArray(resjson)[4], Instructions: APIcallToArray(resjson[5])});
+    const {data: insertData, error: insertError} = await supabaseQuery.insert(supabase, "Exercises", {Type: objectToArray(resjson)[1], Name:name, Muscle:objectToArray(resjson)[2], Difficulty: objectToArray(resjson)[4], Instructions: objectToArray(resjson[5])});
     if(insertError) console.error(insertError);
     else console.log({insertData})
 }
@@ -182,7 +185,7 @@ module.exports.fitnessMainPage = fitnessMainPage;
 module.exports.trackExercises = trackExercises;
 module.exports.workoutPlans = workoutPlans;
 module.exports.getOccurrences = getOccurrences;
-module.exports.APIcallToArray = APIcallToArray;
+module.exports.objectToArray = objectToArray;
 module.exports.searchDB = searchDB;
 // module.exports.returnexercises = returnexercises;
 
