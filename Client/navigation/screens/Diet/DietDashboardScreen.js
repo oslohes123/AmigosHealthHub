@@ -9,6 +9,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {PieChart} from "react-native-chart-kit";
 import themeContext from '../../theme/themeContext';
 import { EventRegister } from 'react-native-event-listeners'
+import { genericSearch , specificSearch} from '../../../functions/foodSearch'
+
 
 export default function DietDashboardScreen({ navigation }) {
 
@@ -39,6 +41,9 @@ export default function DietDashboardScreen({ navigation }) {
       color: "green",
       legendFontColor: "black",
       legendFontSize: 18
+
+
+
     },
     {
       name: "Fat",
@@ -63,47 +68,23 @@ export default function DietDashboardScreen({ navigation }) {
     }
   ];
 
-  const [data] = useState([
-    { name: 'Apple', calories: '50 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Banana', calories: '20 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Bacon', calories: '30 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Bagel', calories: '70 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Basil', calories: '90 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Bacon Bits', calories: '25 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Beef', calories: '45 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Bread', calories: '47 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Butter', calories: '74 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Broccoli', calories: '53 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Brownie', calories: '58 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Cherry', calories: '59 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Date', calories: '65 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Elderberry', calories: '47 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Fig', calories: '94 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Grape', calories: '41 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Honeydew', calories: '222 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Iced watermelon', calories: '120 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Jackfruit', calories: '450 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Kiwi', calories: '61 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Lemon', calories: '11 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Mango', calories: '4 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Nectarine', calories: '96 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Orange', calories: '68 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Papaya', calories: '16 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Quince', calories: '17 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Raspberry', calories: '518 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Strawberry', calories: '18 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Tangerine', calories: '9 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Ugli fruit', calories: '3 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Vegetable juice', calories: '89 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Watermelon', calories: '32 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Xigua', calories: '98 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Yellow watermelon', calories: '32 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Zucchini', calories: '45 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' }
+  const [foodNames,setFoodNames] = useState([
   ]);
 
   const [text, setText] = useState('');
 
-  const filteredData = data.filter(item => item.name.toLowerCase().startsWith(text.toLowerCase()));
+  useEffect(() => {
+    async function fetchData() {
+      const data = await genericSearch(text);
+      setFoodNames(data)
+    }
+    if(text.length > 2){
+      fetchData();
+    }else if(text.length < 3){
+      setFoodNames([])
+    }
+  }, [text]);
+
 
   const pressHandler = () => {
     navigation.navigate('Nutrients');
@@ -117,9 +98,17 @@ export default function DietDashboardScreen({ navigation }) {
   //   navigation.navigate('Settings');
   // }
 
-  const pressHandler2 = (name, calories, Protein, Carbs, Fat, Sugars, Vitamins, Fibre) => {
-    navigation.navigate('Food Details', { name, calories, Protein, Carbs, Fat, Sugars, Vitamins, Fibre });
+  async function foodPress (name = null,nix_item_id = null){
+    let data;
+    if(nix_item_id == null){
+      data = await specificSearch(name);
+    }else{
+      data = await specificSearch(nix_item_id);
+    }
+    navigation.navigate('Food Details', data);
   }
+
+
 
   const pressHandler3 = () => {
     navigation.navigate('Food History');
@@ -132,7 +121,6 @@ export default function DietDashboardScreen({ navigation }) {
   // }
 
   return (
-    
     <SafeAreaView style={[styles.container, {backgroundColor:theme.background}]}>
       <View style={{flexDirection: 'row', justifyContent: 'center', marginBottom: '-10%'}}>
       <View style={[styles.headerView, {borderColor:theme.color}]}>
@@ -161,6 +149,7 @@ export default function DietDashboardScreen({ navigation }) {
       {/* </TouchableOpacity> */}
       {/* <ScrollView style={styles.fullScroll}> */}
       <View>
+
         <TextInput
           clearButtonMode='always'
           value={text}
@@ -168,6 +157,7 @@ export default function DietDashboardScreen({ navigation }) {
           style={[styles.input, {borderColor: theme.color}, {color: theme.color}]}
           placeholder='Find food...' 
           placeholderTextColor={theme.color}/>
+
         <View style={styles.chart}>
         {text.length == 0 && (
           <TouchableOpacity style={styles.pieWidget} onPress={pressHandler}>
@@ -175,6 +165,7 @@ export default function DietDashboardScreen({ navigation }) {
           data={Piedata}
           width={340}
           height={210}
+          paddingLeft='10'
           chartConfig={{
             //backgroundColor: "#e26a00",
             //backgroundGradientFrom: "#fb8c00",
@@ -190,6 +181,7 @@ export default function DietDashboardScreen({ navigation }) {
             //   strokeWidth: "2",
             //   stroke: "#ffa726"
             // }
+            
           }}
           accessor="amount"
           backgroundColor="transparent"
@@ -197,13 +189,14 @@ export default function DietDashboardScreen({ navigation }) {
         </TouchableOpacity>
         )}
         </View>
-        {text.length > 0 && (
+
+        {text.length > 2 && (
           <ScrollView style={styles.scroll}>
-            {filteredData.length > 0 && filteredData.map(item => (
-              <TouchableOpacity onPress={() => pressHandler2(item.name, item.calories, item.Protein, item.Carbs, item.Fat, item.Sugars, item.Vitamins, item.Fibre)}
-                style={styles.textContainer} key={item.name}>
+            {foodNames.items && foodNames.items.map(item => (
+              <TouchableOpacity onPress={() => {item.item_id ? foodPress(null,item.item_id) : foodPress(item.food_name,null)}}
+                style={styles.textContainer} key={item.food_name}>
                 <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-                  <Text style={styles.textData} key={item.name}>{item.name}</Text>
+                  <Text style={styles.textData} key={item.food_name}>{item.food_name} {item.item_id?"From: " + item.brand_name:null}</Text>
                   <Ionicons name={'chevron-forward-outline'} size={32} color={'black'} />
                 </View>
               </TouchableOpacity>
@@ -284,7 +277,6 @@ const styles = StyleSheet.create({
 
 
   input: {
-    color: '#fff',
     //marginTop: 10,
     //marginBottom: 10,
     //paddingHorizontal: 8,
@@ -301,7 +293,6 @@ const styles = StyleSheet.create({
     //marginVertical: 10,
     paddingVertical: 12,
     marginTop: -190,
-    marginBottom: 20,
     position: 'absolute',
     borderWidth: 1
     //borderWidth: 1,
@@ -327,11 +318,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 10
   },
   scroll: {
-    marginTop: 10,
+    // marginTop: 10,
     height: 300,
     position: 'absolute',
     marginLeft: 40,
-    marginTop: -120,
+
     alignSelf: 'center',
     // textAlign: 'flex-start',
     flex: 1,

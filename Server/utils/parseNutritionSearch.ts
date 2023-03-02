@@ -1,28 +1,21 @@
 import NutrientSearchInterface from '../api_interfaces/nutrientSearchInterface';
-import specificFoodNutritionInterface, { Food } from '../interfaces/specificFoodNutritionInterface';
+import specificFoodNutritionInterface from '../interfaces/specificFoodNutritionInterface';
 
 export default function transformNutrientSearchInterface(data: NutrientSearchInterface): specificFoodNutritionInterface {
-    const transformedFoods: Food[] = data.foods.map(food => {
-        const transformedFood: Food = {
+    const food = data.foods[0];
+    return {
             food_name: food.food_name,
             brand_name: food.brand_name,
             serving_qty: food.serving_qty,
             serving_unit: food.serving_unit,
             serving_weight_grams: food.serving_weight_grams,
             calories: food.nf_calories,
-            total_fat: food.nf_total_fat,
+            fat: food.nf_total_fat,
             protein: food.nf_protein,
-            total_carbohydrates: food.nf_total_carbohydrate,
+            carbohydrates: food.nf_total_carbohydrate,
             sugar: food.nf_sugars,
-            Fiber: food.nf_dietary_fiber,
+            fiber: food.nf_dietary_fiber,
             alt_measures: food.alt_measures,
-        };
-        return transformedFood;
-    });
 
-    const transformedData: specificFoodNutritionInterface = {
-        foods: transformedFoods,
     };
-
-    return transformedData;
 }
