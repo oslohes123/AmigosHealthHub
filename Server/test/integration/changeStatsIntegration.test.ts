@@ -239,7 +239,6 @@ test(`POST ${changeStatsRoute} with missing last name`, async (t: any) => {
    const{data, error}:any = await supabaseQuery.selectWhere(supabase,'User'
     ,'email',firstUserEmail,'*');
 
-   console.log(`response: ${JSON.stringify(response)}`)
    t.true(response.status === 200)
    t.true(response.headers['content-type'] === "application/json; charset=utf-8")
    t.true(JSON.stringify(response.body) === JSON.stringify({mssg: "Successful Update"}));

@@ -7,8 +7,7 @@
     "build": "npx tsc",
     "start": "node dist/server.js",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon dist/server.js\"",
-    "test": "./node_modules/.bin/jest --forceExit --watch --detectOpenHandles --coverage",
-    "testAva": "npx tsc && c8 ava"
+    "test": "npx tsc && c8 ava"
   },
   "author": "",
   "license": "ISC",
