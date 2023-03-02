@@ -203,16 +203,18 @@ export default function DietDashboardScreen({ navigation }) {
         </View>
 
         {text.length > 2 &&
-          <View>
+          <View style={{flexDirection: 'row', height: '10%', marginTop: '15%'}}>
             <ScrollView style={styles.scroll}>
               {genericFoodList.length > 2 && genericFoodList.map(item => (
                 <TouchableOpacity onPress={() => foodPress(item.food_name, null)}
                   style={styles.textContainer} key={item.food_name}>
-                  <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+                  <View >
+                  <View >
                     <Text style={styles.textData} key={item.food_name}>{item.food_name}</Text>
                     <Text style={{ fontSize: 15, alignSelf: 'center', width: '100%' }}>(Common Food)</Text>
                   </View>
                   <Ionicons name={'chevron-forward-outline'} size={32} color={'black'} />
+                  </View>
                 </TouchableOpacity>
               ))}
             </ScrollView>
@@ -221,7 +223,7 @@ export default function DietDashboardScreen({ navigation }) {
             {specificFoodList.length > 2 && specificFoodList.map(item => (
                 <TouchableOpacity onPress={() => foodPress(null, item.item_id)}
                   style={styles.brandedTextContainer} key={item.food_name}>
-                  <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+                  <View style={{ flex: 1, justifyContent: 'space-between' }}>
                     <View>
                       <Text style={styles.textData} key={item.food_name}>{item.food_name}</Text>
                       <Text style={{ fontSize: 15, alignSelf: 'center', width: '100%' }}>(Branded Food)</Text>
@@ -284,8 +286,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: 50,
     padding: 10,
-    marginTop: 10,
-    marginBottom: -180,
+    //marginTop: 40,
+    marginBottom: '-50%',
     backgroundColor: '#48D1CC',
     //margin: 10,
     //marginBottom: -100,
@@ -312,6 +314,7 @@ const styles = StyleSheet.create({
 
 
   input: {
+    color: '#fff',
     //marginTop: 10,
     //marginBottom: 10,
     //paddingHorizontal: 8,
@@ -328,40 +331,52 @@ const styles = StyleSheet.create({
     //marginVertical: 10,
     paddingVertical: 12,
     marginTop: -190,
+    marginBottom: 20,
     position: 'absolute',
     borderWidth: 1
     //borderWidth: 1,
     //borderColor: '#CCCCCC',
   },
   textData: {
-    fontSize: 25,
+    fontSize: 20,
     color: 'black',
     // marginLeft: 20,
     //marginTop: 1,
     fontWeight: 'bold',
     alignSelf: 'flex-start',
-
+    
   },
   textContainer: {
     backgroundColor: '#3eda9b',
     borderRadius: 15,
-    padding: 20,
+    padding: 10,
     // height: 50,
     marginVertical: 10,
     width: '90%',
     alignSelf: 'center',
     marginHorizontal: 10
   },
+  brandedTextContainer: {
+    backgroundColor: 'red',
+    borderRadius: 15,
+    padding: 10,
+    // height: 50,
+    marginVertical: 10,
+    width: '90%',
+    alignSelf: 'center',
+    marginHorizontal: 10,
+  },
   scroll: {
-    // marginTop: 10,
-    height: 300,
+    marginTop: 10,
+    height: 400,
     position: 'absolute',
-    marginLeft: 40,
-
+    //marginLeft: 40,
+    marginLeft: '50%',
+    marginTop: -120,
     alignSelf: 'center',
     // textAlign: 'flex-start',
     flex: 1,
-    width: '100%'
+    width: '50%'
   },
   // surr: {
   //   borderWidth: 2,
@@ -412,7 +427,7 @@ const styles = StyleSheet.create({
     //margin: '7%'
     borderWidth: 2,
     borderRadius: 15,
-    width: '40%',
+    width:'40%',
     margin: '5%',
     padding: 10
   },
@@ -423,8 +438,14 @@ const styles = StyleSheet.create({
     //margin: '7%'
     borderWidth: 2,
     borderRadius: 15,
-    width: '40%',
+    width:'40%',
     margin: '5%',
     padding: 10
+  },
+  brandedScroll: {
+    position: 'absolute', 
+    alignSelf: 'center', 
+    width: '50%', 
+    height: 400,
   }
 });
