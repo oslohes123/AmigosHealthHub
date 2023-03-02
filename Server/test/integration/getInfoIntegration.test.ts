@@ -46,8 +46,7 @@ test.after(async(t: any) => {
 test(`GET ${getInfoRoute} with no fields`, async (t: any) => {
     const response = await request(app)
    .get(getInfoRoute)
-   .set("authorization", token)
-   .send({});
+   .set("authorization", token);
  
    console.log(`response: ${JSON.stringify(response)}`)
    t.true(response.status === 400)

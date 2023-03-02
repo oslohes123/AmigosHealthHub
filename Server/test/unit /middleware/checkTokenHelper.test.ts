@@ -6,7 +6,7 @@ import { checkTokenHelper } from '../../../utils/checkTokenHelpers';
 import supabase from '../../../utils/supabaseSetUp';
 import { supabaseQueryClass } from '../../../utils/databaseInterface';
 const supabaseQuery = new supabaseQueryClass();
-import { createHashedPassword, createToken } from '../../../utils/userFunctions';
+import { createHashedPassword, createToken, deleteUserRow } from '../../../utils/userFunctions';
 
 
 const mockResponse = () => {
@@ -132,7 +132,7 @@ test('checkTokenHelper with missing authorization header results in error', asyn
     t.true(res.status.calledWith(200));
     t.true(res.json.calledWith({mssg: "Legitimate token"}));
 
-    await supabaseQuery.deleteFrom(supabase, 'User', 'email', testUser);
+    await deleteUserRow(testUser)
   });
 
 

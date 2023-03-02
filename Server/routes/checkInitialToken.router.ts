@@ -6,7 +6,7 @@ import { checkInitialToken } from "./checkInitialToken.controller";
 /**
  * All these routes start with /api/user
  */
-
+export const checkInitialTokenRoute = "/api/user/checkInitialToken"
 //Routes
 checkInitialTokenRouter.get('/checkInitialToken', checkInitialToken);
 
