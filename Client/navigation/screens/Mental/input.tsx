@@ -29,25 +29,9 @@ export default function App({navigation}: {navigation: any}) {
       console.log(`Input can't be empty`);
     }
     else{
-      const date1 = new Date();
-      const date2 = new Date('1/03/2023');
-      if (date1.getDate().toString().length == 1 && date1.getMonth().toString().length == 1) {
-        console.log('0' + date1.getDate().toString() + '/0' + (date1.getMonth()+1).toString() + '/' + date1.getFullYear().toString());
-      } else if (date1.getDate().toString().length == 1) {
-        console.log('0' + date.getDate().toString() + '/' + (date.getMonth()+1).toString() + '/' + date.getFullYear().toString());
-      } else if (date1.getMonth().toString().length == 1){
-        console.log(date1.getDate().toString() + '/' + '0' + (date1.getMonth()+1).toString() + '/' + date1.getFullYear().toString());
-      } else {
-          console.log(date1.getDate().toString() +(date1.getMonth()+1).toString() + date1.getFullYear().toString());
-      }
       console.log(`Text input value: ${textInputValue}`);
       console.log(`Slider value: ${faceInputValue}`);
-      console.log(date1);
-      console.log(date2);
-      console.log(date1 > date2);
     }
-
-
   };
 
   return (
