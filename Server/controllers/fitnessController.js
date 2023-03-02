@@ -22,7 +22,9 @@ async function searchDB(name){
     const supabaseQueryClass = require('../dist/utils/databaseInterface.js');
     const supabaseQuery = new supabaseQueryClass()
     const {data,error} = await supabaseQuery.findrow(supabase, "Exercises", "Name", name); //search Supabase database for exercise
-    if(error) return null;
+    if(error){
+        return null;
+    }
     // console.error(error)
     else if (data != null){
         console.log({data});
@@ -45,9 +47,16 @@ async function searchDB(name){
             'X-Api-Key': 'MJIJot8zJvjqN881cfM7/A==uUVjsJou0izgtlB5'
         },
         }, function(error, response, body) {
-        if(error) return console.error('Request failed:', error);
-        else if(response.statusCode != 200) return console.error('Error:', response.statusCode, body.toString('utf8'));
-        else return body
+        if(error){
+            return console.error('Request failed:', error);
+        }
+        else if(response.statusCode != 200){
+            return console.error('Error:', response.statusCode, body.toString('utf8'));
+        }
+        else{
+            APItodatabase(body);
+             return body;
+        }
         });
 
     }
@@ -141,15 +150,17 @@ async function addCustomExercise(req, res){
 
 function searchExercise(req, res){
     var isValid = true
-    if (searchDB(req.body.exercise) == null){
-        isValid = false
-    }
-    if(isValid){
-        res.send(searchDB(req.body.exercise))
-    }
-    else{
-        res.json('Input a valid exercise')
-    }
+    console.log(req.params)
+    let exercise = searchDB(req.params.exercise)
+    // if (exercise == null){
+    //     isValid = false
+    // }
+    // if(isValid){
+    //     res.json(searchDB(req.body.exercise))
+    // }
+    // else{
+    //     res.json('Input a valid exercise')
+    // }
 }
 
 
@@ -160,7 +171,7 @@ function trackExercises(req, res){
     return res.status(200).json({'mssg': "Track Exercises. Over here you can track a single exercise.", 'display': mostRecentData(), 'search': searchExercise(req, res), 'addEx': addCustomExercise(req, res), 'track': trackOneExercise(req, res)})
 }
 function workoutPlans(req, res){
-    return res.status(200).json({'mssg': 'Workout Plans. Over here you can access your own workout plans.', 'search': workoutPlanNameFind(req.body.name), 'addEx': addExercise(req, res, searchExercise(req, res)), 'workoutlist':req.body.workoutlist})    
+    return res.status(200).json({'mssg': 'Workout Plans. Over here you can access your own workout plans.', 'search': workoutPlanNameFind(req.body.name), 'addEx': addExercise(req, res, searchExercise(req, res)), 'workoutlist': req.body.workoutlist})    
 }
 
 
