@@ -29,9 +29,7 @@ test.before(async (t: any) => {
   const uuid1 = uuidv4();
   firstUserEmail = `${uuid1}@gmail.com`
 
-  const salt = await bcrypt.genSalt(10);
-  hashedPassword1  = await bcrypt.hash("User1Password123!", salt);
-
+  hashedPassword1 = await createHashedPassword("User1Password123!");
   await supabaseQuery.insert(supabase, 'User',{firstName: "First", lastName:"User", 
   email:firstUserEmail, password: hashedPassword1, age: 31});
   

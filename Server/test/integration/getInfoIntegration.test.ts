@@ -1,7 +1,7 @@
 import app from "../../index";
 const request = require('supertest');
 const test = require('ava');
-import { createToken } from "../../utils/userFunctions";
+import { createHashedPassword, createToken } from "../../utils/userFunctions";
 import { Request, Response } from 'express';
 const sinon = require('sinon');
 import { getInfo } from "../../routes/getUserInfo.controller";
@@ -21,9 +21,7 @@ test.before(async (t: any) => {
   const uuid = uuidv4();
   existingEmail = `${uuid}@gmail.com`
 
-  const salt = await bcrypt.genSalt(10);
-  hashedPassword = await bcrypt.hash("CorrectPassword123!", salt);
-
+  hashedPassword = await createHashedPassword("CorrectPassword123!")
   await supabaseQuery.insert(supabase, 'User',{firstName: "Already", lastName:"Exists", 
   email:existingEmail, age: 30, password: hashedPassword});
 

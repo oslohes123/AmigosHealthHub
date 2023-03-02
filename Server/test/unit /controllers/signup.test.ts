@@ -8,6 +8,7 @@ import {v4 as uuidv4} from 'uuid';
 const bcrypt = require('bcrypt');
 import supabase from '../../../utils/supabaseSetUp';
 import { supabaseQueryClass } from '../../../utils/databaseInterface';
+import { createHashedPassword } from '../../../utils/userFunctions';
 const supabaseQuery = new supabaseQueryClass();
 const mockResponse = () => {
     let res: any = {};
@@ -29,9 +30,7 @@ const mockResponse = () => {
     const uuid = uuidv4();
     alreadyExistsEmail = `${uuid}@gmail.com`
 
-    const salt = await bcrypt.genSalt(10);
-    hashedPassword = await bcrypt.hash("CorrectPassword123!", salt);
-
+    hashedPassword = await createHashedPassword("CorrectPassword123!")
     const {data, error}:any = await supabaseQuery.insert(supabase, 'User',{firstName: "already", lastName:"exists", 
     email:alreadyExistsEmail, password: hashedPassword});
     

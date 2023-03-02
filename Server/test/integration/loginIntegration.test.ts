@@ -6,6 +6,7 @@ import { loginUser } from "../../routes/authentication.controller";
 const bcrypt = require('bcrypt');
 import supabase from "../../utils/supabaseSetUp";
 import { supabaseQueryClass } from "../../utils/databaseInterface";
+import { createHashedPassword } from "../../utils/userFunctions";
 const supabaseQuery = new supabaseQueryClass();
 /**
  * Refactor using objects, interfaces to prevent repeated code. 
@@ -17,9 +18,8 @@ test.before(async (t : any) => {
     const uuid = uuidv4();
     randomEmail = `${uuid}@gmail.com`
     console.log("In before")
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash("CorrectPassword123!", salt);
-
+    
+    const hashedPassword = await createHashedPassword("CorrectPassword123!")
     const {data, error}:any = await supabaseQuery.insert(supabase, 'User',{firstName: "firstName", lastName:"lastName", 
     email:randomEmail, password: hashedPassword});
     

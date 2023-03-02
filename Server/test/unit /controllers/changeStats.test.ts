@@ -38,8 +38,7 @@ test.before( async (t:any) => {
     const uuid2 = uuidv4();
     secondUserEmail = `${uuid2}@gmail.com`
 
-    const salt = await bcrypt.genSalt(10);
-    hashedPassword2  = await bcrypt.hash("User2Password123!", salt);
+    hashedPassword2 = await createHashedPassword("User2Password123!")
     console.log("In second user creation")
     const {data, error}:any = await supabaseQuery.insert(supabase, 'User',{firstName: "Second", lastName:"User", 
     email:secondUserEmail, password: hashedPassword2, age:30});
