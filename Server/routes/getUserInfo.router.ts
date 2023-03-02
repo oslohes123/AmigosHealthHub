@@ -3,7 +3,7 @@
 const express = require('express');
 const getUserInfoRouter = express.Router();
 getUserInfoRouter.use(express.json());
-import { getInfo } from "./authentication.controller";
+import { getInfo } from "./getUserInfo.controller";
 import { checkToken } from "../middleware/checkToken";
 getUserInfoRouter.use(checkToken);
 /**

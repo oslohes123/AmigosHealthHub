@@ -4,7 +4,7 @@ const test = require('ava');
 import { createToken } from "../../utils/userFunctions";
 import { Request, Response } from 'express';
 const sinon = require('sinon');
-import { getInfo } from "../../routes/authentication.controller"; 
+import { getInfo } from "../../routes/getUserInfo.controller";
 import {v4 as uuidv4} from 'uuid';
 const bcrypt = require('bcrypt');
 import supabase from "../../utils/supabaseSetUp";
@@ -45,7 +45,7 @@ test.after(async(t: any) => {
   await supabaseQuery.deleteFrom(supabase, 'User', 'email', existingEmail);
 })
 
-test("GET /api/user/getInfo with no fields", async (t: any) => {
+test(`GET ${getInfoRoute} with no fields`, async (t: any) => {
     const response = await request(app)
    .get(getInfoRoute)
    .set("authorization", token)
@@ -58,7 +58,7 @@ test("GET /api/user/getInfo with no fields", async (t: any) => {
  })
 
  
- test("GET /api/user/getInfo with existing user", async (t: any) => {
+ test(`GET ${getInfoRoute} with existing user`, async (t: any) => {
     const randomEmail = `${uuidv4()}@gmail.com`
     const response = await request(app)
    .get(getInfoRoute)
