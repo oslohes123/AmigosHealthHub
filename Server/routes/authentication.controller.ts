@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { createUser, getUserByEmail, verifyPassword, createHashedPassword, createToken} from '../utils/userFunctions';
 import { isEmail, isAlpha, isStrongPassword } from '../utils/validators';
 import { UserInterface } from '../utils/userInterface';
+
 export const loginUser = async(req:Request,res:Response) => {
 
     const {email, password} = req.body;
@@ -22,7 +23,7 @@ export const loginUser = async(req:Request,res:Response) => {
         mssg: "Incorrect Email"
     })
     
-    const passwordMatches = await verifyPassword(password, data[0].password)
+    const passwordMatches = await verifyPassword(password, data[0].password);
 
     if(passwordMatches) return res.status(200).json({
     firstName: data[0].firstName,
