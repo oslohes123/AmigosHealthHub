@@ -5,11 +5,11 @@ export default interface specificFoodNutritionInterface {
     serving_unit: string;
     serving_weight_grams: number;
     calories: number;
-    total_fat: number;
+    fat: number;
     protein: number;
-    total_carbohydrates: number;
+    carbohydrates: number;
     sugar: number;
-    Fiber: number;
+    fiber: number;
     alt_measures: AltMeasures[] | null;
 }
 
