@@ -1,51 +1,8 @@
-const jwtToken = require('jsonwebtoken');
 const dotenv = require("dotenv");
-import{Request, Response, NextFunction} from 'express'
+import{Request, Response} from 'express'
 dotenv.config();
-import supabase from '../utils/supabaseSetUp';
-import { supabaseQueryClass } from '../utils/databaseInterface';
-const supabaseQuery = new supabaseQueryClass();
+import { checkTokenHelper } from '../utils/checkTokenHelpers';
 
 export const checkInitialToken = async(req:Request, res:Response) => {
-
-    console.log("Middleware Executed!")
- //Check user making request is authenticated
-  const {authorization} = req.headers
- //  console.log(req.headers)
-  //NO authorisation header
-  if(!authorization){    
-     return res.status(401).json({mssg: "No Authorization Header"})
-  }
-  console.log(`authorization: ${authorization}`)
-  console.log(`authorization.indexOf(' '): ${authorization.indexOf(' ')}`)
-  console.log(`authorization.includes("bearer"): ${authorization.includes("bearer")}`)
- 
-  if((authorization.indexOf(' ') === -1)  || (!authorization.includes("bearer"))){
-    return res.status(400).json({mssg: "Authorization header must have format 'bearer token'."})
-  }
-  
-  else{
-    //Extract token from bearer token
-    const token = authorization.split(' ')[1];
-    console.log(`token: ${token}`);
- 
-    try{
-       console.log(`In checkToken, ${JSON.stringify(jwtToken.verify(token, process.env.JWTSECRET))}`)
-       const {id} =  jwtToken.verify(token, process.env.JWTSECRET);
- 
-      const {data, error}: any =  await supabaseQuery.selectWhere(supabase, 'User','id', id, 'id');
- 
-       if(data.length === 0){
-          return res.status(401).json({mssg:"Request Failed due to Authentication"})
-       }
-       else{
-          console.log("IN NEXT LN50")
-          return res.status(200).json({mssg:"Legitimate token"})
-       }
-    }
-    catch(error){
-       console.error(`Error caught by me, ${error}`);
-       return res.status(401).json({mssg:"Request Failed due to Authentication"})
-    }
- }
- }
+   return checkTokenHelper(req, res, null);
+}
