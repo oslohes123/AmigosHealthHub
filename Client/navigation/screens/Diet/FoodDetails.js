@@ -11,10 +11,11 @@ export default function FoodDetails({ route, navigation }) {
     food_name: name,
     calories,
     protein: Protein,
-    total_carbohydrates: Carbs,
-    total_fat: Fat,
+    carbohydrates: Carbs,
+    fat: Fat,
     sugar: Sugars,
-    fiber: Fibre
+    fiber: Fibre,
+    brand_name: Brand,
   } = route.params;
 
 //   console.log(route.params);
@@ -46,6 +47,10 @@ export default function FoodDetails({ route, navigation }) {
         <Text style={styles.text}>Fibre</Text>
         <Text style={styles.values}>{Fibre}</Text>
       </View>
+      {Brand?<View style={styles.box}>
+        <Text style={styles.text}>Brand name</Text>
+        <Text style={styles.values}>{Brand}</Text>
+      </View> : null}
       <View style={styles.buttonContainer}>
         <GreenButton
           buttonFunction={pressHandler}
