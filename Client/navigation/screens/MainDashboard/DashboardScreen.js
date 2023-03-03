@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: "flex-start",
     position: "absolute",
-    top: 10,
+    top: 100,
     right: 10,
   },
   blankSpace: {
@@ -85,11 +85,11 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     justifyContent: "center",
   },
-  settings: {
-    flex: 1,
-    alignSelf: "flex-start",
-    position: "absolute",
-    top: 10,
-    right: 10,
-  },
+  // settings: {
+  //   flex: 1,
+  //   alignSelf: "flex-start",
+  //   position: "absolute",
+  //   top: 10,
+  //   right: 10,
+  // },
 });

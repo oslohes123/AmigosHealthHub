@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-import { Button, Text, TextInput, View } from "react-native";
+import { Button, Text, TextInput, View, SafeAreaView } from "react-native";
 import React, { useEffect, useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -52,7 +52,7 @@ export const formikChangeUserDetailsForm = () => {
   console.log(`age: ${age}`);
 
   return (
-    <View style={globalStyles.container}>
+    <SafeAreaView style={globalStyles.container}>
       <Formik
         enableReinitialize={true}
         initialValues={{
@@ -116,6 +116,6 @@ export const formikChangeUserDetailsForm = () => {
           </View>
         )}
       </Formik>
-    </View>
+    </SafeAreaView>
   );
 };

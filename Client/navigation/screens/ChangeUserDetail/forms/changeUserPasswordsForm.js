@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-import { Button, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Button, Text, TextInput, TouchableOpacity, View, SafeAreaView } from "react-native";
 import React, { useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -38,7 +38,7 @@ export const formikChangeUserPasswordForm = () => {
   const [showPassword3, setShowPassword3] = useState(false);
 
   return (
-    <View style={globalStyles.container}>
+    <SafeAreaView style={globalStyles.container}>
       <Formik
         initialValues={{
           old_password: "",
@@ -104,6 +104,6 @@ export const formikChangeUserPasswordForm = () => {
           </View>
         )}
       </Formik>
-    </View>
+    </SafeAreaView>
   );
 };
