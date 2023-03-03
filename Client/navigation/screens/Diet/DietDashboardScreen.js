@@ -203,24 +203,24 @@ export default function DietDashboardScreen({ navigation }) {
         </View>
 
         {text.length > 2 &&
-          <View style={{flexDirection: 'row', height: '10%', marginTop: '15%'}}>
+          <View style={{ flexDirection: 'row', height: '10%', marginTop: '15%' }}>
             <ScrollView style={styles.scroll}>
               {genericFoodList.length > 2 && genericFoodList.map(item => (
                 <TouchableOpacity onPress={() => foodPress(item.food_name, null)}
                   style={styles.textContainer} key={item.food_name}>
                   <View >
-                  <View >
-                    <Text style={styles.textData} key={item.food_name}>{item.food_name}</Text>
-                    <Text style={{ fontSize: 15, alignSelf: 'center', width: '100%' }}>(Common Food)</Text>
-                  </View>
-                  <Ionicons name={'chevron-forward-outline'} size={32} color={'black'} />
+                    <View >
+                      <Text style={styles.textData} key={item.food_name}>{item.food_name}</Text>
+                      <Text style={{ fontSize: 15, alignSelf: 'center', width: '100%' }}>(Common Food)</Text>
+                    </View>
+                    <Ionicons name={'chevron-forward-outline'} size={32} color={'black'} />
                   </View>
                 </TouchableOpacity>
               ))}
             </ScrollView>
 
             <ScrollView style={styles.brandedScroll}>
-            {specificFoodList.length > 2 && specificFoodList.map(item => (
+              {specificFoodList.length > 2 && specificFoodList.map(item => (
                 <TouchableOpacity onPress={() => foodPress(null, item.item_id)}
                   style={styles.brandedTextContainer} key={item.food_name}>
                   <View style={{ flex: 1, justifyContent: 'space-between' }}>
@@ -344,7 +344,7 @@ const styles = StyleSheet.create({
     //marginTop: 1,
     fontWeight: 'bold',
     alignSelf: 'flex-start',
-    
+
   },
   textContainer: {
     backgroundColor: '#3eda9b',
@@ -427,7 +427,7 @@ const styles = StyleSheet.create({
     //margin: '7%'
     borderWidth: 2,
     borderRadius: 15,
-    width:'40%',
+    width: '40%',
     margin: '5%',
     padding: 10
   },
@@ -438,14 +438,14 @@ const styles = StyleSheet.create({
     //margin: '7%'
     borderWidth: 2,
     borderRadius: 15,
-    width:'40%',
+    width: '40%',
     margin: '5%',
     padding: 10
   },
   brandedScroll: {
-    position: 'absolute', 
-    alignSelf: 'center', 
-    width: '50%', 
+    position: 'absolute',
+    alignSelf: 'center',
+    width: '50%',
     height: 400,
   }
 });
