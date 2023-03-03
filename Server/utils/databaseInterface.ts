@@ -165,7 +165,7 @@ interface dbInterface {
         console.error(err);
       }
     }
-    async mostrecent(
+    async mostrecent( // returns array of objects 
       supabaseDb: any,
       table: string,
       firstcolumn: string,
@@ -181,7 +181,7 @@ interface dbInterface {
         if (error) console.error(error);
         else {
           console.log({ data });
-          return { data };
+          return data;
         }
       } catch (err: unknown) {
         console.error(err);

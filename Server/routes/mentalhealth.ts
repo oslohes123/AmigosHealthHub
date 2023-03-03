@@ -2,13 +2,16 @@
 import { Request, Response } from "express";
 const express = require('express');
 const mentalHealthRouter = express.Router();
-const mhFunctions = require('../controllers/fitnessController.js');
+const mhFunctions = require('../controllers/mhcontroller.js');
 
 mentalHealthRouter.get('/', (req:Request,res:Response) => {
     res.status(200).json(mhFunctions.mainPage);}
     );
 mentalHealthRouter.get('/reviewday', (req:Request,res:Response) => {
     res.status(200).json(mhFunctions.reviewDay);}
+    );
+mentalHealthRouter.get('/graph', (req:Request,res:Response) => {
+    res.status(200).json(mhFunctions.graph);}
     );
 // mentalHealthRouter.get('/workoutPlans', mhFunctions.workoutPlans)
 // fitnessRouter.get('/trackExercises/searchExercise')
