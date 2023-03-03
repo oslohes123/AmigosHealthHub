@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-import { Button, Text, TextInput, View } from 'react-native';
+import { Button, Text, TextInput, View, SafeAreaView } from 'react-native';
 import React, { useContext } from 'react';
 
 import { Formik } from 'formik';
@@ -24,7 +24,7 @@ export const deleteAccountForm = () => {
     const { user } = useAuthContext();
     // const userEmail = getUserDetails();
     return (
-        <View style={globalStyles.container}>
+        <SafeAreaView style={globalStyles.container}>
             <Text>Email: {user.email}</Text>
             <Formik
                 initialValues={{current_password: ''}}
@@ -53,6 +53,6 @@ export const deleteAccountForm = () => {
                     </View>
                 )}
             </Formik>
-        </View>
+        </SafeAreaView>
     );
 };
