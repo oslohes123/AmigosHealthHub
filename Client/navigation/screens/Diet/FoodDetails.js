@@ -16,6 +16,8 @@ export default function FoodDetails({ route, navigation }) {
     sugar: Sugars,
     fiber: Fibre,
     brand_name: Brand,
+    serving_qty: servingQty,
+    serving_unit: servingUnit,
   } = route.params;
 
 //   console.log(route.params);
@@ -46,6 +48,14 @@ export default function FoodDetails({ route, navigation }) {
       <View style={styles.box}>
         <Text style={styles.text}>Fibre</Text>
         <Text style={styles.values}>{Fibre}</Text>
+      </View>
+      <View style={styles.box}>
+        <Text style={styles.text}>Serving units</Text>
+        <Text style={styles.values}>{servingUnit}</Text>
+      </View>
+      <View style={styles.box}>
+        <Text style={styles.text}>Serving quantity</Text>
+        <Text style={styles.values}>{servingQty}</Text>
       </View>
       {Brand?<View style={styles.box}>
         <Text style={styles.text}>Brand name</Text>
