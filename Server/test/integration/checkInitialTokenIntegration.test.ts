@@ -10,8 +10,10 @@ const bcrypt = require('bcrypt');
 import supabase from "../../utils/supabaseSetUp";
 import { supabaseQueryClass } from "../../utils/databaseInterface"; 
 const supabaseQuery = new supabaseQueryClass();
-import { checkInitialTokenRoute } from "../../routes/checkInitialToken.router";
+import RouteNames from "../../utils/routeNames";
+const routeNames = new RouteNames();
 
+const checkInitialTokenRoute = routeNames.fullCheckInitialTokenURL
 
 test(`GET ${checkInitialTokenRoute} with missing authorization`, async (t: any) => {
 

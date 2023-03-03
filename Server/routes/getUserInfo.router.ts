@@ -6,12 +6,10 @@ getUserInfoRouter.use(express.json());
 import { getInfo } from "./getUserInfo.controller";
 import { checkToken } from "../middleware/checkToken";
 getUserInfoRouter.use(checkToken);
-/**
- * All these routes start with /api/user
- */
-
+import RouteNames from "../utils/routeNames";
+const routeNames = new RouteNames();
 //Routes
-getUserInfoRouter.get('/getInfo', getInfo);
+getUserInfoRouter.get(routeNames.partialGetInfoURL, getInfo);
 
 export default getUserInfoRouter;
 

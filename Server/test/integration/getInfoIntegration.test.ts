@@ -10,8 +10,9 @@ const bcrypt = require('bcrypt');
 import supabase from "../../utils/supabaseSetUp";
 import { supabaseQueryClass } from "../../utils/databaseInterface"; 
 const supabaseQuery = new supabaseQueryClass();
-
-const getInfoRoute = '/api/user/getInfo'
+import RouteNames from "../../utils/routeNames";
+const routeNames = new RouteNames();
+const getInfoRoute = routeNames.fullGetInfoURL
 
 let existingEmail: string;
 let hashedPassword: string;

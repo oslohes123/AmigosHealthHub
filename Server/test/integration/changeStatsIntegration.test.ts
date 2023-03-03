@@ -10,9 +10,9 @@ import supabase from "../../utils/supabaseSetUp";
 import { supabaseQueryClass } from "../../utils/databaseInterface"; 
 import { createHashedPassword, createToken } from "../../utils/userFunctions";
 const supabaseQuery = new supabaseQueryClass();
-
-
-const changeStatsRoute = '/api/user/changeProfileDetails/stats'
+import RouteNames from "../../utils/routeNames";
+const routeNames = new RouteNames();
+const changeStatsRoute = routeNames.fullChangeStatsURL;
 
 let firstUserEmail: string;
 let hashedPassword1 : string;

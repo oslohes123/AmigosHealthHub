@@ -7,8 +7,9 @@ import supabase from "../../utils/supabaseSetUp";
 import { supabaseQueryClass } from "../../utils/databaseInterface";
 import { createHashedPassword } from "../../utils/userFunctions";
 const supabaseQuery = new supabaseQueryClass();
-
-const signupRoute = '/api/user/sign_up'
+import RouteNames from "../../utils/routeNames";
+const routeNames = new RouteNames()
+const signupRoute = routeNames.fullSignupURL
 
 let alreadyExistsEmail: string;
 let hashedPassword: string;

@@ -27,7 +27,7 @@ export const deleteAccountWrapper = () => {
             );
             console.log(`In deleteAccount, email: ${email}, token:${token}`);
             const response = await fetch(
-                `http://${ip_address}:${port}/api/user/deleteAccount`,
+                `http://${ip_address}:${port}/api/user/changeProfileDetails/deleteAccount`,
                 {
                     method: 'POST',
                     headers: {
