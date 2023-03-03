@@ -117,13 +117,6 @@ test("Login with correct email and correct password", async (t : any) => {
          password:`CorrectPassword123!`});
     const res = mockResponse();
 
-    // await loginUser(req as Request, res as Response)
-    
-    
-    // expect(resultJson.mssg).toEqual("Successful Login");
-    // expect(resultJson.firstName).toEqual("firstName");
-    // expect(resultJson.email).toEqual(randomEmail);
-
     await loginUser(req as Request, res as Response)
 
     const argsPassed = res.json.getCall(0).args[0];

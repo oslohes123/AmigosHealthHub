@@ -68,7 +68,6 @@ export const useChangeProfileDetails = () => {
             }
             if (response.ok) {
                 try {
-                    //Log the user out if change details is successful
                     logout();
                     setIsLoading(false);
             
@@ -83,9 +82,4 @@ export const useChangeProfileDetails = () => {
         }
     };
     return { changeStats, isLoading, error };
-    // const response = await fetch(`http://192.168.0.17:3001/api/user/sign_up`, {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({"email":"sadasds23ad@gmail.com","firstName":"asdasdsad","lastName":"asdasdsadsa","age":"23","password":"Password123!"})
-    // })
 };

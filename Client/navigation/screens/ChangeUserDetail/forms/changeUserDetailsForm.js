@@ -42,8 +42,6 @@ export const formikChangeUserDetailsForm = () => {
   async function setInitialValues() {
     const userInfo = await getUserInfo.getUserInfo();
 
-    //   console.log(`userInfo: ${JSON.stringify(userInfo)}`);
-    //   console.log(`userInfo: ${JSON.stringify(userInfo.user.email)}`);
     setEmail(userInfo.user.email);
     setfirstName(userInfo.user.firstName);
     setlastName(userInfo.user.lastName);
@@ -52,12 +50,6 @@ export const formikChangeUserDetailsForm = () => {
   setInitialValues();
   console.log(`email: ${email}`);
   console.log(`age: ${age}`);
-  //  const initialEmail =  userInfo.email;
-  //  const initialFirstName =  userInfo.firstName;
-  //  const initialLastName =  userInfo.lastName;
-  //  const initialAge =  userInfo.age;
-  //  console.log(`userInfo: ${JSON.stringify(userInfo)}`)
-  //  console.log(`initialEmail: ${initialEmail}`)
 
   return (
     <View style={globalStyles.container}>
