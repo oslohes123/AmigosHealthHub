@@ -1,27 +1,20 @@
 import * as Yup from 'yup';
 
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import React, { useState } from 'react';
 
 import { Formik } from 'formik';
-import React from 'react';
+import PasswordInput from '../../../components/passwordInput';
 import { globalStyles } from '../../../../styles/global';
 import { useLogin } from '../hooks/useLogin';
 
-
 const loginSchema = Yup.object().shape({
-    email: Yup.string().email('Invalid email').required('Required'),
-
-    // password: Yup.string()
-    //     .required('No password provided.')
-    //     .min(8, 'Password is too short - should be 8 chars minimum.')
-    //     .matches(
-    //         passwordRegex,
-    //         'Password must contain atleast 1 lowercase letter, 1 uppercase letter and 1 special character (eg. @, #, $, %, ^, &, +, *, !, =)'
-    //     )
+    email: Yup.string().email('Invalid email').required('Required')
 });
 
 export const formikLoginForm = () => {
     const { login, isLoading, error } = useLogin();
+    const [showPassword, setShowPassword] = useState(false);
     return (
         <View style={globalStyles.container}>
             <Formik
@@ -33,8 +26,6 @@ export const formikLoginForm = () => {
             >
                 {(props) => (
                     <View>
-                        {/* {console.log(`error: ${error}`)} */}
-                        {/* {console.log(`isLoading: ${isLoading}`)} */}
                         <TextInput
                             style={globalStyles.input}
                             placeholder="Email"
@@ -44,12 +35,13 @@ export const formikLoginForm = () => {
                         />
                         <Text>{props.errors.email}</Text>
 
-                        <TextInput
-                            style={globalStyles.input}
-                            secureTextEntry={true}
-                            placeholder="Password"
-                            onChangeText={props.handleChange('password')}
+                        <PasswordInput
+                            label="Password"
                             value={props.values.password}
+                            style={globalStyles.input}
+                            onChange={props.handleChange('password')}
+                            showPassword={showPassword}
+                            setShowPassword={setShowPassword}
                         />
                         <Text>{props.errors.password}</Text>
 
