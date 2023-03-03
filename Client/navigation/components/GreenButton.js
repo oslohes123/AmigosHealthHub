@@ -1,9 +1,12 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, Dimensions } from 'react-native'
 import React from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+const screenWidth = Dimensions.get("window").width;
+const screenHeight = Dimensions.get("window").height
 
-export default function GreenButton({iconName = 'chevron-forward-outline', fontSize = 16, height = 50, width = 50, text = 'Submit', buttonFunction}) {
+
+export default function GreenButton({iconName = 'chevron-forward-outline', fontSize = 16, height = screenHeight * 0.2, width = screenWidth * 0.4, text = 'Submit', buttonFunction}) {
     const styles = {
         textData: {
           fontSize: fontSize,
@@ -16,8 +19,8 @@ export default function GreenButton({iconName = 'chevron-forward-outline', fontS
           borderRadius: 15,
           padding: 20,
           marginVertical: 10,
-          width: `${width}%`,
-          height: `${height}%`,
+          width: width,
+          height: height,
           alignSelf: 'center',
           marginHorizontal: 10
         }

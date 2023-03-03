@@ -1,16 +1,31 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { StyleSheet, SafeAreaView, View, Text, TouchableOpacity, Button, ScrollView, TextInput } from 'react-native';
-import Header from './components/Header';
-import NavBar from '../../components/NavBar';
+// import Header from './components/Header';
+// import Header1 from './components/Header1';
+// import NavBar from '../../components/NavBar';
 //import NutrientsButton from '../components/NutrientsButton';
-import { Feather } from '@expo/vector-icons';
+// import { Feather } from '@expo/vector-icons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {PieChart} from "react-native-chart-kit";
+import { PieChart } from "react-native-chart-kit";
 import themeContext from '../../theme/themeContext';
+import { EventRegister } from 'react-native-event-listeners'
+import { genericSearch, specificSearch } from '../../../functions/foodSearch'
+
 
 export default function DietDashboardScreen({ navigation }) {
 
   const theme = useContext(themeContext)
+
+  const [showHeader, setShowHeader] = useState(false);
+
+  useEffect(() => {
+    const HListener = EventRegister.addEventListener('ChangeHeader', (data) => {
+      setShowHeader(data)
+    })
+    return () => {
+      EventRegister.removeEventListener(HListener)
+    }
+  }, [showHeader])
 
   const Piedata = [
     {
@@ -26,6 +41,9 @@ export default function DietDashboardScreen({ navigation }) {
       color: "green",
       legendFontColor: "black",
       legendFontSize: 18
+
+
+
     },
     {
       name: "Fat",
@@ -50,47 +68,35 @@ export default function DietDashboardScreen({ navigation }) {
     }
   ];
 
-  const [data] = useState([
-    { name: 'Apple', calories: '50 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Banana', calories: '20 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Bacon', calories: '30 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Bagel', calories: '70 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Basil', calories: '90 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Bacon Bits', calories: '25 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Beef', calories: '45 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Bread', calories: '47 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Butter', calories: '74 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Broccoli', calories: '53 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Brownie', calories: '58 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Cherry', calories: '59 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Date', calories: '65 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Elderberry', calories: '47 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Fig', calories: '94 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Grape', calories: '41 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Honeydew', calories: '222 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Iced watermelon', calories: '120 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Jackfruit', calories: '450 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Kiwi', calories: '61 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Lemon', calories: '11 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Mango', calories: '4 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Nectarine', calories: '96 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Orange', calories: '68 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Papaya', calories: '16 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Quince', calories: '17 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Raspberry', calories: '518 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Strawberry', calories: '18 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Tangerine', calories: '9 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Ugli fruit', calories: '3 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Vegetable juice', calories: '89 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Watermelon', calories: '32 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Xigua', calories: '98 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Yellow watermelon', calories: '32 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' },
-    { name: 'Zucchini', calories: '45 cal', Protein: '2g', Carbs: '3g', Fat: '1g', Sugars: '2g', Vitamins: '4g', Fibre: '2.5g' }
-  ]);
+  const [genericFoodList, setGenericFoodList] = useState([]);
+
+  const [specificFoodList, setSpecificFoodList] = useState([]);
 
   const [text, setText] = useState('');
 
-  const filteredData = data.filter(item => item.name.toLowerCase().startsWith(text.toLowerCase()));
+  useEffect(() => {
+    async function fetchData() {
+      const data = await genericSearch(text);
+      let brandedList = [];
+      let genericList = [];
+      data.items.map((item) => {
+        if (item.item_id) {
+          brandedList.push(item)
+        } else {
+          genericList.push(item)
+        }
+      })
+      setGenericFoodList(genericList)
+      setSpecificFoodList(brandedList)
+
+    }
+    if (text.length > 2) {
+      fetchData();
+    } else if (text.length < 3) {
+      setGenericFoodList([])
+    }
+  }, [text]);
+
 
   const pressHandler = () => {
     navigation.navigate('Nutrients');
@@ -104,9 +110,17 @@ export default function DietDashboardScreen({ navigation }) {
   //   navigation.navigate('Settings');
   // }
 
-  const pressHandler2 = (name, calories, Protein, Carbs, Fat, Sugars, Vitamins, Fibre) => {
-    navigation.navigate('Food Details', { name, calories, Protein, Carbs, Fat, Sugars, Vitamins, Fibre });
+  async function foodPress(name = null, nix_item_id = null) {
+    let data;
+    if (nix_item_id == null) {
+      data = await specificSearch(name);
+    } else {
+      data = await specificSearch(nix_item_id);
+    }
+    navigation.navigate('Food Details', data);
   }
+
+
 
   const pressHandler3 = () => {
     navigation.navigate('Food History');
@@ -119,10 +133,19 @@ export default function DietDashboardScreen({ navigation }) {
   // }
 
   return (
-    
-    <SafeAreaView style={[styles.container, {backgroundColor:theme.background}]}>
-      
-      <Header />
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
+      <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: '-10%' }}>
+        <View style={[styles.headerView, { borderColor: theme.color }]}>
+          <Text style={[styles.title, { color: theme.color }]}>Calorie Goal</Text>
+          <Text style={[styles.number, { color: theme.color }, { borderColor: theme.color }]}>1000cal</Text>
+        </View>
+        <View style={[styles.headerView, { borderColor: theme.color }]}>
+          <Text style={[styles.title, { color: theme.color }]}>Calories Remaining</Text>
+          <Text style={[styles.number, { color: theme.color }, { borderColor: theme.color }]}>250cal</Text>
+        </View>
+      </View>
+      {/* <Header /> */}
+      {/* {showHeader ? <Header /> : <Header1 />} */}
       {/* <View style={styles.icon}>
         <TouchableOpacity>
           <Feather name="settings" size={24} color={theme.color} onPress={pressHandler1} />
@@ -138,57 +161,87 @@ export default function DietDashboardScreen({ navigation }) {
       {/* </TouchableOpacity> */}
       {/* <ScrollView style={styles.fullScroll}> */}
       <View>
+
         <TextInput
           clearButtonMode='always'
           value={text}
           onChangeText={(value) => setText(value)}
-          style={[styles.input, {backgroundColor:theme.color}]}
-          placeholder='Find food...' 
-          placeholderTextColor={theme.background}/>
+          style={[styles.input, { borderColor: theme.color }, { color: theme.color }]}
+          placeholder='Find food...'
+          placeholderTextColor={theme.color} />
+
         <View style={styles.chart}>
-        {text.length == 0 && (
-          <TouchableOpacity style={styles.pieWidget} onPress={pressHandler}>
-          <PieChart
-          data={Piedata}
-          width={340}
-          height={210}
-          chartConfig={{
-            //backgroundColor: "#e26a00",
-            //backgroundGradientFrom: "#fb8c00",
-            //backgroundGradientTo: "#ffa726",
-            //decimalPlaces: 2,
-            color: () => "black",
-            // labelColor: () => 'black',
-            // style: {
-            //   borderRadius: 16,
-            // },
-            // propsForDots: {
-            //   r: "6",
-            //   strokeWidth: "2",
-            //   stroke: "#ffa726"
-            // }
-          }}
-          accessor="amount"
-          backgroundColor="transparent"
-        />
-        </TouchableOpacity>
-        )}
+          {text.length == 0 && (
+            <TouchableOpacity style={styles.pieWidget} onPress={pressHandler}>
+              <PieChart
+                data={Piedata}
+                width={340}
+                height={210}
+                paddingLeft='10'
+                chartConfig={{
+                  //backgroundColor: "#e26a00",
+                  //backgroundGradientFrom: "#fb8c00",
+                  //backgroundGradientTo: "#ffa726",
+                  //decimalPlaces: 2,
+                  color: () => "black",
+                  // labelColor: () => 'black',
+                  // style: {
+                  //   borderRadius: 16,
+                  // },
+                  // propsForDots: {
+                  //   r: "6",
+                  //   strokeWidth: "2",
+                  //   stroke: "#ffa726"
+                  // }
+
+                }}
+                accessor="amount"
+                backgroundColor="transparent"
+              />
+            </TouchableOpacity>
+          )}
         </View>
-        {text.length > 0 && (
-          <ScrollView style={styles.scroll}>
-            {filteredData.length > 0 && filteredData.map(item => (
-              <TouchableOpacity onPress={() => pressHandler2(item.name, item.calories, item.Protein, item.Carbs, item.Fat, item.Sugars, item.Vitamins, item.Fibre)}
-                style={styles.textContainer} key={item.name}>
-                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-                  <Text style={styles.textData} key={item.name}>{item.name}</Text>
-                  <Ionicons name={'chevron-forward-outline'} size={32} color={'black'} />
-                </View>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
-        )}
-        </View>
-        {/* <Pie 
+
+        {text.length > 2 &&
+          <View style={{ flexDirection: 'row', height: '10%', marginTop: '15%' }}>
+            <ScrollView style={styles.scroll}>
+              {genericFoodList.length > 2 && genericFoodList.map(item => (
+                <TouchableOpacity onPress={() => foodPress(item.food_name, null)}
+                  style={styles.textContainer} key={item.food_name}>
+                  <View >
+                    <View >
+                      <Text style={styles.textData} key={item.food_name}>{item.food_name}</Text>
+                      <Text style={{ fontSize: 15, alignSelf: 'center', width: '100%' }}>(Common Food)</Text>
+                    </View>
+                    <Ionicons name={'chevron-forward-outline'} size={32} color={'black'} />
+                  </View>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+
+            <ScrollView style={styles.brandedScroll}>
+              {specificFoodList.length > 2 && specificFoodList.map(item => (
+                <TouchableOpacity onPress={() => foodPress(null, item.item_id)}
+                  style={styles.brandedTextContainer} key={item.food_name}>
+                  <View style={{ flex: 1, justifyContent: 'space-between' }}>
+                    <View>
+                      <Text style={styles.textData} key={item.food_name}>{item.food_name}</Text>
+                      <Text style={{ fontSize: 15, alignSelf: 'center', width: '100%' }}>(Branded Food)</Text>
+                    </View>
+                    <Ionicons name={'chevron-forward-outline'} size={32} color={'black'} />
+                  </View>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+        }
+
+
+
+
+
+      </View>
+      {/* <Pie 
            radius={70}
            innerRadius={45}
            sections={pieData}
@@ -233,8 +286,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: 50,
     padding: 10,
-    marginTop: 10,
-    marginBottom: -180,
+    //marginTop: 40,
+    marginBottom: '-50%',
     backgroundColor: '#48D1CC',
     //margin: 10,
     //marginBottom: -100,
@@ -280,38 +333,50 @@ const styles = StyleSheet.create({
     marginTop: -190,
     marginBottom: 20,
     position: 'absolute',
+    borderWidth: 1
     //borderWidth: 1,
     //borderColor: '#CCCCCC',
   },
   textData: {
-    fontSize: 25,
+    fontSize: 20,
     color: 'black',
     // marginLeft: 20,
     //marginTop: 1,
     fontWeight: 'bold',
     alignSelf: 'flex-start',
-    
+
   },
   textContainer: {
     backgroundColor: '#3eda9b',
     borderRadius: 15,
-    padding: 20,
+    padding: 10,
     // height: 50,
     marginVertical: 10,
-    width: '80%',
+    width: '90%',
     alignSelf: 'center',
     marginHorizontal: 10
   },
+  brandedTextContainer: {
+    backgroundColor: 'red',
+    borderRadius: 15,
+    padding: 10,
+    // height: 50,
+    marginVertical: 10,
+    width: '90%',
+    alignSelf: 'center',
+    marginHorizontal: 10,
+  },
   scroll: {
     marginTop: 10,
-    height: 300,
+    height: 400,
     position: 'absolute',
-    marginLeft: 40,
+    //marginLeft: 40,
+    marginLeft: '50%',
     marginTop: -120,
     alignSelf: 'center',
     // textAlign: 'flex-start',
     flex: 1,
-    width: '100%'
+    width: '50%'
   },
   // surr: {
   //   borderWidth: 2,
@@ -333,6 +398,54 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     alignSelf: 'center',
     padding: 5
-
   },
+  title: {
+    textAlign: 'center',
+    color: '#fff',
+    fontSize: 15,
+    fontWeight: 'bold',
+    //paddingTop: 20,
+    //paddingBottom: 10,
+    //marginTop: 1,
+  },
+  number: {
+    textAlign: 'center',
+    color: '#fff',
+    fontSize: 15,
+    fontWeight: 'bold',
+    paddingTop: 10,
+    //borderStyle: 'solid',
+    //borderWidth: 2,
+    paddingBottom: 5,
+    //width: '30%',
+    alignSelf: 'center',
+    //borderRadius: 15
+  },
+  headerView: {
+    //flexDirection: 'row', 
+    //justifyContent: 'space-between',
+    //margin: '7%'
+    borderWidth: 2,
+    borderRadius: 15,
+    width: '40%',
+    margin: '5%',
+    padding: 10
+  },
+  headerView1: {
+    //flexDirection: 'row', 
+    //justifyContent: 'space-between',
+    //marginTop: '-50%',
+    //margin: '7%'
+    borderWidth: 2,
+    borderRadius: 15,
+    width: '40%',
+    margin: '5%',
+    padding: 10
+  },
+  brandedScroll: {
+    position: 'absolute',
+    alignSelf: 'center',
+    width: '50%',
+    height: 400,
+  }
 });
