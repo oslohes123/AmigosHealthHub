@@ -76,24 +76,26 @@ export const AuthContextProvider = ({ children }) => {
       const user = JSON.parse(await AsyncStorage.getItem("user"));
 
       console.log(`user: ${JSON.stringify(user)}`);
-      console.log(`token: ${user.token}`);
-      const token = user.token;
-      const response = await fetch(
-        `http://${ip_address}:${port}/api/user/checkInitialToken`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            authorization: token,
-          },
+      if (user) {
+        console.log(`token: ${user.token}`);
+        const token = user.token;
+        const response = await fetch(
+          `http://${ip_address}:${port}/api/user/checkInitialToken`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              authorization: token,
+            },
+          }
+        );
+        console.log(`response ln 90: ${JSON.stringify(response)}`);
+        //if token exists, then update user state with the token
+        if (response.ok) {
+          dispatch({ type: "LOGIN", payload: user });
+        } else {
+          dispatch({ type: "LOGOUT" });
         }
-      );
-      console.log(`response ln 90: ${JSON.stringify(response)}`);
-      //if token exists, then update user state with the token
-      if (response.ok) {
-        dispatch({ type: "LOGIN", payload: user });
-      } else {
-        dispatch({ type: "LOGOUT" });
       }
     }
     getItem();
