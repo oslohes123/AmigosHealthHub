@@ -3,6 +3,8 @@ import { StatusBar } from 'expo-status-bar';
 import { Text, View, Button, SafeAreaView, TextInput, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Dimensions, Modal, Keyboard } from 'react-native';
 import { useState, useContext } from 'react';
 import themeContext from '../../theme/themeContext';
+import SearchBar from '../../components/SearchBar';
+import GreenButton from '../../components/GreenButton';
 
 export default function WorkoutPlansScreen({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false)
@@ -133,20 +135,11 @@ export default function WorkoutPlansScreen({ navigation }) {
                 </TouchableWithoutFeedback>
             </Modal>
 
+            {/* Main Page */}
             <View style={styles.searchAndCreate}>
 
-                <TextInput
-                    style={[styles.textInput, {borderColor: theme.color}]}
-                    placeholder="Search"
-                    placeholderTextColor={theme.color}
-                    keyboardType='default'
-                    clearButtonMode='always'
-                />
-
-                <Button title='+' onPress={() => {
-                    console.log("Create new workout plan.")
-                    navigation.navigate('Create New Workout')
-                }} />
+                {SearchBar({themeColor: theme.color, width: screenWidth * 0.7})}
+                {GreenButton({height: screenHeight * 0.05, width: screenWidth * 0.15, fontSize: 20, text: "+", buttonFunction: () => {navigation.navigate('Create New Workout')}})}
 
             </View>
 
@@ -231,12 +224,12 @@ const styles = {
         textAlign: 'center',
     },
     scrollView: {
-        height: '60%',
+        height: screenHeight * 0.2,
         borderWidth: 2,
         borderRadius: 26,
         paddingHorizontal: 16,
         margin: 10,
-        width: '90%'
+        width: screenWidth * 0.9
     },
     title: {
         fontSize: 32,
@@ -246,7 +239,7 @@ const styles = {
     searchAndCreate: {
         flexDirection: 'row',
         padding: 12,
-        alignContent: 'space-between'
+        justifyContent: 'space-evenly'
     },
     textInput: {
         borderWidth: 1,
@@ -256,7 +249,7 @@ const styles = {
     },
     container: {
         alignItems: 'center',
-        height: '100%'
+        height: screenHeight
     },
 }
 

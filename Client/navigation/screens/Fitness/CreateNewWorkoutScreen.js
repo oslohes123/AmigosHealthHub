@@ -67,20 +67,14 @@ export default function CreateNewWorkoutScreen({ navigation }) {
             </Modal>
 
             <View style={styles.searchAndCreate}>
-
-                <TextInput
-                    style={[styles.textInput, {borderColor: theme.color}]}
-                    placeholder="Search"
-                    placeholderTextColor={theme.color}
-                    keyboardType='default'
-                    clearButtonMode='always'
-                />
+              
+                {SearchBar({themeColor: theme.color})}
 
             </View>
 
                 <Text style={[styles.customWorkout, {color: theme.color}]}>Exercises</Text>
         
-            <ScrollView style={[styles.scrollView, {borderColor: theme.color}]} showsVerticalScrollIndicator={false} alignItems={'center'}>
+            <ScrollView style={[styles.verticalScroll, {borderColor: theme.color}]} showsVerticalScrollIndicator={false} alignItems={'center'}>
                 <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>
                     <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 1</Text>
                 </TouchableOpacity>
@@ -137,7 +131,7 @@ export default function CreateNewWorkoutScreen({ navigation }) {
                 </TouchableOpacity>
             </ScrollView>
 
-            <ScrollView style={{width: screenWidth * 0.9, padding: 10}} horizontal={true}>
+            <ScrollView style={[styles.horizontalScroll, {borderColor: theme.color}]} horizontal={true} alignItems={'center'} showsHorizontalScrollIndicator={false}>
               <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
                 <Text style={[styles.addedText, {borderColor: theme.color, color: theme.color}]}>Test 1</Text>
               </TouchableOpacity>
@@ -181,18 +175,24 @@ const styles = {
       fontSize: 26,
       padding: 5,
       borderRadius: 20,
-      margin: 5,
+      marginHorizontal: 5,
       borderWidth: 1,
       textAlign: 'center',
       justifyContent: 'center'
   },
-    scrollView: {
-        height: '60%',
-        borderWidth: 2,
-        borderRadius: 26,
-        paddingHorizontal: 16,
-        margin: 10,
-        width: '90%'
+    verticalScroll: {
+      height: '60%',
+      borderWidth: 2,
+      borderRadius: 26,
+      paddingHorizontal: 16,
+      margin: 10,
+      width: '90%'
+    },
+    horizontalScroll: {
+      width: screenWidth * 0.9,
+      borderWidth: 2, 
+      borderRadius: 26, 
+      marginVertical: 10
     },
     title: {
         fontSize: 32,

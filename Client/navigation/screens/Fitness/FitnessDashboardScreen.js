@@ -26,10 +26,6 @@ export default function FitnessScreen({ navigation }) {
                     console.log("The user wants to track a single exercise.")
                     navigation.navigate("Track Exercise")
                 }} />
-                <Button title="Stats" onPress={() => {
-                    console.log("Show the user their fitness stats/trends")
-                    navigation.navigate("Fitness Stats")
-                }} />
             </View>
             <StatusBar style="auto" />
         </SafeAreaView>
