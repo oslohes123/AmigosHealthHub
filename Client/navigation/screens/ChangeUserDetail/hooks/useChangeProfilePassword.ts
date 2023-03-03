@@ -26,6 +26,7 @@ export const useChangeProfilePassword = () => {
             const email = user.email;
             console.log(`in changePassword, email: ${email}`);
              const {token}= JSON.parse(await AsyncStorage.getItem('user') as string)
+             console.log(`Change Password: ${ip_address} : Port ${port}`);
              const response = await fetch(`http://${ip_address}:${port}/api/user/changeProfileDetails/password`, {
                 method: 'POST',
                 headers: { 

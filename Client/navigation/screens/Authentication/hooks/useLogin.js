@@ -11,9 +11,16 @@ export const useLogin = () => {
     const [isLoading, setIsLoading] = useState(null) 
     const { dispatch } = useAuthContext()
 
+    console.log(`port: ${port}`)
+    console.log(`ip_address: ${ip_address}`)
+
     const login = async (email, password) => {
         setIsLoading(true)
         setError(null)
+        
+        console.log("In login");
+        console.log(`Port in login: ${port}`)
+        console.log(`ip_address in login: ${ip_address}`)
 
         const response = await fetch(`http://${ip_address}:${port}/api/user/login`, {
             method: 'POST',

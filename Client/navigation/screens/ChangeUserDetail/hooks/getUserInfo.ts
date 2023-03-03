@@ -10,6 +10,8 @@ const getUserInfo = async () => {
     // console.log(`getUserInfo user : ${JSON.stringify(user)}`);
     const userEmail = user.email;
     // console.log(`full getUserInfo user: ${JSON.stringify(user)}`);
+    console.log(`getUserInfo ip_address: ${ip_address} : Port ${port}`);
+    
     const response = await fetch(
         `http://${ip_address}:${port}/api/user/getInfo`,
         {

@@ -26,6 +26,7 @@ export const deleteAccountWrapper = () => {
                 (await AsyncStorage.getItem('user')) as string
             );
             console.log(`In deleteAccount, email: ${email}, token:${token}`);
+            console.log(`Delete Account: ${ip_address} : Port ${port}`);
             const response = await fetch(
                 `http://${ip_address}:${port}/api/user/changeProfileDetails/deleteAccount`,
                 {

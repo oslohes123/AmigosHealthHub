@@ -41,6 +41,8 @@ export const useChangeProfileDetails = () => {
                 (await AsyncStorage.getItem('user')) as string
             );
             console.log(`In useChangeProfileDetails, email: ${email}, token:${token}`);
+            console.log(`In useChangeProfileDetails : ${ip_address} : Port ${port}`);
+            
             const response = await fetch(
                 `http://${ip_address}:${port}/api/user/changeProfileDetails/stats`,
                 {
