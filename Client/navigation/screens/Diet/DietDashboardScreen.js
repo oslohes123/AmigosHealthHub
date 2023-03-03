@@ -10,6 +10,7 @@ import { PieChart } from "react-native-chart-kit";
 import themeContext from '../../theme/themeContext';
 import { EventRegister } from 'react-native-event-listeners'
 import { genericSearch, specificSearch } from '../../../functions/foodSearch'
+import GreenButton from '../../components/GreenButton';
 
 
 export default function DietDashboardScreen({ navigation }) {
@@ -134,7 +135,7 @@ export default function DietDashboardScreen({ navigation }) {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
-      <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: '-10%' }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: '17%' }}>
         <View style={[styles.headerView, { borderColor: theme.color }]}>
           <Text style={[styles.title, { color: theme.color }]}>Calorie Goal</Text>
           <Text style={[styles.number, { color: theme.color }, { borderColor: theme.color }]}>1000cal</Text>
@@ -203,7 +204,7 @@ export default function DietDashboardScreen({ navigation }) {
         </View>
 
         {text.length > 2 &&
-          <View style={{ flexDirection: 'row', height: '10%', marginTop: '15%' }}>
+          <View style={{ flexDirection: 'row', height: '10%', marginTop: '30%' }}>
             <ScrollView style={styles.scroll}>
               {genericFoodList.length > 2 && genericFoodList.map(item => (
                 <TouchableOpacity onPress={() => foodPress(item.food_name, null)}
@@ -247,8 +248,11 @@ export default function DietDashboardScreen({ navigation }) {
            sections={pieData}
            backgroundColor="#ddd"
           /> */}
-      <View style={styles.button}>
+      {/* <View style={styles.button}>
         <Button title="View Food History" onPress={pressHandler3} color='black' />
+      </View> */}
+      <View style={{marginTop: '47%'}}>
+      <GreenButton buttonFunction={pressHandler3} height={60} width={'50%'} text={'View Food History'}/>
       </View>
       {/* 
       <TouchableOpacity onPress={newPressHandler}>
@@ -281,17 +285,17 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignSelf: 'center',
   },
-  button: {
-    width: 200,
-    alignSelf: 'center',
-    borderRadius: 50,
-    padding: 10,
-    //marginTop: 40,
-    marginBottom: '-50%',
-    backgroundColor: '#48D1CC',
-    //margin: 10,
-    //marginBottom: -100,
-  },
+  // button: {
+  //   width: 200,
+  //   alignSelf: 'center',
+  //   borderRadius: 50,
+  //   padding: 10,
+  //   //marginTop: 40,
+  //   marginBottom: '-50%',
+  //   backgroundColor: '#48D1CC',
+  //   //margin: 10,
+  //   //marginBottom: -100,
+  // },
   // searchFood: {
   //   color: '#fff',
   //   height: 42,
@@ -330,10 +334,10 @@ const styles = StyleSheet.create({
     color: '#000000',
     //marginVertical: 10,
     paddingVertical: 12,
-    marginTop: -190,
-    marginBottom: 20,
+    marginTop: -90,
+    //marginBottom: 20,
     position: 'absolute',
-    borderWidth: 1
+    borderWidth: 1,
     //borderWidth: 1,
     //borderColor: '#CCCCCC',
   },
@@ -390,7 +394,7 @@ const styles = StyleSheet.create({
   chart: {
     alignSelf: 'center',
     flex: 1,
-    marginTop: -70,
+    marginTop: -10,
     width: '90%',
   },
   pieWidget: {
@@ -427,7 +431,7 @@ const styles = StyleSheet.create({
     //margin: '7%'
     borderWidth: 2,
     borderRadius: 15,
-    width: '40%',
+    width: '44%',
     margin: '5%',
     padding: 10
   },
@@ -438,7 +442,7 @@ const styles = StyleSheet.create({
     //margin: '7%'
     borderWidth: 2,
     borderRadius: 15,
-    width: '40%',
+    width: '44%',
     margin: '5%',
     padding: 10
   },
