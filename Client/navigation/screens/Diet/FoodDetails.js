@@ -82,15 +82,15 @@ const styles = StyleSheet.create({
   },
   header: {
     color: "white",
-    fontSize: 32,
-    marginTop: 30,
+    fontSize: 30,
+    marginTop: 20,
     alignSelf: "center",
     fontWeight: "bold",
   },
   box: {
     flexDirection: "row",
-    marginTop: 30,
-    marginLeft: 30,
+    marginTop: 17,
+    marginLeft: 20,
   },
   text: {
     color: "white",
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 10,
     position: "absolute",
-    right: 30,
+    right: 20,
   },
   buttonContainer: {
     marginTop: 10,
