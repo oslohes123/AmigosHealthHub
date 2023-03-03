@@ -6,10 +6,10 @@ import { StyleSheet, SafeAreaView, View, Text, TouchableOpacity, Button, ScrollV
 //import NutrientsButton from '../components/NutrientsButton';
 // import { Feather } from '@expo/vector-icons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {PieChart} from "react-native-chart-kit";
+import { PieChart } from "react-native-chart-kit";
 import themeContext from '../../theme/themeContext';
 import { EventRegister } from 'react-native-event-listeners'
-import { genericSearch , specificSearch} from '../../../functions/foodSearch'
+import { genericSearch, specificSearch } from '../../../functions/foodSearch'
 
 
 export default function DietDashboardScreen({ navigation }) {
@@ -20,12 +20,12 @@ export default function DietDashboardScreen({ navigation }) {
 
   useEffect(() => {
     const HListener = EventRegister.addEventListener('ChangeHeader', (data) => {
-        setShowHeader(data)
+      setShowHeader(data)
     })
     return () => {
-        EventRegister.removeEventListener(HListener)
+      EventRegister.removeEventListener(HListener)
     }
-    }, [showHeader])
+  }, [showHeader])
 
   const Piedata = [
     {
@@ -68,20 +68,32 @@ export default function DietDashboardScreen({ navigation }) {
     }
   ];
 
-  const [foodNames,setFoodNames] = useState([
-  ]);
+  const [genericFoodList, setGenericFoodList] = useState([]);
+
+  const [specificFoodList, setSpecificFoodList] = useState([]);
 
   const [text, setText] = useState('');
 
   useEffect(() => {
     async function fetchData() {
       const data = await genericSearch(text);
-      setFoodNames(data)
+      let brandedList = [];
+      let genericList = [];
+      data.items.map((item) => {
+        if (item.item_id) {
+          brandedList.push(item)
+        } else {
+          genericList.push(item)
+        }
+      })
+      setGenericFoodList(genericList)
+      setSpecificFoodList(brandedList)
+
     }
-    if(text.length > 2){
+    if (text.length > 2) {
       fetchData();
-    }else if(text.length < 3){
-      setFoodNames([])
+    } else if (text.length < 3) {
+      setGenericFoodList([])
     }
   }, [text]);
 
@@ -98,11 +110,11 @@ export default function DietDashboardScreen({ navigation }) {
   //   navigation.navigate('Settings');
   // }
 
-  async function foodPress (name = null,nix_item_id = null){
+  async function foodPress(name = null, nix_item_id = null) {
     let data;
-    if(nix_item_id == null){
+    if (nix_item_id == null) {
       data = await specificSearch(name);
-    }else{
+    } else {
       data = await specificSearch(nix_item_id);
     }
     navigation.navigate('Food Details', data);
@@ -121,16 +133,16 @@ export default function DietDashboardScreen({ navigation }) {
   // }
 
   return (
-    <SafeAreaView style={[styles.container, {backgroundColor:theme.background}]}>
-      <View style={{flexDirection: 'row', justifyContent: 'center', marginBottom: '-10%'}}>
-      <View style={[styles.headerView, {borderColor:theme.color}]}>
-        <Text style={[styles.title, {color:theme.color}]}>Calorie Goal</Text>
-        <Text style={[styles.number, {color:theme.color}, {borderColor:theme.color}]}>1000cal</Text>
-      </View>
-      <View style={[styles.headerView, {borderColor:theme.color}]}>
-        <Text style={[styles.title, {color:theme.color}]}>Calories Remaining</Text>
-        <Text style={[styles.number, {color:theme.color}, {borderColor:theme.color}]}>250cal</Text>
-      </View>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
+      <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: '-10%' }}>
+        <View style={[styles.headerView, { borderColor: theme.color }]}>
+          <Text style={[styles.title, { color: theme.color }]}>Calorie Goal</Text>
+          <Text style={[styles.number, { color: theme.color }, { borderColor: theme.color }]}>1000cal</Text>
+        </View>
+        <View style={[styles.headerView, { borderColor: theme.color }]}>
+          <Text style={[styles.title, { color: theme.color }]}>Calories Remaining</Text>
+          <Text style={[styles.number, { color: theme.color }, { borderColor: theme.color }]}>250cal</Text>
+        </View>
       </View>
       {/* <Header /> */}
       {/* {showHeader ? <Header /> : <Header1 />} */}
@@ -154,57 +166,82 @@ export default function DietDashboardScreen({ navigation }) {
           clearButtonMode='always'
           value={text}
           onChangeText={(value) => setText(value)}
-          style={[styles.input, {borderColor: theme.color}, {color: theme.color}]}
-          placeholder='Find food...' 
-          placeholderTextColor={theme.color}/>
+          style={[styles.input, { borderColor: theme.color }, { color: theme.color }]}
+          placeholder='Find food...'
+          placeholderTextColor={theme.color} />
 
         <View style={styles.chart}>
-        {text.length == 0 && (
-          <TouchableOpacity style={styles.pieWidget} onPress={pressHandler}>
-          <PieChart
-          data={Piedata}
-          width={340}
-          height={210}
-          paddingLeft='10'
-          chartConfig={{
-            //backgroundColor: "#e26a00",
-            //backgroundGradientFrom: "#fb8c00",
-            //backgroundGradientTo: "#ffa726",
-            //decimalPlaces: 2,
-            color: () => "black",
-            // labelColor: () => 'black',
-            // style: {
-            //   borderRadius: 16,
-            // },
-            // propsForDots: {
-            //   r: "6",
-            //   strokeWidth: "2",
-            //   stroke: "#ffa726"
-            // }
-            
-          }}
-          accessor="amount"
-          backgroundColor="transparent"
-        />
-        </TouchableOpacity>
-        )}
+          {text.length == 0 && (
+            <TouchableOpacity style={styles.pieWidget} onPress={pressHandler}>
+              <PieChart
+                data={Piedata}
+                width={340}
+                height={210}
+                paddingLeft='10'
+                chartConfig={{
+                  //backgroundColor: "#e26a00",
+                  //backgroundGradientFrom: "#fb8c00",
+                  //backgroundGradientTo: "#ffa726",
+                  //decimalPlaces: 2,
+                  color: () => "black",
+                  // labelColor: () => 'black',
+                  // style: {
+                  //   borderRadius: 16,
+                  // },
+                  // propsForDots: {
+                  //   r: "6",
+                  //   strokeWidth: "2",
+                  //   stroke: "#ffa726"
+                  // }
+
+                }}
+                accessor="amount"
+                backgroundColor="transparent"
+              />
+            </TouchableOpacity>
+          )}
         </View>
 
-        {text.length > 2 && (
-          <ScrollView style={styles.scroll}>
-            {foodNames.items && foodNames.items.map(item => (
-              <TouchableOpacity onPress={() => {item.item_id ? foodPress(null,item.item_id) : foodPress(item.food_name,null)}}
-                style={styles.textContainer} key={item.food_name}>
-                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-                  <Text style={styles.textData} key={item.food_name}>{item.food_name} {item.item_id?"From: " + item.brand_name:null}</Text>
-                  <Ionicons name={'chevron-forward-outline'} size={32} color={'black'} />
-                </View>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
-        )}
-        </View>
-        {/* <Pie 
+        {text.length > 2 &&
+          <View style={{ flexDirection: 'row', height: '10%', marginTop: '15%' }}>
+            <ScrollView style={styles.scroll}>
+              {genericFoodList.length > 2 && genericFoodList.map(item => (
+                <TouchableOpacity onPress={() => foodPress(item.food_name, null)}
+                  style={styles.textContainer} key={item.food_name}>
+                  <View >
+                    <View >
+                      <Text style={styles.textData} key={item.food_name}>{item.food_name}</Text>
+                      <Text style={{ fontSize: 15, alignSelf: 'center', width: '100%' }}>(Common Food)</Text>
+                    </View>
+                    <Ionicons name={'chevron-forward-outline'} size={32} color={'black'} />
+                  </View>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+
+            <ScrollView style={styles.brandedScroll}>
+              {specificFoodList.length > 2 && specificFoodList.map(item => (
+                <TouchableOpacity onPress={() => foodPress(null, item.item_id)}
+                  style={styles.brandedTextContainer} key={item.food_name}>
+                  <View style={{ flex: 1, justifyContent: 'space-between' }}>
+                    <View>
+                      <Text style={styles.textData} key={item.food_name}>{item.food_name}</Text>
+                      <Text style={{ fontSize: 15, alignSelf: 'center', width: '100%' }}>(Branded Food)</Text>
+                    </View>
+                    <Ionicons name={'chevron-forward-outline'} size={32} color={'black'} />
+                  </View>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+        }
+
+
+
+
+
+      </View>
+      {/* <Pie 
            radius={70}
            innerRadius={45}
            sections={pieData}
@@ -249,8 +286,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: 50,
     padding: 10,
-    marginTop: 10,
-    marginBottom: -180,
+    //marginTop: 40,
+    marginBottom: '-50%',
     backgroundColor: '#48D1CC',
     //margin: 10,
     //marginBottom: -100,
@@ -277,6 +314,7 @@ const styles = StyleSheet.create({
 
 
   input: {
+    color: '#fff',
     //marginTop: 10,
     //marginBottom: 10,
     //paddingHorizontal: 8,
@@ -293,40 +331,52 @@ const styles = StyleSheet.create({
     //marginVertical: 10,
     paddingVertical: 12,
     marginTop: -190,
+    marginBottom: 20,
     position: 'absolute',
     borderWidth: 1
     //borderWidth: 1,
     //borderColor: '#CCCCCC',
   },
   textData: {
-    fontSize: 25,
+    fontSize: 20,
     color: 'black',
     // marginLeft: 20,
     //marginTop: 1,
     fontWeight: 'bold',
     alignSelf: 'flex-start',
-    
+
   },
   textContainer: {
     backgroundColor: '#3eda9b',
     borderRadius: 15,
-    padding: 20,
+    padding: 10,
     // height: 50,
     marginVertical: 10,
     width: '90%',
     alignSelf: 'center',
     marginHorizontal: 10
   },
+  brandedTextContainer: {
+    backgroundColor: 'red',
+    borderRadius: 15,
+    padding: 10,
+    // height: 50,
+    marginVertical: 10,
+    width: '90%',
+    alignSelf: 'center',
+    marginHorizontal: 10,
+  },
   scroll: {
-    // marginTop: 10,
-    height: 300,
+    marginTop: 10,
+    height: 400,
     position: 'absolute',
-    marginLeft: 40,
-
+    //marginLeft: 40,
+    marginLeft: '50%',
+    marginTop: -120,
     alignSelf: 'center',
     // textAlign: 'flex-start',
     flex: 1,
-    width: '100%'
+    width: '50%'
   },
   // surr: {
   //   borderWidth: 2,
@@ -377,7 +427,7 @@ const styles = StyleSheet.create({
     //margin: '7%'
     borderWidth: 2,
     borderRadius: 15,
-    width:'40%',
+    width: '40%',
     margin: '5%',
     padding: 10
   },
@@ -388,8 +438,14 @@ const styles = StyleSheet.create({
     //margin: '7%'
     borderWidth: 2,
     borderRadius: 15,
-    width:'40%',
+    width: '40%',
     margin: '5%',
     padding: 10
+  },
+  brandedScroll: {
+    position: 'absolute',
+    alignSelf: 'center',
+    width: '50%',
+    height: 400,
   }
 });
