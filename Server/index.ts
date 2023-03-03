@@ -6,9 +6,14 @@ app.use(cors());
 import RouteNamesClass from "./utils/routeNamesClass";
 const routeNames = new RouteNamesClass()
 
-// import supabase from "./utils/supabaseSetUp";
-// import { supabaseQueryClass } from "./utils/databaseInterface";
-// const supabaseQuery = new supabaseQueryClass();
+const port = process.env.PORT;
+if(port === undefined){
+  console.log("Please set the PORT environment variable.");
+}
+
+
+const supabase = require('../dist/utils/supabaseSetUp.js');
+const supabaseQuery = require('../dist/utils/databaseInterface.js');
 
 /**---------------- Routes Start--------------- */
 //HomePage Route
@@ -21,10 +26,14 @@ const routeNames = new RouteNamesClass()
 import authRouter from "./routes/authentication.router";
 app.use(routeNames.userBaseURL, authRouter);
 
+
 //Change Profile Details Routes
 // const changeProfileDetailsRouter = require('../routes/changeProfileDetails.js');
 import changeProfileDetailsRouter from "./routes/changeProfileDetails.router";
 app.use(routeNames.changeDetailsBaseURL, changeProfileDetailsRouter);
+
+import foodSearchRouter from "./routes/FoodSearchRouter";
+app.use('/api/food',foodSearchRouter)
 
 // Get User Details Routes
 import getUserInfoRouter from "./routes/getUserInfo.router";

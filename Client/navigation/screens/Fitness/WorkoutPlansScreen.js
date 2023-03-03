@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import react from "react";
-import { StyleSheet, Text, View, Button, SafeAreaView, TextInput } from 'react-native';
+
+import { StyleSheet, Text, View, Button, SafeAreaView, TextInput, ScrollView } from 'react-native';
 
 export default function WorkoutPlansScreen({ navigation }) {
     return (
@@ -12,58 +12,94 @@ export default function WorkoutPlansScreen({ navigation }) {
                 Workout Plans
             </Text>
 
-            <View style={styles.blankSpace}>
+            <View style={styles.searchAndCreate}>
+
                 <TextInput
-                    style={styles.input}
+                    style={styles.textInput}
                     placeholder="Search"
                     keyboardType='default'
+                    clearButtonMode='always'
                 />
+
                 <Button title='+' onPress={() => {
                     console.log("Create new workout plan.")
+                    navigation.navigate('Create New Workout')
                 }} />
+
             </View>
 
-            <View style={styles.button}>
-            </View>
+                <Text style={styles.customWorkout}>Custom Workouts</Text>
+        
+            <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false} alignItems={'center'}>
+                <Text style={styles.testText}>Test text 1</Text>
+                <Text style={styles.testText}>Test text 2</Text>
+                <Text style={styles.testText}>Test text 3</Text>
+                <Text style={styles.testText}>Test text 4</Text>
+                <Text style={styles.testText}>Test text 5</Text>
+                <Text style={styles.testText}>Test text 6</Text>
+                <Text style={styles.testText}>Test text 7</Text>
+                <Text style={styles.testText}>Test text 8</Text>
+                <Text style={styles.testText}>Test text 9</Text>
+                <Text style={styles.testText}>Test text 10</Text>
+                <Text style={styles.testText}>Test text 11</Text>
+                <Text style={styles.testText}>Test text 12</Text>
+                <Text style={styles.testText}>Test text 13</Text>
+                <Text style={styles.testText}>Test text 14</Text>
+                <Text style={styles.testText}>Test text 15</Text>
+                <Text style={styles.testText}>Test text 16</Text>
+                <Text style={styles.testText}>Test text 17</Text>
+                <Text style={styles.testText}>Test text 18</Text>
+            </ScrollView>
 
+            <Button title='TEST Workout Info' onPress={ () => {
+                navigation.navigate("Workout Info")
+            }} />
             <StatusBar style="auto" />
         </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
+    customWorkout: {
+        fontSize: 22,
+        margin: 5,
+        fontWeight: "bold",
+    },
+    testText: {
+        fontSize: 32,
+        padding: 5,
+        borderRadius: 20,
+        margin: 5,
+        borderWidth: 1,
+        textAlign: 'center',
+    },
+    scrollView: {
+        height: '60%',
+        borderWidth: 2,
+        borderRadius: 26,
+        paddingHorizontal: 16,
+        margin: 10,
+        width: '90%'
+    },
     title: {
         fontSize: 32,
         fontWeight: "bold",
-        padding: 40,
+        padding: 20,
     },
-    blankSpace: {
-        flex: 1,
+    searchAndCreate: {
         flexDirection: 'row',
-        justifyContent: 'centre',
-        paddingHorizontal: 10,
+        padding: 12,
+        alignContent: 'space-between'
     },
-    input: {
-
-        flexDirection: 'row',
+    textInput: {
         borderWidth: 1,
         padding: 10,
-        width: 300,
-    },
-    mainImage: {
-        width: 120,
-        height: 120,
+        marginHorizontal: 12,
+        flex: 1,
     },
     container: {
-        flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        height: '100%'
     },
-    button: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        alignItems: 'flex-end',
-        justifyContent: 'center',
-    }
 });
