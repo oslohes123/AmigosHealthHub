@@ -1,4 +1,10 @@
-export const PasswordInput = ({
+import { TextInput, TouchableOpacity, View } from 'react-native';
+
+import { FontAwesome } from '@expo/vector-icons';
+import React from 'react';
+import { globalStyles } from '../../styles/global';
+
+const PasswordInput = ({
     value,
     onChange,
     label,
@@ -27,3 +33,5 @@ export const PasswordInput = ({
         </View>
     );
 };
+
+export default PasswordInput;

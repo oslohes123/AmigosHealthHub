@@ -4,10 +4,9 @@ import { Button, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import React, { useState } from 'react';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { FontAwesome } from '@expo/vector-icons';
 import { Formik } from 'formik';
 import { MaterialIcons } from '@expo/vector-icons';
-import { PasswordInput } from '../../../components/passwordToggle';
+import PasswordInput from '../../../components/passwordInput';
 import { globalStyles } from '../../../../styles/global';
 import { useChangeProfilePassword } from '../hooks/useChangeProfilePassword';
 

@@ -1,11 +1,14 @@
 require('dotenv').config()
+
 import { Request, Response } from 'express';
+import { createHashedPassword, getUserByEmail, updateUser, verifyPassword } from '../utils/userFunctions';
+import { isEmail, isStrongPassword } from '../utils/validators';
+
 import supabase from '../utils/supabaseSetUp'
 import {supabaseQueryClass} from '../utils/databaseInterface'
+
 const bcrypt = require('bcrypt');
-import { isEmail, isStrongPassword } from '../utils/validators';
 const supabaseQuery = new supabaseQueryClass();
-import { createHashedPassword, getUserByEmail, updateUser, verifyPassword } from '../utils/userFunctions';
 
 export const changeStats = async(req:Request,res:Response) => {
 
@@ -117,9 +120,10 @@ export const deleteAccount = async(req:Request, res:Response) =>{
         const match = await bcrypt.compare(password, data[0].password);
         if(match){
                 //delete account
-                const {error}:any = supabaseQuery.deleteFrom(supabase, 'User','email',email);
+                const {error}:any = await supabaseQuery.deleteFrom(supabase, 'User','email',email);
                 if(error){
                     console.log("Failed to delete account!")
+                    console.log(error)
                     res.status(400).json({mssg:"Failed to delete account!"})
                 }
                 else {
