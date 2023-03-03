@@ -7,8 +7,8 @@ import supabase from "../../utils/supabaseSetUp";
 import { supabaseQueryClass } from "../../utils/databaseInterface";
 import { createHashedPassword, createToken } from "../../utils/userFunctions";
 const supabaseQuery = new supabaseQueryClass();
-import RouteNames from "../../utils/routeNames";
-const routeNames = new RouteNames();
+import RouteNamesClass from "../../utils/routeNamesClass";
+const routeNames = new RouteNamesClass()
 const changePasswordRoute = routeNames.fullChangePasswordURL;
 
 let testEmail: string;

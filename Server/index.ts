@@ -3,8 +3,8 @@ const app = express();
 const cors = require('cors');
 app.use(cors());
 
-import RouteNames from "./utils/routeNames";
-const routeNames = new RouteNames();
+import RouteNamesClass from "./utils/routeNamesClass";
+const routeNames = new RouteNamesClass()
 
 // import supabase from "./utils/supabaseSetUp";
 // import { supabaseQueryClass } from "./utils/databaseInterface";

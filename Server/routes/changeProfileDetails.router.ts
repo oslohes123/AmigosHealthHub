@@ -4,8 +4,8 @@ changeProfileDetailsRouter.use(express.json());
 // const userFunctions = require('../controllers/changeProfileDetails');
 import { changeStats, changePassword, deleteAccount } from "./changeProfileDetails.controller";
 import{checkToken} from '../middleware/checkToken'
-import RouteNames from "../utils/routeNames";
- const routeNames = new RouteNames();
+import RouteNamesClass from "../utils/routeNamesClass";
+const routeNames = new RouteNamesClass()
 changeProfileDetailsRouter.use(checkToken); //Routes are protected. 
 /**
  * All these routes start with /api/user

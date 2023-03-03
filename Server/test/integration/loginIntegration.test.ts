@@ -8,8 +8,8 @@ import supabase from "../../utils/supabaseSetUp";
 import { supabaseQueryClass } from "../../utils/databaseInterface";
 import { createHashedPassword } from "../../utils/userFunctions";
 const supabaseQuery = new supabaseQueryClass();
-import RouteNames from "../../utils/routeNames";
-const routeNames = new RouteNames()
+import RouteNamesClass from "../../utils/routeNamesClass";
+const routeNames = new RouteNamesClass()
 /**
  * Refactor using objects, interfaces to prevent repeated code. 
  */

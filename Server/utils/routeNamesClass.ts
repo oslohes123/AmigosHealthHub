@@ -1,23 +1,18 @@
-export default class RouteNames{
+export default class RouteNamesClass{
 
-    /**
-     * All Base Routes
-     */
+    // All Base Routes
     readonly userBaseURL = '/api/user'
     readonly changeDetailsBaseURL = this.userBaseURL + '/changeProfileDetails'
 
-    /**
-     * Auth Routes
-     */
+    // Auth Routes
     readonly partialSignupURL = '/sign_up';
     readonly partialLoginURL = '/login';
 
     readonly fullSignupURL = this.userBaseURL + this.partialSignupURL;
     readonly fullLoginURL = this.userBaseURL + this.partialLoginURL;
 
-    /**
-     * Change Profile Routes
-     */
+    //Change Profile Routes
+     
     readonly partialChangeStatsURL = '/stats';
     readonly partialChangePasswordURL = '/password';
     readonly partialDeleteAccountURL = '/deleteAccount';
@@ -26,15 +21,12 @@ export default class RouteNames{
     readonly fullChangePasswordURL = this.changeDetailsBaseURL + this.partialChangePasswordURL;
     readonly fullDeleteAccountURL = this.changeDetailsBaseURL + this.partialDeleteAccountURL;
     
-    /**
-     * Check Initial Token Route
-     */
+    // Check Initial Token Route
+
     readonly partialCheckInitialTokenURL = '/checkInitialToken';
     readonly fullCheckInitialTokenURL = this.userBaseURL + this.partialCheckInitialTokenURL;
 
-    /**
-     * Get Info Route
-     */
+    //  Get Info Route
     readonly partialGetInfoURL = '/getInfo';
     readonly fullGetInfoURL = this.userBaseURL + this.partialGetInfoURL;
 

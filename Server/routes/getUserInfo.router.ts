@@ -6,8 +6,8 @@ getUserInfoRouter.use(express.json());
 import { getInfo } from "./getUserInfo.controller";
 import { checkToken } from "../middleware/checkToken";
 getUserInfoRouter.use(checkToken);
-import RouteNames from "../utils/routeNames";
-const routeNames = new RouteNames();
+import RouteNamesClass from "../utils/routeNamesClass";
+const routeNames = new RouteNamesClass()
 //Routes
 getUserInfoRouter.get(routeNames.partialGetInfoURL, getInfo);
 
