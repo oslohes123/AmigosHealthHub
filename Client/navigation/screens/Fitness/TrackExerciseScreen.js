@@ -13,7 +13,7 @@ export default function TrackExerciseScreen({ navigation }) {
             <View style={styles.searchAndCreate}>
 
             {SearchBar({themeColor: theme.color, width: screenWidth * 0.7})}
-            {GreenButton({height: screenHeight * 0.05, width: screenWidth * 0.15, fontSize: 20, text: "+", buttonFunction: () => {navigation.navigate('Create New Workout')}})}
+            {GreenButton({height: screenHeight * 0.05, width: screenWidth * 0.15, fontSize: 20, text: "+", buttonFunction: () => {console.log("Add custom exercise")}})}
 
             </View>
 

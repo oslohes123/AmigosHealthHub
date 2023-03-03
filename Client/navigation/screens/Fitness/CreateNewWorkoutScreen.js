@@ -1,12 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 
-import { StyleSheet, Text, View, Button, SafeAreaView, TextInput, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Dimensions, Modal, Keyboard } from 'react-native';
+import { Text, View, Button, Switch, SafeAreaView, TextInput, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Dimensions, Modal, Keyboard } from 'react-native';
 import { useState, useContext } from 'react';
 import themeContext from '../../theme/themeContext';
 import SearchBar from '../../components/SearchBar';
+import RedButton from '../../components/RedButton';
+import GreenButton from '../../components/GreenButton';
 
 export default function CreateNewWorkoutScreen({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false)
+    const [warmUpSet, setWarmUpSet] = useState(false)
     const theme = useContext(themeContext)
     return (
         <SafeAreaView style={[styles.container, {backgroundColor: theme.background}]}>
@@ -39,27 +42,57 @@ export default function CreateNewWorkoutScreen({ navigation }) {
                                     <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}}>THIS, THAT, OTHER, THIS IS ALSO IN THE EQUIPTMENT LIST</Text>
                                 </View>
                             </View>
-                            
-                            <View style={{width: screenWidth * 0.3, flexDirection: 'row', justifyContent: 'space-evenly', alignContent: 'center'}}>
-                                <TextInput 
-                                    style={[modalStyle.textInput, {borderColor: theme.color}]} 
-                                    placeholder='Sets' 
-                                    placeholderTextColor={theme.color} 
-                                    keyboardType={'numeric'} 
-                                    textAlign={'center'}
+
+                            <View style={{width: screenWidth * 0.8, flexDirection: 'row', justifyContent: 'space-evenly', alignContent: 'center'}}>
+                                
+                                <View style={{width: screenWidth * 0.4, flexDirection: 'column', justifyContent: 'space-evenly', alignContent: 'center'}}>
+                                   
+                                    <View style={{width: screenWidth * 0.4, flexDirection: 'row', justifyContent: 'space-evenly', alignContent: 'center'}}>
+                                        <TextInput 
+                                            style={[modalStyle.textInput, {borderColor: theme.color}]} 
+                                            placeholder='Sets' 
+                                            placeholderTextColor={theme.color} 
+                                            keyboardType={'numeric'} 
+                                            textAlign={'center'}
+                                        />
+                                        <TextInput 
+                                            style={[modalStyle.textInput, {borderColor: theme.color}]} 
+                                            placeholder='Reps' 
+                                            placeholderTextColor={theme.color} 
+                                            keyboardType={'numeric'} 
+                                            textAlign={'center'}
+                                        />
+                                    </View>
+
+                                    <TextInput 
+                                        style={[modalStyle.textInput, {borderColor: theme.color, alignSelf: 'center'}]} 
+                                        placeholder='Calories' 
+                                        placeholderTextColor={theme.color} 
+                                        keyboardType={'numeric'} 
+                                        textAlign={'center'}
                                     />
-                                <TextInput 
-                                    style={[modalStyle.textInput, {borderColor: theme.color}]} 
-                                    placeholder='Reps' 
-                                    placeholderTextColor={theme.color} 
-                                    keyboardType={'numeric'} 
-                                    textAlign={'center'}
-                                    />
+
+                                </View>
+
+                                <View style={{width: screenWidth * 0.3, flexDirection: 'column', justifyContent: 'center', alignContent: 'center'}}>
+                                    <Text style={{color: theme.color, fontSize: 16, alignSelf: 'center', padding: 5, fontWeight: 'bold'}}>Warm Up Set</Text>
+                                    <Switch
+                                        style={{alignSelf: 'center'}}
+                                        value={warmUpSet}
+                                        onValueChange={(value) => {setWarmUpSet(value)}}
+                                        />
+                                </View>
                             </View>
 
                             <View style={{width: screenWidth * 0.4, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-                                <Button title='Dismiss' onPress={() => {setModalVisible(!modalVisible)}}/>
-                                <Button title='Add' onPress={() => {setModalVisible(!modalVisible)}}/>
+                                {/* <Button title='Dismiss' onPress={() => {setModalVisible(!modalVisible)}}/>
+                                <Button title='Add' onPress={() => {setModalVisible(!modalVisible)}}/> */}
+                                {RedButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 12, text: "Dismiss", buttonFunction: () => {
+                                    setModalVisible(!modalVisible)
+                                    console.log("Dismiss Info")}})}
+                                {GreenButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 12, text: "Add", buttonFunction: () => {
+                                    setModalVisible(!modalVisible)
+                                    console.log("Add To Workout")}})}
                             </View>
                         </View>
                     </SafeAreaView>
@@ -234,7 +267,8 @@ const modalStyle = {
     textInput: { 
         borderRadius: 10, 
         borderWidth: 1, 
-        width: screenWidth * 0.12, 
+        margin: 5,
+        width: screenWidth * 0.15, 
         height: screenHeight * 0.05,
         fontWeight: 'bold'
     },
