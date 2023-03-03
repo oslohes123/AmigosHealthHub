@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { useAuthContext } from "../hooks/useAuthContext";
 import { useState } from 'react';
 import { useAuthContext } from '../../Authentication/context/AuthContext'
+import { useLogout } from '../../Authentication/hooks/useLogOut';
 const port = process.env['PORT'];
 const ip_address = process.env['IP_ADDRESS'];
 
@@ -11,6 +12,7 @@ export const useChangeProfilePassword = () => {
     const [error, setError] = useState<JSON|null|boolean>(null)
     const [isLoading, setIsLoading] = useState<Boolean|null>(null) 
     const { dispatch, user } = useAuthContext()
+    const {logout} = useLogout();
     console.log("In changePassword");
     
     const changePassword = async (old_password:string , new_password:string) => {
@@ -46,7 +48,7 @@ export const useChangeProfilePassword = () => {
                //Log the user out if change details is successful
     
                 setIsLoading(false)
-                dispatch({ type: 'LOGOUT'})
+                logout()
                 }
                 catch(error){
                     setError(true);

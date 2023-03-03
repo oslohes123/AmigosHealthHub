@@ -27,9 +27,17 @@ const getUserInfo = async () => {
     );
     if (!response.ok) {
         console.log(`response of getUserInfo: ${JSON.stringify(response)}`);
-        throw new Error(
-            `Failed to get user info with email ${email}, status: ${response.status}`
-        );
+        // throw new Error(
+        //     `Failed to get user info with email ${email}, status: ${response.status}`
+        // );
+        return {
+            user:{
+                firstName: "Loading...",
+                lastName: "Loading...",
+                email: "Loading...",
+                age:"Loading..."
+            }
+        }
     } else if (response.ok) {
         const responseJSON = await response.json();
         // console.log(`response json: ${JSON.stringify(responseJSON)}`);

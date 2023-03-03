@@ -1,36 +1,17 @@
-import { useAuthContext } from "../context/AuthContext"
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-
-// export const useLogOut = () => {
-//     const {user,dispatch } = useAuthContext();
-//     async function logOut(){
-//         try{
-//             console.log('In logOut function')
-//             await AsyncStorage.removeItem('user') 
-            
-//             dispatch({ type: 'LOGOUT' })
-//             console.log(user)
-//         }
-//         catch(error){
-//             console.error(error);
-//         }
-//     }
-//     logOut();
-// }
+import { useAuthContext } from "../context/AuthContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const useLogout = () => {
-  const { dispatch } = useAuthContext()
+  const { dispatch } = useAuthContext();
 
-  const logout = async() => {
+  const logout = async () => {
     // remove user from storage
-    console.log('In logOut function')
-    await AsyncStorage.removeItem('user') 
+    console.log("In logOut function");
+    await AsyncStorage.removeItem("user");
 
     // dispatch logout action
-    dispatch({ type: 'LOGOUT' })
-  }
+    dispatch({ type: "LOGOUT" });
+  };
 
-  return { logout }
-}
-
+  return { logout };
+};

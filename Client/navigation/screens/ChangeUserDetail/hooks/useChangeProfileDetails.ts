@@ -2,11 +2,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuthContext } from '../../Authentication/context/AuthContext';
 // import { useAuthContext } from "../hooks/useAuthContext";
 import { useState } from 'react';
+import { useLogout } from '../../Authentication/hooks/useLogOut';
 const port = process.env['PORT'];
 const ip_address = process.env['IP_ADDRESS'];
 
 export const useChangeProfileDetails = () => {
     console.log(`port: ${port}`);
+    const{logout} = useLogout();
     const [error, setError] = useState<JSON | null | boolean>(null);
     const [isLoading, setIsLoading] = useState<Boolean | null>(null);
     const { dispatch, user } = useAuthContext();
@@ -67,9 +69,9 @@ export const useChangeProfileDetails = () => {
             if (response.ok) {
                 try {
                     //Log the user out if change details is successful
-
+                    logout();
                     setIsLoading(false);
-                    dispatch({ type: 'LOGOUT'});
+            
                 } catch (error) {
                     setError(true);
                     setIsLoading(false);
