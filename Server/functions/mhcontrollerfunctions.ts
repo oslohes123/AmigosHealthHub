@@ -12,7 +12,8 @@ export async function returnWords(): Promise<object>{
     const { data,error }:any = await supabaseQuery.mostrecent(supabase, 'Mental Health','todays_word','created_at');
         if(error){
             console.log("Failed to return last 7 words")
-            return {mssg : "Failed to return last 7 words"}
+            throw new Error(error)
+            // return {mssg : "Failed to return last 7 words"}
         }
         else{
             return data

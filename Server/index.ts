@@ -23,6 +23,8 @@ app.get("/", (req: Request, res: Response) => {
 import authRouter from "./routes/authentication";
 app.use('/auth', authRouter);
 
+import mentalHealthRouter from "./routes/mentalhealth";
+app.use('/mentalhealth', mentalHealthRouter)
 
 
 /**---------------- Routes End------------------ */
