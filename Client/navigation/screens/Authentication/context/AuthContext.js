@@ -4,7 +4,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { useAuthContext } from "../hooks/useAuthContext";
 const port = process.env["PORT"];
 const ip_address = process.env["IP_ADDRESS"];
-
 export const AuthContext = createContext();
 
 /**
@@ -39,25 +38,6 @@ export const useAuthContext = () => {
   // console.log(`state and dispatch : ${stateAndDispatch}`);
   return stateAndDispatch;
 };
-
-// const useEffectCheckToken = () => {
-//     useEffect(()=>{
-
-//         async function getItem(){
-//        const token =  JSON.parse(await AsyncStorage.getItem('user'))
-
-//         console.log(`token: ${token}`);
-//         //if token exists, then update user state
-//         if(token){
-//             dispatch({type:'LOGIN', payload:token})
-//         }
-//         }
-//         getItem()
-//     }, [])
-// }
-/**
- * Creating provider to wrap children who need the values provided
- */
 export const AuthContextProvider = ({ children }) => {
   //
   //  initial value: user:null
@@ -67,7 +47,7 @@ export const AuthContextProvider = ({ children }) => {
 
   //   When dispatch is called, the authReducer is called which passes the action and uses that to
   //   update the state
-
+  // const { logout } = useLogout();
   const [state, dispatch] = useReducer(authReducer, { user: null });
 
   console.log(`${state.user}`);
@@ -77,7 +57,8 @@ export const AuthContextProvider = ({ children }) => {
 
       console.log(`user: ${JSON.stringify(user)}`);
       if (user) {
-        console.log(`token: ${user.token}`);
+        // console.log(`token: ${user.token}`);
+        console.log("IN AUTHCONTEXTPROVIDER");
         const token = user.token;
         const response = await fetch(
           `http://${ip_address}:${port}/api/user/checkInitialToken`,
@@ -94,6 +75,7 @@ export const AuthContextProvider = ({ children }) => {
         if (response.ok) {
           dispatch({ type: "LOGIN", payload: user });
         } else {
+          await AsyncStorage.removeItem("user");
           dispatch({ type: "LOGOUT" });
         }
       }

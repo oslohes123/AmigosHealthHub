@@ -40,6 +40,7 @@ export const useChangeProfilePassword = () => {
             const json = await response.json();
       
             if (!response.ok) {
+                if(response.status === 401){logout()}
                 setIsLoading(false)
                 setError(json.mssg)
                 console.log(error)

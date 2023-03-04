@@ -64,14 +64,16 @@ export const useChangeProfileDetails = () => {
             const json = await response.json();
 
             if (!response.ok) {
+                if(response.status === 401){logout()}
                 setIsLoading(false);
                 setError(json.mssg);
                 console.log(error);
             }
             if (response.ok) {
                 try {
-                    logout();
                     setIsLoading(false);
+                    logout();
+                   
             
                 } catch (error) {
                     setError(true);
@@ -80,6 +82,7 @@ export const useChangeProfileDetails = () => {
                 }
             }
         } catch (error) {
+            console.log("In useChangeProfileDetails")
             console.error(error);
         }
     };

@@ -2,7 +2,7 @@ import * as Yup from "yup";
 
 import { Button, Text, TextInput, View, SafeAreaView } from "react-native";
 import React, { useEffect, useState } from "react";
-
+import { useLogout } from "../../Authentication/hooks/useLogOut";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Formik } from "formik";
 import { globalStyles } from "../../../../styles/global";
@@ -10,7 +10,7 @@ import { useAuthContext } from "../../Authentication/context/AuthContext";
 import { useChangeProfileDetails } from "../hooks/useChangeProfileDetails";
 
 // import { getUserInfo } from '../hooks/getUserInfo';
-const getUserInfo = require("../hooks/getUserInfo");
+const getUserInfo = require("../hooks/useGetUserInfo");
 
 const ChangeUserDetailsSchema = Yup.object().shape({
   firstName: Yup.string().required("Required"),
@@ -30,10 +30,7 @@ const ChangeUserDetailsSchema = Yup.object().shape({
 // }
 
 export const formikChangeUserDetailsForm = () => {
-  // useEffect(() => {
-
-  //     myfunction();
-  //     },[])
+  const { logOut } = useLogout();
   const [email, setEmail] = useState(null);
   const [firstName, setfirstName] = useState(null);
   const [lastName, setlastName] = useState(null);
@@ -46,6 +43,9 @@ export const formikChangeUserDetailsForm = () => {
     setfirstName(userInfo.user.firstName);
     setlastName(userInfo.user.lastName);
     setage(userInfo.user.age);
+    // if (email == "Loading...") {
+    //   logOut();
+    // }
   }
   setInitialValues();
   console.log(`email: ${email}`);
