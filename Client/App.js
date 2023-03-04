@@ -6,7 +6,7 @@ import { useAuthContext } from "./navigation/screens/Authentication/context/Auth
 import { createStackNavigator } from "@react-navigation/stack";
 import React, { useState } from "react";
 import { StyleSheet } from "react-native";
-import { Provider as PaperProvider } from 'react-native-paper';
+
 const Stack = createStackNavigator();
 
 //Screen names
@@ -22,12 +22,9 @@ function App() {
 
 export default () => {
   return (
-    <PaperProvider>
     <AuthContextProvider>
       <App />
     </AuthContextProvider>
-    </PaperProvider>
-    
   );
 };
 
