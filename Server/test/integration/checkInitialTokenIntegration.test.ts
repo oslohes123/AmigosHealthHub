@@ -33,7 +33,7 @@ test(`GET ${checkInitialTokenRoute} with authorization header with no spaces res
    .set("authorization", "tokenValue")
 
  
-   t.true(response.status === 400)
+   t.true(response.status === 401)
    t.true(response.headers['content-type'] === "application/json; charset=utf-8")
    t.true(JSON.stringify(response.body) === JSON.stringify({mssg: "Authorization header must have format 'bearer token'."}));
 })
@@ -45,7 +45,7 @@ test(`GET ${checkInitialTokenRoute} with authorization header with no bearer sub
    .set("authorization", " tokenValue")
 
  
-   t.true(response.status === 400)
+   t.true(response.status === 401)
    t.true(response.headers['content-type'] === "application/json; charset=utf-8")
    t.true(JSON.stringify(response.body) === JSON.stringify({mssg: "Authorization header must have format 'bearer token'."}));
 })
