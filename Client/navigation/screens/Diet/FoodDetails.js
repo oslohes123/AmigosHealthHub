@@ -1,13 +1,16 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text,TextInput } from "react-native";
 import GreenButton from "../../components/GreenButton";
+// import { TextInput } from 'react-native-paper';
 
 export default function FoodDetails({ route, navigation }) {
   const pressHandler = () => {
     navigation.navigate("Diet Dashboard");
   };
 
-  const { 
+  const [text, setText] = React.useState("")
+
+  const {
     food_name: name,
     calories,
     protein: Protein,
@@ -18,9 +21,10 @@ export default function FoodDetails({ route, navigation }) {
     brand_name: Brand,
     serving_qty: servingQty,
     serving_unit: servingUnit,
+    alt_measures: altMeasures,
   } = route.params;
 
-//   console.log(route.params);
+  //   console.log(route.params);
 
   return (
     <View style={styles.container}>
@@ -54,8 +58,9 @@ export default function FoodDetails({ route, navigation }) {
         <Text style={styles.values}>{servingUnit}</Text>
       </View>
       <View style={styles.box}>
-        <Text style={styles.text}>Serving quantity</Text>
-        <Text style={styles.values}>{servingQty}</Text>
+        <Text style={styles.text}>Serving Quantity</Text>
+        <TextInput styles = {styles.input}></TextInput>
+        
       </View>
       {Brand?<View style={styles.box}>
         <Text style={styles.text}>Brand name</Text>
@@ -76,8 +81,14 @@ export default function FoodDetails({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+  },
   container: {
-    flex: 1,
+    flex: 2,
     backgroundColor: "#203038",
   },
   header: {
