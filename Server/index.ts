@@ -28,9 +28,12 @@ app.use(routeNames.userBaseURL, authRouter);
 
 
 //Change Profile Details Routes
-// const changeProfileDetailsRouter = require('../routes/changeProfileDetails.js');
 import changeProfileDetailsRouter from "./routes/changeProfileDetails.router";
 app.use(routeNames.changeDetailsBaseURL, changeProfileDetailsRouter);
+
+//Mental Health Routes
+import rateMentalRouter from "./routes/rateMental.router";
+app.use(routeNames.mentalHealthBaseURL, rateMentalRouter);
 
 import foodSearchRouter from "./routes/FoodSearchRouter";
 app.use('/api/food',foodSearchRouter)
@@ -42,7 +45,6 @@ app.use(routeNames.userBaseURL, getUserInfoRouter);
 // Check initial token Route
 import checkInitialTokenRouter from "./routes/checkInitialToken.router";
 app.use(routeNames.userBaseURL, checkInitialTokenRouter);
-
 /**---------------- Routes End------------------ */
 
 export default app;

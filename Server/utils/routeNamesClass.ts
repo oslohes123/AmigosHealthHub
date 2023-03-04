@@ -3,6 +3,7 @@ export default class RouteNamesClass{
     // All Base Routes
     readonly userBaseURL = '/api/user'
     readonly changeDetailsBaseURL = this.userBaseURL + '/changeProfileDetails'
+    readonly mentalHealthBaseURL = this.userBaseURL + '/mentalHealth';
 
     // Auth Routes
     readonly partialSignupURL = '/sign_up';
@@ -29,5 +30,10 @@ export default class RouteNamesClass{
     //  Get Info Route
     readonly partialGetInfoURL = '/getInfo';
     readonly fullGetInfoURL = this.userBaseURL + this.partialGetInfoURL;
+
+    //Mental Health Route
+
+    readonly partialRateMental = '/rateMental';
+    readonly fullRateMentalURL = this.mentalHealthBaseURL + this.partialRateMental;
 
 }
