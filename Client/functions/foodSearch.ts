@@ -4,11 +4,12 @@ import specificFoodNutritionInterface from '../interfaces/specificFoodNutritionI
 import genericSearchInterface from '../interfaces/genericSearchInterface';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { number } from 'prop-types';
-
+const portENV = process.env["PORT"];
+const ip_addressENV = process.env["IP_ADDRESS"];
 // For testing purposes
 // Update this with your own UrlService
-let ip_address:string = '192.168.0.14';
-let port:string = '3001'
+let ip_address:string|undefined = ip_addressENV;
+let port:string|undefined= portENV
 
 
 export async function genericSearch(value:string):Promise<genericSearchInterface | AxiosError> {
@@ -45,8 +46,6 @@ export async function specificSearch(value:string):Promise<specificFoodNutrition
 
     return response.data;
 }
-
-
 
 
 

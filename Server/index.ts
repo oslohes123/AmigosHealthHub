@@ -1,14 +1,10 @@
-//Configuration
-import { Request ,Response } from "express";
-import { request } from "http";
-const express = require("express");
+const express = require('express');
 const app = express();
-
 const cors = require('cors');
 app.use(cors());
 
-const dotenv = require("dotenv");
-dotenv.config();
+import RouteNamesClass from "./utils/routeNamesClass";
+const routeNames = new RouteNamesClass()
 
 const port = process.env.PORT;
 if(port === undefined){
@@ -21,22 +17,32 @@ const supabaseQuery = require('../dist/utils/databaseInterface.js');
 
 /**---------------- Routes Start--------------- */
 //HomePage Route
-app.get("/", (req: Request, res: Response) => {
-  res.send("Homepage");
-});
+// app.get('/', (req, res) => {
+//     res.send('Homepage');
+// });
 
 //Authentication Routes
-const authRouter = require('../routes/authentication.js');
-app.use('/auth', authRouter);
+// const authRouter = require('./routes/authentication')
+import authRouter from "./routes/authentication.router";
+app.use(routeNames.userBaseURL, authRouter);
+
+
+//Change Profile Details Routes
+// const changeProfileDetailsRouter = require('../routes/changeProfileDetails.js');
+import changeProfileDetailsRouter from "./routes/changeProfileDetails.router";
+app.use(routeNames.changeDetailsBaseURL, changeProfileDetailsRouter);
 
 import foodSearchRouter from "./routes/FoodSearchRouter";
 app.use('/api/food',foodSearchRouter)
 
+// Get User Details Routes
+import getUserInfoRouter from "./routes/getUserInfo.router";
+app.use(routeNames.userBaseURL, getUserInfoRouter);
+
+// Check initial token Route
+import checkInitialTokenRouter from "./routes/checkInitialToken.router";
+app.use(routeNames.userBaseURL, checkInitialTokenRouter);
 
 /**---------------- Routes End------------------ */
 
-
-
-app.listen(port, () => {
-  console.log(`[server]: Server is running at http://localhost:${port}`);
-});
+export default app;
