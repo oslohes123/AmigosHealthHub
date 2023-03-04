@@ -26,7 +26,10 @@ function getToday(){
  }
  else {
   const recentValue = (data[data.length - 1].created_at)
-  if(recentValue < getToday){
+  console.log(recentValue)
+  console.log(getToday())
+
+  if(recentValue < getToday()){
     console.log("Not Created")
     return false;
   }
@@ -37,12 +40,18 @@ function getToday(){
  }
 }
   export const insertMentalData = async(req:Request, res:Response) => {
-    const { face, word } = req.body;
-    const {data, error}: any = await databaseQuery.insert(supabase, 'Mental Health', {
-    user_id : 'e9a8a99d-1852-4c2d-802c-e10d3ebdc05b',
-    face_id: face,
-    todays_word: word
-    })
-    return res.status(200).json({mssg:"Success"})
+    if (await checkExistsToday() == true){
+      return res.status(400).json({mssg:"You have already submiited your review of your day"})
+    }
+    else{
+      const { face, word } = req.body;
+      const {data, error}: any = await databaseQuery.insert(supabase, 'Mental Health', {
+      user_id : 'e9a8a99d-1852-4c2d-802c-e10d3ebdc05b',
+      face_id: face,
+      todays_word: word
+      })
+      return res.status(200).json({mssg:"Success"})
+    }
+
 }
 
