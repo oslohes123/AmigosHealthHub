@@ -40,8 +40,8 @@ function getToday(){
     const { face, word } = req.body;
     const {data, error}: any = await databaseQuery.insert(supabase, 'Mental Health', {
     user_id : 'e9a8a99d-1852-4c2d-802c-e10d3ebdc05b',
-    face_id: 5,
-    todays_word: 'Planned'
+    face_id: face,
+    todays_word: word
     })
     return res.status(200).json({mssg:"Success"})
 }
