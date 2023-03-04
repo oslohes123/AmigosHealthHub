@@ -45,6 +45,8 @@ app.use(routeNames.userBaseURL, getUserInfoRouter);
 // Check initial token Route
 import checkInitialTokenRouter from "./routes/checkInitialToken.router";
 app.use(routeNames.userBaseURL, checkInitialTokenRouter);
+
+
 /**---------------- Routes End------------------ */
 
 export default app;
