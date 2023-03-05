@@ -57,10 +57,16 @@ export default function FoodDetails({ route, navigation }) {
         <Text style={styles.text}>Serving units</Text>
         <Text style={styles.values}>{servingUnit}</Text>
       </View>
-      <View style={styles.box}>
+      <View style={styles.box} justifyContent={'space-between'}>
         <Text style={styles.text}>Serving Quantity</Text>
-        <TextInput styles = {styles.input}></TextInput>
-        
+        <TextInput
+          placeholder='Add Qty'
+          placeholderTextColor='white'
+          color= 'white'
+          style={styles.input}
+          keyboardType="numeric"
+          clearButtonMode='always'
+        />
       </View>
       {Brand?<View style={styles.box}>
         <Text style={styles.text}>Brand name</Text>
@@ -82,10 +88,15 @@ export default function FoodDetails({ route, navigation }) {
 
 const styles = StyleSheet.create({
   input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
+    //alignSelf: 'center',
+    //marginTop: '15%',
+    fontSize: 16,
+    borderWidth: 2,
+    padding: '3%',
+    width: '25%',
+    borderColor: 'white',
+    borderRadius: 25,
+    marginRight: '5%'
   },
   container: {
     flex: 2,
