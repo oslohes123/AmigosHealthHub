@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-import { Button, Text, TextInput, View, SafeAreaView } from "react-native";
+import { Button, Text, TextInput, View, SafeAreaView, StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useLogout } from "../../Authentication/hooks/useLogOut";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -73,6 +73,7 @@ export const formikChangeUserDetailsForm = () => {
       >
         {(props) => (
           <View>
+            <Text style={styles.head}>First Name</Text>
             <TextInput
               style={globalStyles.input}
               placeholder="First Name"
@@ -81,6 +82,7 @@ export const formikChangeUserDetailsForm = () => {
             />
             <Text>{props.errors.firstName}</Text>
 
+            <Text style={styles.head}>Last Name</Text>
             <TextInput
               style={globalStyles.input}
               placeholder="Last Name"
@@ -89,6 +91,7 @@ export const formikChangeUserDetailsForm = () => {
             />
             <Text>{props.errors.lastName}</Text>
 
+            <Text style={styles.head}>Email</Text>
             <TextInput
               style={globalStyles.input}
               placeholder="Email"
@@ -98,6 +101,7 @@ export const formikChangeUserDetailsForm = () => {
             />
             <Text>{props.errors.email}</Text>
 
+            <Text style={styles.head}>Age</Text>
             <TextInput
               style={globalStyles.input}
               placeholder="Age"
@@ -119,3 +123,12 @@ export const formikChangeUserDetailsForm = () => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  head: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginLeft: '2%',
+    //marginTop: '2%'
+  },
+})

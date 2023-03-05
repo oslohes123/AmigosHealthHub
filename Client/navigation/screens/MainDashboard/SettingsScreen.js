@@ -10,32 +10,32 @@ export default function SettingsScreen({ navigation }) {
                 style={styles.button}
                 onPress={() => {
                     console.log('Change details pressed.');
-                    navigation.navigate('ChangeUserDetails');
+                    navigation.navigate('Change User Details');
                 }}
             >
                 <Text style={styles.buttonText}>Change details</Text>
-                <Ionicons name="ios-arrow-forward" size={16} color="white" />
+                <Ionicons name="ios-arrow-forward" size={32} color="black" />
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
                     console.log('Change password Pressed');
-                    navigation.navigate('ChangeUserPassword');
+                    navigation.navigate('Change User Password');
                 }}
             >
                 <Text style={styles.buttonText}>Change password</Text>
-                <Ionicons name="ios-arrow-forward" size={16} color="white" />
+                <Ionicons name="ios-arrow-forward" size={32} color="black" />
             </TouchableOpacity>
 
             <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
                     console.log('Delete account');
-                    navigation.navigate('DeleteAccount');
+                    navigation.navigate('Delete Account');
                 }}
             >
                 <Text style={styles.buttonText}>Delete Account</Text>
-                <Ionicons name="ios-arrow-forward" size={16} color="white" />
+                <Ionicons name="ios-arrow-forward" size={32} color="black" />
             </TouchableOpacity>
         </SafeAreaView>
     );
@@ -55,15 +55,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     button: {
-        backgroundColor: '#2A3C44',
-        paddingVertical: 10,
-        width: '100%',
+        flexDirection: 'row', 
+        width: '90%',
+        height: '10%',
+        alignSelf: 'center',
+        marginTop: '9%',
+        backgroundColor: '#3eda9b',
         alignItems: 'center',
-        marginBottom: 20
+        borderRadius: 15,
+        borderWidth: 1
     },
     buttonText: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: 'bold'
+        fontSize: 30,
+        marginLeft: '5%'
     }
 });
