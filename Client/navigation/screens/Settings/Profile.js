@@ -4,7 +4,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import theme from '../../theme/theme';
 import themeContext from '../../theme/themeContext';
-import ChangeUserDetailsScreen from '../ChangeUserDetail/screens/ChangeUserDetailsScreen';
+//import ChangeUserDetailsScreen from '../ChangeUserDetail/screens/ChangeUserDetailsScreen';
+import { formikChangeUserDetailsForm } from '../ChangeUserDetail/forms/changeUserDetailsForm';
 
 export default function Profile({navigation}) {
 
@@ -17,7 +18,7 @@ export default function Profile({navigation}) {
         <Ionicons name={'person-circle-outline'} size={80} color={theme.color} />
       </View>
 
-      <ChangeUserDetailsScreen/>
+      {formikChangeUserDetailsForm()}
       
       <View> 
 
