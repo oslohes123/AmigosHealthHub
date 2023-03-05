@@ -18,6 +18,7 @@ function getToday(){
  }
  return midnight;
 }
+//.eq user id not hardcoded
  async function checkExistsToday() {
  const { data, error } = await supabase.from('Mental Health').select('created_at').eq('user_id','e9a8a99d-1852-4c2d-802c-e10d3ebdc05b'); 
  if(error) {
@@ -26,32 +27,38 @@ function getToday(){
  }
  else {
   const recentValue = (data[data.length - 1].created_at)
-  console.log(recentValue)
-  console.log(getToday())
-
   if(recentValue < getToday()){
-    console.log("Not Created")
     return false;
   }
   else{ 
-    console.log("Created")
     return true;
   }
  }
 }
+//make sure user_id isn't hardcoded
+//submitMentalData() will call check exists, if true, update, if false insert
   export const insertMentalData = async(req:Request, res:Response) => {
     if (await checkExistsToday() == true){
+      //code can be changed to make the user update their review for the day
       return res.status(400).json({mssg:"You have already submiited your review of your day"})
     }
-    else{
-      const { face, word } = req.body;
-      const {data, error}: any = await databaseQuery.insert(supabase, 'Mental Health', {
+    
+    const { face, word } = req.body;
+
+    if(word == ''){
+      return res.status(400).json({mssg:"Can't submit an empty word"})
+    }
+    if(face < 1 || face > 5){
+      return res.status(400).json({mssg:"Face value must be between 1-5"})
+    }
+    const {data, error}: any = await databaseQuery.insert(supabase, 'Mental Health', {
       user_id : 'e9a8a99d-1852-4c2d-802c-e10d3ebdc05b',
       face_id: face,
       todays_word: word
       })
-      return res.status(200).json({mssg:"Success"})
+      if(error){
+        return res.status(400).json({mssg: error})
+      }
+      return res.status(200).json({mssg:"Success:"})
     }
-
-}
 
