@@ -85,9 +85,18 @@ test(`POST ${loginRoute} with missing password`, async (t: any) => {
     email: randomEmail,
     password:`CorrectPassword123!`
    });
-   
+
+   const expectation  = {
+    firstName: "someFirstName", 
+    email: "someEmail",
+    token: "someToken",
+    id: "someId",
+    mssg:"someMessage"
+  }
    t.true(response.status === 200)
    t.true(response.headers['content-type'] === "application/json; charset=utf-8")
+   t.true(JSON.stringify(Object.keys(response.body))=== JSON.stringify(Object.keys(expectation)))
+   t.true(Object.keys(response.body).length === 5)
    t.true(response.body.firstName === "firstName");
    t.true(response.body.email === randomEmail);
    t.true(response.body.mssg === "Successful Login");

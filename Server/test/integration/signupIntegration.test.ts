@@ -31,27 +31,6 @@ test.after(async(t: any) => {
   await supabaseQuery.deleteFrom(supabase, 'User', 'email', alreadyExistsEmail);
 })
 
-// interface userFields {
-//   firstName:string,
-//   lastName: string,
-//   email: string,
-//   password: string,
-//   age: number
-// }
-
-// let testUser: userFields = {
-//       firstName: "John",
-//       lastName: "Doe",
-//       email:"johndoe@gmail.com",
-//       password: "CorrectPassword123!",
-//       age: 0,
-// };
-// function testUserObj(unwantedField){
-//   const {testUser, ...newObj} = testUser;
-//   return newObj;
-// }
-
-
 test("POST /api/user/sign_up with no fields", async (t: any) => {
     const response = await request(app)
    .post(signupRoute)
@@ -216,9 +195,19 @@ test("POST /api/user/sign_up with no fields", async (t: any) => {
       email: randomEmail,
       age:30
    });
+
+   const expectation  = {
+    firstName: "someFirstName", 
+    email: "someEmail",
+    token: "someToken",
+    id: "someId",
+    mssg:"someMessage"
+  }
  
    t.true(response.status === 200)
    t.true(response.headers['content-type'] === "application/json; charset=utf-8")
+   t.true(JSON.stringify(Object.keys(response.body))=== JSON.stringify(Object.keys(expectation)))
+   t.true(Object.keys(response.body).length === 5)
    t.true(response.body['email'] == randomEmail)
    t.true(response.body['firstName'] === "Jane" )
    t.true(response.body['mssg'] === "Successful sign up!")

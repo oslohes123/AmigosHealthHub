@@ -23,11 +23,12 @@ export const loginUser = async(req:Request,res:Response) => {
     })
     
     const passwordMatches = await verifyPassword(password, data[0].password);
-
+    const id = data[0].id;
     if(passwordMatches) return res.status(200).json({
     firstName: data[0].firstName,
     email: data[0].email, 
-    token: createToken(data[0].id), 
+    token: createToken(id), 
+    id,
     mssg:"Successful Login"
     });
    
@@ -89,8 +90,9 @@ export const signupUser = async(req:Request,res:Response) => {
 
                 if(error) return res.status(400).json({mssg:"Sorry, something went wrong!", err:error.message});
                 else{ 
-                    const token = createToken(data[0].id);
-                    return res.status(200).json({firstName,email, token, mssg: "Successful sign up!"});
+                    const id = data[0].id;   
+                    const token = createToken(id);
+                    return res.status(200).json({firstName,email, token, id, mssg: "Successful sign up!"});
                 }
             }
         }
