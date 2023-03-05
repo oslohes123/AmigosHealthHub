@@ -32,7 +32,7 @@ app.use(routeNames.userBaseURL, authRouter);
 import changeProfileDetailsRouter from "./routes/changeProfileDetails.router";
 app.use(routeNames.changeDetailsBaseURL, changeProfileDetailsRouter);
 
-import foodSearchRouter from "./routes/FoodSearchRouter";
+import foodSearchRouter from "./routes/Food/FoodSearchRouter";
 app.use('/api/food',foodSearchRouter)
 
 // Get User Details Routes

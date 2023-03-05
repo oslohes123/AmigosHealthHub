@@ -1,14 +1,14 @@
 require("dotenv").config();
 import { Request, Response } from "express";
-import { SearchCriteria, clientSearchMethods } from "../constants";
-import brandedSearch from "../searches/brandedSearch";
-import instantSearch from "../searches/instantFoodSearch";
-import nutrientSearch from "../searches/nutrientSearch";
-import transformBrandedSearchInterface from "../utils/parseBrandedSearch";
-import transformInstantSearchInterface from "../utils/parseInstantSearch";
-import transformNutrientSearchInterface from "../utils/parseNutritionSearch";
-import genericSearchInterface from "./../interfaces/genericSearchInterface";
-import specificFoodNutritionInterface from "./../interfaces/specificFoodNutritionInterface";
+import { clientSearchMethods } from "../constants";
+import brandedSearch from "../utils/Food/searches/brandedSearch";
+import instantSearch from "../utils/Food/searches/instantFoodSearch";
+import nutrientSearch from "../utils/Food/searches/nutrientSearch";
+import transformBrandedSearchInterface from "../utils/Food/parseBrandedSearch";
+import transformInstantSearchInterface from "../utils/Food/parseInstantSearch";
+import transformNutrientSearchInterface from "../utils/Food/parseNutritionSearch";
+import genericSearchInterface from "../interfaces/Food/genericSearchInterface";
+import specificFoodNutritionInterface from "../interfaces/Food/specificFoodNutritionInterface";
 
 export const generalSearch = async (req: Request, res: Response) => {
   // const {value:inputData,code}:SearchCriteria = req.query.value

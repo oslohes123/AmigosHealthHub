@@ -2,7 +2,7 @@ const express = require('express');
 const FoodSearchRouter = express.Router();
 FoodSearchRouter.use(express.json());
 // import{checkToken} from '../middleware/checkToken'
-import {generalSearch} from "../controllers/FoodSearchController";
+import {generalSearch} from "../../controllers/FoodSearchController";
 
 // FoodSearchRouter.use(checkToken); //Routes are protected.
 /**
