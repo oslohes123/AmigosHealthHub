@@ -1,8 +1,8 @@
 import * as Yup from "yup";
 
-import { Button, Text, TextInput, View, SafeAreaView } from "react-native";
+import { Button, Text, TextInput, View, SafeAreaView, StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
-
+import { useLogout } from "../../Authentication/hooks/useLogOut";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Formik } from "formik";
 import { globalStyles } from "../../../../styles/global";
@@ -30,10 +30,7 @@ const ChangeUserDetailsSchema = Yup.object().shape({
 // }
 
 export const formikChangeUserDetailsForm = () => {
-  // useEffect(() => {
-
-  //     myfunction();
-  //     },[])
+  const { logOut } = useLogout();
   const [email, setEmail] = useState(null);
   const [firstName, setfirstName] = useState(null);
   const [lastName, setlastName] = useState(null);
@@ -46,6 +43,9 @@ export const formikChangeUserDetailsForm = () => {
     setfirstName(userInfo.user.firstName);
     setlastName(userInfo.user.lastName);
     setage(userInfo.user.age);
+    // if (email == "Loading...") {
+    //   logOut();
+    // }
   }
   setInitialValues();
   console.log(`email: ${email}`);
@@ -73,6 +73,7 @@ export const formikChangeUserDetailsForm = () => {
       >
         {(props) => (
           <View>
+            <Text style={styles.head}>First Name</Text>
             <TextInput
               style={globalStyles.input}
               placeholder="First Name"
@@ -81,6 +82,7 @@ export const formikChangeUserDetailsForm = () => {
             />
             <Text>{props.errors.firstName}</Text>
 
+            <Text style={styles.head}>Last Name</Text>
             <TextInput
               style={globalStyles.input}
               placeholder="Last Name"
@@ -89,6 +91,7 @@ export const formikChangeUserDetailsForm = () => {
             />
             <Text>{props.errors.lastName}</Text>
 
+            <Text style={styles.head}>Email</Text>
             <TextInput
               style={globalStyles.input}
               placeholder="Email"
@@ -98,6 +101,7 @@ export const formikChangeUserDetailsForm = () => {
             />
             <Text>{props.errors.email}</Text>
 
+            <Text style={styles.head}>Age</Text>
             <TextInput
               style={globalStyles.input}
               placeholder="Age"
@@ -119,3 +123,12 @@ export const formikChangeUserDetailsForm = () => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  head: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginLeft: '2%',
+    //marginTop: '2%'
+  },
+})
