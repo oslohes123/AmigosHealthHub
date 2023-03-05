@@ -1,8 +1,10 @@
 interface Obj {
     [word: string]: any;
   }
+
 import supabase from '../utils/supabaseSetUp'
 import {supabaseQueryClass} from '../utils/databaseInterface'
+
 const supabaseQuery = new supabaseQueryClass();
 // average function
 // words count
@@ -59,16 +61,22 @@ export function getFaces(arr: string[][]): number[] {
 
     for (const insideArr of arr) {
         if (insideArr.length > 0) {
-        result.push(parseFloat(insideArr[0]));
+        try{
+            result.push(parseFloat(insideArr[0]));
+        }
+        catch(Error: unknown){
+            // ...
+        }
         }
     }
 
     return result;
 }
 
-export function average(arr: number[]){
+export function average(arr: number[]): number{
     const sum = arr.reduce((acc, val) => acc + val, 0);
     const average = sum/arr.length;
+    return average
 }
 
 export function getOccurrences(arr: string[], v: string): number{

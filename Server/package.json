@@ -6,7 +6,8 @@
   "scripts": {
     "build": "npx tsc",
     "start": "node dist/index.js",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon dist/index.js\""
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon dist/index.js\"",
+    "test": "ava"
   },
   "author": "",
   "license": "ISC",
