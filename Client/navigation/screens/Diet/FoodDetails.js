@@ -1,9 +1,13 @@
-import React from "react";
-import { StyleSheet, View, Text,TextInput } from "react-native";
+import React, {useState} from "react";
+import { StyleSheet, View, Text,TextInput, Modal, TouchableOpacity } from "react-native";
 import GreenButton from "../../components/GreenButton";
 // import { TextInput } from 'react-native-paper';
 
 export default function FoodDetails({ route, navigation }) {
+
+  const [selected, setSelected] = useState("")
+  const [visible, setVisible] = useState(false)
+
   const pressHandler = () => {
     navigation.navigate("Diet Dashboard");
   };
@@ -53,10 +57,56 @@ export default function FoodDetails({ route, navigation }) {
         <Text style={styles.text}>Fibre</Text>
         <Text style={styles.values}>{Fibre}</Text>
       </View>
-      <View style={styles.box}>
+        <View style={styles.box} justifyContent={'space-between'}>
         <Text style={styles.text}>Serving units</Text>
-        <Text style={styles.values}>{servingUnit}</Text>
+        <View style={styles.dropDownContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => setVisible(true)}
+          >
+          <Text>{selected || 'Select an option'}</Text>
+          </TouchableOpacity>
+          <Modal
+            visible={visible}
+            animationType="fade"
+            transparent={true}
+            onRequestClose={() => setVisible(false)}
+          >
+            <View style={styles.modal}>
+              <TouchableOpacity
+              style={styles.modalButton}
+              onPress={() => {
+                setSelected('ml');
+                setVisible(false);
+              }}
+            >
+              <Text>ml</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+              style={styles.modalButton}
+              onPress={() => {
+                setSelected('cups');
+                setVisible(false);
+              }}
+            >
+              <Text>cups</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+              style={styles.modalButton}
+              onPress={() => {
+                setSelected('grams');
+                setVisible(false);
+              }}
+            >
+              <Text>grams</Text>
+              </TouchableOpacity>
+            </View>
+          </Modal>
+        </View>
       </View>
+
       <View style={styles.box} justifyContent={'space-between'}>
         <Text style={styles.text}>Serving Quantity</Text>
         <TextInput
@@ -133,5 +183,32 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: 10,
+  },
+  dropDownContainer: {
+    borderWidth: 2,
+    borderColor: 'white',
+    borderRadius: 15,
+    overflow: 'hidden',
+    marginRight: '5%',
+    width: '30%',
+  },
+  button: {
+    height: 40,
+    justifyContent: 'center',
+    paddingLeft: 10,
+    backgroundColor: 'white'
+  },
+  modal: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  modalButton: {
+    backgroundColor: 'white',
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '50%',
   },
 });
