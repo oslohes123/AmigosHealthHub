@@ -2,6 +2,7 @@ import supabase from "../utils/supabaseSetUp";
 import { supabaseQueryClass } from "../utils/databaseInterface";
 const databaseQuery = new supabaseQueryClass();
 import { Request, Response } from "express";
+import { getUserByEmail } from "../utils/userFunctions";
 //
 const date = new Date();
 function getToday(){
@@ -19,46 +20,56 @@ function getToday(){
  return midnight;
 }
 //.eq user id not hardcoded
- async function checkExistsToday() {
- const { data, error } = await supabase.from('Mental Health').select('created_at').eq('user_id','e9a8a99d-1852-4c2d-802c-e10d3ebdc05b'); 
- if(error) {
-  console.error(error);
-  return true;
- }
- else {
-  const recentValue = (data[data.length - 1].created_at)
-  if(recentValue < getToday()){
-    return false;
-  }
-  else{ 
+ async function checkExistsToday(id:string) {
+  const {data, error}:any = await databaseQuery.selectWhere(supabase, 'Mental Health','user_id', id,'created_at');
+  console.log(`data:${JSON.stringify(data)}`)
+  if(error) {
+    console.error(error);
     return true;
   }
- }
+  else if(data.length === 0){
+    return false;
+  }
+  else {
+    const recentValue = (data[data.length - 1].created_at)
+    console.log(`recentValue: ${recentValue}`)
+    return !(recentValue< getToday())
+  }
 }
 //make sure user_id isn't hardcoded
 //submitMentalData() will call check exists, if true, update, if false insert
   export const insertMentalData = async(req:Request, res:Response) => {
-    if (await checkExistsToday() == true){
-      //code can be changed to make the user update their review for the day
-      return res.status(400).json({mssg:"You have already submiited your review of your day"})
+
+    const { face, word, email } = req.body;
+
+    const {data, error} = await getUserByEmail(email);
+    if (error){
+      return res.status(400).json({mssg:"Something went wrong!", error})
     }
-    
-    const { face, word } = req.body;
+    const id  = data[0].id;
 
     if(word == ''){
       return res.status(400).json({mssg:"Can't submit an empty word"})
     }
+
     if(face < 1 || face > 5){
       return res.status(400).json({mssg:"Face value must be between 1-5"})
     }
-    const {data, error}: any = await databaseQuery.insert(supabase, 'Mental Health', {
-      user_id : 'e9a8a99d-1852-4c2d-802c-e10d3ebdc05b',
-      face_id: face,
-      todays_word: word
-      })
-      if(error){
-        return res.status(400).json({mssg: error})
-      }
-      return res.status(200).json({mssg:"Success:"})
+
+    if (await checkExistsToday(id)){
+      return res.status(400).json({mssg:"You have already submitted your review of your day"})
     }
+    
+   else{    
+      const {error}: any = await databaseQuery.insert(supabase, 'Mental Health', {
+        user_id : id,
+        face_id: face,
+        todays_word: word
+        })
+        if(error){
+          return res.status(400).json({mssg: error})
+        }
+        return res.status(200).json({mssg:"Success"})
+    }
+  }
 
