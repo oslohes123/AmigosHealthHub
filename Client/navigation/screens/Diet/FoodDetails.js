@@ -60,7 +60,7 @@ export default function FoodDetails({ route, navigation }) {
       <View style={styles.box} justifyContent={'space-between'}>
         <Text style={styles.text}>Serving Quantity</Text>
         <TextInput
-          placeholder='Add Qty'
+          placeholder={servingQty.toString()}
           placeholderTextColor='white'
           color= 'white'
           style={styles.input}
@@ -93,10 +93,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderWidth: 2,
     padding: '3%',
-    width: '25%',
+    width: '10%',
     borderColor: 'white',
     borderRadius: 25,
-    marginRight: '5%'
+    marginRight: '5%',
+    textAlign: 'center',
+    bottom:5,
   },
   container: {
     flex: 2,
@@ -123,7 +125,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     //marginLeft: 165,
     borderWidth: 2,
-    borderColor: "white",
+    borderColor: "grey",
     padding: 5,
     borderRadius: 10,
     position: "absolute",
