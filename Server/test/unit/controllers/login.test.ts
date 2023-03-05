@@ -1,7 +1,7 @@
 const test = require('ava');
 import { Request, Response } from 'express';
 const sinon = require('sinon');
-import { loginUser } from '../../../routes/authentication.controller';
+import { loginUser } from '../../../routes/User/authentication.controller';
 import {v4 as uuidv4} from 'uuid';
 const bcrypt = require('bcrypt');
 import supabase from '../../../utils/supabaseSetUp';

@@ -1,4 +1,4 @@
-import { getUserByEmail } from "../utils/userFunctions";
+import { getUserByEmail } from "../../utils/userFunctions";
 import { Request, Response } from "express";
 
 export const getInfo = async (req:Request, res:Response) => {
