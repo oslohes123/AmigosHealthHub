@@ -7,6 +7,7 @@ export const addSleepFunc = async (
     database = supabase,
     table = 'Sleep Data'
 ) => {
+    console.log(sleepData);
     const { data, error }: any = await databaseQuery.insert(
         database,
         table,
