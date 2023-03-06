@@ -22,7 +22,6 @@ function getToday(){
 //.eq user id not hardcoded
  async function checkExistsToday(id:string) {
   const {data, error}:any = await databaseQuery.selectWhere(supabase, 'Mental Health','user_id', id,'created_at');
-  console.log(`data:${JSON.stringify(data)}`)
   if(error) {
     console.error(error);
     return true;
@@ -32,12 +31,9 @@ function getToday(){
   }
   else {
     const recentValue = (data[data.length - 1].created_at)
-    console.log(`recentValue: ${recentValue}`)
     return !(recentValue< getToday())
   }
 }
-//make sure user_id isn't hardcoded
-//submitMentalData() will call check exists, if true, update, if false insert
   export const insertMentalData = async(req:Request, res:Response) => {
 
     const { face, word, email } = req.body;
@@ -57,7 +53,21 @@ function getToday(){
     }
 
     if (await checkExistsToday(id)){
-      return res.status(400).json({mssg:"You have already submitted your review of your day"})
+      const {data}:any = await databaseQuery.selectWhere(supabase, 'Mental Health','user_id', id,'MH_ID');
+      const recentID = (data[data.length - 1].MH_ID)
+      const { error }: any = await databaseQuery.update(supabase, 'Mental Health', {
+        face_id: face,
+        todays_word: word
+        },
+        'MH_ID',recentID)
+
+
+        //update word,face, where column
+        if(error){
+          return res.status(400).json({mssg: error})
+        }
+        return res.status(200).json({mssg:"Success"})
+      //return res.status(400).json({mssg:"You have already submitted your review of your day"})
     }
     
    else{    

@@ -14,8 +14,8 @@ import Slider from "@react-native-community/slider";
 import React, { useState } from "react";
 import { Formik } from "formik";
 //npm install , npm install @react-native-community/slider --save
-const date = new Date();
 import { globalStyles } from "../../../styles/global";
+import { useSubmit } from "./hooks/useSubmit";
 const moodImage = [
   require("../../../assets/Worst.png"),
   require("../../../assets/Sad.png"),
@@ -25,22 +25,24 @@ const moodImage = [
 ];
 const mentalHealthSchema = Yup.object().shape({
   word: Yup.string().required("Word Of Today cannot be empty!"),
+  word: Yup.string().max(35, "Word/expression has to be shorter than 35 letters"),
 });
 
 export const rateMentalHealthForm = () => {
+  const { submit } = useSubmit();
   const [faceInputValue, setFaceValue] = useState(3);
   const [moodI, setRangeI] = useState(require("../../../assets/Neutral.png"));
 
   const handleFaceInputChange = (value) => {
     setFaceValue(value);
-    setRangeI(moodImage[value]);
+    setRangeI(moodImage[value])
   };
   return (
     <View style={globalStyles.container}>
       <Formik
-        initialValues={{ word: "", face: faceInputValue }}
+        initialValues={{ word: ""}}
         onSubmit={async (values) => {
-          // CHANGE
+          await submit(faceInputValue + 1, values.word);
         }}
         validationSchema={mentalHealthSchema}
       >
@@ -63,7 +65,7 @@ export const rateMentalHealthForm = () => {
               minimumTrackTintColor="green"
               maximumTrackTintColor="green"
               thumbTintColor="green"
-              value={3}
+              value={faceInputValue}
               step={1}
               onValueChange={(value) => handleFaceInputChange(value)}
             />
