@@ -1,9 +1,9 @@
 // Import jest-fetch-mock and instantSearch
 import fetchMock from "jest-fetch-mock";
-import brandedSearch from "../../utils/Food/searches/brandedSearch";
+import brandedSearch from "../../../utils/Food/searches/brandedSearch";
 import { bigMacBrandedTestData } from "./testdata";
-import authHeaders from "../../utils/Food/searches/headersObject";
-import { baseUrl } from "../../constants";
+import authHeaders from "../../../utils/Food/searches/headersObject";
+import { baseUrl } from "../../../constants";
 
 // Enable fetch mocking
 fetchMock.enableMocks();
