@@ -29,6 +29,7 @@ export default function App({navigation}: {navigation: any}) {
       console.log(`Input can't be empty`);
     }
     else{
+      //insert supabase insert function here
       console.log(`Text input value: ${textInputValue}`);
       console.log(`Slider value: ${faceInputValue}`);
     }
