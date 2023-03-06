@@ -1,13 +1,13 @@
 const test = require('ava');
-import app from "../../index";
+import app from "../../../index";
 const request = require('supertest'); 
 import {v4 as uuidv4} from 'uuid';
 const bcrypt = require('bcrypt');
-import supabase from "../../utils/supabaseSetUp";
-import { supabaseQueryClass } from "../../utils/databaseInterface";
-import { createHashedPassword, createToken } from "../../utils/userFunctions";
+import supabase from "../../../utils/supabaseSetUp";
+import { supabaseQueryClass } from "../../../utils/databaseInterface";
+import { createHashedPassword, createToken } from "../../../utils/userFunctions";
 const supabaseQuery = new supabaseQueryClass();
-import RouteNamesClass from "../../utils/routeNamesClass";
+import RouteNamesClass from "../../../utils/routeNamesClass";
 const routeNames = new RouteNamesClass()
 const changePasswordRoute = routeNames.fullChangePasswordURL;
 

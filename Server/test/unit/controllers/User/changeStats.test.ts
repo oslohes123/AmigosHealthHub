@@ -1,12 +1,12 @@
 const test = require('ava');
 import { Request, Response } from 'express';
 const sinon = require('sinon');
-import { changeStats } from '../../../routes/User/changeProfileDetails.controller';
+import { changeStats } from '../../../../routes/User/changeProfileDetails.controller';
 import {v4 as uuidv4} from 'uuid';
 const bcrypt = require('bcrypt');
-import supabase from '../../../utils/supabaseSetUp';
-import { supabaseQueryClass } from '../../../utils/databaseInterface';
-import { createHashedPassword, createUser } from '../../../utils/userFunctions';
+import supabase from '../../../../utils/supabaseSetUp';
+import { supabaseQueryClass } from '../../../../utils/databaseInterface';
+import { createHashedPassword, createUser } from '../../../../utils/userFunctions';
 const supabaseQuery = new supabaseQueryClass();
 
 

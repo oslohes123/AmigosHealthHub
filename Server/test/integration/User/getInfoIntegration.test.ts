@@ -1,16 +1,16 @@
-import app from "../../index";
+import app from "../../../index";
 const request = require('supertest');
 const test = require('ava');
-import { createHashedPassword, createToken } from "../../utils/userFunctions";
+import { createHashedPassword, createToken } from "../../../utils/userFunctions";
 import { Request, Response } from 'express';
 const sinon = require('sinon');
-import { getInfo } from "../../routes/User/getUserInfo.controller";
+import { getInfo } from "../../../routes/User/getUserInfo.controller";
 import {v4 as uuidv4} from 'uuid';
 const bcrypt = require('bcrypt');
-import supabase from "../../utils/supabaseSetUp";
-import { supabaseQueryClass } from "../../utils/databaseInterface"; 
+import supabase from "../../../utils/supabaseSetUp";
+import { supabaseQueryClass } from "../../../utils/databaseInterface"; 
 const supabaseQuery = new supabaseQueryClass();
-import RouteNamesClass from "../../utils/routeNamesClass";
+import RouteNamesClass from "../../../utils/routeNamesClass";
 const routeNames = new RouteNamesClass()
 const getInfoRoute = routeNames.fullGetInfoURL
 

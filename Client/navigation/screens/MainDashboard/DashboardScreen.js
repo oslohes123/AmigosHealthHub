@@ -31,7 +31,7 @@ export default function DashboardScreen({ navigation }) {
           console.log("The user wants to see info about the dashboard.");
         }}
       >
-        <Text>Welcome to your Dashboard,${user.firstName}</Text>
+        <Text>Welcome to your Dashboard,{user.firstName}</Text>
       </Text>
       <View style={styles.settings}>
         <Ionicons

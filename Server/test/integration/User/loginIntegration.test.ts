@@ -1,13 +1,13 @@
-import app from "../../index";
+import app from "../../../index";
 const request = require('supertest');
 const test = require('ava');
 import {v4 as uuidv4} from 'uuid';
 const bcrypt = require('bcrypt');
-import supabase from "../../utils/supabaseSetUp";
-import { supabaseQueryClass } from "../../utils/databaseInterface";
-import { createHashedPassword } from "../../utils/userFunctions";
+import supabase from "../../../utils/supabaseSetUp";
+import { supabaseQueryClass } from "../../../utils/databaseInterface";
+import { createHashedPassword } from "../../../utils/userFunctions";
 const supabaseQuery = new supabaseQueryClass();
-import RouteNamesClass from "../../utils/routeNamesClass";
+import RouteNamesClass from "../../../utils/routeNamesClass";
 const routeNames = new RouteNamesClass()
 /**
  * Refactor using objects, interfaces to prevent repeated code. 

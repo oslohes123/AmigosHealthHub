@@ -3,6 +3,8 @@ import { Request, Response } from 'express';
 import { createUser, getUserByEmail, verifyPassword, createHashedPassword, createToken} from '../../utils/userFunctions'
 import { isEmail, isAlpha, isStrongPassword} from '../../utils/validators';
 import { UserInterface } from '../../utils/userInterface';
+
+
 export const loginUser = async(req:Request,res:Response) => {
 
     const {email, password} = req.body;
