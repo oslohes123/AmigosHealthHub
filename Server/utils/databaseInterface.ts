@@ -50,7 +50,7 @@ interface dbInterface {
     table: string,
     firstcolumn: string,
     secondcolumn: string,
-    id: string | string[] | undefined
+    id: any
   ) => object;
 
 }
@@ -176,7 +176,7 @@ export class supabaseQueryClass implements dbInterface {
     table: string,
     firstcolumn: string,
     secondcolumn: string,
-    id: string | string[] | undefined
+    id: any
   ): Promise<object | undefined> {
     try {
       const { data, error } = await supabaseDb
@@ -190,7 +190,7 @@ export class supabaseQueryClass implements dbInterface {
       if (error) console.error(error);
       else {
         console.log({ data });
-        return data;
+        return { data };
       }
     } catch (err: unknown) {
       console.error(err);
