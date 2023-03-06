@@ -33,7 +33,7 @@ export default class RouteNamesClass {
     readonly partialGetInfoURL = '/getInfo';
     readonly fullGetInfoURL = this.userBaseURL + this.partialGetInfoURL;
 
-    // Sleep Route
-    readonly partialSleepURL = '/sleep';
-    readonly fullSleepURL = '/sleep';
+    // Sleep Routes
+    readonly partialAddSleepURL = '/sleep/add';
+    readonly fullAddSleepURL = '/sleep/add';
 }
