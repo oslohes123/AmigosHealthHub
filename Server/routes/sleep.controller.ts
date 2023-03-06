@@ -1,20 +1,21 @@
 import { Request, Response } from 'express';
 
-import { getUserByEmail } from '../utils/userFunctions';
+import { addSleepFunc } from '../utils/sleepFunctions';
 
-export const sleep = async (req: Request, res: Response) => {
-    const { date, duration } = req.body;
+export const addSleep = async (req: Request, res: Response) => {
+    const { uuid, date, duration } = req.body;
 
-    if (!email) return res.status(400).json({ mssg: 'Email must be provided' });
+    if (!uuid) return res.status(400).json({ mssg: 'UUID must be provided' });
+    const sleepData = { uuid, duration, date };
 
     // @ts-ignore
-    const { data, error }: any = await getUserByEmail(
-        email,
-        'firstName, lastName, email, age'
-    );
+    const { data, error }: any = await addSleepFunc(sleepData);
 
     if (error) return res.status(400).json({ mssg: error.message });
     else if (data.length === 0)
-        return res.status(400).json({ mssg: 'User not found!' });
-    else return res.status(200).json({ user: data[0] });
+        return res.status(400).json({ mssg: 'User (UUID) not found!' });
+    else
+        return res
+            .status(200)
+            .json({ sleep: `Sleep added ${uuid},  ${date},  ${duration}` });
 };
