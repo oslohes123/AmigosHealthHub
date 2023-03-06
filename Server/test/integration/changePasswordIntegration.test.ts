@@ -21,12 +21,12 @@ test.before(async (t: any) => {
  
     hashedPassword = await createHashedPassword("OriginalPassword123!")
     await supabaseQuery.insert(supabase, 'User',{firstName: "First", lastName:"User", 
-    email:testEmail, password: hashedPassword, age: 31});
+    email:testEmail, password: hashedPassword, age: "31"});
     
     const{data, error}:any = await supabaseQuery.selectWhere(supabase,'User'
     ,'email',testEmail,'id');
     if(error){
-        t.fail("Inserting second user failed!");
+        t.fail("Inserting first user failed!");
     }
     token = createToken(data[0].id)
   })

@@ -46,7 +46,7 @@ test('checkTokenHelper with missing authorization header results in error', asyn
     await checkTokenHelper(req as Request, res as Response, next as NextFunction);
     // await signupUser(req, res);
     t.true(next.callCount === 0);
-    t.true(res.status.calledWith(400))
+    t.true(res.status.calledWith(401))
     t.true(res.json.calledWith({mssg: "Authorization header must have format 'bearer token'."}));
   
   });
@@ -61,7 +61,7 @@ test('checkTokenHelper with missing authorization header results in error', asyn
     await checkTokenHelper(req as Request, res as Response, next as NextFunction);
     // await signupUser(req, res);
     t.true(next.callCount === 0);
-    t.true(res.status.calledWith(400))
+    t.true(res.status.calledWith(401))
     t.true(res.json.calledWith({mssg: "Authorization header must have format 'bearer token'."}));
   
   });

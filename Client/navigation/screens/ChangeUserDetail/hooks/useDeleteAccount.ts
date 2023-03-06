@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuthContext } from '../../Authentication/context/AuthContext';
 const port = process.env['PORT'];
 const ip_address = process.env['IP_ADDRESS'];
-
+import { useLogout } from '../../Authentication/hooks/useLogOut';
 
 
 
@@ -11,7 +11,7 @@ export const deleteAccountWrapper = () => {
     const [error, setError] = useState<JSON | null | boolean>(null);
     const [isLoading, setIsLoading] = useState<Boolean | null>(null);
     const { dispatch, user } = useAuthContext();
-    
+    const {logout} = useLogout();
     //Provide just the password, email is taken from the 'user' context
     
     const deleteAccount = async (password: string) => {
@@ -48,11 +48,13 @@ export const deleteAccountWrapper = () => {
                 setIsLoading(false);
                 setError(json.mssg);
                 console.log(error);
+                if(response.status === 401){logout()}
+               
             }
             if (response.ok) {
                 try {
                     setIsLoading(false);
-                    dispatch({ type: 'LOGOUT'});
+                    logout();
                 } 
                 catch (error) {
                     setError(true);

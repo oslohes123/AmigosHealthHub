@@ -3,7 +3,7 @@
 const test = require('ava');
 import { Request, Response } from 'express';
 const sinon = require('sinon');
-import { signupUser } from '../../../routes/authentication.controller';
+import { signupUser } from '../../../routes/User/authentication.controller';
 import {v4 as uuidv4} from 'uuid';
 const bcrypt = require('bcrypt');
 import supabase from '../../../utils/supabaseSetUp';
@@ -244,9 +244,17 @@ const mockResponse = () => {
     await signupUser(req as Request, res as Response);
     
     const argsPassed = res.json.getCall(0).args[0];
-   
+    const expectation  = {
+        firstName: "someFirstName", 
+        email: "someEmail",
+        token: "someToken",
+        id: "someId",
+        mssg:"someMessage"
+    }
     t.true(res.status.calledWith(200))
     t.true(res.json.calledOnceWith(argsPassed))
+    t.true(JSON.stringify(Object.keys(argsPassed))=== JSON.stringify(Object.keys(expectation)))
+    t.true(Object.keys(argsPassed).length === 5)
     t.true(argsPassed.email == randomEmail)
     t.true(argsPassed.firstName == "Jane")
     t.true(argsPassed.mssg == "Successful sign up!")

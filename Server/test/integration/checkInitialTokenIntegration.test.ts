@@ -4,7 +4,7 @@ const test = require('ava');
 import { createHashedPassword, createToken, deleteUserRow } from "../../utils/userFunctions";
 import { Request, Response } from 'express';
 const sinon = require('sinon');
-import { getInfo } from "../../routes/getUserInfo.controller";
+import { getInfo } from "../../routes/User/getUserInfo.controller";
 import {v4 as uuidv4} from 'uuid';
 const bcrypt = require('bcrypt');
 import supabase from "../../utils/supabaseSetUp";
@@ -33,7 +33,7 @@ test(`GET ${checkInitialTokenRoute} with authorization header with no spaces res
    .set("authorization", "tokenValue")
 
  
-   t.true(response.status === 400)
+   t.true(response.status === 401)
    t.true(response.headers['content-type'] === "application/json; charset=utf-8")
    t.true(JSON.stringify(response.body) === JSON.stringify({mssg: "Authorization header must have format 'bearer token'."}));
 })
@@ -45,7 +45,7 @@ test(`GET ${checkInitialTokenRoute} with authorization header with no bearer sub
    .set("authorization", " tokenValue")
 
  
-   t.true(response.status === 400)
+   t.true(response.status === 401)
    t.true(response.headers['content-type'] === "application/json; charset=utf-8")
    t.true(JSON.stringify(response.body) === JSON.stringify({mssg: "Authorization header must have format 'bearer token'."}));
 })

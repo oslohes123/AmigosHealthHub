@@ -10,7 +10,7 @@ import { useAuthContext } from "../../Authentication/context/AuthContext";
 import { useChangeProfileDetails } from "../hooks/useChangeProfileDetails";
 
 // import { getUserInfo } from '../hooks/getUserInfo';
-const getUserInfo = require("../hooks/getUserInfo");
+const getUserInfo = require("../hooks/useGetUserInfo");
 
 const ChangeUserDetailsSchema = Yup.object().shape({
   firstName: Yup.string().required("Required"),
