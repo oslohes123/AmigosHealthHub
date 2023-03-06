@@ -32,32 +32,32 @@ test('average should be able to deal with decimal numbers', t => {
 });
 
 test('getOccurrences should return 0 when the value is not found in the array', t => {
-    const arr: string[] = ['hello', 'bar', 'baz'];
-    const v:string = 'qux';
+    const arr: string[] = ['hello', 'goodbye', 'welcome'];
+    const v:string = 'adios';
     const expected: number = 0;
     const actual = getOccurrences(arr, v);
     t.is(actual, expected);
   });
   
   test('getOccurrences should return the correct count when the value is found in the array', t => {
-    const arr: string[] = ['hello', 'bar', 'baz', 'bar', 'baz'];
-    const v = 'bar';
+    const arr: string[] = ['hello', 'goodbye', 'welcome', 'goodbye', 'welcome'];
+    const v = 'goodbye';
     const expected: number = 2;
     const actual = getOccurrences(arr, v);
     t.is(actual, expected);
   });
   
-  test('getOccurrences should handle case-sensitive values', t => {
-    const arr: string[] = ['hello', 'Bar', 'baz', 'BAR', 'bAz'];
-    const v: string = 'Bar';
+  test('getOccurrences should be able to deal with case-sensitive values', t => {
+    const arr: string[] = ['hello', 'Goodbye', 'welcome', 'GOODBYE', 'wElcome'];
+    const v: string = 'Goodbye';
     const expected: number = 1;
     const actual = getOccurrences(arr, v);
     t.is(actual, expected);
   });
   
-  test('getOccurrences should handle special characters', t => {
-    const arr: string[] = ['hello', 'bar', 'baz', '@', '@', '@'];
-    const v: string = '@';
+  test('getOccurrences should be able to deal with special characters', t => {
+    const arr: string[] = ['hello', 'goodbye', 'welcome', '!', '!', '!'];
+    const v: string = '!';
     const expected: number = 3;
     const actual = getOccurrences(arr, v);
     t.is(actual, expected);
@@ -71,22 +71,22 @@ test('getOccurrences should return 0 when the value is not found in the array', 
   });
   
   test('wordFreq should return an array of strings when passed an array of strings', t => {
-    const arr: string[] = ['hello', 'bar', 'baz', 'hello', 'qux', 'bar', 'quux'];
-    const expected: string[] = ['hello', '2', 'bar', '2', 'baz', '1', 'qux', '1', 'quux', '1'];
+    const arr: string[] = ['hello', 'goodbye', 'welcome', 'hello', 'adios', 'goodbye', 'box'];
+    const expected: string[] = ['hello', '2', 'goodbye', '2', 'welcome', '1', 'adios', '1', 'box', '1'];
     const actual = wordFreq(arr);
     t.deepEqual(actual, expected);
   });
   
   test('wordFreq should handle case-sensitive values', t => {
-    const arr: string[] = ['hello', 'Bar', 'baz', 'BAR', 'bAz'];
-    const expected: string[] = ['hello', '1', 'Bar', '1', 'baz', '1', 'BAR', '1', 'bAz', '1'];
+    const arr: string[] = ['hello', 'Goodbye', 'welcome', 'GOODBYE', 'wElcome'];
+    const expected: string[] = ['hello', '1', 'Goodbye', '1', 'welcome', '1', 'GOODBYE', '1', 'wElcome', '1'];
     const actual = wordFreq(arr);
     t.deepEqual(actual, expected);
   });
   
   test('wordFreq should handle special characters', t => {
-    const arr: string[] = ['hello', 'bar', 'baz', '@', '@', '@'];
-    const expected: string[] = ['hello', '1', 'bar', '1', 'baz', '1', '@', '3'];
+    const arr: string[] = ['hello', 'goodbye', 'welcome', '?', '?', '?'];
+    const expected: string[] = ['hello', '1', 'goodbye', '1', 'welcome', '1', '?', '3'];
     const actual = wordFreq(arr);
     t.deepEqual(actual, expected);
   });
