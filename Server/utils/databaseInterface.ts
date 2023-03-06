@@ -1,6 +1,10 @@
 interface dbInterface {
   //returns column of a table
-  select: (db: any, table: string, column: any) => object;
+  select: (
+    db: any,
+    table: string,
+    column: any
+    ) => object;
 
   //returns columns (defined by toBeSelected) of rows of the table where the column has value toBeFound
   //to return all columns of the table with a specific value, toBeSelected=='*'
@@ -14,11 +18,19 @@ interface dbInterface {
 
   //inserts a single record or bulk create into a table.
 
-  insert: (db: any, table: string, data: object) => object;
+  insert: (
+    db: any,
+    table: string,
+    data: object
+    ) => object;
 
   //Delete data from a table where column value == value
 
-  deleteFrom: (db: any, table: string, column: string, value: any) => void;
+  deleteFrom: (db: any,
+    table: string,
+    column: string,
+    value: any
+    ) => void;
 
   //Update table with updatingData where a given column has some value
 
@@ -29,7 +41,21 @@ interface dbInterface {
     column: string,
     value: any
   ) => object;
+
+
+  //returns most recent data
+
+  mostrecent: (
+    db: any,
+    table: string,
+    firstcolumn: string,
+    secondcolumn: string,
+    id: string | string[] | undefined
+  ) => object;
+
 }
+
+
 
 /**
  * For more information, look at the supabase JS client library: https://supabase.com/docs/reference/javascript/installing
@@ -140,14 +166,37 @@ export class supabaseQueryClass implements dbInterface {
       console.error(err);
     }
   }
+  // try {
+  //   const { data, error } = await supabaseDb
+  //     .from(table)
+  //     .select(toBeSelected)
+  //     .eq(column, toBeFound);
+  async mostrecent( // returns array of objects 
+    supabaseDb: any,
+    table: string,
+    firstcolumn: string,
+    secondcolumn: string,
+    id: string | string[] | undefined
+  ): Promise<object | undefined> {
+    try {
+      const { data, error } = await supabaseDb
+        .from(table)
+        .select("user_id")
+        .eq("user_id", id)
+        .select(firstcolumn, secondcolumn)
+        .order(secondcolumn, { ascending: false })
+        .range(0, 6)
 
-  //   update: (
-  //     db: any,
-  //     table: string,
-  //     updatingData: object,
-  //     column: string,
-  //     value: any
-  //   ) => object;
+      if (error) console.error(error);
+      else {
+        console.log({ data });
+        return data;
+      }
+    } catch (err: unknown) {
+      console.error(err);
+    }
+  }
+
 }
 
 // module.exports = supabaseQuery;
