@@ -17,14 +17,14 @@ test('average should return 0 for an empty array', t => {
   t.is(actual, expected);
 });
 
-test('average should handle negative numbers', t => {
+test('average should be able to deal with negative numbers', t => {
   const arr: number[] = [-1, -2, -3, -4, -5];
   const expected: number = -3;
   const actual: number = average(arr);
   t.is(actual, expected);
 });
 
-test('average should handle decimal numbers', t => {
+test('average should be able to deal with decimal numbers', t => {
   const arr: number[] = [1.5, 2.5, 3.5, 4.5, 5.5];
   const expected: number = 3.5; 
   const actual: number = average(arr);
