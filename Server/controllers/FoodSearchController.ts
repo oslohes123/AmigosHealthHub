@@ -63,7 +63,8 @@ export const generalSearch = async (req: Request, res: Response) => {
         items: [],
         errorMessage: `Invalid code: ${clientCode}. Use 0 for genericSearches and 1 for specificSearches.`,
       };
+      res.status(500).json(result);
   }
 
-  res.json(result);
+  res.status(200).json(result);
 };
