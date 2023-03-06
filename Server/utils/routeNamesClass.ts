@@ -1,8 +1,7 @@
-export default class RouteNamesClass{
-
+export default class RouteNamesClass {
     // All Base Routes
-    readonly userBaseURL = '/api/user'
-    readonly changeDetailsBaseURL = this.userBaseURL + '/changeProfileDetails'
+    readonly userBaseURL = '/api/user';
+    readonly changeDetailsBaseURL = this.userBaseURL + '/changeProfileDetails';
 
     // Auth Routes
     readonly partialSignupURL = '/sign_up';
@@ -12,22 +11,29 @@ export default class RouteNamesClass{
     readonly fullLoginURL = this.userBaseURL + this.partialLoginURL;
 
     //Change Profile Routes
-     
+
     readonly partialChangeStatsURL = '/stats';
     readonly partialChangePasswordURL = '/password';
     readonly partialDeleteAccountURL = '/deleteAccount';
 
-    readonly fullChangeStatsURL = this.changeDetailsBaseURL + this.partialChangeStatsURL;
-    readonly fullChangePasswordURL = this.changeDetailsBaseURL + this.partialChangePasswordURL;
-    readonly fullDeleteAccountURL = this.changeDetailsBaseURL + this.partialDeleteAccountURL;
-    
+    readonly fullChangeStatsURL =
+        this.changeDetailsBaseURL + this.partialChangeStatsURL;
+    readonly fullChangePasswordURL =
+        this.changeDetailsBaseURL + this.partialChangePasswordURL;
+    readonly fullDeleteAccountURL =
+        this.changeDetailsBaseURL + this.partialDeleteAccountURL;
+
     // Check Initial Token Route
 
     readonly partialCheckInitialTokenURL = '/checkInitialToken';
-    readonly fullCheckInitialTokenURL = this.userBaseURL + this.partialCheckInitialTokenURL;
+    readonly fullCheckInitialTokenURL =
+        this.userBaseURL + this.partialCheckInitialTokenURL;
 
     //  Get Info Route
     readonly partialGetInfoURL = '/getInfo';
     readonly fullGetInfoURL = this.userBaseURL + this.partialGetInfoURL;
 
+    // Sleep Route
+    readonly partialSleepURL = '/sleep';
+    readonly fullSleepURL = '/sleep';
 }
