@@ -43,6 +43,10 @@ app.use(routeNames.userBaseURL, getUserInfoRouter);
 import checkInitialTokenRouter from "./routes/User/checkInitialToken.router";
 app.use(routeNames.userBaseURL, checkInitialTokenRouter);
 
+// Sleep Routes
+import sleepRouter from "./routes/Sleep/sleep.router";
+app.use(routeNames.sleepBaseURL, sleepRouter);
+
 /**---------------- Routes End------------------ */
 
 export default app;
