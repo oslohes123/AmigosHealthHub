@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Calendar } from 'react-native-calendars'
 import { date } from 'yup';
-import GreenButton from '../../components/GreenButton';
+import { AntDesign } from '@expo/vector-icons'; 
 
 export default function FoodHistory() {
 
@@ -35,12 +35,13 @@ export default function FoodHistory() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Food Consumed</Text>
+      <TouchableOpacity style={styles.icon} onPress={toggleCalendar}>
+        <AntDesign name="calendar" size={35} color="white" />
+      </TouchableOpacity>
       <View style={styles.primary}>
         {selectDay && (
           <Text style={styles.text}>{selectDay}</Text>
         )}
-        <GreenButton text='View Calender' height={70} buttonFunction={toggleCalendar}/>
       </View>
       {viewCalendar && (
         <Calendar
@@ -62,14 +63,14 @@ const styles = StyleSheet.create({
       backgroundColor: '#203038',
       flex: 1,
     },
-    header: {
-      //width: 300,
-      fontSize: 30,
-      fontWeight: 'bold',
-      marginTop: 30,
-      color: 'white',
-      alignSelf: 'center',
-      },
+    // header: {
+    //   //width: 300,
+    //   fontSize: 30,
+    //   fontWeight: 'bold',
+    //   marginTop: 30,
+    //   color: 'white',
+    //   alignSelf: 'center',
+    //   },
     primary: {
       flexDirection:'row', 
       alignItems: 'center', 
@@ -97,6 +98,10 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       borderColor: 'white',
       alignSelf: 'center'
+    },
+    icon: {
+      alignSelf: 'flex-end',
+      margin: '5%'
     }
 })
 
