@@ -14,7 +14,7 @@ web-build/
 .DS_Store
 # Created by https://www.toptal.com/developers/gitignore/api/yarn,visualstudiocode,node,reactnative
 # Edit at https://www.toptal.com/developers/gitignore?templates=yarn,visualstudiocode,node,reactnative
-
+*/coverage-ts
 ### Node ###
 # Logs
 logs
@@ -28,6 +28,7 @@ lerna-debug.log*
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
+*.vscode
 # Runtime data
 pids
 *.pid
@@ -720,3 +721,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+#Prettier
+.prettierrc
