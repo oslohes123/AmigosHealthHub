@@ -42,4 +42,6 @@ export default class RouteNamesClass{
         //Workout Routes
             readonly partialAddWorkout = '/add';
             readonly fullAddWorkoutURL = this.workoutBaseURL + this.partialAddWorkout;
+            readonly partialGetWorkout = '/get';
+            readonly fullGetWorkoutURL = this.workoutBaseURL + this.partialGetWorkout;
     }

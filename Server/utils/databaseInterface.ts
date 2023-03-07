@@ -42,16 +42,13 @@ interface dbInterface {
     value: any
   ) => object;
 
-
-  //returns most recent data
-
-//   mostrecent: (
-//     db: any,
-//     table: string,
-//     firstcolumn: string,
-//     secondcolumn: string,
-//     id: string | string[] | undefined
-//   ) => object;
+  //Select toBeSelected where a row in the given table matches 'match'
+   match: (
+    db: any, 
+    table: string,
+    toBeSelected: string,
+    toBeMatched: Object
+  ) => object; 
 
 }
 
@@ -78,6 +75,34 @@ export class supabaseQueryClass implements dbInterface {
     }
   }
 
+  async match(
+    supabaseDb: any, 
+    table: string,
+    toBeSelected: string,
+    toBeMatched: Object
+  ):Promise<object | undefined> {
+
+    try{
+      const { data, error } = await supabaseDb
+      .from(table)
+      .select(toBeSelected)
+      .match(toBeMatched);
+
+      if (error){
+        console.error(error);
+        return {error}
+      }
+      else {
+        console.log({ data });
+        return { data };
+      }
+
+    }
+    catch(err: unknown){
+      console.error(err);
+    }
+
+  }
   async selectWhere(
     supabaseDb: any,
     table: string,
@@ -166,38 +191,8 @@ export class supabaseQueryClass implements dbInterface {
       console.error(err);
     }
   }
-  // try {
-  //   const { data, error } = await supabaseDb
-  //     .from(table)
-  //     .select(toBeSelected)
-  //     .eq(column, toBeFound);
-//   async mostrecent( // returns array of objects 
-//     supabaseDb: any,
-//     table: string,
-//     firstcolumn: string,
-//     secondcolumn: string,
-//     id: string | string[] | undefined
-//   ): Promise<object | undefined> {
-//     try {
-//       const { data, error } = await supabaseDb
-//         .from(table)
-//         .select("user_id")
-//         .eq("user_id", id)
-//         .select(firstcolumn, secondcolumn)
-//         .order(secondcolumn, { ascending: false })
-//         .range(0, 6)
 
-//       if (error) console.error(error);
-//       else {
-//         console.log({ data });
-//         return data;
-//       }
-//     } catch (err: unknown) {
-//       console.error(err);
-//     }
-//   }
 
 }
 
-// module.exports = supabaseQuery;
 export {};

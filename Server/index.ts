@@ -11,10 +11,6 @@ if(port === undefined){
   console.log("Please set the PORT environment variable.");
 }
 
-
-const supabase = require('../dist/utils/supabaseSetUp.js');
-const supabaseQuery = require('../dist/utils/databaseInterface.js');
-
 /**---------------- Routes Start--------------- */
 //HomePage Route
 // app.get('/', (req, res) => {
@@ -36,7 +32,8 @@ app.use(routeNames.userBaseURL, authRouter);
   //Workout Routes
   import createWorkoutRouter from "./routes/Exercise/createWorkout.router";
   app.use(routeNames.workoutBaseURL, createWorkoutRouter)
-
+  import getWorkoutRouter from "./routes/Exercise/getWorkout.router";
+  app.use(routeNames.workoutBaseURL, getWorkoutRouter)
 //Change Profile Details Routes
 // const changeProfileDetailsRouter = require('../routes/changeProfileDetails.js');
 import changeProfileDetailsRouter from "./routes/User/changeProfileDetails.router";
