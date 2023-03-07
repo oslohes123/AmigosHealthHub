@@ -50,7 +50,8 @@ interface dbInterface {
     table: string,
     firstcolumn: string,
     secondcolumn: string,
-    id: any
+    id: any,
+    user: string
   ) => object;
 
 }
@@ -176,15 +177,17 @@ export class supabaseQueryClass implements dbInterface {
     table: string,
     firstcolumn: string,
     secondcolumn: string,
-    id: any
+    id: any,
+    user: string
   ): Promise<object | undefined> {
     try {
       const { data, error } = await supabaseDb
         .from(table)
-        .select("user_id")
-        .eq("user_id", id)
+        // .select("user_id")
+        // .eq("user_id", id)
         .select(firstcolumn, secondcolumn)
         .order(secondcolumn, { ascending: false })
+        .eq(user, id)
         .range(0, 6)
 
       if (error) console.error(error);
@@ -199,5 +202,29 @@ export class supabaseQueryClass implements dbInterface {
 
 }
 
+// async selectWhere(
+//   supabaseDb: any,
+//   table: string,
+//   column: string,
+//   toBeFound: any,
+//   toBeSelected: string
+// ): Promise<object | undefined> {
+//   try {
+//     const { data, error } = await supabaseDb
+//       .from(table)
+//       .select(toBeSelected)
+//       .eq(column, toBeFound);
+
+//     if (error){
+//       console.error(error);
+//       return {error}
+//     }
+//     else console.log({ data });
+
+//     return { data };
+//   } catch (err: unknown) {
+//     console.error(err);
+//   }
+// }
 // module.exports = supabaseQuery;
 export {};
