@@ -26,11 +26,22 @@ const supabaseQuery = require('../dist/utils/databaseInterface.js');
 import authRouter from "./routes/User/authentication.router";
 app.use(routeNames.userBaseURL, authRouter);
 
+/**
+ * Exercise and Workout Routes
+ */
+  //Exercise Routes
+  import addExerciseRouter from "./routes/Exercise/addExercise.router";
+  app.use(routeNames.exerciseBaseURL, addExerciseRouter)
+
+  //Workout Routes
+  import createWorkoutRouter from "./routes/Exercise/createWorkout.router";
+  app.use(routeNames.workoutBaseURL, createWorkoutRouter)
 
 //Change Profile Details Routes
 // const changeProfileDetailsRouter = require('../routes/changeProfileDetails.js');
 import changeProfileDetailsRouter from "./routes/User/changeProfileDetails.router";
 app.use(routeNames.changeDetailsBaseURL, changeProfileDetailsRouter);
+
 
 import foodSearchRouter from "./routes/Food/FoodSearchRouter";
 app.use('/api/food',foodSearchRouter)
