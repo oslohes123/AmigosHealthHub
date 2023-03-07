@@ -45,13 +45,13 @@ interface dbInterface {
 
   //returns most recent data
 
-  mostrecent: (
-    db: any,
-    table: string,
-    firstcolumn: string,
-    secondcolumn: string,
-    id: string | string[] | undefined
-  ) => object;
+//   mostrecent: (
+//     db: any,
+//     table: string,
+//     firstcolumn: string,
+//     secondcolumn: string,
+//     id: string | string[] | undefined
+//   ) => object;
 
 }
 
@@ -171,31 +171,31 @@ export class supabaseQueryClass implements dbInterface {
   //     .from(table)
   //     .select(toBeSelected)
   //     .eq(column, toBeFound);
-  async mostrecent( // returns array of objects 
-    supabaseDb: any,
-    table: string,
-    firstcolumn: string,
-    secondcolumn: string,
-    id: string | string[] | undefined
-  ): Promise<object | undefined> {
-    try {
-      const { data, error } = await supabaseDb
-        .from(table)
-        .select("user_id")
-        .eq("user_id", id)
-        .select(firstcolumn, secondcolumn)
-        .order(secondcolumn, { ascending: false })
-        .range(0, 6)
+//   async mostrecent( // returns array of objects 
+//     supabaseDb: any,
+//     table: string,
+//     firstcolumn: string,
+//     secondcolumn: string,
+//     id: string | string[] | undefined
+//   ): Promise<object | undefined> {
+//     try {
+//       const { data, error } = await supabaseDb
+//         .from(table)
+//         .select("user_id")
+//         .eq("user_id", id)
+//         .select(firstcolumn, secondcolumn)
+//         .order(secondcolumn, { ascending: false })
+//         .range(0, 6)
 
-      if (error) console.error(error);
-      else {
-        console.log({ data });
-        return data;
-      }
-    } catch (err: unknown) {
-      console.error(err);
-    }
-  }
+//       if (error) console.error(error);
+//       else {
+//         console.log({ data });
+//         return data;
+//       }
+//     } catch (err: unknown) {
+//       console.error(err);
+//     }
+//   }
 
 }
 
