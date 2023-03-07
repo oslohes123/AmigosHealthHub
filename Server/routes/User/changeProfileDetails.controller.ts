@@ -1,11 +1,11 @@
 require('dotenv').config()
 
 import { Request, Response } from 'express';
-import { createHashedPassword, getUserByEmail, updateUser, verifyPassword } from '../utils/userFunctions';
-import { isEmail, isStrongPassword } from '../utils/validators';
+import { createHashedPassword, getUserByEmail, updateUser, verifyPassword } from '../../utils/userFunctions';
+import { isEmail, isStrongPassword } from '../../utils/validators';
 
-import supabase from '../utils/supabaseSetUp'
-import {supabaseQueryClass} from '../utils/databaseInterface'
+import supabase from '../../utils/supabaseSetUp'
+import {supabaseQueryClass} from '../../utils/databaseInterface'
 
 const bcrypt = require('bcrypt');
 const supabaseQuery = new supabaseQueryClass();

@@ -40,7 +40,7 @@ export const useLogin = () => {
     }
     if (response.ok) {
       try {
-        //sets email and jwtToken from API to 'user' in AsyncStorage
+        //sets user properties from API to 'user' in AsyncStorage, so it can 'remember' a user
         await AsyncStorage.setItem("user", JSON.stringify(json));
         console.log(json);
 

@@ -1,13 +1,13 @@
 const test = require('ava');
-import app from "../../index";
+import app from "../../../index";
 const request = require('supertest'); 
 import {v4 as uuidv4} from 'uuid';
 const bcrypt = require('bcrypt');
-import supabase from "../../utils/supabaseSetUp";
-import { supabaseQueryClass } from "../../utils/databaseInterface";
-import { createHashedPassword, createToken } from "../../utils/userFunctions";
+import supabase from "../../../utils/supabaseSetUp";
+import { supabaseQueryClass } from "../../../utils/databaseInterface";
+import { createHashedPassword, createToken } from "../../../utils/userFunctions";
 const supabaseQuery = new supabaseQueryClass();
-import RouteNamesClass from "../../utils/routeNamesClass";
+import RouteNamesClass from "../../../utils/routeNamesClass";
 const routeNames = new RouteNamesClass()
 const changePasswordRoute = routeNames.fullChangePasswordURL;
 
@@ -21,12 +21,12 @@ test.before(async (t: any) => {
  
     hashedPassword = await createHashedPassword("OriginalPassword123!")
     await supabaseQuery.insert(supabase, 'User',{firstName: "First", lastName:"User", 
-    email:testEmail, password: hashedPassword, age: 31});
+    email:testEmail, password: hashedPassword, age: "31"});
     
     const{data, error}:any = await supabaseQuery.selectWhere(supabase,'User'
     ,'email',testEmail,'id');
     if(error){
-        t.fail("Inserting second user failed!");
+        t.fail("Inserting first user failed!");
     }
     token = createToken(data[0].id)
   })

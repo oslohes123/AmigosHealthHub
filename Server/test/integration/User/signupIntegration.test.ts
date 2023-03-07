@@ -1,13 +1,13 @@
-import app from "../../index";
+import app from "../../../index";
 const request = require('supertest');
 const test = require('ava');
 import {v4 as uuidv4} from 'uuid';
 const bcrypt = require('bcrypt');
-import supabase from "../../utils/supabaseSetUp";
-import { supabaseQueryClass } from "../../utils/databaseInterface";
-import { createHashedPassword } from "../../utils/userFunctions";
+import supabase from "../../../utils/supabaseSetUp";
+import { supabaseQueryClass } from "../../../utils/databaseInterface";
+import { createHashedPassword } from "../../../utils/userFunctions";
 const supabaseQuery = new supabaseQueryClass();
-import RouteNamesClass from "../../utils/routeNamesClass";
+import RouteNamesClass from "../../../utils/routeNamesClass";
 const routeNames = new RouteNamesClass()
 const signupRoute = routeNames.fullSignupURL
 
@@ -30,27 +30,6 @@ test.before(async (t: any) => {
 test.after(async(t: any) => {
   await supabaseQuery.deleteFrom(supabase, 'User', 'email', alreadyExistsEmail);
 })
-
-// interface userFields {
-//   firstName:string,
-//   lastName: string,
-//   email: string,
-//   password: string,
-//   age: number
-// }
-
-// let testUser: userFields = {
-//       firstName: "John",
-//       lastName: "Doe",
-//       email:"johndoe@gmail.com",
-//       password: "CorrectPassword123!",
-//       age: 0,
-// };
-// function testUserObj(unwantedField){
-//   const {testUser, ...newObj} = testUser;
-//   return newObj;
-// }
-
 
 test("POST /api/user/sign_up with no fields", async (t: any) => {
     const response = await request(app)
@@ -216,9 +195,19 @@ test("POST /api/user/sign_up with no fields", async (t: any) => {
       email: randomEmail,
       age:30
    });
+
+   const expectation  = {
+    firstName: "someFirstName", 
+    email: "someEmail",
+    token: "someToken",
+    id: "someId",
+    mssg:"someMessage"
+  }
  
    t.true(response.status === 200)
    t.true(response.headers['content-type'] === "application/json; charset=utf-8")
+   t.true(JSON.stringify(Object.keys(response.body))=== JSON.stringify(Object.keys(expectation)))
+   t.true(Object.keys(response.body).length === 5)
    t.true(response.body['email'] == randomEmail)
    t.true(response.body['firstName'] === "Jane" )
    t.true(response.body['mssg'] === "Successful sign up!")

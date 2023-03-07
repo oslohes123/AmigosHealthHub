@@ -1,30 +1,31 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, Dimensions } from 'react-native'
 import React from 'react'
-import Ionicons from 'react-native-vector-icons/Ionicons';
 
-export default function RedButton({iconName = 'chevron-forward-outline', fontSize = 16, height = 50, width = 50, text = 'Cancel', buttonFunction}) {
+const screenWidth = Dimensions.get("window").width;
+const screenHeight = Dimensions.get("window").height
+
+
+export default function RedButton({fontSize = 16, height = screenHeight * 0.2, width = screenWidth * 0.4, text = 'Submit', buttonFunction}) {
     const styles = {
         textData: {
-            fontSize: fontSize,
-            color: 'white',
-            fontWeight: 'bold',
-          },
-          textContainer: {
-            backgroundColor: '#ff565e',            
-            borderRadius: 15,
-            padding: 20,
-            marginVertical: 10,
-            width: `${width}%`,
-            height: `${height}%`,
-            alignSelf: 'center',
-            marginHorizontal: 10
-          },
+          fontSize: fontSize,
+          color: '#fff',
+          fontWeight: 'bold',
+          alignSelf: 'center'
+        },
+        textContainer: {
+          backgroundColor: '#ff565e',
+          borderRadius: 15,
+          marginHorizontal: 10,
+          width: width,
+          height: height,
+          alignSelf: 'center',
+        }
     }
   return (
-    <TouchableOpacity onPress={buttonFunction} style={styles.textContainer}>
-        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Text style={styles.textData}>{text}</Text>
-            <Ionicons name={`${iconName}`} size={fontSize} color={'white'} />
+    <TouchableOpacity onPress={buttonFunction} style={[styles.textContainer, {width: width}]}>
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={styles.textData}>{text}</Text>
         </View>
     </TouchableOpacity>
   )
