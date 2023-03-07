@@ -4,6 +4,7 @@ import specificFoodNutritionInterface from '../interfaces/specificFoodNutritionI
 import genericSearchInterface from '../interfaces/genericSearchInterface';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { number } from 'prop-types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const portENV = process.env["PORT"];
 const ip_addressENV = process.env["IP_ADDRESS"];
 // For testing purposes
@@ -17,7 +18,13 @@ export async function genericSearch(value:string):Promise<genericSearchInterface
 
     let response:AxiosResponse;
     try {
-        response = await axios.get(url);
+        const {token } = JSON.parse(
+            (await AsyncStorage.getItem('user')) as string
+        );
+        response = await axios.get(url,{
+            headers: {
+                authorization:token
+        }});
     } catch (error: any | AxiosError) {
         if(axios.isAxiosError(error)){
             console.log(error.response);
@@ -33,7 +40,13 @@ export async function specificSearch(value:string):Promise<specificFoodNutrition
     let url:string = `http://${ip_address}:${port}/api/food/${clientSearchMethods.specificSearch}.${value}`;
     let response:AxiosResponse;
     try {
-        response = await axios.get(url);
+        const {token } = JSON.parse(
+            (await AsyncStorage.getItem('user')) as string
+        );
+        response = await axios.get(url,{
+            headers: {
+                authorization:token
+        }});
     }
     catch (error: any | AxiosError) {
         if(axios.isAxiosError(error)){
