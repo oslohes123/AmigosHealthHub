@@ -11,7 +11,7 @@ export const searchForExercise = async(req: Request, res: Response) => {
     console.log(`wordtosearch: ${wordtosearch}`);
     console.log(`req.headers: ${JSON.stringify(req.headers)}`)
     if(!wordtosearch){
-        return res.status(400).json({mssg:"wordtosearch is empty", searchedWords: {}})
+        return res.status(200).json({mssg:"wordtosearch is empty", searchedWords: {}})
     }
     try{
         const nameFitnessURL = 'https://api.api-ninjas.com/v1/exercises?name=' + wordtosearch
@@ -45,6 +45,11 @@ export const searchForExercise = async(req: Request, res: Response) => {
 export const addExerciseToExercises = async(req: Request, res: Response) =>{
 
     const {type,name,muscle, difficulty, instructions, equipment } = req.body
+
+    if(!type||!name||!muscle||! difficulty||!instructions||! equipment){
+        return res.status(400).json({mssg:"One of type,name,muscle, difficulty, instructions, equipment is missing!"})
+    }
+
 
     //if that exercise name doesn't exist, then attempt to add it
     const {data, error}: any= await databaseQuery.selectWhere(supabase, 'Exercises', 'name', name, '*'); 
