@@ -60,13 +60,11 @@ function getToday(){
         todays_word: word
         },
         'MH_ID',recentID)
-
-
         //update word,face, where column
         if(error){
           return res.status(400).json({mssg: error})
         }
-        return res.status(200).json({mssg:"Success"})
+        return res.status(200).json({mssg:"Submission for today has been updated"})
       //return res.status(400).json({mssg:"You have already submitted your review of your day"})
     }
     
@@ -79,7 +77,7 @@ function getToday(){
         if(error){
           return res.status(400).json({mssg: error})
         }
-        return res.status(200).json({mssg:"Success"})
+        return res.status(200).json({mssg:"Successful Submission"})
     }
   }
 

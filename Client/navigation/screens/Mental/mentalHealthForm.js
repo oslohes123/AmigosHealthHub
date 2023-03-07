@@ -15,7 +15,7 @@ import React, { useState } from "react";
 import { Formik } from "formik";
 //npm install , npm install @react-native-community/slider --save
 import { globalStyles } from "../../../styles/global";
-import { useSubmit } from "./hooks/useSubmit";
+import { useSubmit } from "./hooks/useAddWordFace";
 const moodImage = [
   require("../../../assets/Worst.png"),
   require("../../../assets/Sad.png"),
@@ -29,7 +29,7 @@ const mentalHealthSchema = Yup.object().shape({
 });
 
 export const rateMentalHealthForm = () => {
-  const { submit } = useSubmit();
+  const { submit, isLoading, error } = useSubmit();
   const [faceInputValue, setFaceValue] = useState(3);
   const [moodI, setRangeI] = useState(require("../../../assets/Neutral.png"));
 
@@ -72,8 +72,9 @@ export const rateMentalHealthForm = () => {
             <Button
               title="Submit!"
               onPress={props.handleSubmit}
-              // disabled={isLoading}
+               disabled={isLoading}
             />
+            {error && <Text>{error}</Text>}
           </View>
         )}
       </Formik>
