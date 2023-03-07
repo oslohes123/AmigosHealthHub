@@ -41,8 +41,6 @@ export default function FoodDetails({ route, navigation }) {
             });
     }
 
-    const save = () => { };
-
     const isNum = (val) => {
         // Tests whether the number is a number
         return /^\d+$/.test(val);
