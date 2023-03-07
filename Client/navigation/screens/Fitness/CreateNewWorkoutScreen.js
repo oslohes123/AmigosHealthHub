@@ -6,6 +6,10 @@ import themeContext from '../../theme/themeContext';
 import SearchBar from '../../components/SearchBar';
 import RedButton from '../../components/RedButton';
 import GreenButton from '../../components/GreenButton';
+import { formikTrackExerciseForm } from './forms/TrackExerciseForm';
+
+import { Formik } from 'formik';
+
 
 export default function CreateNewWorkoutScreen({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false)
@@ -23,8 +27,8 @@ export default function CreateNewWorkoutScreen({ navigation }) {
                             <Text style={[modalStyle.modalText, {color: theme.color}]}>Exercise Information</Text>
                             
                             <View style={{justifyContent: 'space-evenly', borderWidth: 2, borderRadius: 26, padding: 10,  width: screenWidth * 0.7, borderColor: theme.color}}>
-                                <Text style={{textAlign: 'center', fontWeight: 'bold', color: theme.color, fontSize: 20, paddingVertical: 5}}>Information</Text>
-                                <Text style={{textAlign: 'justify', color: theme.color, fontSize: 16}}>This text is an example of the text that will be rendered within this text box. 
+                                <Text style={{textAlign: 'center', fontWeight: 'bold', color: theme.color, fontSize: 16, paddingVertical: 5}}>Information</Text>
+                                <Text style={{textAlign: 'justify', color: theme.color, fontSize: 12}}>This text is an example of the text that will be rendered within this text box. 
                                     It will contain information on the workout including how to perform said workout.</Text>
                             </View>
 
@@ -42,59 +46,11 @@ export default function CreateNewWorkoutScreen({ navigation }) {
                                     <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}}>THIS, THAT, OTHER, THIS IS ALSO IN THE EQUIPTMENT LIST</Text>
                                 </View>
                             </View>
-
-                            <View style={{width: screenWidth * 0.8, flexDirection: 'row', justifyContent: 'space-evenly', alignContent: 'center'}}>
-                                
-                                <View style={{width: screenWidth * 0.4, flexDirection: 'column', justifyContent: 'space-evenly', alignContent: 'center'}}>
-                                   
-                                    <View style={{width: screenWidth * 0.4, flexDirection: 'row', justifyContent: 'space-evenly', alignContent: 'center'}}>
-                                        <TextInput 
-                                            style={[modalStyle.textInput, {borderColor: theme.color}]} 
-                                            placeholder='Sets' 
-                                            placeholderTextColor={theme.color} 
-                                            keyboardType={'numeric'} 
-                                            textAlign={'center'}
-                                        />
-                                        <TextInput 
-                                            style={[modalStyle.textInput, {borderColor: theme.color}]} 
-                                            placeholder='Reps' 
-                                            placeholderTextColor={theme.color} 
-                                            keyboardType={'numeric'} 
-                                            textAlign={'center'}
-                                        />
-                                    </View>
-
-                                    <TextInput 
-                                        style={[modalStyle.textInput, {borderColor: theme.color, alignSelf: 'center'}]} 
-                                        placeholder='Calories' 
-                                        placeholderTextColor={theme.color} 
-                                        keyboardType={'numeric'} 
-                                        textAlign={'center'}
-                                    />
-
-                                </View>
-
-                                <View style={{width: screenWidth * 0.3, flexDirection: 'column', justifyContent: 'center', alignContent: 'center'}}>
-                                    <Text style={{color: theme.color, fontSize: 16, alignSelf: 'center', padding: 5, fontWeight: 'bold'}}>Warm Up Set</Text>
-                                    <Switch
-                                        style={{alignSelf: 'center'}}
-                                        value={warmUpSet}
-                                        onValueChange={(value) => {setWarmUpSet(value)}}
-                                        />
-                                </View>
-                            </View>
-
-                            <View style={{width: screenWidth * 0.4, flexDirection: 'row', justifyContent: 'space-evenly'}}>
-                                {/* <Button title='Dismiss' onPress={() => {setModalVisible(!modalVisible)}}/>
-                                <Button title='Add' onPress={() => {setModalVisible(!modalVisible)}}/> */}
+                                {formikTrackExerciseForm()}
                                 {RedButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 12, text: "Dismiss", buttonFunction: () => {
                                     setModalVisible(!modalVisible)
                                     console.log("Dismiss Info")}})}
-                                {GreenButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 12, text: "Add", buttonFunction: () => {
-                                    setModalVisible(!modalVisible)
-                                    console.log("Add To Workout")}})}
                             </View>
-                        </View>
                     </SafeAreaView>
                 </TouchableWithoutFeedback>
             </Modal>

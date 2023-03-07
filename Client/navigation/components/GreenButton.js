@@ -5,7 +5,7 @@ const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height
 
 
-export default function GreenButton({fontSize = 16, height = screenHeight * 0.2, width = screenWidth * 0.4, text = 'Submit', buttonFunction}) {
+export default function GreenButton({fontSize = 16, height = screenHeight * 0.2, width = screenWidth * 0.4, text = 'Submit', buttonDisabled = false, buttonFunction}) {
     const styles = {
         textData: {
           fontSize: fontSize,
@@ -13,8 +13,8 @@ export default function GreenButton({fontSize = 16, height = screenHeight * 0.2,
           fontWeight: 'bold',
           alignSelf: 'center'
         },
-        textContainer: {
-          backgroundColor: '#3eda9b',
+        textContainer: {    
+          backgroundColor: !buttonDisabled ? '#3eda9b' : '#697a76',       
           borderRadius: 15,
           marginHorizontal: 10,
           width: width,
@@ -23,11 +23,11 @@ export default function GreenButton({fontSize = 16, height = screenHeight * 0.2,
         }
     }
   return (
-    <TouchableOpacity onPress={buttonFunction} style={[styles.textContainer, {width: width}]}>
+    <TouchableOpacity onPress={buttonFunction} style={styles.textContainer} disabled={buttonDisabled}>
 
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={styles.textData}>{text}</Text>
-        </View>
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text style={styles.textData}>{text}</Text>
+      </View>       
 
     </TouchableOpacity>
   )

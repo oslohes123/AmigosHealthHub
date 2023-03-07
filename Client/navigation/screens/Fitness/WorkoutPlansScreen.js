@@ -5,6 +5,7 @@ import { useState, useContext } from 'react';
 import themeContext from '../../theme/themeContext';
 import SearchBar from '../../components/SearchBar';
 import GreenButton from '../../components/GreenButton';
+import { formikTrackExerciseForm } from './forms/TrackExerciseForm';
 
 export default function WorkoutPlansScreen({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false)
@@ -32,7 +33,7 @@ export default function WorkoutPlansScreen({ navigation }) {
                                             <Text style={{color: theme.color, fontSize: 10}}>Equiptment</Text>
                                             <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}}>THIS, THAT, OTHER, THIS IS ALSO IN THE EQUIPTMENT LIST</Text>
                                         </View>
-                                        <View style={{flexDirection: 'row', justifyContent: 'space-evenly', padding: 5}}>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between', padding: 5}}>
                                             <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}}>Sets 0</Text>
                                             <TextInput 
                                                 style={[modalStyle.textInput, {borderColor: theme.color}]} 
@@ -42,8 +43,18 @@ export default function WorkoutPlansScreen({ navigation }) {
                                                 textAlign={'center'}
                                                 />
                                         </View>
-                                        <View style={{flexDirection: 'row', justifyContent: 'space-evenly', padding: 5}}>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between', padding: 5}}>
                                             <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}}>Reps 0</Text>
+                                            <TextInput 
+                                                style={[modalStyle.textInput, {borderColor: theme.color}]} 
+                                                placeholder='Reps Completed' 
+                                                placeholderTextColor={theme.color} 
+                                                keyboardType={'numeric'} 
+                                                textAlign={'center'}
+                                            />
+                                        </View>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between', padding: 5}}>
+                                            <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}}>Calories 0</Text>
                                             <TextInput 
                                                 style={[modalStyle.textInput, {borderColor: theme.color}]} 
                                                 placeholder='Reps Completed' 
@@ -66,7 +77,7 @@ export default function WorkoutPlansScreen({ navigation }) {
                                             <Text style={{color: theme.color, fontSize: 10}}>Equiptment</Text>
                                             <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}}>THIS, THAT, OTHER, THIS IS ALSO IN THE EQUIPTMENT LIST</Text>
                                         </View>
-                                        <View style={{flexDirection: 'row', justifyContent: 'space-evenly', padding: 5}}>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between', padding: 5}}>
                                             <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}}>Sets 0</Text>
                                             <TextInput 
                                                 style={[modalStyle.textInput, {borderColor: theme.color}]} 
@@ -76,8 +87,18 @@ export default function WorkoutPlansScreen({ navigation }) {
                                                 textAlign={'center'}
                                                 />
                                         </View>
-                                        <View style={{flexDirection: 'row', justifyContent: 'space-evenly', padding: 5}}>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between', padding: 5}}>
                                             <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}}>Reps 0</Text>
+                                            <TextInput 
+                                                style={[modalStyle.textInput, {borderColor: theme.color}]} 
+                                                placeholder='Reps Completed' 
+                                                placeholderTextColor={theme.color} 
+                                                keyboardType={'numeric'} 
+                                                textAlign={'center'}
+                                            />
+                                        </View>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between', padding: 5}}>
+                                            <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}}>Calories 0</Text>
                                             <TextInput 
                                                 style={[modalStyle.textInput, {borderColor: theme.color}]} 
                                                 placeholder='Reps Completed' 
@@ -100,7 +121,7 @@ export default function WorkoutPlansScreen({ navigation }) {
                                             <Text style={{color: theme.color, fontSize: 10}}>Equiptment</Text>
                                             <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}}>THIS, THAT, OTHER, THIS IS ALSO IN THE EQUIPTMENT LIST</Text>
                                         </View>
-                                        <View style={{flexDirection: 'row', justifyContent: 'space-evenly', padding: 5}}>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between', padding: 5}}>
                                             <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}}>Sets 0</Text>
                                             <TextInput 
                                                 style={[modalStyle.textInput, {borderColor: theme.color}]} 
@@ -110,11 +131,21 @@ export default function WorkoutPlansScreen({ navigation }) {
                                                 textAlign={'center'}
                                                 />
                                         </View>
-                                        <View style={{flexDirection: 'row', justifyContent: 'space-evenly', padding: 5}}>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between', padding: 5}}>
                                             <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}}>Reps 0</Text>
                                             <TextInput 
                                                 style={[modalStyle.textInput, {borderColor: theme.color}]} 
                                                 placeholder='Reps Completed' 
+                                                placeholderTextColor={theme.color} 
+                                                keyboardType={'numeric'} 
+                                                textAlign={'center'}
+                                            />
+                                        </View>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between', padding: 5}}>
+                                            <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}}>Calories 0</Text>
+                                            <TextInput 
+                                                style={[modalStyle.textInput, {borderColor: theme.color}]} 
+                                                placeholder='Calories Burnt' 
                                                 placeholderTextColor={theme.color} 
                                                 keyboardType={'numeric'} 
                                                 textAlign={'center'}
@@ -249,7 +280,7 @@ const styles = {
     },
     container: {
         alignItems: 'center',
-        height: screenHeight
+        flex: 1
     },
 }
 
