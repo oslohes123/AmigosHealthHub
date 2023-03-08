@@ -3,8 +3,47 @@ import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Calendar } from 'react-native-calendars'
 import { date } from 'yup';
 import { AntDesign } from '@expo/vector-icons'; 
+import { PieChart } from "react-native-chart-kit";
 
 export default function FoodHistory() {
+
+  const Piedata = [
+    {
+      name: "Protein",
+      amount: 60,
+      color: "orange",
+      legendFontColor: "black",
+      legendFontSize: 18
+    },
+    {
+      name: "Carbs",
+      amount: 120,
+      color: "green",
+      legendFontColor: "black",
+      legendFontSize: 18
+    },
+    {
+      name: "Fat",
+      amount: 25,
+      color: "yellow",
+      legendFontColor: "black",
+      legendFontSize: 18
+    },
+    {
+      name: "Vitamins",
+      amount: 55,
+      color: "blue",
+      legendFontColor: "black",
+      legendFontSize: 18
+    },
+    {
+      name: "Fibre",
+      amount: 34,
+      color: "red",
+      legendFontColor: "black",
+      legendFontSize: 18
+    }
+  ];
 
   const[viewCalendar, setViewCalendar] = useState(false);
   const[selectDay, setSelectDay] = useState(null);
@@ -35,14 +74,32 @@ export default function FoodHistory() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.primary}>
+        {!selectDay && (
+          <Text style={styles.text}>Select a day from the Calendar to View Food History</Text>
+        )}
+        {selectDay && (
+          <Text style={styles.text}>{selectDay}-: 2500cal consumed</Text>
+        )}
       <TouchableOpacity style={styles.icon} onPress={toggleCalendar}>
         <AntDesign name="calendar" size={35} color="white" />
       </TouchableOpacity>
-      <View style={styles.primary}>
-        {selectDay && (
-          <Text style={styles.text}>{selectDay}</Text>
-        )}
       </View>
+      {selectDay && (
+      <TouchableOpacity style={styles.pieWidget}>
+        <PieChart
+          data={Piedata}
+          width={340}
+          height={210}
+          paddingLeft='10'
+          chartConfig={{
+            color: () => "black",
+          }}
+          accessor="amount"
+          backgroundColor="transparent"
+          />
+        </TouchableOpacity>
+      )}
       {viewCalendar && (
         <Calendar
         style={{width: '90%', alignSelf: 'center'}}
@@ -75,7 +132,7 @@ const styles = StyleSheet.create({
       flexDirection:'row', 
       alignItems: 'center', 
       justifyContent: 'space-between',
-      marginHorizontal: '10%',
+      marginHorizontal: '15%',
       marginVertical: '5%',
     },
     text: {
@@ -97,11 +154,18 @@ const styles = StyleSheet.create({
       borderRadius: 15,
       borderWidth: 1,
       borderColor: 'white',
-      alignSelf: 'center'
+      alignSelf: 'center',
+      marginVertical: '5%'
     },
     icon: {
-      alignSelf: 'flex-end',
-      margin: '5%'
-    }
+      //alignSelf: 'flex-end',
+      //margin: '5%'
+    },
+    pieWidget: {
+      backgroundColor: '#3eda9b',
+      borderRadius: 25,
+      alignSelf: 'center',
+      padding: 5
+    },
 })
 
