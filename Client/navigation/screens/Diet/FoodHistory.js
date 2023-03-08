@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { Calendar } from 'react-native-calendars'
 import { date } from 'yup';
 import { AntDesign } from '@expo/vector-icons'; 
@@ -7,6 +7,124 @@ import { PieChart } from "react-native-chart-kit";
 
 export default function FoodHistory({navigation}) {
 
+  const foodData ={
+    '2023-03-08': [
+      {
+        name: "Apple",
+        calories: "20cal",
+        Carbs: "5g",
+        Protein: "4g"
+      },
+      {
+        name: "Orange",
+        calories: "15cal",
+        Carbs: "7g",
+        Protein: "5g"
+      },
+      {
+        name: "Banana",
+        calories: "17cal",
+        Carbs: "8g",
+        Protein: "2g"
+      },
+      {
+        name: "Mango",
+        calories: "37cal",
+        Carbs: "7g",
+        Protein: "9g"
+      },
+      {
+        name: "Grapes",
+        calories: "20cal",
+        Carbs: "5g",
+        Protein: "4g"
+      },
+      {
+        name: "Bread",
+        calories: "20cal",
+        Carbs: "5g",
+        Protein: "4g"
+      },
+    ],
+    '2023-03-07': [
+      {
+        name: "Bagel",
+        calories: "20cal",
+        Carbs: "5g",
+        Protein: "4g"
+      },
+      {
+        name: "Chicken",
+        calories: "15cal",
+        Carbs: "7g",
+        Protein: "5g"
+      },
+      {
+        name: "Banana",
+        calories: "17cal",
+        Carbs: "8g",
+        Protein: "2g"
+      },
+      {
+        name: "Mango",
+        calories: "37cal",
+        Carbs: "7g",
+        Protein: "9g"
+      },
+      {
+        name: "Strawberry",
+        calories: "20cal",
+        Carbs: "5g",
+        Protein: "4g"
+      },
+      {
+        name: "Carrot",
+        calories: "20cal",
+        Carbs: "5g",
+        Protein: "4g"
+      },
+    ],
+    '2023-03-06': [
+      {
+        name: "Milk Shake",
+        calories: "20cal",
+        Carbs: "5g",
+        Protein: "4g"
+      },
+      {
+        name: "Tortillas",
+        calories: "15cal",
+        Carbs: "7g",
+        Protein: "5g"
+      },
+      {
+        name: "Pasta",
+        calories: "17cal",
+        Carbs: "8g",
+        Protein: "2g"
+      },
+      {
+        name: "Sausage",
+        calories: "37cal",
+        Carbs: "7g",
+        Protein: "9g"
+      },
+      {
+        name: "Strawberry",
+        calories: "20cal",
+        Carbs: "5g",
+        Protein: "4g"
+      },
+      {
+        name: "Carrot",
+        calories: "20cal",
+        Carbs: "5g",
+        Protein: "4g"
+      },
+    ],
+
+  }
+  
   const Piedata = [
     {
       name: "Protein",
@@ -60,13 +178,33 @@ export default function FoodHistory({navigation}) {
     setFood(getFood(day.dateString));
   }
 
+  // const getFood = (dateString) => {
+  //   if (dateString === '2023-03-02') {
+  //     return 'Apple: 15cal';
+  //   } else if (dateString === '2023-03-03') {
+  //     return 'Banana: 20cal';
+  //   } else if (dateString === '2023-03-04') {
+  //     return 'Orange: 35cal';
+  //   } else {
+  //     return 'No food item consumed on this day';
+  //   }
+  // };
+
+  // const getFood = (dateString) => {
+    // const food = foodData.filter((item) => item.date === dateString);
+    // if (food.length > 0) {
+    //   return food.map((item) => `${item.name}: ${item.calories} cal, ${item.Carbs} carbs, ${item.Protein} protein`).join('\n');
+    // } else {
+    //   return 'No food item consumed on this day';
+    // }
+  // };
+
   const getFood = (dateString) => {
-    if (dateString === '2023-03-02') {
-      return 'Apple: 30cal';
-    } else if (dateString === '2023-03-03') {
-      return 'Banana: 20cal';
-    } else if (dateString === '2023-03-04') {
-      return 'Orange: 35cal';
+    const food = foodData[dateString];
+    if (food) {
+      return food
+        .map((item) => `Name: ${item.name} \n Calories: ${item.calories} \n Carbs: ${item.Carbs} \n Protein: ${item.Protein} \n`)
+        .join('\n');
     } else {
       return 'No food item consumed on this day';
     }
@@ -78,6 +216,7 @@ export default function FoodHistory({navigation}) {
 
   return (
     <View style={styles.container}>
+      <ScrollView style={styles.scroll}>
       <View style={styles.primary}>
         {!selectDay && (
           <Text style={styles.text}>Select a day from the Calendar to View Food History</Text>
@@ -115,6 +254,7 @@ export default function FoodHistory({navigation}) {
         {!viewCalendar && food !== '' && (
           <Text style={styles.foodText}>{food}</Text>
         )}
+    </ScrollView>    
     </View>
   )
 }
@@ -164,12 +304,25 @@ const styles = StyleSheet.create({
     icon: {
       //alignSelf: 'flex-end',
       //margin: '5%'
+      marginLeft: '4%'
     },
     pieWidget: {
       backgroundColor: '#3eda9b',
       borderRadius: 25,
       alignSelf: 'center',
       padding: 5
+    },
+    scroll: {
+      //marginTop: 10,
+      height: 400,
+      //position: 'absolute',
+      //marginLeft: 40,
+      //marginLeft: '50%',
+      //marginTop: -120,
+      //alignSelf: 'center',
+      // textAlign: 'flex-start',
+      //flex: 1,
+      //width: '50%'
     },
 })
 
