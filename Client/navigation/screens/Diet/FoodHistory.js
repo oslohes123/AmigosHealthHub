@@ -5,7 +5,7 @@ import { date } from 'yup';
 import { AntDesign } from '@expo/vector-icons'; 
 import { PieChart } from "react-native-chart-kit";
 
-export default function FoodHistory() {
+export default function FoodHistory({navigation}) {
 
   const Piedata = [
     {
@@ -62,15 +62,19 @@ export default function FoodHistory() {
 
   const getFood = (dateString) => {
     if (dateString === '2023-03-02') {
-      return 'Apple';
+      return 'Apple: 30cal';
     } else if (dateString === '2023-03-03') {
-      return 'Banana';
+      return 'Banana: 20cal';
     } else if (dateString === '2023-03-04') {
-      return 'Orange';
+      return 'Orange: 35cal';
     } else {
       return 'No food item consumed on this day';
     }
   };
+
+  const pressHandler = () => {
+    navigation.navigate('Nutrients');
+  }
 
   return (
     <View style={styles.container}>
@@ -85,8 +89,8 @@ export default function FoodHistory() {
         <AntDesign name="calendar" size={35} color="white" />
       </TouchableOpacity>
       </View>
-      {selectDay && (
-      <TouchableOpacity style={styles.pieWidget}>
+      {selectDay && !viewCalendar &&(
+      <TouchableOpacity style={styles.pieWidget} onPress={pressHandler}>
         <PieChart
           data={Piedata}
           width={340}
