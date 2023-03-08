@@ -1,5 +1,5 @@
-import BrandedSearchInterface, { BrandFood } from "../api_interfaces/brandedSearchInterface";
-import specificFoodNutritionInterface from "../interfaces/specificFoodNutritionInterface";
+import BrandedSearchInterface from "../../interfaces/Food/api_interfaces/brandedSearchInterface";
+import specificFoodNutritionInterface from "../../interfaces/Food/specificFoodNutritionInterface";
 
 export default function transformBrandedSearchInterface(data: BrandedSearchInterface): specificFoodNutritionInterface {
   const food = data.foods[0];

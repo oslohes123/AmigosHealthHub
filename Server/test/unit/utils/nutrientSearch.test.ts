@@ -1,8 +1,8 @@
 import fetchMock from "jest-fetch-mock";
 import { URLSearchParams } from "url";
-import { baseUrl } from "../../constants";
-import authHeaders from "../../searches/headersObject";
-import nutrientSearch from "../../searches/nutrientSearch";
+import { baseUrl } from "../../../constants";
+import authHeaders from "../../../utils/Food/searches/headersObject";
+import nutrientSearch from "../../../utils/Food/searches/nutrientSearch";
 import { steakNutritionTestData } from "./testdata";
 
 // Enable fetch mocking

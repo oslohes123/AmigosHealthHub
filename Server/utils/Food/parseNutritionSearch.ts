@@ -1,5 +1,5 @@
-import NutrientSearchInterface from '../api_interfaces/nutrientSearchInterface';
-import specificFoodNutritionInterface from '../interfaces/specificFoodNutritionInterface';
+import NutrientSearchInterface from '../../interfaces/Food/api_interfaces/nutrientSearchInterface';
+import specificFoodNutritionInterface from '../../interfaces/Food/specificFoodNutritionInterface';
 
 export default function transformNutrientSearchInterface(data: NutrientSearchInterface): specificFoodNutritionInterface {
     const food = data.foods[0];

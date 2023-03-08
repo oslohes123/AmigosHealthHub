@@ -1,6 +1,5 @@
-import BrandedSearchInterface from '../api_interfaces/brandedSearchInterface';
-import InstantSearchInterface, {Common, Branded } from '../api_interfaces/instantFoodSearchInterface';
-import genericSearchInterface, { Item } from '../interfaces/genericSearchInterface';
+import InstantSearchInterface, {Common, Branded } from '../../interfaces/Food/api_interfaces/instantFoodSearchInterface';
+import genericSearchInterface, { Item } from '../../interfaces/Food/genericSearchInterface';
 
 function transformCommon({ food_name, serving_unit, serving_qty }: Common): Item {
   return {

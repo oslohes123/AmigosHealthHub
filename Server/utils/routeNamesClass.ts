@@ -30,4 +30,13 @@ export default class RouteNamesClass{
     readonly partialGetInfoURL = '/getInfo';
     readonly fullGetInfoURL = this.userBaseURL + this.partialGetInfoURL;
 
+    // Food Search Routes
+    readonly foodBaseURL = '/api/food'
+    readonly partialFoodSearchURL = '/:code.:value'
+    readonly fullFoodSearchURL = this.foodBaseURL + this.partialFoodSearchURL
+
+    // Food Update Routes
+    readonly partialFoodUpdateURL = '/updateTrackedFood'
+    readonly fullFoodUpdateURL = this.foodBaseURL + this.partialFoodUpdateURL
+    
 }
