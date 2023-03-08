@@ -3,6 +3,9 @@ import supabase from "../../utils/supabaseSetUp";
 import { supabaseQueryClass } from "../../utils/databaseInterface";
 const databaseQuery = new supabaseQueryClass();
 
+/**
+ *Return a user's workout given an id and workoutname
+ */
 export const getWorkout =async (req:Request, res: Response) => {
    const {userid, workoutname} = req.headers;
     

@@ -39,7 +39,8 @@ export const searchForExercise = async(req: Request, res: Response) => {
     
 }
 /**
- * If an exercise is not already in the Exercises table, then add it
+ * If an exercise is not already in the Exercises table, then add it and return exerciseID
+ * If an exericse is already in the Exercise table, then return exerciseID
  */
 
 export const addExerciseToExercises = async(req: Request, res: Response) =>{

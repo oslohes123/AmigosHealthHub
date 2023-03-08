@@ -3,6 +3,10 @@ import supabase from "../../utils/supabaseSetUp";
 import { supabaseQueryClass } from "../../utils/databaseInterface";
 const databaseQuery = new supabaseQueryClass();
 
+/**
+ * Creates a WorkoutPlan, adds each exercise to PossibleExercises and adds
+ * multiple records to WorkoutPlansWithExercises
+ */
 export const createWorkout =async (req:Request, res: Response) => {
 
   
