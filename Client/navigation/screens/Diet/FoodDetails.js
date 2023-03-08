@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, TextInput, Modal, TouchableOpacity } from "reac
 import GreenButton from "../../components/GreenButton";
 // import { TextInput } from 'react-native-paper';
 import { useAuthContext } from "../Authentication/context/AuthContext";
+import { addTrackedFood } from "../../../functions/updateTrackedFood";
 
 
 export default function FoodDetails({ route, navigation }) {
@@ -13,32 +14,14 @@ export default function FoodDetails({ route, navigation }) {
     const id = user.id;
     
     function save(){
-        fetch(`http://localhost:3000/api/diet/food/${id}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                food_name: name,
-                calories,
-                protein: Protein,
-                carbohydrates: Carbs,
-                fat: Fat,
-                sugar: Sugars,
-                fiber: Fibre,
-                brand_name: Brand,
-                serving_qty: servingQty,
-                serving_unit: servingUnit,
-                alt_measures: altMeasures,
-            }),
+        addTrackedFood({
+            user_id: id,
+            food_name: name,
+            brand_name: Brand,
+            calories: calories,
+            serving_qty: quantity,
+            serving_unit: selectedServingUnit,
         })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log('Success:', data);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
     }
 
     const isNum = (val) => {
