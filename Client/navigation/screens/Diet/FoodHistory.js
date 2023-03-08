@@ -46,83 +46,6 @@ export default function FoodHistory({navigation}) {
         Protein: "4g"
       },
     ],
-    '2023-03-07': [
-      {
-        name: "Bagel",
-        calories: "20cal",
-        Carbs: "5g",
-        Protein: "4g"
-      },
-      {
-        name: "Chicken",
-        calories: "15cal",
-        Carbs: "7g",
-        Protein: "5g"
-      },
-      {
-        name: "Banana",
-        calories: "17cal",
-        Carbs: "8g",
-        Protein: "2g"
-      },
-      {
-        name: "Mango",
-        calories: "37cal",
-        Carbs: "7g",
-        Protein: "9g"
-      },
-      {
-        name: "Strawberry",
-        calories: "20cal",
-        Carbs: "5g",
-        Protein: "4g"
-      },
-      {
-        name: "Carrot",
-        calories: "20cal",
-        Carbs: "5g",
-        Protein: "4g"
-      },
-    ],
-    '2023-03-06': [
-      {
-        name: "Milk Shake",
-        calories: "20cal",
-        Carbs: "5g",
-        Protein: "4g"
-      },
-      {
-        name: "Tortillas",
-        calories: "15cal",
-        Carbs: "7g",
-        Protein: "5g"
-      },
-      {
-        name: "Pasta",
-        calories: "17cal",
-        Carbs: "8g",
-        Protein: "2g"
-      },
-      {
-        name: "Sausage",
-        calories: "37cal",
-        Carbs: "7g",
-        Protein: "9g"
-      },
-      {
-        name: "Strawberry",
-        calories: "20cal",
-        Carbs: "5g",
-        Protein: "4g"
-      },
-      {
-        name: "Carrot",
-        calories: "20cal",
-        Carbs: "5g",
-        Protein: "4g"
-      },
-    ],
-
   }
   
   const Piedata = [
@@ -177,27 +100,6 @@ export default function FoodHistory({navigation}) {
     setViewCalendar(false);
     setFood(getFood(day.dateString));
   }
-
-  // const getFood = (dateString) => {
-  //   if (dateString === '2023-03-02') {
-  //     return 'Apple: 15cal';
-  //   } else if (dateString === '2023-03-03') {
-  //     return 'Banana: 20cal';
-  //   } else if (dateString === '2023-03-04') {
-  //     return 'Orange: 35cal';
-  //   } else {
-  //     return 'No food item consumed on this day';
-  //   }
-  // };
-
-  // const getFood = (dateString) => {
-    // const food = foodData.filter((item) => item.date === dateString);
-    // if (food.length > 0) {
-    //   return food.map((item) => `${item.name}: ${item.calories} cal, ${item.Carbs} carbs, ${item.Protein} protein`).join('\n');
-    // } else {
-    //   return 'No food item consumed on this day';
-    // }
-  // };
 
   const getFood = (dateString) => {
     const food = foodData[dateString];
@@ -264,14 +166,6 @@ const styles = StyleSheet.create({
       backgroundColor: '#203038',
       flex: 1,
     },
-    // header: {
-    //   //width: 300,
-    //   fontSize: 30,
-    //   fontWeight: 'bold',
-    //   marginTop: 30,
-    //   color: 'white',
-    //   alignSelf: 'center',
-    //   },
     primary: {
       flexDirection:'row', 
       alignItems: 'center', 
@@ -283,7 +177,6 @@ const styles = StyleSheet.create({
       fontSize: 20,
       color: 'white',
       fontWeight: 'bold',
-      //backgroundColor: 'white',
       padding: 10,
       borderRadius: 15,
       borderWidth: 1,
@@ -293,7 +186,6 @@ const styles = StyleSheet.create({
       fontSize: 20,
       color: 'white',
       fontWeight: 'bold',
-      //backgroundColor: 'white',
       padding: 10,
       borderRadius: 15,
       borderWidth: 1,
@@ -302,8 +194,6 @@ const styles = StyleSheet.create({
       marginVertical: '5%'
     },
     icon: {
-      //alignSelf: 'flex-end',
-      //margin: '5%'
       marginLeft: '4%'
     },
     pieWidget: {
@@ -313,16 +203,7 @@ const styles = StyleSheet.create({
       padding: 5
     },
     scroll: {
-      //marginTop: 10,
       height: 400,
-      //position: 'absolute',
-      //marginLeft: 40,
-      //marginLeft: '50%',
-      //marginTop: -120,
-      //alignSelf: 'center',
-      // textAlign: 'flex-start',
-      //flex: 1,
-      //width: '50%'
     },
 })
 
