@@ -6,7 +6,7 @@ import {generalSearch} from "./foodSearch.controller";
 import routeNames from "../../utils/routeNamesClass";
 let routeNamesClass = new routeNames();
 
-FoodSearchRouter.use(checkToken); //Routes are protected.
+// FoodSearchRouter.use(checkToken); //Routes are protected.
 
 // All these routes start with /api/food/
 
