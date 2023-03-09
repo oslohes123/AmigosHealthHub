@@ -43,6 +43,13 @@ interface dbInterface {
   ) => object;
 
 
+  //Select toBeSelected where a row in the given table matches 'match'
+  match: (
+    db: any, 
+    table: string,
+    toBeSelected: string,
+    toBeMatched: Object
+  ) => object; 
   //returns most recent data
 
 //   mostrecent: (
@@ -78,6 +85,37 @@ export class supabaseQueryClass implements dbInterface {
     }
   }
 
+
+
+  async match(
+    supabaseDb: any, 
+    table: string,
+    toBeSelected: string,
+    toBeMatched: Object
+  ):Promise<object | undefined> {
+
+    try{
+      const { data, error } = await supabaseDb
+      .from(table)
+      .select(toBeSelected)
+      .match(toBeMatched);
+
+      if (error){
+        console.error(error);
+        return {error}
+      }
+      else {
+        console.log({ data });
+        return { data };
+      }
+
+    }
+    catch(err: unknown){
+      console.error(err);
+    }
+
+  }
+  
   async selectWhere(
     supabaseDb: any,
     table: string,
