@@ -289,6 +289,7 @@ export default function CreateNewWorkoutScreen({ navigation }) {
       </Text>
 
       <ScrollView style={styles.scroll}>
+        {error && <Text>{error}</Text>}
         {results.map((item) => (
           <TouchableOpacity
             onPress={() => {
