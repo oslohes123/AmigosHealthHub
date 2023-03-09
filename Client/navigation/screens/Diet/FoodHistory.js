@@ -1,12 +1,53 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { Calendar } from 'react-native-calendars'
 import { date } from 'yup';
 import { AntDesign } from '@expo/vector-icons'; 
 import { PieChart } from "react-native-chart-kit";
 
-export default function FoodHistory() {
+export default function FoodHistory({navigation}) {
 
+  const foodData ={
+    '2023-03-08': [
+      {
+        name: "Apple",
+        calories: "20cal",
+        Carbs: "5g",
+        Protein: "4g"
+      },
+      {
+        name: "Orange",
+        calories: "15cal",
+        Carbs: "7g",
+        Protein: "5g"
+      },
+      {
+        name: "Banana",
+        calories: "17cal",
+        Carbs: "8g",
+        Protein: "2g"
+      },
+      {
+        name: "Mango",
+        calories: "37cal",
+        Carbs: "7g",
+        Protein: "9g"
+      },
+      {
+        name: "Grapes",
+        calories: "20cal",
+        Carbs: "5g",
+        Protein: "4g"
+      },
+      {
+        name: "Bread",
+        calories: "20cal",
+        Carbs: "5g",
+        Protein: "4g"
+      },
+    ],
+  }
+  
   const Piedata = [
     {
       name: "Protein",
@@ -61,19 +102,23 @@ export default function FoodHistory() {
   }
 
   const getFood = (dateString) => {
-    if (dateString === '2023-03-02') {
-      return 'Apple';
-    } else if (dateString === '2023-03-03') {
-      return 'Banana';
-    } else if (dateString === '2023-03-04') {
-      return 'Orange';
+    const food = foodData[dateString];
+    if (food) {
+      return food
+        .map((item) => `Name: ${item.name} \n Calories: ${item.calories} \n Carbs: ${item.Carbs} \n Protein: ${item.Protein} \n`)
+        .join('\n');
     } else {
       return 'No food item consumed on this day';
     }
   };
 
+  const pressHandler = () => {
+    navigation.navigate('Nutrients');
+  }
+
   return (
     <View style={styles.container}>
+      <ScrollView style={styles.scroll}>
       <View style={styles.primary}>
         {!selectDay && (
           <Text style={styles.text}>Select a day from the Calendar to View Food History</Text>
@@ -85,8 +130,8 @@ export default function FoodHistory() {
         <AntDesign name="calendar" size={35} color="white" />
       </TouchableOpacity>
       </View>
-      {selectDay && (
-      <TouchableOpacity style={styles.pieWidget}>
+      {selectDay && !viewCalendar &&(
+      <TouchableOpacity style={styles.pieWidget} onPress={pressHandler}>
         <PieChart
           data={Piedata}
           width={340}
@@ -111,6 +156,7 @@ export default function FoodHistory() {
         {!viewCalendar && food !== '' && (
           <Text style={styles.foodText}>{food}</Text>
         )}
+    </ScrollView>    
     </View>
   )
 }
@@ -120,14 +166,6 @@ const styles = StyleSheet.create({
       backgroundColor: '#203038',
       flex: 1,
     },
-    // header: {
-    //   //width: 300,
-    //   fontSize: 30,
-    //   fontWeight: 'bold',
-    //   marginTop: 30,
-    //   color: 'white',
-    //   alignSelf: 'center',
-    //   },
     primary: {
       flexDirection:'row', 
       alignItems: 'center', 
@@ -139,7 +177,6 @@ const styles = StyleSheet.create({
       fontSize: 20,
       color: 'white',
       fontWeight: 'bold',
-      //backgroundColor: 'white',
       padding: 10,
       borderRadius: 15,
       borderWidth: 1,
@@ -149,7 +186,6 @@ const styles = StyleSheet.create({
       fontSize: 20,
       color: 'white',
       fontWeight: 'bold',
-      //backgroundColor: 'white',
       padding: 10,
       borderRadius: 15,
       borderWidth: 1,
@@ -158,14 +194,16 @@ const styles = StyleSheet.create({
       marginVertical: '5%'
     },
     icon: {
-      //alignSelf: 'flex-end',
-      //margin: '5%'
+      marginLeft: '4%'
     },
     pieWidget: {
       backgroundColor: '#3eda9b',
       borderRadius: 25,
       alignSelf: 'center',
       padding: 5
+    },
+    scroll: {
+      height: 400,
     },
 })
 
