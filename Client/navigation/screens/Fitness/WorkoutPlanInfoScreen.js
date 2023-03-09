@@ -2,6 +2,9 @@ import { View, Text, SafeAreaView, TextInput, Button, TouchableWithoutFeedback, 
 import { useContext } from 'react'
 import themeContext from '../../theme/themeContext'
 import { IconButton } from 'react-native-paper'
+import GreenButton from '../../components/GreenButton'
+import RedButton from '../../components/RedButton'
+import CommonButton from '../../components/CommonButton'
 
 export default function WorkoutPlanInfoScreen() {
     const theme = useContext(themeContext) 
@@ -163,9 +166,15 @@ export default function WorkoutPlanInfoScreen() {
                     
                 </ScrollView>
                 <View style={styles.bottomButtons}>
-                    <Button title='Delete' onPress={() => {console.log("Button Pressed")}}/>
-                    <Button title='Edit' onPress={() => {console.log("Button Pressed")}}/>
-                    <Button title='Track' onPress={() => {console.log("Button Pressed")}}/>
+                    {RedButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 20, text: "Delete", buttonFunction: () => {
+                        console.log("Delete Workout Plan")
+                        navigation.pop()}})}
+                    {CommonButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 20, text: "Edit", buttonFunction: () => {
+                        console.log("Track Workout Data")
+                        navigation.pop()}})}
+                    {GreenButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 20, text: "Track", buttonFunction: () => {
+                        console.log("Track Workout Data")
+                        navigation.pop()}})}
                 </View>
         </SafeAreaView>
     )
@@ -205,7 +214,7 @@ const styles = {
         padding: 5
     },
     bottomButtons: {
-        width: screenWidth * 0.6, 
+        width: screenWidth * 0.8, 
         flexDirection: 'row', 
         justifyContent: 'space-evenly',
         padding: 5

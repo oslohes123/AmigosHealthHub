@@ -5,7 +5,7 @@ const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
 
-export default function GreenButton({ textColor = '#fff', marginHorzontal = 10, fontSize = 16, height = screenHeight * 0.2, width = screenWidth * 0.4, text = 'Submit', buttonDisabled = false, buttonFunction}) {
+export default function CommonButton({buttonColor = '#697a76', textColor = '#fff', marginHorzontal = 10, fontSize = 16, height = screenHeight * 0.2, width = screenWidth * 0.4, text = 'Button', buttonDisabled = false, buttonFunction}) {
     const styles = {
         textData: {
           fontSize: fontSize,
@@ -14,7 +14,7 @@ export default function GreenButton({ textColor = '#fff', marginHorzontal = 10, 
           alignSelf: 'center'
         },
         textContainer: {    
-          backgroundColor: !buttonDisabled ? '#3eda9b' : '#697a76',       
+          backgroundColor: !buttonDisabled ? buttonColor : '#697a76',       
           borderRadius: 15,
           marginHorizontal: marginHorzontal,
           width: width,
