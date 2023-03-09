@@ -4,9 +4,34 @@ import { supabaseQueryClass } from "../../utils/databaseInterface";
 const databaseQuery = new supabaseQueryClass();
 
 /**
- *Return a user's workout given an id and workoutname
+ * @returns a Response object , if successful, containing a property named arrayOfAllWorkouts
+ * which contains all the workout names of that user
  */
-export const getWorkout =async (req:Request, res: Response) => {
+export const getAllWorkoutNames =async (req:Request, res: Response) => {
+    const{userid} = req.headers;
+    if(!userid){
+        return res.status(400).json({mssg:"userid cannot be empty!"})
+       }
+    const {data, error}:any = await databaseQuery.selectWhere(supabase, 'WorkoutPlans','userid', userid,'workoutname');
+    if(error){
+        console.log(error);
+        return res.status(400).json({mssg: "Error selecting from WorkoutPlans table", error})
+    }
+    else{
+        let arrayOfAllWorkouts = []
+        for(let i = 0; i<data.length; i++){
+            arrayOfAllWorkouts.push(data[i].workoutname);
+        }
+        console.log(`arrayOfAllWorkouts: ${arrayOfAllWorkouts}`)
+        console.log(`data ln18: ${JSON.stringify(data)}`)
+        return res.status(200).json({arrayOfAllWorkouts});
+    }
+} 
+
+/**
+ *Return a user's workout given a user id and workoutname
+ */
+export const getWorkoutDetails =async (req:Request, res: Response) => {
    const {userid, workoutname} = req.headers;
     
    if(!userid||!workoutname){
