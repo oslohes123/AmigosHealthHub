@@ -14,6 +14,8 @@ export const checkToken = async(req:Request, res:Response,next:NextFunction) => 
    return checkTokenHelper(req, res, next)
 }
 
+export const checkingTokens:boolean = false;
+
 export {};
 
 
