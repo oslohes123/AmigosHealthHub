@@ -4,22 +4,22 @@ import { Text, View, Button, Switch, SafeAreaView, TextInput, ScrollView, Toucha
 import { useState, useContext } from 'react';
 import themeContext from '../../theme/themeContext';
 import SearchBar from '../../components/SearchBar';
-import RedButton from '../../components/RedButton';
+// import RedButton from '../../components/RedButton';
 import GreenButton from '../../components/GreenButton';
-import { formikTrackExerciseForm } from './forms/TrackExerciseForm';
+// import { formikTrackExerciseForm } from './forms/TrackExerciseForm';
 
 import { Formik } from 'formik';
 
 
 export default function CreateNewWorkoutScreen({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false)
-    const [warmUpSet, setWarmUpSet] = useState(false)
+    // const [warmUpSet, setWarmUpSet] = useState(false)
     const theme = useContext(themeContext)
     return (
         <SafeAreaView style={[styles.container, {backgroundColor: theme.background}]}>
 
             {/*Exercise Info Modal*/}
-            <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { setModalVisible(!modalVisible)}}>
+            {/* <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { setModalVisible(!modalVisible)}}>
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems:'center'}}>
                         <View style={[modalStyle.modalMain, {backgroundColor: theme.secondary}]}>
@@ -53,7 +53,7 @@ export default function CreateNewWorkoutScreen({ navigation }) {
                             </View>
                     </SafeAreaView>
                 </TouchableWithoutFeedback>
-            </Modal>
+            </Modal> */}
 
             <View style={styles.searchAndCreate}>
               
@@ -64,58 +64,58 @@ export default function CreateNewWorkoutScreen({ navigation }) {
                 <Text style={[styles.customWorkout, {color: theme.color}]}>Exercises</Text>
         
             <ScrollView style={[styles.verticalScroll, {borderColor: theme.color}]} showsVerticalScrollIndicator={false} alignItems={'center'}>
-                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>
+                <TouchableOpacity onPress={() => {navigation.navigate("Exercise Information")}}>
                     <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 1</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
+                <TouchableOpacity onPress={() => {navigation.navigate("Exercise Information")}}>                    
                     <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 2</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
+                <TouchableOpacity onPress={() => {navigation.navigate("Exercise Information")}}>                    
                     <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 3</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
+                <TouchableOpacity onPress={() => {navigation.navigate("Exercise Information")}}>                    
                     <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 4</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
+                <TouchableOpacity onPress={() => {navigation.navigate("Exercise Information")}}>                    
                     <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 5</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
+                <TouchableOpacity onPress={() => {navigation.navigate("Exercise Information")}}>                    
                     <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 6</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
+                <TouchableOpacity onPress={() => {navigation.navigate("Exercise Information")}}>                    
                     <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 7</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
+                <TouchableOpacity onPress={() => {navigation.navigate("Exercise Information")}}>                    
                     <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 8</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
+                <TouchableOpacity onPress={() => {navigation.navigate("Exercise Information")}}>                    
                     <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 9</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
+                <TouchableOpacity onPress={() => {navigation.navigate("Exercise Information")}}>                    
                     <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 10</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
+                <TouchableOpacity onPress={() => {navigation.navigate("Exercise Information")}}>                    
                     <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 11</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
+                <TouchableOpacity onPress={() => {navigation.navigate("Exercise Information")}}>                    
                     <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 12</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>
+                <TouchableOpacity onPress={() => {navigation.navigate("Exercise Information")}}>
                     <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 13</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
+                <TouchableOpacity onPress={() => {navigation.navigate("Exercise Information")}}>                    
                     <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 14</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
+                <TouchableOpacity onPress={() => {navigation.navigate("Exercise Information")}}>                    
                     <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 15</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
+                <TouchableOpacity onPress={() => {navigation.navigate("Exercise Information")}}>                    
                     <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 16</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
+                <TouchableOpacity onPress={() => {navigation.navigate("Exercise Information")}}>                    
                     <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 17</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
+                <TouchableOpacity onPress={() => {navigation.navigate("Exercise Information")}}>                    
                     <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 18</Text>
                 </TouchableOpacity>
             </ScrollView>
