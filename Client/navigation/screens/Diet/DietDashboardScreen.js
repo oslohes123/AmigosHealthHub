@@ -114,9 +114,9 @@ export default function DietDashboardScreen({ navigation }) {
   async function foodPress(name = null, nix_item_id = null) {
     let data;
     if (nix_item_id == null) {
-      data = await specificSearch(name);
+      data = {foodData:await specificSearch(name), foodIdentifier:name}
     } else {
-      data = await specificSearch(nix_item_id);
+      data = {foodData:await specificSearch(nix_item_id), foodIdentifier:nix_item_id}
     }
     navigation.navigate('Food Details', data);
   }
