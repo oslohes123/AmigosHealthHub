@@ -9,7 +9,7 @@ const ip_addressENV = process.env["IP_ADDRESS"];
 let ip_address: string | undefined = ip_addressENV;
 let port: string | undefined = portENV
 
-export async function addTrackedFood(food: JSON) {
+export async function addTrackedFood(input: JSON,userID: string) {    
     let url: string = `http://${ip_address}:${port}/api/food/updateTrackedFood`;
     let response: AxiosResponse;
     try {
@@ -17,7 +17,8 @@ export async function addTrackedFood(food: JSON) {
             (await AsyncStorage.getItem('user')) as string
         );
         response = await axios.post(url, {
-            food: food,
+            input,
+            userID
         },{
             headers: {
                 authorization: token
@@ -33,5 +34,6 @@ export async function addTrackedFood(food: JSON) {
         }
         return error;
     }
-    return response.data;
+    // console.log(response.status);
+    return response.status;
 }
