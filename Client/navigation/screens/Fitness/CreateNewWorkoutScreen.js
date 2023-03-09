@@ -1,15 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 
-import { Text, View, Button, Switch, SafeAreaView, TextInput, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Dimensions, Modal, Keyboard } from 'react-native';
+import { Text, View, SafeAreaView, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Dimensions, Modal, Keyboard } from 'react-native';
 import { useState, useContext } from 'react';
 import themeContext from '../../theme/themeContext';
 import SearchBar from '../../components/SearchBar';
-// import RedButton from '../../components/RedButton';
+import RedButton from '../../components/RedButton';
 import GreenButton from '../../components/GreenButton';
-// import { formikTrackExerciseForm } from './forms/TrackExerciseForm';
-
-import { Formik } from 'formik';
-
 
 export default function CreateNewWorkoutScreen({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false)
@@ -19,41 +15,42 @@ export default function CreateNewWorkoutScreen({ navigation }) {
         <SafeAreaView style={[styles.container, {backgroundColor: theme.background}]}>
 
             {/*Exercise Info Modal*/}
-            {/* <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { setModalVisible(!modalVisible)}}>
+            <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { setModalVisible(!modalVisible)}}>
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems:'center'}}>
                         <View style={[modalStyle.modalMain, {backgroundColor: theme.secondary}]}>
                             
                             <Text style={[modalStyle.modalText, {color: theme.color}]}>Exercise Information</Text>
-                            
-                            <View style={{justifyContent: 'space-evenly', borderWidth: 2, borderRadius: 26, padding: 10,  width: screenWidth * 0.7, borderColor: theme.color}}>
-                                <Text style={{textAlign: 'center', fontWeight: 'bold', color: theme.color, fontSize: 16, paddingVertical: 5}}>Information</Text>
-                                <Text style={{textAlign: 'justify', color: theme.color, fontSize: 12}}>This text is an example of the text that will be rendered within this text box. 
-                                    It will contain information on the workout including how to perform said workout.</Text>
+
+                            <View style={{flexDirection: 'row', justifyContent: 'space-evenly', borderWidth: 2, borderRadius: 26, padding: 10, margin: 20, width: screenWidth * 0.7, borderColor: theme.color}}>
+                                <View>
+                                    <Text style={{color: theme.color, fontSize: 12, textAlign:'center'}}>Sets</Text>
+                                    <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16, textAlign:'center'}}>0</Text>
+                                    <Text style={{color: theme.color, fontSize: 12, textAlign:'center'}}>Reps</Text>
+                                    <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16, textAlign:'center'}}>0</Text>
+                                </View>
+                                <View>
+                                    <Text style={{color: theme.color, fontSize: 12, textAlign:'center'}}>Calories</Text>
+                                    <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16, textAlign:'center'}}>0</Text>
+                                    <Text style={{color: theme.color, fontSize: 12, textAlign:'center'}}>Warm Up Set</Text>
+                                    <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16, textAlign:'center'}}>No</Text>
+                                </View>
                             </View>
 
-                            <View style={{justifyContent: 'space-evenly', borderWidth: 2, borderRadius: 26, padding: 10,  width: screenWidth * 0.7, borderColor: theme.color}}>
-                                <View style={{justifyContent: 'space-evenly'}}>
-                                    <Text style={{color: theme.color, fontSize: 10}}>Type</Text>
-                                    <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}}>TYPENAME</Text>
-                                    <Text style={{color: theme.color, fontSize: 10}}>Muscle</Text>
-                                    <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}}>MUSCLE</Text>
-                                    <Text style={{color: theme.color, fontSize: 10}}>Difficulty</Text>
-                                    <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}}>0</Text>
-                                </View>
-                                <View style={{justifyContent: 'space-evenly'}}>
-                                    <Text style={{color: theme.color, fontSize: 10}}>Equiptment</Text>
-                                    <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}}>THIS, THAT, OTHER, THIS IS ALSO IN THE EQUIPTMENT LIST</Text>
-                                </View>
-                            </View>
-                                {formikTrackExerciseForm()}
+                            <View style={{flexDirection: 'row'}}>
                                 {RedButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 12, text: "Dismiss", buttonFunction: () => {
                                     setModalVisible(!modalVisible)
                                     console.log("Dismiss Info")}})}
+
+                                {RedButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 12, text: "Remove", buttonFunction: () => {
+                                    setModalVisible(!modalVisible)
+                                    //Remove from workout
+                                    console.log("Remove from workout")}})}
                             </View>
+                        </View>
                     </SafeAreaView>
                 </TouchableWithoutFeedback>
-            </Modal> */}
+            </Modal>
 
             <View style={styles.searchAndCreate}>
               
@@ -139,7 +136,9 @@ export default function CreateNewWorkoutScreen({ navigation }) {
                 </TouchableOpacity>
                 </ScrollView>
 
-                {GreenButton({marginHorizontal: 0, height: screenHeight * 0.05, width: screenWidth * 0.15, fontSize: 20, text: "Save", buttonFunction: () => console.log("Save Workout Plan")})}
+                {GreenButton({marginHorizontal: 0, height: screenHeight * 0.05, width: screenWidth * 0.15, fontSize: 20, text: "Save", buttonFunction: () => {
+                    console.log("Save Workout Plan")
+                    navigation.pop()}})}
             </View>
 
             <StatusBar style="auto" />
@@ -213,8 +212,7 @@ const modalStyle = {
     modalMain: {
         justifyContent: 'space-between', 
         alignItems:'center', 
-        height: screenHeight * 0.8, 
-        width: screenWidth * 0.9, 
+        width: screenWidth * 0.8, 
         borderRadius: 26, 
         padding: 20,
         borderWidth: 3
