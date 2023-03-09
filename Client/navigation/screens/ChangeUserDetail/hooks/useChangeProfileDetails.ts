@@ -3,9 +3,10 @@ import { useAuthContext } from '../../Authentication/context/AuthContext';
 // import { useAuthContext } from "../hooks/useAuthContext";
 import { useState } from 'react';
 import { useLogout } from '../../Authentication/hooks/useLogOut';
-const port = process.env['PORT'];
-const ip_address = process.env['IP_ADDRESS'];
-
+// const port = process.env['PORT'];
+// const ip_address = process.env['IP_ADDRESS'];
+const port = process.env.REACT_APP_PORT;
+const ip_address = process.env.REACT_APP_IP_ADDRESS;
 export const useChangeProfileDetails = () => {
     console.log(`port: ${port}`);
     const{logout} = useLogout();

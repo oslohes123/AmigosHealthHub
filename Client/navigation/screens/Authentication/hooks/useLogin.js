@@ -3,8 +3,10 @@ import { useAuthContext } from "../context/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // const dotenv = require("dotenv");
 // dotenv.config();
-const port = process.env["PORT"];
-const ip_address = process.env["IP_ADDRESS"];
+// const port = process.env["PORT"];
+// const ip_address = process.env["IP_ADDRESS"];
+const port = process.env.REACT_APP_PORT;
+const ip_address = process.env.REACT_APP_IP_ADDRESS;
 
 export const useLogin = () => {
   const [error, setError] = useState(null);
