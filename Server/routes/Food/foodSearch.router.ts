@@ -10,8 +10,6 @@ if(checkingTokens){
     FoodSearchRouter.use(checkToken); //Routes are protected.
 }
 
-// FoodSearchRouter.use(checkToken); //Routes are protected.
-
 // All these routes start with /api/food/
 
 FoodSearchRouter.get(routeNamesClass.partialFoodSearchURL,generalSearch)
