@@ -44,7 +44,7 @@ export const searchForExercise = async(req: Request, res: Response) => {
 
 
 /**
- * Given a specific name of an exercise, have the API return the closest match
+ * Given a specific name of an exercise, have the API return the details of the closest match
  */
 export const getExerciseByName =async (req:Request, res: Response) => {
     const {exercisename} = req.headers;
