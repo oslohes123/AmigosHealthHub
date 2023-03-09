@@ -26,8 +26,8 @@ app.use(routeNames.userBaseURL, authRouter);
  * Exercise and Workout Routes
  */
   //Exercise Routes
-  import addExerciseRouter from "./routes/Exercise/addExercise.router";
-  app.use(routeNames.exerciseBaseURL, addExerciseRouter)
+  import exerciseRouter from "./routes/Exercise/addExercise.router";
+  app.use(routeNames.exerciseBaseURL, exerciseRouter)
 
   //Workout Routes
   import createWorkoutRouter from "./routes/Exercise/createWorkout.router";
