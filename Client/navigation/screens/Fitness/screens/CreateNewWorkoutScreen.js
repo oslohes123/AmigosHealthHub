@@ -24,7 +24,7 @@ export default function CreateNewWorkoutScreen({ navigation }) {
         let resultsList = [];
 
         data.map((item) => {
-            resultsList.push(item.name);
+            resultsList.push(item);
         });
         setResults(resultsList);
         }
