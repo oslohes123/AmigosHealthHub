@@ -35,8 +35,8 @@ app.use(routeNames.changeDetailsBaseURL, changeProfileDetailsRouter);
 import foodSearchRouter from "./routes/Food/foodSearch.router";
 app.use(routeNames.foodBaseURL,foodSearchRouter)
 
-import updateTrackedFoodRouter from "./routes/Food/updateTrackedFood.router";
-app.use(routeNames.foodBaseURL, updateTrackedFoodRouter);
+import foodDatabaseRouter from "./routes/Food/foodDatabase.router";
+app.use(routeNames.foodBaseURL, foodDatabaseRouter);
 
 
 // Get User Details Routes

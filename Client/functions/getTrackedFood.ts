@@ -1,7 +1,6 @@
 import axios, { AxiosResponse, AxiosError } from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
 const portENV = process.env["PORT"];
 const ip_addressENV = process.env["IP_ADDRESS"];
 // For testing purposes
@@ -9,17 +8,14 @@ const ip_addressENV = process.env["IP_ADDRESS"];
 let ip_address: string | undefined = ip_addressENV;
 let port: string | undefined = portENV
 
-export async function addTrackedFood(input: JSON,userID: string) {    
-    let url: string = `http://${ip_address}:${port}/api/food/updateTrackedFood`;
+export async function getTrackedFood(Date: string, userID: string) {
+    let url: string = `http://${ip_address}:${port}/api/food/getTrackedFood/${Date}.${userID}`;
     let response: AxiosResponse;
     try {
         const { token } = JSON.parse(
             (await AsyncStorage.getItem('user')) as string
         );
-        response = await axios.post(url, {
-            input,
-            userID
-        },{
+        response = await axios.get(url, {
             headers: {
                 authorization: token
             }
@@ -33,7 +29,6 @@ export async function addTrackedFood(input: JSON,userID: string) {
             console.log("Default error handler" + error);
         }
         return error;
-    }
- 
-    return response.status;
+    }    
+    return response.data;
 }
