@@ -28,6 +28,7 @@ export const useSearchExercise = () => {
       setIsLoading(false);
       setError(searchedExercisesJson.mssg);
       console.log(error);
+      return [];
     }
     if (response.ok) {
       try {

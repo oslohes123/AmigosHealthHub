@@ -24,10 +24,13 @@ export const searchForExercise = async(req: Request, res: Response) => {
             }
         );
     
-        const json = await response.json();
-        
+        const arrayOfExercises = await response.json();
+        let arrayOfExerciseNames = [];
+        for(let i = 0; i < arrayOfExercises.length;i++){
+            arrayOfExerciseNames.push(arrayOfExercises[i].name)
+        }
         if(response.ok){
-            res.status(200).json({mssg:"Successful Search!", searchedWords: json})
+            res.status(200).json({mssg:"Successful Search!", searchedWords: arrayOfExerciseNames})
         }
         else{
             res.status(400).json({mssg:"Fetching fitness api went wrong!"})
