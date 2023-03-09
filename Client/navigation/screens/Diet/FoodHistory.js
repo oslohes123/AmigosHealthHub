@@ -11,7 +11,14 @@ import { useEffect } from 'react';
 export default function FoodHistory({ navigation }) {
 
   const [foodData, setFoodData] = useState([]);
-
+  const currentDate = new Date();
+  const markedDate = {
+    [currentDate.toISOString().split('T')[0]]: {
+      selected: true,
+      marked: true,
+      dotColor: 'red'
+    }
+  };
   const Piedata = [
     {
       name: "Protein",
