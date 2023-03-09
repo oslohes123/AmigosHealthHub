@@ -7,6 +7,15 @@ import { PieChart } from "react-native-chart-kit";
 
 export default function FoodHistory({ navigation }) {
 
+  const currentDate = new Date();
+  const markedDate = {
+    [currentDate.toISOString().split('T')[0]]: {
+      selected: true,
+      marked: true,
+      dotColor: 'red'
+    }
+  };
+
   const foodData = {
     '2023-03-08': [
       {
@@ -160,10 +169,11 @@ export default function FoodHistory({ navigation }) {
         )}
         {viewCalendar && (
           <Calendar
-            style={{ width: '90%', alignSelf: 'center' }}
+            style={styles.calendar}
             onVisibleMonthsChange={(months) => { console.log('now these months are visible', months); }}
             onDayPress={handleDayPress}
             maxDate={new Date().toISOString().split('T')[0]}
+            markedDates={markedDate}
           />
         )}
         {!viewCalendar && food !== '' && (
@@ -220,5 +230,12 @@ const styles = StyleSheet.create({
   scroll: {
     height: 400,
   },
+  calendar: {
+    width: '90%', 
+    alignSelf: 'center', 
+    borderTopEndRadius: 40,
+    borderTopLeftRadius: 40,
+    //backgroundColor: 'black'
+  }
 })
 
