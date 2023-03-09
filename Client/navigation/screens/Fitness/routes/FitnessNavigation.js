@@ -1,11 +1,11 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import WorkoutPlansScreen from "../WorkoutPlansScreen";
-import TrackExerciseScreen from "../TrackExerciseScreen";
-import FitnessDashboardScreen from "../FitnessDashboardScreen";
-import CreateNewWorkoutScreen from "../CreateNewWorkoutScreen";
-import ExerciseScreen from "../ExerciseScreen";
-import ExerciseInfoScreen from '../ExerciseInfoScreen';
-import WorkoutPlanInfoScreen from '../WorkoutPlanInfoScreen';
+import WorkoutPlansScreen from "../screens/WorkoutPlansScreen";
+import TrackExerciseScreen from "../screens/TrackExerciseScreen";
+import FitnessDashboardScreen from "../screens/FitnessDashboardScreen";
+import CreateNewWorkoutScreen from "../screens/CreateNewWorkoutScreen";
+import ExerciseScreen from "../screens/ExerciseScreen";
+import ExerciseInfoScreen from '../screens/ExerciseInfoScreen';
+import WorkoutPlanInfoScreen from '../screens/WorkoutPlanInfoScreen';
 
 
 const Stack = createStackNavigator();

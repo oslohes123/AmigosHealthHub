@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { useContext } from 'react';
 import { StyleSheet, Text, View, Button, SafeAreaView, Image } from 'react-native';
-import theme from '../../theme/theme';
-import themeContext from '../../theme/themeContext';
+import theme from '../../../theme/theme';
+import themeContext from '../../../theme/themeContext';
 
 //Screen Names
 const trackWorkoutName = 'Workout Plans'

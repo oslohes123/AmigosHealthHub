@@ -1,21 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
 
-import { Text, View, SafeAreaView, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Dimensions, Modal, Keyboard } from 'react-native';
+import { Text, View, SafeAreaView, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Dimensions, Modal, Keyboard, TextInput } from 'react-native';
 import { useState, useContext } from 'react';
-import themeContext from '../../theme/themeContext';
-import SearchBar from '../../components/SearchBar';
-import RedButton from '../../components/RedButton';
-import GreenButton from '../../components/GreenButton';
+import themeContext from '../../../theme/themeContext';
+import SearchBar from '../../../components/SearchBar';
+import RedButton from '../../../components/RedButton';
+import GreenButton from '../../../components/GreenButton';
 
 export default function CreateNewWorkoutScreen({ navigation }) {
-    const [modalVisible, setModalVisible] = useState(false)
-    // const [warmUpSet, setWarmUpSet] = useState(false)
+    const [exerciseModalVisible, setExerciseModalVisible] = useState(false)
+    const [nameModalVisible, setNameModalVisible] = useState(false)
     const theme = useContext(themeContext)
     return (
         <SafeAreaView style={[styles.container, {backgroundColor: theme.background}]}>
 
             {/*Exercise Info Modal*/}
-            <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { setModalVisible(!modalVisible)}}>
+            <Modal animationType="slide" transparent={true} visible={exerciseModalVisible} onRequestClose={() => { setExerciseModalVisible(!exerciseModalVisible)}}>
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems:'center'}}>
                         <View style={[modalStyle.modalMain, {backgroundColor: theme.secondary}]}>
@@ -39,11 +39,11 @@ export default function CreateNewWorkoutScreen({ navigation }) {
 
                             <View style={{flexDirection: 'row'}}>
                                 {RedButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 12, text: "Dismiss", buttonFunction: () => {
-                                    setModalVisible(!modalVisible)
+                                    setExerciseModalVisible(!exerciseModalVisible)
                                     console.log("Dismiss Info")}})}
 
                                 {RedButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 12, text: "Remove", buttonFunction: () => {
-                                    setModalVisible(!modalVisible)
+                                    setExerciseModalVisible(!exerciseModalVisible)
                                     //Remove from workout
                                     console.log("Remove from workout")}})}
                             </View>
@@ -52,10 +52,41 @@ export default function CreateNewWorkoutScreen({ navigation }) {
                 </TouchableWithoutFeedback>
             </Modal>
 
-            <View style={styles.searchAndCreate}>
-              
-                {SearchBar({themeColor: theme.color})}
+            {/*Workout Name Modal*/}
+            <Modal animationType="slide" transparent={true} visible={nameModalVisible} onRequestClose={() => {setExerciseModalVisible(!exerciseModalVisible)}}>
+                <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems:'center'}}>
+                    <View style={[modalStyle.modalMain, {backgroundColor: theme.secondary}]}>
+                        
+                        <Text style={[modalStyle.modalText, {color: theme.color}]}>Save Workout</Text>
 
+                        <TextInput 
+                            style={{color: theme.color, width: screenWidth * 0.6, borderColor: theme.color, margin: 10}} 
+                            placeholder={'Workout Name'} 
+                            textAlign={'center'} 
+                            placeholderTextColor={theme.color}
+                            clearButtonMode={'always'}
+                            borderColor={theme.color}
+                            borderWidth={1}
+                            borderRadius={10}
+                        />
+
+                        <View style={{flexDirection: 'row'}}>
+                            {RedButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 12, text: "Dismiss", buttonFunction: () => {
+                                setNameModalVisible(!nameModalVisible)
+                                console.log("Don't Save Yet")}})}
+                            {GreenButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 12, text: "Save", buttonFunction: () => {
+                                setNameModalVisible(!nameModalVisible)
+                                console.log("Save Plan")}})}
+                        </View>
+                    </View>
+                </SafeAreaView>
+            </Modal>
+
+            <View style={styles.searchAndCreate}>
+                {SearchBar({themeColor: theme.color, width: screenWidth * 0.7})}
+                {GreenButton({height: screenHeight * 0.05, width: screenWidth * 0.15, fontSize: 20, text: "Save", buttonFunction: () => {
+                    setNameModalVisible(!nameModalVisible)
+                    console.log("Save Workout Plan")}})}
             </View>
 
                 <Text style={[styles.customWorkout, {color: theme.color}]}>Exercises</Text>
@@ -117,29 +148,23 @@ export default function CreateNewWorkoutScreen({ navigation }) {
                 </TouchableOpacity>
             </ScrollView>
 
-            <View style={{flexDirection: 'row', justifyContent: 'space-between', height: screenHeight * 0.15, width: screenWidth * 0.9}}>
-                <ScrollView style={[styles.horizontalScroll, {borderColor: theme.color}]} horizontal={true} alignItems={'center'} showsHorizontalScrollIndicator={false}>
-                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
+            <ScrollView style={[styles.horizontalScroll, {borderColor: theme.color}]} horizontal={true} alignItems={'center'} showsHorizontalScrollIndicator={false}>
+                <TouchableOpacity onPress={() => {setExerciseModalVisible(!exerciseModalVisible)}}>                    
                     <Text style={[styles.addedText, {borderColor: theme.color, color: theme.color}]}>Test 1</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
+                <TouchableOpacity onPress={() => {setExerciseModalVisible(!exerciseModalVisible)}}>                    
                     <Text style={[styles.addedText, {borderColor: theme.color, color: theme.color}]}>Test 2</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
+                <TouchableOpacity onPress={() => {setExerciseModalVisible(!exerciseModalVisible)}}>                    
                     <Text style={[styles.addedText, {borderColor: theme.color, color: theme.color}]}>Test 3</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
+                <TouchableOpacity onPress={() => {setExerciseModalVisible(!exerciseModalVisible)}}>                    
                     <Text style={[styles.addedText, {borderColor: theme.color, color: theme.color}]}>Test 4</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
+                <TouchableOpacity onPress={() => {setExerciseModalVisible(!exerciseModalVisible)}}>                    
                     <Text style={[styles.addedText, {borderColor: theme.color, color: theme.color}]}>Test 5</Text>
                 </TouchableOpacity>
-                </ScrollView>
-
-                {GreenButton({marginHorizontal: 0, height: screenHeight * 0.05, width: screenWidth * 0.15, fontSize: 20, text: "Save", buttonFunction: () => {
-                    console.log("Save Workout Plan")
-                    navigation.pop()}})}
-            </View>
+            </ScrollView>
 
             <StatusBar style="auto" />
         </SafeAreaView>

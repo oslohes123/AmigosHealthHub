@@ -2,9 +2,9 @@ import { StatusBar } from 'expo-status-bar';
 
 import { Text, View, SafeAreaView, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { useContext } from 'react';
-import themeContext from '../../theme/themeContext';
-import SearchBar from '../../components/SearchBar';
-import GreenButton from '../../components/GreenButton';
+import themeContext from '../../../theme/themeContext';
+import SearchBar from '../../../components/SearchBar';
+import GreenButton from '../../../components/GreenButton';
 
 export default function WorkoutPlansScreen({ navigation }) {
     const theme = useContext(themeContext)

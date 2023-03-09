@@ -2,8 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 
 import { Text, View, SafeAreaView, Dimensions, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import { useContext } from 'react';
-import themeContext from '../../theme/themeContext';
-import { formikTrackExerciseForm } from './forms/TrackExerciseForm';
+import themeContext from '../../../theme/themeContext';
+import { formikTrackExerciseForm } from '../forms/TrackExerciseForm';
 
 
 export default function ExerciseInfoScreen({ route, navigation }) {
