@@ -49,16 +49,16 @@ export default function CreateNewWorkoutScreen({ navigation }) {
 
                         <View style={{flexDirection: "row", justifyContent: "space-evenly", borderWidth: 2, borderRadius: 26, padding: 10, margin: 20, width: screenWidth * 0.7, borderColor: theme.color}}>
                             <View>
-                            <Text style={{color: theme.color, fontSize: 12, textAlign: "center"}}>Sets</Text>
-                            <Text style={{fontWeight: "bold", color: theme.color, fontSize: 16, textAlign: "center"}}>0</Text>
-                            <Text style={{color: theme.color, fontSize: 12, textAlign: "center"}}>Reps</Text>
-                            <Text style={{fontWeight: "bold", color: theme.color, fontSize: 16, textAlign: "center"}}>0</Text>
+                                <Text style={{color: theme.color, fontSize: 12, textAlign: "center"}}>Sets</Text>
+                                <Text style={{fontWeight: "bold", color: theme.color, fontSize: 16, textAlign: "center"}}>0</Text>
+                                <Text style={{color: theme.color, fontSize: 12, textAlign: "center"}}>Reps</Text>
+                                <Text style={{fontWeight: "bold", color: theme.color, fontSize: 16, textAlign: "center"}}>0</Text>
                             </View>
                             <View>
-                            <Text style={{color: theme.color, fontSize: 12, textAlign: "center"}}>Calories</Text>
-                            <Text style={{fontWeight: "bold", color: theme.color, fontSize: 16, textAlign: "center"}}>0</Text>
-                            <Text style={{color: theme.color, fontSize: 12, textAlign: "center"}}>Warm Up Set</Text>
-                            <Text style={{fontWeight: "bold", color: theme.color, fontSize: 16, textAlign: "center"}}>No</Text>
+                                <Text style={{color: theme.color, fontSize: 12, textAlign: "center"}}>Calories</Text>
+                                <Text style={{fontWeight: "bold", color: theme.color, fontSize: 16, textAlign: "center"}}>0</Text>
+                                <Text style={{color: theme.color, fontSize: 12, textAlign: "center"}}>Warm Up Set</Text>
+                                <Text style={{fontWeight: "bold", color: theme.color, fontSize: 16, textAlign: "center"}}>No</Text>
                             </View>
                         </View>
 

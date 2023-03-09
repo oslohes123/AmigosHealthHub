@@ -38,10 +38,14 @@ export default class RouteNamesClass{
             readonly fullSearchExerciseURL = this.exerciseBaseURL + this.partialSearchExercise;
             readonly partialAddToExercises = '/add';
             readonly fullAddToExercisesURL = this.exerciseBaseURL + this.partialAddToExercises;
+            readonly partialGetExercise = '/get';
+            readonly fullGetExerciseURL = this.exerciseBaseURL + this.partialAddToExercises;
 
         //Workout Routes
             readonly partialAddWorkout = '/add';
             readonly fullAddWorkoutURL = this.workoutBaseURL + this.partialAddWorkout;
             readonly partialGetWorkout = '/get';
             readonly fullGetWorkoutURL = this.workoutBaseURL + this.partialGetWorkout;
+            readonly partialGetAllWorkoutNames = '/getAllWorkoutNames';
+            readonly fullGetAllWorkoutNames = this.workoutBaseURL + this.partialGetAllWorkoutNames;
     }

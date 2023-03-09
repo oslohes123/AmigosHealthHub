@@ -24,10 +24,13 @@ export const searchForExercise = async(req: Request, res: Response) => {
             }
         );
     
-        const json = await response.json();
-        
+        const arrayOfExercises = await response.json();
+        let arrayOfExerciseNames = [];
+        for(let i = 0; i < arrayOfExercises.length;i++){
+            arrayOfExerciseNames.push(arrayOfExercises[i].name)
+        }
         if(response.ok){
-            res.status(200).json({mssg:"Successful Search!", searchedWords: json})
+            res.status(200).json({mssg:"Successful Search!", searchedWords: arrayOfExerciseNames})
         }
         else{
             res.status(400).json({mssg:"Fetching fitness api went wrong!"})
@@ -37,6 +40,49 @@ export const searchForExercise = async(req: Request, res: Response) => {
         res.status(400).json({mssg:"Fetching fitness api went wrong!"})
     }
     
+}
+
+
+/**
+ * Given a specific name of an exercise, have the API return the details of the closest match
+ */
+export const getExerciseByName =async (req:Request, res: Response) => {
+    const {exercisename} = req.headers;
+    console.log(`exercisename: ${exercisename}`);
+    console.log(`req.headers: ${JSON.stringify(req.headers)}`)
+    if(!exercisename){
+        return res.status(400).json({mssg:"exercisename is empty"})
+    }
+    try{
+        const nameFitnessURL = 'https://api.api-ninjas.com/v1/exercises?name=' + exercisename
+        console.log(`nameFitnessURL: ${nameFitnessURL}`)
+        const response = await fetch(
+            nameFitnessURL,
+            {
+            method: "GET",
+            headers: {'X-Api-Key': EXERCISE_API_KEY},
+            }
+        );
+    
+        const exerciseInformation = await response.json();
+        
+        if(response.ok){
+            console.log(`exerciseInformation: ${JSON.stringify(exerciseInformation)}`)
+            if(exerciseInformation.length > 0){
+                res.status(200).json({mssg:"Exercise Matched!", exerciseInformation: exerciseInformation[0]})
+            }
+            else{
+                res.status(400).json({mssg:"No exercise of that name was found!"})
+            }
+        }
+        else{
+            res.status(400).json({mssg:"Fetching fitness api went wrong!"})
+        }
+    }
+    catch(error){
+        res.status(400).json({mssg:"Fetching fitness api went wrong!"})
+    }
+
 }
 /**
  * If an exercise is not already in the Exercises table, then add it and return exerciseID
