@@ -167,10 +167,10 @@ export default function FoodHistory({ navigation }) {
           />
         )}
         {!viewCalendar && food !== '' && (
-  <View >
-    {getFood(selectDay)}
-  </View>
-)}
+        <View >
+          {getFood(selectDay)}
+        </View>
+        )}
       </ScrollView>
     </View>
   )
