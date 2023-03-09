@@ -8,20 +8,45 @@ import { addTrackedFood } from "../../../functions/updateTrackedFood";
 
 export default function FoodDetails({ route, navigation }) {
 
+    const {
+        food_name: name,
+        calories,
+        protein: Protein,
+        carbohydrates: Carbs,
+        fat: Fat,
+        sugar: Sugars,
+        fiber: Fibre,
+        brand_name: Brand,
+        serving_qty: servingQty,
+        serving_unit: servingUnit,
+        alt_measures: altMeasures,
+    } = route.params.foodData;
 
+    
+    
+
+    const [quantity, setQuantity] = React.useState(servingQty.toString())
+
+    const [selectedServingUnit, setSelectedServingUnit] = useState(servingUnit.toString())
+    const [visible, setVisible] = useState(false)
 
     const { user } = useAuthContext();
     const id = user.id;
-    
-    function save(){
-        addTrackedFood({
-            user_id: id,
-            food_name: name,
-            brand_name: Brand,
-            calories: calories,
+    const foodInput = route.params;
+
+    const updatedFoodInput = {
+        ...foodInput,
+        foodData:{
+            ...foodInput.foodData,
             serving_qty: quantity,
-            serving_unit: selectedServingUnit,
-        })
+            serving_unit: selectedServingUnit
+        }
+        
+    }
+
+    async function save(){
+        let statusCode = await addTrackedFood(updatedFoodInput,id)
+        console.log(statusCode);
     }
 
     const isNum = (val) => {
@@ -39,24 +64,7 @@ export default function FoodDetails({ route, navigation }) {
 
 
 
-    const {
-        food_name: name,
-        calories,
-        protein: Protein,
-        carbohydrates: Carbs,
-        fat: Fat,
-        sugar: Sugars,
-        fiber: Fibre,
-        brand_name: Brand,
-        serving_qty: servingQty,
-        serving_unit: servingUnit,
-        alt_measures: altMeasures,
-    } = route.params;
-
-    const [quantity, setQuantity] = React.useState(servingQty.toString())
-
-    const [selectedServingUnit, setSelectedServingUnit] = useState(servingUnit.toString())
-    const [visible, setVisible] = useState(false)
+    
     //   console.log(route.params);
 
 
