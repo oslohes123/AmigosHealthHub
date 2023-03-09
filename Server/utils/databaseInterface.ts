@@ -142,6 +142,32 @@ export class supabaseQueryClass implements dbInterface {
         }
     }
 
+    async selectWhereRange(
+        supabaseDb: any,
+        table: string,
+        column: string,
+        filterColumn: string,
+        toBeFound: String,
+        startValue: String,
+        endValue: String
+    ): Promise<object | undefined> {
+        try {
+            const { data, error } = await supabaseDb
+                .from(table)
+                .select(column)
+                .eq(filterColumn, toBeFound)
+                .gte('timestamp', startValue)
+                .lte('timestamp', endValue);
+
+            if (error) console.error(error);
+            else console.log({ data });
+
+            return { data };
+        } catch (err: unknown) {
+            console.error(err);
+        }
+    }
+
     //   update: (
     //     db: any,
     //     table: string,

@@ -7,11 +7,35 @@ export const addSleepFunc = async (
     database = supabase,
     table = 'Sleep Data'
 ) => {
-    console.log(sleepData);
+    console.log(`Sleep data TO ADD: ${sleepData}`);
     const { data, error }: any = await databaseQuery.insert(
         database,
         table,
         sleepData
+    );
+    return { data, error };
+};
+
+export const getSleepFunc = async (
+    userID: String,
+    startDate: String,
+    endDate: String,
+    database = supabase,
+    table = 'Sleep Data'
+) => {
+    console.log(
+        `Getting sleep data from ${startDate} to ${endDate} for user ${userID}`
+    );
+
+    const columnSelected = 'hoursSlept, timestamp';
+    const { data, error }: any = await databaseQuery.selectWhereRange(
+        database,
+        table,
+        columnSelected,
+        'userID',
+        userID,
+        startDate,
+        endDate
     );
     return { data, error };
 };
