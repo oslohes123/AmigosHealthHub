@@ -4,49 +4,13 @@ import { Calendar } from 'react-native-calendars'
 import { date } from 'yup';
 import { AntDesign } from '@expo/vector-icons';
 import { PieChart } from "react-native-chart-kit";
+import { getTrackedFood } from '../../../functions/getTrackedFood';
+import { useAuthContext } from '../Authentication/context/AuthContext';
+import { useEffect } from 'react';
 
 export default function FoodHistory({ navigation }) {
 
-  const foodData = {
-    '2023-03-08': [
-      {
-        name: "Apple",
-        calories: "20cal",
-        Carbs: "5g",
-        Protein: "4g"
-      },
-      {
-        name: "Orange",
-        calories: "15cal",
-        Carbs: "7g",
-        Protein: "5g"
-      },
-      {
-        name: "Banana",
-        calories: "17cal",
-        Carbs: "8g",
-        Protein: "2g"
-      },
-      {
-        name: "Mango",
-        calories: "37cal",
-        Carbs: "7g",
-        Protein: "9g"
-      },
-      {
-        name: "Grapes",
-        calories: "20cal",
-        Carbs: "5g",
-        Protein: "4g"
-      },
-      {
-        name: "Bread",
-        calories: "20cal",
-        Carbs: "5g",
-        Protein: "4g"
-      },
-    ],
-  }
+  const [foodData, setFoodData] = useState([]);
 
   const Piedata = [
     {
@@ -86,35 +50,50 @@ export default function FoodHistory({ navigation }) {
     }
   ];
 
+  const { user } = useAuthContext();
+  const id = user.id;
+
+  async function getFood(dateString) {
+    let response = await getTrackedFood(dateString,id);
+    setFoodData(response);
+    console.log("Data returned");
+    console.log(response);
+  }
+
+
   const [viewCalendar, setViewCalendar] = useState(false);
-  const [selectDay, setSelectDay] = useState(null);
-  const [food, setFood] = useState('');
+  const [selectDay, setSelectDay] = useState(new Date().toISOString().split('T')[0]);
+
 
   const toggleCalendar = () => {
     setViewCalendar(!viewCalendar);
   }
 
-  const handleDayPress = (day) => {
+  const handleDayPress = async (day) => {
     setSelectDay(day.dateString);
     console.log('selected day', day);
+    setFoodData(await getFood(day.dateString));
     setViewCalendar(false);
-    setFood(getFood(day.dateString));
+    getFood1(day.dateString);
   }
 
-  const getFood = (dateString) => {
-    const food = foodData[dateString];
-    if (food) {
-      return food.map((item, index) => (
+  const getFood1 = () => {
+    console.log(foodData.length);
+    if (foodData.length > 0) {
+      console.log("We are here");
+      return foodData.map((item, index) => (
         <View key={index}>
           <TouchableOpacity>
             <Text style={styles.foodText}>
-              Name: {item.name}
+              Name: {item.FoodName}
               {"\n"}
-              Calories: {item.calories}
+              Calories: {item.CaloriesInMeal}
               {"\n"}
-              Carbs: {item.Carbs}
+              Carbs: {item.Quantity}
               {"\n"}
-              Protein: {item.Protein}
+              Protein: {item.Measure}
+              {"\n"}
+              {/* {item.BrandName? "Brand: " + item.BrandName : null} */}
             </Text>
           </TouchableOpacity>
         </View>
@@ -166,9 +145,9 @@ export default function FoodHistory({ navigation }) {
             maxDate={new Date().toISOString().split('T')[0]}
           />
         )}
-        {!viewCalendar && food !== '' && (
+        {!viewCalendar && foodData && (
         <View >
-          {getFood(selectDay)}
+          {getFood1}
         </View>
         )}
       </ScrollView>
