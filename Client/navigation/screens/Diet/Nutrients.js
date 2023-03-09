@@ -1,50 +1,53 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { View, StyleSheet, Text } from 'react-native';
+import themeContext from '../../theme/themeContext';
 
 export default function Nutrients() {
 
+  const theme = useContext(themeContext)
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Food Consumed</Text>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
+      <Text style={[styles.header, { color: theme.color }, {borderColor: theme.color}]}>Nutrients Consumed</Text>
       
       <View style={styles.primaryView}>
-        <Text style={styles.primaryHeader}>Nutrient</Text>
-        <Text style={styles.primaryHeader}>Amount</Text>
+        <Text style={[styles.primaryHeader, { color: theme.color }, {borderColor: theme.color}]}>Nutrient</Text>
+        <Text style={[styles.primaryHeader, { color: theme.color }, {borderColor: theme.color}]}>Amount</Text>
       </View>
 
       <View style={styles.primaryView}>
-        <Text style={styles.text}>Protein</Text>
-        <Text style={styles.text}>82g</Text>
+        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>Protein</Text>
+        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>82g</Text>
       </View>
 
       <View style={styles.primaryView}>
-        <Text style={styles.text}>Carbs</Text>
-        <Text style={styles.text}>82g</Text>
+        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>Carbs</Text>
+        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>82g</Text>
       </View>
 
       <View style={styles.primaryView}>
-        <Text style={styles.text}>Fat</Text>
-        <Text style={styles.text}>22g</Text>
+        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>Fat</Text>
+        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>22g</Text>
       </View>
 
       <View style={styles.primaryView}>
-        <Text style={styles.text}>Energy</Text>
-        <Text style={styles.text}>62g</Text>
+        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>Energy</Text>
+        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>62g</Text>
       </View>
 
       <View style={styles.primaryView}>
-        <Text style={styles.text}>Sugars</Text>
-        <Text style={styles.text}>45g</Text>
+        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>Sugars</Text>
+        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>45g</Text>
       </View>
 
       <View style={styles.primaryView}>
-        <Text style={styles.text}>Fibre</Text>
-        <Text style={styles.text}>34g</Text>
+        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>Fibre</Text>
+        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>34g</Text>
       </View>
 
       <View style={styles.primaryView}>
-        <Text style={styles.text}>Vitamins</Text>
-        <Text style={styles.text}>12g</Text>
+        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>Vitamins</Text>
+        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>12g</Text>
       </View>
 
     </View>
@@ -53,7 +56,6 @@ export default function Nutrients() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#203038',
     flex: 1,
   },
   header: {
@@ -65,9 +67,8 @@ const styles = StyleSheet.create({
   },
   primaryHeader: {
     fontSize: 25,
-    color: 'white',
+    fontWeight: 'bold',
     borderWidth: 2,
-    borderColor: 'white',
     width: '70%',
     paddingVertical: '13%',
   },
@@ -79,9 +80,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
-    color: 'white',
     borderWidth: 2,
-    borderColor: 'white',
     width: '70%',
     paddingVertical: '7%',
   }
