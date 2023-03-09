@@ -7,6 +7,7 @@ import { useLogout } from '../../Authentication/hooks/useLogOut';
 // const ip_address = process.env['IP_ADDRESS'];
 const port = process.env.REACT_APP_PORT;
 const ip_address = process.env.REACT_APP_IP_ADDRESS;
+console.log(`process.env: ${JSON.stringify(process.env)}`)
 export const useChangeProfileDetails = () => {
     console.log(`port: ${port}`);
     const{logout} = useLogout();

@@ -11,7 +11,7 @@ export const searchForExercise = async(req: Request, res: Response) => {
     console.log(`wordtosearch: ${wordtosearch}`);
     console.log(`req.headers: ${JSON.stringify(req.headers)}`)
     if(!wordtosearch){
-        return res.status(200).json({mssg:"wordtosearch is empty", searchedWords: {}})
+        return res.status(200).json({mssg:"wordtosearch is empty", searchedWords: []})
     }
     try{
         const nameFitnessURL = 'https://api.api-ninjas.com/v1/exercises?name=' + wordtosearch
