@@ -139,10 +139,11 @@ export default function FoodHistory({ navigation }) {
         )}
         {viewCalendar && (
           <Calendar
-            style={{ width: '90%', alignSelf: 'center' }}
+            style={styles.calendar}
             onVisibleMonthsChange={(months) => { console.log('now these months are visible', months); }}
             onDayPress={handleDayPress}
             maxDate={new Date().toISOString().split('T')[0]}
+            markedDates={markedDate}
           />
         )}
         {!viewCalendar && foodData && (
@@ -199,5 +200,12 @@ const styles = StyleSheet.create({
   scroll: {
     height: 400,
   },
+  calendar: {
+    width: '90%', 
+    alignSelf: 'center', 
+    borderTopEndRadius: 40,
+    borderTopLeftRadius: 40,
+    //backgroundColor: 'black'
+  }
 })
 
