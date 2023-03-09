@@ -95,7 +95,7 @@ export const formikTrackExerciseForm = () => {
                                 console.log("Dismiss Info")}})} */}
                             {GreenButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 12, text: "Add", buttonDisabled: isDisabled, buttonFunction: () => {
                                 console.log("Add To Workout")
-                                setIsDisabled(!isDisabled)
+                                // setIsDisabled(!isDisabled)
                                 props.handleSubmit}})}
                         </View>
                             {/* {error && <Text className="error">{error}</Text>} */}

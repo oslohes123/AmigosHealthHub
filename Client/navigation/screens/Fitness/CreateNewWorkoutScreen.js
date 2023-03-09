@@ -120,23 +120,27 @@ export default function CreateNewWorkoutScreen({ navigation }) {
                 </TouchableOpacity>
             </ScrollView>
 
-            <ScrollView style={[styles.horizontalScroll, {borderColor: theme.color}]} horizontal={true} alignItems={'center'} showsHorizontalScrollIndicator={false}>
-              <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
-                <Text style={[styles.addedText, {borderColor: theme.color, color: theme.color}]}>Test 1</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
-                <Text style={[styles.addedText, {borderColor: theme.color, color: theme.color}]}>Test 2</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
-                <Text style={[styles.addedText, {borderColor: theme.color, color: theme.color}]}>Test 3</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
-                <Text style={[styles.addedText, {borderColor: theme.color, color: theme.color}]}>Test 4</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
-                <Text style={[styles.addedText, {borderColor: theme.color, color: theme.color}]}>Test 5</Text>
-              </TouchableOpacity>
-            </ScrollView>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between', height: screenHeight * 0.15, width: screenWidth * 0.9}}>
+                <ScrollView style={[styles.horizontalScroll, {borderColor: theme.color}]} horizontal={true} alignItems={'center'} showsHorizontalScrollIndicator={false}>
+                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
+                    <Text style={[styles.addedText, {borderColor: theme.color, color: theme.color}]}>Test 1</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
+                    <Text style={[styles.addedText, {borderColor: theme.color, color: theme.color}]}>Test 2</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
+                    <Text style={[styles.addedText, {borderColor: theme.color, color: theme.color}]}>Test 3</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
+                    <Text style={[styles.addedText, {borderColor: theme.color, color: theme.color}]}>Test 4</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}}>                    
+                    <Text style={[styles.addedText, {borderColor: theme.color, color: theme.color}]}>Test 5</Text>
+                </TouchableOpacity>
+                </ScrollView>
+
+                {GreenButton({marginHorizontal: 0, height: screenHeight * 0.05, width: screenWidth * 0.15, fontSize: 20, text: "Save", buttonFunction: () => console.log("Save Workout Plan")})}
+            </View>
 
             <StatusBar style="auto" />
         </SafeAreaView>
