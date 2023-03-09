@@ -1,9 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuthContext } from '../../Authentication/context/AuthContext';
 import { useLogout } from '../../Authentication/hooks/useLogOut';
-const port = process.env['PORT'];
-const ip_address = process.env['IP_ADDRESS'];
-
+// const port = process.env['PORT'];
+// const ip_address = process.env['IP_ADDRESS'];
+const port = process.env.REACT_APP_PORT;
+const ip_address = process.env.REACT_APP_IP_ADDRESS;
 const getUserInfo = async () => {
     const { user, dispatch } = useAuthContext();
     const { email, token } = user;
