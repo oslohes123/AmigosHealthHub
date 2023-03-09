@@ -101,31 +101,22 @@ export default function FoodHistory({ navigation }) {
     setFood(getFood(day.dateString));
   }
 
-  // const getFood = (dateString) => {
-  //   const food = foodData[dateString];
-  //   if (food) {
-  //     return food
-  //       .map((item) => `Name: ${item.name} \n Calories: ${item.calories} \n Carbs: ${item.Carbs} \n Protein: ${item.Protein} \n`)
-  //       .join('\n');
-  //   } else {
-  //     return 'No food item consumed on this day';
-  //   }
-  // };
-
   const getFood = (dateString) => {
     const food = foodData[dateString];
     if (food) {
       return food.map((item, index) => (
         <View key={index}>
-          <Text style={styles.foodText}>
-            Name: {item.name}
-            {"\n"}
-            Calories: {item.calories}
-            {"\n"}
-            Carbs: {item.Carbs}
-            {"\n"}
-            Protein: {item.Protein}
-          </Text>
+          <TouchableOpacity>
+            <Text style={styles.foodText}>
+              Name: {item.name}
+              {"\n"}
+              Calories: {item.calories}
+              {"\n"}
+              Carbs: {item.Carbs}
+              {"\n"}
+              Protein: {item.Protein}
+            </Text>
+          </TouchableOpacity>
         </View>
       ));
     } else {
@@ -175,11 +166,8 @@ export default function FoodHistory({ navigation }) {
             maxDate={new Date().toISOString().split('T')[0]}
           />
         )}
-        {/* {!viewCalendar && food !== '' && (
-          <Text style={styles.foodText}>{food}</Text>
-        )} */}
         {!viewCalendar && food !== '' && (
-  <View style={styles.foodContainer}>
+  <View >
     {getFood(selectDay)}
   </View>
 )}
