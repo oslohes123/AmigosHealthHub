@@ -6,6 +6,8 @@ const databaseQuery = new supabaseQueryClass();
 /**
  * Creates a WorkoutPlan, adds each exercise to PossibleExercises and adds
  * multiple records to WorkoutPlansWithExercises
+ * 
+ * exercises should be an array of objects containing userid and other properties specific to an exercise
  */
 export const createWorkout =async (req:Request, res: Response) => {
 

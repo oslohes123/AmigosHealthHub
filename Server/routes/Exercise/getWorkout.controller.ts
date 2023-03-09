@@ -54,6 +54,7 @@ export const getWorkoutDetails =async (req:Request, res: Response) => {
     return res.status(200).json({mssg:"Success!", workoutToReturn})
 }
 
+//helper function to getWorkoutDetails
 const getWorkoutByID = async( workoutPlanID: string) => {
     const {data, error}: any = await databaseQuery.selectWhere(supabase, 'WorkoutPlansWithExercises','WorkoutPlanID', workoutPlanID,'*');
     console.log(`getWorkoutByID: ${JSON.stringify(data)}`);

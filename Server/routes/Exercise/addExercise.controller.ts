@@ -5,7 +5,9 @@ import supabase from '../../utils/supabaseSetUp';
 import { supabaseQueryClass } from '../../utils/databaseInterface';
 const databaseQuery = new supabaseQueryClass();
 
-//Given a name, return exercise matches from the fitness API
+/**
+ * Given a name, return all exercise matches from the fitness API
+ */
 export const searchForExercise = async(req: Request, res: Response) => {
     const {wordtosearch} = req.headers;
     console.log(`wordtosearch: ${wordtosearch}`);
@@ -44,7 +46,7 @@ export const searchForExercise = async(req: Request, res: Response) => {
 
 
 /**
- * Given a specific name of an exercise, have the API return the details of the closest match
+ * Given a name of an exercise, have the API return the details of the closest match
  */
 export const getExerciseByName =async (req:Request, res: Response) => {
     const {exercisename} = req.headers;
