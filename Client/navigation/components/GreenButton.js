@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, Dimensions } from 'react-native'
 import React from 'react'
 
 const screenWidth = Dimensions.get("window").width;
-const screenHeight = Dimensions.get("window").height
+const screenHeight = Dimensions.get("window").height;
 
 
 export default function GreenButton({marginHorzontal = 10, fontSize = 16, height = screenHeight * 0.2, width = screenWidth * 0.4, text = 'Submit', buttonDisabled = false, buttonFunction}) {

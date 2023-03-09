@@ -72,7 +72,7 @@ export default function TrackExerciseScreen({ navigation }) {
 }
 
 const screenWidth = Dimensions.get("window").width;
-const screenHeight = Dimensions.get("window").height
+const screenHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
     customWorkout: {

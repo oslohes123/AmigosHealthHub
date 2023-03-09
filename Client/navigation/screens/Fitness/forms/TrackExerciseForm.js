@@ -108,7 +108,7 @@ export const formikTrackExerciseForm = ({navigation}) => {
 };
 
 const screenWidth = Dimensions.get("window").width;
-const screenHeight = Dimensions.get("window").height
+const screenHeight = Dimensions.get("window").height;
 
 const modalStyle = {
     modalMain: {

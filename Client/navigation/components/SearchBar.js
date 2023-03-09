@@ -14,7 +14,7 @@ export default function SearchBar({ placeholder = 'Search', customStyle = styles
 }
 
 const screenWidth = Dimensions.get("window").width;
-const screenHeight = Dimensions.get("window").height
+const screenHeight = Dimensions.get("window").height;
 
 const styles = {
   search_bar: {
