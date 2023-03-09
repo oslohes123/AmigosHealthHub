@@ -25,7 +25,7 @@ import GreenButton from '../../../components/GreenButton';
 //     //     )
 // });
 
-export const formikTrackExerciseForm = () => {
+export const formikTrackExerciseForm = ({navigation}) => {
     // const { login, isLoading, error } = useLogin();
     const theme = useContext(themeContext)
     const [warmUpSet, setWarmUpSet] = useState(false)
@@ -96,7 +96,8 @@ export const formikTrackExerciseForm = () => {
                             {GreenButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 12, text: "Add", buttonDisabled: isDisabled, buttonFunction: () => {
                                 console.log("Add To Workout")
                                 // setIsDisabled(!isDisabled)
-                                props.handleSubmit}})}
+                                props.handleSubmit
+                                navigation.pop()}})}
                         </View>
                             {/* {error && <Text className="error">{error}</Text>} */}
                     </View>
@@ -107,7 +108,7 @@ export const formikTrackExerciseForm = () => {
 };
 
 const screenWidth = Dimensions.get("window").width;
-const screenHeight = Dimensions.get("window").height
+const screenHeight = Dimensions.get("window").height;
 
 const modalStyle = {
     modalMain: {

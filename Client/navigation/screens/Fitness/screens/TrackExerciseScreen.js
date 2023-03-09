@@ -1,9 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
-import GreenButton from '../../components/GreenButton';
-import SearchBar from '../../components/SearchBar';
+import GreenButton from '../../../components/GreenButton';
+import SearchBar from '../../../components/SearchBar';
 import { useContext } from 'react';
-import themeContext from '../../theme/themeContext';
+import themeContext from '../../../theme/themeContext';
 
 export default function TrackExerciseScreen({ navigation }) {
     const theme = useContext(themeContext)
@@ -72,7 +72,7 @@ export default function TrackExerciseScreen({ navigation }) {
 }
 
 const screenWidth = Dimensions.get("window").width;
-const screenHeight = Dimensions.get("window").height
+const screenHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
     customWorkout: {
