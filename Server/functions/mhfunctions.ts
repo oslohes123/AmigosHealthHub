@@ -2,6 +2,16 @@ interface Obj {
     [word: string]: any;
   }
 
+import supabase from '../utils/supabaseSetUp'
+import {supabaseQueryClass} from '../utils/databaseInterface'
+
+const supabaseQuery = new supabaseQueryClass();
+// average function
+// words count
+// words to array
+
+
+
 export function arrayOfObjectsToStrings(arr: Obj[]): string[][] {
     const result: string[][] = [];
   

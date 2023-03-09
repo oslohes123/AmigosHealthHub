@@ -1,12 +1,12 @@
 // Configuration
 import { Request, Response } from "express";
-import { wordValues, faceValues, reviewDay } from "../controllers/mhcontroller";
+import { wordValues, faceValues, reviewDay } from "../routes/mhcontroller";
 const express = require('express');
 const mentalHealthRouter = express.Router();
 // const mhFunctions = ('../controllers/mhcontroller.ts');
 
-mentalHealthRouter.get('/wordcloud', wordValues)
-mentalHealthRouter.get('/facegraph', faceValues)
+mentalHealthRouter.get('/', wordValues)
+mentalHealthRouter.get('/', faceValues)
 mentalHealthRouter.get('/reviewday', reviewDay)
 // mentalHealthRouter.get('/workoutPlans', mhFunctions.workoutPlans)
 // fitnessRouter.get('/trackExercises/searchExercise')
