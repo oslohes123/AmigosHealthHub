@@ -4,6 +4,7 @@ import GreenButton from "../../components/GreenButton";
 // import { TextInput } from 'react-native-paper';
 import { useAuthContext } from "../Authentication/context/AuthContext";
 import { addTrackedFood } from "../../../functions/addTrackedFood";
+import { AntDesign } from '@expo/vector-icons'; 
 
 
 export default function FoodDetails({ route, navigation }) {
@@ -163,7 +164,7 @@ export default function FoodDetails({ route, navigation }) {
                     width={100}
                     text={"Update"}
                 />
-                <GreenButton
+                {/* <GreenButton
                     buttonFunction={save}
                     iconName="add-outline"
                     fontSize={23}
@@ -171,7 +172,10 @@ export default function FoodDetails({ route, navigation }) {
                     width={100}
 
                     text={"Delete"}
-                />
+                /> */}
+                <TouchableOpacity onPress={save}>
+                    <AntDesign name="delete" size={24} color="white" />
+                </TouchableOpacity>
             </View>
         </View>
     );
