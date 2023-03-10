@@ -63,8 +63,6 @@ export default function FoodHistory({ navigation }) {
   async function getFood(dateString) {
     let response = await getTrackedFood(dateString,id);
     setFoodData(response);
-    console.log("Data returned");
-    console.log(response);
   }
 
 
@@ -79,14 +77,14 @@ export default function FoodHistory({ navigation }) {
   const handleDayPress = async (day) => {
     setSelectDay(day.dateString);
     console.log('selected day', day);
-    setFoodData(await getFood(day.dateString));
     setViewCalendar(false);
+    await getFood(day.dateString);
     getFood1(day.dateString);
   }
 
   const getFood1 = () => {
-    console.log(foodData.length);
     if (foodData.length > 0) {
+      console.log(foodData);
       console.log("We are here");
       return foodData.map((item, index) => (
         <View key={index}>
@@ -94,13 +92,13 @@ export default function FoodHistory({ navigation }) {
             <Text style={styles.foodText}>
               Name: {item.FoodName}
               {"\n"}
-              Calories: {item.CaloriesInMeal}
+              Total meal Calories: {item.CaloriesInMeal}
               {"\n"}
-              Carbs: {item.Quantity}
+              Quantity: {item.Quantity}
               {"\n"}
-              Protein: {item.Measure}
+              Measure: {item.Measure}
               {"\n"}
-              {/* {item.BrandName? "Brand: " + item.BrandName : null} */}
+              {item.BrandName? "Brand: " + item.BrandName : null}
             </Text>
           </TouchableOpacity>
         </View>
@@ -155,7 +153,7 @@ export default function FoodHistory({ navigation }) {
         )}
         {!viewCalendar && foodData && (
         <View >
-          {getFood1}
+          {getFood1()}
         </View>
         )}
       </ScrollView>
