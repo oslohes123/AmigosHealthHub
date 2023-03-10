@@ -10,7 +10,7 @@ let ip_address: string | undefined = ip_addressENV;
 let port: string | undefined = portENV
 
 export async function addTrackedFood(input: JSON,userID: string) {    
-    let url: string = `http://${ip_address}:${port}/api/food/updateTrackedFood`;
+    let url: string = `http://${ip_address}:${port}/api/food/addTrackedFood`;
     let response: AxiosResponse;
     try {
         const { token } = JSON.parse(
