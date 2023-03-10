@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TextInput, Modal, TouchableOpacity } from "reac
 import GreenButton from "../../components/GreenButton";
 // import { TextInput } from 'react-native-paper';
 import { useAuthContext } from "../Authentication/context/AuthContext";
-import { addTrackedFood } from "../../../functions/updateTrackedFood";
+import { addTrackedFood } from "../../../functions/addTrackedFood";
 
 
 export default function FoodDetails({ route, navigation }) {
