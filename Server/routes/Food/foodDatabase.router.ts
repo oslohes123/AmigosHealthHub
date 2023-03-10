@@ -1,6 +1,6 @@
 import { checkToken } from '../../middleware/checkToken'
 import RouteNamesClass from '../../utils/routeNamesClass';
-import { foodUpdate,getTrackedFood } from './foodDatabase.controller';
+import { addTrackedFood,getTrackedFood } from './foodDatabase.controller';
 
 const express = require('express');
 const foodDatabaseRouter = express.Router();
@@ -10,7 +10,7 @@ let routeNames = new RouteNamesClass();
 foodDatabaseRouter.use(checkToken); //Routes are protected.
 
 // This route goes to /api/food/updateTrackedFood
-foodDatabaseRouter.post(routeNames.partialFoodUpdateURL, foodUpdate)
+foodDatabaseRouter.post(routeNames.partialFoodUpdateURL, addTrackedFood)
 
 foodDatabaseRouter.get(routeNames.partialFoodDatabaseGetURL, getTrackedFood)
 

@@ -7,10 +7,9 @@ const databaseQuery = new supabaseQueryClass();
 
 
 
-export const foodUpdate = async (req: Request, res: Response) => {
+export const addTrackedFood = async (req: Request, res: Response) => {
 
     const Data: FoodInput = req.body;
-    let foodID;
     // First match to see if the food is already in the Food table
     const { data: matchingData, error: matchingDataError }: any = await databaseQuery.match(
         supabase,
@@ -36,6 +35,7 @@ export const foodUpdate = async (req: Request, res: Response) => {
                     BrandName: Data.input.foodData.brand_name,
                     Fat: Data.input.foodData.fat,
                     Carbohydrate: Data.input.foodData.carbohydrates,
+                    AltMeasures: Data.input.foodData.alt_measures,
                 }
             );
             if (insertFoodError) {
