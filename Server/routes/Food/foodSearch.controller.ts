@@ -9,6 +9,7 @@ import transformInstantSearchInterface from "../../utils/Food/parseInstantSearch
 import transformNutrientSearchInterface from "../../utils/Food/parseNutritionSearch";
 import genericSearchInterface from "../../interfaces/Food/genericSearchInterface";
 import specificFoodNutritionInterface from "../../interfaces/Food/specificFoodNutritionInterface";
+import { isBranded } from "../../utils/Food/genericOrBrandedIdentifier";
 
 export const generalSearch = async (req: Request, res: Response) => {
   // const {value:inputData,code}:SearchCriteria = req.query.value
@@ -28,7 +29,6 @@ export const generalSearch = async (req: Request, res: Response) => {
     return res.status(500).json({ message: "X_APP_KEY is undefined" });
   }
 
-  let regex = /\d/;
   switch (clientCode) {
     case clientSearchMethods.genericSearch:
       try {
@@ -41,7 +41,7 @@ export const generalSearch = async (req: Request, res: Response) => {
       break;
     case clientSearchMethods.specificSearch:
       // If the input data contains a number or is greater or equal to 24 characters, it is a branded search
-      if (regex.test(inputData) || inputData.length >= 24) {
+      if (isBranded(inputData)) {
         try {
           data = await brandedSearch(inputData);
           result = transformBrandedSearchInterface(data);
