@@ -8,7 +8,7 @@ import { getTrackedFood } from '../../../functions/getTrackedFood';
 import { useAuthContext } from '../Authentication/context/AuthContext';
 import { useEffect } from 'react';
 import { isBranded } from './../../../functions/genericOrBrandedIdentifier';
-import { specificSearch } from '../../../functions/foodSearch';
+import { specificSearch } from '../../../functions/searchFood';
 
 
 export default function FoodHistory({ navigation }) {

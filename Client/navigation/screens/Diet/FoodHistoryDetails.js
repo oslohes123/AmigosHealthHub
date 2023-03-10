@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TextInput, Modal, TouchableOpacity } from "reac
 import GreenButton from "../../components/GreenButton";
 // import { TextInput } from 'react-native-paper';
 import { useAuthContext } from "../Authentication/context/AuthContext";
-import { addTrackedFood } from "../../../functions/updateTrackedFood";
+import { addTrackedFood } from "../../../functions/addTrackedFood";
 
 
 export default function FoodDetails({ route, navigation }) {
@@ -20,11 +20,7 @@ export default function FoodDetails({ route, navigation }) {
         serving_qty: servingQty,
         serving_unit: servingUnit,
         alt_measures: altMeasures,
-    } = route.params.foodData;
-
-    const isHistory = route.params.isHistory;
-    
-    
+    } = route.params.foodData;    
 
     const [quantity, setQuantity] = useState(servingQty.toString())
 
@@ -45,7 +41,7 @@ export default function FoodDetails({ route, navigation }) {
         
     }
 
-    async function save(){
+    async function update(){
         let statusCode = await addTrackedFood(updatedFoodInput,id)
         console.log(statusCode);
     }
