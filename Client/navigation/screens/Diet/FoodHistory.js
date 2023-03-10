@@ -14,6 +14,9 @@ import { specificSearch } from '../../../functions/foodSearch';
 export default function FoodHistory({ navigation }) {
 
   const [foodData, setFoodData] = useState([]);
+  const [viewCalendar, setViewCalendar] = useState(false);
+  const [selectDay, setSelectDay] = useState(new Date().toISOString().split('T')[0]);
+
   const currentDate = new Date();
   const markedDate = {
     [currentDate.toISOString().split('T')[0]]: {
@@ -63,56 +66,25 @@ export default function FoodHistory({ navigation }) {
   const { user } = useAuthContext();
   const id = user.id;
 
-  async function getFood(dateString) {
-    let response = await getTrackedFood(dateString, id);
-    setFoodData(response);
-  }
 
-
-  const [viewCalendar, setViewCalendar] = useState(false);
-  const [selectDay, setSelectDay] = useState(new Date().toISOString().split('T')[0]);
+  useEffect(() => {
+    setViewCalendar(false);
+    async function gettingTrackedFood() {
+      let response = await getTrackedFood(selectDay, id);
+      setFoodData(response);
+    }
+    gettingTrackedFood();
+  },[selectDay])
 
 
   const toggleCalendar = () => {
     setViewCalendar(!viewCalendar);
   }
 
-  const handleDayPress = async (day) => {
-    setSelectDay(day.dateString);
-    console.log('selected day', day);
-    setViewCalendar(false);
-    await getFood(day.dateString);
-    getFood1(day.dateString);
-  }
   async function foodPress(foodID) {
-    navigation.navigate('Food History Details', { foodData: await specificSearch(foodID), foodIdentifier: foodID , isHistory: true});
+    navigation.navigate('Food History Details', { foodData: await specificSearch(foodID), foodIdentifier: foodID});
   }
 
-  const getFood1 = () => {
-    if (foodData.length > 0) {
-      console.log(foodData);
-      console.log("We are here");
-      return foodData.map((item, index) => (
-        <View key={index}>
-          <TouchableOpacity onPress={() => foodPress(item.FoodID)}>
-            <Text style={styles.foodText}>
-              Name: {item.FoodName}
-              {"\n"}
-              Total meal Calories: {item.CaloriesInMeal}
-              {"\n"}
-              Quantity: {item.Quantity}
-              {"\n"}
-              Measure: {item.Measure}
-              {"\n"}
-              {item.BrandName ? "Brand: " + item.BrandName : null}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      ));
-    } else {
-      return <Text style={styles.foodText}>No food item consumed on this day</Text>;
-    }
-  };
 
   const pressHandler = () => {
     navigation.navigate('Nutrients');
@@ -152,14 +124,30 @@ export default function FoodHistory({ navigation }) {
           <Calendar
             style={styles.calendar}
             onVisibleMonthsChange={(months) => { console.log('now these months are visible', months); }}
-            onDayPress={handleDayPress}
+            onDayPress={(day) => setSelectDay(day.dateString)}
             maxDate={new Date().toISOString().split('T')[0]}
             markedDates={markedDate}
           />
         )}
         {!viewCalendar && foodData && (
           <View >
-            {getFood1()}
+            {foodData.length > 0 ? 
+            foodData.map((item, index) => (
+              <View key={index}>
+                <TouchableOpacity onPress={() => foodPress(item.FoodID)}>
+                  <Text style={styles.foodText}>
+                    Name: {item.FoodName}
+                    {"\n"}
+                    Total meal Calories: {item.CaloriesInMeal}
+                    {"\n"}
+                    Quantity: {item.Quantity}
+                    {"\n"}
+                    Measure: {item.Measure}
+                    {"\n"}
+                    {item.BrandName ? "Brand: " + item.BrandName : null}
+                  </Text>
+                </TouchableOpacity>
+              </View>)): <Text style={styles.foodText}>No food item consumed on this day</Text>}
           </View>
         )}
       </ScrollView>
