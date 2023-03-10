@@ -20,7 +20,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
         async function fetchWorkoutDetails(item) {
             const data = await getWorkoutDetails(item)
             console.log(`workout data: ${JSON.stringify(data)}`)
-            setWorkoutDetails(data.workoutToReturn)
+            setWorkoutDetails(data)
         }
         console.log(`Route Params: ${JSON.stringify(route.params)}`)
         fetchWorkoutDetails(route.params)
@@ -46,164 +46,68 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                 </SafeAreaView>
             </Modal>
 
-            <Text style={[styles.text, {color: theme.color}]}>Workout_Name</Text>
+            <Text style={[styles.text, {color: theme.color}]}>{route.params}</Text>
+
+            {console.log(`Workout Details: ${workoutDetails}`)}
 
             <ScrollView alignContent={'center'} borderColor={theme.color} borderRadius={26} borderWidth={2} showsVerticalScrollIndicator={false} alignItems='center' style={{margin: 10, width: screenWidth * 0.9}}>
-                <TouchableWithoutFeedback style={{padding: 40}}>
-                    <View style={[styles.exerciseSection, {borderColor: theme.color}]}>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                            <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 20, padding: 5}}>Exercise Name</Text>
-                            <IconButton icon="information" iconColor={theme.color} size={20} onPress={() => {
-                                setInstructionModalData("Instruction 1")
-                                setModalVisible(!modalVisible)}}/>
-                        </View>
-                        <View style={{justifyContent: 'space-evenly', padding: 5}}>
-                            <Text style={{color: theme.color, fontSize: 10}}>Muscle</Text>
-                            <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}}>MUSCLE</Text>
-                        </View>
-                        <View style={{justifyContent: 'space-evenly', padding: 5}}>
-                            <Text style={{color: theme.color, fontSize: 10}}>Equiptment</Text>
-                            <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}}>THIS, THAT, OTHER, THIS IS ALSO IN THE EQUIPTMENT LIST</Text>
-                        </View>
-                        <View style={styles.statsRows}>
-                            <Text style={[styles.statsText, {color: theme.color}]}>Sets 0</Text>
-                            <TextInput 
-                                style={[styles.textInput, {borderColor: theme.color}]} 
-                                placeholder='Sets Completed' 
-                                color={theme.color}
-                                placeholderTextColor={theme.color} 
-                                keyboardType={'numeric'} 
-                                textAlign={'center'}
+                {workoutDetails.map((item) => (
+                    <TouchableWithoutFeedback style={{padding: 40}}>
+                        <View style={[styles.exerciseSection, {borderColor: theme.color}]}>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 20, padding: 5}}>{item.exercise.name}</Text>
+                                <IconButton icon="information" iconColor={theme.color} size={20} key={item} onPress={() => {
+                                    console.log(`instructions: ${item.exercise.instructions}`)
+                                    setInstructionModalData(item.exercise.instructions)
+                                    setModalVisible(!modalVisible)}}/>                        
+                            </View>
+                            <View style={{justifyContent: 'space-evenly', padding: 5}}>
+                                <Text style={{color: theme.color, fontSize: 10}}>Muscle</Text>
+                                <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}}>{item.exercise.muscle}</Text>
+                            </View>
+                            <View style={{justifyContent: 'space-evenly', padding: 5}}>
+                                <Text style={{color: theme.color, fontSize: 10}}>Equipment</Text>
+                                {console.log(`item equipment: ${item.exercise.equipment}`)}
+                                <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}}>{item.exercise.equipment ? "n/a" : item.exercise.equipment}</Text>
+                            </View>
+                            <View style={styles.statsRows}>
+                                {console.log(`sets: ${item.sets}`)}
+                                <Text style={[styles.statsText, {color: theme.color}]}>Sets {item.sets}</Text>
+                                <TextInput 
+                                    style={[styles.textInput, {borderColor: theme.color}]} 
+                                    placeholder='Sets Completed' 
+                                    color={theme.color}
+                                    placeholderTextColor={theme.color} 
+                                    keyboardType={'numeric'} 
+                                    textAlign={'center'}
+                                    />
+                            </View>
+                            <View style={styles.statsRows}>
+                                <Text style={[styles.statsText, {color: theme.color}]}>Reps 0</Text>
+                                <TextInput 
+                                    style={[styles.textInput, {borderColor: theme.color}]} 
+                                    placeholder='Reps Completed' 
+                                    color={theme.color}
+                                    placeholderTextColor={theme.color} 
+                                    keyboardType={'numeric'} 
+                                    textAlign={'center'}
                                 />
+                            </View>
+                            <View style={styles.statsRows}>
+                                <Text style={[styles.statsText, {color: theme.color}]}>Calories {item.calories}</Text>
+                                <TextInput 
+                                    style={[styles.textInput, {borderColor: theme.color}]} 
+                                    placeholder='Reps Completed' 
+                                    color={theme.color}
+                                    placeholderTextColor={theme.color} 
+                                    keyboardType={'numeric'} 
+                                    textAlign={'center'}
+                                />
+                            </View>
                         </View>
-                        <View style={styles.statsRows}>
-                            <Text style={[styles.statsText, {color: theme.color}]}>Reps 0</Text>
-                            <TextInput 
-                                style={[styles.textInput, {borderColor: theme.color}]} 
-                                placeholder='Reps Completed' 
-                                color={theme.color}
-                                placeholderTextColor={theme.color} 
-                                keyboardType={'numeric'} 
-                                textAlign={'center'}
-                            />
-                        </View>
-                        <View style={styles.statsRows}>
-                            <Text style={[styles.statsText, {color: theme.color}]}>Calories 0</Text>
-                            <TextInput 
-                                style={[styles.textInput, {borderColor: theme.color}]} 
-                                placeholder='Reps Completed' 
-                                color={theme.color}
-                                placeholderTextColor={theme.color} 
-                                keyboardType={'numeric'} 
-                                textAlign={'center'}
-                            />
-                        </View>
-                    </View>
-                </TouchableWithoutFeedback>
+                    </TouchableWithoutFeedback>
+                ))}
 
-                <TouchableWithoutFeedback style={{padding: 40}}>
-                    <View style={[styles.exerciseSection, {borderColor: theme.color}]}>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                            <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 20, padding: 5}}>Exercise Name</Text>
-                            <IconButton icon="information" iconColor={theme.color} size={20} onPress={() => {
-                                setInstructionModalData("Instruction 2")
-                                setModalVisible(!modalVisible)}}/>
-                        </View>
-                        <View style={{justifyContent: 'space-evenly', padding: 5}}>
-                            <Text style={{color: theme.color, fontSize: 10}}>Muscle</Text>
-                            <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}}>MUSCLE</Text>
-                        </View>
-                        <View style={{justifyContent: 'space-evenly', padding: 5}}>
-                            <Text style={{color: theme.color, fontSize: 10}}>Equiptment</Text>
-                            <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}}>THIS, THAT, OTHER, THIS IS ALSO IN THE EQUIPTMENT LIST</Text>
-                        </View>
-                        <View style={styles.statsRows}>
-                            <Text style={[styles.statsText, {color: theme.color}]}>Sets 0</Text>
-                            <TextInput 
-                                style={[styles.textInput, {borderColor: theme.color}]} 
-                                placeholder='Sets Completed' 
-                                color={theme.color}
-                                placeholderTextColor={theme.color} 
-                                keyboardType={'numeric'} 
-                                textAlign={'center'}
-                                />
-                        </View>
-                        <View style={styles.statsRows}>
-                            <Text style={[styles.statsText, {color: theme.color}]}>Reps 0</Text>
-                            <TextInput 
-                                style={[styles.textInput, {borderColor: theme.color}]} 
-                                placeholder='Reps Completed' 
-                                color={theme.color}
-                                placeholderTextColor={theme.color} 
-                                keyboardType={'numeric'} 
-                                textAlign={'center'}
-                            />
-                        </View>
-                        <View style={styles.statsRows}>
-                            <Text style={[styles.statsText, {color: theme.color}]}>Calories 0</Text>
-                            <TextInput 
-                                style={[styles.textInput, {borderColor: theme.color}]} 
-                                placeholder='Reps Completed' 
-                                color={theme.color}
-                                placeholderTextColor={theme.color} 
-                                keyboardType={'numeric'} 
-                                textAlign={'center'}
-                            />
-                        </View>
-                    </View>
-                </TouchableWithoutFeedback>
-
-                <TouchableWithoutFeedback style={{padding: 40}}>
-                    <View style={[styles.exerciseSection, {borderColor: theme.color}]}>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                            <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 20, padding: 5}}>Exercise Name</Text>
-                            <IconButton icon="information" iconColor={theme.color} size={20} onPress={() => {
-                                setInstructionModalData("Instruction 3")
-                                setModalVisible(!modalVisible)}}/>                        
-                        </View>
-                        <View style={{justifyContent: 'space-evenly', padding: 5}}>
-                            <Text style={{color: theme.color, fontSize: 10}}>Muscle</Text>
-                            <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}}>MUSCLE</Text>
-                        </View>
-                        <View style={{justifyContent: 'space-evenly', padding: 5}}>
-                            <Text style={{color: theme.color, fontSize: 10}}>Equiptment</Text>
-                            <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}}>THIS, THAT, OTHER, THIS IS ALSO IN THE EQUIPTMENT LIST</Text>
-                        </View>
-                        <View style={styles.statsRows}>
-                            <Text style={[styles.statsText, {color: theme.color}]}>Sets 0</Text>
-                            <TextInput 
-                                style={[styles.textInput, {borderColor: theme.color}]} 
-                                placeholder='Sets Completed' 
-                                color={theme.color}
-                                placeholderTextColor={theme.color} 
-                                keyboardType={'numeric'} 
-                                textAlign={'center'}
-                                />
-                        </View>
-                        <View style={styles.statsRows}>
-                            <Text style={[styles.statsText, {color: theme.color}]}>Reps 0</Text>
-                            <TextInput 
-                                style={[styles.textInput, {borderColor: theme.color}]} 
-                                placeholder='Reps Completed' 
-                                color={theme.color}
-                                placeholderTextColor={theme.color} 
-                                keyboardType={'numeric'} 
-                                textAlign={'center'}
-                            />
-                        </View>
-                        <View style={styles.statsRows}>
-                            <Text style={[styles.statsText, {color: theme.color}]}>Calories 0</Text>
-                            <TextInput 
-                                style={[styles.textInput, {borderColor: theme.color}]} 
-                                placeholder='Reps Completed' 
-                                color={theme.color}
-                                placeholderTextColor={theme.color} 
-                                keyboardType={'numeric'} 
-                                textAlign={'center'}
-                            />
-                        </View>
-                    </View>
-                </TouchableWithoutFeedback>
                     
             </ScrollView>
             <View style={styles.bottomButtons}>
