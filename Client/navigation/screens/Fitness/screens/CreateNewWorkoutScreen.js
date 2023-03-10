@@ -124,7 +124,7 @@ export default function CreateNewWorkoutScreen({ navigation }) {
 
             <Text style={[styles.customWorkout, { color: theme.color }]}>Exercises</Text>
 
-            <ScrollView style={[styles.verticalScroll, {borderColor: theme.color}]}>
+            <ScrollView style={[styles.verticalScroll, {borderColor: theme.color}]} bounces={false}>
                 {results.map((item) => (
                     <TouchableOpacity onPress={() => {console.log(item)}} key={item}>
                         <Text style={[styles.resultsText, { borderColor: theme.color, color: theme.color }]} key={item}>{item}</Text>

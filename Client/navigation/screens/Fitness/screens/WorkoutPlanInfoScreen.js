@@ -6,7 +6,7 @@ import GreenButton from '../../../components/GreenButton'
 import RedButton from '../../../components/RedButton'
 import CommonButton from '../../../components/CommonButton'
 
-export default function WorkoutPlanInfoScreen({ navigation }) {
+export default function WorkoutPlanInfoScreen({ route, navigation }) {
     const theme = useContext(themeContext) 
     const [instructionModalData, setInstructionModalData] = useState('No Instructions Available')
     const [modalVisible, setModalVisible] = useState(false)
