@@ -81,3 +81,30 @@ export const getTrackedFood = async (req: Request, res: Response) => {
         res.status(200).send(returnData);
     }
 }
+
+interface updateTrackedFood{
+    userID: string;
+    quantity: number;
+    measure: string;
+}
+
+export const updateTrackedFood = async (req: Request, res: Response) => {
+
+    const {Quantity, Measure, UserID} = req.body;
+
+    const { data: returnData, error }: any = await databaseQuery.update(
+        supabase,
+        "Tracked Food",
+        { "Quantity": Quantity, "Measure": Measure },
+        "UserID",
+        UserID
+    )
+    if (error) {
+        console.log("Error updating tracked food");
+        res.status(500).send(error);
+    } else {
+        res.status(200).send(returnData);
+    }
+        
+
+}
