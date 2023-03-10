@@ -26,7 +26,7 @@ export default function FoodDetails({ route, navigation }) {
     
     
 
-    const [quantity, setQuantity] = React.useState(servingQty.toString())
+    const [quantity, setQuantity] = useState(servingQty.toString())
 
     const [selectedServingUnit, setSelectedServingUnit] = useState(servingUnit.toString())
     const [visible, setVisible] = useState(false)
@@ -173,7 +173,7 @@ export default function FoodDetails({ route, navigation }) {
                     fontSize={23}
                     height={70}
                     width={100}
-                    
+
                     text={"Delete"}
                 />
             </View>
