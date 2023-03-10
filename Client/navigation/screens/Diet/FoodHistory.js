@@ -7,6 +7,9 @@ import { PieChart } from "react-native-chart-kit";
 import { getTrackedFood } from '../../../functions/getTrackedFood';
 import { useAuthContext } from '../Authentication/context/AuthContext';
 import { useEffect } from 'react';
+import { isBranded } from './../../../functions/genericOrBrandedIdentifier';
+import { specificSearch } from '../../../functions/foodSearch';
+
 
 export default function FoodHistory({ navigation }) {
 
@@ -61,7 +64,7 @@ export default function FoodHistory({ navigation }) {
   const id = user.id;
 
   async function getFood(dateString) {
-    let response = await getTrackedFood(dateString,id);
+    let response = await getTrackedFood(dateString, id);
     setFoodData(response);
   }
 
@@ -81,6 +84,9 @@ export default function FoodHistory({ navigation }) {
     await getFood(day.dateString);
     getFood1(day.dateString);
   }
+  async function foodPress(foodID) {
+    navigation.navigate('Food History Details', { foodData: await specificSearch(foodID), foodIdentifier: foodID , isHistory: true});
+  }
 
   const getFood1 = () => {
     if (foodData.length > 0) {
@@ -88,7 +94,7 @@ export default function FoodHistory({ navigation }) {
       console.log("We are here");
       return foodData.map((item, index) => (
         <View key={index}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => foodPress(item.FoodID)}>
             <Text style={styles.foodText}>
               Name: {item.FoodName}
               {"\n"}
@@ -98,7 +104,7 @@ export default function FoodHistory({ navigation }) {
               {"\n"}
               Measure: {item.Measure}
               {"\n"}
-              {item.BrandName? "Brand: " + item.BrandName : null}
+              {item.BrandName ? "Brand: " + item.BrandName : null}
             </Text>
           </TouchableOpacity>
         </View>
@@ -152,9 +158,9 @@ export default function FoodHistory({ navigation }) {
           />
         )}
         {!viewCalendar && foodData && (
-        <View >
-          {getFood1()}
-        </View>
+          <View >
+            {getFood1()}
+          </View>
         )}
       </ScrollView>
     </View>
@@ -206,8 +212,8 @@ const styles = StyleSheet.create({
     height: 400,
   },
   calendar: {
-    width: '90%', 
-    alignSelf: 'center', 
+    width: '90%',
+    alignSelf: 'center',
     borderTopEndRadius: 40,
     borderTopLeftRadius: 40,
     //backgroundColor: 'black'
