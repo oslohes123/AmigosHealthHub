@@ -1,15 +1,31 @@
 import { View, Text, SafeAreaView, TextInput, TouchableWithoutFeedback, ScrollView, Dimensions, Modal } from 'react-native'
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import themeContext from '../../../theme/themeContext'
 import { IconButton } from 'react-native-paper'
 import GreenButton from '../../../components/GreenButton'
 import RedButton from '../../../components/RedButton'
 import CommonButton from '../../../components/CommonButton'
 
+import { useGetWorkoutDetails } from '../hooks/useGetWorkoutDetails'
+
 export default function WorkoutPlanInfoScreen({ route, navigation }) {
     const theme = useContext(themeContext) 
     const [instructionModalData, setInstructionModalData] = useState('No Instructions Available')
     const [modalVisible, setModalVisible] = useState(false)
+
+    const [workoutDetails, setWorkoutDetails] = useState([])
+    const { getWorkoutDetails, isLoading, error } = useGetWorkoutDetails();
+
+    useEffect(() => {
+        async function fetchWorkoutDetails(item) {
+            const data = await getWorkoutDetails(item)
+            console.log(`workout data: ${JSON.stringify(data)}`)
+            setWorkoutDetails(data.workoutToReturn)
+        }
+        console.log(`Route Params: ${JSON.stringify(route.params)}`)
+        fetchWorkoutDetails(route.params)
+    }, [])
+
     return (
         <SafeAreaView style={{flex: 1, justifyContent: 'space-evenly', maxHeight: screenHeight, alignItems:'center', paddingVertical: 10, backgroundColor: theme.background}}>
 

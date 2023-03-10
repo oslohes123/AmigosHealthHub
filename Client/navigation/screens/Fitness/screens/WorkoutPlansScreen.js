@@ -10,10 +10,8 @@ import { useGetWorkoutDetails } from '../hooks/useGetWorkoutDetails';
 
 export default function WorkoutPlansScreen({ navigation }) {
     const theme = useContext(themeContext)
-    const { getAllWorkoutNames } = useGetAllWorkoutNames();
+    const { getAllWorkoutNames, isLoading, error } = useGetAllWorkoutNames();
     const [results, setResults] = useState([])
-    const [workoutDetails, setWorkoutDetails] = useState([])
-    const { getWorkoutDetails, isLoading, error } = useGetWorkoutDetails();
     
     useEffect(() => {
         async function fetchData() {
@@ -28,13 +26,6 @@ export default function WorkoutPlansScreen({ navigation }) {
         }
         fetchData()
     }, [])  
-    
-
-    async function fetchWorkoutDetails(item) {
-        const data = await getWorkoutDetails(item)
-        console.log(`workout data: ${data}`)
-        setWorkoutDetails(data.workoutToReturn)
-    }
 
     return (
         <SafeAreaView style={[styles.container, {backgroundColor: theme.background}]}>
@@ -54,8 +45,7 @@ export default function WorkoutPlansScreen({ navigation }) {
                 
                 {results && results.map((item) => (
                     <TouchableOpacity key={item} onPress={() => {
-                        fetchWorkoutDetails(item)
-                        navigation.navigate("Workout Plan Information", workoutDetails)
+                        navigation.navigate("Workout Plan Information", item)
                     }}> 
                         <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]} key={item}>{item}</Text>
                     </TouchableOpacity>
