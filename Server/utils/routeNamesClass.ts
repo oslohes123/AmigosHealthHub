@@ -38,9 +38,19 @@ export default class RouteNamesClass{
     // Food Update Routes
     readonly partialFoodUpdateURL = '/updateTrackedFood'
     readonly fullFoodUpdateURL = this.foodBaseURL + this.partialFoodUpdateURL
+
+    // Food Add Routes
+    readonly partialFoodAddURL = '/addTrackedFood'
+    readonly fullFoodAddURL = this.foodBaseURL + this.partialFoodAddURL
+
     
     // Food database get routes
     readonly partialFoodDatabaseGetURL = '/getTrackedFood/:date.:userID'
     readonly fullFoodDatabaseGetURL = this.foodBaseURL + this.partialFoodDatabaseGetURL 
+
+    // Food database delete routes
+    readonly partialFoodDatabaseDeleteURL = '/deleteTrackedFood/:date.:userID'
+    readonly fullFoodDatabaseDeleteURL = this.foodBaseURL + this.partialFoodDatabaseDeleteURL
+    
 
 }
