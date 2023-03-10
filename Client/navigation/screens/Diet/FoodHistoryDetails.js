@@ -42,6 +42,16 @@ export default function FoodDetails({ route, navigation }) {
         
     }
 
+    const pressHandler = () => {
+        navigation.navigate('Food History');
+        alert('Food Updated successfully');
+    }
+
+    const pressHandler1 = () => {
+        navigation.navigate('Food History');
+        alert('Food Deleted successfully');
+    }
+
     async function update(){
         let statusCode = await addTrackedFood(updatedFoodInput,id)
         console.log(statusCode);
@@ -57,14 +67,6 @@ export default function FoodDetails({ route, navigation }) {
         // navigation.navigate("Diet Dashboard");
 
     }
-
-
-
-
-
-    
-    //   console.log(route.params);
-
 
     return (
         <View style={styles.container}>
@@ -132,7 +134,6 @@ export default function FoodDetails({ route, navigation }) {
                                     }}>
                                     <Text>{selectedServingUnit}</Text>
                                 </TouchableOpacity>
-
                             }
                         </View>
                     </Modal>
@@ -157,24 +158,15 @@ export default function FoodDetails({ route, navigation }) {
             </View> : null}
             <View style={styles.buttonContainer}>
                 <GreenButton
-                    buttonFunction={save}
+                    buttonFunction={pressHandler}
                     iconName="add-outline"
                     fontSize={23}
                     height={70}
                     width={100}
                     text={"Update"}
                 />
-                {/* <GreenButton
-                    buttonFunction={save}
-                    iconName="add-outline"
-                    fontSize={23}
-                    height={70}
-                    width={100}
-
-                    text={"Delete"}
-                /> */}
-                <TouchableOpacity onPress={save}>
-                    <AntDesign name="delete" size={24} color="white" />
+                <TouchableOpacity onPress={pressHandler1}>
+                    <AntDesign name="delete" size={40} color="white" />
                 </TouchableOpacity>
             </View>
         </View>
@@ -228,6 +220,9 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         marginTop: 10,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     dropDownContainer: {
         borderWidth: 2,
