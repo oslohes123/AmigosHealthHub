@@ -40,19 +40,22 @@ export function getFaces(arr: string[][]): number[] {
 
     for (const insideArr of arr) {
         if (insideArr.length > 0) {
-        try{
+//        try{
             result.push(parseFloat(insideArr[0]));
+//        }
+//        catch(Error: unknown){
+            
         }
-        catch(Error: unknown){
-            // ...
-        }
-        }
+//        }
     }
 
     return result;
 }
 
 export function average(arr: number[]): number{
+    if(arr.length == 0){
+        return 0
+    }
     const sum = arr.reduce((acc, val) => acc + val, 0);
     const average = sum/arr.length;
     return average
