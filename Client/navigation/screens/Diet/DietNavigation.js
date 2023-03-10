@@ -7,6 +7,8 @@ import FoodDetails from './FoodDetails';
 // import Settings from './Settings';
 import FoodHistory from './FoodHistory';
 
+import foodHistoryDetails from './FoodHistoryDetails';
+
 const Stack = createStackNavigator();
 
 //Screen Names
@@ -16,6 +18,7 @@ const nutrientsName = 'Nutrients'
 // const foodSearchName = 'Food Search'
 const foodDetailsName = 'Food Details'
 const foodHistoryName = 'Food History'
+const foodHistoryDetailsName = "Food History Details"
 
 export default function DietNavigation({ navigation }) {
     return (
@@ -26,6 +29,8 @@ export default function DietNavigation({ navigation }) {
             {/* <Stack.Screen name={foodSearchName} component={FoodSearch} /> */}
             <Stack.Screen name={foodDetailsName} component={FoodDetails} />
             <Stack.Screen name={foodHistoryName} component={FoodHistory} />
+            <Stack.Screen name={foodHistoryDetailsName} component={foodHistoryDetails} />
+
         </Stack.Navigator>
     );
 }
