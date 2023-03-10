@@ -178,14 +178,15 @@ const styles = StyleSheet.create({
   },
   foodText: {
     fontSize: 20,
-    color: 'white',
+    color: 'black',
     fontWeight: 'bold',
     padding: 10,
-    borderRadius: 15,
-    borderWidth: 1,
-    borderColor: 'white',
+    borderRadius: 25,
+    //borderWidth: 1,
+    //borderColor: 'white',
     alignSelf: 'center',
-    marginVertical: '5%'
+    marginVertical: '5%',
+    backgroundColor: '#3eda9b',
   },
   icon: {
     marginLeft: '4%'
