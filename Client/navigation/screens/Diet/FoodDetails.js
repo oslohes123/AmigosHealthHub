@@ -47,7 +47,7 @@ export default function FoodDetails({ route, navigation }) {
     async function save(){
         let statusCode = await addTrackedFood(updatedFoodInput,id)
         console.log(statusCode);
-        navigation.navigate("Diet Dashboard");
+        navigation.navigate('Diet Dashboard')
     }
 
     
