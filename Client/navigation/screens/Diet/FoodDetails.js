@@ -49,19 +49,7 @@ export default function FoodDetails({ route, navigation }) {
         console.log(statusCode);
     }
 
-    const isNum = (val) => {
-        // Tests whether the number is a number
-        return /^\d+$/.test(val);
-    }
-
-    if (isNum(quantity)) {
-
-        // navigation.navigate("Diet Dashboard");
-
-    }
-
-
-
+    
 
 
     
