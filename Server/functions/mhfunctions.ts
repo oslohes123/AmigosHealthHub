@@ -14,7 +14,10 @@ const supabaseQuery = new supabaseQueryClass();
 
 export function arrayOfObjectsToStrings(arr: Obj[]): string[][] {
     const result: string[][] = [];
-  
+    if(arr.length == 1){
+      result.push(arr[0].stringify)
+      return result
+    }
     for (const obj of arr) {
       const values = Object.values(obj).map((value) => String(value));
       result.push(values);
@@ -24,7 +27,15 @@ export function arrayOfObjectsToStrings(arr: Obj[]): string[][] {
 
 export function getWords(arr: string[][]): string[] {
     const result: string[] = [];
-
+    if(arr.length == 1){
+      if(arr[0].length == 0){
+        return []
+      }
+      else{
+        result.push((arr[0][0]))
+        return result
+      }
+    }
     for (const insideArr of arr) {
         if (insideArr.length > 0) {
         result.push(insideArr[0]);
@@ -37,7 +48,15 @@ export function getWords(arr: string[][]): string[] {
 
 export function getFaces(arr: string[][]): number[] {
     const result: number[] = [];
-
+    if(arr.length == 1){
+      if(arr[0].length == 0){
+        return []
+      }
+      else{
+        result.push(parseFloat(arr[0][0]))
+        return result
+      }
+    }
     for (const insideArr of arr) {
         if (insideArr.length > 0) {
 //        try{
@@ -46,6 +65,7 @@ export function getFaces(arr: string[][]): number[] {
 //        catch(Error: unknown){
             
         }
+        else continue
 //        }
     }
 
@@ -55,6 +75,9 @@ export function getFaces(arr: string[][]): number[] {
 export function average(arr: number[]): number{
     if(arr.length == 0){
         return 0
+    }
+    if(arr.length == 1){
+      return 1
     }
     const sum = arr.reduce((acc, val) => acc + val, 0);
     const average = sum/arr.length;
@@ -69,6 +92,10 @@ export function getOccurrences(arr: string[], v: string): number{
 
 export function wordFreq(arr: string[]): Map<string, number> {
     const freqMap = new Map<string, number>();
+    if(arr.length == 1){
+      freqMap.set(arr[0], 1)
+      return freqMap
+    }
     for (const word of arr) {
       freqMap.set(word, getOccurrences(arr, word));
     }

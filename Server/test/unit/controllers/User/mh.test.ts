@@ -1,7 +1,7 @@
 const test = require('ava');
 import { Request, Response } from 'express';
 const sinon = require('sinon');
-import { faceValues, wordValues } from "../../../../controllers/mhcontroller";
+import { wordValues } from "../../../../controllers/mhcontroller";
 import { supabaseQueryClass } from '../../../../utils/databaseInterface';
 import supabase from '../../../../utils/supabaseSetUp';
 import {v4 as uuidv4} from 'uuid';
@@ -31,7 +31,7 @@ test.before(async (t : any) => {
     // randomEmail = `${uuid}@gmail.com`
     
     // const hashedPassword = await createHashedPassword("CorrectPassword123!")
-    const {data, error}:any = await supabaseQuery.insert(supabase, 'Mental Health',{face_id: "4", created_at: '2023-03-01 00:00:00+00', todays_word: 'Happy'});
+    const {data, error}:any = await supabaseQuery.insert(supabase, 'Mental Health',{user_id: uuid, face_id: "4", created_at: '2020-03-01 00:00:00+00', todays_word: 'Happy'});
     
     if(error){
         t.fail()
@@ -42,6 +42,7 @@ test.before(async (t : any) => {
 
 test.after(async() => {
     await supabaseQuery.deleteFrom(supabase, 'User', 'email', randomEmail);
+    await supabaseQuery.deleteFrom(supabase, 'Mental Health', 'user_id', uuid);
 })
 
 const mockResponse = () => {
@@ -56,11 +57,11 @@ const mockRequest = (sessionData: any) => {
         headers: sessionData
     }
 }
-test("Return last 7 words and their frequencies", async (t: any) => {
+test("Return last 7 words and their frequencies with an incorrect ID", async (t: any) => {
 
-    console.log("In returning last 7 words and their frequencies")
+    console.log("In returning last 7 words and their frequencies with an incorrect ID")
     const req = mockRequest({
-        id: uuid,
+        id: '093724974890',
     });
     const res = mockResponse();
     await wordValues(req as Request, res as Response)
@@ -79,9 +80,22 @@ test("Return last 7 words and their frequencies", async (t: any) => {
 
 //     t.true(res.status.calledWith(200))
 // });
-test("Return last 7 words and their frequencies", async (t: any) => {
+test("Return last 7 words and their frequencies with a new ID", async (t: any) => {
 
-    console.log("In returning last 7 words and their frequencies")
+    console.log("In returning last 7 words and their frequencies with a new ID")
+    const req = mockRequest({
+        id: uuid,
+    });
+    const res = mockResponse();
+    await wordValues(req as Request, res as Response)
+
+    t.true(res.status.calledWith(200))
+    t.true(res.json.calledWith({mssg : "Retrieved words"}));
+});
+
+test("Return last 7 words and their frequencies with an ID with multiple rows in the Mental Health database", async (t: any) => {
+
+    console.log("In returning last 7 words and their frequencies with a correct ID")
     const req = mockRequest({
         id: uuid,
     });
@@ -109,7 +123,7 @@ test("Return last 7 words and their frequencies", async (t: any) => {
 
     console.log("In returning last 7 words and their frequencies")
     const req = mockRequest({
-        id: uuid,
+        id: 'e9a8a99d-1852-4c2d-802c-e10d3ebdc05b',
     });
     const res = mockResponse();
     await wordValues(req as Request, res as Response)

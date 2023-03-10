@@ -82,13 +82,13 @@ test('getOccurrences should return 0 when the value is not found in the array', 
     t.deepEqual(freqMap.get('adios'), 1);
   });
   
-  test('wordFreq handles an array with one word correctly', t => {
+  test('wordFreq should be able to deal with an array with one word correctly', t => {
     const arr = ['hello'];
     const freqMap = wordFreq(arr);
     t.deepEqual(freqMap.get('hello'), 1);
   });
   
-  test('wordFreq handles an array with multiple instances of the same word correctly', t => {
+  test('wordFreq should be able to deal with an array with multiple instances of the same word correctly', t => {
     const arr = ['hello', 'hello', 'hello'];
     const freqMap = wordFreq(arr);
     t.deepEqual(freqMap.get('hello'), 3);
