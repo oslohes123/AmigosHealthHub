@@ -67,13 +67,14 @@ export function getOccurrences(arr: string[], v: string): number{
     return count;
 }
 
-export function wordFreq(arr: string[]): string[]{
-    const newarr: string[] = []
-    for(const elem of arr){
-        newarr.push(elem, getOccurrences(arr, elem).toString())
+export function wordFreq(arr: string[]): Map<string, number> {
+    const freqMap = new Map<string, number>();
+    for (const word of arr) {
+      freqMap.set(word, getOccurrences(arr, word));
     }
-    return newarr
-}
+    return freqMap;
+  }
+  
 
 
 

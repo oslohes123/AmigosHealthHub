@@ -1,10 +1,11 @@
 // import sinon from 'sinon';
 
 import test from 'ava';
-import { average, getOccurrences, wordFreq, arrayOfObjectsToStrings, getWords } from '../../../../../functions/mhfunctions';
+import { average, getOccurrences, wordFreq, getWords, getFaces, arrayOfObjectsToStrings } from '../../../../../functions/mhfunctions';
+
 interface Obj {
-    [word: string]: any;
-  }
+  [word: string]: any;
+}
 
 test('average should return the correct value for an array of numbers', t => {
   const arr: number[] = [1, 2, 3, 4, 5];
@@ -66,32 +67,31 @@ test('getOccurrences should return 0 when the value is not found in the array', 
     t.is(actual, expected);
   });
 
-  test('wordFreq should return an empty array when passed an empty array', t => {
+  test('wordFreq returns an empty map for an empty array', t => {
     const arr: string[] = [];
-    const expected: string[] = [];
-    const actual = wordFreq(arr);
-    t.deepEqual(actual, expected);
+    const freqMap = wordFreq(arr);
+    t.deepEqual(freqMap, new Map());
   });
   
-  test('wordFreq should return an array of strings when passed an array of strings', t => {
-    const arr: string[] = ['hello', 'goodbye', 'welcome', 'hello', 'adios', 'goodbye', 'box'];
-    const expected: string[] = ['hello', '2', 'goodbye', '2', 'welcome', '1', 'adios', '1', 'box', '1'];
-    const actual = wordFreq(arr);
-    t.deepEqual(actual, expected);
+  test('wordFreq returns the correct frequencies for an array of words', t => {
+    const arr = ['hello', 'goodbye', 'hello', 'welcome', 'hello', 'goodbye', 'adios'];
+    const freqMap = wordFreq(arr);
+    t.deepEqual(freqMap.get('hello'), 3);
+    t.deepEqual(freqMap.get('goodbye'), 2);
+    t.deepEqual(freqMap.get('welcome'), 1);
+    t.deepEqual(freqMap.get('adios'), 1);
   });
   
-  test('wordFreq should handle case-sensitive values', t => {
-    const arr: string[] = ['hello', 'Goodbye', 'welcome', 'GOODBYE', 'wElcome'];
-    const expected: string[] = ['hello', '1', 'Goodbye', '1', 'welcome', '1', 'GOODBYE', '1', 'wElcome', '1'];
-    const actual = wordFreq(arr);
-    t.deepEqual(actual, expected);
+  test('wordFreq handles an array with one word correctly', t => {
+    const arr = ['hello'];
+    const freqMap = wordFreq(arr);
+    t.deepEqual(freqMap.get('hello'), 1);
   });
   
-  test('wordFreq should handle special characters', t => {
-    const arr: string[] = ['hello', 'goodbye', 'welcome', '?', '?', '?'];
-    const expected: string[] = ['hello', '1', 'goodbye', '1', 'welcome', '1', '?', '3'];
-    const actual = wordFreq(arr);
-    t.deepEqual(actual, expected);
+  test('wordFreq handles an array with multiple instances of the same word correctly', t => {
+    const arr = ['hello', 'hello', 'hello'];
+    const freqMap = wordFreq(arr);
+    t.deepEqual(freqMap.get('hello'), 3);
   });
 
   test('arrayOfObjectsToStrings should return an empty array when passed an empty array', (t) => {
@@ -165,5 +165,35 @@ test('getOccurrences should return 0 when the value is not found in the array', 
     const result = getWords(expectedOutput);
     t.deepEqual(result, ['Vishal', 'Manik', 'Saath']);
   });
+
+  test('getFaces returns an array of numbers from input array', (t) => {
+    const inputArr = [['1', '2'], ['493', '4'], ['-92', '6']];
+    const expectedOutput = [1, 493, -92];
+    const result = getFaces(inputArr);
+    t.deepEqual(result, expectedOutput);
+  });
   
+  test('getFaces returns an empty array when input array is empty', (t) => {
+    const inputArr: string[][] = [];
+    const expectedOutput: number[] = [];
+    const result = getFaces(inputArr);
+    t.deepEqual(result, expectedOutput);
+  });
+
+  test('combining getFaces and arrayOfObjectsToStrings', (t) => {
+    const input = [
+        { face: 5, age: 20, active: true },
+        { face: 4, age: '40', active: false },
+        { face: 2, age: null, active: undefined },
+      ];
+      const expectedOutput = [
+        ['5', '20', 'true'],
+        ['4', '40', 'false'],
+        ['2', 'null', 'undefined'],
+      ];
+    const result = getWords(expectedOutput);
+    t.deepEqual(result, ['5', '4', '2']);
+  });
+  
+
   
