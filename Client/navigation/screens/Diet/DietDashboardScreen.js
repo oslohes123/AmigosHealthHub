@@ -9,7 +9,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { PieChart } from "react-native-chart-kit";
 import themeContext from '../../theme/themeContext';
 import { EventRegister } from 'react-native-event-listeners'
-import { genericSearch, specificSearch } from '../../../functions/foodSearch'
+import { genericSearch, specificSearch } from '../../../functions/searchFood'
+
 import GreenButton from '../../components/GreenButton';
 
 
