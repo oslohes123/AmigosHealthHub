@@ -31,7 +31,7 @@ test.before(async (t : any) => {
     // randomEmail = `${uuid}@gmail.com`
     
     // const hashedPassword = await createHashedPassword("CorrectPassword123!")
-    const {data, error}:any = await supabaseQuery.insert(supabase, 'Mental Health',{created_at: '2023-03-01 00:00:00+00'});
+    const {data, error}:any = await supabaseQuery.insert(supabase, 'Mental Health',{face_id: "4", created_at: '2023-03-01 00:00:00+00', todays_word: 'Happy'});
     
     if(error){
         t.fail()
@@ -60,7 +60,7 @@ test("Return last 7 words and their frequencies", async (t: any) => {
 
     console.log("In returning last 7 words and their frequencies")
     const req = mockRequest({
-        id: '9d-1852-4c2d-802c-e10d3ebdc05b',
+        id: uuid,
     });
     const res = mockResponse();
     await wordValues(req as Request, res as Response)
@@ -83,7 +83,7 @@ test("Return last 7 words and their frequencies", async (t: any) => {
 
     console.log("In returning last 7 words and their frequencies")
     const req = mockRequest({
-        id: 'e9a8a99d-1852-4c2d-802c-e10d3ebdc05b',
+        id: uuid,
     });
     const res = mockResponse();
     await wordValues(req as Request, res as Response)
@@ -109,7 +109,7 @@ test("Return last 7 words and their frequencies", async (t: any) => {
 
     console.log("In returning last 7 words and their frequencies")
     const req = mockRequest({
-        id: '11f431c9-c848-4c44-a26d-5083696e6a5a',
+        id: uuid,
     });
     const res = mockResponse();
     await wordValues(req as Request, res as Response)

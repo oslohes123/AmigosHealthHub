@@ -1,7 +1,11 @@
 // import sinon from 'sinon';
 
 import test from 'ava';
-import { average, getOccurrences, wordFreq } from '../functions/mhfunctions';
+import { average, getOccurrences, wordFreq, getWords, getFaces, arrayOfObjectsToStrings } from '../functions/mhfunctions';
+
+interface Obj {
+  [word: string]: any;
+}
 
 test('average should return the correct value for an array of numbers', t => {
   const arr: number[] = [1, 2, 3, 4, 5];
@@ -90,3 +94,107 @@ test('getOccurrences should return 0 when the value is not found in the array', 
     const actual = wordFreq(arr);
     t.deepEqual(actual, expected);
   });
+
+  test('arrayOfObjectsToStrings should return an empty array when passed an empty array', (t) => {
+    const input: Obj[] = [];
+    const expectedOutput: string[][] = [];
+    const output = arrayOfObjectsToStrings(input);
+    t.deepEqual(output, expectedOutput);
+  });
+  
+  test('arrayOfObjectsToStrings should convert an array of objects to an array of arrays of strings', (t) => {
+    const input = [
+      { name: 'Vishal', age: 20 },
+      { name: 'Manik', age: 40 },
+      { name: 'Saath', age: 60 },
+    ];
+    const expectedOutput = [
+      ['Vishal', '20'],
+      ['Manik', '40'],
+      ['Saath', '60'],
+    ];
+    const output = arrayOfObjectsToStrings(input);
+    t.deepEqual(output, expectedOutput);
+  });
+  
+  test('arrayOfObjectsToStrings should convert an array of objects with mixed types to an array of arrays of strings', (t) => {
+    const input = [
+      { name: 'Vishal', age: 20, active: true },
+      { name: 'Manik', age: '40', active: false },
+      { name: 'Saath', age: null, active: undefined },
+    ];
+    const expectedOutput = [
+      ['Vishal', '20', 'true'],
+      ['Manik', '40', 'false'],
+      ['Saath', 'null', 'undefined'],
+    ];
+    const output = arrayOfObjectsToStrings(input);
+    t.deepEqual(output, expectedOutput);
+  });
+
+  test('getWords returns empty array if input is empty', (t) => {
+    const result = getWords([]);
+    t.deepEqual(result, []);
+  });
+  
+  test('getWords returns empty array if all inner arrays are empty', (t) => {
+    const result = getWords([[], [], []]);
+    t.deepEqual(result, []);
+  });
+  
+  test('getWords returns first element of each inner array', (t) => {
+    const result = getWords([['apple', 'banana'], ['cat', 'dog'], ['elephant']]);
+    t.deepEqual(result, ['apple', 'cat', 'elephant']);
+  });
+  
+  test('getWords ignores empty strings', (t) => {
+    const result = getWords([['apple', '', 'banana'], ['cat', 'dog', ''], ['elephant']]);
+    t.deepEqual(result, ['apple', 'cat', 'elephant']);
+  });
+
+  test('combining getWords and arrayOfObjectsToStrings', (t) => {
+    const input = [
+        { name: 'Vishal', age: 20, active: true },
+        { name: 'Manik', age: '40', active: false },
+        { name: 'Saath', age: null, active: undefined },
+      ];
+      const expectedOutput = [
+        ['Vishal', '20', 'true'],
+        ['Manik', '40', 'false'],
+        ['Saath', 'null', 'undefined'],
+      ];
+    const result = getWords(expectedOutput);
+    t.deepEqual(result, ['Vishal', 'Manik', 'Saath']);
+  });
+
+  test('getFaces returns an array of numbers from input array', (t) => {
+    const inputArr = [['1', '2'], ['493', '4'], ['-92', '6']];
+    const expectedOutput = [1, 493, -92];
+    const result = getFaces(inputArr);
+    t.deepEqual(result, expectedOutput);
+  });
+  
+  test('getFaces returns an empty array when input array is empty', (t) => {
+    const inputArr: string[][] = [];
+    const expectedOutput: number[] = [];
+    const result = getFaces(inputArr);
+    t.deepEqual(result, expectedOutput);
+  });
+
+  test('combining getFaces and arrayOfObjectsToStrings', (t) => {
+    const input = [
+        { face: 5, age: 20, active: true },
+        { face: 4, age: '40', active: false },
+        { face: 2, age: null, active: undefined },
+      ];
+      const expectedOutput = [
+        ['5', '20', 'true'],
+        ['4', '40', 'false'],
+        ['2', 'null', 'undefined'],
+      ];
+    const result = getWords(expectedOutput);
+    t.deepEqual(result, ['5', '4', '2']);
+  });
+  
+
+  
