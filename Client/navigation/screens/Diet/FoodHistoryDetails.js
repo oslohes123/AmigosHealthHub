@@ -39,19 +39,18 @@ export default function FoodDetails({ route, navigation }) {
     const [selectedServingUnit, setSelectedServingUnit] = useState(servingUnit.toString())
     const [visible, setVisible] = useState(false)
 
-
-
-
     async function update(){
         let statusCode = await updateTrackedFood({Quantity:quantity,Measure:selectedServingUnit,LogID,Calories:calories})
         navigation.navigate('Diet Dashboard')
         console.log(statusCode);
+        alert('Food successfully updated');
     }
 
     async function handleDeleteFood() {
         let statusCode = await deleteTrackedFood(LogID)
         navigation.navigate('Diet Dashboard')
         console.log(statusCode);
+        alert('Food successfully deleted');
     }
 
 
