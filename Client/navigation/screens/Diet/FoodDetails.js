@@ -7,19 +7,23 @@ import {addTrackedFood} from "../../../functions/Food";
 
 export default function FoodDetails({ route, navigation }) {
 
-    const {
+    let {
         food_name: name,
         calories,
         protein: Protein,
         carbohydrates: Carbs,
         fat: Fat,
         sugar: Sugars,
-        fiber: Fibre,
+        fiber: Fiber,
         brand_name: Brand,
         serving_qty: servingQty,
         serving_unit: servingUnit,
         alt_measures: altMeasures,
     } = route.params.foodData;
+
+    Fiber = Fiber ? Fiber : 0;
+    Sugars = Sugars ? Sugars : 0;
+
 
     const [quantity, setQuantity] = React.useState(servingQty.toString())
 
@@ -72,7 +76,7 @@ export default function FoodDetails({ route, navigation }) {
             </View>
             <View style={styles.box}>
                 <Text style={styles.text}>Fibre</Text>
-                <Text style={styles.values}>{Fibre}</Text>
+                <Text style={styles.values}>{Fiber}</Text>
             </View>
             <View style={styles.box} justifyContent={'space-between'}>
                 <Text style={styles.text}>Serving units</Text>
