@@ -26,7 +26,12 @@ export default function FoodDetails({ route, navigation }) {
         BrandName: Brand,
     } = route.params.selectedFoodDetails;
 
-    const altMeasures = route.params.selectedFoodDetails.AltMeasures.map(jsonStr => JSON.parse(jsonStr));
+    let altMeasures;
+    if(route.params.selectedFoodDetails.AltMeasures != null){
+        altMeasures = route.params.selectedFoodDetails.AltMeasures.map(jsonStr => JSON.parse(jsonStr));
+    }else{
+       altMeasures = null;
+    }
 
     const [quantity, setQuantity] = useState(servingQty.toString())
 
@@ -92,7 +97,7 @@ export default function FoodDetails({ route, navigation }) {
                         onRequestClose={() => setVisible(false)}
                     >
                         <View style={styles.modal}>
-                            {altMeasures ? altMeasures.map(altMeasure => {
+                            {altMeasures != null ? altMeasures.map(altMeasure => {
                                 return (
                                     <TouchableOpacity
                                         key={altMeasure.measure}
