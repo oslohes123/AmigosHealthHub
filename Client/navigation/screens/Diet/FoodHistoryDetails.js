@@ -151,16 +151,8 @@ export default function FoodDetails({ route, navigation }) {
                     width={100}
                     text={"Update"}
                 />
-                {/* <GreenButton */}
-                    {/* buttonFunction={handleDeleteFood} */}
-                    {/* iconName="add-outline" */}
-                    {/* fontSize={23} */}
-                    {/* height={70} */}
-                    {/* width={100} */}
-                    {/* text={"Delete"} */}
-                {/* /> */}
                 <TouchableOpacity onPress={handleDeleteFood}>
-                    <AntDesign name="delete" size={24} color="white" />
+                    <AntDesign name="delete" size={40} color="white" />
                  </TouchableOpacity>
             </View>
         </View>
