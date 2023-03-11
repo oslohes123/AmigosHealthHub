@@ -1,12 +1,28 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { Calendar } from 'react-native-calendars'
 import { date } from 'yup';
-import { AntDesign } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons';
 import { PieChart } from "react-native-chart-kit";
+import { getFood, getTrackedFood,getSpecificTrackedFood } from '../../../functions/Food';
+import { useAuthContext } from '../Authentication/context/AuthContext';
+import { useEffect } from 'react';
 
-export default function FoodHistory() {
 
+export default function FoodHistory({ navigation }) {
+
+  const [foodData, setFoodData] = useState([]);
+  const [viewCalendar, setViewCalendar] = useState(false);
+  const [selectDay, setSelectDay] = useState(new Date().toISOString().split('T')[0]);
+
+  const currentDate = new Date();
+  const markedDate = {
+    [currentDate.toISOString().split('T')[0]]: {
+      selected: true,
+      marked: true,
+      dotColor: 'red'
+    }
+  };
   const Piedata = [
     {
       name: "Protein",
@@ -45,127 +61,152 @@ export default function FoodHistory() {
     }
   ];
 
-  const[viewCalendar, setViewCalendar] = useState(false);
-  const[selectDay, setSelectDay] = useState(null);
-  const[food, setFood] = useState('');
+  const { user } = useAuthContext();
+  const id = user.id;
+
+
+  useEffect(() => {
+    setViewCalendar(false);
+    async function gettingTrackedFood() {
+      let response = await getTrackedFood(selectDay, id);
+      setFoodData(response);
+      console.log(response);
+    }
+    gettingTrackedFood();
+  },[selectDay])
+
 
   const toggleCalendar = () => {
     setViewCalendar(!viewCalendar);
   }
 
-  const handleDayPress = (day) => {
-    setSelectDay(day.dateString);
-    console.log('selected day', day);
-    setViewCalendar(false);
-    setFood(getFood(day.dateString));
+  async function foodPress(item) {
+    let selectedFoodDetails = await getFood(item.FoodID);
+    let trackedFoodDetails = await getSpecificTrackedFood(item.LogID);
+    navigation.navigate('Food History Details', {selectedFoodDetails,trackedFoodDetails});
   }
 
-  const getFood = (dateString) => {
-    if (dateString === '2023-03-02') {
-      return 'Apple';
-    } else if (dateString === '2023-03-03') {
-      return 'Banana';
-    } else if (dateString === '2023-03-04') {
-      return 'Orange';
-    } else {
-      return 'No food item consumed on this day';
-    }
-  };
+
+  const pressHandler = () => {
+    navigation.navigate('Nutrients');
+  }
 
   return (
     <View style={styles.container}>
-      <View style={styles.primary}>
-        {!selectDay && (
-          <Text style={styles.text}>Select a day from the Calendar to View Food History</Text>
+      <ScrollView style={styles.scroll}>
+        <View style={styles.primary}>
+          {!selectDay && (
+            <Text style={styles.text}>Select a day from the Calendar to View Food History</Text>
+          )}
+          {selectDay && (
+            <Text style={styles.text}>{selectDay}-: 2500cal consumed</Text>
+          )}
+          <TouchableOpacity style={styles.icon} onPress={toggleCalendar}>
+            <AntDesign name="calendar" size={35} color="white" />
+          </TouchableOpacity>
+        </View>
+
+        {selectDay && !viewCalendar && (
+          <TouchableOpacity style={styles.pieWidget} onPress={pressHandler}>
+            <PieChart
+              data={Piedata}
+              width={340}
+              height={210}
+              paddingLeft='10'
+              chartConfig={{
+                color: () => "black",
+              }}
+              accessor="amount"
+              backgroundColor="transparent"
+            />
+          </TouchableOpacity>
         )}
-        {selectDay && (
-          <Text style={styles.text}>{selectDay}-: 2500cal consumed</Text>
-        )}
-      <TouchableOpacity style={styles.icon} onPress={toggleCalendar}>
-        <AntDesign name="calendar" size={35} color="white" />
-      </TouchableOpacity>
-      </View>
-      {selectDay && (
-      <TouchableOpacity style={styles.pieWidget}>
-        <PieChart
-          data={Piedata}
-          width={340}
-          height={210}
-          paddingLeft='10'
-          chartConfig={{
-            color: () => "black",
-          }}
-          accessor="amount"
-          backgroundColor="transparent"
+        {viewCalendar && (
+          <Calendar
+            style={styles.calendar}
+            onVisibleMonthsChange={(months) => { console.log('now these months are visible', months); }}
+            onDayPress={(day) => setSelectDay(day.dateString)}
+            maxDate={new Date().toISOString().split('T')[0]}
+            markedDates={markedDate}
           />
-        </TouchableOpacity>
-      )}
-      {viewCalendar && (
-        <Calendar
-        style={{width: '90%', alignSelf: 'center'}}
-        onVisibleMonthsChange={(months) => {console.log('now these months are visible', months);}}
-        onDayPress={handleDayPress}
-        maxDate={new Date()}
-        />
-      )}
-        {!viewCalendar && food !== '' && (
-          <Text style={styles.foodText}>{food}</Text>
         )}
+        {!viewCalendar && foodData && (
+          <View >
+            {foodData.length > 0 ?
+            foodData.map((item, index) => (
+              <View key={index}>
+                <TouchableOpacity onPress={() => foodPress(item)}>
+                  <Text style={styles.foodText}>
+                    Name: {item.FoodName}
+                    {"\n"}
+                    Total meal Calories: {item.CaloriesInMeal}
+                    {"\n"}
+                    Quantity: {item.Quantity}
+                    {"\n"}
+                    Measure: {item.Measure}
+                    {"\n"}
+                    {item.BrandName ? "Brand: " + item.BrandName : null}
+                  </Text>
+                </TouchableOpacity>
+              </View>)): <Text style={styles.foodText}>No food item consumed on this day</Text>}
+          </View>
+        )}
+      </ScrollView>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-    container: {
-      backgroundColor: '#203038',
-      flex: 1,
-    },
-    // header: {
-    //   //width: 300,
-    //   fontSize: 30,
-    //   fontWeight: 'bold',
-    //   marginTop: 30,
-    //   color: 'white',
-    //   alignSelf: 'center',
-    //   },
-    primary: {
-      flexDirection:'row', 
-      alignItems: 'center', 
-      justifyContent: 'space-between',
-      marginHorizontal: '15%',
-      marginVertical: '5%',
-    },
-    text: {
-      fontSize: 20,
-      color: 'white',
-      fontWeight: 'bold',
-      //backgroundColor: 'white',
-      padding: 10,
-      borderRadius: 15,
-      borderWidth: 1,
-      borderColor: 'white'
-    },
-    foodText: {
-      fontSize: 20,
-      color: 'white',
-      fontWeight: 'bold',
-      //backgroundColor: 'white',
-      padding: 10,
-      borderRadius: 15,
-      borderWidth: 1,
-      borderColor: 'white',
-      alignSelf: 'center',
-      marginVertical: '5%'
-    },
-    icon: {
-      //alignSelf: 'flex-end',
-      //margin: '5%'
-    },
-    pieWidget: {
-      backgroundColor: '#3eda9b',
-      borderRadius: 25,
-      alignSelf: 'center',
-      padding: 5
-    },
+  container: {
+    backgroundColor: '#203038',
+    flex: 1,
+  },
+  primary: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginHorizontal: '15%',
+    marginVertical: '5%',
+  },
+  text: {
+    fontSize: 20,
+    color: 'white',
+    fontWeight: 'bold',
+    padding: 10,
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: 'white'
+  },
+  foodText: {
+    fontSize: 20,
+    color: 'black',
+    fontWeight: 'bold',
+    padding: 10,
+    borderRadius: 25,
+    //borderWidth: 1,
+    //borderColor: 'white',
+    alignSelf: 'center',
+    marginVertical: '5%',
+    backgroundColor: '#3eda9b',
+  },
+  icon: {
+    marginLeft: '4%'
+  },
+  pieWidget: {
+    backgroundColor: '#3eda9b',
+    borderRadius: 25,
+    alignSelf: 'center',
+    padding: 5
+  },
+  scroll: {
+    height: 400,
+  },
+  calendar: {
+    width: '90%',
+    alignSelf: 'center',
+    borderTopEndRadius: 40,
+    borderTopLeftRadius: 40,
+    //backgroundColor: 'black'
+  }
 })
 

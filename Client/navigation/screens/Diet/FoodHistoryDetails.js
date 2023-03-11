@@ -1,51 +1,55 @@
-import React, {useState} from "react";
-import {StyleSheet, View, Text, TextInput, Modal, TouchableOpacity} from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View, Text, TextInput, Modal, TouchableOpacity } from "react-native";
 import GreenButton from "../../components/GreenButton";
 // import { TextInput } from 'react-native-paper';
-import {useAuthContext} from "../Authentication/context/AuthContext";
-import {addTrackedFood} from "../../../functions/Food";
+import { useAuthContext } from "../Authentication/context/AuthContext";
+import {updateTrackedFood,deleteTrackedFood } from "../../../functions/Food";
+
 
 export default function FoodDetails({ route, navigation }) {
 
     const {
-        food_name: name,
-        calories,
-        protein: Protein,
-        carbohydrates: Carbs,
-        fat: Fat,
-        sugar: Sugars,
-        fiber: Fibre,
-        brand_name: Brand,
-        serving_qty: servingQty,
-        serving_unit: servingUnit,
-        alt_measures: altMeasures,
-    } = route.params.foodData;
+        Quantity: servingQty,
+        Measure: servingUnit,
+        LogID,
+        UserID
+    } = route.params.trackedFoodDetails;
 
-    const [quantity, setQuantity] = React.useState(servingQty.toString())
+    const {
+        Name: name,
+        Calories:calories,
+        Protein: Protein,
+        Carbohydrate: Carbs,
+        Fat,
+        Sugar: Sugars,
+        Fiber,
+        BrandName: Brand,
+    } = route.params.selectedFoodDetails;
+
+
+    const altMeasures = route.params.selectedFoodDetails.AltMeasures.map(jsonStr => JSON.parse(jsonStr));
+
+
+    const [quantity, setQuantity] = useState(servingQty.toString())
 
     const [selectedServingUnit, setSelectedServingUnit] = useState(servingUnit.toString())
     const [visible, setVisible] = useState(false)
 
-    const {user} = useAuthContext();
-    const id = user.id;
-    const foodInput = route.params;
 
-    const updatedFoodInput = {
-        ...foodInput,
-        foodData: {
-            ...foodInput.foodData,
-            serving_qty: quantity,
-            serving_unit: selectedServingUnit
-        }
 
-    }
 
-    async function save() {
-        let statusCode = await addTrackedFood(updatedFoodInput, id)
-        console.log(statusCode);
+    async function update(){
+        let statusCode = await updateTrackedFood({Quantity:quantity,Measure:selectedServingUnit,LogID,Calories:calories})
         navigation.navigate('Diet Dashboard')
-        alert('Food successfully added');
+        console.log(statusCode);
     }
+
+    async function handleDeleteFood() {
+        let statusCode = await deleteTrackedFood(LogID)
+        navigation.navigate('Diet Dashboard')
+        console.log(statusCode);
+    }
+
 
     return (
         <View style={styles.container}>
@@ -72,7 +76,7 @@ export default function FoodDetails({ route, navigation }) {
             </View>
             <View style={styles.box}>
                 <Text style={styles.text}>Fibre</Text>
-                <Text style={styles.values}>{Fibre}</Text>
+                <Text style={styles.values}>{Fiber}</Text>
             </View>
             <View style={styles.box} justifyContent={'space-between'}>
                 <Text style={styles.text}>Serving units</Text>
@@ -90,20 +94,20 @@ export default function FoodDetails({ route, navigation }) {
                         onRequestClose={() => setVisible(false)}
                     >
                         <View style={styles.modal}>
-                            {altMeasures ? altMeasures.map(altMeasure => {
-                                        return (
-                                            <TouchableOpacity
-                                                key={altMeasure.serving_weight}
-                                                style={styles.modalButton}
-                                                onPress={() => {
-                                                    setSelectedServingUnit(altMeasure.measure)
-                                                    setVisible(false)
-                                                }}>
-                                                <Text>{altMeasure.measure}</Text>
-                                            </TouchableOpacity>
-                                        )
-                                    }
-                                ) :
+                            {altMeasures != null ? altMeasures.map(altMeasure => {
+                                return (
+                                    <TouchableOpacity
+                                        key={altMeasure.measure}
+                                        style={styles.modalButton}
+                                        onPress={() => {
+                                            setSelectedServingUnit(altMeasure.measure)
+                                            setVisible(false)
+                                        }}>
+                                        <Text>{altMeasure.measure}</Text>
+                                    </TouchableOpacity>
+                                )
+                            }
+                            ) :
 
                                 <TouchableOpacity
                                     key='undefined'
@@ -113,7 +117,6 @@ export default function FoodDetails({ route, navigation }) {
                                     }}>
                                     <Text>{selectedServingUnit}</Text>
                                 </TouchableOpacity>
-
                             }
                         </View>
                     </Modal>
@@ -138,12 +141,21 @@ export default function FoodDetails({ route, navigation }) {
             </View> : null}
             <View style={styles.buttonContainer}>
                 <GreenButton
-                    buttonFunction={save}
+                    buttonFunction={update}
                     iconName="add-outline"
                     fontSize={23}
                     height={70}
-                    width={200}
-                    text={"Add Food"}
+                    width={100}
+                    text={"Update"}
+                />
+                <GreenButton
+                    buttonFunction={handleDeleteFood}
+                    iconName="add-outline"
+                    fontSize={23}
+                    height={70}
+                    width={100}
+
+                    text={"Delete"}
                 />
             </View>
         </View>
@@ -197,6 +209,9 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         marginTop: 10,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     dropDownContainer: {
         borderWidth: 2,

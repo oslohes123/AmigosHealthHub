@@ -36,7 +36,30 @@ export default class RouteNamesClass{
     readonly fullFoodSearchURL = this.foodBaseURL + this.partialFoodSearchURL
 
     // Food Update Routes
-    readonly partialFoodUpdateURL = '/updateTrackedFood'
-    readonly fullFoodUpdateURL = this.foodBaseURL + this.partialFoodUpdateURL
+    readonly partialUpdateFoodURL = '/updateTrackedFood'
+    readonly fullFoodUpdateURL = this.foodBaseURL + this.partialUpdateFoodURL
+
+    // Food Add Routes
+    readonly partialAddTrackedFood = '/addTrackedFood'
+    readonly fullAddTrackedFoodURL = this.foodBaseURL + this.partialAddTrackedFood
+
     
+    // Food database get tracked routes
+    readonly partialGetTrackedFoodURL = '/getTrackedFood/:date.:userID'
+    readonly fullGetTrackedFoodURL = this.foodBaseURL + this.partialGetTrackedFoodURL 
+
+    // Food database get specific tracked routes
+    readonly partialGetSpecificTrackedFoodURL = '/getSpecificTrackedFood/:logID'
+    readonly fullGetSpecificTrackedFoodURL = this.foodBaseURL + this.partialGetSpecificTrackedFoodURL
+
+
+    // Food database get routes
+    readonly partialGetFoodURL = '/getFood/:FoodID'
+    readonly fullGetFoodURL = this.foodBaseURL + this.partialGetFoodURL
+
+    // Food database delete routes
+    readonly partialDeleteTrackedFoodURL = '/deleteTrackedFood'
+    readonly fullDeleteFoodURL = this.foodBaseURL + this.partialDeleteTrackedFoodURL
+    
+
 }

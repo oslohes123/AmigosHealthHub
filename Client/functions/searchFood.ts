@@ -1,5 +1,5 @@
 import {createClient} from '@supabase/supabase-js'
-import {anonKey, apiSearchMethods, clientSearchMethods, supabaseURL} from "../constants";
+import {apiSearchMethods, clientSearchMethods} from "../constants";
 import specificFoodNutritionInterface from '../interfaces/specificFoodNutritionInterface';
 import genericSearchInterface from '../interfaces/genericSearchInterface';
 import axios, { AxiosError, AxiosResponse } from 'axios';
