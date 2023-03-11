@@ -26,12 +26,9 @@ export default function FoodDetails({ route, navigation }) {
         BrandName: Brand,
     } = route.params.selectedFoodDetails;
 
-    let altMeasures;
-    if(route.params.selectedFoodDetails.AltMeasures != null){
-        altMeasures = route.params.selectedFoodDetails.AltMeasures.map(jsonStr => JSON.parse(jsonStr));
-    }else{
-       altMeasures = null;
-    }
+
+    const altMeasures = route.params.selectedFoodDetails.AltMeasures.map(jsonStr => JSON.parse(jsonStr));
+
 
     const [quantity, setQuantity] = useState(servingQty.toString())
 

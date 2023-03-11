@@ -35,7 +35,7 @@ export const addTrackedFood = async (req: Request, res: Response) => {
                     BrandName: Data.input.foodData.brand_name,
                     Fat: Data.input.foodData.fat,
                     Carbohydrate: Data.input.foodData.carbohydrates,
-                    AltMeasures: Data.input.foodData.alt_measures,
+                    AltMeasures: Data.input.foodData.alt_measures ||  [{measure:Data.input.foodData.serving_unit}],
                 }
             );
             if (insertFoodError) {
