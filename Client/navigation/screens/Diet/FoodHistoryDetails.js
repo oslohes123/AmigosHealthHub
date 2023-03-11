@@ -3,8 +3,7 @@ import { StyleSheet, View, Text, TextInput, Modal, TouchableOpacity } from "reac
 import GreenButton from "../../components/GreenButton";
 // import { TextInput } from 'react-native-paper';
 import { useAuthContext } from "../Authentication/context/AuthContext";
-import { AntDesign } from '@expo/vector-icons'; 
-import { addTrackedFood,updateTrackedFood,deleteTrackedFood } from "../../../functions/Food";
+import {updateTrackedFood,deleteTrackedFood } from "../../../functions/Food";
 
 
 export default function FoodDetails({ route, navigation }) {
@@ -23,7 +22,7 @@ export default function FoodDetails({ route, navigation }) {
         Carbohydrate: Carbs,
         Fat,
         Sugar: Sugars,
-        Fibre,
+        Fiber,
         BrandName: Brand,
     } = route.params.selectedFoodDetails;
 
@@ -34,19 +33,7 @@ export default function FoodDetails({ route, navigation }) {
     const [selectedServingUnit, setSelectedServingUnit] = useState(servingUnit.toString())
     const [visible, setVisible] = useState(false)
 
-    const { user } = useAuthContext();
-    const id = user.id;
-    const foodInput = route.params;
 
-    const updatedFoodInput = {
-        ...foodInput,
-        foodData:{
-            ...foodInput.foodData,
-            serving_qty: quantity,
-            serving_unit: selectedServingUnit
-        }
-
-    }
 
 
     async function update(){
@@ -87,7 +74,7 @@ export default function FoodDetails({ route, navigation }) {
             </View>
             <View style={styles.box}>
                 <Text style={styles.text}>Fibre</Text>
-                <Text style={styles.values}>{Fibre}</Text>
+                <Text style={styles.values}>{Fiber}</Text>
             </View>
             <View style={styles.box} justifyContent={'space-between'}>
                 <Text style={styles.text}>Serving units</Text>
