@@ -3,25 +3,31 @@ import { StyleSheet, View, Text, TextInput, Modal, TouchableOpacity } from "reac
 import GreenButton from "../../components/GreenButton";
 // import { TextInput } from 'react-native-paper';
 import { useAuthContext } from "../Authentication/context/AuthContext";
-import { addTrackedFood } from "../../../functions/addTrackedFood";
 import { AntDesign } from '@expo/vector-icons'; 
+import { addTrackedFood,updateTrackedFood,deleteTrackedFood } from "../../../functions/Food";
 
 
 export default function FoodDetails({ route, navigation }) {
 
     const {
-        food_name: name,
-        calories,
-        protein: Protein,
-        carbohydrates: Carbs,
-        fat: Fat,
-        sugar: Sugars,
-        fiber: Fibre,
-        brand_name: Brand,
-        serving_qty: servingQty,
-        serving_unit: servingUnit,
-        alt_measures: altMeasures,
-    } = route.params.foodData;    
+        Quantity: servingQty,
+        Measure: servingUnit,
+        LogID,
+        UserID
+    } = route.params.trackedFoodDetails;
+
+    const {
+        Name: name,
+        Calories:calories,
+        Protein: Protein,
+        Carbohydrate: Carbs,
+        Fat,
+        Sugar: Sugars,
+        Fibre,
+        BrandName: Brand,
+    } = route.params.selectedFoodDetails;
+
+    const altMeasures = route.params.selectedFoodDetails.AltMeasures.map(jsonStr => JSON.parse(jsonStr));
 
     const [quantity, setQuantity] = useState(servingQty.toString())
 
@@ -39,34 +45,22 @@ export default function FoodDetails({ route, navigation }) {
             serving_qty: quantity,
             serving_unit: selectedServingUnit
         }
-        
+
     }
 
-    const pressHandler = () => {
-        navigation.navigate('Food History');
-        alert('Food Updated successfully');
-    }
-
-    const pressHandler1 = () => {
-        navigation.navigate('Food History');
-        alert('Food Deleted successfully');
-    }
 
     async function update(){
-        let statusCode = await addTrackedFood(updatedFoodInput,id)
+        let statusCode = await updateTrackedFood({Quantity:quantity,Measure:selectedServingUnit,LogID,Calories:calories})
+        navigation.navigate('Diet Dashboard')
         console.log(statusCode);
     }
 
-    const isNum = (val) => {
-        // Tests whether the number is a number
-        return /^\d+$/.test(val);
+    async function handleDeleteFood() {
+        let statusCode = await deleteTrackedFood(LogID)
+        navigation.navigate('Diet Dashboard')
+        console.log(statusCode);
     }
 
-    if (isNum(quantity)) {
-
-        // navigation.navigate("Diet Dashboard");
-
-    }
 
     return (
         <View style={styles.container}>
@@ -114,7 +108,7 @@ export default function FoodDetails({ route, navigation }) {
                             {altMeasures ? altMeasures.map(altMeasure => {
                                 return (
                                     <TouchableOpacity
-                                        key={altMeasure.serving_weight}
+                                        key={altMeasure.measure}
                                         style={styles.modalButton}
                                         onPress={() => {
                                             setSelectedServingUnit(altMeasure.measure)
@@ -158,16 +152,22 @@ export default function FoodDetails({ route, navigation }) {
             </View> : null}
             <View style={styles.buttonContainer}>
                 <GreenButton
-                    buttonFunction={pressHandler}
+                    buttonFunction={update}
                     iconName="add-outline"
                     fontSize={23}
                     height={70}
                     width={100}
                     text={"Update"}
                 />
-                <TouchableOpacity onPress={pressHandler1}>
-                    <AntDesign name="delete" size={40} color="white" />
-                </TouchableOpacity>
+                <GreenButton
+                    buttonFunction={handleDeleteFood}
+                    iconName="add-outline"
+                    fontSize={23}
+                    height={70}
+                    width={100}
+
+                    text={"Delete"}
+                />
             </View>
         </View>
     );

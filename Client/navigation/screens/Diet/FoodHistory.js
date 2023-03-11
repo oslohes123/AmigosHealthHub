@@ -4,11 +4,9 @@ import { Calendar } from 'react-native-calendars'
 import { date } from 'yup';
 import { AntDesign } from '@expo/vector-icons';
 import { PieChart } from "react-native-chart-kit";
-import { getTrackedFood } from '../../../functions/getTrackedFood';
+import { getFood, getTrackedFood,getSpecificTrackedFood } from '../../../functions/Food';
 import { useAuthContext } from '../Authentication/context/AuthContext';
 import { useEffect } from 'react';
-import { isBranded } from './../../../functions/genericOrBrandedIdentifier';
-import { specificSearch } from '../../../functions/searchFood';
 
 
 export default function FoodHistory({ navigation }) {
@@ -72,6 +70,7 @@ export default function FoodHistory({ navigation }) {
     async function gettingTrackedFood() {
       let response = await getTrackedFood(selectDay, id);
       setFoodData(response);
+      console.log(response);
     }
     gettingTrackedFood();
   },[selectDay])
@@ -81,8 +80,10 @@ export default function FoodHistory({ navigation }) {
     setViewCalendar(!viewCalendar);
   }
 
-  async function foodPress(foodID) {
-    navigation.navigate('Food History Details', { foodData: await specificSearch(foodID), foodIdentifier: foodID});
+  async function foodPress(item) {
+    let selectedFoodDetails = await getFood(item.FoodID);
+    let trackedFoodDetails = await getSpecificTrackedFood(item.LogID);
+    navigation.navigate('Food History Details', {selectedFoodDetails,trackedFoodDetails});
   }
 
 
@@ -131,10 +132,10 @@ export default function FoodHistory({ navigation }) {
         )}
         {!viewCalendar && foodData && (
           <View >
-            {foodData.length > 0 ? 
+            {foodData.length > 0 ?
             foodData.map((item, index) => (
               <View key={index}>
-                <TouchableOpacity onPress={() => foodPress(item.FoodID)}>
+                <TouchableOpacity onPress={() => foodPress(item)}>
                   <Text style={styles.foodText}>
                     Name: {item.FoodName}
                     {"\n"}

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { StyleSheet, View, Text, TextInput, Modal, TouchableOpacity } from "react-native";
+import React, {useState} from "react";
+import {StyleSheet, View, Text, TextInput, Modal, TouchableOpacity} from "react-native";
 import GreenButton from "../../components/GreenButton";
 // import { TextInput } from 'react-native-paper';
-import { useAuthContext } from "../Authentication/context/AuthContext";
-import { addTrackedFood } from "../../../functions/addTrackedFood";
+import {useAuthContext} from "../Authentication/context/AuthContext";
+import {addTrackedFood} from "../../../functions/Food";
 
 export default function FoodDetails({ route, navigation }) {
 
@@ -26,22 +26,22 @@ export default function FoodDetails({ route, navigation }) {
     const [selectedServingUnit, setSelectedServingUnit] = useState(servingUnit.toString())
     const [visible, setVisible] = useState(false)
 
-    const { user } = useAuthContext();
+    const {user} = useAuthContext();
     const id = user.id;
     const foodInput = route.params;
 
     const updatedFoodInput = {
         ...foodInput,
-        foodData:{
+        foodData: {
             ...foodInput.foodData,
             serving_qty: quantity,
             serving_unit: selectedServingUnit
         }
-        
+
     }
 
-    async function save(){
-        let statusCode = await addTrackedFood(updatedFoodInput,id)
+    async function save() {
+        let statusCode = await addTrackedFood(updatedFoodInput, id)
         console.log(statusCode);
         navigation.navigate('Diet Dashboard')
         alert('Food successfully added');
@@ -91,19 +91,19 @@ export default function FoodDetails({ route, navigation }) {
                     >
                         <View style={styles.modal}>
                             {altMeasures ? altMeasures.map(altMeasure => {
-                                return (
-                                    <TouchableOpacity
-                                        key={altMeasure.serving_weight}
-                                        style={styles.modalButton}
-                                        onPress={() => {
-                                            setSelectedServingUnit(altMeasure.measure)
-                                            setVisible(false)
-                                        }}>
-                                        <Text>{altMeasure.measure}</Text>
-                                    </TouchableOpacity>
-                                )
-                            }
-                            ) :
+                                        return (
+                                            <TouchableOpacity
+                                                key={altMeasure.serving_weight}
+                                                style={styles.modalButton}
+                                                onPress={() => {
+                                                    setSelectedServingUnit(altMeasure.measure)
+                                                    setVisible(false)
+                                                }}>
+                                                <Text>{altMeasure.measure}</Text>
+                                            </TouchableOpacity>
+                                        )
+                                    }
+                                ) :
 
                                 <TouchableOpacity
                                     key='undefined'
