@@ -5,7 +5,6 @@ import GreenButton from "../../components/GreenButton";
 import { useAuthContext } from "../Authentication/context/AuthContext";
 import { addTrackedFood } from "../../../functions/addTrackedFood";
 
-
 export default function FoodDetails({ route, navigation }) {
 
     const {
@@ -21,9 +20,6 @@ export default function FoodDetails({ route, navigation }) {
         serving_unit: servingUnit,
         alt_measures: altMeasures,
     } = route.params.foodData;
-
-    
-    
 
     const [quantity, setQuantity] = React.useState(servingQty.toString())
 
@@ -48,14 +44,8 @@ export default function FoodDetails({ route, navigation }) {
         let statusCode = await addTrackedFood(updatedFoodInput,id)
         console.log(statusCode);
         navigation.navigate('Diet Dashboard')
+        alert('Food successfully added');
     }
-
-    
-
-
-    
-    //   console.log(route.params);
-
 
     return (
         <View style={styles.container}>
