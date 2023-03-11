@@ -8,14 +8,14 @@ import {updateTrackedFood,deleteTrackedFood } from "../../../functions/Food";
 
 export default function FoodDetails({ route, navigation }) {
 
-    const {
+    let {
         Quantity: servingQty,
         Measure: servingUnit,
         LogID,
         UserID
     } = route.params.trackedFoodDetails;
 
-    const {
+    let {
         Name: name,
         Calories:calories,
         Protein: Protein,
@@ -25,6 +25,10 @@ export default function FoodDetails({ route, navigation }) {
         Fiber,
         BrandName: Brand,
     } = route.params.selectedFoodDetails;
+
+    Fiber = Fiber ? Fiber : 0;
+    Sugars = Sugars ? Sugars : 0;
+
 
 
     const altMeasures = route.params.selectedFoodDetails.AltMeasures.map(jsonStr => JSON.parse(jsonStr));
