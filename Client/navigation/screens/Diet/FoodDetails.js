@@ -90,10 +90,10 @@ export default function FoodDetails({ route, navigation }) {
                         onRequestClose={() => setVisible(false)}
                     >
                         <View style={styles.modal}>
-                            {altMeasures ? altMeasures.map(altMeasure => {
+                            {altMeasures ? altMeasures.map((altMeasure,index) => {
                                         return (
                                             <TouchableOpacity
-                                                key={altMeasure.serving_weight}
+                                                key={index}
                                                 style={styles.modalButton}
                                                 onPress={() => {
                                                     setSelectedServingUnit(altMeasure.measure)
