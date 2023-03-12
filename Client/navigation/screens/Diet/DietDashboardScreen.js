@@ -20,14 +20,14 @@ export default function DietDashboardScreen({ navigation }) {
 
   const [showHeader, setShowHeader] = useState(false);
 
-  useEffect(() => {
-    const HListener = EventRegister.addEventListener('ChangeHeader', (data) => {
-      setShowHeader(data)
-    })
-    return () => {
-      EventRegister.removeEventListener(HListener)
-    }
-  }, [showHeader])
+  // useEffect(() => {
+  //   const HListener = EventRegister.addEventListener('ChangeHeader', (data) => {
+  //     setShowHeader(data)
+  //   })
+  //   return () => {
+  //     EventRegister.removeEventListener(HListener)
+  //   }
+  // }, [showHeader])
 
   const Piedata = [
     {
