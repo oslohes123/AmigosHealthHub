@@ -60,11 +60,26 @@ export default function App({navigation}: {navigation: any}) {
     </View>
   );
 }
+
+const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+const getCurrentDayOfWeek = () => {
+  const date = new Date();
+  const dayOfWeek = date.getDay();
+  return dayOfWeek;
+};
+
+  const currentDayOfWeek = getCurrentDayOfWeek();
+  const daysOfWeekWithCurrentDayLast = [
+    ...daysOfWeek.slice(currentDayOfWeek + 1),
+    ...daysOfWeek.slice(0, currentDayOfWeek + 1),
+  ];
+
 const line = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+  labels: daysOfWeekWithCurrentDayLast,
   datasets: [
     {
-      data: [20, 45, 28, 80, 99, 43],
+      data: [2,3,3,4],
       strokeWidth: 2, // optional
     },
   ],
