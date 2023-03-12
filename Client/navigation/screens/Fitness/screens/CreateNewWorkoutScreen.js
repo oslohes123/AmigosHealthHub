@@ -3,9 +3,9 @@ import { StatusBar } from "expo-status-bar";
 import { Text, View, SafeAreaView, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Dimensions, Modal, Keyboard, TextInput } from "react-native";
 import { useState, useContext, useEffect } from "react";
 import themeContext from "../../../theme/themeContext";
-import SearchBar from "../../../components/SearchBar";
-import RedButton from "../../../components/RedButton";
+import { FAB } from 'react-native-paper';
 import GreenButton from "../../../components/GreenButton";
+import RedButton from "../../../components/RedButton";
 import { useSearchExercise } from "../hooks/useSearchExercise";
 
 export default function CreateNewWorkoutScreen({ navigation }) {
@@ -105,12 +105,31 @@ export default function CreateNewWorkoutScreen({ navigation }) {
                         />
 
                         <View style={{ flexDirection: "row" }}>
-                            {RedButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 12, text: "Dismiss", buttonFunction: () => {
+                            {/* {RedButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 12, text: "Dismiss", buttonFunction: () => {
                                 setNameModalVisible(!nameModalVisible)
                                 console.log("Don't Save Yet")}})}
                             {GreenButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 12, text: "Save", buttonFunction: () => {
                                 setNameModalVisible(!nameModalVisible)
-                                console.log("Save Plan")}})}
+                                console.log("Save Plan")}})} */}
+
+                            <FAB        
+                                icon="close"
+                                style={styles.fab}
+                                // label="Save"
+                                // animated={true}
+                                onPress={() => {
+                                    setNameModalVisible(!nameModalVisible)
+                                    console.log("Save Workout Plan")}}
+                            />
+                            <FAB        
+                                icon="check"
+                                style={styles.fab}
+                                // label="Save"
+                                // animated={true}
+                                onPress={() => {
+                                    setNameModalVisible(!nameModalVisible)
+                                    console.log("Save Workout Plan")}}
+                            />
                         </View>
                     </View>
                 </SafeAreaView>
@@ -127,9 +146,19 @@ export default function CreateNewWorkoutScreen({ navigation }) {
                     placeholderTextColor={theme.color}
                 />
 
-                {GreenButton({height: screenHeight * 0.05, width: screenWidth * 0.15, fontSize: 20, text: "Save", buttonFunction: () => {
+                <FAB        
+                    icon="check"
+                    style={styles.fab}
+                    // label="Save"
+                    // animated={true}
+                    onPress={() => {
+                        setNameModalVisible(!nameModalVisible)
+                        console.log("Save Workout Plan")}}
+                />
+
+                {/* {GreenButton({height: screenHeight * 0.05, width: screenWidth * 0.15, fontSize: 20, text: "Save", buttonFunction: () => {
                     setNameModalVisible(!nameModalVisible)
-                    console.log("Save Workout Plan")}})}
+                    console.log("Save Workout Plan")}})} */}
             </View>
 
             <Text style={[styles.customWorkout, { color: theme.color }]}>Exercises</Text>
@@ -228,7 +257,13 @@ const styles = {
         borderWidth: 2,
         borderRadius: 25,
         padding: 12
-      }
+    },
+    fab: {
+        // position: 'absolute',
+        marginHorizontal: 8,
+        // left: screenWidth * 0.03,
+        // bottom: screenHeight * 0.02
+    },
 };
 
 const modalStyle = {
