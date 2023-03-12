@@ -3,15 +3,15 @@ import { StatusBar } from 'expo-status-bar';
 import { Text, View, SafeAreaView, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { useState, useContext, useEffect } from 'react';
 import themeContext from '../../../theme/themeContext';
-import SearchBar from '../../../components/SearchBar';
 import GreenButton from '../../../components/GreenButton';
 import { useGetAllWorkoutNames } from '../hooks/useGetAllWorkoutNames';
-import { useGetWorkoutDetails } from '../hooks/useGetWorkoutDetails';
+import { FAB, AnimatedFAB } from "react-native-paper"
 
 export default function WorkoutPlansScreen({ navigation }) {
     const theme = useContext(themeContext)
     const { getAllWorkoutNames, isLoading, error } = useGetAllWorkoutNames();
     const [results, setResults] = useState([])
+    const [isExtended, setIsExtended] = useState(true)
     
     useEffect(() => {
         async function fetchData() {
@@ -30,15 +30,9 @@ export default function WorkoutPlansScreen({ navigation }) {
     return (
         <SafeAreaView style={[styles.container, {backgroundColor: theme.background}]}>
 
-            {/* <View style={styles.searchAndCreate}>
-
-                {SearchBar({themeColor: theme.color, width: screenWidth * 0.7})}
-
-            </View> */}
-
             <Text style={[styles.customWorkout, {color: theme.color}]}>Custom Workouts</Text>
         
-            <ScrollView style={[styles.scrollView, {borderColor: theme.color}]} showsVerticalScrollIndicator={false} bounces={false} alignItems={'center'}>
+            <ScrollView onScrollToTop={isExtended} style={[styles.scrollView, {borderColor: theme.color}]} showsVerticalScrollIndicator={false} bounces={false} alignItems={'center'}>
 
                 {error && <Text>{error}</Text>}
                 {(results.length < 1) && <Text>You currently have no custom workout plans.</Text>}
@@ -53,7 +47,27 @@ export default function WorkoutPlansScreen({ navigation }) {
 
             </ScrollView>
             <View style={{padding: 10}}>
-                {GreenButton({height: screenHeight * 0.05, width: screenWidth * 0.15, fontSize: 20, text: "+", buttonFunction: () => {navigation.navigate('Create New Workout')}})}
+
+                <FAB
+                    icon="plus"
+                    style={styles.fab}
+                    label="Create Plan"
+                    // animated={true}
+                    onPress={() => {navigation.navigate('Create New Workout')}}
+                />
+
+                {/* <AnimatedFAB
+                    icon={'plus'}
+                    label={'Create Plan'}
+                    extended={isExtended}
+                    onPress={() => {navigation.navigate('Create New Workout')}}
+                    visible={true}
+                    animateFrom={'right'}
+                    iconMode={'dynamic'}
+                    style={styles.fab}
+                /> */}
+
+                {/* {GreenButton({height: screenHeight * 0.05, width: screenWidth * 0.15, fontSize: 20, text: "+", buttonFunction: () => {navigation.navigate('Create New Workout')}})} */}
             </View>
             <StatusBar style="auto" />
         </SafeAreaView>
@@ -105,6 +119,12 @@ const styles = {
         alignItems: 'center',
         flex: 1
     },
+    fab: {
+        position: 'absolute',
+        margin: 16,
+        left: screenWidth * 0.03,
+        bottom: screenHeight * 0.02
+      },
 }
 
 const modalStyle = {

@@ -55,55 +55,93 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                     <TouchableWithoutFeedback style={{padding: 40}}>
                         <View style={[styles.exerciseSection, {borderColor: theme.color}]}>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 20, padding: 5}}>{item.exercise.name}</Text>
-                                <IconButton icon="information" iconColor={theme.color} size={20} key={item} onPress={() => {
+                                <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 20, padding: 5}} key={item.exercise.name}>{item.exercise.name}</Text>
+                                <IconButton icon="information" iconColor={theme.color} size={20} key={item.exercise.instructions} onPress={() => {
                                     console.log(`instructions: ${item.exercise.instructions}`)
                                     setInstructionModalData(item.exercise.instructions)
                                     setModalVisible(!modalVisible)}}/>                        
                             </View>
                             <View style={{justifyContent: 'space-evenly', padding: 5}}>
                                 <Text style={{color: theme.color, fontSize: 10}}>Muscle</Text>
-                                <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}}>{item.exercise.muscle}</Text>
+                                <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}} key={item.exercise.muscle}>{item.exercise.muscle}</Text>
                             </View>
                             <View style={{justifyContent: 'space-evenly', padding: 5}}>
                                 <Text style={{color: theme.color, fontSize: 10}}>Equipment</Text>
                                 {console.log(`item equipment: ${item.exercise.equipment}`)}
-                                <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}}>{item.exercise.equipment ? "n/a" : item.exercise.equipment}</Text>
+                                <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}} key={item.exercise.equipment}>{item.exercise.equipment ? "n/a" : item.exercise.equipment}</Text>
                             </View>
                             <View style={styles.statsRows}>
-                                {console.log(`sets: ${item.sets}`)}
-                                <Text style={[styles.statsText, {color: theme.color}]}>Sets {item.sets}</Text>
+                                <Text style={[styles.statsText, {color: theme.color}]} key={item.calories}>Calories {item.calories}</Text>
                                 <TextInput 
                                     style={[styles.textInput, {borderColor: theme.color}]} 
-                                    placeholder='Sets Completed' 
+                                    placeholder='Calories Burnt' 
                                     color={theme.color}
                                     placeholderTextColor={theme.color} 
                                     keyboardType={'numeric'} 
                                     textAlign={'center'}
+                                />
+                            </View>
+
+                            {item.exercise.type == 'cardio'  ?  
+                            <>
+                                <View style={styles.statsRows}>
+                                    {console.log(`distance: ${item.distance}`)}
+                                    <Text style={[styles.statsText, {color: theme.color}]} key={item.distance}>Distance {item.distance}</Text>
+                                    <TextInput 
+                                        style={[styles.textInput, {borderColor: theme.color}]} 
+                                        placeholder='Sets Completed' 
+                                        color={theme.color}
+                                        placeholderTextColor={theme.color} 
+                                        keyboardType={'numeric'} 
+                                        textAlign={'center'}
+                                        />
+                                </View>
+                                <View style={styles.statsRows}>
+                                    <Text style={[styles.statsText, {color: theme.color}]} key={item.duration}>Duration {item.duration}</Text>
+                                    <TextInput 
+                                        style={[styles.textInput, {borderColor: theme.color}]} 
+                                        placeholder='Reps Completed' 
+                                        color={theme.color}
+                                        placeholderTextColor={theme.color} 
+                                        keyboardType={'numeric'} 
+                                        textAlign={'center'}
                                     />
-                            </View>
-                            <View style={styles.statsRows}>
-                                <Text style={[styles.statsText, {color: theme.color}]}>Reps 0</Text>
-                                <TextInput 
-                                    style={[styles.textInput, {borderColor: theme.color}]} 
-                                    placeholder='Reps Completed' 
-                                    color={theme.color}
-                                    placeholderTextColor={theme.color} 
-                                    keyboardType={'numeric'} 
-                                    textAlign={'center'}
-                                />
-                            </View>
-                            <View style={styles.statsRows}>
-                                <Text style={[styles.statsText, {color: theme.color}]}>Calories {item.calories}</Text>
-                                <TextInput 
-                                    style={[styles.textInput, {borderColor: theme.color}]} 
-                                    placeholder='Reps Completed' 
-                                    color={theme.color}
-                                    placeholderTextColor={theme.color} 
-                                    keyboardType={'numeric'} 
-                                    textAlign={'center'}
-                                />
-                            </View>
+                                </View>
+                            </>
+                            : 
+                            <>
+                            {setsComponent(item, theme)}
+                                {/* {(item) => {
+                                    for (let i = 0; i < item.sets; i++) {
+                                        <>
+                                            <View style={styles.statsRows}>
+                                                {console.log(`distance: ${item.distance}`)}
+                                                <Text style={[styles.statsText, {color: theme.color}]} key={item.reps}>Reps {rep}</Text>
+                                                <TextInput 
+                                                    style={[styles.textInput, {borderColor: theme.color}]} 
+                                                    placeholder='Reps Completed' 
+                                                    color={theme.color}
+                                                    placeholderTextColor={theme.color} 
+                                                    keyboardType={'numeric'} 
+                                                    textAlign={'center'}
+                                                    />
+                                            </View>
+                                            <View style={styles.statsRows}>
+                                                <Text style={[styles.statsText, {color: theme.color}]} key={item.weight}>Weight {item.weight}</Text>
+                                                <TextInput 
+                                                    style={[styles.textInput, {borderColor: theme.color}]} 
+                                                    placeholder='Weight' 
+                                                    color={theme.color}
+                                                    placeholderTextColor={theme.color} 
+                                                    keyboardType={'numeric'} 
+                                                    textAlign={'center'}
+                                                    />
+                                            </View>
+                                        </>
+                                    }
+                                }} */}
+                            </>
+                            }
                         </View>
                     </TouchableWithoutFeedback>
                 ))}
@@ -122,6 +160,36 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
             </View>
         </SafeAreaView>
     )
+}
+
+const setsComponent = (item, theme) => {
+    for (let i = 0; i < item.sets; i++) {
+        <>
+            <View style={styles.statsRows}>
+                {console.log(`distance: ${item.distance}`)}
+                <Text style={[styles.statsText, {color: theme.color}]} key={item.reps}>Reps {item.reps}</Text>
+                <TextInput 
+                    style={[styles.textInput, {borderColor: theme.color}]} 
+                    placeholder='Reps Completed' 
+                    color={theme.color}
+                    placeholderTextColor={theme.color} 
+                    keyboardType={'numeric'} 
+                    textAlign={'center'}
+                    />
+            </View>
+            <View style={styles.statsRows}>
+                <Text style={[styles.statsText, {color: theme.color}]} key={item.weight}>Weight {item.weight}</Text>
+                <TextInput 
+                    style={[styles.textInput, {borderColor: theme.color}]} 
+                    placeholder='Weight' 
+                    color={theme.color}
+                    placeholderTextColor={theme.color} 
+                    keyboardType={'numeric'} 
+                    textAlign={'center'}
+                    />
+            </View>
+        </>
+    }
 }
 
 const screenWidth = Dimensions.get("window").width;
