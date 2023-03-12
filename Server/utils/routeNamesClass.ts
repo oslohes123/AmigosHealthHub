@@ -53,6 +53,8 @@ export default class RouteNamesClass{
         //Completed Workouts Routes
         readonly partialgetCompletedWorkouts = '/get';
         readonly fullGetCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialgetCompletedWorkouts;
+        readonly partialGetAllCompletedWorkouts = '/getAll';
+        readonly fullGetAllCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialgetCompletedWorkouts;
         readonly partialaddCompletedWorkouts = '/add';
         readonly fullAddCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialaddCompletedWorkouts;
     }
