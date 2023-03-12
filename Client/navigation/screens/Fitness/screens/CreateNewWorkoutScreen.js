@@ -219,7 +219,7 @@ export default function CreateNewWorkoutScreen({ navigation , route }) {
                             setModalName(item.name)
                             setModalReps(item.reps)
                             setModalSets(item.sets)
-                            setModalWarmUpSet(item.modalWarmUpSet)
+                            setModalWarmUpSet(item.warmUpSet)
                             setModalWeight(item.weight)
                             setExerciseModalVisible(!exerciseModalVisible)}}>
                             <Text style={[styles.addedText, { borderColor: theme.color, color: theme.color }]} key={item}>{item.name}</Text>
