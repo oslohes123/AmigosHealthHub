@@ -45,7 +45,6 @@ export const readSpecificCalorieGoal = async (req: Request, res: Response) => {
 
 export const readAllCalorieGoals = async (req: Request, res: Response) => {
     const {UserID} = req.params;
-    console.log("We are here",UserID)
     const { data, error }: any = await databaseQuery.match(
         supabase,
         "Calories",
