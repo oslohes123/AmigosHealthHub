@@ -27,11 +27,14 @@ function getToday(){
     return true;
   }
   else if(data.length === 0){
+    console.log("NotCreated")
     return false;
   }
   else {
     const recentValue = (data[data.length - 1].created_at)
-    return !(recentValue< getToday())
+    console.log("Created")
+    console.log(recentValue)
+    return (recentValue < getToday())
   }
 }
   export const insertMentalData = async(req:Request, res:Response) => {
