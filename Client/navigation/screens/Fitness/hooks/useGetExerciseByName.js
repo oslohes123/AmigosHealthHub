@@ -23,7 +23,7 @@ export const useGetExerciseByName = () => {
     });
 
     const getExerciseByNameJSON = await response.json();
-    console.log(getExerciseByNameJSON);
+    // console.log(getExerciseByNameJSON);
     if (!response.ok) {
       setIsLoading(false);
       setError(getExerciseByNameJSON.mssg);

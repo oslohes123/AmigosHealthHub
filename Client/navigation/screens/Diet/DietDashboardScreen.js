@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
 
   },
   textContainer: {
-    backgroundColor: '#3eda9b',
+    backgroundColor: '#8bf2f3',
     borderRadius: 15,
     padding: 10,
     // height: 50,
@@ -394,7 +394,7 @@ const styles = StyleSheet.create({
     width: '90%',
   },
   pieWidget: {
-    backgroundColor: '#3eda9b',
+    backgroundColor: '#8bf2f3',
     borderRadius: 25,
     alignSelf: 'center',
     padding: 5

@@ -19,7 +19,7 @@ const foodHistoryName = 'Food History'
 
 export default function DietNavigation({ navigation }) {
     return (
-        <Stack.Navigator screenOptions={{headerShown: true, headerTitleStyle: styles.header, headerStyle: {backgroundColor: '#3eda9b'}}}>
+        <Stack.Navigator screenOptions={{headerShown: true, headerTitleStyle: styles.header, headerStyle: {backgroundColor: '#8bf2f3'}}}>
             <Stack.Screen name={dietDashboardName} component={DietDashboardScreen} />
             <Stack.Screen name={nutrientsName} component={Nutrients} />
             {/* <Stack.Screen name={settingsName} component={Settings} /> */}

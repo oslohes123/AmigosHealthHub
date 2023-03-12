@@ -4,34 +4,52 @@ import { Text, View, SafeAreaView, ScrollView, TouchableOpacity, TouchableWithou
 import { useState, useContext, useEffect } from "react";
 import themeContext from "../../../theme/themeContext";
 import { FAB } from 'react-native-paper';
-import GreenButton from "../../../components/GreenButton";
-import RedButton from "../../../components/RedButton";
 import { useSearchExercise } from "../hooks/useSearchExercise";
+import { useAddWorkout } from "../hooks/useAddWorkout";
 
-export default function CreateNewWorkoutScreen({ navigation }) {
+export default function CreateNewWorkoutScreen({ navigation , route }) {
     const [exerciseModalVisible, setExerciseModalVisible] = useState(false);
     const [nameModalVisible, setNameModalVisible] = useState(false);
     const theme = useContext(themeContext);
     const [text, setText] = useState("");
     const [results, setResults] = useState([]);
-    const [selectedExercises, setSelectedExercises] = useState([])
+    const [selectedExercises, setSelectedExercises] = useState([]);
+
+    console.log(`Selected Exercises: ${JSON.stringify(selectedExercises)}`)
+    console.log(`route: ${JSON.stringify(route)}`)
+    console.log(`route.params: ${JSON.stringify(route.params)}`)
+
+    const [modalName, setModalName] = useState('')
+    const [modalDistance, setModalDistance] = useState(0)
+    const [modalDuration, setModalDuration] = useState(0)
+    const [modalSets, setModalSets] = useState(0)
+    const [modalReps, setModalReps] = useState(0)
+    const [modalWeight, setModalWeight] = useState(0)
+    const [modalWarmUpSet, setModalWarmUpSet] = useState(false)
+    const [modalCalories, setModalCalories] = useState(0)
+
     const { searchExercise, isLoading, error } = useSearchExercise();
-    
-    const [modalData, setModalData] = useState({
-        name: '', 
-        distance: 0,
-        duration: 0,
-        sets: 0, 
-        reps: 0, 
-        weight: 0, 
-        warmUpSet: false,
-        calories: 0})
+    const { addWorkout } = useAddWorkout();
+
+    useEffect(() => {
+        if (route.params && route.params != selectedExercises) { 
+            console.log(`route.params: ${JSON.stringify(route.params)}`)
+            setSelectedExercises(route.params)
+            console.log(`if exc`) 
+        } 
+        else { 
+            setSelectedExercises([]) 
+            console.log(`else exc`)
+        }
+        console.log(`selected exercises after: ${JSON.stringify(selectedExercises)}`)
+    }, [route.params])
 
     useEffect(() => {
         async function fetchData() {
         const data = await searchExercise(text);
         console.log(`data: ${JSON.stringify(data)}`);
         let resultsList = [];
+
 
         data.map((item) => {
             resultsList.push(item);
@@ -53,35 +71,46 @@ export default function CreateNewWorkoutScreen({ navigation }) {
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <SafeAreaView style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                         <View style={[modalStyle.modalMain, { backgroundColor: theme.secondary }]}>
-                        <Text style={[modalStyle.modalText, { color: theme.color }]}>
-                            Exercise Information
-                        </Text>
+                            <Text style={[modalStyle.modalText, { color: theme.color }]}>
+                                Exercise Information
+                            </Text>
 
-                        <View style={{flexDirection: "row", justifyContent: "space-evenly", borderWidth: 2, borderRadius: 26, padding: 10, margin: 20, width: screenWidth * 0.7, borderColor: theme.color}}>
-                            <View>
-                                <Text style={{color: theme.color, fontSize: 12, textAlign: "center"}}>Sets</Text>
-                                <Text style={{fontWeight: "bold", color: theme.color, fontSize: 16, textAlign: "center"}}>{modalData.sets}</Text>
-                                <Text style={{color: theme.color, fontSize: 12, textAlign: "center"}}>Reps</Text>
-                                <Text style={{fontWeight: "bold", color: theme.color, fontSize: 16, textAlign: "center"}}>{modalData.reps}</Text>
+                            <View style={{flexDirection: "row", justifyContent: "space-evenly", borderWidth: 2, borderRadius: 26, padding: 10, margin: 20, width: screenWidth * 0.7, borderColor: theme.color}}>
+                                <View>
+                                    <Text style={{color: theme.color, fontSize: 12, textAlign: "center"}}>Sets</Text>
+                                    <Text style={{fontWeight: "bold", color: theme.color, fontSize: 16, textAlign: "center"}}>{modalSets}</Text>
+                                    <Text style={{color: theme.color, fontSize: 12, textAlign: "center"}}>Reps</Text>
+                                    <Text style={{fontWeight: "bold", color: theme.color, fontSize: 16, textAlign: "center"}}>{modalReps}</Text>
+                                </View>
+                                <View>
+                                    <Text style={{color: theme.color, fontSize: 12, textAlign: "center"}}>Calories</Text>
+                                    <Text style={{fontWeight: "bold", color: theme.color, fontSize: 16, textAlign: "center"}}>{modalCalories}</Text>
+                                    <Text style={{color: theme.color, fontSize: 12, textAlign: "center"}}>Warm Up Set</Text>
+                                    <Text style={{fontWeight: "bold", color: theme.color, fontSize: 16, textAlign: "center"}}>{modalWarmUpSet ? 'Yes' : 'No'}</Text>
+                                </View>
                             </View>
-                            <View>
-                                <Text style={{color: theme.color, fontSize: 12, textAlign: "center"}}>Calories</Text>
-                                <Text style={{fontWeight: "bold", color: theme.color, fontSize: 16, textAlign: "center"}}>{modalData.calories}</Text>
-                                <Text style={{color: theme.color, fontSize: 12, textAlign: "center"}}>Warm Up Set</Text>
-                                <Text style={{fontWeight: "bold", color: theme.color, fontSize: 16, textAlign: "center"}}>{modalData.warmUpSet ? 'Yes' : 'No'}</Text>
+
+                            <View style={{ flexDirection: "row" }}>
+                                <FAB        
+                                    icon="close"
+                                    style={styles.fab}
+                                    // label="Save"
+                                    // animated={true}
+                                    onPress={() => {
+                                        setExerciseModalVisible(!exerciseModalVisible)
+                                        console.log("Dismiss Info")}}
+                                />
+                                <FAB        
+                                    icon="delete"
+                                    style={styles.fab}
+                                    // label="Save"
+                                    // animated={true}
+                                    onPress={() => {
+                                        setExerciseModalVisible(!exerciseModalVisible)
+                                        //Remove from workout
+                                        console.log("Remove from workout")}}
+                                />
                             </View>
-                        </View>
-
-                        <View style={{ flexDirection: "row" }}>
-                            {RedButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 12, text: "Dismiss", buttonFunction: () => {
-                                setExerciseModalVisible(!exerciseModalVisible)
-                                console.log("Dismiss Info")}})}
-
-                            {RedButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 12, text: "Remove", buttonFunction: () => {
-                                setExerciseModalVisible(!exerciseModalVisible)
-                                //Remove from workout
-                                console.log("Remove from workout")}})}
-                        </View>
                         </View>
                     </SafeAreaView>
                 </TouchableWithoutFeedback>
@@ -97,6 +126,8 @@ export default function CreateNewWorkoutScreen({ navigation }) {
                             style={{color: theme.color, width: screenWidth * 0.6, borderColor: theme.color, margin: 10}}
                             placeholder={"Workout Name"}
                             textAlign={"center"}
+                            // onChangeText={setWorkoutName(workoutName)}
+                            // value={workoutName}
                             placeholderTextColor={theme.color}
                             clearButtonMode={"always"}
                             borderColor={theme.color}
@@ -119,7 +150,7 @@ export default function CreateNewWorkoutScreen({ navigation }) {
                                 // animated={true}
                                 onPress={() => {
                                     setNameModalVisible(!nameModalVisible)
-                                    console.log("Save Workout Plan")}}
+                                    console.log("Don't Save Yet")}}
                             />
                             <FAB        
                                 icon="check"
@@ -127,8 +158,12 @@ export default function CreateNewWorkoutScreen({ navigation }) {
                                 // label="Save"
                                 // animated={true}
                                 onPress={() => {
-                                    setNameModalVisible(!nameModalVisible)
-                                    console.log("Save Workout Plan")}}
+                                    // if (workoutName && selectedExercises && workoutName.length > 0 && selectedExercises.length > 0) {
+                                    //     // addWorkout(workoutName, selectedExercises)
+                                    //     setNameModalVisible(!nameModalVisible)
+                                    //     console.log("Save Plan to DB")
+                                        // }
+                                    }}
                             />
                         </View>
                     </View>
@@ -166,20 +201,28 @@ export default function CreateNewWorkoutScreen({ navigation }) {
             <ScrollView style={[styles.verticalScroll, {borderColor: theme.color}]} bounces={false}>
                 {results.map((item) => (
                     <TouchableOpacity onPress={() => {
+                        console.log(`exercises selected: ${selectedExercises}`)
                         navigation.navigate("Exercise Information", {item, selectedExercises})
-                        console.log(`exercises selected: ${selectedExercises}`)}} key={item}>
+                    }} key={item}>
                         <Text style={[styles.resultsText, { borderColor: theme.color, color: theme.color }]} key={item}>{item}</Text>
                     </TouchableOpacity>
                 ))}
             </ScrollView>
 
-            {selectedExercises.length > 0 && 
+            {selectedExercises && 
                 <ScrollView style={[styles.horizontalScroll, { borderColor: theme.color }]} horizontal={true} alignItems={"center"} showsHorizontalScrollIndicator={false}>
                     {selectedExercises.map((item) => (
                         <TouchableOpacity key={item} onPress={() => {
-                            // setModalData({name: item.name, distance: item.distance, duration: item.duration, sets: item.sets, reps: item.reps, weight: item.weight, warmUpSet: item.warmUpSet, calories: item.calories})
+                            setModalCalories(item.calories)
+                            setModalDistance(item.distance)
+                            setModalDuration(item.duration)
+                            setModalName(item.name)
+                            setModalReps(item.reps)
+                            setModalSets(item.sets)
+                            setModalWarmUpSet(item.modalWarmUpSet)
+                            setModalWeight(item.weight)
                             setExerciseModalVisible(!exerciseModalVisible)}}>
-                            <Text style={[styles.addedText, { borderColor: theme.color, color: theme.color }]} key={item}>{item}</Text>
+                            <Text style={[styles.addedText, { borderColor: theme.color, color: theme.color }]} key={item}>{item.name}</Text>
                         </TouchableOpacity>
 
                     ))}
@@ -259,10 +302,7 @@ const styles = {
         padding: 12
     },
     fab: {
-        // position: 'absolute',
         marginHorizontal: 8,
-        // left: screenWidth * 0.03,
-        // bottom: screenHeight * 0.02
     },
 };
 

@@ -22,7 +22,7 @@ export default function WorkoutPlansScreen({ navigation }) {
     useEffect(() => {
         async function fetchData() {
             const data = await getAllWorkoutNames();
-            console.log(`data: ${JSON.stringify(data)}`);
+            // console.log(`data: ${JSON.stringify(data)}`);
             let resultsList = [];
 
             data.map((item) => {
@@ -164,7 +164,7 @@ const styles = {
         margin: 16,
         left: screenWidth * 0.03,
         bottom: screenHeight * 0.02
-      },
+    },
 }
 
 const modalStyle = {

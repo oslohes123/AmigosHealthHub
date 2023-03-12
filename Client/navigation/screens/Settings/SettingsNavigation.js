@@ -18,7 +18,7 @@ const SettingsDashboardName = 'Settings Dashboard'
 
 export default function SettingsNavigation({ navigation }) {
     return (
-        <Stack.Navigator screenOptions={{headerShown: true, headerTitleStyle: styles.header, headerStyle: {backgroundColor: '#3eda9b'}}}>
+        <Stack.Navigator screenOptions={{headerShown: true, headerTitleStyle: styles.header, headerStyle: {backgroundColor: '#8bf2f3'}}}>
             <Stack.Screen name={SettingsDashboardName} component={SettingsDashboard} />
             <Stack.Screen name={DietSettingsName} component={DietSettings} />
             <Stack.Screen name={ExerciseSettingsName} component={ExerciseSettings} />
