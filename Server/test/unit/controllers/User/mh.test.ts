@@ -5,7 +5,7 @@ import { wordValues } from "../../../../controllers/mhcontroller";
 import { supabaseQueryClass } from '../../../../utils/databaseInterface';
 import supabase from '../../../../utils/supabaseSetUp';
 import {v4 as uuidv4} from 'uuid';
-import { createHashedPassword, createUser } from '../../../../utils/userFunctions';
+import { createHashedPassword, createUser, addMHSection } from '../../../../utils/userFunctions';
 
 
 const supabaseQuery = new supabaseQueryClass();
@@ -31,7 +31,7 @@ test.before(async (t : any) => {
     // randomEmail = `${uuid}@gmail.com`
     
     // const hashedPassword = await createHashedPassword("CorrectPassword123!")
-    const {data, error}:any = await supabaseQuery.insert(supabase, 'Mental Health',{user_id: uuid, face_id: "4", created_at: '2020-03-01 00:00:00+00', todays_word: 'Happy'});
+    const {data, error}:any = await addMHSection({face_id: "4", created_at: '2020-03-01 00:00:00+00', todays_word: 'Happy'});
     
     if(error){
         t.fail()

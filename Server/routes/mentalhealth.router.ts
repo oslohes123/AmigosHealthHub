@@ -5,8 +5,8 @@ const express = require('express');
 const mentalHealthRouter = express.Router();
 // const mhFunctions = ('../controllers/mhcontroller.ts');
 
-mentalHealthRouter.get('/', wordValues)
-mentalHealthRouter.get('/', faceValues)
+mentalHealthRouter.get('/wordcloud', wordValues)
+mentalHealthRouter.get('/facegraph', faceValues)
 mentalHealthRouter.get('/reviewday', reviewDay)
 // mentalHealthRouter.get('/workoutPlans', mhFunctions.workoutPlans)
 // fitnessRouter.get('/trackExercises/searchExercise')
