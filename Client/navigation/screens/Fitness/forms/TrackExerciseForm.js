@@ -25,15 +25,16 @@ import GreenButton from '../../../components/GreenButton';
 //     //     )
 // });
 
-export const formikTrackExerciseForm = ({navigation}) => {
+export const formikTrackExerciseForm = ({navigation, exerciseInfo}) => {
     // const { login, isLoading, error } = useLogin();
     const theme = useContext(themeContext)
     const [warmUpSet, setWarmUpSet] = useState(false)
     const [isDisabled, setIsDisabled] = useState(false)
+
     return (
         <View>
             <Formik
-                initialValues={{ setsOrDistance: 0, repsOrTime: 0, calories: 0, warmUpSet: false }}
+                initialValues={{ sets: 0, reps: 0, weight: 0, calories: 0, distance: 0, duration: 0, warmUpSet: false }}
                 onSubmit={async (values) => {
                     // await login(values.email, values.password);
                     console.log('Form Loaded')
@@ -42,6 +43,7 @@ export const formikTrackExerciseForm = ({navigation}) => {
             >
                 {(props) => (
                     <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                        {exerciseInfo.type != 'cardio' ?
                         <View style={{width: screenWidth * 0.8, flexDirection: 'row', justifyContent: 'space-evenly', alignContent: 'center'}}>     
                             <View style={{width: screenWidth * 0.4, flexDirection: 'column', justifyContent: 'space-evenly', alignContent: 'center'}}>
                                 <View style={{width: screenWidth * 0.4, flexDirection: 'row', justifyContent: 'space-evenly', alignContent: 'center'}}>
@@ -49,34 +51,46 @@ export const formikTrackExerciseForm = ({navigation}) => {
                                         style={[modalStyle.textInput, {borderColor: theme.color}]} 
                                         placeholder='Sets' 
                                         placeholderTextColor={theme.color} 
-                                        onChangeText={props.handleChange('setsOrDistance')}
+                                        onChangeText={props.handleChange('sets')}
                                         value={props.values.setsOrDistance}
                                         keyboardType={'numeric'} 
                                         textAlign={'center'}
                                     />
-                                    <Text>{props.errors.setsOrDistance}</Text>
+                                    <Text>{props.errors.sets}</Text>
                                     <TextInput 
                                         style={[modalStyle.textInput, {borderColor: theme.color}]} 
                                         placeholder='Reps' 
                                         placeholderTextColor={theme.color} 
-                                        onChangeText={props.handleChange('repsOrTime')}
+                                        onChangeText={props.handleChange('reps')}
                                         value={props.values.repsOrTime}
                                         keyboardType={'numeric'} 
                                         textAlign={'center'}
                                     />
-                                    <Text>{props.errors.repsOrTime}</Text>
+                                    <Text>{props.errors.reps}</Text>
                                 </View>
 
-                                <TextInput 
-                                    style={[modalStyle.textInput, {borderColor: theme.color, alignSelf: 'center'}]} 
-                                    placeholder='Calories' 
-                                    placeholderTextColor={theme.color} 
-                                    onChangeText={props.handleChange('calories')}
-                                    value={props.values.calories}
-                                    keyboardType={'numeric'} 
-                                    textAlign={'center'}
-                                />
-                                <Text>{props.errors.calories}</Text>
+                                <View style={{width: screenWidth * 0.4, flexDirection: 'row', justifyContent: 'space-evenly', alignContent: 'center'}}>
+                                    <TextInput 
+                                        style={[modalStyle.textInput, {borderColor: theme.color, alignSelf: 'center'}]} 
+                                        placeholder='Calories' 
+                                        placeholderTextColor={theme.color} 
+                                        onChangeText={props.handleChange('calories')}
+                                        value={props.values.calories}
+                                        keyboardType={'numeric'} 
+                                        textAlign={'center'}
+                                        />
+                                    <Text>{props.errors.calories}</Text>
+                                    <TextInput 
+                                        style={[modalStyle.textInput, {borderColor: theme.color, alignSelf: 'center'}]} 
+                                        placeholder='Weight' 
+                                        placeholderTextColor={theme.color} 
+                                        onChangeText={props.handleChange('weight')}
+                                        value={props.values.repsOrTime}
+                                        keyboardType={'numeric'} 
+                                        textAlign={'center'}
+                                        />
+                                    <Text>{props.errors.weight}</Text>
+                                </View>
                             </View>
 
                             <View style={{width: screenWidth * 0.3, flexDirection: 'column', justifyContent: 'center', alignContent: 'center'}}>
@@ -88,8 +102,49 @@ export const formikTrackExerciseForm = ({navigation}) => {
                                 />
                             </View>
                         </View>
+                        :
+                        <View style={{width: screenWidth * 0.8, flexDirection: 'row', justifyContent: 'space-evenly', alignContent: 'center'}}>     
+                            <View style={{width: screenWidth * 0.4, flexDirection: 'column', justifyContent: 'space-evenly', alignContent: 'center'}}>
+                                <View style={{width: screenWidth * 0.4, flexDirection: 'row', justifyContent: 'space-evenly', alignContent: 'center'}}>
+                                    <TextInput 
+                                        style={[modalStyle.textInput, {borderColor: theme.color}]} 
+                                        placeholder='Distance' 
+                                        placeholderTextColor={theme.color} 
+                                        onChangeText={props.handleChange('distance')}
+                                        value={props.values.setsOrDistance}
+                                        keyboardType={'numeric'} 
+                                        textAlign={'center'}
+                                    />
+                                    <Text>{props.errors.distance}</Text>
+                                    <TextInput 
+                                        style={[modalStyle.textInput, {borderColor: theme.color}]} 
+                                        placeholder='Duration' 
+                                        placeholderTextColor={theme.color} 
+                                        onChangeText={props.handleChange('duration')}
+                                        value={props.values.repsOrTime}
+                                        keyboardType={'numeric'} 
+                                        textAlign={'center'}
+                                    />
+                                    <Text>{props.errors.duration}</Text>
+                                </View>
 
-                        <View style={{width: screenWidth * 0.4, flexDirection: 'row', justifyContent: 'space-evenly'}}>
+                                <View style={{width: screenWidth * 0.4, flexDirection: 'row', justifyContent: 'center', alignContent: 'center'}}>
+                                    <TextInput 
+                                        style={[modalStyle.textInput, {borderColor: theme.color, alignSelf: 'center'}]} 
+                                        placeholder='Calories' 
+                                        placeholderTextColor={theme.color} 
+                                        onChangeText={props.handleChange('calories')}
+                                        value={props.values.calories}
+                                        keyboardType={'numeric'} 
+                                        textAlign={'center'}
+                                        />
+                                    <Text>{props.errors.calories}</Text>
+                                </View>
+                            </View>
+                        </View>
+                        }
+
+                        <View style={{width: screenWidth * 0.4, flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 10}}>
                             {/* {RedButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 12, text: "Dismiss", buttonFunction: () => {
                                 setModalVisible(!modalVisible)
                                 console.log("Dismiss Info")}})} */}

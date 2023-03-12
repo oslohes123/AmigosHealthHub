@@ -16,6 +16,16 @@ export default function CreateNewWorkoutScreen({ navigation }) {
     const [results, setResults] = useState([]);
     const [selectedExercises, setSelectedExercises] = useState([])
     const { searchExercise, isLoading, error } = useSearchExercise();
+    
+    const [modalData, setModalData] = useState({
+        name: '', 
+        distance: 0,
+        duration: 0,
+        sets: 0, 
+        reps: 0, 
+        weight: 0, 
+        warmUpSet: false,
+        calories: 0})
 
     useEffect(() => {
         async function fetchData() {
@@ -50,15 +60,15 @@ export default function CreateNewWorkoutScreen({ navigation }) {
                         <View style={{flexDirection: "row", justifyContent: "space-evenly", borderWidth: 2, borderRadius: 26, padding: 10, margin: 20, width: screenWidth * 0.7, borderColor: theme.color}}>
                             <View>
                                 <Text style={{color: theme.color, fontSize: 12, textAlign: "center"}}>Sets</Text>
-                                <Text style={{fontWeight: "bold", color: theme.color, fontSize: 16, textAlign: "center"}}>0</Text>
+                                <Text style={{fontWeight: "bold", color: theme.color, fontSize: 16, textAlign: "center"}}>{modalData.sets}</Text>
                                 <Text style={{color: theme.color, fontSize: 12, textAlign: "center"}}>Reps</Text>
-                                <Text style={{fontWeight: "bold", color: theme.color, fontSize: 16, textAlign: "center"}}>0</Text>
+                                <Text style={{fontWeight: "bold", color: theme.color, fontSize: 16, textAlign: "center"}}>{modalData.reps}</Text>
                             </View>
                             <View>
                                 <Text style={{color: theme.color, fontSize: 12, textAlign: "center"}}>Calories</Text>
-                                <Text style={{fontWeight: "bold", color: theme.color, fontSize: 16, textAlign: "center"}}>0</Text>
+                                <Text style={{fontWeight: "bold", color: theme.color, fontSize: 16, textAlign: "center"}}>{modalData.calories}</Text>
                                 <Text style={{color: theme.color, fontSize: 12, textAlign: "center"}}>Warm Up Set</Text>
-                                <Text style={{fontWeight: "bold", color: theme.color, fontSize: 16, textAlign: "center"}}>No</Text>
+                                <Text style={{fontWeight: "bold", color: theme.color, fontSize: 16, textAlign: "center"}}>{modalData.warmUpSet ? 'Yes' : 'No'}</Text>
                             </View>
                         </View>
 
@@ -126,32 +136,24 @@ export default function CreateNewWorkoutScreen({ navigation }) {
 
             <ScrollView style={[styles.verticalScroll, {borderColor: theme.color}]} bounces={false}>
                 {results.map((item) => (
-                    <TouchableOpacity onPress={() => {console.log(item)}} key={item}>
+                    <TouchableOpacity onPress={() => {
+                        navigation.navigate("Exercise Information", {item, selectedExercises})
+                        console.log(`exercises selected: ${selectedExercises}`)}} key={item}>
                         <Text style={[styles.resultsText, { borderColor: theme.color, color: theme.color }]} key={item}>{item}</Text>
                     </TouchableOpacity>
                 ))}
             </ScrollView>
 
-            {selectedExercises.length > 0 &&
+            {selectedExercises.length > 0 && 
                 <ScrollView style={[styles.horizontalScroll, { borderColor: theme.color }]} horizontal={true} alignItems={"center"} showsHorizontalScrollIndicator={false}>
-                    <TouchableOpacity onPress={() => {setExerciseModalVisible(!exerciseModalVisible)}}>
-                        <Text style={[styles.addedText, { borderColor: theme.color, color: theme.color }]}>Test 1</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => {setExerciseModalVisible(!exerciseModalVisible)}}>
-                        <Text style={[styles.addedText, { borderColor: theme.color, color: theme.color }]}>Test 2</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => {setExerciseModalVisible(!exerciseModalVisible)}}>
-                        <Text style={[styles.addedText, { borderColor: theme.color, color: theme.color }]}>Test 3</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => {setExerciseModalVisible(!exerciseModalVisible)}}>
-                        <Text style={[styles.addedText, { borderColor: theme.color, color: theme.color }]}>Test 4</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => {setExerciseModalVisible(!exerciseModalVisible)}}>
-                        <Text style={[styles.addedText, { borderColor: theme.color, color: theme.color }]}>Test 5</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => {setExerciseModalVisible(!exerciseModalVisible)}}>
-                        <Text style={[styles.addedText, { borderColor: theme.color, color: theme.color }]}>Test 6</Text>
-                    </TouchableOpacity>
+                    {selectedExercises.map((item) => (
+                        <TouchableOpacity key={item} onPress={() => {
+                            // setModalData({name: item.name, distance: item.distance, duration: item.duration, sets: item.sets, reps: item.reps, weight: item.weight, warmUpSet: item.warmUpSet, calories: item.calories})
+                            setExerciseModalVisible(!exerciseModalVisible)}}>
+                            <Text style={[styles.addedText, { borderColor: theme.color, color: theme.color }]} key={item}>{item}</Text>
+                        </TouchableOpacity>
+
+                    ))}
                 </ScrollView>
             }
 

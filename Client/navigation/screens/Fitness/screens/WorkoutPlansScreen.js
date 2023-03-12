@@ -5,13 +5,19 @@ import { useState, useContext, useEffect } from 'react';
 import themeContext from '../../../theme/themeContext';
 import GreenButton from '../../../components/GreenButton';
 import { useGetAllWorkoutNames } from '../hooks/useGetAllWorkoutNames';
-import { FAB, AnimatedFAB } from "react-native-paper"
+import { FAB, Provider, Portal } from "react-native-paper"
 
 export default function WorkoutPlansScreen({ navigation }) {
     const theme = useContext(themeContext)
     const { getAllWorkoutNames, isLoading, error } = useGetAllWorkoutNames();
     const [results, setResults] = useState([])
-    const [isExtended, setIsExtended] = useState(true)
+    // const [isOpen, setIsOpen] = useState(false)
+
+    const [state, setState] = useState({ open: false });
+
+  const onStateChange = ({ open }) => setState({ open });
+
+  const { open } = state;
     
     useEffect(() => {
         async function fetchData() {
@@ -32,7 +38,7 @@ export default function WorkoutPlansScreen({ navigation }) {
 
             <Text style={[styles.customWorkout, {color: theme.color}]}>Custom Workouts</Text>
         
-            <ScrollView onScrollToTop={isExtended} style={[styles.scrollView, {borderColor: theme.color}]} showsVerticalScrollIndicator={false} bounces={false} alignItems={'center'}>
+            <ScrollView style={[styles.scrollView, {borderColor: theme.color}]} showsVerticalScrollIndicator={false} bounces={false} alignItems={'center'}>
 
                 {error && <Text>{error}</Text>}
                 {(results.length < 1) && <Text>You currently have no custom workout plans.</Text>}
@@ -55,6 +61,40 @@ export default function WorkoutPlansScreen({ navigation }) {
                     // animated={true}
                     onPress={() => {navigation.navigate('Create New Workout')}}
                 />
+
+                {/* <Provider>
+                    <Portal>
+                        <FAB.Group
+                        open={open}
+                        visible
+                        icon={open ? 'cross' : 'plus'}
+                        actions={[
+                            { icon: 'plus', onPress: () => console.log('Pressed add') },
+                            {
+                            icon: 'star',
+                            label: 'Star',
+                            onPress: () => console.log('Pressed star'),
+                            },
+                            {
+                            icon: 'email',
+                            label: 'Email',
+                            onPress: () => console.log('Pressed email'),
+                            },
+                            {
+                            icon: 'bell',
+                            label: 'Remind',
+                            onPress: () => console.log('Pressed notifications'),
+                            },
+                        ]}
+                        onStateChange={onStateChange}
+                        onPress={() => {
+                            if (open) {
+                            // do something if the speed dial is open
+                            }
+                        }}
+                        />
+                    </Portal>
+                </Provider> */}
 
                 {/* <AnimatedFAB
                     icon={'plus'}
