@@ -55,7 +55,7 @@ export default function DietSettings() {
         </Button> */}
         <FAB
         //icon='check'
-        color='white'
+        color='black'
         style={ styles.button}
         label="Set Goal"
         onPress={handleButtonPress}
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   //   fontSize: 30
   // },
   button: {
-    width: 250,
+    width: 200,
     backgroundColor: '#3eda9b',
     alignSelf: 'center',
   }
