@@ -59,6 +59,7 @@ export const createWorkout =async (req:Request, res: Response) => {
             //if no possible exercise matches the one given, then insert into the table
             else {
                const {data, error}: any =  await databaseQuery.insert(supabase, 'PossibleExercises', exercises[i]);
+               console.log(`exercises[i]: ${exercises[i]}`)
                if(error){
                 console.log(error);
                 return res.status(400).json({mssg: "createWorkout Failed!", err: error})
