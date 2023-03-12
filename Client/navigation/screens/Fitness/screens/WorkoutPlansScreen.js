@@ -1,81 +1,60 @@
 import { StatusBar } from 'expo-status-bar';
 
 import { Text, View, SafeAreaView, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
-import { useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import themeContext from '../../../theme/themeContext';
 import SearchBar from '../../../components/SearchBar';
 import GreenButton from '../../../components/GreenButton';
+import { useGetAllWorkoutNames } from '../hooks/useGetAllWorkoutNames';
+import { useGetWorkoutDetails } from '../hooks/useGetWorkoutDetails';
 
 export default function WorkoutPlansScreen({ navigation }) {
     const theme = useContext(themeContext)
+    const { getAllWorkoutNames, isLoading, error } = useGetAllWorkoutNames();
+    const [results, setResults] = useState([])
+    
+    useEffect(() => {
+        async function fetchData() {
+            const data = await getAllWorkoutNames();
+            console.log(`data: ${JSON.stringify(data)}`);
+            let resultsList = [];
+
+            data.map((item) => {
+                resultsList.push(item);
+            });
+            setResults(resultsList);
+        }
+        fetchData()
+    }, [])  
+
     return (
         <SafeAreaView style={[styles.container, {backgroundColor: theme.background}]}>
 
-            <View style={styles.searchAndCreate}>
+            {/* <View style={styles.searchAndCreate}>
 
                 {SearchBar({themeColor: theme.color, width: screenWidth * 0.7})}
-                {GreenButton({height: screenHeight * 0.05, width: screenWidth * 0.15, fontSize: 20, text: "+", buttonFunction: () => {navigation.navigate('Create New Workout')}})}
 
-            </View>
+            </View> */}
 
-                <Text style={[styles.customWorkout, {color: theme.color}]}>Custom Workouts</Text>
+            <Text style={[styles.customWorkout, {color: theme.color}]}>Custom Workouts</Text>
         
-            <ScrollView style={[styles.scrollView, {borderColor: theme.color}]} showsVerticalScrollIndicator={false} alignItems={'center'}>
-                <TouchableOpacity onPress={() => {navigation.navigate("Workout Plan Information")}}>
-                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 1</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {navigation.navigate("Workout Plan Information")}}>                    
-                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 2</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {navigation.navigate("Workout Plan Information")}}>                    
-                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 3</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {navigation.navigate("Workout Plan Information")}}>                    
-                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 4</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {navigation.navigate("Workout Plan Information")}}>                    
-                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 5</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {navigation.navigate("Workout Plan Information")}}>                    
-                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 6</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {navigation.navigate("Workout Plan Information")}}>                    
-                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 7</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {navigation.navigate("Workout Plan Information")}}>                    
-                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 8</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {navigation.navigate("Workout Plan Information")}}>                    
-                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 9</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {navigation.navigate("Workout Plan Information")}}>                    
-                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 10</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {navigation.navigate("Workout Plan Information")}}>                    
-                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 11</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {navigation.navigate("Workout Plan Information")}}>                    
-                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 12</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {navigation.navigate("Workout Plan Information")}}>
-                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 13</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {navigation.navigate("Workout Plan Information")}}>                    
-                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 14</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {navigation.navigate("Workout Plan Information")}}>                    
-                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 15</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {navigation.navigate("Workout Plan Information")}}>                    
-                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 16</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {navigation.navigate("Workout Plan Information")}}>                    
-                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 17</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => {navigation.navigate("Workout Plan Information")}}>                    
-                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Test text 18</Text>
-                </TouchableOpacity>
+            <ScrollView style={[styles.scrollView, {borderColor: theme.color}]} showsVerticalScrollIndicator={false} bounces={false} alignItems={'center'}>
+
+                {error && <Text>{error}</Text>}
+                {(results.length < 1) && <Text>You currently have no custom workout plans.</Text>}
+                
+                {results && results.map((item) => (
+                    <TouchableOpacity key={item} onPress={() => {
+                        navigation.navigate("Workout Plan Information", item)
+                    }}> 
+                        <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]} key={item}>{item}</Text>
+                    </TouchableOpacity>
+                ))}
+
             </ScrollView>
+            <View style={{padding: 10}}>
+                {GreenButton({height: screenHeight * 0.05, width: screenWidth * 0.15, fontSize: 20, text: "+", buttonFunction: () => {navigation.navigate('Create New Workout')}})}
+            </View>
             <StatusBar style="auto" />
         </SafeAreaView>
     );
@@ -87,7 +66,7 @@ const screenHeight = Dimensions.get("window").height;
 const styles = {
     customWorkout: {
         fontSize: 22,
-        margin: 5,
+        margin: 10,
         fontWeight: "bold",
     },
     testText: {
@@ -103,7 +82,7 @@ const styles = {
         borderWidth: 2,
         borderRadius: 26,
         paddingHorizontal: 16,
-        margin: 10,
+        marginHorizontal: 10,
         width: screenWidth * 0.9
     },
     title: {

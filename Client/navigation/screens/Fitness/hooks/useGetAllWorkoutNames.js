@@ -8,13 +8,13 @@ const getAllWorkoutNamesRoute = `http://${ip_address}:${port}/api/user/workout/g
 export const useGetAllWorkoutNames = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
+  const { user } = useAuthContext();
+  const userid = user.id;
   // const { dispatch } = useAuthContext();
 
   const getAllWorkoutNames = async () => {
     setIsLoading(true);
     setError(null);
-    const { user } = useAuthContext();
-    const userid = user.id;
 
     console.log("In getAllWorkoutNames");
     // console.log(`Port in searchExercise: ${port}`);

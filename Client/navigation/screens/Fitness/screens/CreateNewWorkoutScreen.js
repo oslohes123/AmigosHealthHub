@@ -215,21 +215,29 @@ export default function CreateNewWorkoutScreen({ navigation }) {
               Save Workout
             </Text>
 
-            <TextInput
-              style={{
-                color: theme.color,
-                width: screenWidth * 0.6,
-                borderColor: theme.color,
-                margin: 10,
-              }}
-              placeholder={"Workout Name"}
-              textAlign={"center"}
-              placeholderTextColor={theme.color}
-              clearButtonMode={"always"}
-              borderColor={theme.color}
-              borderWidth={1}
-              borderRadius={10}
-            />
+            <ScrollView
+              style={[styles.verticalScroll, { borderColor: theme.color }]}
+              bounces={false}
+            >
+              {results.map((item) => (
+                <TouchableOpacity
+                  onPress={() => {
+                    console.log(item);
+                  }}
+                  key={item}
+                >
+                  <Text
+                    style={[
+                      styles.resultsText,
+                      { borderColor: theme.color, color: theme.color },
+                    ]}
+                    key={item}
+                  >
+                    {item}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
 
             <View style={{ flexDirection: "row" }}>
               {RedButton({
