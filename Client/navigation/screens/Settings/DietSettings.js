@@ -42,8 +42,8 @@ export default function DietSettings() {
       <View>
         <TextInput
           placeholder='Add new calorie goal'
-          placeholderTextColor={theme.color}
-          style={[styles.input, {borderColor: theme.color}, {color: theme.color}]}
+          placeholderTextColor='black'
+          style={[styles.input, {borderColor: theme.color}]}
           keyboardType="numeric"
           value={goal}
           onChangeText={setGoal}
@@ -83,7 +83,8 @@ const styles = StyleSheet.create({
     // borderTopStartRadius: 25,
     marginBottom: '3%',
     //height: 20,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    color: 'black',
 },
   // CalorieView: {
   //   flexDirection: 'row',
