@@ -27,7 +27,7 @@ export const getSleepFunc = async (
         `Getting sleep data from ${startDate} to ${endDate} for user ${userID}`
     );
 
-    const columnSelected = 'hoursSlept, timestamp';
+    const columnSelected = 'hoursSlept, timestamp, sleepQuality';
     const { data, error }: any = await databaseQuery.selectWhereRange(
         database,
         table,
