@@ -7,7 +7,7 @@ export const useSubmit = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useAuthContext();
-  let email = user.id
+  let email = user.email
 
   console.log(`port: ${port}`);
   console.log(`ip_address: ${ip_address}`);

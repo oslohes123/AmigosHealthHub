@@ -31,7 +31,7 @@ function getToday(){
   }
   else {
     const recentValue = (data[data.length - 1].created_at)
-    return (recentValue < getToday())
+    return !(recentValue < getToday())
   }
 }
   export const insertMentalData = async(req:Request, res:Response) => {
