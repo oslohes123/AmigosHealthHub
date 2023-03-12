@@ -1,15 +1,8 @@
 import { LineChart } from 'react-native-chart-kit';
 import React from 'react';
+const getSleep = require('./hooks/useGetSleep');
 
-const data = [
-    { hoursSlept: 10, timestamp: '2016-11-10' },
-    { hoursSlept: 7, timestamp: '2016-11-11' },
-    { hoursSlept: 10, timestamp: '2016-11-12' },
-    { hoursSlept: 12, timestamp: '2016-11-13' },
-    { hoursSlept: 8, timestamp: '2016-11-14' },
-    { hoursSlept: 5, timestamp: '2016-11-15' },
-    { hoursSlept: 9, timestamp: '2016-11-16' }
-];
+const data = getSleep;
 
 const graphData = {
     labels: data.map((item) =>

@@ -7,7 +7,7 @@ import {
     View
 } from 'react-native';
 
-import GraphWidget from './graphWidget';
+import GraphWidget from '../Sleep/graphWidget';
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useAuthContext } from '../Authentication/context/AuthContext';
