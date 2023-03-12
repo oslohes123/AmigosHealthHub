@@ -5,6 +5,10 @@ import supabase from '../../utils/supabaseSetUp';
 import { supabaseQueryClass } from '../../utils/databaseInterface';
 const databaseQuery = new supabaseQueryClass();
 
+
+function removeDuplicates(arr: Array<any>) {
+    return [...new Set(arr)];
+}
 /**
  * Given a name, return all exercise matches from the fitness API
  */
@@ -32,6 +36,9 @@ export const searchForExercise = async(req: Request, res: Response) => {
         for(let i = 0; i < arrayOfExercises.length;i++){
             arrayOfExerciseNames.push(arrayOfExercises[i].name)
         }
+
+         arrayOfExerciseNames = removeDuplicates(arrayOfExerciseNames)
+         console.log(`arrayOfExerciseNames: ${arrayOfExerciseNames}`)
         if(response.ok){
             res.status(200).json({mssg:"Successful Search!", searchedWords: arrayOfExerciseNames})
         }
