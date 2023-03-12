@@ -4,9 +4,82 @@ import { supabaseQueryClass } from "../../utils/databaseInterface"
 import { getDate, getTime } from "../../utils/convertTimeStamptz";
 const databaseQuery = new supabaseQueryClass();
 
-export const getCompletedWorkouts =async (req:Request, res:Response) => {
-    return res.status(200).json({mssg:"This is the getCompletedWorkouts page!"})
+//Get a specific workout by userid, workoutname, date and time
+export const getACompletedWorkout =async (req:Request, res:Response) => {
+    const {userid, workoutname, date, time}= req.headers;
+
+    if(!userid|| !workoutname||!date||!time){
+        return res.status(400).json({mssg:"No userid, workoutname, date or time"})
+    }
+    const {data, error}:any = await databaseQuery.match(supabase, 'CompletedWorkouts','completedWorkoutID, timestamp', {userid,workoutname});
+    if(error){
+        return res.status(400).json({mssg:"Something went wrong!", error})
+    }
+    console.log(`getACompletedWorkout: ${JSON.stringify(data)}`)
+
+   //Break down each completed workouts' timestamp and match that with the one given in the headers
+    let selectedWorkout;
+    for(let i = 0; i< data.length;i++){
+        if( getDate(data[i].timestamp) === date &&getTime(data[i].timestamp) === time ){
+            selectedWorkout = data[i].completedWorkoutID
+        }
+    }
+    if(!selectedWorkout){
+        return res.status(400).json({mssg:"A workout of this name at this time does not exist for this user!"})
+    }
+    console.log(`selectedWorkout: ${selectedWorkout}`)
+
+    const {errorPresent, workoutToReturn}: any = await getWorkoutByID(selectedWorkout)
+    if(errorPresent){
+        return res.status(400).json({mssg:"getWorkoutPlanById failed!", err: errorPresent});
+    }
+    return res.status(200).json({mssg:"Success!", workoutToReturn})
 }
+
+const getWorkoutByID = async( completedWorkoutID: string) => {
+    const {data, error}: any = await databaseQuery.selectWhere(supabase, 'TrackedWorkoutsWithExercises','completedWorkoutID', completedWorkoutID,'*');
+    
+    console.log(`getWorkoutByID: ${JSON.stringify(data)}`);
+
+    const errorAndWorkout = {errorPresent: '', workoutToReturn:[""]};
+    if(error) errorAndWorkout.errorPresent = error;
+   
+    else{
+        let arrayOfAEID = [];
+        for(let i = 0; i< data.length; i++){
+            arrayOfAEID.push(data[i].AEID)
+        }
+        console.log(`arrayOfAEID: ${arrayOfAEID}`)
+
+        let arrayOfPossibleExercises = []
+        for (let j = 0; j<arrayOfAEID.length; j++){
+            const {data, error}: any = await databaseQuery.selectWhere(supabase, 'ActualExercises', 'AEID',arrayOfAEID[j],'*');
+            if(error) errorAndWorkout.errorPresent = error;
+            else{
+                arrayOfPossibleExercises.push(data[0])
+                console.log(`data ln50 getWorkout: ${JSON.stringify(data)}`);
+                console.log(`arrayOfPossibleExercises ln: ${JSON.stringify(arrayOfPossibleExercises)}`)
+            }
+        }
+
+        for(let i = 0; i<arrayOfPossibleExercises.length; i++){
+            const {data, error}: any = await databaseQuery.selectWhere(supabase, 'ActualExercises', 'AEID',arrayOfPossibleExercises[i].AEID,'*');
+            if(error) errorAndWorkout.errorPresent = error;
+            else{
+                delete arrayOfPossibleExercises[i].exerciseID
+                delete arrayOfPossibleExercises[i].userID
+                // arrayOfPossibleExercises[i].exercise = data[0];
+                console.log(`data ln65 getWorkout: ${JSON.stringify(data)}`);
+                console.log(`arrayOfPossibleExercises ln 66: ${JSON.stringify(arrayOfPossibleExercises)}`)
+            }
+        }
+        errorAndWorkout.workoutToReturn = arrayOfPossibleExercises;
+
+    }
+    return errorAndWorkout;
+}
+
+
 
 //Returns all of a user's completed workouts' names and dates
 export const getAllCompletedWorkouts =async (req:Request, res: Response) => {
