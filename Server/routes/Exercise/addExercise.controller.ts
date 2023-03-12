@@ -27,6 +27,7 @@ export const searchForExercise = async(req: Request, res: Response) => {
         );
     
         const arrayOfExercises = await response.json();
+        console.log(`arrayOfExercises: ${JSON.stringify(arrayOfExercises)}`)
         let arrayOfExerciseNames = [];
         for(let i = 0; i < arrayOfExercises.length;i++){
             arrayOfExerciseNames.push(arrayOfExercises[i].name)
