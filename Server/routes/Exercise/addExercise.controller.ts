@@ -3,8 +3,8 @@ import { Request, Response } from 'express';
 const EXERCISE_API_KEY = process.env.EXERCISE_API_KEY as string;
 import supabase from '../../utils/supabaseSetUp';
 import { supabaseQueryClass } from '../../utils/databaseInterface';
+import removeDuplicates from '../../utils/removeDuplicates';
 const databaseQuery = new supabaseQueryClass();
-
 /**
  * Given a name, return all exercise matches from the fitness API
  */
@@ -27,10 +27,14 @@ export const searchForExercise = async(req: Request, res: Response) => {
         );
     
         const arrayOfExercises = await response.json();
+        console.log(`arrayOfExercises: ${JSON.stringify(arrayOfExercises)}`)
         let arrayOfExerciseNames = [];
         for(let i = 0; i < arrayOfExercises.length;i++){
             arrayOfExerciseNames.push(arrayOfExercises[i].name)
         }
+
+         arrayOfExerciseNames = removeDuplicates(arrayOfExerciseNames)
+         console.log(`arrayOfExerciseNames: ${arrayOfExerciseNames}`)
         if(response.ok){
             res.status(200).json({mssg:"Successful Search!", searchedWords: arrayOfExerciseNames})
         }

@@ -69,7 +69,7 @@ const getWorkoutByID = async( workoutPlanID: string) => {
 
         let arrayOfPossibleExercises = []
         for (let j = 0; j<arrayOfPEID.length; j++){
-            const {data, error}: any = await databaseQuery.selectWhere(supabase, 'PossibleExercises', 'PEID',arrayOfPEID[j],'exerciseID, sets, duration, distance, warmUpSetFlag, calories, reps');
+            const {data, error}: any = await databaseQuery.selectWhere(supabase, 'PossibleExercises', 'PEID',arrayOfPEID[j],'*');
             if(error) errorAndWorkout.errorPresent = error;
             else{
                 arrayOfPossibleExercises.push(data[0])
@@ -79,10 +79,11 @@ const getWorkoutByID = async( workoutPlanID: string) => {
         }
 
         for(let i = 0; i<arrayOfPossibleExercises.length; i++){
-            const {data, error}: any = await databaseQuery.selectWhere(supabase, 'Exercises', 'ExerciseID',arrayOfPossibleExercises[i].exerciseID,'type, muscle, instructions, name, difficulty, equipment');
+            const {data, error}: any = await databaseQuery.selectWhere(supabase, 'Exercises', 'ExerciseID',arrayOfPossibleExercises[i].exerciseID,'*');
             if(error) errorAndWorkout.errorPresent = error;
             else{
                 delete arrayOfPossibleExercises[i].exerciseID
+                delete arrayOfPossibleExercises[i].userID
                 arrayOfPossibleExercises[i].exercise = data[0];
                 console.log(`data ln65 getWorkout: ${JSON.stringify(data)}`);
                 console.log(`arrayOfPossibleExercises ln 66: ${JSON.stringify(arrayOfPossibleExercises)}`)

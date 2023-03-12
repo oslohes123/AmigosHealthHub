@@ -20,6 +20,7 @@ export const useLogin = () => {
   console.log(`port: ${port}`);
   console.log(`ip_address: ${ip_address}`);
   console.log(JSON.stringify(process.env));
+
   const login = async (email, password) => {
     setIsLoading(true);
     setError(null);

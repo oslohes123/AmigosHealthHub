@@ -11,6 +11,7 @@ export const useGetWorkoutDetails = () => {
   const { user } = useAuthContext();
   const userid = user.id;
   console.log(`userid ln13 getworkoutdetails: ${userid}`);
+
   const getWorkoutDetails = async (workoutname) => {
     setIsLoading(true);
     setError(null);

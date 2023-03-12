@@ -5,6 +5,7 @@ export default class RouteNamesClass{
     readonly changeDetailsBaseURL = this.userBaseURL + '/changeProfileDetails'
     readonly exerciseBaseURL = this.userBaseURL + '/exercise'
     readonly workoutBaseURL = this.userBaseURL + '/workout'
+    readonly completedWorkoutBaseURL = this.userBaseURL + '/completedWorkouts'
     // Auth Routes
     readonly partialSignupURL = '/sign_up';
     readonly partialLoginURL = '/login';
@@ -40,7 +41,10 @@ export default class RouteNamesClass{
             readonly fullAddToExercisesURL = this.exerciseBaseURL + this.partialAddToExercises;
             readonly partialGetExercise = '/get';
             readonly fullGetExerciseURL = this.exerciseBaseURL + this.partialAddToExercises;
-
+            readonly partialGetExerciseHistory = '/history';
+            readonly fullGetExerciseHistoryURL = this.exerciseBaseURL + this.partialGetExerciseHistory;
+            readonly partialGetAllExercises = '/getAll';
+            readonly fullGetAllExercisesURL = this.exerciseBaseURL + this.partialGetAllExercises;
         //Workout Routes
             readonly partialAddWorkout = '/add';
             readonly fullAddWorkoutURL = this.workoutBaseURL + this.partialAddWorkout;
@@ -48,4 +52,12 @@ export default class RouteNamesClass{
             readonly fullGetWorkoutURL = this.workoutBaseURL + this.partialGetWorkout;
             readonly partialGetAllWorkoutNames = '/getAllWorkoutNames';
             readonly fullGetAllWorkoutNames = this.workoutBaseURL + this.partialGetAllWorkoutNames;
-    }
+        
+        //Completed Workouts Routes
+        readonly partialgetCompletedWorkouts = '/get';
+        readonly fullGetCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialgetCompletedWorkouts;
+        readonly partialGetAllCompletedWorkouts = '/getAll';
+        readonly fullGetAllCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialgetCompletedWorkouts;
+        readonly partialaddCompletedWorkouts = '/add';
+        readonly fullAddCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialaddCompletedWorkouts;
+    }   
