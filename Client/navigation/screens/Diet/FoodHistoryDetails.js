@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, TextInput, Modal, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, TextInput, Modal, TouchableOpacity, Alert } from "react-native";
 import GreenButton from "../../components/GreenButton";
 // import { TextInput } from 'react-native-paper';
 import { useAuthContext } from "../Authentication/context/AuthContext";
@@ -44,11 +44,31 @@ export default function FoodDetails({ route, navigation }) {
         console.log(statusCode);
     }
 
+    // async function handleDeleteFood() {
+    //     let statusCode = await deleteTrackedFood(LogID)
+    //     navigation.navigate('Diet Dashboard')
+    //     console.log(statusCode);
+    // }
+
     async function handleDeleteFood() {
-        let statusCode = await deleteTrackedFood(LogID)
-        navigation.navigate('Diet Dashboard')
-        console.log(statusCode);
-    }
+        Alert.alert(
+          'Confirm Delete',
+          'Are you sure you want to delete this tracked food?',
+          [
+            { text: 'Cancel', style: 'cancel' },
+            {
+              text: 'Delete',
+              onPress: async () => {
+                let statusCode = await deleteTrackedFood(LogID);
+                navigation.navigate('Diet Dashboard');
+                console.log(statusCode);
+                alert("Food successfully deleted")
+              },
+              style: 'destructive',
+            },
+          ]
+        );
+      }
 
 
     return (
