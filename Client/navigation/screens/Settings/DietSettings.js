@@ -16,7 +16,7 @@ export default function DietSettings() {
     } else if (isNaN(goal)) {
         alert('Calorie should be a number');
     } else {
-        setGoal('');
+        console.log(goal)
         alert('Calorie goal successfully added');
     }
   }

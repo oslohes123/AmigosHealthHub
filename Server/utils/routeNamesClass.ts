@@ -36,8 +36,8 @@ export default class RouteNamesClass{
     readonly fullFoodSearchURL = this.foodBaseURL + this.partialFoodSearchURL
 
     // Calorie Track Routes
-    readonly partialReadSpecificCaloriesURL = '/calorieTrack/:id'
-    readonly partialReadCaloriesURL = '/calorieTrack/:userID'
+    readonly partialReadSpecificCaloriesURL = '/calorieTrack/Specific.:id'
+    readonly partialReadCaloriesURL = '/calorieTrack/General.:UserID'
     readonly partialUpdateSpecificCaloriesURL = '/calorieTrack/updateCalories'
     readonly partialCreateCalorieLogURL = '/calorieTrack/createCalorieLog'
     readonly partialDeleteCalorieLogURL = '/calorieTrack/deleteCalorieLog'
