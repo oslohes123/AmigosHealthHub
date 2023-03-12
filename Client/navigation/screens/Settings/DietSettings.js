@@ -2,7 +2,9 @@ import React, {useState, useContext} from 'react';
 import { View, StyleSheet, Text, SafeAreaView, Switch, TextInput} from 'react-native';
 // import { EventRegister } from 'react-native-event-listeners'
 import themeContext from '../../theme/themeContext';
-import GreenButton from '../../components/GreenButton';
+// import GreenButton from '../../components/GreenButton';
+import { Button, FAB } from 'react-native-paper';
+import { check } from 'prettier';
 
 export default function DietSettings() {
 
@@ -47,7 +49,17 @@ export default function DietSettings() {
           onChangeText={setGoal}
           clearButtonMode='always'
         />
-        <GreenButton text='Set Goal' buttonFunction={handleButtonPress} height={60} width={220}/>
+        {/* <GreenButton text='Set Goal' buttonFunction={handleButtonPress} height={60} width={220}/> */}
+        {/* <F mode='elevated' onPress={handleButtonPress} style={styles.button}>
+          Set Goal
+        </Button> */}
+        <FAB
+        //icon='check'
+        color='white'
+        style={ styles.button}
+        label="Set Goal"
+        onPress={handleButtonPress}
+        />
       </View>
     </SafeAreaView>
   )
@@ -65,8 +77,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: '3%',
     width: '70%',
+    //borderRadius: 25,
+    // borderTopEndRadius: 25,
     borderRadius: 25,
-}
+    // borderTopStartRadius: 25,
+    marginBottom: '3%',
+    //height: 20,
+    backgroundColor: 'white'
+},
   // CalorieView: {
   //   flexDirection: 'row',
   //   justifyContent: 'space-between',
@@ -76,5 +94,10 @@ const styles = StyleSheet.create({
   // text: {
   //   fontSize: 30
   // },
+  button: {
+    width: 250,
+    backgroundColor: '#3eda9b',
+    alignSelf: 'center',
+  }
 })
 
