@@ -38,6 +38,9 @@ app.use(routeNames.userBaseURL, authRouter);
   //Completed Workout Routes
   import completedWorkoutsRouter from "./routes/Exercise/completedWorkouts.router";
   app.use(routeNames.completedWorkoutBaseURL, completedWorkoutsRouter)
+
+  import exerciseHistoryRouter from "./routes/Exercise/exerciseHistory.router";
+  app.use(routeNames.exerciseBaseURL, exerciseHistoryRouter)
 //Change Profile Details Routes
 // const changeProfileDetailsRouter = require('../routes/changeProfileDetails.js');
 import changeProfileDetailsRouter from "./routes/User/changeProfileDetails.router";

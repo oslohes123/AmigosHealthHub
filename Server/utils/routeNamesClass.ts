@@ -41,7 +41,10 @@ export default class RouteNamesClass{
             readonly fullAddToExercisesURL = this.exerciseBaseURL + this.partialAddToExercises;
             readonly partialGetExercise = '/get';
             readonly fullGetExerciseURL = this.exerciseBaseURL + this.partialAddToExercises;
-
+            readonly partialGetExerciseHistory = '/history';
+            readonly fullGetExerciseHistoryURL = this.exerciseBaseURL + this.partialGetExerciseHistory;
+            readonly partialGetAllExercises = '/getAll';
+            readonly fullGetAllExercisesURL = this.exerciseBaseURL + this.partialGetAllExercises;
         //Workout Routes
             readonly partialAddWorkout = '/add';
             readonly fullAddWorkoutURL = this.workoutBaseURL + this.partialAddWorkout;
@@ -57,4 +60,4 @@ export default class RouteNamesClass{
         readonly fullGetAllCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialgetCompletedWorkouts;
         readonly partialaddCompletedWorkouts = '/add';
         readonly fullAddCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialaddCompletedWorkouts;
-    }
+    }   
