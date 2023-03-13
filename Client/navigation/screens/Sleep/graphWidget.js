@@ -3,7 +3,8 @@ import { Dimensions, StyleSheet, Text, View } from 'react-native';
 
 import React from 'react';
 
-const GraphWidget = (inputLabel, inputDataset, graphTitle) => {
+//
+const GraphWidget = (inputLabel, inputDataset, graphTitle, graphAttributes) => {
     const chartData = {
         labels: inputLabel,
         datasets: [
@@ -13,8 +14,8 @@ const GraphWidget = (inputLabel, inputDataset, graphTitle) => {
             }
         ]
     };
-    const screenWidth = Dimensions.get('window').width * 0.97;
-
+    const screenWidth = Dimensions.get('window').width * 0.95;
+    const { yAxisSuffix } = graphAttributes;
     return (
         <View>
             <Text style={styles.title}>{graphTitle}</Text>
@@ -22,13 +23,13 @@ const GraphWidget = (inputLabel, inputDataset, graphTitle) => {
                 data={chartData}
                 width={screenWidth}
                 height={220}
-                yAxisSuffix={' h'}
+                yAxisSuffix={yAxisSuffix}
                 fromZero={true}
                 chartConfig={{
                     backgroundGradientFrom: 'white',
                     backgroundGradientTo: '#38D689',
-                    fillShadowGradientFrom: 'blue',
-                    fillShadowGradientTo: 'orange',
+                    fillShadowGradientFrom: '#233037',
+                    fillShadowGradientTo: '#252628',
                     decimalPlaces: 0,
                     color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
                     style: {
@@ -40,6 +41,27 @@ const GraphWidget = (inputLabel, inputDataset, graphTitle) => {
                     borderRadius: 16
                 }}
             />
+            {/* <LineChart
+                data={chartData}
+                width={screenWidth}
+                height={220}
+                yAxisSuffix={' h'}
+                chartConfig={{
+                    backgroundGradientFrom: '#38D689',
+                    backgroundGradientTo: '#38D689',
+                    fillShadowGradientFrom: '#38D689',
+                    fillShadowGradientTo: '#38D689',
+                    decimalPlaces: 0,
+                    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                    style: {
+                        borderRadius: 16
+                    }
+                }}
+                style={{
+                    marginVertical: 8,
+                    borderRadius: 16
+                }}
+            /> */}
         </View>
     );
 };

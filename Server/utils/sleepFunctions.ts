@@ -35,7 +35,8 @@ export const getSleepFunc = async (
         'userID',
         userID,
         startDate,
-        endDate
+        endDate,
+        'timestamp'
     );
     return { data, error };
 };

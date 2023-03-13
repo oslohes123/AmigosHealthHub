@@ -24,12 +24,17 @@ export default function hoursSleptGraph() {
     const graphTitle = 'Hours slept this week';
     const label = data.map((item) => moment(item.timestamp).format('ddd'));
     const dataset = data.map((item) => item.hoursSlept);
+    const graphAttributes = {
+        yAxisSuffix: ' h'
+    };
 
     return (
         <View>
             {isLoading && <ActivityIndicator />}
             {error && <Text>{error}</Text>}
-            {!isLoading && !error && GraphWidget(label, dataset, graphTitle)}
+            {!isLoading &&
+                !error &&
+                GraphWidget(label, dataset, graphTitle, graphAttributes)}
         </View>
     );
 }

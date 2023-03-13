@@ -149,15 +149,17 @@ export class supabaseQueryClass implements dbInterface {
         filterColumn: string,
         toBeFound: String,
         startValue: String,
-        endValue: String
+        endValue: String,
+        sortBy: String
     ): Promise<object | undefined> {
         try {
             const { data, error } = await supabaseDb
                 .from(table)
                 .select(column)
                 .eq(filterColumn, toBeFound)
-                .gte('timestamp', startValue)
-                .lte('timestamp', endValue);
+                .gte(sortBy, startValue)
+                .lte(sortBy, endValue)
+                .order(sortBy, { ascending: true });
 
             if (error) console.error(error);
             else console.log({ data });
