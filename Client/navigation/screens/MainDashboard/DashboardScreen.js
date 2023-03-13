@@ -7,11 +7,10 @@ import {
     View
 } from 'react-native';
 
-import GraphWidget from '../Sleep/graphWidget';
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
+import hoursSleptGraph from '../Sleep/hoursSleptGraph';
 import { useAuthContext } from '../Authentication/context/AuthContext';
-import widget from '../../components/widget';
 
 //import { useLogout } from "../Authentication/hooks/useLogOut";
 
@@ -22,7 +21,7 @@ export default function DashboardScreen({ navigation }) {
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.title}>{welcomeMessage}</Text>
-            <>{GraphWidget()}</>
+            <>{hoursSleptGraph()}</>
 
             <StatusBar style="auto" />
         </SafeAreaView>
@@ -31,6 +30,7 @@ export default function DashboardScreen({ navigation }) {
 
 const styles = StyleSheet.create({
     title: {
+        color: 'white',
         alignSelf: 'center',
         fontSize: 32,
         fontWeight: 'bold',
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#203038',
         alignItems: 'center',
         justifyContent: 'flex-start'
     }

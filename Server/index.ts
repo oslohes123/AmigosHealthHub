@@ -27,6 +27,10 @@ import authRouter from "./routes/User/authentication.router";
 app.use(routeNames.userBaseURL, authRouter);
 
 
+// Sleep Routes
+import sleepRouter from "./routes/Sleep/sleep.router";
+app.use(routeNames.sleepBaseURL, sleepRouter);
+
 //Change Profile Details Routes
 // const changeProfileDetailsRouter = require('../routes/changeProfileDetails.js');
 import changeProfileDetailsRouter from "./routes/User/changeProfileDetails.router";
@@ -42,10 +46,6 @@ app.use(routeNames.userBaseURL, getUserInfoRouter);
 // Check initial token Route
 import checkInitialTokenRouter from "./routes/User/checkInitialToken.router";
 app.use(routeNames.userBaseURL, checkInitialTokenRouter);
-
-// Sleep Routes
-import sleepRouter from "./routes/Sleep/sleep.router";
-app.use(routeNames.sleepBaseURL, sleepRouter);
 
 /**---------------- Routes End------------------ */
 

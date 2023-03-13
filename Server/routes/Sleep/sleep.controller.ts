@@ -27,7 +27,7 @@ export const getSleep = async (req: Request, res: Response) => {
             .status(400)
             .json({ mssg: 'Start and end date must be provided' });
     const { data, error }: any = await getSleepFunc(userID, startDate, endDate);
-
+    console.log(`getSleep data is: ${data}`);
     if (error || data === null)
         return res.status(400).json({ mssg: error.message });
     else if (data.length === 0)
