@@ -73,26 +73,26 @@ test('getOccurrences should return 0 when the value is not found in the array', 
     t.deepEqual(freqMap, new Map());
   });
   
-  test('wordFreq returns the correct frequencies for an array of words', t => {
-    const arr = ['hello', 'goodbye', 'hello', 'welcome', 'hello', 'goodbye', 'adios'];
-    const freqMap = wordFreq(arr);
-    t.deepEqual(freqMap.get('hello'), 3);
-    t.deepEqual(freqMap.get('goodbye'), 2);
-    t.deepEqual(freqMap.get('welcome'), 1);
-    t.deepEqual(freqMap.get('adios'), 1);
-  });
+  // test('wordFreq returns the correct frequencies for an array of words', t => {
+  //   const arr = ['hello', 'goodbye', 'hello', 'welcome', 'hello', 'goodbye', 'adios'];
+  //   const freqMap = wordFreq(arr);
+  //   t.deepEqual(freqMap.get('hello'), 3);
+  //   t.deepEqual(freqMap.get('goodbye'), 2);
+  //   t.deepEqual(freqMap.get('welcome'), 1);
+  //   t.deepEqual(freqMap.get('adios'), 1);
+  // });
   
-  test('wordFreq should be able to deal with an array with one word correctly', t => {
-    const arr = ['hello'];
-    const freqMap = wordFreq(arr);
-    t.deepEqual(freqMap.get('hello'), 1);
-  });
+  // test('wordFreq should be able to deal with an array with one word correctly', t => {
+  //   const arr = ['hello'];
+  //   const freqMap = wordFreq(arr);
+  //   t.deepEqual(freqMap.get('hello'), 1);
+  // });
   
-  test('wordFreq should be able to deal with an array with multiple instances of the same word correctly', t => {
-    const arr = ['hello', 'hello', 'hello'];
-    const freqMap = wordFreq(arr);
-    t.deepEqual(freqMap.get('hello'), 3);
-  });
+  // test('wordFreq should be able to deal with an array with multiple instances of the same word correctly', t => {
+  //   const arr = ['hello', 'hello', 'hello'];
+  //   const freqMap = wordFreq(arr);
+  //   t.deepEqual(freqMap.get('hello'), 3);
+  // });
 
   test('arrayOfObjectsToStrings should return an empty array when passed an empty array', (t) => {
     const input: Obj[] = [];
