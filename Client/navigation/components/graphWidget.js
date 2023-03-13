@@ -41,27 +41,6 @@ const GraphWidget = (inputLabel, inputDataset, graphTitle, graphAttributes) => {
                     borderRadius: 16
                 }}
             />
-            {/* <LineChart
-                data={chartData}
-                width={screenWidth}
-                height={220}
-                yAxisSuffix={' h'}
-                chartConfig={{
-                    backgroundGradientFrom: '#38D689',
-                    backgroundGradientTo: '#38D689',
-                    fillShadowGradientFrom: '#38D689',
-                    fillShadowGradientTo: '#38D689',
-                    decimalPlaces: 0,
-                    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                    style: {
-                        borderRadius: 16
-                    }
-                }}
-                style={{
-                    marginVertical: 8,
-                    borderRadius: 16
-                }}
-            /> */}
         </View>
     );
 };

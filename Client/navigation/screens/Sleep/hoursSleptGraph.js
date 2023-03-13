@@ -1,7 +1,7 @@
 import { ActivityIndicator, Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 
-import GraphWidget from './graphWidget';
+import GraphWidget from '../../components/graphWidget';
 import moment from 'moment';
 import { useGetSleep } from './hooks/useGetSleep';
 
