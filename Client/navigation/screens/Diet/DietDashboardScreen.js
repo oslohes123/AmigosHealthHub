@@ -5,8 +5,9 @@ import { PieChart } from "react-native-chart-kit";
 import themeContext from '../../theme/themeContext';
 import { EventRegister } from 'react-native-event-listeners'
 import { genericSearch, specificSearch } from '../../../functions/searchFood'
-import { getLatestCalorieGoal } from '../../../functions/Calories';
-import {useAuthContext} from "../Authentication/context/AuthContext";
+import { addCalorieGoal, getCaloriesRemaining, getLatestCalorieGoal } from '../../../functions/Calories';
+import { useAuthContext } from "../Authentication/context/AuthContext";
+import { useIsFocused } from '@react-navigation/native';
 
 import GreenButton from '../../components/GreenButton';
 
@@ -14,7 +15,7 @@ import GreenButton from '../../components/GreenButton';
 export default function DietDashboardScreen({ navigation }) {
 
   const theme = useContext(themeContext)
-
+  const isFocused = useIsFocused();
   const Piedata = [
     {
       name: "Protein",
@@ -56,8 +57,9 @@ export default function DietDashboardScreen({ navigation }) {
     }
   ];
 
-  const {user} = useAuthContext();
+  const { user } = useAuthContext();
   const id = user.id;
+  const todaysDate = new Date().toISOString().split('T')[0];
 
   const [genericFoodList, setGenericFoodList] = useState([]);
 
@@ -69,13 +71,22 @@ export default function DietDashboardScreen({ navigation }) {
 
   const [caloriesRemaining, setCaloriesRemaining] = useState(0);
 
+  async function getCalorieData() {
+    let data = await getLatestCalorieGoal(id);
+    setCalorieGoal(data.CalorieGoal);
+    let calories = await getCaloriesRemaining(id, todaysDate, data.CalorieGoal);
+    setCaloriesRemaining(calories)
+  }
+
+
+  
+ 
   useEffect(() => {
-    async function fetchData() {
-      let data = await getLatestCalorieGoal(id);
-      setCalorieGoal(data.CalorieGoal);
+    if (isFocused){
+      getCalorieData();
     }
-    fetchData();
-  },[])
+  },[navigation, isFocused])
+
 
   useEffect(() => {
     async function fetchData() {
@@ -102,14 +113,15 @@ export default function DietDashboardScreen({ navigation }) {
 
   const pressHandler = async () => {
     navigation.navigate('Nutrients');
+    
   }
 
   async function foodPress(name = null, nix_item_id = null) {
     let data;
     if (nix_item_id == null) {
-      data = {foodData:await specificSearch(name), foodIdentifier:name}
+      data = { foodData: await specificSearch(name), foodIdentifier: name }
     } else {
-      data = {foodData:await specificSearch(nix_item_id), foodIdentifier:nix_item_id}
+      data = { foodData: await specificSearch(nix_item_id), foodIdentifier: nix_item_id }
     }
     navigation.navigate('Food Details', data);
   }
@@ -119,6 +131,9 @@ export default function DietDashboardScreen({ navigation }) {
   }
 
   return (
+
+
+
     <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
       <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: '17%' }}>
         <View style={[styles.headerView, { borderColor: theme.color }]}>
@@ -127,9 +142,11 @@ export default function DietDashboardScreen({ navigation }) {
         </View>
         <View style={[styles.headerView, { borderColor: theme.color }]}>
           <Text style={[styles.title, { color: theme.color }]}>Calories Remaining</Text>
-          <Text style={[styles.number, { color: theme.color }, { borderColor: theme.color }]}>250cal</Text>
+          <Text style={[styles.number, { color: theme.color }, { borderColor: theme.color }]}>{caloriesRemaining}</Text>
         </View>
       </View>
+
+
       <View>
 
         <TextInput
@@ -206,8 +223,8 @@ export default function DietDashboardScreen({ navigation }) {
       {/* <View style={styles.button}>
         <Button title="View Food History" onPress={pressHandler3} color='black' />
       </View> */}
-      <View style={{marginTop: '47%'}}>
-      <GreenButton buttonFunction={pressHandler3} height={60} width={'50%'} text={'View Food History'}/>
+      <View style={{ marginTop: '47%' }}>
+        <GreenButton buttonFunction={pressHandler3} height={60} width={'50%'} text={'View Food History'} />
       </View>
       {/* 
       <TouchableOpacity onPress={newPressHandler}>
