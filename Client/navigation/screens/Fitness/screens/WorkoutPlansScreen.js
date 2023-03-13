@@ -3,20 +3,26 @@ import { StatusBar } from 'expo-status-bar';
 import { Text, View, SafeAreaView, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { useState, useContext, useEffect } from 'react';
 import themeContext from '../../../theme/themeContext';
-import SearchBar from '../../../components/SearchBar';
 import GreenButton from '../../../components/GreenButton';
 import { useGetAllWorkoutNames } from '../hooks/useGetAllWorkoutNames';
-import { useGetWorkoutDetails } from '../hooks/useGetWorkoutDetails';
+import { FAB, Provider, Portal } from "react-native-paper"
 
 export default function WorkoutPlansScreen({ navigation }) {
     const theme = useContext(themeContext)
     const { getAllWorkoutNames, isLoading, error } = useGetAllWorkoutNames();
     const [results, setResults] = useState([])
+    // const [isOpen, setIsOpen] = useState(false)
+
+    const [state, setState] = useState({ open: false });
+
+  const onStateChange = ({ open }) => setState({ open });
+
+  const { open } = state;
     
     useEffect(() => {
         async function fetchData() {
             const data = await getAllWorkoutNames();
-            console.log(`data: ${JSON.stringify(data)}`);
+            // console.log(`data: ${JSON.stringify(data)}`);
             let resultsList = [];
 
             data.map((item) => {
@@ -29,12 +35,6 @@ export default function WorkoutPlansScreen({ navigation }) {
 
     return (
         <SafeAreaView style={[styles.container, {backgroundColor: theme.background}]}>
-
-            {/* <View style={styles.searchAndCreate}>
-
-                {SearchBar({themeColor: theme.color, width: screenWidth * 0.7})}
-
-            </View> */}
 
             <Text style={[styles.customWorkout, {color: theme.color}]}>Custom Workouts</Text>
         
@@ -53,7 +53,61 @@ export default function WorkoutPlansScreen({ navigation }) {
 
             </ScrollView>
             <View style={{padding: 10}}>
-                {GreenButton({height: screenHeight * 0.05, width: screenWidth * 0.15, fontSize: 20, text: "+", buttonFunction: () => {navigation.navigate('Create New Workout')}})}
+
+                <FAB
+                    icon="plus"
+                    style={styles.fab}
+                    label="Create Plan"
+                    // animated={true}
+                    onPress={() => {navigation.navigate('Create New Workout')}}
+                />
+
+                {/* <Provider>
+                    <Portal>
+                        <FAB.Group
+                        open={open}
+                        visible
+                        icon={open ? 'cross' : 'plus'}
+                        actions={[
+                            { icon: 'plus', onPress: () => console.log('Pressed add') },
+                            {
+                            icon: 'star',
+                            label: 'Star',
+                            onPress: () => console.log('Pressed star'),
+                            },
+                            {
+                            icon: 'email',
+                            label: 'Email',
+                            onPress: () => console.log('Pressed email'),
+                            },
+                            {
+                            icon: 'bell',
+                            label: 'Remind',
+                            onPress: () => console.log('Pressed notifications'),
+                            },
+                        ]}
+                        onStateChange={onStateChange}
+                        onPress={() => {
+                            if (open) {
+                            // do something if the speed dial is open
+                            }
+                        }}
+                        />
+                    </Portal>
+                </Provider> */}
+
+                {/* <AnimatedFAB
+                    icon={'plus'}
+                    label={'Create Plan'}
+                    extended={isExtended}
+                    onPress={() => {navigation.navigate('Create New Workout')}}
+                    visible={true}
+                    animateFrom={'right'}
+                    iconMode={'dynamic'}
+                    style={styles.fab}
+                /> */}
+
+                {/* {GreenButton({height: screenHeight * 0.05, width: screenWidth * 0.15, fontSize: 20, text: "+", buttonFunction: () => {navigation.navigate('Create New Workout')}})} */}
             </View>
             <StatusBar style="auto" />
         </SafeAreaView>
@@ -104,6 +158,12 @@ const styles = {
     container: {
         alignItems: 'center',
         flex: 1
+    },
+    fab: {
+        position: 'absolute',
+        margin: 16,
+        left: screenWidth * 0.03,
+        bottom: screenHeight * 0.02
     },
 }
 

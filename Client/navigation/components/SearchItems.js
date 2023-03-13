@@ -15,7 +15,7 @@ export default function SearchItems(item, searchFunction) {
 
 const styles = {
     textContainer: {
-        backgroundColor: '#3eda9b',
+        backgroundColor: '#8bf2f3',
         borderRadius: 15,
         padding: 20,
         marginVertical: 10,

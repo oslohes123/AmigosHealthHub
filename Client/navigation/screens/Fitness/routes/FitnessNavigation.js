@@ -21,11 +21,11 @@ const workoutPlanInfoName = "Workout Plan Information"
 
 export default function FitnessNavigationScreen({ navigation }) {
     return (
-        <Stack.Navigator initialRouteName={fitnessDashboardName} screenOptions={{ headerShown: true, headerTitleStyle: styles.header, headerStyle: {backgroundColor: '#3eda9b'} }}>
+        <Stack.Navigator initialRouteName={fitnessDashboardName} screenOptions={{ headerShown: true, headerTitleStyle: styles.header, headerStyle: {backgroundColor: '#8bf2f3'} }}>
             <Stack.Screen name={fitnessDashboardName} component={FitnessDashboardScreen} />
             <Stack.Screen name={workoutPlansName} component={WorkoutPlansScreen} />
             <Stack.Screen name={trackExerciseName} component={TrackExerciseScreen} />
-            <Stack.Screen name={createNewWorkoutName} component={CreateNewWorkoutScreen} />
+            <Stack.Screen name={createNewWorkoutName} component={CreateNewWorkoutScreen}/>
             <Stack.Screen name={exerciseName} component={ExerciseScreen} />
             <Stack.Screen name={exerciseInformationName} component={ExerciseInfoScreen} />
             <Stack.Screen name={workoutPlanInfoName} component={WorkoutPlanInfoScreen} />

@@ -14,7 +14,7 @@ export default function GreenButton({ textColor = '#fff', marginHorzontal = 10, 
           alignSelf: 'center'
         },
         textContainer: {    
-          backgroundColor: !buttonDisabled ? '#3eda9b' : '#697a76',       
+          backgroundColor: !buttonDisabled ? '#8bf2f3' : '#697a76',       
           borderRadius: 15,
           marginHorizontal: marginHorzontal,
           width: width,
