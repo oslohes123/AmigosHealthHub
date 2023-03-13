@@ -3,20 +3,99 @@ import supabase from "../../utils/supabaseSetUp";
 import { supabaseQueryClass } from "../../utils/databaseInterface";
 const databaseQuery = new supabaseQueryClass();
 
+
+/**
+ * 
+ * Get getexerciseid of a single exercise, if not in the exercise table already- add it
+ */
+export const addExerciseToExercises = async(type:string,name:string,muscle:string, difficulty:string, instructions:string, equipment:string) =>{
+
+   const errorAndIDs = {errorPresent: '', ID:""};
+   //Allow instructions to be the empty string
+    if(!type||!name||!muscle||! difficulty||! equipment){
+       errorAndIDs.errorPresent = "One of type, name, muscle, difficulty or equipment are empty!"
+       return errorAndIDs;
+    }
+    else{
+        const {data, error}: any= await databaseQuery.selectWhere(supabase, 'Exercises', 'name', name, '*'); 
+        
+        if(error){
+            console.log("Error selecting from Exercises table!")
+            errorAndIDs.errorPresent = error
+            return errorAndIDs;
+        }
+        
+        else if(data.length == 0){
+            const {data, error}: any =  await databaseQuery.insert(supabase, 'Exercises', {type,name, muscle, difficulty, instructions, equipment})
+            if(error){
+                console.log(`Error inserting into Exercises table!`)
+                errorAndIDs.errorPresent = error
+                return errorAndIDs;
+            }
+            else {
+                const exerciseID = data[0].ExerciseID
+                console.log(`exerciseID: ${exerciseID}`)
+                console.log(`Exercise has been successfully added!`)
+                errorAndIDs.ID = exerciseID;
+                return errorAndIDs;
+            }
+
+        }
+        else{
+            const exerciseID = data[0].ExerciseID 
+            console.log(`exerciseID: ${exerciseID}`)
+            console.log("Exercise is already in the Exercises table!")
+            errorAndIDs.ID = exerciseID;
+            return errorAndIDs;
+        }
+    }
+} 
 /**
  * Creates a WorkoutPlan, adds each exercise to PossibleExercises and adds
  * multiple records to WorkoutPlansWithExercises
  * 
  * exercises should be an array of objects containing userid and other properties specific to an exercise
  */
-export const createWorkout =async (req:Request, res: Response) => {
 
-  
+//Array of objects where each exercise will have the properties type,name,muscle, difficulty, instructions, equipment,
+//and sets, reps, possible exercise data.
+//Workoutname
+//Empty string
+export const createWorkout =async (req:Request, res: Response) => {
    const {userid, workoutname, exercises} = req.body;
 
    if(!userid||!workoutname||!exercises){
     return res.status(400).json({mssg: "userid, workoutname or exercises is missing!"})
    }
+
+   
+   //Add the exerciseID and userid of the exercise to each exercise object's property
+   for(let i = 0; i< exercises.length; i++){
+    try{
+     const {sets, weight,warmUpSet, reps, calories, duration, distance,type, name, muscle, difficulty, instructions, equipment }= exercises[i];
+     const {errorPresent, ID} = await addExerciseToExercises(type, name, muscle, difficulty, instructions, equipment);
+     if(errorPresent){
+        return res.status(400).json({mssg:errorPresent})
+     }
+     else{
+        exercises[i].exerciseID = ID;
+        exercises[i].userID = userid;
+        delete exercises[i].type
+        delete exercises[i].name
+        delete exercises[i].muscle
+        delete exercises[i].difficulty
+        delete exercises[i].instructions
+        delete exercises[i].equipment
+     }
+    }
+    catch(error){
+        return res.status(400).json({mssg:error})
+    }
+   }
+
+   console.log(`exercises after mod: ${JSON.stringify(exercises)}`)
+   
+
     //1. Create a record in WorkoutPlans
 
     const {data, error}: any =  await databaseQuery.match(supabase, 'WorkoutPlans','*', {userid, workoutname});

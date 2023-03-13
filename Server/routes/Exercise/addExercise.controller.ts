@@ -95,6 +95,11 @@ export const getExerciseByName =async (req:Request, res: Response) => {
  * If an exericse is already in the Exercise table, then return exerciseID
  */
 
+//Array of objects where each exercise will have the properties type,name,muscle, difficulty, instructions, equipment,
+//and sets, reps, possible exercise data.
+//Workoutname
+//Empty string
+
 export const addExerciseToExercises = async(req: Request, res: Response) =>{
 
     const {type,name,muscle, difficulty, instructions, equipment } = req.body
