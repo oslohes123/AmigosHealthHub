@@ -38,6 +38,9 @@ function getToday(){
 
     const { face, word, email } = req.body;
 
+    if(email == null) {
+      return res.status(400).json({mssg:"You must be logged in to submit data"})
+    }
     const {data, error} = await getUserByEmail(email);
     if (error){
       return res.status(400).json({mssg:"Something went wrong!", error})
