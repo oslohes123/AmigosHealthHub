@@ -31,9 +31,10 @@ test.before(async (t: any) => {
     token = createToken(data[0].id)
   })
   
-  test.after(async(t: any) => {
+
+  test.after.always('guaranteed cleanup of user', async (t: any) => {
     await supabaseQuery.deleteFrom(supabase, 'User', 'email', testEmail);
-  })
+  });
 
   test(`POST ${changePasswordRoute} with no fields`, async (t: any) => {
     const response = await request(app)
