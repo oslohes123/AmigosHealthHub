@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, TextInput, TouchableWithoutFeedback, ScrollView, Dimensions, Modal } from 'react-native'
+import { View, Text, SafeAreaView, TextInput, TouchableWithoutFeedback, ScrollView, Dimensions, Modal, unstable_enableLogBox } from 'react-native'
 import { useState, useContext, useEffect } from 'react'
 import themeContext from '../../../theme/themeContext'
 import { IconButton } from 'react-native-paper'
@@ -15,6 +15,11 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
 
     const [workoutDetails, setWorkoutDetails] = useState([])
     const { getWorkoutDetails, isLoading, error } = useGetWorkoutDetails();
+
+    const [setsArray, setSetsArray] = useState({});
+    const [repsArray, setRepsArray] = useState({});
+    const [weightArray, setWeightArray] = useState({});
+    const [exRepsEtc, setExRepsEtc] = useState([])
 
     useEffect(() => {
         async function fetchWorkoutDetails(item) {
@@ -71,7 +76,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                                 <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}} key={item.exercise.equipment}>{item.exercise.equipment || item.exercise.equipment == "body_only" ? "n/a" : item.exercise.equipment}</Text>
                             </View>
                             <View style={styles.statsRows}>
-                                <Text style={[styles.statsText, {color: theme.color}]} key={item.calories}>Calories: {item.calories} kcal</Text>
+                                <Text style={[styles.statsText, {color: theme.color, alignSelf: 'center'}]} key={item.calories}>Calories: {item.calories} kcal</Text>
                                 <TextInput 
                                     style={[styles.textInput, {borderColor: theme.color}]} 
                                     placeholder='Calories (kcal)' 
@@ -86,7 +91,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                             <>
                                 <View style={styles.statsRows}>
                                     {console.log(`distance: ${item.distance}`)}
-                                    <Text style={[styles.statsText, {color: theme.color}]} key={item.distance}>Distance: {item.distance} m</Text>
+                                    <Text style={[styles.statsText, {color: theme.color, alignSelf: 'center'}]} key={item.distance}>Distance: {item.distance} m</Text>
                                     <TextInput 
                                         style={[styles.textInput, {borderColor: theme.color}]} 
                                         placeholder='Distance (m)' 
@@ -97,7 +102,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                                         />
                                 </View>
                                 <View style={styles.statsRows}>
-                                    <Text style={[styles.statsText, {color: theme.color}]} key={item.duration}>Duration: {item.duration} mins</Text>
+                                    <Text style={[styles.statsText, {color: theme.color, alignSelf: 'center'}]} key={item.duration}>Duration: {item.duration} mins</Text>
                                     <TextInput 
                                         style={[styles.textInput, {borderColor: theme.color}]} 
                                         placeholder='Duration (mins)' 
@@ -110,13 +115,53 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                             </>
                             : 
                             <>
-                            {setsComponent(item, theme)}
+                            {/* {exRepsEtc != [] && exRepsEtc != [[item.name, item.sets, returnDataArray(item.sets, item.reps), returnDataArray(item.sets, item.weight)]] ? 
+                            setExRepsEtc(exRepsEtc.concat([[item.name, item.sets, returnDataArray(item.sets, item.reps), returnDataArray(item.sets, item.weight)]])) : 
+                            (exRepsEtc ? setExRepsEtc([[item.name, item.sets, returnDataArray(item.sets, item.reps), returnDataArray(item.sets, item.weight)]])) : <></>}
+                            
+                            {console.log(`exRepsEtc: ${JSON.stringify(exRepsEtc)}`)}
+
+                            {exRepsEtc.map((ex) => {
+                                {if (ex[0] === item.name) {
+                                    ex[2].forEach(element => {
+                                        <>
+                                            <View style={styles.statsRows}>
+                                                {console.log(`distance: ${item.distance}`)}
+                                                <Text style={[styles.statsText, {color: theme.color, alignSelf: 'center'}]} key={`${item.name}Reps`}>Reps {item.reps}</Text>
+                                                <TextInput 
+                                                    style={[styles.textInput, {borderColor: theme.color}]} 
+                                                    placeholder='Reps Completed' 
+                                                    color={theme.color}
+                                                    placeholderTextColor={theme.color} 
+                                                    keyboardType={'numeric'} 
+                                                    textAlign={'center'}
+                                                    defaultValue={element}
+                                                    />
+                                            </View>
+                                            <View style={styles.statsRows}>
+                                                <Text style={[styles.statsText, {color: theme.color, alignSelf: 'center'}]} key={`${item.name}Weight`}>Weight {item.weight}</Text>
+                                                <TextInput 
+                                                    style={[styles.textInput, {borderColor: theme.color}]} 
+                                                    placeholder='Weight' 
+                                                    color={theme.color}
+                                                    placeholderTextColor={theme.color} 
+                                                    keyboardType={'numeric'} 
+                                                    textAlign={'center'}
+                                                    defaultValue={ex[3][0]}
+                                                    />
+                                            </View>
+                                        </>
+                                    });
+                                }}
+                            })} */}
+
+                            {/* {setsComponent(item, theme)} */}
                                 {/* {(item) => {
                                     for (let i = 0; i < item.sets; i++) {
                                         <>
                                             <View style={styles.statsRows}>
                                                 {console.log(`distance: ${item.distance}`)}
-                                                <Text style={[styles.statsText, {color: theme.color}]} key={item.reps}>Reps {rep}</Text>
+                                                <Text style={[styles.statsText, {color: theme.color, alignSelf: 'center'}]} key={item.reps}>Reps {rep}</Text>
                                                 <TextInput 
                                                     style={[styles.textInput, {borderColor: theme.color}]} 
                                                     placeholder='Reps Completed' 
@@ -127,7 +172,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                                                     />
                                             </View>
                                             <View style={styles.statsRows}>
-                                                <Text style={[styles.statsText, {color: theme.color}]} key={item.weight}>Weight {item.weight}</Text>
+                                                <Text style={[styles.statsText, {color: theme.color, alignSelf: 'center'}]} key={item.weight}>Weight {item.weight}</Text>
                                                 <TextInput 
                                                     style={[styles.textInput, {borderColor: theme.color}]} 
                                                     placeholder='Weight' 
@@ -162,12 +207,20 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
     )
 }
 
+function returnDataArray(itemSets, itemData) {
+    let dataArray = []
+    for (let i=0; i<itemSets; i++) {
+        dataArray.push(itemData);
+    }
+    return dataArray;
+}
+
 const setsComponent = (item, theme) => {
     for (let i = 0; i < item.sets; i++) {
         <>
             <View style={styles.statsRows}>
                 {console.log(`distance: ${item.distance}`)}
-                <Text style={[styles.statsText, {color: theme.color}]} key={item.reps}>Reps {item.reps}</Text>
+                <Text style={[styles.statsText, {color: theme.color, alignSelf: 'center'}]} key={item.reps}>Reps {item.reps}</Text>
                 <TextInput 
                     style={[styles.textInput, {borderColor: theme.color}]} 
                     placeholder='Reps Completed' 
@@ -178,7 +231,7 @@ const setsComponent = (item, theme) => {
                     />
             </View>
             <View style={styles.statsRows}>
-                <Text style={[styles.statsText, {color: theme.color}]} key={item.weight}>Weight {item.weight}</Text>
+                <Text style={[styles.statsText, {color: theme.color, alignSelf: 'center'}]} key={item.weight}>Weight {item.weight}</Text>
                 <TextInput 
                     style={[styles.textInput, {borderColor: theme.color}]} 
                     placeholder='Weight' 
