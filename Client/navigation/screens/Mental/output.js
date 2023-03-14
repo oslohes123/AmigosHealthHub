@@ -51,7 +51,7 @@ const line = {
   labels: daysOfWeekWithCurrentDayLast,
   datasets: [
     {
-      data: getFaceValuesArray,
+      data: getFaceValuesArray.reverse(),
       strokeWidth: 2, // optional
     },
   ],
