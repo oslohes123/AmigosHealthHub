@@ -74,10 +74,10 @@ export const createWorkout =async (req:Request, res: Response) => {
    for(let i = 0; i< exercises.length; i++){
     try{
      const {type, name, muscle, difficulty, instructions, equipment }= exercises[i];
-     const propertiesOfExercise= Object.keys(exercises[i]);
-     for(let k = 0; k<propertiesOfExercise.length; k++){
+    //  const propertiesOfExercise= Object.keys(exercises[i]);
+    //  for(let k = 0; k<propertiesOfExercise.length; k++){
     
-     }
+    //  }
      //check if exercises has all of the destructured properties above and make sure name is not the empty string   
      const necessaryProperties = ["type", "name","muscle", "difficulty", "equipment","instructions"]
     for(let j = 0; j<necessaryProperties.length; j++){

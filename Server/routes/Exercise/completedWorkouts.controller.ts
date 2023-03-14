@@ -108,13 +108,13 @@ export const getAllCompletedWorkouts =async (req:Request, res: Response) => {
 }
 
 
-
-export const addExerciseToExercises = async(type:string,name:string,muscle:string, difficulty:string, instructions:string, equipment:string) =>{
+//search for an exercise by name in the Exercises table
+export const searchExerciseInExercises = async(name:string) =>{
 
     const errorAndIDs = {errorPresent: '', ID:""};
     //Allow instructions to be the empty string
-     if(!type||!name||!muscle||! difficulty||! equipment){
-        errorAndIDs.errorPresent = "One of type, name, muscle, difficulty or equipment are empty!"
+     if(!name){
+        errorAndIDs.errorPresent = "Name is empty!"
         return errorAndIDs;
      }
      else{
@@ -125,33 +125,19 @@ export const addExerciseToExercises = async(type:string,name:string,muscle:strin
              errorAndIDs.errorPresent = error
              return errorAndIDs;
          }
-         console.log(`selectWhere data: ${JSON.stringify(data)}`);
-          if(data.length == 0){
-             console.log(`data.length == 0!`)
-             const {data, error}: any =  await databaseQuery.insert(supabase, 'Exercises', {type,name, muscle, difficulty, instructions, equipment})
-             if(error){
-                 console.log(`Error inserting into Exercises table!`)
-                 errorAndIDs.errorPresent = error
-                 return errorAndIDs;
-             }
-             else {
-                 const exerciseID = data[0].ExerciseID
-                 console.log(`exerciseID: ${exerciseID}`)
-                 console.log(`Exercise has been successfully added!`)
-                 errorAndIDs.ID = exerciseID;
-                 return errorAndIDs;
-             }
- 
-         }
-         else{
-             const exerciseID = data[0].ExerciseID 
-             console.log(`exerciseID: ${exerciseID}`)
-             console.log("Exercise is already in the Exercises table!")
-             errorAndIDs.ID = exerciseID;
-             return errorAndIDs;
-         }
-     }
+        if(data.length <= 0){
+            errorAndIDs.errorPresent = "No exercise of given name exists!"
+            return errorAndIDs;
+        }
+        else{
+                const exerciseID = data[0].ExerciseID
+                console.log(`exerciseID: ${exerciseID}`)
+                console.log(`Exercise exists!`)
+                errorAndIDs.ID = exerciseID;
+                return errorAndIDs;
+        }
  } 
+}
 
 export const addCompletedWorkouts =async (req:Request, res: Response) => {
     
@@ -163,24 +149,17 @@ export const addCompletedWorkouts =async (req:Request, res: Response) => {
 
     for(let i = 0; i< exercises.length; i++){
         try{
-         const {type, name, muscle, difficulty, instructions, equipment }= exercises[i];
-         const propertiesOfExercise= Object.keys(exercises[i]);
-         for(let k = 0; k<propertiesOfExercise.length; k++){
+         const {name}= exercises[i];
+         
         
-         }
-         //check if exercises has all of the destructured properties above and make sure name is not the empty string   
-         const necessaryProperties = ["type", "name","muscle", "difficulty", "equipment","instructions"]
-        for(let j = 0; j<necessaryProperties.length; j++){
-            console.log(`${necessaryProperties[j]}:${exercises[i].hasOwnProperty(necessaryProperties[j])} }`)
-        }
-         if(!exercises[i].hasOwnProperty("type")||!exercises[i].hasOwnProperty("name")||!exercises[i].hasOwnProperty("muscle")||!exercises[i].hasOwnProperty("difficulty")||!exercises[i].hasOwnProperty("equipment")||!exercises[i].hasOwnProperty("instructions")){
-            return res.status(400).json({mssg:"Exercise doesn't have one of the following properties:type, name, muscle, difficulty, equipment"})
+         if(!exercises[i].hasOwnProperty("name")){
+            return res.status(400).json({mssg:"Exercise doesn't have one of the following properties:name"})
          }
          console.log(`exercises[i] before delete for: ${JSON.stringify(exercises[i])}`)
     
          Object.keys(exercises[i]).forEach((k) => (exercises[i])[k] == null && delete (exercises[i])[k]);
          console.log(`exercises[i] after delete for:  ${JSON.stringify(exercises[i])}`)
-         const {errorPresent, ID} = await addExerciseToExercises(type, name, muscle, difficulty, instructions, equipment);
+         const {errorPresent, ID} = await searchExerciseInExercises(name);
          if(errorPresent){
             console.log(`errorPresent: ${errorPresent}`)
             return res.status(400).json({mssg:errorPresent, error:"error"})
