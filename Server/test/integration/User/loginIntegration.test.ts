@@ -29,9 +29,10 @@ test.before(async (t : any) => {
     }
 })
 
-test.after(async() => {
-    await supabaseQuery.deleteFrom(supabase, 'User', 'email', randomEmail);
-})
+
+test.after.always('guaranteed cleanup of users', async (t: any) => {
+  await supabaseQuery.deleteFrom(supabase, 'User', 'email', randomEmail);
+});
 
 test(`POST ${loginRoute} with missing email`, async (t: any) => {
     const response = await request(app)
