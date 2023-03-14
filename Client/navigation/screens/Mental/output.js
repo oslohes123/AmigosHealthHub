@@ -3,8 +3,9 @@ import { StyleSheet, Text, View , Button, TextInput,  Dimensions} from "react-na
 import WordCloud from '../../../cloud.js';
 import { LineChart } from 'react-native-chart-kit';
 // npm install , npm install react-native-chart-kit , npx expo install react-native-svg ,  npm install react-native-word-cloud, npm install prop-types
-import React from 'react';
- 
+import React , {useEffect, useState} from 'react';
+// import { useAuthContext } from '../Authentication/context/AuthContext.js';
+ import { useGetFaceValues } from './hooks/useGetFaceValues.js';
 const words = [
   {
     text: 'told',
@@ -23,9 +24,49 @@ const words = [
     value: 17,
   },
 ]
+
+
  
 const screenWidth = Dimensions.get("window").width;
-export default function App({navigation}: {navigation: any}) {
+//: {navigation: any}
+export default function App({navigation}) {
+
+   const [getFaceValuesArray, setFaceValuesArray]= useState([1]);
+  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+  const getCurrentDayOfWeek = () => {
+  const date = new Date();
+  const dayOfWeek = date.getDay();
+  return dayOfWeek;
+};
+
+  const currentDayOfWeek = getCurrentDayOfWeek();
+  const daysOfWeekWithCurrentDayLast = [
+    ...daysOfWeek.slice(currentDayOfWeek + 1),
+    ...daysOfWeek.slice(0, currentDayOfWeek + 1),
+  ];
+
+
+const line = {
+  labels: daysOfWeekWithCurrentDayLast,
+  datasets: [
+    {
+      data: getFaceValuesArray,
+      strokeWidth: 2, // optional
+    },
+  ],
+};
+  const {getFaceValues} = useGetFaceValues();
+  useEffect(() => {
+
+    async function getFaceValuesCall(){
+      const faceValues = await getFaceValues();
+      setFaceValuesArray(faceValues);
+      console.log(`faceValuesUseEffect: ${JSON.stringify(faceValues)}`)
+    }
+
+      getFaceValuesCall();
+  }, [])
   const back = () => {
     navigation.goBack();
   }
@@ -61,34 +102,12 @@ export default function App({navigation}: {navigation: any}) {
   );
 }
 
-const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-const getCurrentDayOfWeek = () => {
-  const date = new Date();
-  const dayOfWeek = date.getDay();
-  return dayOfWeek;
-};
-
-  const currentDayOfWeek = getCurrentDayOfWeek();
-  const daysOfWeekWithCurrentDayLast = [
-    ...daysOfWeek.slice(currentDayOfWeek + 1),
-    ...daysOfWeek.slice(0, currentDayOfWeek + 1),
-  ];
-
-const line = {
-  labels: daysOfWeekWithCurrentDayLast,
-  datasets: [
-    {
-      data: [2,3,3,4],
-      strokeWidth: 2, // optional
-    },
-  ],
-};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
+    aligItems: 'center',
     justifyContent: 'center',
   },
 });
