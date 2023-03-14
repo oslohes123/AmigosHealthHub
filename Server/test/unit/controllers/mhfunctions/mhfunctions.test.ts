@@ -1,5 +1,5 @@
  import test from 'ava';
- import { average, getOccurrences, wordFreq, getWords, getFaces } from '../../../../../functions/mhfunctions';
+ import { average, getOccurrences, wordFreq, getWords, getFaces } from '../../../../functions/mhfunctions';
 
  interface Obj {
    [word: string]: any;
