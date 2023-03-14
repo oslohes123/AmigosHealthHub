@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View , Button, TextInput,  Dimensions} from "react-native";
-import WordCloud from '../../../cloud.js';
+import WordCloud from './components/cloud.js';
 import { LineChart } from 'react-native-chart-kit';
 // npm install , npm install react-native-chart-kit , npx expo install react-native-svg ,  npm install react-native-word-cloud, npm install prop-types
 import React , {useEffect, useState} from 'react';
