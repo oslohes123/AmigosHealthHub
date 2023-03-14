@@ -30,7 +30,7 @@ export default function FitnessScreen({ navigation }) {
             <View style={styles.buttonView}>
                 <Button title="View Stats" onPress={() => {
                     console.log("The user wants to see their workout stats.")
-                    // navigation.navigate("View Stats")
+                    navigation.navigate("View Stats")
                 }} />
             </View>
             <StatusBar style="auto" />
