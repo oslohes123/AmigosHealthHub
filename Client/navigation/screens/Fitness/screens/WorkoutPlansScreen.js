@@ -36,13 +36,11 @@ export default function WorkoutPlansScreen({ navigation }) {
 
     return (
         <SafeAreaView style={[styles.container, {backgroundColor: theme.background}]}>
-
-            {/* <Text style={[styles.customWorkout, {color: theme.color}]}>Custom Workouts</Text> */}
         
-            <ScrollView style={[styles.scrollView, {borderColor: theme.color}]} showsVerticalScrollIndicator={false} bounces={false} alignItems={'center'}>
+            <ScrollView style={[styles.scrollView, {borderColor: theme.color}]} showsVerticalScrollIndicator={false} bounces={false} justifyContent={results.length < 1 ? 'center' : 'flex-start'} alignItems={'center'}>
 
                 {error && <Text>{error}</Text>}
-                {(results.length < 1) && <Text>You currently have no custom workout plans.</Text>}
+                {(results.length < 1) && <Text style={{color: theme.color, fontWeight: 'bold'}}>You currently have no custom workout plans.</Text>}
                 
                 {results && results.map((item) => (
                     <TouchableOpacity key={item} onPress={() => {
@@ -59,7 +57,6 @@ export default function WorkoutPlansScreen({ navigation }) {
                     icon="plus"
                     style={styles.fab}
                     label="Create Plan"
-                    // animated={true}
                     onPress={() => {navigation.navigate('Create New Workout')}}
                 />
 
