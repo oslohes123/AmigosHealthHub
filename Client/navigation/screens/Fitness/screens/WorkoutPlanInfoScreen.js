@@ -55,7 +55,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                     <TouchableWithoutFeedback style={{padding: 40}}>
                         <View style={[styles.exerciseSection, {borderColor: theme.color}]}>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 20, padding: 5}} key={item.exercise.name}>{item.exercise.name}</Text>
+                                <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 20, padding: 5, width: screenWidth * 0.6}} key={item.exercise.name}>{item.exercise.name}</Text>
                                 <IconButton icon="information" iconColor={theme.color} size={20} key={item.exercise.instructions} onPress={() => {
                                     console.log(`instructions: ${item.exercise.instructions}`)
                                     setInstructionModalData(item.exercise.instructions)
