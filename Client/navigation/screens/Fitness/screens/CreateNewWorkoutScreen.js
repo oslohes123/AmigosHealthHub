@@ -28,75 +28,8 @@ export default function CreateNewWorkoutScreen({ navigation , route }) {
     const [modalCalories, setModalCalories] = useState(0)
     const [modalType, setModalType] = useState('')
 
-    const { addExerciseToExercises, isLoading, error } = useAddExerciseToExercises();
     const { searchExercise } = useSearchExercise();
     const { addWorkout } = useAddWorkout();
-    const { user } = useAuthContext();
-    const uid = user.id
-    const [isExerciseIDNull, setIsExerciseIDNull] = useState(false);
-    const [exercisesToAdd, setExercisesToAdd] = useState({})
-
-    // async function getExerciseID(type, name, muscle, difficulty, instructions, equipment) {
-    //     const exerciseID = await addExerciseToExercises(type, name, muscle, difficulty, instructions, equipment);
-    //     console.log(`exercicseID: ${exerciseID}`)
-    //     console.log(`type: ${type}`)
-    //     console.log(`name: ${name}`)
-    //     console.log(`musc: ${muscle}`)
-    //     console.log(`diff: ${difficulty}`)
-    //     console.log(`inst: ${instructions}`)
-    //     console.log(`equ: ${equipment}`)
-    //     return exerciseID
-    // }   
-    
-   const savePlan = async () => {
-    console.log(`savePlan EXECUTED!`)
-    //    async function getExerciseID(type, name, muscle, difficulty, instructions, equipment) {
-    //            const exerciseID = await addExerciseToExercises(type, name, muscle, difficulty, instructions, equipment);
-    //        return exerciseID
-    //    }
-       if (workoutName && selectedExercises && workoutName.length > 0 && selectedExercises.length > 0) {
-            async function fetch() {
-                let exercisesToSave = []
-                selectedExercises.forEach(async (exercise) => {
-                    console.log(`ex: ${JSON.stringify(exercise)}`)
-                    const newUID = uid
-                    // console.log(`uidtype: ${typeof(newUID)}`)
-                    // const newExerciseID = await getExerciseID(exercise.type, exercise.name, exercise.muscle, exercise.difficulty, exercise.instructions, exercise.equipment)
-                    console.log(`IF WORKOUTNAME && ....SAVEPLAN EXECUTED!`)
-                    const newExerciseID =  await addExerciseToExercises(exercise.type, exercise.name, exercise.muscle, exercise.difficulty, exercise.instructions, exercise.equipment);
-                    console.log(`Checkpoint 6`);
-                    console.log(`newExerciseID: ${newExerciseID}`)
-                    if (newExerciseID === null || JSON.stringify(newExerciseID) === JSON.stringify({"_x":0,"_y":0,"_z":null,"_A":null})) {
-                        console.log(`ln60 of createNewWorkout`)
-                        setIsExerciseIDNull(true) 
-                    }
-            
-
-                    exercise.type != 'cardio' ?
-                    exercisesToSave.push({userID: newUID, exerciseID: newExerciseID, sets: exercise.sets, reps: exercise.reps, weight: exercise.weight, warmUpSet: exercise.warmUpSet, calories: exercise.calories})
-                    :
-                    exercisesToSave.push({userID: newUID, exerciseID: newExerciseID, distance: exercise.distance, duration: exercise.duration, calories: exercise.calories})
-
-                }
-                )
-                console.log(`ex to save: ${JSON.stringify(exercisesToSave)}`)
-                setExercisesToAdd(exercisesToSave)
-            }
-            console.log(`Checkpoint X`)
-            await fetch()
-            console.log(`Checkpoint Y`)
-            if (!isExerciseIDNull) {
-                console.log(`Checkpoint 7: !isExerciseIDNull`);
-                console.log(`in branch create plan, adding workout plan`)
-            } else {
-                console.log(`in create plan, not adding workout as exID null`)
-                //dismiss and flag that its not saved
-                setIsExerciseIDNull(false)
-            }
-        } else {
-            console.log("ELSE BLOCK, WORKOUTNAME, ETC. NOT PRESENT!")
-        }        
-    }
 
     useEffect(() => {
         if (route.params && route.params != selectedExercises) { 
@@ -231,14 +164,11 @@ export default function CreateNewWorkoutScreen({ navigation , route }) {
                             <FAB        
                                 icon="check"
                                 style={styles.fab}
-                                onPress={async () => {
-                                    await savePlan() 
-                                    if (JSON.stringify(exercisesToAdd) != JSON.stringify({})) {
-                                        addWorkout(workoutName, exercisesToAdd)
+                                onPress={() => {
+                                        addWorkout(workoutName, selectedExercises)
+                                        setNameModalVisible(!nameModalVisible)
                                     }
-                                    setNameModalVisible(!nameModalVisible)
                                 }
-                            }
                             />
                         </View>
                     </View>
