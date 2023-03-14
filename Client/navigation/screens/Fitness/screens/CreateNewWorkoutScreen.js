@@ -165,6 +165,8 @@ export default function CreateNewWorkoutScreen({ navigation , route }) {
                                 icon="check"
                                 style={styles.fab}
                                 onPress={() => {
+                                        console.log(`selected exercises: ${JSON.stringify(selectedExercises)}`)
+                                        console.log(`workout name: ${workoutName}`)
                                         addWorkout(workoutName, selectedExercises)
                                         setNameModalVisible(!nameModalVisible)
                                     }

@@ -41,7 +41,7 @@ export const useAddWorkout = () => {
     const response = await fetch(addWorkoutRoute, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: { userid, workoutname, exercises },
+      body: JSON.stringify({ userid, workoutname, exercises }),
     });
 
     const addWorkoutJSON = await response.json();
