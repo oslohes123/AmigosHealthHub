@@ -1,7 +1,7 @@
 // import { useAuthContext } from "../../Authentication/context/AuthContext";
 const port = process.env["PORT"];
 const ip_address = process.env["IP_ADDRESS"];
-const faceValuesRoute = `http://${ip_address}:${port}/mentalHealth/facegraph`
+const faceValuesRoute = `http://${ip_address}:${port}/api/user/mentalHealth/faceGraph`
 console.log(`faceValuesRoute:${faceValuesRoute}`)
 
 export const useGetFaceValues = () => {
