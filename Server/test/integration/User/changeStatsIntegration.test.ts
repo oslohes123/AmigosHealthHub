@@ -62,10 +62,11 @@ test.before( async (t:any) => {
 })
 
 
-test.after(async(t: any) => {
+
+test.after.always('guaranteed cleanup of users', async (t: any) => {
   await supabaseQuery.deleteFrom(supabase, 'User', 'email', firstUserEmail);
   await supabaseQuery.deleteFrom(supabase, 'User', 'email', newEmail);
-})
+});
 
 test(`POST ${changeStatsRoute} with no fields`, async (t: any) => {
     const response = await request(app)

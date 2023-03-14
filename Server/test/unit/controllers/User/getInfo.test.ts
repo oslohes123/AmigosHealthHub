@@ -38,9 +38,11 @@ const mockResponse = () => {
     }
 })
 
-  test.after(async(t: any) => {
+
+  test.after.always('guaranteed cleanup of user', async (t: any) => {
     await supabaseQuery.deleteFrom(supabase, 'User', 'email', existingEmail);
-  })
+  });
+  
 
   test('getInfo with no fields results in error', async (t: any) => {
     const req = mockRequest({});
