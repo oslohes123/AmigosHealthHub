@@ -25,7 +25,7 @@ export const getACompletedWorkout =async (req:Request, res:Response) => {
         }
     }
     if(!selectedWorkout){
-        return res.status(400).json({mssg:"A workout of this name at this time does not exist for this user!"})
+        return res.status(400).json({mssg:"A workout of this name at this time and date does not exist for this user!"})
     }
     console.log(`selectedWorkout: ${selectedWorkout}`)
 
@@ -61,18 +61,28 @@ const getWorkoutByID = async( completedWorkoutID: string) => {
                 console.log(`arrayOfPossibleExercises ln: ${JSON.stringify(arrayOfPossibleExercises)}`)
             }
         }
-
         for(let i = 0; i<arrayOfPossibleExercises.length; i++){
-            const {data, error}: any = await databaseQuery.selectWhere(supabase, 'ActualExercises', 'AEID',arrayOfPossibleExercises[i].AEID,'*');
+            const {data, error}: any = await databaseQuery.selectWhere(supabase, 'Exercises', 'ExerciseID',arrayOfPossibleExercises[i].exerciseID,'*');
             if(error) errorAndWorkout.errorPresent = error;
             else{
                 delete arrayOfPossibleExercises[i].exerciseID
                 delete arrayOfPossibleExercises[i].userID
+                arrayOfPossibleExercises[i].exercise = data[0];
+                console.log(`data ln65 getWorkout: ${JSON.stringify(data)}`);
+                console.log(`arrayOfPossibleExercises ln 66: ${JSON.stringify(arrayOfPossibleExercises)}`)
+            }
+        }
+        for(let i = 0; i<arrayOfPossibleExercises.length; i++){
+            const {data, error}: any = await databaseQuery.selectWhere(supabase, 'ActualExercises', 'AEID',arrayOfPossibleExercises[i].AEID,'*');
+            if(error) errorAndWorkout.errorPresent = error;
+            else{
                 // arrayOfPossibleExercises[i].exercise = data[0];
                 console.log(`data ln65 getWorkout: ${JSON.stringify(data)}`);
                 console.log(`arrayOfPossibleExercises ln 66: ${JSON.stringify(arrayOfPossibleExercises)}`)
             }
         }
+
+       
         errorAndWorkout.workoutToReturn = arrayOfPossibleExercises;
 
     }
