@@ -20,6 +20,7 @@ const matchExercise =async (userID:string|string[],exerciseID:string ) => {
    }
 }
 //for weighted exercise return 2 arrays: array of dates(x-axis), array of weight pulled(y-axis)
+//else return arrayOfCalories, arrayOfDuration, arrayOfDistance
 export const getExerciseHistory =async (req:Request, res: Response) => {
    const {nameofexercise, userid} = req.headers;
    if(!nameofexercise||!userid){
