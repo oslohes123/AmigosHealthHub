@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import Cloud from "react-native-word-cloud";
 //npm install prop-types , npm install react-native-word-cloud
+
+const getWordFreq = async() => {
+
+}
 class WordCloud extends Component {
     render() {
         return (
@@ -8,36 +12,42 @@ class WordCloud extends Component {
         )
     }
 }
+
+
+
+
+
+const colours = ["#A7BED3","#C6E2E9","#F1FFC4","#DAB894"]
 const keywordsArray = [
     {
         keyword: "Oof", 
         frequency: Math.sqrt(1),     
-        color: "#A7BED3"     
+        color: colours[Math.floor(Math.random() * 3)]     
     },
     {
         keyword: "Meh", 
         frequency: Math.sqrt(2),     
-        color: "#C6E2E9"     
+        color: colours[Math.floor(Math.random() * 3)]     
     },
     {
         keyword: "Perfect", 
         frequency: Math.sqrt(3),     
-        color: "#F1FFC4"     
+        color: colours[Math.floor(Math.random() * 3)]     
     },
     {
         keyword: "Mediocre", 
         frequency: Math.sqrt(6),     
-        color: "#FFCAAF"     
+        color: colours[Math.floor(Math.random() * 3)]     
     },
     {
         keyword: "Sensational", 
         frequency: Math.sqrt(5),     
-        color: "#DAB894"     
+        color: colours[Math.floor(Math.random() * 3)]     
     },
     {
         keyword: "Rough", 
         frequency: Math.sqrt(4),     
-        color: "#DAB894"     
+        color: colours[Math.floor(Math.random() * 3)]     
     }
   ]
 

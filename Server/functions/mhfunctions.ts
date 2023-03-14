@@ -52,7 +52,7 @@ export function wordFreq(arr: string[]): string[]{
   }
   }
   for(const item of nodupes){
-      newarr.push(item, getOccurrences(arr, item).toString())
+      newarr.push(getOccurrences(arr, item).toString())
   }
   return newarr
 }

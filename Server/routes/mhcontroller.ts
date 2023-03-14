@@ -16,7 +16,7 @@ export const wordValues = async(req:Request,res:Response) => {
         else{
             const freq = wordFreq(getWords(data))
             console.log(`this: ${JSON.stringify(data)}`)
-             return res.status(200).json({mssg: "MentalHealthOverview", words: data, freq: freq})
+             return res.status(200).json({mssg: "MentalHealthOverview", words: getWords(data), freq: freq})
         }
     }
         
