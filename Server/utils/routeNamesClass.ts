@@ -5,6 +5,7 @@ export default class RouteNamesClass{
     readonly changeDetailsBaseURL = this.userBaseURL + '/changeProfileDetails'
     readonly exerciseBaseURL = this.userBaseURL + '/exercise'
     readonly workoutBaseURL = this.userBaseURL + '/workout'
+    readonly caloriesBaseURL = this.workoutBaseURL + '/calories'
     readonly completedWorkoutBaseURL = this.userBaseURL + '/completedWorkouts'
     // Auth Routes
     readonly partialSignupURL = '/sign_up';
@@ -54,6 +55,11 @@ export default class RouteNamesClass{
             readonly fullDeleteWorkoutURL = this.workoutBaseURL + this.partialDeleteWorkout;
             readonly partialGetAllWorkoutNames = '/getAllWorkoutNames';
             readonly fullGetAllWorkoutNames = this.workoutBaseURL + this.partialGetAllWorkoutNames;
+        
+        //Calories Routes
+        readonly partialGetCaloriesToday = '/getToday';
+        readonly fullGetCaloriesToday = this.caloriesBaseURL + this.partialGetCaloriesToday;
+            
         
         //Completed Workouts Routes
         readonly partialgetCompletedWorkouts = '/get';
