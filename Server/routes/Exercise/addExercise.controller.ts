@@ -104,7 +104,7 @@ export const addExerciseToExercises = async(req: Request, res: Response) =>{
 
     const {type,name,muscle, difficulty, instructions, equipment } = req.body
 
-    if(!type||!name||!muscle||! difficulty||!instructions||! equipment){
+    if(!type||!name||!muscle||! difficulty||! equipment){
         return res.status(400).json({mssg:"One of type,name,muscle, difficulty, instructions, equipment is missing!"})
     }
 

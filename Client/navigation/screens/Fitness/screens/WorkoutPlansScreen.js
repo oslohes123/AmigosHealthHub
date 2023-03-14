@@ -30,7 +30,7 @@ export default function WorkoutPlansScreen({ navigation }) {
 
     return (
         <SafeAreaView style={[styles.container, {backgroundColor: theme.background}]}>
-            <Provider>
+            {/* <Provider> */}
         
                     <ScrollView style={[styles.scrollView, {borderColor: theme.color}]} showsVerticalScrollIndicator={false} bounces={false} justifyContent={results.length < 1 ? 'center' : 'flex-start'} alignItems={'center'}>
 
@@ -89,7 +89,7 @@ export default function WorkoutPlansScreen({ navigation }) {
                     }}/>
 
                 </Portal> */}
-            </Provider>
+            {/* </Provider> */}
         </SafeAreaView>
     );
 }
