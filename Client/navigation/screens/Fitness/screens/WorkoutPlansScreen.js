@@ -12,13 +12,7 @@ export default function WorkoutPlansScreen({ navigation }) {
     const { getAllWorkoutNames, isLoading, error } = useGetAllWorkoutNames();
     const [results, setResults] = useState([])
     const isFocused = useIsFocused();
-    // const [isOpen, setIsOpen] = useState(false)
-
-//     const [state, setState] = useState({ open: false });
-
-//   const onStateChange = ({ open }) => setState({ open });
-
-//   const { open } = state;
+    const [isOpen, setIsOpen] = useState(false)
     
     useEffect(() => {
         async function fetchData() {
@@ -36,78 +30,66 @@ export default function WorkoutPlansScreen({ navigation }) {
 
     return (
         <SafeAreaView style={[styles.container, {backgroundColor: theme.background}]}>
+            <Provider>
         
-            <ScrollView style={[styles.scrollView, {borderColor: theme.color}]} showsVerticalScrollIndicator={false} bounces={false} justifyContent={results.length < 1 ? 'center' : 'flex-start'} alignItems={'center'}>
+                    <ScrollView style={[styles.scrollView, {borderColor: theme.color}]} showsVerticalScrollIndicator={false} bounces={false} justifyContent={results.length < 1 ? 'center' : 'flex-start'} alignItems={'center'}>
 
-                {error && <Text>{error}</Text>}
-                {(results.length < 1) && <Text style={{color: theme.color, fontWeight: 'bold'}}>You currently have no custom workout plans.</Text>}
-                
-                {results && results.map((item) => (
-                    <TouchableOpacity key={item} onPress={() => {
-                        navigation.navigate("Workout Plan Information", item)
-                    }}> 
-                        <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]} key={item}>{item}</Text>
-                    </TouchableOpacity>
-                ))}
+                        {error && <Text>{error}</Text>}
+                        {(results.length < 1) && <Text style={{color: theme.color, fontWeight: 'bold'}}>You currently have no custom workout plans.</Text>}
+                        
+                        {results && results.map((item) => (
+                            <TouchableOpacity key={item} onPress={() => {
+                                navigation.navigate("Workout Plan Information", item)
+                            }}> 
+                                <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]} key={item}>{item}</Text>
+                            </TouchableOpacity>
+                        ))}
 
-            </ScrollView>
-            <View>
+                    </ScrollView>
 
-                <FAB
-                    icon="plus"
-                    style={styles.fab}
-                    label="Create Plan"
-                    onPress={() => {navigation.navigate('Create New Workout')}}
-                />
-
-                {/* <Provider>
-                    <Portal>
-                        <FAB.Group
-                        open={open}
-                        visible
-                        icon={open ? 'cross' : 'plus'}
-                        actions={[
-                            { icon: 'plus', onPress: () => console.log('Pressed add') },
-                            {
-                            icon: 'star',
-                            label: 'Star',
-                            onPress: () => console.log('Pressed star'),
-                            },
-                            {
-                            icon: 'email',
-                            label: 'Email',
-                            onPress: () => console.log('Pressed email'),
-                            },
-                            {
-                            icon: 'bell',
-                            label: 'Remind',
-                            onPress: () => console.log('Pressed notifications'),
-                            },
-                        ]}
-                        onStateChange={onStateChange}
-                        onPress={() => {
-                            if (open) {
-                            // do something if the speed dial is open
-                            }
-                        }}
+                    <View>
+                        <FAB
+                        icon="plus"
+                        style={styles.fab}
+                        label="Create Plan"
+                        onPress={() => {navigation.navigate('Create New Workout')}}
+                        onLongPress={() => {navigation.navigate('Add Custom Exercise')}}
                         />
-                    </Portal>
-                </Provider> */}
+                    </View>
 
-                {/* <AnimatedFAB
-                    icon={'plus'}
-                    label={'Create Plan'}
-                    extended={isExtended}
-                    onPress={() => {navigation.navigate('Create New Workout')}}
-                    visible={true}
-                    animateFrom={'right'}
-                    iconMode={'dynamic'}
+                {/* <Portal>
+                    <FAB.Group
+                    open={isOpen}
+                    visible
                     style={styles.fab}
-                /> */}
+                    icon={isOpen ? 'cross' : 'plus'}
+                    actions={[
+                        { icon: 'plus', onPress: () => console.log('Pressed add') },
+                        {
+                        icon: 'star',
+                        label: 'Star',
+                        onPress: () => console.log('Pressed star'),
+                        },
+                        {
+                        icon: 'email',
+                        label: 'Email',
+                        onPress: () => console.log('Pressed email'),
+                        },
+                        {
+                        icon: 'bell',
+                        label: 'Remind',
+                        onPress: () => console.log('Pressed notifications'),
+                        },
+                    ]}
+                    onStateChange={(isOpen) => setIsOpen(!isOpen)}
+                    onPress={() => {
+                        if (isOpen) {
+                        // do something if the speed dial is open
+                        }
+                    }}/>
 
-                {/* {GreenButton({height: screenHeight * 0.05, width: screenWidth * 0.15, fontSize: 20, text: "+", buttonFunction: () => {navigation.navigate('Create New Workout')}})} */}
-            </View>
-            <StatusBar style="auto" />
+                </Portal> */}
+            </Provider>
         </SafeAreaView>
     );
 }

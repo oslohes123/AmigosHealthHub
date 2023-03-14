@@ -8,21 +8,19 @@ export default function WorkoutHistoryScreen() {
   // const { getAllWorkoutNames, isLoading, error } = useGetAllWorkoutNames();
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'space-evenly', maxHeight: screenHeight, alignItems:'center', paddingVertical: 10, backgroundColor: theme.background}}>
-    
-        {/* <Text style={[styles.customWorkout, {color: theme.color}]}>Custom Workouts</Text> */}
         
         <ScrollView style={[styles.scrollView, {borderColor: theme.color}]} showsVerticalScrollIndicator={false} bounces={false} justifyContent={results.length < 1 ? 'center' : 'flex-start'} alignItems={'center'}>
 
         {/* {error && <Text>{error}</Text>} */}
         {(results.length < 1) && <Text style={{color: theme.color, fontWeight: 'bold'}}>You currently have no Workout History data.</Text>}
 
-        {/* {results && results.map((item) => (
+        {results && results.map((item) => (
             <TouchableOpacity key={item} onPress={() => {
                 navigation.navigate("Workout Plan Information", item)
             }}> 
                 <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]} key={item}>{item}</Text>
             </TouchableOpacity>
-        ))} */}
+        ))}
 
         </ScrollView>
 
@@ -34,11 +32,6 @@ const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
 const styles = {
-  customWorkout: {
-      fontSize: 22,
-      margin: 10,
-      fontWeight: "bold",
-  },
   testText: {
       fontSize: 32,
       padding: 5,
@@ -55,25 +48,11 @@ const styles = {
       margin: 10,
       width: screenWidth * 0.9
   },
-  title: {
-      fontSize: 32,
-      fontWeight: "bold",
-      padding: 40,
-  },
-  searchAndCreate: {
-      flexDirection: 'row',
-      padding: 12,
-      justifyContent: 'space-evenly'
-  },
   textInput: {
       borderWidth: 1,
       padding: 10,
       marginHorizontal: 12,
       flex: 1,
-  },
-  container: {
-      alignItems: 'center',
-      flex: 1
   },
   fab: {
       position: 'absolute',
