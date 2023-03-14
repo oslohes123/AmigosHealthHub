@@ -13,7 +13,7 @@ export default function Stats() {
         datasets: [
           {
             data: [20, 45, 28, 80, 99, 43],
-            color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`, // optional
             strokeWidth: 2 // optional
           }
         ],
@@ -23,11 +23,11 @@ export default function Stats() {
       const screenWidth = Dimensions.get("window").width;
 
       const chartConfig = {
-        backgroundGradientFrom: "#1E2923",
-        backgroundGradientFromOpacity: 0,
-        backgroundGradientTo: "#08130D",
+        backgroundGradientFrom: "white",
+        //backgroundGradientFromOpacity: 0,
+        backgroundGradientTo: "#38D689",
         backgroundGradientToOpacity: 0.5,
-        color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+        color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
         strokeWidth: 2, // optional, default 3
         barPercentage: 0.5,
         useShadowColorFromDataset: false // optional
