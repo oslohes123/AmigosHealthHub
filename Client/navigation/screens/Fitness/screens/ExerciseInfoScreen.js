@@ -96,7 +96,7 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                                 {exerciseInfo.type != 'cardio' ?
                                 <>
                                     <TextInput 
-                                        style={[styles.textInput, {borderColor: theme.color}]} 
+                                        style={[styles.textInput, {borderColor: theme.color, color: theme.color}]} 
                                         placeholder='Sets' 
                                         placeholderTextColor={theme.color}
                                         onChangeText={setSets}
@@ -105,7 +105,7 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                                         textAlign={'center'}
                                     />
                                     <TextInput 
-                                        style={[styles.textInput, {borderColor: theme.color}]} 
+                                        style={[styles.textInput, {borderColor: theme.color, color: theme.color}]} 
                                         placeholder='Reps' 
                                         placeholderTextColor={theme.color}
                                         onChangeText={setReps}
@@ -118,7 +118,7 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                                 <>
                                 <View>
                                     <TextInput 
-                                        style={[styles.textInput, {borderColor: theme.color}]} 
+                                        style={[styles.textInput, {borderColor: theme.color, color: theme.color}]} 
                                         placeholder='Distance (km)' 
                                         placeholderTextColor={theme.color} 
                                         onChangeText={setDistance}
@@ -129,7 +129,7 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                                 </View>
                                 <View>
                                     <TextInput 
-                                        style={[styles.textInput, {borderColor: theme.color}]} 
+                                        style={[styles.textInput, {borderColor: theme.color, color: theme.color}]} 
                                         placeholder='Duration (mins)' 
                                         placeholderTextColor={theme.color} 
                                         onChangeText={setDuration}
@@ -146,7 +146,7 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                                 {exerciseInfo.type != 'cardio' &&
                                 <>
                                     <TextInput 
-                                        style={[styles.textInput, {borderColor: theme.color, alignSelf: 'center'}]} 
+                                        style={[styles.textInput, {borderColor: theme.color, alignSelf: 'center', color: theme.color}]} 
                                         placeholder='Weight (kg)' 
                                         placeholderTextColor={theme.color}
                                         onChangeText={setWeight}
@@ -157,7 +157,7 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                                 </>
                                 }
                                     <TextInput 
-                                        style={[styles.textInput, {borderColor: theme.color, alignSelf: 'center'}]} 
+                                        style={[styles.textInput, {borderColor: theme.color, alignSelf: 'center', color: theme.color}]} 
                                         placeholder='Calories (kcal)' 
                                         placeholderTextColor={theme.color}
                                         onChangeText={setCalories}
