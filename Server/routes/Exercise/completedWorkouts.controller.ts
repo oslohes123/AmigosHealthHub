@@ -95,12 +95,6 @@ export const getAllCompletedWorkouts =async (req:Request, res: Response) => {
     else{
         console.log(`data of completedWorkouts: ${JSON.stringify(data)}`);
 
-        // let arrayOfDates = []
-        // for(let i = 0; i< data.length;i++){
-        //     arrayOfDates.push(getDate(data[i].timestamp))
-        //     arrayOfDates.push(getTime(data[i].timestamp))
-        // }
-
         for(let i = 0; i< data.length;i++){
           let timestamp = data[i].timestamp;
           delete data[i].timestamp;
@@ -108,7 +102,8 @@ export const getAllCompletedWorkouts =async (req:Request, res: Response) => {
           data[i].time = getTime(timestamp);
         }
         console.log(`After mod completedWorkouts: ${JSON.stringify(data)}`);
-        return res.status(200).json({mssg:"Got All Completed Workouts!"})
+        const workoutsNamesAndDates = data;
+        return res.status(200).json({mssg:"Got All Completed Workouts!",workoutsNamesAndDates})
     }
 }
 
