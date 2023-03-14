@@ -11,7 +11,7 @@ export const wordValues = async(req:Request,res:Response) => {
     const { data,error }:any = await supabaseQuery.mostrecent(supabase, 'Mental Health','todays_word','created_at', id);
         if(error){
             console.log("Failed to return last 7 words")
-            return res.status(400).json({mssg:"Failed to retrieve last 7 faces"})
+            return res.status(400).json({mssg:"Failed to retrieve last 7 words"})
         }
         else{
             const freq = wordFreq(getWords(data))
@@ -26,7 +26,7 @@ export const faceValues = async(req:Request,res:Response) =>{
     const { data,error }:any = await supabaseQuery.mostrecent(supabase, 'Mental Health','face_id','created_at', id);
         if(error){
             console.log("Failed to return last 7 faces")
-            return res.status(400).json({mssg : "Failed to return last 7 faces"})
+            return res.status(400).json({mssg : "Failed to retrieve last 7 faces"})
         }
         else{
            const avg = average(getFaces(data))
@@ -35,5 +35,5 @@ export const faceValues = async(req:Request,res:Response) =>{
 }        
 
 export const reviewDay = async(req:Request,res:Response) => {
-    return res.status(400).json({mssg:"Failed to retrieve last 7 faces"})
+    return res.status(400).json({mssg:"Failed to input"})
 }
