@@ -29,8 +29,8 @@ export const faceValues = async(req:Request,res:Response) =>{
             return res.status(400).json({mssg : "Failed to return last 7 faces"})
         }
         else{
-           const avg = average(getFaces(data))
-            return res.status(200).json({mssg: "Retrieved words",faces: data, average: avg, success: "successful"}) 
+           const avg = average(getFaces(data));
+            return res.status(200).json({mssg: "Retrieved words",faces: getFaces(data), average: avg, success: "successful"}) 
         } 
 }        
 
