@@ -25,7 +25,7 @@ export default function Stats() {
       const chartConfig = {
         backgroundGradientFrom: "white",
         //backgroundGradientFromOpacity: 0,
-        backgroundGradientTo: "#38D689",
+        backgroundGradientTo: "blue",
         backgroundGradientToOpacity: 0.5,
         color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
         strokeWidth: 2, // optional, default 3
@@ -103,14 +103,14 @@ export default function Stats() {
             </Modal>
             </View>
          </View>
-
+        <View>
          <LineChart
-  data={data}
-  width={screenWidth}
-  height={220}
-  chartConfig={chartConfig}
-/>
-
+            data={data}
+            width={screenWidth}
+            height={220}
+            chartConfig={chartConfig}
+        />
+        </View>
     </View>
   )
 }
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     },
     modalContainer: {
         alignItems: 'center',
-        marginTop: '15%',
+        marginVertical: '15%',
         width: '100%'
     },
     dropDownContainer: {
