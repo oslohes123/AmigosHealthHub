@@ -47,9 +47,9 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                             console.log(`These are the previous selected exercises: ${JSON.stringify(selectedExercises)}`)
                             let updatedSelectedExercises
                             if (selectedExercises) {
-                                updatedSelectedExercises = selectedExercises.concat([{name: exerciseInfo.name, sets: sets, reps: reps, distance: distance, duration: duration, weight: weight, calories: calories, warmUpSet: warmUpSet}]) 
+                                updatedSelectedExercises = selectedExercises.concat([{name: exerciseInfo.name, sets, reps, distance, duration, weight, calories, warmUpSet, type: exerciseInfo.type, muscle: exerciseInfo.muscle, difficulty: exerciseInfo.difficulty, instructions: exerciseInfo.instructions, equipment: exerciseInfo.equipment}]) 
                             } else {
-                                updatedSelectedExercises = [{name: exerciseInfo.name, sets: sets, reps: reps, distance: distance, duration: duration, weight: weight, calories: calories, warmUpSet: warmUpSet}]
+                                updatedSelectedExercises = [{name: exerciseInfo.name, sets, reps, distance, duration, weight, calories, warmUpSet, type: exerciseInfo.type, muscle: exerciseInfo.muscle, difficulty: exerciseInfo.difficulty, instructions: exerciseInfo.instructions, equipment: exerciseInfo.equipment}]
                             }
                             console.log(`updated selected exercises: ${JSON.stringify(updatedSelectedExercises)}`)
                             navigation.navigate("Create New Workout", updatedSelectedExercises)
@@ -96,7 +96,7 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                                 {exerciseInfo.type != 'cardio' ?
                                 <>
                                     <TextInput 
-                                        style={[styles.textInput, {borderColor: theme.color}]} 
+                                        style={[styles.textInput, {borderColor: theme.color, color: theme.color}]} 
                                         placeholder='Sets' 
                                         placeholderTextColor={theme.color}
                                         onChangeText={setSets}
@@ -105,7 +105,7 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                                         textAlign={'center'}
                                     />
                                     <TextInput 
-                                        style={[styles.textInput, {borderColor: theme.color}]} 
+                                        style={[styles.textInput, {borderColor: theme.color, color: theme.color}]} 
                                         placeholder='Reps' 
                                         placeholderTextColor={theme.color}
                                         onChangeText={setReps}
@@ -116,24 +116,28 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                                 </>
                                 :
                                 <>
+                                <View>
                                     <TextInput 
-                                        style={[styles.textInput, {borderColor: theme.color}]} 
-                                        placeholder='Distance' 
+                                        style={[styles.textInput, {borderColor: theme.color, color: theme.color}]} 
+                                        placeholder='Distance (km)' 
                                         placeholderTextColor={theme.color} 
                                         onChangeText={setDistance}
                                         value={distance}
                                         keyboardType={'numeric'} 
                                         textAlign={'center'}
-                                    />
+                                        />
+                                </View>
+                                <View>
                                     <TextInput 
-                                        style={[styles.textInput, {borderColor: theme.color}]} 
-                                        placeholder='Duration' 
+                                        style={[styles.textInput, {borderColor: theme.color, color: theme.color}]} 
+                                        placeholder='Duration (mins)' 
                                         placeholderTextColor={theme.color} 
                                         onChangeText={setDuration}
                                         value={duration}
                                         keyboardType={'numeric'} 
                                         textAlign={'center'}
-                                    />
+                                        />
+                                </View>
                                 </>
                                 }
                             </View>
@@ -142,8 +146,8 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                                 {exerciseInfo.type != 'cardio' &&
                                 <>
                                     <TextInput 
-                                        style={[styles.textInput, {borderColor: theme.color, alignSelf: 'center'}]} 
-                                        placeholder='Weight' 
+                                        style={[styles.textInput, {borderColor: theme.color, alignSelf: 'center', color: theme.color}]} 
+                                        placeholder='Weight (kg)' 
                                         placeholderTextColor={theme.color}
                                         onChangeText={setWeight}
                                         value={weight}
@@ -153,8 +157,8 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                                 </>
                                 }
                                     <TextInput 
-                                        style={[styles.textInput, {borderColor: theme.color, alignSelf: 'center'}]} 
-                                        placeholder='Calories' 
+                                        style={[styles.textInput, {borderColor: theme.color, alignSelf: 'center', color: theme.color}]} 
+                                        placeholder='Calories (kcal)' 
                                         placeholderTextColor={theme.color}
                                         onChangeText={setCalories}
                                         value={calories}
@@ -205,8 +209,9 @@ const styles = {
         borderRadius: 10, 
         borderWidth: 1, 
         margin: 5,
-        width: screenWidth * 0.15, 
+        width: screenWidth * 0.2, 
         height: screenHeight * 0.05,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontSize: 10
     },
 }

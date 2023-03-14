@@ -3,21 +3,22 @@ import { StatusBar } from 'expo-status-bar';
 import { Text, View, SafeAreaView, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { useState, useContext, useEffect } from 'react';
 import themeContext from '../../../theme/themeContext';
-import GreenButton from '../../../components/GreenButton';
 import { useGetAllWorkoutNames } from '../hooks/useGetAllWorkoutNames';
 import { FAB, Provider, Portal } from "react-native-paper"
+import { useIsFocused } from '@react-navigation/native';
 
 export default function WorkoutPlansScreen({ navigation }) {
     const theme = useContext(themeContext)
     const { getAllWorkoutNames, isLoading, error } = useGetAllWorkoutNames();
     const [results, setResults] = useState([])
+    const isFocused = useIsFocused();
     // const [isOpen, setIsOpen] = useState(false)
 
-    const [state, setState] = useState({ open: false });
+//     const [state, setState] = useState({ open: false });
 
-  const onStateChange = ({ open }) => setState({ open });
+//   const onStateChange = ({ open }) => setState({ open });
 
-  const { open } = state;
+//   const { open } = state;
     
     useEffect(() => {
         async function fetchData() {
@@ -31,12 +32,12 @@ export default function WorkoutPlansScreen({ navigation }) {
             setResults(resultsList);
         }
         fetchData()
-    }, [])  
+    }, [navigation, isFocused])  
 
     return (
         <SafeAreaView style={[styles.container, {backgroundColor: theme.background}]}>
 
-            <Text style={[styles.customWorkout, {color: theme.color}]}>Custom Workouts</Text>
+            {/* <Text style={[styles.customWorkout, {color: theme.color}]}>Custom Workouts</Text> */}
         
             <ScrollView style={[styles.scrollView, {borderColor: theme.color}]} showsVerticalScrollIndicator={false} bounces={false} alignItems={'center'}>
 
@@ -52,7 +53,7 @@ export default function WorkoutPlansScreen({ navigation }) {
                 ))}
 
             </ScrollView>
-            <View style={{padding: 10}}>
+            <View>
 
                 <FAB
                     icon="plus"
@@ -136,7 +137,7 @@ const styles = {
         borderWidth: 2,
         borderRadius: 26,
         paddingHorizontal: 16,
-        marginHorizontal: 10,
+        margin: 10,
         width: screenWidth * 0.9
     },
     title: {
@@ -162,8 +163,8 @@ const styles = {
     fab: {
         position: 'absolute',
         margin: 16,
-        left: screenWidth * 0.03,
-        bottom: screenHeight * 0.02
+        left: screenWidth * 0.005,
+        bottom: screenHeight * 0.005
     },
 }
 
