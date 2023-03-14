@@ -7,7 +7,7 @@
     "build": "npx tsc",
     "start": "node dist/server.js",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon dist/server.js\"",
-    "test": "npx tsc && c8 ava",
+    "testOnLinux": "rm -r dist && npx tsc && c8 ava",
     "ts-coverage": "typescript-coverage-report"
   },
   "author": "",

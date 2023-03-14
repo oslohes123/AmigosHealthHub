@@ -48,11 +48,10 @@ test.before( async (t:any) => {
     }
 })
 
-
-test.after(async(t: any) => {
+test.after.always('guaranteed cleanup of user', async (t: any) => {
   await supabaseQuery.deleteFrom(supabase, 'User', 'email', firstUserEmail);
   await supabaseQuery.deleteFrom(supabase, 'User', 'email', newEmail);
-})
+});
 
 
 const mockResponse = () => {
