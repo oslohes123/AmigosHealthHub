@@ -68,13 +68,13 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                             <View style={{justifyContent: 'space-evenly', padding: 5}}>
                                 <Text style={{color: theme.color, fontSize: 10}}>Equipment</Text>
                                 {console.log(`item equipment: ${item.exercise.equipment}`)}
-                                <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}} key={item.exercise.equipment}>{item.exercise.equipment ? "n/a" : item.exercise.equipment}</Text>
+                                <Text style={{fontWeight: 'bold', color: theme.color, fontSize: 16}} key={item.exercise.equipment}>{item.exercise.equipment || item.exercise.equipment == "body_only" ? "n/a" : item.exercise.equipment}</Text>
                             </View>
                             <View style={styles.statsRows}>
-                                <Text style={[styles.statsText, {color: theme.color}]} key={item.calories}>Calories {item.calories}</Text>
+                                <Text style={[styles.statsText, {color: theme.color}]} key={item.calories}>Calories: {item.calories} kcal</Text>
                                 <TextInput 
                                     style={[styles.textInput, {borderColor: theme.color}]} 
-                                    placeholder='Calories Burnt' 
+                                    placeholder='Calories (kcal)' 
                                     color={theme.color}
                                     placeholderTextColor={theme.color} 
                                     keyboardType={'numeric'} 
@@ -86,10 +86,10 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                             <>
                                 <View style={styles.statsRows}>
                                     {console.log(`distance: ${item.distance}`)}
-                                    <Text style={[styles.statsText, {color: theme.color}]} key={item.distance}>Distance {item.distance}</Text>
+                                    <Text style={[styles.statsText, {color: theme.color}]} key={item.distance}>Distance: {item.distance} m</Text>
                                     <TextInput 
                                         style={[styles.textInput, {borderColor: theme.color}]} 
-                                        placeholder='Sets Completed' 
+                                        placeholder='Distance (m)' 
                                         color={theme.color}
                                         placeholderTextColor={theme.color} 
                                         keyboardType={'numeric'} 
@@ -97,10 +97,10 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                                         />
                                 </View>
                                 <View style={styles.statsRows}>
-                                    <Text style={[styles.statsText, {color: theme.color}]} key={item.duration}>Duration {item.duration}</Text>
+                                    <Text style={[styles.statsText, {color: theme.color}]} key={item.duration}>Duration: {item.duration} mins</Text>
                                     <TextInput 
                                         style={[styles.textInput, {borderColor: theme.color}]} 
-                                        placeholder='Reps Completed' 
+                                        placeholder='Duration (mins)' 
                                         color={theme.color}
                                         placeholderTextColor={theme.color} 
                                         keyboardType={'numeric'} 
