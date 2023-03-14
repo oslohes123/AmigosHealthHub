@@ -23,11 +23,12 @@ const supabaseQuery = require('../dist/utils/databaseInterface.js');
 
 //Authentication Routes
 // const authRouter = require('./routes/authentication')
+
 import authRouter from "./routes/User/authentication.router";
 app.use(routeNames.userBaseURL, authRouter);
 
-import mentalHealthRouter from "./routes/mentalhealth.router";
-app.use('/mentalhealth',mentalHealthRouter)
+import mentalHealthRouter from "./routes/MentalHealth/mhGetStats.router";
+app.use(routeNames.mentalHealthBaseURL,mentalHealthRouter)
 
 //Change Profile Details Routes
 // const changeProfileDetailsRouter = require('../routes/changeProfileDetails.js');
