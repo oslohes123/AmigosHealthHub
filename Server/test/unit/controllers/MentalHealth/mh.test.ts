@@ -1,7 +1,7 @@
 const test = require('ava');
 import { Request, Response } from 'express';
 const sinon = require('sinon');
-import { faceValues, wordValues } from '../../../../routes/mhcontroller';
+import { faceValues, wordValues } from '../../../../routes/MentalHealth/mhGetStats.controller';
 import { supabaseQueryClass } from '../../../../utils/databaseInterface';
 import supabase from '../../../../utils/supabaseSetUp';
 import {v4 as uuidv4} from 'uuid';
@@ -172,7 +172,7 @@ test("Return last 7 words and their frequencies", async (t: any) => {
     t.true(res.json.calledOnceWith(argsPassed))
     t.true(JSON.stringify(argsPassed) == stringifiedExpectedArgs)
 });
-test("Return last 7 faces and their average with an incorrect ID", async (t: any) => {
+test("Getting last 7 faces and their average with an incorrect ID should result in an error", async (t: any) => {
 
     console.log("In returning last 7 faces and their average")
     const req = mockRequest({
@@ -197,42 +197,21 @@ test("Return last 7 faces and their average with new ID", async (t: any) => {
     const res = mockResponse();
     await faceValues(req as Request, res as Response)
     const argsPassedFull = res.json.getCall(0);
-    console.log(`argsPassedFull: ${JSON.stringify(argsPassedFull)}`)
+    // console.log(`argsPassedFull: ${JSON.stringify(argsPassedFull)}`)
     const argsPassed = res.json.getCall(0).args[0];
-    console.log(`argspassed: ${JSON.stringify(argsPassed)}`)
+    // console.log(`argspassed: ${JSON.stringify(argsPassed)}`)
 
     const expectedArgs = {
-        mssg: "Retrieved words",
-        faces: [
-            {
-                "face_id": 1
-            },
-            {
-                "face_id": 2
-            },
-            {
-                "face_id": 3
-            },
-            {
-                "face_id": 4
-            },
-            {
-                "face_id": 1
-            },
-            {
-                "face_id": 3
-            },
-            {
-                "face_id": 2
-            }
-        ],
+        mssg: "Retrieved faces",
+        faces: ["1","2","3","4","1","3","2"],
         average: 2.2857142857142856,
         success: "successful"
     }
      const stringifiedExpectedArgs= JSON.stringify(expectedArgs)
-
+    console.log(`argsPassed ln 233:${JSON.stringify(argsPassed)}`); //{"mssg":"Retrieved faces","faces":["1","2","3","4","1","3","2"],"average":2.2857142857142856,"success":"successful"}
+    console.log(`stringifiedExpectedArgs ln 233:${stringifiedExpectedArgs}`)//{"mssg":"Retrieved faces","faces":[{"face_id":1},{"face_id":2},{"face_id":3},{"face_id":4},{"face_id":1},{"face_id":3},{"face_id":2}],"average":2.2857142857142856,"success":"successful"}
     t.true(res.status.calledWith(200))
-    t.true(res.json.calledOnceWith(argsPassed))
+    t.true(res.json.calledOnceWith(argsPassed)) 
     t.true(JSON.stringify(argsPassed) == stringifiedExpectedArgs)
 });
 

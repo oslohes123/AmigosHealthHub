@@ -1,8 +1,9 @@
 require('dotenv').config()
 import { Request, Response } from 'express';
-import supabase from '../utils/supabaseSetUp'
-import {supabaseQueryClass} from '../utils/databaseInterface'
-import {getWords, getFaces, average, getOccurrences, wordFreq} from '../functions/mhfunctions'
+import supabase from '../../utils/supabaseSetUp'
+import {supabaseQueryClass} from '../../utils/databaseInterface'
+import {getWords, getFaces, average, getOccurrences, wordFreq} from '../../functions/mhfunctions'
+
 const supabaseQuery = new supabaseQueryClass();
 
 
@@ -30,10 +31,10 @@ export const faceValues = async(req:Request,res:Response) =>{
         }
         else{
            const avg = average(getFaces(data));
-            return res.status(200).json({mssg: "Retrieved words",faces: getFaces(data), average: avg, success: "successful"}) 
+            return res.status(200).json({mssg: "Retrieved faces",faces: getFaces(data), average: avg, success: "successful"}) 
         } 
 }        
 
-export const reviewDay = async(req:Request,res:Response) => {
-    return res.status(400).json({mssg:"Failed to input"})
-}
+// export const reviewDay = async(req:Request,res:Response) => {
+//     return res.status(400).json({mssg:"Failed to input"})
+// }
