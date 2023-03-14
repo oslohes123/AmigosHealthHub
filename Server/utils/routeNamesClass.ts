@@ -50,6 +50,8 @@ export default class RouteNamesClass{
             readonly fullAddWorkoutURL = this.workoutBaseURL + this.partialAddWorkout;
             readonly partialGetWorkout = '/get';
             readonly fullGetWorkoutURL = this.workoutBaseURL + this.partialGetWorkout;
+            readonly partialDeleteWorkout = '/delete';
+            readonly fullDeleteWorkoutURL = this.workoutBaseURL + this.partialDeleteWorkout;
             readonly partialGetAllWorkoutNames = '/getAllWorkoutNames';
             readonly fullGetAllWorkoutNames = this.workoutBaseURL + this.partialGetAllWorkoutNames;
         

@@ -4,6 +4,57 @@ import { supabaseQueryClass } from "../../utils/databaseInterface";
 const databaseQuery = new supabaseQueryClass();
 
 
+
+const deleteWorkoutPlansWithExercisesByID =async (workoutPlanID:string) => {
+    const errorAndIDs = {errorPresent: ''};
+  const {error}:any = await databaseQuery.deleteFrom(supabase, 'WorkoutPlansWithExercises','WorkoutPlanID', workoutPlanID)
+  if(error){
+    errorAndIDs.errorPresent = error;
+    return errorAndIDs;
+  }
+  return errorAndIDs
+}
+
+
+const deleteWorkoutPlanByID =async (workoutPlanID:string) => {
+    const errorAndIDs = {deleteError: ''};
+  const {error}:any = await databaseQuery.deleteFrom(supabase, 'WorkoutPlans','WorkoutPlanID', workoutPlanID)
+  if(error){
+    errorAndIDs.deleteError = error;
+    return errorAndIDs;
+  }
+  return errorAndIDs
+}
+
+
+export const deleteWorkoutPlan =async (req:Request, res: Response) => {
+    const {userid, workoutname} = req.body;
+    if(!userid || !workoutname){
+        return res.status(400).json({mssg:"Either userid or workoutname is missing!"})
+    }
+
+   const {data, error}:any = await databaseQuery.match(supabase, 'WorkoutPlans','WorkoutPlanID', {userid, workoutname});
+   if(error){
+        return res.status(400).json({mssg:error})
+   }
+   if(data.length===0){
+        return res.status(400).json({mssg:"User does not have a plan of that name!"})
+   }
+   const workoutPlanToDel = data[0].WorkoutPlanID
+   const {errorPresent} = await deleteWorkoutPlansWithExercisesByID(workoutPlanToDel);
+   if(errorPresent){
+    return res.status(400).json({mssg:"Fail to delete WorkoutPlanByID", errorPresent})
+   }
+
+   const {deleteError} = await deleteWorkoutPlanByID(workoutPlanToDel)
+   if(deleteError){
+    return res.status(400).json({mssg:"Fail to delete WorkoutPlanByID", deleteError})
+   }
+   else{
+    return res.status(200).json({mssg:`Workout Plan ${workoutname} Deleted!`})
+   }
+
+}
 /**
  * 
  * Get getexerciseid of a single exercise, if not in the exercise table already- add it
