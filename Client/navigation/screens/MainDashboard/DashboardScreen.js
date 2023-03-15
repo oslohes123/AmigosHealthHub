@@ -12,7 +12,7 @@ import { StatusBar } from "expo-status-bar";
 import react from "react";
 import { useAuthContext } from "../Authentication/context/AuthContext";
 import { useLogout } from "../Authentication/hooks/useLogOut";
-import DateWidget from "../../components/DateWidget";
+import CaloriesBurntTodayWidget from "../../components/CaloriesBurntTodayWidget";
 
 export default function DashboardScreen({ navigation }) {
   const { logout } = useLogout();
@@ -43,9 +43,9 @@ export default function DashboardScreen({ navigation }) {
         ></Ionicons>
       </View>
       <Button title={"LogOut"} onPress={handleClick} />
-      <DateWidget/>
+      <CaloriesBurntTodayWidget />
       <View style={styles.blankSpace}>
-        {/* <Image style={styles.mainImage} source={require('assets/favicon.png')} /> */}
+        {/* <Image style={styles.mainImage} source=Cal{require('assets/favicon.png')} /> */}
         {widget({})}
       </View>
       <StatusBar style="auto" />

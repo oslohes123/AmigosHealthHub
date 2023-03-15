@@ -42,7 +42,7 @@ export const useGetCaloriesBurntToday = () => {
           )}`
         );
         setIsLoading(false);
-        return getAllWorkoutNamesJSON.totalCaloriesBurnt; //this is a single number
+        return getCaloriesBurntTodayJSON.totalCaloriesBurnt; //this is a single number
       } catch (error) {
         setError(error);
         setIsLoading(false);
