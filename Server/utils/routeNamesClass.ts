@@ -65,6 +65,8 @@ export default class RouteNamesClass{
     readonly partialGetFoodURL = '/getFood/:FoodID'
     readonly fullGetFoodURL = this.foodBaseURL + this.partialGetFoodURL
 
+    readonly partialGetMultipleFoodURL = '/getMultipleFood'
+
     // Food database delete routes
     readonly partialDeleteTrackedFoodURL = '/deleteTrackedFood'
     readonly fullDeleteFoodURL = this.foodBaseURL + this.partialDeleteTrackedFoodURL
