@@ -34,6 +34,7 @@ export const getCaloriesToday =async (req:Request, res: Response) => {
         let arrayOfExercisesToday = []
         for(let i= 0; i<arrayOfWorkoutsToday.length; i++){
             const completedWorkoutID = arrayOfWorkoutsToday[i].completedWorkoutID
+            console.log(`completedWorkoutID: ${completedWorkoutID}`)
             const {data, error}:any = await databaseQuery.selectWhere(supabase, 'TrackedWorkoutsWithExercises','completedWorkoutID', completedWorkoutID, 'AEID');
             if(error){
                 return res.status(400).json({mssg:"Something went wrong!", error});
