@@ -4,7 +4,6 @@ const bcrypt = require("bcrypt");
 const jwttoken = require("jsonwebtoken");
 const databaseQuery = new supabaseQueryClass();
 import { UserInterface } from "./userInterface";
-import { MHUserInterface } from "./MHUserInterface";
 
 export const createUser = async (
   informationToInsert: UserInterface,
@@ -19,18 +18,6 @@ export const createUser = async (
   return { data, error };
 };
 
-export const addMHSection = async (
-  informationToInsert: MHUserInterface,
-  database = supabase,
-  table = "Mental Health"
-) => {
-  const { data, error }: any = await databaseQuery.insert(
-    database,
-    table,
-    informationToInsert
-  );
-  return { data, error };
-}
 
 export const getUserByEmail = async (
   email: string,

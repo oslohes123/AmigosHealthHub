@@ -5,7 +5,7 @@ import { faceValues, wordValues } from '../../../../routes/MentalHealth/mhGetSta
 import { supabaseQueryClass } from '../../../../utils/databaseInterface';
 import supabase from '../../../../utils/supabaseSetUp';
 import {v4 as uuidv4} from 'uuid';
-import { createHashedPassword, createUser, addMHSection } from '../../../../utils/userFunctions';
+import { createHashedPassword, createUser } from '../../../../utils/userFunctions';
 
 
 const databaseQuery = new supabaseQueryClass();
