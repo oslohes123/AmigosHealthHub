@@ -10,13 +10,14 @@ export const getCaloriesToday =async (req:Request, res: Response) => {
     if(!userid){
         return res.status(400).json({mssg:"userid is required!"});
     }
+    let totalCaloriesBurnt = 0;
     const todayDate = getDate(moment().format());
     const {data, error}:any = await databaseQuery.selectWhere(supabase, 'CompletedWorkouts','userid', userid, 'completedWorkoutID, timestamp');
     if(error){
         return res.status(400).json({mssg:"Something went wrong!", error});
     }
     else if (data.length ===0){
-        return res.status(400).json({mssg:"User has no workouts!"});
+        return res.status(200).json({mssg:"User has no workouts!", totalCaloriesBurnt});
     }
     else{
         console.log(`data ln 19: ${JSON.stringify(data)}`);
@@ -51,7 +52,7 @@ export const getCaloriesToday =async (req:Request, res: Response) => {
         }
         console.log(`arrayOfExercisesToday: ${JSON.stringify(arrayOfExercisesToday)}`);
 
-        let totalCaloriesBurnt = 0;
+        
         for(let i = 0; i< arrayOfExercisesToday.length; i++){
             const AEID = arrayOfExercisesToday[i]
            const {data,error}:any = await databaseQuery.match(supabase, 'ActualExercises','calories', {userID:userid,AEID});

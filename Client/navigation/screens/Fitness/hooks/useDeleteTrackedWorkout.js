@@ -29,7 +29,9 @@ export const useDeleteTrackedWorkout = () => {
     });
 
     const deleteTrackedWorkoutJSON = await response.json();
-    console.log(deleteTrackedWorkoutJSON);
+    console.log(
+      `deleteTrackedWorkoutJSON: ${JSON.stringify(deleteTrackedWorkoutJSON)}`
+    );
     if (!response.ok) {
       setIsLoading(false);
       setError(deleteTrackedWorkoutJSON.mssg);
@@ -37,7 +39,11 @@ export const useDeleteTrackedWorkout = () => {
     }
     if (response.ok) {
       try {
-        console.log(deleteTrackedWorkoutJSON);
+        console.log(
+          `deleteTrackedWorkoutJSON SUCCESS: ${JSON.stringify(
+            deleteTrackedWorkoutJSON
+          )}`
+        );
         setSuccess(deleteTrackedWorkoutJSON.mssg);
         setIsLoading(false);
       } catch (error) {
