@@ -146,7 +146,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                   icon="information"
                   iconColor={theme.color}
                   size={20}
-                  key={item.exercise.instructions}
+                  key={`${item.exercise.name}Instructions`}
                   onPress={() => {
                     console.log(`instructions: ${item.exercise.instructions}`);
                     setInstructionModalData(item.exercise.instructions);
@@ -329,9 +329,6 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
         ))}
       </ScrollView>
       <View style={styles.bottomButtons}>
-        {/* {RedButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 20, text: "Delete", buttonFunction: () => {
-                    console.log("Delete Workout Plan")
-                    navigation.pop()}})} */}
         <FAB
           icon="delete"
           style={styles.fab}
@@ -341,11 +338,6 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
             navigation.pop();
           }}
         />
-        {/* {CommonButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 20, text: "Edit", buttonFunction: () => {
-                    console.log("Edit Workout Plan")}})} */}
-        {/* {GreenButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 20, text: "Track", buttonFunction: () => {
-                    console.log("Track Workout Data")
-                    navigation.pop()}})} */}
         <FAB
           icon="check"
           style={styles.fab}

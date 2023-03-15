@@ -55,21 +55,8 @@ export default function WorkoutPlansScreen({ navigation }) {
 
           {results &&
             results.map((item) => (
-              <TouchableOpacity
-                key={item}
-                onPress={() => {
-                  navigation.navigate("Workout Plan Information", item);
-                }}
-              >
-                <Text
-                  style={[
-                    styles.testText,
-                    { borderColor: theme.color, color: theme.color },
-                  ]}
-                  key={item}
-                >
-                  {item}
-                </Text>
+              <TouchableOpacity style={styles.textBorder} key={item} onPress={() => {navigation.navigate("Workout Plan Information", item)}}>
+                <Text style={[styles.testText, { borderColor: theme.color, color: theme.color, fontSize: 32 }]}>{item}</Text>
               </TouchableOpacity>
             ))}
         </ScrollView>
@@ -99,13 +86,14 @@ const styles = {
     margin: 10,
     fontWeight: "bold",
   },
-  testText: {
-    fontSize: 32,
+  textBorder: {
     padding: 5,
     borderRadius: 20,
     margin: 5,
     borderWidth: 1,
     textAlign: "center",
+    width: screenWidth * 0.8,
+    alignItems: 'center'
   },
   scrollView: {
     height: screenHeight * 0.2,
