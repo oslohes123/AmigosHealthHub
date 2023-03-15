@@ -27,12 +27,14 @@ const SignupSchema = Yup.object().shape({
     .required("Confirm your new password")
     .oneOf([Yup.ref("password"), null], "Passwords don't match!"),
 
-  age: Yup.number("Age must be a number!")
+  age: Yup.number()
+    .typeError("Age must be a number!")
     .required("Age is Required")
     .positive("Age must be positive")
     .integer("Age must be a whole number!"),
 
-  calories: Yup.number("Calories must be a number!")
+  calories: Yup.number()
+    .typeError("Calories must be a number!")
     .positive("Calories must be positive")
     .integer("Calories must be a whole number!"),
 });
