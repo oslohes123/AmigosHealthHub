@@ -1,10 +1,10 @@
 // import { useAuthContext } from "../../Authentication/context/AuthContext";
 const port = process.env["PORT"];
 const ip_address = process.env["IP_ADDRESS"];
-const wordValuesRoute = `http://${ip_address}:${port}/mentalHealth/wordcloud`
+const wordValuesRoute = `http://${ip_address}:${port}/api/user/mentalHealth/wordcloud`
 console.log(`WordValuesRoute:${wordValuesRoute}`)
 
-export const useGetFaceValues = () => {
+export const useGetWordValues = () => {
 
 const getWordValues = async () => {
     const response = await fetch(
@@ -25,7 +25,7 @@ const getWordValues = async () => {
     }
     if (response.ok) {
       try {
-        return json.words
+        return json
       } catch (error) {
         console.error(error);
         return [0]

@@ -26,7 +26,7 @@ const getFaceValues = async () => {
     if (response.ok) {
       
       try {
-        return json.faces
+        return (json.faces).reverse();
       } catch (error) {
         console.error(error);
         return [0]
