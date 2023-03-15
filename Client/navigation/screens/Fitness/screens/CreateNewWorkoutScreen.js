@@ -3,18 +3,19 @@ import { StatusBar } from "expo-status-bar";
 import { Text, View, SafeAreaView, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Dimensions, Modal, Keyboard, TextInput } from "react-native";
 import { useState, useContext, useEffect } from "react";
 import themeContext from "../../../theme/themeContext";
-import { FAB } from 'react-native-paper';
+import { FAB, Snackbar } from 'react-native-paper';
 import { useSearchExercise } from "../hooks/useSearchExercise";
 import { useAddWorkout } from "../hooks/useAddWorkout";
 
 export default function CreateNewWorkoutScreen({ navigation , route }) {
     const [exerciseModalVisible, setExerciseModalVisible] = useState(false);
     const [nameModalVisible, setNameModalVisible] = useState(false);
+    const [snackbarVisible, setSnackbarVisible] = useState(false);
     const theme = useContext(themeContext);
     const [text, setText] = useState("");
     const [results, setResults] = useState([]);
     const [selectedExercises, setSelectedExercises] = useState([]);
-    const [workoutName, setWorkoutName] = useState('')
+    const [workoutName, setWorkoutName] = useState('');
 
     const [modalName, setModalName] = useState('')
     const [modalDistance, setModalDistance] = useState(0)
@@ -27,7 +28,7 @@ export default function CreateNewWorkoutScreen({ navigation , route }) {
     const [modalType, setModalType] = useState('')
 
     const { searchExercise } = useSearchExercise();
-    const { addWorkout } = useAddWorkout();
+    const { addWorkout, isLoading, message } = useAddWorkout();
 
     useEffect(() => {
         if (route.params && route.params != selectedExercises) { 
@@ -162,11 +163,23 @@ export default function CreateNewWorkoutScreen({ navigation , route }) {
                             <FAB        
                                 icon="check"
                                 style={styles.fab}
-                                onPress={() => {
-                                        console.log(`selected exercises: ${JSON.stringify(selectedExercises)}`)
-                                        console.log(`workout name: ${workoutName}`)
-                                        addWorkout(workoutName, selectedExercises)
-                                        setNameModalVisible(!nameModalVisible)
+                                onPress={async () => {
+                                        // console.log(`selected exercises: ${JSON.stringify(selectedExercises)}`)
+                                        // console.log(`workout name: ${workoutName}`)
+                                        if (workoutName.length > 1 && selectedExercises.length > 0) {
+                                            await addWorkout(workoutName, selectedExercises);
+
+                                            console.log(`this is the mssg: ${message}`)
+                                            if (message === "Workout Plan created!") {
+                                                setNameModalVisible(false);
+                                                navigation.pop();
+                                            }
+                                        } else {
+                                            setSnackbarVisible(true)
+                                        }
+                                        if (selectedExercises.length < 1) {
+                                            setNameModalVisible(!nameModalVisible)
+                                        }
                                     }
                                 }
                             />
@@ -211,7 +224,7 @@ export default function CreateNewWorkoutScreen({ navigation , route }) {
             {selectedExercises.length > 0 && 
                 <ScrollView style={[styles.horizontalScroll, { borderColor: theme.color }]} horizontal={true} alignItems={"center"} showsHorizontalScrollIndicator={false}>
                     {selectedExercises.map((item) => (
-                        <TouchableOpacity key={item.name} onPress={() => {
+                        <TouchableOpacity key={`${item.name} Selected`} onPress={() => {
                             setModalCalories(item.calories)
                             setModalDistance(item.distance)
                             setModalDuration(item.duration)
@@ -229,7 +242,20 @@ export default function CreateNewWorkoutScreen({ navigation , route }) {
                 </ScrollView>
             }
 
-        <StatusBar style="auto" />
+            <Snackbar
+                visible={snackbarVisible}
+                onDismiss={() => setSnackbarVisible(!snackbarVisible)}
+                action={{
+                    label: 'Close',
+                    onPress: () => {
+                        setSnackbarVisible(!snackbarVisible)
+                    },
+                }}
+                >
+                Could not save workout plan. Make sure at least 1 exercise has been selected and you have given the plan a name.
+            </Snackbar>
+
+            <StatusBar style="auto" />
         </SafeAreaView>
     );
 }
