@@ -56,7 +56,11 @@ export default function CaloriesBurntTodayWidget({ navigation }) {
         {isLoading && (
           <>
             {/* <Text>Refreshing.....</Text> */}
-            <ActivityIndicator animating={true} color={MD2Colors.red800} />
+            <ActivityIndicator
+              animating={true}
+              size={25}
+              color={MD2Colors.greenA100}
+            />
           </>
         )}
       </LinearGradient>
