@@ -36,6 +36,7 @@ export default function Stats({ navigation }) {
         strokeWidth: 2, // optional
       },
     ],
+    legend: ["Weighted Graph"]
   };
 
   const durationData = {
@@ -47,6 +48,7 @@ export default function Stats({ navigation }) {
         strokeWidth: 2, // optional
       },
     ],
+    legend: ["Duration"]
   };
 
   const caloriesData = {
@@ -58,6 +60,7 @@ export default function Stats({ navigation }) {
         strokeWidth: 2, // optional
       },
     ],
+    legend: ["Calories"]
   };
   const distanceData = {
     labels: getDistanceLabels,
@@ -68,6 +71,7 @@ export default function Stats({ navigation }) {
         strokeWidth: 2, // optional
       },
     ],
+    legend: ["Distance"]
   };
   const setAllExercises = async () => {
     setArrayOfExercises(await getAllExercises());
@@ -114,7 +118,7 @@ export default function Stats({ navigation }) {
   const chartConfig = {
     backgroundGradientFrom: "white",
     //backgroundGradientFromOpacity: 0,
-    backgroundGradientTo: "blue",
+    backgroundGradientTo: "#0040ff",
     backgroundGradientToOpacity: 0.5,
     color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
     strokeWidth: 2, // optional, default 3
