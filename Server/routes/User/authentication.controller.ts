@@ -1,7 +1,7 @@
 require('dotenv').config()
 import { Request, Response } from 'express';
 import { createUser, getUserByEmail, verifyPassword, createHashedPassword, createToken} from '../../utils/userFunctions'
-import { isEmail, isAlpha, isStrongPassword} from '../../utils/validators';
+import { isEmail, isAlpha, isStrongPassword, isInt} from '../../utils/validators';
 import { UserInterface } from '../../utils/userInterface';
 import { createCalorieGoal } from '../../utils/Food/userCaloriesInit';
 
@@ -44,14 +44,24 @@ export const loginUser = async(req:Request,res:Response) => {
 
 export const signupUser = async(req:Request,res:Response) => {
 
-    const {firstName, lastName, email, password, age} = req.body;
-
+    const {firstName, lastName, email, password, age } = req.body;
+    let {calories} = req.body;
     if(!email || !password ||!firstName ||!lastName ||!age){
         return res.status(400).json({
             mssg: "All Fields Must Be Filled"
         })
     }
 
+    if(!calories){
+        calories = 2000;
+    }
+    else{
+        if(!(isInt(calories) && calories > 0)){
+            return res.status(400).json({
+                mssg: "Invalid Calorie Format"
+            })
+        }
+    }
     if(!isEmail(email)) return res.status(400).json({
         mssg: "Invalid Email"
     })
@@ -95,7 +105,10 @@ export const signupUser = async(req:Request,res:Response) => {
                 else{ 
                     const id = data[0].id;   
                     const token = createToken(id);
-                    await createCalorieGoal(id,2000);
+
+                    const {error} = await createCalorieGoal(id,calories);
+                    if(error) return res.status(400).json({mssg:"Sorry, something went wrong!", err:error});
+
                     return res.status(200).json({firstName,email, token, id, mssg: "Successful sign up!"});
                 }
             }
