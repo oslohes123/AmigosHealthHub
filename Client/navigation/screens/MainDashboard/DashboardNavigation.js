@@ -19,7 +19,7 @@ export default function DashboardNavigationScreen({ navigation }) {
         <Stack.Navigator
             initialRouteName={dashboardName}
             screenOptions={{
-                headerShown: false,
+                headerShown: true,
                 headerTitleStyle: styles.header
             }}
         >

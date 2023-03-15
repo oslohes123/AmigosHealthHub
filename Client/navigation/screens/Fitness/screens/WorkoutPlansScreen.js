@@ -12,7 +12,6 @@ export default function WorkoutPlansScreen({ navigation }) {
     const { getAllWorkoutNames, isLoading, error } = useGetAllWorkoutNames();
     const [results, setResults] = useState([])
     const isFocused = useIsFocused();
-    const [isOpen, setIsOpen] = useState(false)
     
     useEffect(() => {
         async function fetchData() {
@@ -30,7 +29,7 @@ export default function WorkoutPlansScreen({ navigation }) {
 
     return (
         <SafeAreaView style={[styles.container, {backgroundColor: theme.background}]}>
-            {/* <Provider> */}
+            <Provider>
         
                     <ScrollView style={[styles.scrollView, {borderColor: theme.color}]} showsVerticalScrollIndicator={false} bounces={false} justifyContent={results.length < 1 ? 'center' : 'flex-start'} alignItems={'center'}>
 
@@ -57,39 +56,7 @@ export default function WorkoutPlansScreen({ navigation }) {
                         />
                     </View>
 
-                {/* <Portal>
-                    <FAB.Group
-                    open={isOpen}
-                    visible
-                    style={styles.fab}
-                    icon={isOpen ? 'cross' : 'plus'}
-                    actions={[
-                        { icon: 'plus', onPress: () => console.log('Pressed add') },
-                        {
-                        icon: 'star',
-                        label: 'Star',
-                        onPress: () => console.log('Pressed star'),
-                        },
-                        {
-                        icon: 'email',
-                        label: 'Email',
-                        onPress: () => console.log('Pressed email'),
-                        },
-                        {
-                        icon: 'bell',
-                        label: 'Remind',
-                        onPress: () => console.log('Pressed notifications'),
-                        },
-                    ]}
-                    onStateChange={(isOpen) => setIsOpen(!isOpen)}
-                    onPress={() => {
-                        if (isOpen) {
-                        // do something if the speed dial is open
-                        }
-                    }}/>
-
-                </Portal> */}
-            {/* </Provider> */}
+            </Provider>
         </SafeAreaView>
     );
 }
@@ -140,10 +107,9 @@ const styles = {
         flex: 1
     },
     fab: {
-        position: 'absolute',
-        margin: 16,
-        left: screenWidth * 0.005,
-        bottom: screenHeight * 0.005
+        marginBottom: 16,
+        width: screenWidth * 0.9,
+        alignSelf: 'center'
     },
 }
 

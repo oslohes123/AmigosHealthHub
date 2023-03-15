@@ -6,8 +6,6 @@ import themeContext from "../../../theme/themeContext";
 import { FAB } from 'react-native-paper';
 import { useSearchExercise } from "../hooks/useSearchExercise";
 import { useAddWorkout } from "../hooks/useAddWorkout";
-import { useAuthContext } from "../../Authentication/context/AuthContext";
-import { useAddExerciseToExercises } from "../hooks/useAddExerciseToExercises";
 
 export default function CreateNewWorkoutScreen({ navigation , route }) {
     const [exerciseModalVisible, setExerciseModalVisible] = useState(false);
