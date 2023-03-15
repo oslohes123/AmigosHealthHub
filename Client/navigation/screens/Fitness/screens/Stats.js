@@ -168,19 +168,20 @@ export default function Stats({ navigation }) {
           </Modal>
         </View>
       </View>
-      <View>
-        {isLoading && (
-          <>
-            {/* <Text>Refreshing.....</Text> */}
-            <ActivityIndicator animating={true} color={MD2Colors.red800} />
-          </>
-        )}
 
+      {isLoading && (
+        <>
+          {/* <Text>Refreshing.....</Text> */}
+          <ActivityIndicator animating={true} color={MD2Colors.red800} />
+        </>
+      )}
+      <View style={{ alignItems: "center" }}>
         {/* This is the WeightedGraph */}
         {getWeightedData && getWeightedLabels && (
           <LineChart
+            style={{ borderRadius: 25 }}
             data={weightedData}
-            width={screenWidth}
+            width={0.8 * screenWidth}
             height={220}
             chartConfig={chartConfig}
           />
