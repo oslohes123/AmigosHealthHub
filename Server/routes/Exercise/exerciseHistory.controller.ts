@@ -215,13 +215,17 @@ export const getExerciseHistory =async (req:Request, res: Response) => {
                return res.status(400).json({mssg:"Exercise has never been performed"});
             }
          }
-        if(typeOfExercise === "Weight"){
          arrayOfDates = arrayOfDates.map((x) => [getDate(x)])
+         // arrayOfWeightPulled = arrayOfWeightPulled.map((x) => [x])
          console.log(`arrayOfDates ln219: ${JSON.stringify(arrayOfDates)}`)
-         return res.status(200).json({mssg:"Success!", type: "Weight", arrayOfDates,arrayOfWeightPulled });
+        if(typeOfExercise === "Weight"){
+         return res.status(200).json({mssg:"Success!", type: "Weight", arrayOfDates, data:{arrayOfWeightPulled} });
         }
         else{
-         return res.status(200).json({mssg:"Success!", type: "Other",arrayOfDates,arrayOfCalories, arrayOfDistance, arrayOfDuration });
+         // arrayOfCalories = arrayOfCalories.map((x) => [x + 'kcal'])
+         // arrayOfDistance = arrayOfDistance.map((x) => [x + 'm'])
+         // arrayOfDuration = arrayOfDuration.map((x) => [x + 'hrs'])
+         return res.status(200).json({mssg:"Success!", type: "Other",arrayOfDates,data: {arrayOfCalories, arrayOfDistance, arrayOfDuration} });
         }
         
      }

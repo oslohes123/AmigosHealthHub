@@ -6,35 +6,26 @@ import { useGetAllExercises } from "../hooks/exercise/useGetAllExercises";
 import { useIsFocused } from "@react-navigation/native";
 import { FAB } from "react-native-paper";
 import { useGetExerciseHistory } from "../hooks/exercise/useGetExerciseHistory";
+import { ScrollView } from "react-native-gesture-handler";
+import { ActivityIndicator, MD2Colors } from "react-native-paper";
 export default function Stats({ navigation }) {
   const [selected, setSelected] = useState("");
   const [visible, setVisible] = useState(false);
   const [getArrayOfExercises, setArrayOfExercises] = useState([]);
   const [getWeightedLabels, setWeightedLabels] = useState(null);
   const [getWeightedData, setWeightedData] = useState(null);
-  const { getAllExercises, isLoading, error } = useGetAllExercises();
-  const { getExerciseHistory } = useGetExerciseHistory();
-  const isFocused = useIsFocused();
 
-  // const data = {
-  //   labels: ["January", "February", "March", "April", "May", "June"],
-  //   datasets: [
-  //     {
-  //       data: [20, 45, 28, 80, 99, 43],
-  //       strokeWidth: 2, // optional
-  //     },
-  //   ],
-  // };
-  // const data = {
-  //   labels: getLabels,
-  //   datasets: [
-  //     {
-  //       data: getData,
-  //       color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`, // optional
-  //       strokeWidth: 2, // optional
-  //     },
-  //   ],
-  // };
+  const [getDurationLabels, setDurationLabels] = useState(null);
+  const [getDurationData, setDurationData] = useState(null);
+  const [getDistanceLabels, setDistanceLabels] = useState(null);
+  const [getDistanceData, setDistanceData] = useState(null);
+
+  const [getCaloriesLabels, setCaloriesLabels] = useState(null);
+  const [getCaloriesData, setCaloriesData] = useState(null);
+
+  const { getAllExercises } = useGetAllExercises();
+  const { getExerciseHistory, isLoading } = useGetExerciseHistory();
+  const isFocused = useIsFocused();
 
   const weightedData = {
     labels: getWeightedLabels,
@@ -46,19 +37,66 @@ export default function Stats({ navigation }) {
       },
     ],
   };
+
+  const durationData = {
+    labels: getDurationLabels,
+    datasets: [
+      {
+        data: getDurationData,
+        color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`, // optional
+        strokeWidth: 2, // optional
+      },
+    ],
+  };
+
+  const caloriesData = {
+    labels: getCaloriesLabels,
+    datasets: [
+      {
+        data: getCaloriesData,
+        color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`, // optional
+        strokeWidth: 2, // optional
+      },
+    ],
+  };
+  const distanceData = {
+    labels: getDistanceLabels,
+    datasets: [
+      {
+        data: getDistanceData,
+        color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`, // optional
+        strokeWidth: 2, // optional
+      },
+    ],
+  };
   const setAllExercises = async () => {
     setArrayOfExercises(await getAllExercises());
   };
 
   useEffect(() => {
     const setDataAndLabels = async () => {
+      setDurationData(null);
+      setWeightedData(null);
+      setDistanceData(null);
+      setCaloriesData(null);
+
       const result = await getExerciseHistory(selected);
       if (result) {
-        const { data, labels, type } = result;
+        //Look into have one state that manages labels as they all have the same labels
+        const { labels, type, data } = result;
 
         if (type === "Weight") {
-          setWeightedData(data);
+          setWeightedData(data.arrayOfWeightPulled);
           setWeightedLabels(labels);
+        } else if (type === "Other") {
+          setDurationData(data.arrayOfDuration);
+          setDurationLabels(labels);
+
+          setDistanceData(data.arrayOfDistance);
+          setDistanceLabels(labels);
+
+          setCaloriesData(data.arrayOfCalories);
+          setCaloriesLabels(labels);
         }
       }
     };
@@ -85,7 +123,7 @@ export default function Stats({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.modalContainer}>
         <View style={styles.dropDownContainer}>
           <TouchableOpacity
@@ -131,6 +169,13 @@ export default function Stats({ navigation }) {
         </View>
       </View>
       <View>
+        {isLoading && (
+          <>
+            {/* <Text>Refreshing.....</Text> */}
+            <ActivityIndicator animating={true} color={MD2Colors.red800} />
+          </>
+        )}
+
         {/* This is the WeightedGraph */}
         {getWeightedData && getWeightedLabels && (
           <LineChart
@@ -140,8 +185,38 @@ export default function Stats({ navigation }) {
             chartConfig={chartConfig}
           />
         )}
+
+        {/* This is the duration graph for an Other exercise */}
+        {getDurationData && getDurationLabels && (
+          <LineChart
+            data={durationData}
+            width={screenWidth}
+            height={220}
+            chartConfig={chartConfig}
+          />
+        )}
+
+        {/* This is the distance graph for an Other exercise */}
+        {getDistanceData && getDistanceLabels && (
+          <LineChart
+            data={distanceData}
+            width={screenWidth}
+            height={220}
+            chartConfig={chartConfig}
+          />
+        )}
+
+        {/* This is the calories graph for an Other exercise */}
+        {getCaloriesData && getCaloriesLabels && (
+          <LineChart
+            data={caloriesData}
+            width={screenWidth}
+            height={220}
+            chartConfig={chartConfig}
+          />
+        )}
       </View>
-    </View>
+    </ScrollView>
   );
 }
 

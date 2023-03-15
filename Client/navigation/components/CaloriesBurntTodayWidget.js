@@ -6,6 +6,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Animated } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { ActivityIndicator, MD2Colors } from "react-native-paper";
 export default function CaloriesBurntTodayWidget({ navigation }) {
   const { getCaloriesBurntToday, error, isLoading } =
     useGetCaloriesBurntToday();
@@ -13,7 +14,7 @@ export default function CaloriesBurntTodayWidget({ navigation }) {
   const { user } = useAuthContext();
   const userid = user.id;
 
-  const [getCaloriesBurnt, setCaloriesBurnt] = useState("Not Available");
+  const [getCaloriesBurnt, setCaloriesBurnt] = useState(null);
   const caloriesBurnt = async () => {
     let caloriesTemp = await getCaloriesBurntToday();
     setCaloriesBurnt(caloriesTemp);
@@ -48,7 +49,18 @@ export default function CaloriesBurntTodayWidget({ navigation }) {
           Calories Burnt Today:
         </Text>
 
-        <Text style={styles.number}>{getCaloriesBurnt}</Text>
+        {getCaloriesBurnt ? (
+          <Text style={styles.number}>{getCaloriesBurnt}</Text>
+        ) : (
+          <ActivityIndicator animating={true} color={MD2Colors.red800} />
+        )}
+
+        {isLoading && (
+          <>
+            {/* <Text>Refreshing.....</Text> */}
+            <ActivityIndicator animating={true} color={MD2Colors.red800} />
+          </>
+        )}
       </LinearGradient>
     </View>
   );

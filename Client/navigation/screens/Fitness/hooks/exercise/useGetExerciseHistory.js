@@ -37,7 +37,7 @@ export const useGetExerciseHistory = () => {
         setIsLoading(false);
         return {
           labels: getExerciseHistoryJSON.arrayOfDates,
-          data: getExerciseHistoryJSON.arrayOfWeightPulled,
+          data: getExerciseHistoryJSON.data,
           type: getExerciseHistoryJSON.type,
         };
       } catch (error) {
