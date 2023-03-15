@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import supabase from "../../utils/supabaseSetUp";
 import { supabaseQueryClass } from "../../utils/databaseInterface";
 import { eitherIsFloatOrInt, covertStringToNumber } from "../../utils/validators";
+import { type } from "os";
 const databaseQuery = new supabaseQueryClass();
 
 
@@ -42,10 +43,10 @@ export const deleteWorkoutPlan =async (req:Request, res: Response) => {
         return res.status(400).json({mssg:"User does not have a plan of that name!"})
    }
    const workoutPlanToDel = data[0].WorkoutPlanID
-   const {errorPresent} = await deleteWorkoutPlansWithExercisesByID(workoutPlanToDel);
-   if(errorPresent){
-    return res.status(400).json({mssg:"Fail to delete WorkoutPlanByID", errorPresent})
-   }
+//    const {errorPresent} = await deleteWorkoutPlansWithExercisesByID(workoutPlanToDel);
+//    if(errorPresent){
+//     return res.status(400).json({mssg:"Fail to delete WorkoutPlanByID", errorPresent})
+//    }
 
    const {deleteError} = await deleteWorkoutPlanByID(workoutPlanToDel)
    if(deleteError){
@@ -196,23 +197,23 @@ export const createWorkout =async (req:Request, res: Response) => {
         let workoutPEIDs = [];
         for(let i= 0; i<numberOfExercises;i++){
              //Check if exercises inputs are numbers!
-             if(exercises[i].calories && !(eitherIsFloatOrInt(exercises[i].calories))){
+            if(exercises[i].calories && typeof(exercises[i].calories) ==='string'&&!(eitherIsFloatOrInt(exercises[i].calories))){
                 return res.status(400).json({mssg: "Make sure calories is a number!"})
             }
 
-            if(exercises[i].sets && !(eitherIsFloatOrInt(exercises[i].sets))){
+            if(exercises[i].sets && typeof(exercises[i].sets) ==='string'&&!(eitherIsFloatOrInt(exercises[i].sets))){
                 return res.status(400).json({mssg: "Make sure sets is a number!"})
             }
-            if(exercises[i].reps && !(eitherIsFloatOrInt(exercises[i].reps))){
+            if(exercises[i].reps &&typeof(exercises[i].reps) ==='string'&& !(eitherIsFloatOrInt(exercises[i].reps))){
                 return res.status(400).json({mssg: "Make sure reps is a number!"})
             }
-            if(exercises[i].weight && !(eitherIsFloatOrInt(exercises[i].weight))){
+            if(exercises[i].weight && typeof(exercises[i].weight) ==='string'&&!(eitherIsFloatOrInt(exercises[i].weight))){
                 return res.status(400).json({mssg: "Make sure weight is a number!"})
             }
-            if(exercises[i].distance && !(eitherIsFloatOrInt(exercises[i].distance))){
+            if(exercises[i].distance && typeof(exercises[i].distance) ==='string'&&!(eitherIsFloatOrInt(exercises[i].distance))){
                 return res.status(400).json({mssg: "Make sure distance is a number!"})
             }
-            if(exercises[i].duration && !(eitherIsFloatOrInt(exercises[i].duration))){
+            if(exercises[i].duration &&typeof(exercises[i].duration) ==='string'&& !(eitherIsFloatOrInt(exercises[i].duration))){
                     return res.status(400).json({mssg: "Make sure duration is a number!"})
             }
             //Check if exercises inputs are numbers!
