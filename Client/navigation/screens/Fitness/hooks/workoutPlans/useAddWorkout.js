@@ -45,7 +45,7 @@ export const useAddWorkout = () => {
     });
 
     const addWorkoutJSON = await response.json();
-    console.log(addWorkoutJSON);
+    console.log(`addWorkoutJSON:${JSON.stringify(addWorkoutJSON)}`);
     if (!response.ok) {
       setIsLoading(false);
       setMessage(addWorkoutJSON.mssg);
