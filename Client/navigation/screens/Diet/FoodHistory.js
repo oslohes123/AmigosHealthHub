@@ -201,6 +201,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginVertical: '5%',
     backgroundColor: '#3eda9b',
+    width: '60%'
   },
   icon: {
     marginLeft: '4%'

@@ -4,18 +4,18 @@ import GreenButton from "../../components/GreenButton";
 // import { TextInput } from 'react-native-paper';
 import { useAuthContext } from "../Authentication/context/AuthContext";
 import {updateTrackedFood,deleteTrackedFood } from "../../../functions/Food";
-
+import { AntDesign } from '@expo/vector-icons'; 
 
 export default function FoodDetails({ route, navigation }) {
 
-    const {
+    let {
         Quantity: servingQty,
         Measure: servingUnit,
         LogID,
         UserID
     } = route.params.trackedFoodDetails;
 
-    const {
+    let {
         Name: name,
         Calories:calories,
         Protein: Protein,
@@ -26,6 +26,10 @@ export default function FoodDetails({ route, navigation }) {
         BrandName: Brand,
     } = route.params.selectedFoodDetails;
 
+    Fiber = Fiber ? Fiber : 0;
+    Sugars = Sugars ? Sugars : 0;
+
+
 
     const altMeasures = route.params.selectedFoodDetails.AltMeasures.map(jsonStr => JSON.parse(jsonStr));
 
@@ -35,13 +39,11 @@ export default function FoodDetails({ route, navigation }) {
     const [selectedServingUnit, setSelectedServingUnit] = useState(servingUnit.toString())
     const [visible, setVisible] = useState(false)
 
-
-
-
     async function update(){
         let statusCode = await updateTrackedFood({Quantity:quantity,Measure:selectedServingUnit,LogID,Calories:calories})
         navigation.navigate('Diet Dashboard')
         console.log(statusCode);
+        alert('Food successfully updated');
     }
 
     // async function handleDeleteFood() {
@@ -168,15 +170,9 @@ export default function FoodDetails({ route, navigation }) {
                     width={100}
                     text={"Update"}
                 />
-                <GreenButton
-                    buttonFunction={handleDeleteFood}
-                    iconName="add-outline"
-                    fontSize={23}
-                    height={70}
-                    width={100}
-
-                    text={"Delete"}
-                />
+                <TouchableOpacity onPress={handleDeleteFood}>
+                    <AntDesign name="delete" size={40} color="white" />
+                 </TouchableOpacity>
             </View>
         </View>
     );
