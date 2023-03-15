@@ -91,16 +91,17 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
             >
               <Text style={{ color: theme.color }}>{instructionModalData}</Text>
             </View>
-            {RedButton({
-              height: screenHeight * 0.05,
-              width: screenWidth * 0.2,
-              fontSize: 12,
-              text: "Dismiss",
-              buttonFunction: () => {
+            {/* {RedButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 12, text: "Dismiss", buttonFunction: () => {
+                            setModalVisible(!modalVisible)
+                            console.log("Dismiss Info")}})} */}
+            <FAB
+              icon="close"
+              style={styles.fab}
+              // label="Create Plan"
+              onPress={() => {
                 setModalVisible(!modalVisible);
-                console.log("Dismiss Info");
-              },
-            })}
+              }}
+            />
           </View>
         </SafeAreaView>
       </Modal>
@@ -439,7 +440,7 @@ const styles = {
   },
   statsText: {
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 14,
   },
   statsRows: {
     flexDirection: "row",
