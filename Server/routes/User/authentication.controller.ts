@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { createUser, getUserByEmail, verifyPassword, createHashedPassword, createToken} from '../../utils/userFunctions'
 import { isEmail, isAlpha, isStrongPassword} from '../../utils/validators';
 import { UserInterface } from '../../utils/userInterface';
+import { createCalorieGoal } from '../../utils/Food/userCaloriesInit';
 
 
 export const loginUser = async(req:Request,res:Response) => {
@@ -94,6 +95,7 @@ export const signupUser = async(req:Request,res:Response) => {
                 else{ 
                     const id = data[0].id;   
                     const token = createToken(id);
+                    await createCalorieGoal(id,2000);
                     return res.status(200).json({firstName,email, token, id, mssg: "Successful sign up!"});
                 }
             }

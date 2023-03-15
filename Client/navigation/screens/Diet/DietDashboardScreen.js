@@ -1,15 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { StyleSheet, SafeAreaView, View, Text, TouchableOpacity, Button, ScrollView, TextInput } from 'react-native';
-// import Header from './components/Header';
-// import Header1 from './components/Header1';
-// import NavBar from '../../components/NavBar';
-//import NutrientsButton from '../components/NutrientsButton';
-// import { Feather } from '@expo/vector-icons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { PieChart } from "react-native-chart-kit";
 import themeContext from '../../theme/themeContext';
 import { EventRegister } from 'react-native-event-listeners'
 import { genericSearch, specificSearch } from '../../../functions/searchFood'
+import { addCalorieGoal, getCaloriesRemaining, getLatestCalorieGoal } from '../../../functions/Calories';
+import { useAuthContext } from "../Authentication/context/AuthContext";
+import { useIsFocused } from '@react-navigation/native';
 
 import GreenButton from '../../components/GreenButton';
 
@@ -17,18 +15,7 @@ import GreenButton from '../../components/GreenButton';
 export default function DietDashboardScreen({ navigation }) {
 
   const theme = useContext(themeContext)
-
-  const [showHeader, setShowHeader] = useState(false);
-
-  useEffect(() => {
-    const HListener = EventRegister.addEventListener('ChangeHeader', (data) => {
-      setShowHeader(data)
-    })
-    return () => {
-      EventRegister.removeEventListener(HListener)
-    }
-  }, [showHeader])
-
+  const isFocused = useIsFocused();
   const Piedata = [
     {
       name: "Protein",
@@ -70,15 +57,40 @@ export default function DietDashboardScreen({ navigation }) {
     }
   ];
 
+  const { user } = useAuthContext();
+  const id = user.id;
+  const todaysDate = new Date().toISOString().split('T')[0];
+
   const [genericFoodList, setGenericFoodList] = useState([]);
 
   const [specificFoodList, setSpecificFoodList] = useState([]);
 
-  const [text, setText] = useState('');
+  const [foodInput, setText] = useState('');
+
+  const [calorieGoal, setCalorieGoal] = useState(0);
+
+  const [caloriesRemaining, setCaloriesRemaining] = useState(0);
+
+  async function getCalorieData() {
+    let data = await getLatestCalorieGoal(id);
+    setCalorieGoal(data.CalorieGoal);
+    let calories = await getCaloriesRemaining(id, todaysDate, data.CalorieGoal);
+    setCaloriesRemaining(calories)
+  }
+
+
+  
+ 
+  useEffect(() => {
+    if (isFocused){
+      getCalorieData();
+    }
+  },[navigation, isFocused])
+
 
   useEffect(() => {
     async function fetchData() {
-      const data = await genericSearch(text);
+      const data = await genericSearch(foodInput);
       let brandedList = [];
       let genericList = [];
       data.items.map((item) => {
@@ -92,88 +104,61 @@ export default function DietDashboardScreen({ navigation }) {
       setSpecificFoodList(brandedList)
 
     }
-    if (text.length > 2) {
+    if (foodInput.length > 2) {
       fetchData();
-    } else if (text.length < 3) {
+    } else if (foodInput.length < 3) {
       setGenericFoodList([])
     }
-  }, [text]);
+  }, [foodInput]);
 
-
-  const pressHandler = () => {
+  const pressHandler = async () => {
     navigation.navigate('Nutrients');
+    
   }
-
-  // const newPressHandler = () => {
-  //   navigation.navigate('foodSearch');
-  // }
-
-  // const pressHandler1 = () => {
-  //   navigation.navigate('Settings');
-  // }
 
   async function foodPress(name = null, nix_item_id = null) {
     let data;
     if (nix_item_id == null) {
-      data = {foodData:await specificSearch(name), foodIdentifier:name}
+      data = { foodData: await specificSearch(name), foodIdentifier: name }
     } else {
-      data = {foodData:await specificSearch(nix_item_id), foodIdentifier:nix_item_id}
+      data = { foodData: await specificSearch(nix_item_id), foodIdentifier: nix_item_id }
     }
     navigation.navigate('Food Details', data);
   }
-
-
 
   const pressHandler3 = () => {
     navigation.navigate('Food History');
   }
 
-  // const [text, setText] = useState('')
-
-  // const submitHandler = (inputText) => {
-  //   setText(inputText)
-  // }
-
   return (
+
+
+
     <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
       <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: '17%' }}>
         <View style={[styles.headerView, { borderColor: theme.color }]}>
           <Text style={[styles.title, { color: theme.color }]}>Calorie Goal</Text>
-          <Text style={[styles.number, { color: theme.color }, { borderColor: theme.color }]}>1000cal</Text>
+          <Text style={[styles.number, { color: theme.color }, { borderColor: theme.color }]}>{calorieGoal}</Text>
         </View>
         <View style={[styles.headerView, { borderColor: theme.color }]}>
           <Text style={[styles.title, { color: theme.color }]}>Calories Remaining</Text>
-          <Text style={[styles.number, { color: theme.color }, { borderColor: theme.color }]}>250cal</Text>
+          <Text style={[styles.number, { color: theme.color }, { borderColor: theme.color }]}>{caloriesRemaining}</Text>
         </View>
       </View>
-      {/* <Header /> */}
-      {/* {showHeader ? <Header /> : <Header1 />} */}
-      {/* <View style={styles.icon}>
-        <TouchableOpacity>
-          <Feather name="settings" size={24} color={theme.color} onPress={pressHandler1} />
-        </TouchableOpacity>
-      </View> */}
-      {/* <View>
-        <Search submitHandler={submitHandler} />
-      </View> */}
-      {/* <TouchableOpacity> */}
-      {/* <View>
-        {text ? <Text style={styles.text}>{text}</Text> : null}
-      </View> */}
-      {/* </TouchableOpacity> */}
-      {/* <ScrollView style={styles.fullScroll}> */}
+
+
       <View>
 
         <TextInput
           clearButtonMode='always'
-          value={text}
+          value={foodInput}
           onChangeText={(value) => setText(value)}
           style={[styles.input, { borderColor: theme.color }, { color: theme.color }]}
           placeholder='Find food...'
           placeholderTextColor={theme.color} />
 
         <View style={styles.chart}>
-          {text.length == 0 && (
+          {foodInput.length == 0 && (
             <TouchableOpacity style={styles.pieWidget} onPress={pressHandler}>
               <PieChart
                 data={Piedata}
@@ -181,21 +166,7 @@ export default function DietDashboardScreen({ navigation }) {
                 height={210}
                 paddingLeft='10'
                 chartConfig={{
-                  //backgroundColor: "#e26a00",
-                  //backgroundGradientFrom: "#fb8c00",
-                  //backgroundGradientTo: "#ffa726",
-                  //decimalPlaces: 2,
                   color: () => "black",
-                  // labelColor: () => 'black',
-                  // style: {
-                  //   borderRadius: 16,
-                  // },
-                  // propsForDots: {
-                  //   r: "6",
-                  //   strokeWidth: "2",
-                  //   stroke: "#ffa726"
-                  // }
-
                 }}
                 accessor="amount"
                 backgroundColor="transparent"
@@ -204,7 +175,7 @@ export default function DietDashboardScreen({ navigation }) {
           )}
         </View>
 
-        {text.length > 2 &&
+        {foodInput.length > 2 &&
           <View style={{ flexDirection: 'row', height: '10%', marginTop: '30%' }}>
             <ScrollView style={styles.scroll}>
               {genericFoodList.length > 2 && genericFoodList.map(item => (
@@ -252,8 +223,8 @@ export default function DietDashboardScreen({ navigation }) {
       {/* <View style={styles.button}>
         <Button title="View Food History" onPress={pressHandler3} color='black' />
       </View> */}
-      <View style={{marginTop: '47%'}}>
-      <GreenButton buttonFunction={pressHandler3} height={60} width={'50%'} text={'View Food History'}/>
+      <View style={{ marginTop: '47%' }}>
+        <GreenButton buttonFunction={pressHandler3} height={60} width={'50%'} text={'View Food History'} />
       </View>
       {/* 
       <TouchableOpacity onPress={newPressHandler}>

@@ -5,6 +5,7 @@ import { date } from 'yup';
 import { AntDesign } from '@expo/vector-icons';
 import { PieChart } from "react-native-chart-kit";
 import { getFood, getTrackedFood,getSpecificTrackedFood } from '../../../functions/Food';
+import { getLatestCalorieGoal, getCaloriesRemaining } from '../../../functions/Calories';
 import { useAuthContext } from '../Authentication/context/AuthContext';
 import { useEffect } from 'react';
 
@@ -14,6 +15,8 @@ export default function FoodHistory({ navigation }) {
   const [foodData, setFoodData] = useState([]);
   const [viewCalendar, setViewCalendar] = useState(false);
   const [selectDay, setSelectDay] = useState(new Date().toISOString().split('T')[0]);
+  const [calorieGoal, setCalorieGoal] = useState(0);
+  const [caloriesRemaining, setCaloriesRemaining] = useState(0);
 
   const currentDate = new Date();
   const markedDate = {
@@ -64,13 +67,19 @@ export default function FoodHistory({ navigation }) {
   const { user } = useAuthContext();
   const id = user.id;
 
+  async function getCalorieData() {
+    let data = await getLatestCalorieGoal(id, selectDay);
+    setCalorieGoal(data.CalorieGoal);
+    let calories = await getCaloriesRemaining(id, selectDay, data.CalorieGoal);
+    setCaloriesRemaining(calories)
+  }
 
   useEffect(() => {
     setViewCalendar(false);
     async function gettingTrackedFood() {
       let response = await getTrackedFood(selectDay, id);
       setFoodData(response);
-      console.log(response);
+      getCalorieData();
     }
     gettingTrackedFood();
   },[selectDay])
@@ -86,6 +95,10 @@ export default function FoodHistory({ navigation }) {
     navigation.navigate('Food History Details', {selectedFoodDetails,trackedFoodDetails});
   }
 
+  
+
+ 
+
 
   const pressHandler = () => {
     navigation.navigate('Nutrients');
@@ -99,7 +112,7 @@ export default function FoodHistory({ navigation }) {
             <Text style={styles.text}>Select a day from the Calendar to View Food History</Text>
           )}
           {selectDay && (
-            <Text style={styles.text}>{selectDay}-: 2500cal consumed</Text>
+            <Text style={styles.text}>Date: {selectDay} Calorie-goal: {calorieGoal} Calories-remaining: {caloriesRemaining}</Text>
           )}
           <TouchableOpacity style={styles.icon} onPress={toggleCalendar}>
             <AntDesign name="calendar" size={35} color="white" />

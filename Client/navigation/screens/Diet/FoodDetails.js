@@ -45,10 +45,15 @@ export default function FoodDetails({ route, navigation }) {
     }
 
     async function save() {
+        if(quantity > 0) {
         let statusCode = await addTrackedFood(updatedFoodInput, id)
         console.log(statusCode);
         navigation.navigate('Diet Dashboard')
         alert('Food successfully added');
+        }
+        else {
+            alert('Serving quantity should be greater than 0')
+        }
     }
 
     return (
@@ -94,10 +99,10 @@ export default function FoodDetails({ route, navigation }) {
                         onRequestClose={() => setVisible(false)}
                     >
                         <View style={styles.modal}>
-                            {altMeasures ? altMeasures.map(altMeasure => {
+                            {altMeasures ? altMeasures.map((altMeasure,index) => {
                                         return (
                                             <TouchableOpacity
-                                                key={altMeasure.serving_weight}
+                                                key={index}
                                                 style={styles.modalButton}
                                                 onPress={() => {
                                                     setSelectedServingUnit(altMeasure.measure)

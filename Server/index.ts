@@ -38,6 +38,8 @@ app.use(routeNames.foodBaseURL,foodSearchRouter)
 import foodDatabaseRouter from "./routes/Food/foodDatabase.router";
 app.use(routeNames.foodBaseURL, foodDatabaseRouter);
 
+import calorieTrackRouter from "./routes/Food/calorieTrack.router";
+app.use(routeNames.foodBaseURL, calorieTrackRouter);
 
 // Get User Details Routes
 import getUserInfoRouter from "./routes/User/getUserInfo.router";
