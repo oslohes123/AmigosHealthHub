@@ -24,7 +24,7 @@ test.before(async (t : any) => {
     }
 })
 
-test.after(async() => {
+test.after.always(async() => {
     await supabaseQuery.deleteFrom(supabase, 'User', 'email', randomEmail);
 })
 

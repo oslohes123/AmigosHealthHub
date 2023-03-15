@@ -39,7 +39,7 @@ const mockResponse = () => {
     }
 })
 
-  test.after(async(t: any) => {
+test.after.always(async(t: any) => {
     await supabaseQuery.deleteFrom(supabase, 'User', 'email', alreadyExistsEmail);
   })
   //Missing fields for sign up form
