@@ -3,7 +3,7 @@ import { REACT_APP_IP_ADDRESS, REACT_APP_PORT } from "@env";
 const port = REACT_APP_PORT;
 import { useAuthContext } from "../../Authentication/context/AuthContext";
 const ip_address = REACT_APP_IP_ADDRESS;
-const getTrackedWorkoutDetailsRoute = `http://${ip_address}:${port}/api/user/completedWorkouts/get`;
+const getTrackedWorkoutDetailsRoute = `http://${ip_address}:${port}/api/user/workout/delete`;
 
 export const useDeleteWorkoutPlan = () => {
   const [error, setError] = useState(null);
@@ -29,11 +29,11 @@ export const useDeleteWorkoutPlan = () => {
     });
 
     const useDeleteWorkoutPlanJSON = await response.json();
-    console.log(useDeleteWorkoutPlanJSON);
+    console.log(`delete workout json output: ${JSON.stringify(useDeleteWorkoutPlanJSON)}`);
     if (!response.ok) {
       setIsLoading(false);
       setError(useDeleteWorkoutPlanJSON.mssg);
-      console.log(error);
+      console.log(`delete plan error: ${error}`);
     }
     if (response.ok) {
       try {

@@ -5,6 +5,8 @@ import { IconButton } from 'react-native-paper'
 import GreenButton from '../../../components/GreenButton'
 import RedButton from '../../../components/RedButton'
 import CommonButton from '../../../components/CommonButton'
+import { useDeleteWorkoutPlan } from "../hooks/useDeleteWorkoutPlan"
+import { FAB } from 'react-native-paper'
 
 import { useGetWorkoutDetails } from '../hooks/useGetWorkoutDetails'
 
@@ -15,11 +17,13 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
 
     const [workoutDetails, setWorkoutDetails] = useState([])
     const { getWorkoutDetails, isLoading, error } = useGetWorkoutDetails();
+    const { deleteWorkoutPlan } = useDeleteWorkoutPlan();
 
     const [setsArray, setSetsArray] = useState({});
     const [repsArray, setRepsArray] = useState({});
     const [weightArray, setWeightArray] = useState({});
     const [exRepsEtc, setExRepsEtc] = useState([])
+    const workoutName = route.params
 
     useEffect(() => {
         async function fetchWorkoutDetails(item) {
@@ -28,7 +32,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
             setWorkoutDetails(data)
         }
         console.log(`Route Params: ${JSON.stringify(route.params)}`)
-        fetchWorkoutDetails(route.params)
+        fetchWorkoutDetails(workoutName)
     }, [])
 
     return (
@@ -51,7 +55,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                 </SafeAreaView>
             </Modal>
 
-            <Text style={[styles.text, {color: theme.color}]}>{route.params}</Text>
+            <Text style={[styles.text, {color: theme.color}]}>{workoutName}</Text>
 
             {console.log(`Workout Details: ${workoutDetails}`)}
 
@@ -115,13 +119,16 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                             </>
                             : 
                             <>
+
+                            {/* {(!exRepsEtc || exRepsEtc === []) && } */}
+
                             {/* {exRepsEtc != [] && exRepsEtc != [[item.name, item.sets, returnDataArray(item.sets, item.reps), returnDataArray(item.sets, item.weight)]] ? 
                             setExRepsEtc(exRepsEtc.concat([[item.name, item.sets, returnDataArray(item.sets, item.reps), returnDataArray(item.sets, item.weight)]])) : 
-                            (exRepsEtc ? setExRepsEtc([[item.name, item.sets, returnDataArray(item.sets, item.reps), returnDataArray(item.sets, item.weight)]])) : <></>}
+                            (exRepsEtc === [[item.name, item.sets, returnDataArray(item.sets, item.reps), returnDataArray(item.sets, item.weight)]] ? <></> : setExRepsEtc([[item.name, item.sets, returnDataArray(item.sets, item.reps), returnDataArray(item.sets, item.weight)]]))}
                             
-                            {console.log(`exRepsEtc: ${JSON.stringify(exRepsEtc)}`)}
+                            {console.log(`exRepsEtc: ${JSON.stringify(exRepsEtc)}`)} */}
 
-                            {exRepsEtc.map((ex) => {
+                            {/* {exRepsEtc && exRepsEtc.map((ex) => {
                                 {if (ex[0] === item.name) {
                                     ex[2].forEach(element => {
                                         <>
@@ -194,14 +201,30 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                     
             </ScrollView>
             <View style={styles.bottomButtons}>
-                {RedButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 20, text: "Delete", buttonFunction: () => {
+                {/* {RedButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 20, text: "Delete", buttonFunction: () => {
                     console.log("Delete Workout Plan")
-                    navigation.pop()}})}
-                {CommonButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 20, text: "Edit", buttonFunction: () => {
-                    console.log("Edit Workout Plan")}})}
-                {GreenButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 20, text: "Track", buttonFunction: () => {
+                    navigation.pop()}})} */}
+                <FAB
+                    icon="delete"
+                    style={styles.fab}
+                    label="Delete Plan"
+                    onPress={() => {
+                        deleteWorkoutPlan(workoutName)
+                        navigation.pop()}}
+                />
+                {/* {CommonButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 20, text: "Edit", buttonFunction: () => {
+                    console.log("Edit Workout Plan")}})} */}
+                {/* {GreenButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 20, text: "Track", buttonFunction: () => {
                     console.log("Track Workout Data")
-                    navigation.pop()}})}
+                    navigation.pop()}})} */}
+                <FAB
+                    icon="check"
+                    style={styles.fab}
+                    label="Track Plan"
+                    onPress={() => {
+                        deleteWorkoutPlan(workoutName)
+                        navigation.pop()}}
+                />
             </View>
         </SafeAreaView>
     )
@@ -279,7 +302,7 @@ const styles = {
         padding: 5
     },
     bottomButtons: {
-        width: screenWidth * 0.8, 
+        width: screenWidth * 0.9, 
         flexDirection: 'row', 
         justifyContent: 'space-evenly',
         padding: 5

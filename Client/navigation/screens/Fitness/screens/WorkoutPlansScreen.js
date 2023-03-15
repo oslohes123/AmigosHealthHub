@@ -12,7 +12,6 @@ export default function WorkoutPlansScreen({ navigation }) {
     const { getAllWorkoutNames, isLoading, error } = useGetAllWorkoutNames();
     const [results, setResults] = useState([])
     const isFocused = useIsFocused();
-    const [isOpen, setIsOpen] = useState(false)
     
     useEffect(() => {
         async function fetchData() {
