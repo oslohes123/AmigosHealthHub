@@ -5,6 +5,8 @@ import themeContext from '../../theme/themeContext';
 // import GreenButton from '../../components/GreenButton';
 import { Button, FAB } from 'react-native-paper';
 import { check } from 'prettier';
+import { addCalorieGoal } from '../../../functions/Calories';
+import { useAuthContext } from '../Authentication/context/AuthContext';
 
 export default function DietSettings() {
 
@@ -12,14 +14,23 @@ export default function DietSettings() {
 
   const [goal, setGoal] = useState('');
 
-  const handleButtonPress = () => {
+  const { user } = useAuthContext();
+  const id = user.id;
+
+  const currentDate = new Date().toISOString().split('T')[0];
+
+  const calorieButtonPress = async () => {
     if (goal === '') {
-      alert('Please enter new calorie goal');
+      alert('Error: Please enter new calorie goal');
     } else if (isNaN(goal)) {
-        alert('Calorie should be a number');
-    } else {
-        console.log(goal)
-        alert('Calorie goal successfully added');
+        alert('Error: Calorie should be a number');
+    }
+    else if(goal < 1) {
+        alert('Error: Calorie goal should be positive');
+    }
+    else {
+        await addCalorieGoal(id, goal)
+        alert('Success: Calorie goal successfully added');
     }
   }
   // const [darkMode, setDarkMode] = useState(false)
@@ -58,7 +69,7 @@ export default function DietSettings() {
         color='black'
         style={ styles.button}
         label="Set Goal"
-        onPress={handleButtonPress}
+        onPress={calorieButtonPress}
         />
       </View>
     </SafeAreaView>

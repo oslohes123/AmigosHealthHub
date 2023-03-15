@@ -6,13 +6,15 @@ import { log } from "react-native-reanimated";
 
 const portENV = process.env["PORT"];
 const ip_addressENV = process.env["IP_ADDRESS"];
+const currentDate = new Date().toISOString().split('T')[0];
+
 // For testing purposes
 // Update this with your own UrlService
 let ip_address: string | undefined = ip_addressENV;
 let port: string | undefined = portENV;
 
 
-export async function getLatestCalorieGoal(UserID: string,inputDate:string = ""):Promise<number> {
+export async function getLatestCalorieGoal(UserID: string,inputDate:string = ""){
     // Get the all the calorie goals for the user
     let data = await getGeneralCalorieGoal(UserID);
     if (data.length == 0) {
@@ -81,18 +83,37 @@ export async function getGeneralCalorieGoal(UserID: string) {
     return response.data;
 }
 
-export async function addCalorieGoal(UserID: string, CalorieGoal: number, Date: string) {
-    let url: string = `http://${ip_address}:${port}/api/food/calorieTrack/createCalorieLog`;
+export async function addCalorieGoal(UserID: string, CalorieGoal: number, Date: string = currentDate ) {
+    // Get the latest calorie goal
+    let currentCalorieGoal = await getLatestCalorieGoal(UserID);
+    let url: string = `http://${ip_address}:${port}/api/food/calorieTrack/`;
+    let inputData ={};
+
+    // If the latest calorie goal is for the current date, update the calorie goal 
+    // otherwise create a new calorie goal
+    if (currentCalorieGoal.Date == currentDate) {
+        url = url + "updateCalories";
+        inputData ={
+            CalorieGoal: CalorieGoal,
+            id: currentCalorieGoal.id
+        }
+    }else{
+        url = url + "createCalorieLog";
+        
+        inputData ={
+            CalorieGoal: CalorieGoal,
+            UserID: UserID,
+            Date: Date,
+        }
+    }
+
+    // Make the api call
     let response: AxiosResponse;
     try {
         const { token } = JSON.parse(
             (await AsyncStorage.getItem("user")) as string
         );
-        response = await axios.post(url, {
-            UserID: UserID,
-            Date: Date,
-            CalorieGoal: CalorieGoal,
-        }, {
+        response = await axios.post(url, inputData, {
             headers: {
                 authorization: token,
             },
@@ -106,6 +127,7 @@ export async function addCalorieGoal(UserID: string, CalorieGoal: number, Date: 
         }
         return error;
     }
+    // Return the response
     return response.data;
 
 }
