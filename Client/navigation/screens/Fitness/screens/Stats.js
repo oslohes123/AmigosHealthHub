@@ -5,27 +5,66 @@ import { Dimensions } from "react-native";
 import { useGetAllExercises } from "../hooks/exercise/useGetAllExercises";
 import { useIsFocused } from "@react-navigation/native";
 import { FAB } from "react-native-paper";
+import { useGetExerciseHistory } from "../hooks/exercise/useGetExerciseHistory";
 export default function Stats({ navigation }) {
   const [selected, setSelected] = useState("");
   const [visible, setVisible] = useState(false);
   const [getArrayOfExercises, setArrayOfExercises] = useState([]);
+  const [getWeightedLabels, setWeightedLabels] = useState(null);
+  const [getWeightedData, setWeightedData] = useState(null);
   const { getAllExercises, isLoading, error } = useGetAllExercises();
+  const { getExerciseHistory } = useGetExerciseHistory();
   const isFocused = useIsFocused();
 
-  const data = {
-    labels: ["January", "February", "March", "April", "May", "June"],
+  // const data = {
+  //   labels: ["January", "February", "March", "April", "May", "June"],
+  //   datasets: [
+  //     {
+  //       data: [20, 45, 28, 80, 99, 43],
+  //       strokeWidth: 2, // optional
+  //     },
+  //   ],
+  // };
+  // const data = {
+  //   labels: getLabels,
+  //   datasets: [
+  //     {
+  //       data: getData,
+  //       color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`, // optional
+  //       strokeWidth: 2, // optional
+  //     },
+  //   ],
+  // };
+
+  const weightedData = {
+    labels: getWeightedLabels,
     datasets: [
       {
-        data: [20, 45, 28, 80, 99, 43],
+        data: getWeightedData,
         color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`, // optional
         strokeWidth: 2, // optional
       },
     ],
-    legend: ["Rainy Days"], // optional
   };
   const setAllExercises = async () => {
     setArrayOfExercises(await getAllExercises());
   };
+
+  useEffect(() => {
+    const setDataAndLabels = async () => {
+      const result = await getExerciseHistory(selected);
+      if (result) {
+        const { data, labels, type } = result;
+
+        if (type === "Weight") {
+          setWeightedData(data);
+          setWeightedLabels(labels);
+        }
+      }
+    };
+    setDataAndLabels();
+  }, [selected]);
+
   useEffect(() => {
     if (isFocused) {
       setAllExercises();
@@ -92,12 +131,15 @@ export default function Stats({ navigation }) {
         </View>
       </View>
       <View>
-        <LineChart
-          data={data}
-          width={screenWidth}
-          height={220}
-          chartConfig={chartConfig}
-        />
+        {/* This is the WeightedGraph */}
+        {getWeightedData && getWeightedLabels && (
+          <LineChart
+            data={weightedData}
+            width={screenWidth}
+            height={220}
+            chartConfig={chartConfig}
+          />
+        )}
       </View>
     </View>
   );

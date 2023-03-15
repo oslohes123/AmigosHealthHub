@@ -173,11 +173,11 @@ export const getExerciseHistory =async (req:Request, res: Response) => {
                    console.log(`arrayOfAEIDs:${arrayOfAEIDs}`)
                    console.log(`arrayOfDates:${arrayOfDates}`)
 
-                   const transformedArray = arrayOfDates.map((x) => [getDate(x), getTime(x)])
-                   console.log(`transformedArray:${transformedArray}`)
-                   console.log(`transformedArray[0]:${transformedArray[0]}`)
+                  //  const transformedArray = arrayOfDates.map((x) => [getDate(x)])
+                  //  console.log(`transformedArray:${transformedArray}`)
+                  //  console.log(`transformedArray[0]:${transformedArray[0]}`)
 
-                   
+                  //  arrayOfDates = transformedArray;
                    for(let i = 0; i< arrayOfAEIDs.length ; i++){
                      const {data, error}:any = await databaseQuery.selectWhere(supabase, 'ActualExercises','AEID', arrayOfAEIDs[i],'calories, duration, distance');
                      if(error){
@@ -197,7 +197,7 @@ export const getExerciseHistory =async (req:Request, res: Response) => {
                            arrayOfDistance.push(distance)
                           
                            console.log(`arrayOfCalories:${arrayOfCalories}`)
-                           console.log(`arrayOfDates: ${transformedArray}`)
+                           console.log(`arrayOfDates: ${arrayOfDates}`)
                            console.log(`arrayOfDuration:${arrayOfDuration}`)
                            console.log(`arrayOfDistance:${arrayOfDistance}`)
 
@@ -216,10 +216,12 @@ export const getExerciseHistory =async (req:Request, res: Response) => {
             }
          }
         if(typeOfExercise === "Weight"){
-         return res.status(200).json({mssg:"Success!", arrayOfDates,arrayOfWeightPulled });
+         arrayOfDates = arrayOfDates.map((x) => [getDate(x)])
+         console.log(`arrayOfDates ln219: ${JSON.stringify(arrayOfDates)}`)
+         return res.status(200).json({mssg:"Success!", type: "Weight", arrayOfDates,arrayOfWeightPulled });
         }
         else{
-         return res.status(200).json({mssg:"Success!", arrayOfDates,arrayOfCalories, arrayOfDistance, arrayOfDuration });
+         return res.status(200).json({mssg:"Success!", type: "Other",arrayOfDates,arrayOfCalories, arrayOfDistance, arrayOfDuration });
         }
         
      }
