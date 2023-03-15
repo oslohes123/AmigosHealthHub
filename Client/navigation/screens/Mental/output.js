@@ -1,39 +1,28 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View , Button, TextInput,  Dimensions} from "react-native";
-import WordCloud from '../../../cloud.js';
+import WordCloud from './components/cloud.js';
+import Cloud from "react-native-word-cloud";
 import { LineChart } from 'react-native-chart-kit';
 // npm install , npm install react-native-chart-kit , npx expo install react-native-svg ,  npm install react-native-word-cloud, npm install prop-types
-import React , {useEffect, useState} from 'react';
+import React , {useEffect, useState, Component} from 'react';
 // import { useAuthContext } from '../Authentication/context/AuthContext.js';
  import { useGetFaceValues } from './hooks/useGetFaceValues.js';
-const words = [
-  {
-    text: 'told',
-    value: 64,
-  },
-  {
-    text: 'mistake',
-    value: 11,
-  },
-  {
-    text: 'thought',
-    value: 16,
-  },
-  {
-    text: 'bad',
-    value: 17,
-  },
-]
-
-
- 
+ import { useGetWordValues } from './hooks/useGetWordValues.js'
 const screenWidth = Dimensions.get("window").width;
-//: {navigation: any}
+const colours = ["#A7BED3","#C6E2E9","#F1FFC4","#DAB894"]
+
 export default function App({navigation}) {
 
-   const [getFaceValuesArray, setFaceValuesArray]= useState([1]);
+  const [getFaceValuesArray, setFaceValuesArray]= useState([1]);
+  const [getWordValuesArray, setWordValuesArray]= useState([{word:"",freq:0,colour:"#ffffff"}]);
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
+  class WordCloud extends Component {
+    render() {
+        return (
+            <Cloud keywords={getWordValuesArray} scale={300} largestAtCenter={true} />
+        )
+    }
+}
   const getCurrentDayOfWeek = () => {
   const date = new Date();
   const dayOfWeek = date.getDay();
@@ -51,7 +40,7 @@ const line = {
   labels: daysOfWeekWithCurrentDayLast,
   datasets: [
     {
-      data: getFaceValuesArray.reverse(),
+      data: getFaceValuesArray,
       strokeWidth: 2, // optional
     },
   ],
@@ -67,6 +56,22 @@ const line = {
 
       getFaceValuesCall();
   }, [])
+
+  const {getWordValues} = useGetWordValues();
+  useEffect(() => {
+
+    async function getWordValuesCall(){
+      const wordValues = await getWordValues();
+      console.log(`wordValuesUseEffect: ${JSON.stringify(wordValues)}`)
+      const wordfreqcolor = [];
+      for (let i = 0; i < wordValues.words.length; i++) {
+        wordfreqcolor.push({keyword:(wordValues.words[i] + "").slice(1, -1),frequency:Number(wordValues.freq[i]),color: colours[Math.floor(Math.random() * colours.length)]})
+      }
+      setWordValuesArray(wordfreqcolor)
+    }
+      getWordValuesCall();
+  }, [])
+
   const back = () => {
     navigation.goBack();
   }

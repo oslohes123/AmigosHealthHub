@@ -108,7 +108,7 @@ test.before(async (t : any) => {
 
 test.after.always('guaranteed cleanup', async (t: any) => {
     console.log(`test.after.always executed!`)
-    await databaseQuery.deleteFrom(supabase, "Mental Health", "user_id", uuid);
+    // await databaseQuery.deleteFrom(supabase, "Mental Health", "user_id", uuid);
     await databaseQuery.deleteFrom(supabase, 'User', 'id',uuid);
 });
 
