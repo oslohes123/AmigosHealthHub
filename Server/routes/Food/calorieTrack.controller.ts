@@ -2,6 +2,7 @@ require("dotenv").config();
 import e, { Request, Response } from "express";
 import { supabaseQueryClass } from "../../utils/databaseInterface";
 import supabase from "../../utils/supabaseSetUp";
+import { isInt } from "../../utils/validators";
 const databaseQuery = new supabaseQueryClass();
 
 
@@ -64,6 +65,9 @@ export const readAllCalorieGoals = async (req: Request, res: Response) => {
 
 export const updateSpecificCalorieGoal = async (req: Request, res: Response) => {
     const {CalorieGoal,id} = req.body;
+    if( isInt(CalorieGoal) == false){
+        return res.status(500).send("CalorieGoal must be an integer");
+    }
     const {data, error}: any = await databaseQuery.update(
         supabase,
         "Calories",
