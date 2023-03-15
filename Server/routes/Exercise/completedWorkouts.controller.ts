@@ -227,3 +227,93 @@ export const addCompletedWorkouts =async (req:Request, res: Response) => {
     return res.status(200).json({mssg: "Successfully tracked a workout!"})
 
 }
+
+//Delete TrackedWorkoutWithExercises entries corresponding to a completedWorkoutID
+const deleteWorkoutPlansWithExercisesByID =async (completedWorkoutID:string) => {
+    const errorAndIDs = {errorPresent: ''};
+  const {error}:any = await databaseQuery.deleteFrom(supabase, 'TrackedWorkoutsWithExercises','completedWorkoutID', completedWorkoutID)
+  if(error){
+    errorAndIDs.errorPresent = error;
+    return errorAndIDs;
+  }
+  return errorAndIDs
+}
+
+
+const deleteWorkoutPlanByID =async (completedWorkoutID:string) => {
+    const errorAndIDs = {deleteError: ''};
+  const {error}:any = await databaseQuery.deleteFrom(supabase, 'CompletedWorkouts','completedWorkoutID', completedWorkoutID)
+  if(error){
+    errorAndIDs.deleteError = error;
+    return errorAndIDs;
+  }
+  return errorAndIDs
+}
+const selectAEIDs =async (workoutPlanToDel:string) => {
+    console.log(`workoutPlanToDel ln253: ${workoutPlanToDel}`)
+    const errorAndIDs:any = {errorHere: '', AEIDs:[{}]};
+    // const {data, error}:any = await databaseQuery.selectWhere(supabase, 'TrackedWorkoutsWithExercises','completedWorkoutID', "d05a8235-98f9-4a90-b982-306655813916",'AEID');
+    const {data, error}:any = await databaseQuery.selectWhere(supabase, 'TrackedWorkoutsWithExercises','completedWorkoutID', workoutPlanToDel, 'AEID' );
+    console.log(`data ln 257: ${JSON.stringify(data)}`)
+    if(error){
+        errorAndIDs.errorHere = error;
+        return errorAndIDs;
+      }
+      errorAndIDs.AEIDs = data;
+      return errorAndIDs
+}
+export const deleteTrackedWorkout =async (req:Request, res: Response) => {
+    const {userid, workoutname, date, time}= req.headers;
+
+    if(!userid|| !workoutname||!date||!time){
+        return res.status(400).json({mssg:"No userid, workoutname, date or time"})
+    }
+    const {data, error}:any = await databaseQuery.match(supabase, 'CompletedWorkouts','completedWorkoutID, timestamp', {userid,workoutname});
+    if(error){
+        return res.status(400).json({mssg:"Something went wrong!", error})
+    }
+    console.log(`getACompletedWorkout: ${JSON.stringify(data)}`)
+
+   //Break down each completed workouts' timestamp and match that with the one given in the headers
+    let selectedWorkout;
+    for(let i = 0; i< data.length;i++){
+        if( getDate(data[i].timestamp) === date &&getTime(data[i].timestamp) === time ){
+            selectedWorkout = data[i].completedWorkoutID
+        }
+    }
+    if(!selectedWorkout){
+        return res.status(400).json({mssg:"A workout of this name at this time and date does not exist for this user!"})
+    }
+   if(data.length===0){
+        return res.status(400).json({mssg:"User does not have a plan of that name!"})
+   }
+   const workoutPlanToDel = selectedWorkout
+   console.log(`workoutPlanToDel:${workoutPlanToDel}`);
+   
+   const {errorHere, AEIDs}= await selectAEIDs(workoutPlanToDel);
+    console.log(`AEIDs ln 282: ${JSON.stringify(AEIDs)}`)
+    if(errorHere){
+        return res.status(400).json({mssg:"Fail to selectAEIDs", errorHere})
+       }
+   
+   const {errorPresent} = await deleteWorkoutPlansWithExercisesByID(workoutPlanToDel);
+   if(errorPresent){
+    return res.status(400).json({mssg:"Fail to delete WorkoutPlanByID", errorPresent})
+   }
+   for(let i = 0; i < AEIDs.length; i++){
+    const AEID = AEIDs[i].AEID;
+    const {error}:any = await databaseQuery.deleteFrom(supabase, 'ActualExercises','AEID',AEID );
+    if(error){
+        return res.status(400).json({mssg:"Fail to delete from ActualExercises", error})
+    }
+    
+}
+   const {deleteError} = await deleteWorkoutPlanByID(workoutPlanToDel)
+   if(deleteError){
+    return res.status(400).json({mssg:"Fail to delete WorkoutPlanByID", deleteError})
+   }
+   else{
+    return res.status(200).json({mssg:`Workout Plan ${workoutname} Deleted!`})
+   }
+
+}

@@ -5,6 +5,7 @@ export default class RouteNamesClass{
     readonly changeDetailsBaseURL = this.userBaseURL + '/changeProfileDetails'
     readonly exerciseBaseURL = this.userBaseURL + '/exercise'
     readonly workoutBaseURL = this.userBaseURL + '/workout'
+    readonly caloriesBaseURL = this.workoutBaseURL + '/calories'
     readonly completedWorkoutBaseURL = this.userBaseURL + '/completedWorkouts'
     // Auth Routes
     readonly partialSignupURL = '/sign_up';
@@ -55,11 +56,18 @@ export default class RouteNamesClass{
             readonly partialGetAllWorkoutNames = '/getAllWorkoutNames';
             readonly fullGetAllWorkoutNames = this.workoutBaseURL + this.partialGetAllWorkoutNames;
         
+        //Calories Routes
+        readonly partialGetCaloriesToday = '/getToday';
+        readonly fullGetCaloriesToday = this.caloriesBaseURL + this.partialGetCaloriesToday;
+            
+        
         //Completed Workouts Routes
-        readonly partialgetCompletedWorkouts = '/get';
-        readonly fullGetCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialgetCompletedWorkouts;
-        readonly partialGetAllCompletedWorkouts = '/getAll';
-        readonly fullGetAllCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialgetCompletedWorkouts;
-        readonly partialaddCompletedWorkouts = '/add';
-        readonly fullAddCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialaddCompletedWorkouts;
+        readonly partialgetCompletedWorkout = '/get';
+        readonly fullGetCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialgetCompletedWorkout;
+        readonly partialGetAllCompletedWorkout = '/getAll';
+        readonly fullGetAllCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialgetCompletedWorkout;
+        readonly partialaddCompletedWorkout = '/add';
+        readonly fullAddCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialaddCompletedWorkout;
+        readonly partialDeleteCompletedWorkout = '/delete';
+        readonly fullDeleteCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialDeleteCompletedWorkout;
     }   
