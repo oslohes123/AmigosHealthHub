@@ -1,43 +1,43 @@
 import { useState } from "react";
 import { REACT_APP_IP_ADDRESS, REACT_APP_PORT } from "@env";
 const port = REACT_APP_PORT;
-import { useAuthContext } from "../../Authentication/context/AuthContext";
 const ip_address = REACT_APP_IP_ADDRESS;
-const getWorkoutDetailsRoute = `http://${ip_address}:${port}/api/user/workout/get`;
+import { useAuthContext } from "../../../Authentication/context/AuthContext";
+const getAllWorkoutNamesRoute = `http://${ip_address}:${port}/api/user/workout/getAllWorkoutNames`;
 
-export const useGetWorkoutDetails = () => {
+export const useGetAllWorkoutNames = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useAuthContext();
   const userid = user.id;
-  console.log(`userid ln13 getworkoutdetails: ${userid}`);
+  // const { dispatch } = useAuthContext();
 
-  const getWorkoutDetails = async (workoutname) => {
+  const getAllWorkoutNames = async () => {
     setIsLoading(true);
     setError(null);
 
-    console.log("In useGetWorkoutDetails");
+    console.log("In getAllWorkoutNames");
     // console.log(`Port in searchExercise: ${port}`);
     // console.log(`ip_address in searchExercise: ${ip_address}`);
 
-    const response = await fetch(getWorkoutDetailsRoute, {
+    const response = await fetch(getAllWorkoutNamesRoute, {
       method: "GET",
-      headers: { "Content-Type": "application/json", userid, workoutname },
+      headers: { "Content-Type": "application/json", userid },
     });
 
-    const getWorkoutDetailsJSON = await response.json();
-    console.log(getWorkoutDetailsJSON);
+    const getAllWorkoutNamesJSON = await response.json();
+    console.log(getAllWorkoutNamesJSON);
     if (!response.ok) {
       setIsLoading(false);
-      setError(getWorkoutDetailsJSON.mssg);
+      setError(getAllWorkoutNamesJSON.mssg);
       console.log(error);
       return [];
     }
     if (response.ok) {
       try {
-        console.log(getWorkoutDetailsJSON);
+        console.log(getAllWorkoutNamesJSON);
         setIsLoading(false);
-        return getWorkoutDetailsJSON.workoutToReturn; //this is an array
+        return getAllWorkoutNamesJSON.arrayOfAllWorkouts; //this is an array containing all workout names
       } catch (error) {
         setError(error);
         setIsLoading(false);
@@ -47,5 +47,5 @@ export const useGetWorkoutDetails = () => {
     }
   };
 
-  return { getWorkoutDetails, isLoading, error };
+  return { getAllWorkoutNames, isLoading, error };
 };

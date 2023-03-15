@@ -3,7 +3,7 @@ import { REACT_APP_IP_ADDRESS, REACT_APP_PORT } from "@env";
 const port = REACT_APP_PORT;
 const ip_address = REACT_APP_IP_ADDRESS;
 const addWorkoutRoute = `http://${ip_address}:${port}/api/user/workout/add`;
-import { useAuthContext } from "../../Authentication/context/AuthContext";
+import { useAuthContext } from "../../../Authentication/context/AuthContext";
 
 /**
  *

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import supabase from "../../utils/supabaseSetUp";
 import { supabaseQueryClass } from "../../utils/databaseInterface";
+import { eitherIsFloatOrInt, covertStringToNumber } from "../../utils/validators";
 const databaseQuery = new supabaseQueryClass();
 
 
@@ -119,7 +120,7 @@ export const createWorkout =async (req:Request, res: Response) => {
    if(!userid||!workoutname||!exercises){
     return res.status(400).json({mssg: "userid, workoutname or exercises is missing!"})
    }
-
+   console.log(`ln122 req.body: ${JSON.stringify(req.body)}`);
    
    //Add the exerciseID and userid of the exercise to each exercise object's property
    for(let i = 0; i< exercises.length; i++){
@@ -194,7 +195,27 @@ export const createWorkout =async (req:Request, res: Response) => {
         const numberOfExercises = exercises.length;
         let workoutPEIDs = [];
         for(let i= 0; i<numberOfExercises;i++){
-            
+             //Check if exercises inputs are numbers!
+             if(exercises[i].calories && !(eitherIsFloatOrInt(exercises[i].calories))){
+                return res.status(400).json({mssg: "Make sure calories is a number!"})
+            }
+
+            if(exercises[i].sets && !(eitherIsFloatOrInt(exercises[i].sets))){
+                return res.status(400).json({mssg: "Make sure sets is a number!"})
+            }
+            if(exercises[i].reps && !(eitherIsFloatOrInt(exercises[i].reps))){
+                return res.status(400).json({mssg: "Make sure reps is a number!"})
+            }
+            if(exercises[i].weight && !(eitherIsFloatOrInt(exercises[i].weight))){
+                return res.status(400).json({mssg: "Make sure weight is a number!"})
+            }
+            if(exercises[i].distance && !(eitherIsFloatOrInt(exercises[i].distance))){
+                return res.status(400).json({mssg: "Make sure distance is a number!"})
+            }
+            if(exercises[i].duration && !(eitherIsFloatOrInt(exercises[i].duration))){
+                    return res.status(400).json({mssg: "Make sure duration is a number!"})
+            }
+            //Check if exercises inputs are numbers!
             const { data, error}: any = await databaseQuery.match(supabase, 'PossibleExercises', 'PEID', exercises[i]);
             console.log(`ln41: ${JSON.stringify(data)} `)
             if(error){
