@@ -83,7 +83,38 @@ export async function getGeneralCalorieGoal(UserID: string) {
     return response.data;
 }
 
-export async function addCalorieGoal(UserID: string, CalorieGoal: number, Date: string = currentDate ) {
+export async function addCalorieGoal(UserID:string,CalorieGoal:number,Date: string = currentDate){
+    let url: string = `http://${ip_address}:${port}/api/food/calorieTrack/createCalorieLog`;
+
+    let response: AxiosResponse;
+    try {
+        const { token } = JSON.parse(
+            (await AsyncStorage.getItem("user")) as string
+        );
+        response = await axios.post(url, {
+            CalorieGoal: CalorieGoal,
+            UserID: UserID,
+            Date: Date,
+        }, {
+            headers: {
+                authorization: token,
+            },
+        });
+    } catch (error: any | AxiosError) {
+        if (axios.isAxiosError(error)) {
+            console.log("Error when inserting calorie goal");
+            console.log(error.response);
+        } else {
+            console.log("Default error handler" + error);
+        }
+        return error;
+    }
+    // Return the response
+    return response.data;
+
+}
+
+export async function updateCalorieGoal(UserID: string, CalorieGoal: number, Date: string = currentDate ) {
     // Get the latest calorie goal
     let currentCalorieGoal = await getLatestCalorieGoal(UserID);
     let url: string = `http://${ip_address}:${port}/api/food/calorieTrack/`;
