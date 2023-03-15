@@ -175,9 +175,10 @@ export default function Stats({ navigation }) {
           <ActivityIndicator animating={true} color={MD2Colors.red800} />
         </>
       )}
-      <View style={{ alignItems: "center" }}>
+      <View style={{ alignItems: "center"}}>
         {/* This is the WeightedGraph */}
         {getWeightedData && getWeightedLabels && (
+          <View style={{marginBottom: 40}}>
           <LineChart
             style={{ borderRadius: 25 }}
             data={weightedData}
@@ -185,33 +186,41 @@ export default function Stats({ navigation }) {
             height={220}
             chartConfig={chartConfig}
           />
+          </View>
         )}
 
         {/* This is the duration graph for an Other exercise */}
         {getDurationData && getDurationLabels && (
+          <View style={{marginBottom: 40}}>
           <LineChart
+            style={{ borderRadius: 25 }}
             data={durationData}
-            width={screenWidth}
+            width={0.8 * screenWidth}
             height={220}
             chartConfig={chartConfig}
           />
+          </View>
         )}
 
         {/* This is the distance graph for an Other exercise */}
         {getDistanceData && getDistanceLabels && (
+          <View style={{marginBottom: 40}}>
           <LineChart
+            style={{ borderRadius: 25 }}
             data={distanceData}
-            width={screenWidth}
+            width={0.8 * screenWidth}
             height={220}
             chartConfig={chartConfig}
           />
+          </View>
         )}
 
         {/* This is the calories graph for an Other exercise */}
         {getCaloriesData && getCaloriesLabels && (
           <LineChart
+            style={{ borderRadius: 25 }}
             data={caloriesData}
-            width={screenWidth}
+            width={0.8 * screenWidth}
             height={220}
             chartConfig={chartConfig}
           />
