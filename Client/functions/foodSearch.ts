@@ -4,8 +4,8 @@ import specificFoodNutritionInterface from '../interfaces/specificFoodNutritionI
 import genericSearchInterface from '../interfaces/genericSearchInterface';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { number } from 'prop-types';
-const portENV = process.env.REACT_APP_PORT;
-const ip_addressENV = process.env.REACT_APP_IP_ADDRESS;
+const portENV = process.env.PORT;
+const ip_addressENV = process.env.IP_ADDRESS;
 // For testing purposes
 // Update this with your own UrlService
 let ip_address:string|undefined = ip_addressENV;

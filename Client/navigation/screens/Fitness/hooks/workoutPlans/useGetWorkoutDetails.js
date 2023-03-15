@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { REACT_APP_IP_ADDRESS, REACT_APP_PORT } from "@env";
-const port = REACT_APP_PORT;
+import { IP_ADDRESS, PORT } from "@env";
+const port = PORT;
 import { useAuthContext } from "../../../Authentication/context/AuthContext";
-const ip_address = REACT_APP_IP_ADDRESS;
+const ip_address = IP_ADDRESS;
 const getWorkoutDetailsRoute = `http://${ip_address}:${port}/api/user/workout/get`;
 
 export const useGetWorkoutDetails = () => {

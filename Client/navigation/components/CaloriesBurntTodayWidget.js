@@ -3,7 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useAuthContext } from "../screens/Authentication/context/AuthContext";
 import { useGetCaloriesBurntToday } from "../screens/Fitness/hooks/calories/useGetCaloriesBurntToday";
 import { useIsFocused } from "@react-navigation/native";
-
+import { LinearGradient } from "expo-linear-gradient";
+import { Animated } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 export default function CaloriesBurntTodayWidget({ navigation }) {
   const { getCaloriesBurntToday, error, isLoading } =
     useGetCaloriesBurntToday();
@@ -23,22 +25,54 @@ export default function CaloriesBurntTodayWidget({ navigation }) {
   }, [navigation, isFocused]);
 
   return (
+    // <View style={styles.container}>
+    //   {error && <Text>{error}</Text>}
+
+    //   <View style={styles.widget}>
+    //     <Text style={styles.header}>Calories Burnt Today:</Text>
+    //     <Text style={styles.number}>{getCaloriesBurnt}</Text>
+    //   </View>
+    // </View>
+
     <View style={styles.container}>
-      {error && <Text>{error}</Text>}
-      <Text style={styles.text}>Calories Burnt Today:{getCaloriesBurnt}</Text>
+      <LinearGradient
+        // Button Linear Gradient
+        // colors={["#00BFFF", "#0040ff"]}
+        colors={["#00ffc8", "#0040ff"]}
+        style={styles.widget}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+      >
+        <Text style={styles.header}>
+          <Ionicons name="bicycle-outline" size={30} color="black" />
+          Calories Burnt Today:
+        </Text>
+
+        <Text style={styles.number}>{getCaloriesBurnt}</Text>
+      </LinearGradient>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  text: {
+  widget: {
     paddingHorizontal: "15%",
-    paddingVertical: "12%",
-    fontSize: 30,
-    color: "white",
-  },
-  container: {
-    backgroundColor: "darkblue",
+    paddingVertical: "10%",
     borderRadius: 25,
   },
+  header: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 25,
+  },
+  number: {
+    color: "white",
+    fontSize: 25,
+    // fontWeight: "bold",
+    textAlign: "center",
+  },
+  // container: {
+  //   backgroundColor: "darkblue",
+  //   borderRadius: 25,
+  // },
 });

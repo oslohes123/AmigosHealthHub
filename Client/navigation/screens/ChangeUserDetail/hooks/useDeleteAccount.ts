@@ -4,8 +4,8 @@ import { useAuthContext } from '../../Authentication/context/AuthContext';
 // const port = process.env['PORT'];
 // const ip_address = process.env['IP_ADDRESS'];
 import { useLogout } from '../../Authentication/hooks/useLogOut';
-const port = process.env.REACT_APP_PORT;
-const ip_address = process.env.REACT_APP_IP_ADDRESS;
+const port = process.env.PORT;
+const ip_address = process.env.IP_ADDRESS;
 
 
 export const deleteAccountWrapper = () => {

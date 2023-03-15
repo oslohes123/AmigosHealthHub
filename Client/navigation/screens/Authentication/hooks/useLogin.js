@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { REACT_APP_IP_ADDRESS, REACT_APP_PORT } from "@env";
+import { IP_ADDRESS, PORT } from "@env";
 // const dotenv = require("dotenv");
 // dotenv.config();
 // const port = process.env["PORT"];
 // const ip_address = process.env["IP_ADDRESS"];
-const port = REACT_APP_PORT;
-const ip_address = REACT_APP_IP_ADDRESS;
-// console.log(`process.env.REACT_APP_PORT: ${process.env.REACT_APP_PORT}`);
+const port = PORT;
+const ip_address = IP_ADDRESS;
+// console.log(`process.env.PORT: ${process.env.PORT}`);
 // console.log(
-//   `process.env.REACT_APP_IP_ADDRESS: ${process.env.REACT_APP_IP_ADDRESS}`
+//   `process.env.IP_ADDRESS: ${process.env.IP_ADDRESS}`
 // );
 export const useLogin = () => {
   const [error, setError] = useState(null);

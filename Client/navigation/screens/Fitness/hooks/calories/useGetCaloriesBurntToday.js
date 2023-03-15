@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { REACT_APP_IP_ADDRESS, REACT_APP_PORT } from "@env";
-const port = REACT_APP_PORT;
-const ip_address = REACT_APP_IP_ADDRESS;
+import { IP_ADDRESS, PORT } from "@env";
+const port = PORT;
+const ip_address = IP_ADDRESS;
 import { useAuthContext } from "../../../Authentication/context/AuthContext";
 const getCaloriesBurntTodayRoute = `http://${ip_address}:${port}/api/user/workout/calories/getToday`;
 
