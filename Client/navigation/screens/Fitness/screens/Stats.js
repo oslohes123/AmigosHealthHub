@@ -103,10 +103,11 @@ export default function Stats() {
             </Modal>
             </View>
          </View>
-        <View>
+        <View style={{ alignItems: 'center'}}>
          <LineChart
+            style={{borderRadius: 25}}
             data={data}
-            width={screenWidth}
+            width={0.8 * screenWidth}
             height={220}
             chartConfig={chartConfig}
         />
