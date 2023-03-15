@@ -62,10 +62,12 @@ export default class RouteNamesClass{
             
         
         //Completed Workouts Routes
-        readonly partialgetCompletedWorkouts = '/get';
-        readonly fullGetCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialgetCompletedWorkouts;
-        readonly partialGetAllCompletedWorkouts = '/getAll';
-        readonly fullGetAllCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialgetCompletedWorkouts;
-        readonly partialaddCompletedWorkouts = '/add';
-        readonly fullAddCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialaddCompletedWorkouts;
+        readonly partialgetCompletedWorkout = '/get';
+        readonly fullGetCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialgetCompletedWorkout;
+        readonly partialGetAllCompletedWorkout = '/getAll';
+        readonly fullGetAllCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialgetCompletedWorkout;
+        readonly partialaddCompletedWorkout = '/add';
+        readonly fullAddCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialaddCompletedWorkout;
+        readonly partialDeleteCompletedWorkout = '/delete';
+        readonly fullDeleteCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialDeleteCompletedWorkout;
     }   
