@@ -172,7 +172,11 @@ export default function Stats({ navigation }) {
       {isLoading && (
         <>
           {/* <Text>Refreshing.....</Text> */}
-          <ActivityIndicator animating={true} color={MD2Colors.red800} />
+          <ActivityIndicator
+            animating={true}
+            size={50}
+            color={MD2Colors.lightBlue400}
+          />
         </>
       )}
       <View style={{ alignItems: "center"}}>

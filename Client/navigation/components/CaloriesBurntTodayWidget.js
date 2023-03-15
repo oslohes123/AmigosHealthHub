@@ -49,16 +49,18 @@ export default function CaloriesBurntTodayWidget({ navigation }) {
           Calories Burnt Today:
         </Text>
 
-        {getCaloriesBurnt ? (
+        {getCaloriesBurnt && (
           <Text style={styles.number}>{getCaloriesBurnt}</Text>
-        ) : (
-          <ActivityIndicator animating={true} color={MD2Colors.red800} />
         )}
 
         {isLoading && (
           <>
             {/* <Text>Refreshing.....</Text> */}
-            <ActivityIndicator animating={true} color={MD2Colors.red800} />
+            <ActivityIndicator
+              animating={true}
+              size={25}
+              color={MD2Colors.greenA100}
+            />
           </>
         )}
       </LinearGradient>
