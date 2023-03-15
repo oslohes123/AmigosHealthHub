@@ -58,23 +58,11 @@ export default function WorkoutHistoryScreen({ navigation }) {
 
         {results &&
           results.map((item) => (
-            <TouchableOpacity
-              key={item.workoutname}
-              onPress={() => {
+            <TouchableOpacity key={item.workoutname} style={styles.itemBorder} onPress={() => {
                 // navigation.navigate("Workout Plan Information", item)
-                console.log(
-                  `completed workout pressed: ${JSON.stringify(item)}`
-                );
-              }}
-            >
-              <Text
-                style={[
-                  styles.testText,
-                  { borderColor: theme.color, color: theme.color },
-                ]}
-              >
-                {item.workoutname}
-              </Text>
+                console.log(`completed workout pressed: ${JSON.stringify(item)}`)}}>
+              <Text style={{ borderColor: theme.color, color: theme.color, fontSize: 32 }}>{item.workoutname}</Text>
+              <Text style={{ borderColor: theme.color, color: theme.color, fontSize: 16, alignSelf: 'center' }}>{item.date}</Text>
             </TouchableOpacity>
           ))}
       </ScrollView>
@@ -87,12 +75,16 @@ const screenHeight = Dimensions.get("window").height;
 
 const styles = {
   testText: {
-    fontSize: 32,
+    
+  },
+  itemBorder: {
     padding: 5,
     borderRadius: 20,
     margin: 5,
     borderWidth: 1,
     textAlign: "center",
+    width: screenWidth * 0.8,
+    alignItems: 'center'
   },
   scrollView: {
     height: screenHeight * 0.2,
