@@ -34,8 +34,6 @@ export default function PastWorkoutDetails() {
     }
   };
 
-  const[food, setFood] = useState('');
-
   const toggleCalendar = () => {
     setViewCalendar(!viewCalendar);
   }
@@ -61,7 +59,7 @@ export default function PastWorkoutDetails() {
     <View style={styles.container}> 
       <View style={styles.primary}>
         {!selectDay && (
-          <Text style={styles.text}>Select a day from the Calendar to View Food History</Text>
+          <Text style={styles.text}>Select a day from the Calendar to View Workout History</Text>
         )}
         {selectDay && (
           <Text style={styles.text}>Date: {selectDay}</Text>
