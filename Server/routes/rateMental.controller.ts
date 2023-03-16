@@ -3,6 +3,7 @@ import { supabaseQueryClass } from "../utils/databaseInterface";
 const databaseQuery = new supabaseQueryClass();
 import { Request, Response } from "express";
 import { getUserByEmail } from "../utils/userFunctions";
+import moment from "moment";
 //
 const date = new Date();
 export function getToday(){
@@ -31,6 +32,7 @@ export function getToday(){
   }
   else {
     const recentValue = (data[data.length - 1].created_at)
+    console.log(`getToday(): ${getToday()}`)
     return !(recentValue < getToday())
   }
 }
