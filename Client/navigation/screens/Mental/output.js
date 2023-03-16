@@ -66,7 +66,12 @@ const line = {
       for (let i = 0; i < wordValues.words.length; i++) {
         wordfreqcolor.push({keyword:(wordValues.words[i] + "").slice(1, -1),frequency:Number(wordValues.freq[i]),color: colours[Math.floor(Math.random() * colours.length )]})
       }
-      setWordValuesArray(wordfreqcolor) 
+      if(wordfreqcolor==""){
+        setWordValuesArray([{keyword:"", frequency:1, color:"#ffffff"}])
+      }
+      else{
+        setWordValuesArray(wordfreqcolor)
+      }
     }
       getWordValuesCall();
   }, [])
