@@ -2,9 +2,22 @@ import React, {useContext} from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import themeContext from '../../theme/themeContext';
 
-export default function Nutrients() {
+export default function Nutrients({ route, navigation}) {
 
   const theme = useContext(themeContext)
+  const data = route.params;
+  console.log(data);
+
+  const dataItems =  data.map((item,index) => {
+    return (
+      <View key = {index} style={styles.primaryView}>
+        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>{item.name}</Text>
+        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>{item.amount}</Text>
+      </View>
+
+    )
+  })
+
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
@@ -14,41 +27,7 @@ export default function Nutrients() {
         <Text style={[styles.primaryHeader, { color: theme.color }, {borderColor: theme.color}]}>Nutrient</Text>
         <Text style={[styles.primaryHeader, { color: theme.color }, {borderColor: theme.color}]}>Amount</Text>
       </View>
-
-      <View style={styles.primaryView}>
-        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>Protein</Text>
-        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>82g</Text>
-      </View>
-
-      <View style={styles.primaryView}>
-        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>Carbs</Text>
-        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>82g</Text>
-      </View>
-
-      <View style={styles.primaryView}>
-        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>Fat</Text>
-        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>22g</Text>
-      </View>
-
-      <View style={styles.primaryView}>
-        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>Energy</Text>
-        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>62g</Text>
-      </View>
-
-      <View style={styles.primaryView}>
-        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>Sugars</Text>
-        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>45g</Text>
-      </View>
-
-      <View style={styles.primaryView}>
-        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>Fibre</Text>
-        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>34g</Text>
-      </View>
-
-      <View style={styles.primaryView}>
-        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>Vitamins</Text>
-        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>12g</Text>
-      </View>
+      {dataItems}
 
     </View>
   );
