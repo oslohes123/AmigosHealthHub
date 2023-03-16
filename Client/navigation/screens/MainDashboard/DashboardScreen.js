@@ -11,14 +11,14 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { StatusBar } from "expo-status-bar";
 import react from "react";
 import { useAuthContext } from "../Authentication/context/AuthContext";
-import { useLogout } from "../Authentication/hooks/useLogOut";
+//import { useLogout } from "../Authentication/hooks/useLogOut";
 
 export default function DashboardScreen({ navigation }) {
-  const { logout } = useLogout();
+  // const { logout } = useLogout();
 
-  const handleClick = () => {
-    logout();
-  };
+  // const handleClick = () => {
+  //   logout();
+  // };
 
   const { user } = useAuthContext();
   const welcomeMessage = `Welcome to your Dashboard,${user.firstName} `;
@@ -33,15 +33,15 @@ export default function DashboardScreen({ navigation }) {
       >
         <Text>Welcome to your Dashboard,{user.firstName}</Text>
       </Text>
-      <View style={styles.settings}>
+      {/* <View style={styles.settings}>
         <Ionicons
           name={"cog"}
           size={50}
           colour={"white"}
           onPress={() => navigation.navigate("Settings")}
         ></Ionicons>
-      </View>
-      <Button title={"LogOut"} onPress={handleClick} />
+      </View> */}
+      {/* <Button title={"LogOut"} onPress={handleClick} /> */}
       <View style={styles.blankSpace}>
         {/* <Image style={styles.mainImage} source={require('assets/favicon.png')} /> */}
         {widget({})}
@@ -53,7 +53,7 @@ export default function DashboardScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   title: {
-    alignSelf: "flex-start",
+    alignSelf: "center",
     fontSize: 32,
     fontWeight: "bold",
     padding: 15,

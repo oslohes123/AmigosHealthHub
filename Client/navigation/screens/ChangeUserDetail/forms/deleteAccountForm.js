@@ -1,10 +1,10 @@
 import * as Yup from "yup";
 
-import { Button, Text, TextInput, View, SafeAreaView } from "react-native";
+import { Button, Text, TextInput, View, SafeAreaView, StyleSheet } from "react-native";
 import React, { useContext } from "react";
 
 import { Formik } from "formik";
-import { deleteAccountWrapper } from "../hooks/useDeleteAccount";
+import { deleteAccountWrapper } from "../hooks/deleteAccount";
 import { globalStyles } from "../../../../styles/global";
 import { useAuthContext } from "../../Authentication/context/AuthContext";
 
@@ -25,7 +25,8 @@ export const deleteAccountForm = () => {
   // const userEmail = getUserDetails();
   return (
     <SafeAreaView style={globalStyles.container}>
-      <Text>Email: {user.email}</Text>
+      <Text style={styles.head}>Email</Text>
+      <Text style={styles.email}>{user.email}</Text>
       <Formik
         initialValues={{ current_password: "" }}
         onSubmit={async (values) => {
@@ -36,7 +37,7 @@ export const deleteAccountForm = () => {
         {(props) => (
           <View>
             <TextInput
-              style={globalStyles.input}
+              style={styles.input}
               secureTextEntry={true}
               placeholder="Your password:"
               onChangeText={props.handleChange("current_password")}
@@ -56,3 +57,25 @@ export const deleteAccountForm = () => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  email: {
+    fontSize: 23,
+    marginLeft: '5%'
+  },
+  head: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginLeft: '5%',
+    marginTop: '5%'
+  },
+  input: {
+    borderWidth: 1,
+    padding: 10,
+    fontSize: 18,
+    borderRadius: 20,
+    width: '90%',
+    alignSelf: 'center',
+    marginTop: '5%'
+  },
+})

@@ -5,6 +5,10 @@ import SleepSettings from './SleepSettings';
 import HealthSettings from './HealthSettings';
 import Profile from './Profile';
 import SettingsDashboard from './SettingsDashboard';
+// import SettingsScreen from '../MainDashboard/SettingsScreen';
+import ChangeUserDetailsScreen from '../ChangeUserDetail/screens/ChangeUserDetailsScreen';
+import ChangeUserPasswordScreen from '../ChangeUserDetail/screens/ChangeUserPasswordScreen';
+import DeleteAccountScreen from '../ChangeUserDetail/screens/DeleteAccountScreen';
 
 const Stack = createStackNavigator();
 
@@ -15,6 +19,11 @@ const SleepSettingsName = 'Sleep Settings'
 const HealthSettingsName = 'Health Settings'
 const ProfileName = 'Profile'
 const SettingsDashboardName = 'Settings Dashboard'
+// const AccountSettingsName = 'Account Settings'
+const ChangeUserDetailsName = 'Change User Details'
+const ChangeUserPasswordName = 'Change User Password'
+const DeleteAccountName = 'Delete Account'
+
 
 export default function SettingsNavigation({ navigation }) {
     return (
@@ -25,6 +34,10 @@ export default function SettingsNavigation({ navigation }) {
             <Stack.Screen name={SleepSettingsName} component={SleepSettings} />
             <Stack.Screen name={HealthSettingsName} component={HealthSettings} />
             <Stack.Screen name={ProfileName} component={Profile} />
+            {/* <Stack.Screen name={AccountSettingsName} component={SettingsScreen} /> */}
+            <Stack.Screen name={ChangeUserDetailsName} component={ChangeUserDetailsScreen} />
+            <Stack.Screen name={ChangeUserPasswordName} component={ChangeUserPasswordScreen} />
+            <Stack.Screen name={DeleteAccountName} component={DeleteAccountScreen} />
         </Stack.Navigator>
     );
 }

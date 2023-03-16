@@ -3,11 +3,21 @@ import { View, StyleSheet, Text, SafeAreaView, Switch, TouchableOpacity } from '
 import themeContext from '../../theme/themeContext';
 import { EventRegister } from 'react-native-event-listeners'
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useLogout } from '../Authentication/hooks/useLogOut';
+import { useAuthContext } from '../Authentication/context/AuthContext';
 
 export default function SettingsDashboard({ navigation }) {
 
+  const { user } = useAuthContext();
+
   const theme = useContext(themeContext)
   const [darkMode, setDarkMode] = useState(false)
+
+  const { logout } = useLogout();
+
+  const handleClick = () => {
+    logout();
+  };
 
   const pressHandler1 = () => {
     navigation.navigate('Diet Settings');
@@ -36,9 +46,8 @@ export default function SettingsDashboard({ navigation }) {
         <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '95%'}}>
           <Ionicons name={'person-circle-outline'} size={80} color={'black'} />
           <View>
-            <Text style={styles.username}>Shazeen</Text>
-            <Text style={styles.profileText}>+44 123456789</Text>
-            <Text style={styles.profileText}>shazeen@mail.mail</Text>
+            <Text style={styles.username}>{user.firstName}</Text>
+            <Text style={styles.profileText}>{user.email}</Text>
           </View>
           <Ionicons name={'chevron-forward-outline'} size={32} color={'black'} />
         </View>
@@ -82,6 +91,11 @@ export default function SettingsDashboard({ navigation }) {
           }}
         />
       </View>
+      <TouchableOpacity style={styles.logOutView} onPress={handleClick}>
+        <View style={{alignItems: 'center', width: '95%'}}>
+          <Text style={styles.navText}>Log Out</Text>
+        </View>
+      </TouchableOpacity>
     </SafeAreaView>
   )
 }
@@ -92,16 +106,16 @@ const styles = StyleSheet.create({
       flex: 1,
     },
     header: {
-        fontSize: 30,
-        fontWeight: 'bold',
-        marginTop: 30,
-        color: 'white',
-        alignSelf: 'center',
+      fontSize: 30,
+      fontWeight: 'bold',
+      marginTop: 30,
+      color: 'white',
+      alignSelf: 'center',
       },
-      themeView: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        padding: '10%'
+    themeView: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      padding: '10%'
     },
     text: {
       fontSize: 30
@@ -151,16 +165,26 @@ const styles = StyleSheet.create({
       backgroundColor: '#3eda9b',
       alignItems: 'center',
       borderRadius: 15,
-      borderWidth: 1,
+      borderWidth: 3,
       justifyContent: 'center',
     },
     profileText: {
-      fontSize: 20,
+      fontSize: 18,
       marginRight: '22%'
     },
     username: {
       fontSize: 30,
       fontWeight: 'bold'
+    },
+    logOutView: {
+      flexDirection: 'row', 
+      width: '35%',
+      height: '10%',
+      alignSelf: 'center',
+      backgroundColor: '#3eda9b',
+      alignItems: 'center',
+      borderRadius: 15,
+      borderWidth: 3
     }
 })
 

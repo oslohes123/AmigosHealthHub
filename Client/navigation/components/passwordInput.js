@@ -1,4 +1,4 @@
-import { TextInput, TouchableOpacity, View } from 'react-native';
+import { TextInput, TouchableOpacity, View, StyleSheet } from 'react-native';
 
 import { FontAwesome } from '@expo/vector-icons';
 import React from 'react';
@@ -14,7 +14,7 @@ const PasswordInput = ({
     return (
         <View>
             <TextInput
-                style={globalStyles.input}
+                style={styles.input}
                 placeholder={label}
                 secureTextEntry={!showPassword}
                 value={value}
@@ -22,7 +22,7 @@ const PasswordInput = ({
             />
             <TouchableOpacity
                 onPress={() => setShowPassword(!showPassword)}
-                style={{ position: 'absolute', right: 10, top: 10 }}
+                style={{ position: 'absolute', right: '8%', top: '35%' }}
             >
                 <FontAwesome
                     name={showPassword ? 'eye-slash' : 'eye'}
@@ -35,3 +35,15 @@ const PasswordInput = ({
 };
 
 export default PasswordInput;
+
+const styles = StyleSheet.create({
+    input: {
+        borderWidth: 1,
+        padding: 10,
+        fontSize: 18,
+        borderRadius: 20,
+        width: '90%',
+        alignSelf: 'center',
+        margin: '5%'
+      },
+})
