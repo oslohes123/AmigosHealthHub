@@ -23,24 +23,30 @@ const supabaseQuery = require('../dist/utils/databaseInterface.js');
 
 //Authentication Routes
 // const authRouter = require('./routes/authentication')
-import authRouter from "./routes/authentication.router";
+import authRouter from "./routes/User/authentication.router";
 app.use(routeNames.userBaseURL, authRouter);
 
 
 //Change Profile Details Routes
 // const changeProfileDetailsRouter = require('../routes/changeProfileDetails.js');
-import changeProfileDetailsRouter from "./routes/changeProfileDetails.router";
+import changeProfileDetailsRouter from "./routes/User/changeProfileDetails.router";
 app.use(routeNames.changeDetailsBaseURL, changeProfileDetailsRouter);
 
-import foodSearchRouter from "./routes/FoodSearchRouter";
-app.use('/api/food',foodSearchRouter)
+import foodSearchRouter from "./routes/Food/foodSearch.router";
+app.use(routeNames.foodBaseURL,foodSearchRouter)
+
+import foodDatabaseRouter from "./routes/Food/foodDatabase.router";
+app.use(routeNames.foodBaseURL, foodDatabaseRouter);
+
+import calorieTrackRouter from "./routes/Food/calorieTrack.router";
+app.use(routeNames.foodBaseURL, calorieTrackRouter);
 
 // Get User Details Routes
-import getUserInfoRouter from "./routes/getUserInfo.router";
+import getUserInfoRouter from "./routes/User/getUserInfo.router";
 app.use(routeNames.userBaseURL, getUserInfoRouter);
 
 // Check initial token Route
-import checkInitialTokenRouter from "./routes/checkInitialToken.router";
+import checkInitialTokenRouter from "./routes/User/checkInitialToken.router";
 app.use(routeNames.userBaseURL, checkInitialTokenRouter);
 
 /**---------------- Routes End------------------ */

@@ -2,7 +2,11 @@ import React, {useState, useContext} from 'react';
 import { View, StyleSheet, Text, SafeAreaView, Switch, TextInput} from 'react-native';
 // import { EventRegister } from 'react-native-event-listeners'
 import themeContext from '../../theme/themeContext';
-import GreenButton from '../../components/GreenButton';
+// import GreenButton from '../../components/GreenButton';
+import { Button, FAB } from 'react-native-paper';
+import { check } from 'prettier';
+import { addCalorieGoal } from '../../../functions/Calories';
+import { useAuthContext } from '../Authentication/context/AuthContext';
 
 export default function DietSettings() {
 
@@ -10,14 +14,23 @@ export default function DietSettings() {
 
   const [goal, setGoal] = useState('');
 
-  const handleButtonPress = () => {
+  const { user } = useAuthContext();
+  const id = user.id;
+
+  const currentDate = new Date().toISOString().split('T')[0];
+
+  const calorieButtonPress = async () => {
     if (goal === '') {
-      alert('Please enter new calorie goal');
+      alert('Error: Please enter new calorie goal');
     } else if (isNaN(goal)) {
-        alert('Calorie should be a number');
-    } else {
-        setGoal('');
-        alert('Calorie goal successfully added');
+        alert('Error: Calorie should be a number');
+    }
+    else if(goal < 1) {
+        alert('Error: Calorie goal should be positive');
+    }
+    else {
+        await addCalorieGoal(id, goal)
+        alert('Success: Calorie goal successfully added');
     }
   }
   // const [darkMode, setDarkMode] = useState(false)
@@ -40,14 +53,24 @@ export default function DietSettings() {
       <View>
         <TextInput
           placeholder='Add new calorie goal'
-          placeholderTextColor={theme.color}
-          style={[styles.input, {borderColor: theme.color}, {color: theme.color}]}
+          placeholderTextColor='black'
+          style={[styles.input, {borderColor: theme.color}]}
           keyboardType="numeric"
           value={goal}
           onChangeText={setGoal}
           clearButtonMode='always'
         />
-        <GreenButton text='Set Goal' buttonFunction={handleButtonPress} height={60} width={220}/>
+        {/* <GreenButton text='Set Goal' buttonFunction={handleButtonPress} height={60} width={220}/> */}
+        {/* <F mode='elevated' onPress={handleButtonPress} style={styles.button}>
+          Set Goal
+        </Button> */}
+        <FAB
+        //icon='check'
+        color='black'
+        style={ styles.button}
+        label="Set Goal"
+        onPress={calorieButtonPress}
+        />
       </View>
     </SafeAreaView>
   )
@@ -65,8 +88,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: '3%',
     width: '70%',
+    //borderRadius: 25,
+    // borderTopEndRadius: 25,
     borderRadius: 25,
-}
+    // borderTopStartRadius: 25,
+    marginBottom: '3%',
+    //height: 20,
+    backgroundColor: 'white',
+    color: 'black',
+},
   // CalorieView: {
   //   flexDirection: 'row',
   //   justifyContent: 'space-between',
@@ -76,5 +106,10 @@ const styles = StyleSheet.create({
   // text: {
   //   fontSize: 30
   // },
+  button: {
+    width: 200,
+    backgroundColor: '#3eda9b',
+    alignSelf: 'center',
+  }
 })
 

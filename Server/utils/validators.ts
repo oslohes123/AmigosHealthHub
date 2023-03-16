@@ -10,3 +10,7 @@ export const isAlpha = (containsAlpha: string) => {
 export const isStrongPassword = (password: string) => {
     return validator.isStrongPassword(password)
 }
+
+export const isInt = (containsInt: any) => {
+    return validator.isInt(containsInt)
+}
