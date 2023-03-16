@@ -1,49 +1,71 @@
+import React, { useContext } from 'react';
 import {
-    Button,
-    Image,
     SafeAreaView,
     StyleSheet,
     Text,
+    TouchableOpacity,
     View
 } from 'react-native';
 
-import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import hoursSleptGraph from '../Sleep/hoursSleptGraph';
+import themeContext from '../../theme/themeContext';
 import { useAuthContext } from '../Authentication/context/AuthContext';
-
-//import { useLogout } from "../Authentication/hooks/useLogOut";
 
 export default function DashboardScreen({ navigation }) {
     const { user } = useAuthContext();
+    const theme = useContext(themeContext);
+
     const welcomeMessage = `Welcome to your Dashboard, ${user.firstName} `;
+    const background = { backgroundColor: theme.background };
+    const textColour = { color: theme.color };
+
+    const handlePress = () => {
+        navigation.navigate('Sleep');
+    };
 
     return (
-        <SafeAreaView style={styles.container}>
-            <Text style={styles.title}>{welcomeMessage}</Text>
-            <>{hoursSleptGraph()}</>
-
+        <SafeAreaView style={[styles.container, background]}>
+            <Text style={[styles.title, textColour]}>{welcomeMessage}</Text>
+            <SafeAreaView style={styles.widgetContainer}>
+                <View style={styles.graphContainer}>
+                    {hoursSleptGraph()}
+                    <TouchableOpacity
+                        style={[styles.graphOverlay]}
+                        onPress={() => navigation.navigate('Sleep')}
+                    />
+                </View>
+            </SafeAreaView>
             <StatusBar style="auto" />
         </SafeAreaView>
     );
 }
-
 const styles = StyleSheet.create({
     title: {
-        color: 'white',
         alignSelf: 'center',
         fontSize: 32,
         fontWeight: 'bold',
         padding: 15
     },
-    mainImage: {
-        width: 120,
-        height: 120
-    },
     container: {
         flex: 1,
-        backgroundColor: '#203038',
         alignItems: 'center',
         justifyContent: 'flex-start'
+    },
+    widgetContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        margin: 30
+    },
+    graphContainer: {
+        position: 'relative'
+    },
+    graphOverlay: {
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0
     }
 });
