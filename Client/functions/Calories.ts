@@ -31,7 +31,7 @@ export async function getLatestCalorieGoal(UserID: string,inputDate:string = "")
     // Return the latest calorie goal
     return data.reduce((acc: any, curr: any) => {
         return new Date(curr.Date) > new Date(acc.Date) ? curr : acc;
-    })
+    },-1)
 }
 
 export async function getCaloriesRemaining(UserID: string, Date: string, calorieGoal: number = -1): Promise<number> {
