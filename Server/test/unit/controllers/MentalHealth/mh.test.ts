@@ -1,11 +1,13 @@
 const test = require('ava');
 import { Request, Response } from 'express';
 const sinon = require('sinon');
-import { faceValues, wordValues } from '../../../../routes/MentalHealth/mhGetStats.controller';
+import { faceValues, todaysValue, wordValues } from '../../../../routes/MentalHealth/mhGetStats.controller';
 import { supabaseQueryClass } from '../../../../utils/databaseInterface';
 import supabase from '../../../../utils/supabaseSetUp';
 import {v4 as uuidv4} from 'uuid';
 import { createHashedPassword, createUser } from '../../../../utils/userFunctions';
+import { getDate } from '../../../../utils/convertTimeStamptz';
+import moment from 'moment';
 
 
 const databaseQuery = new supabaseQueryClass();
@@ -14,6 +16,7 @@ let randomEmail:string;
 const uuid = uuidv4();
 const wrong_uuid = '1a-2345-6b7c-890d-e01f2ghij34k'
 randomEmail = `${uuid}@gmail.com`
+let todayDate = getDate(moment().format());
 
 test.serial.before(async (t : any) => {
     // const uuid = uuidv4();
@@ -105,11 +108,22 @@ test.before(async (t : any) => {
         t.fail(`MHtesterror8: ${JSON.stringify(error)}`)
     }
 })
+test.before(async (t : any) => {
+    console.log(`9th executed!`)
+    const {data, error}:any = await databaseQuery.insert(supabase, "Mental Health", {user_id: uuid, face_id: '1',created_at: todayDate, todays_word: 'Awful'});
+
+    if(error){
+        // console.log()
+        t.fail(`MHtesterror9: ${JSON.stringify(error)}`)
+    }
+})
+
+
 
 test.after.always('guaranteed cleanup', async (t: any) => {
     console.log(`test.after.always executed!`)
     // await databaseQuery.deleteFrom(supabase, "Mental Health", "user_id", uuid);
-    await databaseQuery.deleteFrom(supabase, 'User', 'id',uuid);
+    await databaseQuery.deleteFrom(supabase, 'User', 'id', uuid);
 });
 
 const mockResponse = () => {
@@ -215,3 +229,25 @@ test("Return last 7 faces and their average with new ID", async (t: any) => {
     t.true(JSON.stringify(argsPassed) == stringifiedExpectedArgs)
 });
 
+test("Return today's word", async (t: any) => {
+    const req = mockRequest({
+        id:uuid
+    });
+    const res = mockResponse();
+    await todaysValue(req as Request, res as Response)
+    const argsPassedFull = res.json.getCall(0);;
+    const argsPassed = res.json.getCall(0).args[0];
+
+    const expectedArgs = {
+        mssg: "Here is today's word!",
+        word: [
+            {"todays_word": "Awful"}
+        ]
+    }
+    const stringifiedExpectedArgs= JSON.stringify(expectedArgs)
+    console.log(`argsPassed ln 233:${JSON.stringify(argsPassed)}`); //{"mssg":"Retrieved faces","faces":["1","2","3","4","1","3","2"],"average":2.2857142857142856,"success":"successful"}
+    console.log(`stringifiedExpectedArgs ln 233:${stringifiedExpectedArgs}`)//{"mssg":"Retrieved faces","faces":[{"face_id":1},{"face_id":2},{"face_id":3},{"face_id":4},{"face_id":1},{"face_id":3},{"face_id":2}],"average":2.2857142857142856,"success":"successful"}
+    t.true(res.status.calledWith(200))
+    t.true(res.json.calledOnceWith(argsPassed)) 
+    t.true(JSON.stringify(argsPassed) == stringifiedExpectedArgs)
+})

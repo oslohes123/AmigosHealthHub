@@ -1,6 +1,6 @@
 // Configuration
 import { Request, Response } from "express";
-import { wordValues, faceValues } from "./mhGetStats.controller";
+import { wordValues, faceValues, todaysValue } from "./mhGetStats.controller";
 // import { checkToken } from "../../middleware/checkToken";
 const express = require('express');
 const mentalHealthRouter = express.Router();
@@ -10,6 +10,7 @@ const routeNames = new RouteNamesClass()
 
 mentalHealthRouter.get(routeNames.partialWordCloud, wordValues)
 mentalHealthRouter.get(routeNames.partialFaceGraph, faceValues)
+mentalHealthRouter.get(routeNames.partialTodaysWord, todaysValue)
 // mentalHealthRouter.get('/reviewday', reviewDay)
 
 

@@ -53,6 +53,16 @@ interface dbInterface {
     id: string | string[] | undefined
   ) => object;
 
+  todays_data: (
+    db: any,
+    table: string,
+    first_column: string,
+    second_cloumn: string,
+    toBeFoundFirst: any,
+    toBeFoundSecond: any,
+    toBeSelected: string,
+  ) => object;
+
 }
 
 
@@ -200,6 +210,35 @@ export class supabaseQueryClass implements dbInterface {
       console.error(err);
     }
   }
+  async todays_data(
+    supabaseDb: any,
+    table: string,
+    first_column: string,
+    second_cloumn: string,
+    toBeFoundFirst: any,
+    toBeFoundSecond: any,
+    toBeSelected: string
+  ): Promise<object | undefined> {
+    try {
+      const { data, error } = await supabaseDb
+        .from(table)
+        .select(toBeSelected)
+        .eq(first_column, toBeFoundFirst)
+        .select(toBeSelected)
+        .eq(second_cloumn, toBeFoundSecond)
+
+      if (error){
+        console.error(error);
+        return {error}
+      }
+      else console.log({ data });
+
+      return { data };
+    } catch (err: unknown) {
+      console.error(err);
+    }
+  }
+  
 
 }
 

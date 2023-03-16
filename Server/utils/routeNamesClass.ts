@@ -39,5 +39,7 @@ export default class RouteNamesClass{
     readonly fullWordCloudURL = this.mentalHealthBaseURL + this.partialWordCloud;
     readonly partialFaceGraph = '/faceGraph';
     readonly fullFaceGraphURL = this.mentalHealthBaseURL + this.partialFaceGraph;
+    readonly partialTodaysWord = '/todaysWord';
+    readonly fullTodaysWordURL = this.mentalHealthBaseURL + this.partialTodaysWord;
 
 }
