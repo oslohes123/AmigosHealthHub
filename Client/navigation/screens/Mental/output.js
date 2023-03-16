@@ -9,7 +9,7 @@ import React , {useEffect, useState, Component} from 'react';
  import { useGetFaceValues } from './hooks/useGetFaceValues.js';
  import { useGetWordValues } from './hooks/useGetWordValues.js'
 const screenWidth = Dimensions.get("window").width;
-const colours = ["#ABDEE6","#CBAACB","FFFFB5","FFCCB6","8FCACA","FFC8A2","55CBCD","FCB9AA","ECD5E3","C6DBDA","FED7C3","A2E1DB","97C1A9"]
+const colours = ["#ABDEE6","#CBAACB","#FFFFB5","#FFCCB6","#8FCACA","#FFC8A2","#55CBCD","#FCB9AA","#ECD5E3","#C6DBDA","#FED7C3","#A2E1DB","#97C1A9"]
 
 export default function App({navigation}) {
 
@@ -64,14 +64,10 @@ const line = {
       console.log(`wordValuesUseEffect: ${JSON.stringify(wordValues)}`)
       const wordfreqcolor = [];
       for (let i = 0; i < wordValues.words.length; i++) {
-        wordfreqcolor.push({keyword:(wordValues.words[i] + "").slice(1, -1),frequency:Number(wordValues.freq[i]),color: colours[Math.floor(Math.random() * colours.length)]})
+        wordfreqcolor.push({keyword:(wordValues.words[i] + "").slice(1, -1),frequency:Number(wordValues.freq[i]),color: colours[Math.floor(Math.random() * colours.length )]})
       }
-      if(wordfreqcolor==""){
-        setWordValuesArray([{keyword:"", frequency:1, color:"#ffffff"}])
-      }
-      else{
-        setWordValuesArray(wordfreqcolor)
-      }    }
+      setWordValuesArray(wordfreqcolor) 
+    }
       getWordValuesCall();
   }, [])
 
