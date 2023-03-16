@@ -48,7 +48,7 @@ export default function Graph({ navigation }) {
         strokeWidth: 2, // optional
       },
     ],
-    legend: ["Duration"],
+    // legend: ["Duration"],
   };
 
   const caloriesData = {
@@ -60,7 +60,7 @@ export default function Graph({ navigation }) {
         strokeWidth: 2, // optional
       },
     ],
-    legend: ["Calories"],
+    // legend: ["Calories"],
   };
   const distanceData = {
     labels: getDistanceLabels,
@@ -71,7 +71,7 @@ export default function Graph({ navigation }) {
         strokeWidth: 2, // optional
       },
     ],
-    legend: ["Distance"],
+    // legend: ["Distance"],
   };
   const setAllExercises = async () => {
     setArrayOfExercises(await getAllExercises());
@@ -242,16 +242,19 @@ export default function Graph({ navigation }) {
 
         {/* This is the calories graph for an Other exercise */}
         {getCaloriesData && getCaloriesLabels && (
-          <LineChart
-            style={{ borderRadius: 25 }}
-            data={caloriesData}
-            width={screenWidth}
-            height={220}
-            chartConfig={chartConfig}
-            fromZero={true}
-            bezier
-            yAxisSuffix={" kcal"}
-          />
+          <View style={{ marginBottom: 40 }}>
+            <Text style={[styles.title]}>Calories</Text>
+            <LineChart
+              style={{ borderRadius: 25 }}
+              data={caloriesData}
+              width={screenWidth}
+              height={220}
+              chartConfig={chartConfig}
+              fromZero={true}
+              bezier
+              yAxisSuffix={" kcal"}
+            />
+          </View>
         )}
       </View>
     </ScrollView>
