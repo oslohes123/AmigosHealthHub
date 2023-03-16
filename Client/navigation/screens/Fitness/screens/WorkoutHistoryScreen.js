@@ -16,6 +16,7 @@ export default function WorkoutHistoryScreen({ navigation }) {
   const [results, setResults] = useState([]);
   const { getWorkoutHistory, isLoading, error } = useGetWorkoutHistory();
   const isFocused = useIsFocused();
+  const [incNo, setIncNo] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
@@ -26,10 +27,16 @@ export default function WorkoutHistoryScreen({ navigation }) {
       data.map((item) => {
         resultsList.push(item);
       });
-      setResults(resultsList);
+      setResults(resultsList.reverse());
     }
     fetchData();
   }, [navigation, isFocused]);
+
+  function incrementor() {
+    let no = incNo;
+    setIncNo(incNo + 1);
+    return no;
+  }
 
   return (
     <SafeAreaView
@@ -58,11 +65,14 @@ export default function WorkoutHistoryScreen({ navigation }) {
 
         {results &&
           results.map((item) => (
-            <TouchableOpacity key={item.workoutname} style={styles.itemBorder} onPress={() => {
+            <TouchableOpacity key={`${item.date} ${item.time}`} style={styles.itemBorder} onPress={() => {
                 // navigation.navigate("Workout Plan Information", item)
                 console.log(`completed workout pressed: ${JSON.stringify(item)}`)}}>
               <Text style={{ borderColor: theme.color, color: theme.color, fontSize: 32 }}>{item.workoutname}</Text>
-              <Text style={{ borderColor: theme.color, color: theme.color, fontSize: 16, alignSelf: 'center' }}>{item.date}</Text>
+              <View style={{flexDirection: 'row', justifyContent: "space-evenly", width: screenWidth * 0.7}}>
+                <Text style={{ borderColor: theme.color, color: theme.color, fontSize: 16, alignSelf: 'center' }}>{item.date}</Text>
+                <Text style={{ borderColor: theme.color, color: theme.color, fontSize: 16, alignSelf: 'center' }}>{item.time}</Text>
+              </View>
             </TouchableOpacity>
           ))}
       </ScrollView>
