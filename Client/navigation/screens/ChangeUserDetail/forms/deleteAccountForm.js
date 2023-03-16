@@ -4,7 +4,8 @@ import { Button, Text, TextInput, View, SafeAreaView, StyleSheet } from "react-n
 import React, { useContext } from "react";
 
 import { Formik } from "formik";
-import { deleteAccountWrapper } from "../hooks/deleteAccount";
+//import { deleteAccountWrapper } from "../hooks/deleteAccount";
+import { deleteAccountWrapper } from "../hooks/useDeleteAccount";
 import { globalStyles } from "../../../../styles/global";
 import { useAuthContext } from "../../Authentication/context/AuthContext";
 
