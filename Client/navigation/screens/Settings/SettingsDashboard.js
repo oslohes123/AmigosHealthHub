@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react';
-import { View, StyleSheet, Text, SafeAreaView, Switch, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, SafeAreaView, Switch, TouchableOpacity, Alert } from 'react-native';
 import themeContext from '../../theme/themeContext';
 import { EventRegister } from 'react-native-event-listeners'
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -16,7 +16,20 @@ export default function SettingsDashboard({ navigation }) {
   const { logout } = useLogout();
 
   const handleClick = () => {
-    logout();
+    Alert.alert(
+      'Confirm Logout',
+      'Are you sure you want to Logout?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Logout',
+          onPress: async () => {
+            logout();
+          },
+          style: 'destructive',
+        },
+      ]
+    );
   };
 
   const pressHandler1 = () => {
