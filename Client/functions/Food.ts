@@ -1,5 +1,7 @@
 import axios, {AxiosResponse, AxiosError} from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+var randomColor = require('randomcolor');
+
 
 const portENV = process.env["PORT"];
 const ip_addressENV = process.env["IP_ADDRESS"];
@@ -209,31 +211,63 @@ function sumNutrients(data: any) {
   
     for (let i = 0; i < data.length; i++) {
       const item = data[i];
-      protein += parseFloat(item.Protein.toFixed(2));
-      sugar += parseFloat(item.Sugar.toFixed(2));
-      carbohydrates += parseFloat(item.Carbohydrate.toFixed(2));
-      fat += parseFloat(item.Fat.toFixed(2));
-      fiber += parseFloat(item.Fiber.toFixed(2));
+      protein += parseFloat(item.Protein.toFixed(2)) * item.Quantity;
+      sugar += parseFloat((item.Sugar * item.Quantity).toFixed(2));
+      carbohydrates += parseFloat(item.Carbohydrate.toFixed(2)) * item.Quantity;
+      fat += parseFloat(item.Fat.toFixed(2)) * item.Quantity;
+      fiber += parseFloat(item.Fiber.toFixed(2)) * item.Quantity;
     }
-  
+    sugar = Number(sugar.toFixed(2))
+    fat = Number(fat.toFixed(2))
+    carbohydrates = Number(carbohydrates.toFixed(2))
+    protein = Number(protein.toFixed(2))
+    fiber = Number(fiber.toFixed(2))
+    
     return { protein, sugar, carbohydrates, fat, fiber };
 }
 
 
-export async function getPieChartData(UserID:string){
-    let currentFood = await getTrackedFood(currentDate , UserID )
-    console.log(currentFood);
+export async function getPieChartData(UserID:string,inputDate:string = currentDate) {
+    let currentFood = await getTrackedFood(inputDate , UserID )
+    if(currentFood.length == 0 || currentFood == undefined){
+        return [];
+    }
     let foodIDs = currentFood.map((food:any) => food.FoodID);
+    // console.log(foodIDs);
+    
     let foods = await getMultipleFood(foodIDs)
-    let data = sumNutrients(foods);
-    const output = Object.entries(data).map(([name, population]) => ({
+    let allFoods = mergeTwoFoods(foods,currentFood)
+   
+    let data = sumNutrients(allFoods);
+    // console.log(data)
+    const output = Object.entries(data).map(([name, amount]) => ({
         name,
-        population,
-        color: "#F00",
+        amount,
+        color: randomColor(),
         legendFontColor: "#7F7F7F",
         legendFontSize: 15
       }));
-    console.log(output);
+    // console.log(output);
     return output;
+}
+
+function mergeTwoFoods(dataArray:any[],quantityArray: any[]){
+    for(let i = 0; i < quantityArray.length; i++) {
+        let currentObj = quantityArray[i]
+        for(let j = 0; j < dataArray.length; j++) {
+          let nutrientObj = dataArray[j]
+          if(currentObj.FoodID === nutrientObj.FoodID) {
+            // merge nutrient information
+            currentObj.Calories = nutrientObj.Calories
+            currentObj.Carbohydrate = nutrientObj.Carbohydrate
+            currentObj.Fat = nutrientObj.Fat
+            currentObj.Fiber = nutrientObj.Fiber
+            currentObj.Protein = nutrientObj.Protein
+            currentObj.Sugar = nutrientObj.Sugar
+            break
+          }
+        }
+      }
+    return quantityArray
 }
 
