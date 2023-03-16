@@ -319,8 +319,12 @@ const selectAEIDs =async (workoutPlanToDel:string) => {
 // }
 
 export const deleteTrackedWorkout =async (req:Request, res: Response) => {
-    const {userid, workoutname, date, time}= req.headers;
+    const {userid, workoutname, date, time}= req.body;
 
+    console.log(`In deleteTrackedWorkout, userid: ${userid}`);
+    console.log(`In deleteTrackedWorkout, workoutname: ${workoutname}`);
+    console.log(`In deleteTrackedWorkout, date: ${date}`);
+    console.log(`In deleteTrackedWorkout, time: ${time}`);
     if(!userid|| !workoutname||!date||!time){
         return res.status(400).json({mssg:"No userid, workoutname, date or time"})
     }
