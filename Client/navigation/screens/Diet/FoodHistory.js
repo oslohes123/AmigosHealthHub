@@ -70,9 +70,16 @@ export default function FoodHistory({ navigation }) {
 
   async function getCalorieData() {
     let data = await getLatestCalorieGoal(id, selectDay);
-    setCalorieGoal(data.CalorieGoal);
-    let calories = await getCaloriesRemaining(id, selectDay, data.CalorieGoal);
-    setCaloriesRemaining(calories)
+    console.log(data);
+    if (data == -1) {
+      setCalorieGoal(0);
+      setCaloriesRemaining(0);
+      return;
+    }else {
+      setCalorieGoal(data.CalorieGoal);
+      let calories = await getCaloriesRemaining(id, selectDay, data.CalorieGoal);
+      setCaloriesRemaining(calories)
+    }
   }
 
   async function updatePieChart() {
