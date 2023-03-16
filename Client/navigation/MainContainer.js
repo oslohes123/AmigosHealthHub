@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import react, { useEffect, useState } from 'react';
 
-import DashboardNavigationScreen from './screens/MainDashboard/routes/DashboardNavigation';
+import DashboardNavigationScreen from './screens/MainDashboard/DashboardNavigation';
 import DietNavigation from './screens/Diet/DietNavigation';
 import { EventRegister } from 'react-native-event-listeners';
 import FitnessNavigationScreen from './screens/Fitness/routes/FitnessNavigation';

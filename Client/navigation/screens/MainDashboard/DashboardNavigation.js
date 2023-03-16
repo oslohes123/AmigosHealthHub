@@ -1,20 +1,15 @@
-//import ChangeUserDetailsScreen from '../ChangeUserDetail/screens/ChangeUserDetailsScreen';
-//import ChangeUserPasswordScreen from '../ChangeUserDetail/screens/ChangeUserPasswordScreen';
 import DashboardScreen from './DashboardScreen';
-//import DeleteAccountScreen from '../ChangeUserDetail/screens/DeleteAccountScreen';
-import SettingsScreen from './SettingsScreen';
+import React from 'react';
+import SleepScreen from '../Sleep/SleepScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
 
 //Screen Names
-const settingsName = 'Settings';
-const dashboardName = 'DashboardWelcome';
-// const changeUserDetailsName = 'ChangeUserDetails';
-// const changeUserPasswordName = 'ChangeUserPassword';
-// const deleteAccount = 'DeleteAccount';
+const dashboardName = 'Dashboard Home';
+const sleepName = 'Sleep';
 
-export default function DashboardNavigationScreen({ navigation }) {
+export default function DashboardNavigation({ navigation }) {
     return (
         <Stack.Navigator
             initialRouteName={dashboardName}
@@ -23,20 +18,8 @@ export default function DashboardNavigationScreen({ navigation }) {
                 headerTitleStyle: styles.header
             }}
         >
-            <Stack.Screen name={settingsName} component={SettingsScreen} />
             <Stack.Screen name={dashboardName} component={DashboardScreen} />
-            {/* <Stack.Screen
-                name={changeUserDetailsName}
-                component={ChangeUserDetailsScreen}
-            />
-            <Stack.Screen
-                name={changeUserPasswordName}
-                component={ChangeUserPasswordScreen}
-            />
-            <Stack.Screen
-                name={deleteAccount}
-                component={DeleteAccountScreen}
-            /> */}
+            <Stack.Screen name={sleepName} component={SleepScreen} />
         </Stack.Navigator>
     );
 }
