@@ -50,10 +50,10 @@ export async function getCaloriesRemaining(UserID: string, Date: string, calorie
     // otherwise use the passed in calorie goal
     if (calorieGoal == -1) {
         let currentCalorieGoal = await getLatestCalorieGoal(UserID);
-        return currentCalorieGoal - totalCalories;
+        return Number((currentCalorieGoal - totalCalories).toFixed(2));
 
     } else {
-        return calorieGoal - totalCalories;
+        return Number((calorieGoal - totalCalories).toFixed(2));
     }
 
 
