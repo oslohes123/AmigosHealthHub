@@ -36,6 +36,7 @@ export default function Stats({ navigation }) {
         strokeWidth: 2, // optional
       },
     ],
+    legend: ["Weighted Graph"]
   };
 
   const durationData = {
@@ -47,6 +48,7 @@ export default function Stats({ navigation }) {
         strokeWidth: 2, // optional
       },
     ],
+    legend: ["Duration"]
   };
 
   const caloriesData = {
@@ -58,6 +60,7 @@ export default function Stats({ navigation }) {
         strokeWidth: 2, // optional
       },
     ],
+    legend: ["Calories"]
   };
   const distanceData = {
     labels: getDistanceLabels,
@@ -68,6 +71,7 @@ export default function Stats({ navigation }) {
         strokeWidth: 2, // optional
       },
     ],
+    legend: ["Distance"]
   };
   const setAllExercises = async () => {
     setArrayOfExercises(await getAllExercises());
@@ -114,7 +118,7 @@ export default function Stats({ navigation }) {
   const chartConfig = {
     backgroundGradientFrom: "white",
     //backgroundGradientFromOpacity: 0,
-    backgroundGradientTo: "blue",
+    backgroundGradientTo: "#0040ff",
     backgroundGradientToOpacity: 0.5,
     color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
     strokeWidth: 2, // optional, default 3
@@ -179,9 +183,10 @@ export default function Stats({ navigation }) {
           />
         </>
       )}
-      <View style={{ alignItems: "center" }}>
+      <View style={{ alignItems: "center"}}>
         {/* This is the WeightedGraph */}
         {getWeightedData && getWeightedLabels && (
+          <View style={{marginBottom: 40}}>
           <LineChart
             style={{ borderRadius: 25 }}
             data={weightedData}
@@ -189,33 +194,41 @@ export default function Stats({ navigation }) {
             height={220}
             chartConfig={chartConfig}
           />
+          </View>
         )}
 
         {/* This is the duration graph for an Other exercise */}
         {getDurationData && getDurationLabels && (
+          <View style={{marginBottom: 40}}>
           <LineChart
+            style={{ borderRadius: 25 }}
             data={durationData}
-            width={screenWidth}
+            width={0.8 * screenWidth}
             height={220}
             chartConfig={chartConfig}
           />
+          </View>
         )}
 
         {/* This is the distance graph for an Other exercise */}
         {getDistanceData && getDistanceLabels && (
+          <View style={{marginBottom: 40}}>
           <LineChart
+            style={{ borderRadius: 25 }}
             data={distanceData}
-            width={screenWidth}
+            width={0.8 * screenWidth}
             height={220}
             chartConfig={chartConfig}
           />
+          </View>
         )}
 
         {/* This is the calories graph for an Other exercise */}
         {getCaloriesData && getCaloriesLabels && (
           <LineChart
+            style={{ borderRadius: 25 }}
             data={caloriesData}
-            width={screenWidth}
+            width={0.8 * screenWidth}
             height={220}
             chartConfig={chartConfig}
           />
