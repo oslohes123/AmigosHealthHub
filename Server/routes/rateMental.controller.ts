@@ -5,7 +5,7 @@ import { Request, Response } from "express";
 import { getUserByEmail } from "../utils/userFunctions";
 //
 const date = new Date();
-function getToday(){
+export function getToday(){
  let midnight = ''
  if (date.getDate().toString().length == 1 && date.getMonth().toString().length == 1) {
    midnight = (date.getFullYear().toString() + '-0' + (date.getMonth()+1).toString() + '-0' + date.getDate().toString());
@@ -20,7 +20,7 @@ function getToday(){
  return midnight;
 }
 //.eq user id not hardcoded
- async function checkExistsToday(id:string) {
+ export async function checkExistsToday(id:string) {
   const {data, error}:any = await databaseQuery.selectWhere(supabase, 'Mental Health','user_id', id,'created_at');
   if(error) {
     console.error(error);
