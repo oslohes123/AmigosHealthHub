@@ -83,7 +83,7 @@ export default function MainContainer() {
                 headerShown: false,
                 headerTitleStyle: styles.header,
                 tabBarShowLabel: false,
-                tabBarStyle: { paddingTop: 10, backgroundColor: "#8bf2f3" },
+                tabBarStyle: { paddingTop: 10, backgroundColor: "#c2e7fe" },
               })}
             >
               <Tab.Screen name={dietName} component={DietNavigation} />
