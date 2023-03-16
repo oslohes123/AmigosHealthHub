@@ -156,3 +156,22 @@ export const getFood = async (req: Request, res: Response) => {
         res.status(200).send(returnData);
     }
 }
+
+export const getMultipleFood = async (req: Request, res: Response) => {
+    const {foodIDs} = req.body;
+    
+    const { data, error }: any = await databaseQuery.selectIn(
+        supabase,
+        "Food",
+        "*",
+        "FoodID",
+        foodIDs
+    );
+    if (error) {
+        console.log("Error getting food");
+        res.status(500).send(error);
+    } else {
+        res.status(200).send(data);
+    }
+
+}

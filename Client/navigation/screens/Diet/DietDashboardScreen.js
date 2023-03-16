@@ -5,11 +5,12 @@ import { PieChart } from "react-native-chart-kit";
 import themeContext from '../../theme/themeContext';
 import { EventRegister } from 'react-native-event-listeners'
 import { genericSearch, specificSearch } from '../../../functions/searchFood'
-import { addCalorieGoal, getCaloriesRemaining, getLatestCalorieGoal } from '../../../functions/Calories';
+import { updateCalorieGoal, getCaloriesRemaining, getLatestCalorieGoal } from '../../../functions/Calories';
 import { useAuthContext } from "../Authentication/context/AuthContext";
 import { useIsFocused } from '@react-navigation/native';
 
 import GreenButton from '../../components/GreenButton';
+import { getPieChartData } from '../../../functions/Food';
 
 
 export default function DietDashboardScreen({ navigation }) {
@@ -60,6 +61,7 @@ export default function DietDashboardScreen({ navigation }) {
   const { user } = useAuthContext();
   const id = user.id;
   const todaysDate = new Date().toISOString().split('T')[0];
+  const [pieChartData, setPieChartData] = useState([]);
 
   const [genericFoodList, setGenericFoodList] = useState([]);
 
@@ -78,14 +80,20 @@ export default function DietDashboardScreen({ navigation }) {
     setCaloriesRemaining(calories)
   }
 
+  async function updatePieChart() {
+    let data = await getPieChartData(id);
+    setPieChartData(data);
+  }
 
-  
- 
+
+
+
   useEffect(() => {
-    if (isFocused){
+    if (isFocused) {
       getCalorieData();
+      updatePieChart();
     }
-  },[navigation, isFocused])
+  }, [navigation, isFocused])
 
 
   useEffect(() => {
@@ -111,9 +119,8 @@ export default function DietDashboardScreen({ navigation }) {
     }
   }, [foodInput]);
 
-  const pressHandler = async () => {
-    navigation.navigate('Nutrients');
-    
+  const pieChartPress = async () => {
+    navigation.navigate('Nutrients', pieChartData);
   }
 
   async function foodPress(name = null, nix_item_id = null) {
@@ -158,10 +165,10 @@ export default function DietDashboardScreen({ navigation }) {
           placeholderTextColor={theme.color} />
 
         <View style={styles.chart}>
-          {foodInput.length == 0 && (
-            <TouchableOpacity style={styles.pieWidget} onPress={pressHandler}>
+          {foodInput.length == 0 && pieChartData.length > 0 ?
+            <TouchableOpacity style={styles.pieWidget} onPress={pieChartPress}>
               <PieChart
-                data={Piedata}
+                data={pieChartData}
                 width={340}
                 height={210}
                 paddingLeft='10'
@@ -172,7 +179,8 @@ export default function DietDashboardScreen({ navigation }) {
                 backgroundColor="transparent"
               />
             </TouchableOpacity>
-          )}
+            : <Text>No data available</Text>
+          }
         </View>
 
         {foodInput.length > 2 &&

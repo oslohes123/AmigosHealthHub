@@ -1,10 +1,6 @@
 interface dbInterface {
   //returns column of a table
-  select: (
-    db: any,
-    table: string,
-    column: any
-    ) => object;
+  select: (db: any, table: string, column: any) => object;
 
   //returns columns (defined by toBeSelected) of rows of the table where the column has value toBeFound
   //to return all columns of the table with a specific value, toBeSelected=='*'
@@ -18,19 +14,11 @@ interface dbInterface {
 
   //inserts a single record or bulk create into a table.
 
-  insert: (
-    db: any,
-    table: string,
-    data: object
-    ) => object;
+  insert: (db: any, table: string, data: object) => object;
 
   //Delete data from a table where column value == value
 
-  deleteFrom: (db: any,
-    table: string,
-    column: string,
-    value: any
-    ) => void;
+  deleteFrom: (db: any, table: string, column: string, value: any) => void;
 
   //Update table with updatingData where a given column has some value
 
@@ -42,27 +30,23 @@ interface dbInterface {
     value: any
   ) => object;
 
-
   //Select toBeSelected where a row in the given table matches 'match'
   match: (
-    db: any, 
+    db: any,
     table: string,
     toBeSelected: string,
     toBeMatched: Object
-  ) => object; 
+  ) => object;
   //returns most recent data
 
-//   mostrecent: (
-//     db: any,
-//     table: string,
-//     firstcolumn: string,
-//     secondcolumn: string,
-//     id: string | string[] | undefined
-//   ) => object;
-
+  //   mostrecent: (
+  //     db: any,
+  //     table: string,
+  //     firstcolumn: string,
+  //     secondcolumn: string,
+  //     id: string | string[] | undefined
+  //   ) => object;
 }
-
-
 
 /**
  * For more information, look at the supabase JS client library: https://supabase.com/docs/reference/javascript/installing
@@ -85,37 +69,56 @@ export class supabaseQueryClass implements dbInterface {
     }
   }
 
-
-
   async match(
-    supabaseDb: any, 
+    supabaseDb: any,
     table: string,
     toBeSelected: string,
     toBeMatched: Object
-  ):Promise<object | undefined> {
-
-    try{
+  ): Promise<object | undefined> {
+    try {
       const { data, error } = await supabaseDb
-      .from(table)
-      .select(toBeSelected)
-      .match(toBeMatched);
+        .from(table)
+        .select(toBeSelected)
+        .match(toBeMatched);
 
-      if (error){
+      if (error) {
         console.error(error);
-        return {error}
-      }
-      else {
+        return { error };
+      } else {
         console.log({ data });
         return { data };
       }
-
-    }
-    catch(err: unknown){
+    } catch (err: unknown) {
       console.error(err);
     }
-
   }
-  
+
+  async selectIn(
+    supabaseDb: any,
+    table: string,
+    column: string,
+    toBeFound: any,
+    toBeSelected: Array<string>
+  ): Promise<object | undefined> {
+    try {
+      const { data, error } = await supabaseDb
+        .from(table)
+        .select(column)
+        .in(toBeFound, toBeSelected);
+
+      if (error) {
+        console.log("error in selectIn");
+        console.error(error);
+        return { error };
+      } else{
+        return { data };
+      }
+    } catch (err: unknown) {
+      console.log("error in selectIn caught error");
+      console.error(err);
+    }
+  }
+
   async selectWhere(
     supabaseDb: any,
     table: string,
@@ -129,11 +132,10 @@ export class supabaseQueryClass implements dbInterface {
         .select(toBeSelected)
         .eq(column, toBeFound);
 
-      if (error){
+      if (error) {
         console.error(error);
-        return {error}
-      }
-      else console.log({ data });
+        return { error };
+      } else console.log({ data });
 
       return { data };
     } catch (err: unknown) {
@@ -152,11 +154,10 @@ export class supabaseQueryClass implements dbInterface {
         .insert(dataToBeInserted)
         .select();
 
-      if (error){ 
+      if (error) {
         console.error(error);
-        return {error}
-      }
-      else console.log({ data });
+        return { error };
+      } else console.log({ data });
 
       return { data };
     } catch (err: unknown) {
@@ -173,11 +174,11 @@ export class supabaseQueryClass implements dbInterface {
     try {
       const { error } = await supabaseDb.from(table).delete().eq(column, value);
 
-      if (error) return {error};
-      else return{error: null}
+      if (error) return { error };
+      else return { error: null };
     } catch (err: unknown) {
       console.error(err);
-      return {error: err};
+      return { error: err };
     }
   }
 
@@ -209,32 +210,31 @@ export class supabaseQueryClass implements dbInterface {
   //     .from(table)
   //     .select(toBeSelected)
   //     .eq(column, toBeFound);
-//   async mostrecent( // returns array of objects 
-//     supabaseDb: any,
-//     table: string,
-//     firstcolumn: string,
-//     secondcolumn: string,
-//     id: string | string[] | undefined
-//   ): Promise<object | undefined> {
-//     try {
-//       const { data, error } = await supabaseDb
-//         .from(table)
-//         .select("user_id")
-//         .eq("user_id", id)
-//         .select(firstcolumn, secondcolumn)
-//         .order(secondcolumn, { ascending: false })
-//         .range(0, 6)
+  //   async mostrecent( // returns array of objects
+  //     supabaseDb: any,
+  //     table: string,
+  //     firstcolumn: string,
+  //     secondcolumn: string,
+  //     id: string | string[] | undefined
+  //   ): Promise<object | undefined> {
+  //     try {
+  //       const { data, error } = await supabaseDb
+  //         .from(table)
+  //         .select("user_id")
+  //         .eq("user_id", id)
+  //         .select(firstcolumn, secondcolumn)
+  //         .order(secondcolumn, { ascending: false })
+  //         .range(0, 6)
 
-//       if (error) console.error(error);
-//       else {
-//         console.log({ data });
-//         return data;
-//       }
-//     } catch (err: unknown) {
-//       console.error(err);
-//     }
-//   }
-
+  //       if (error) console.error(error);
+  //       else {
+  //         console.log({ data });
+  //         return data;
+  //       }
+  //     } catch (err: unknown) {
+  //       console.error(err);
+  //     }
+  //   }
 }
 
 // module.exports = supabaseQuery;

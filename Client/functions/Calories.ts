@@ -29,9 +29,13 @@ export async function getLatestCalorieGoal(UserID: string,inputDate:string = "")
         })
     }
     // Return the latest calorie goal
-    return data.reduce((acc: any, curr: any) => {
-        return new Date(curr.Date) > new Date(acc.Date) ? curr : acc;
-    })
+    if(data.length == 0){
+        return -1;
+    }else{
+        return data.reduce((acc: any, curr: any) => {
+            return new Date(curr.Date) > new Date(acc.Date) ? curr : acc;
+        })
+    }
 }
 
 export async function getCaloriesRemaining(UserID: string, Date: string, calorieGoal: number = -1): Promise<number> {
@@ -50,10 +54,10 @@ export async function getCaloriesRemaining(UserID: string, Date: string, calorie
     // otherwise use the passed in calorie goal
     if (calorieGoal == -1) {
         let currentCalorieGoal = await getLatestCalorieGoal(UserID);
-        return currentCalorieGoal - totalCalories;
+        return Number((currentCalorieGoal - totalCalories).toFixed(2));
 
     } else {
-        return calorieGoal - totalCalories;
+        return Number((calorieGoal - totalCalories).toFixed(2));
     }
 
 
@@ -83,7 +87,38 @@ export async function getGeneralCalorieGoal(UserID: string) {
     return response.data;
 }
 
-export async function addCalorieGoal(UserID: string, CalorieGoal: number, Date: string = currentDate ) {
+export async function addCalorieGoal(UserID:string,CalorieGoal:number,Date: string = currentDate){
+    let url: string = `http://${ip_address}:${port}/api/food/calorieTrack/createCalorieLog`;
+
+    let response: AxiosResponse;
+    try {
+        const { token } = JSON.parse(
+            (await AsyncStorage.getItem("user")) as string
+        );
+        response = await axios.post(url, {
+            CalorieGoal: CalorieGoal,
+            UserID: UserID,
+            Date: Date,
+        }, {
+            headers: {
+                authorization: token,
+            },
+        });
+    } catch (error: any | AxiosError) {
+        if (axios.isAxiosError(error)) {
+            console.log("Error when inserting calorie goal");
+            console.log(error.response);
+        } else {
+            console.log("Default error handler" + error);
+        }
+        return error;
+    }
+    // Return the response
+    return response.data;
+
+}
+
+export async function updateCalorieGoal(UserID: string, CalorieGoal: number, Date: string = currentDate ) {
     // Get the latest calorie goal
     let currentCalorieGoal = await getLatestCalorieGoal(UserID);
     let url: string = `http://${ip_address}:${port}/api/food/calorieTrack/`;

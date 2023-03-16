@@ -1,6 +1,6 @@
 import { checkToken } from '../../middleware/checkToken'
 import RouteNamesClass from '../../utils/routeNamesClass';
-import { addTrackedFood, getTrackedFood, updateTrackedFood, deleteTrackedFood, getFood, getSpecificTrackedFood } from './foodDatabase.controller';
+import { addTrackedFood, getTrackedFood, updateTrackedFood, deleteTrackedFood, getFood, getSpecificTrackedFood, getMultipleFood } from './foodDatabase.controller';
 
 const express = require('express');
 const foodDatabaseRouter = express.Router();
@@ -21,6 +21,10 @@ foodDatabaseRouter.post(routeNames.partialUpdateFoodURL, updateTrackedFood)
 foodDatabaseRouter.post(routeNames.partialDeleteTrackedFoodURL, deleteTrackedFood)
 
 foodDatabaseRouter.get(routeNames.partialGetFoodURL, getFood)
+
+foodDatabaseRouter.post(routeNames.partialGetMultipleFoodURL, getMultipleFood)
+
+
 
 
 // module.exports = changeProfileDetailsRouter;

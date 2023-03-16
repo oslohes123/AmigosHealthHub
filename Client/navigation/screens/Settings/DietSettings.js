@@ -5,7 +5,7 @@ import themeContext from '../../theme/themeContext';
 // import GreenButton from '../../components/GreenButton';
 import { Button, FAB } from 'react-native-paper';
 import { check } from 'prettier';
-import { addCalorieGoal } from '../../../functions/Calories';
+import { updateCalorieGoal } from '../../../functions/Calories';
 import { useAuthContext } from '../Authentication/context/AuthContext';
 
 export default function DietSettings() {
@@ -22,14 +22,14 @@ export default function DietSettings() {
   const calorieButtonPress = async () => {
     if (goal === '') {
       alert('Error: Please enter new calorie goal');
-    } else if (isNaN(goal)) {
+    } else if (isNaN(goal) || !Number.isInteger(Number(goal)) || goal.includes('.')) {
         alert('Error: Calorie should be a number');
     }
     else if(goal < 1) {
         alert('Error: Calorie goal should be positive');
     }
     else {
-        await addCalorieGoal(id, goal)
+        await updateCalorieGoal(id, goal)
         alert('Success: Calorie goal successfully added');
     }
   }
