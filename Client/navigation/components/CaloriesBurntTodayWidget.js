@@ -16,8 +16,7 @@ export default function CaloriesBurntTodayWidget({ navigation }) {
 
   const [getCaloriesBurnt, setCaloriesBurnt] = useState(null);
   const caloriesBurnt = async () => {
-    let caloriesTemp = await getCaloriesBurntToday();
-    setCaloriesBurnt(caloriesTemp);
+    setCaloriesBurnt(await getCaloriesBurntToday());
   };
   useEffect(() => {
     if (isFocused) {
@@ -47,11 +46,10 @@ export default function CaloriesBurntTodayWidget({ navigation }) {
         <Text style={styles.header}>
           <Ionicons name="bicycle-outline" size={30} color="black" />
           Calories Burnt Today:
+          {getCaloriesBurnt && (
+            <Text style={styles.number}>{getCaloriesBurnt}</Text>
+          )}
         </Text>
-
-        {getCaloriesBurnt && (
-          <Text style={styles.number}>{getCaloriesBurnt}</Text>
-        )}
 
         {isLoading && (
           <>
