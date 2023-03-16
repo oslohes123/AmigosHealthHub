@@ -6,7 +6,6 @@ export default function Nutrients({ route, navigation}) {
 
   const theme = useContext(themeContext)
   const data = route.params;
-  console.log(data);
 
   const dataItems =  data.map((item,index) => {
     return (

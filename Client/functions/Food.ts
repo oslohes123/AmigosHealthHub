@@ -233,14 +233,9 @@ export async function getPieChartData(UserID:string,inputDate:string = currentDa
         return [];
     }
     let foodIDs = currentFood.map((food:any) => food.FoodID);
-    // console.log(foodIDs);
-    
     let foods = await getMultipleFood(foodIDs)
     let allFoods = mergeTwoFoods(foods,currentFood)
-   
     let data = sumNutrients(allFoods);
-    // console.log(data)
-
     let myColours = [
         "red",
         "darkblue",
@@ -249,7 +244,6 @@ export async function getPieChartData(UserID:string,inputDate:string = currentDa
         "black",
 
     ]
-
     const output = Object.entries(data).map(([name, amount],index) => ({
         name,
         amount,
@@ -257,7 +251,6 @@ export async function getPieChartData(UserID:string,inputDate:string = currentDa
         legendFontColor: "#7F7F7F",
         legendFontSize: 15
       }));
-    // console.log(output);
     return output;
 }
 
