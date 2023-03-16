@@ -7,6 +7,8 @@ import WorkoutPlanInfoScreen from "../screens/WorkoutPlanInfoScreen";
 import WorkoutHistory from "../screens/WorkoutHistoryScreen";
 import trackedWorkoutInfoScreen from "../screens/TrackedWorkoutInfoScreen";
 import Graph from "../screens/Graph";
+// import WorkoutHistory from "../screens/WorkoutHistory";
+import PastWorkoutDetails from "../screens/PastWorkoutDetails";
 // import AddCustomExerciseScreen from '../screens/AddCustomExerciseScreen';
 import Stats from "../screens/Stats";
 import { ThemeContext } from "react-navigation";
@@ -23,6 +25,8 @@ const historyName = "Workout History";
 const trackedWorkoutInfoName = "Workout Information";
 const statsName = "View Stats";
 const graphName = "Graph";
+const pastWorkoutDetailsName = "Past Workout Details";
+// const workoutHistoryName = "Workout History";
 // const customExerciseName = "Add Custom Exercise"
 
 export default function FitnessNavigationScreen({ navigation }) {
@@ -61,6 +65,8 @@ export default function FitnessNavigationScreen({ navigation }) {
       />
       <Stack.Screen name={statsName} component={Stats} />
       <Stack.Screen name={graphName} component={Graph} />
+      <Stack.Screen name={pastWorkoutDetailsName} component={PastWorkoutDetails} />
+      {/* <Stack.Screen name={workoutHistoryName} component={WorkoutHistory} /> */}
       {/* <Stack.Screen name={customExerciseName} component={AddCustomExerciseScreen} /> */}
     </Stack.Navigator>
   );
