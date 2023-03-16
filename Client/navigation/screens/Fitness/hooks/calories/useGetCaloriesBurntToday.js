@@ -36,11 +36,7 @@ export const useGetCaloriesBurntToday = () => {
     }
     if (response.ok) {
       try {
-        console.log(
-          `getCaloriesBurntTodayJSON: ${JSON.stringify(
-            getCaloriesBurntTodayJSON
-          )}`
-        );
+        // console.log(`getCaloriesBurntTodayJSON: ${JSON.stringify(getCaloriesBurntTodayJSON)}`);
         setIsLoading(false);
         return getCaloriesBurntTodayJSON.totalCaloriesBurnt; //this is a single number
       } catch (error) {
