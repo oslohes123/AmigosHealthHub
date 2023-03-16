@@ -70,7 +70,6 @@ export default function FoodHistory({ navigation }) {
 
   async function getCalorieData() {
     let data = await getLatestCalorieGoal(id, selectDay);
-    console.log(data);
     if (data == -1) {
       setCalorieGoal(0);
       setCaloriesRemaining(0);
