@@ -66,7 +66,7 @@ export default function WorkoutHistoryScreen({ navigation }) {
         {results &&
           results.map((item) => (
             <TouchableOpacity key={`${item.date} ${item.time}`} style={styles.itemBorder} onPress={() => {
-                // navigation.navigate("Workout Plan Information", item)
+                navigation.navigate("Workout Information", item)
                 console.log(`completed workout pressed: ${JSON.stringify(item)}`)}}>
               <Text style={{ borderColor: theme.color, color: theme.color, fontSize: 32 }}>{item.workoutname}</Text>
               <View style={{flexDirection: 'row', justifyContent: "space-evenly", width: screenWidth * 0.7}}>

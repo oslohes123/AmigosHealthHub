@@ -138,7 +138,6 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                     padding: 5,
                     width: screenWidth * 0.6,
                   }}
-                  key={item.exercise.name}
                 >
                   {item.exercise.name}
                 </Text>
@@ -162,7 +161,6 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                     color: theme.color,
                     fontSize: 16,
                   }}
-                  key={item.exercise.muscle}
                 >
                   {item.exercise.muscle}
                 </Text>
@@ -178,7 +176,6 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                     color: theme.color,
                     fontSize: 16,
                   }}
-                  key={item.exercise.equipment}
                 >
                   {item.exercise.equipment ||
                   item.exercise.equipment == "body_only"
@@ -192,7 +189,6 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                     styles.statsText,
                     { color: theme.color, alignSelf: "center" },
                   ]}
-                  key={item.calories}
                 >
                   Calories: {item.calories} kcal
                 </Text>
@@ -215,7 +211,6 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                         styles.statsText,
                         { color: theme.color, alignSelf: "center" },
                       ]}
-                      key={item.distance}
                     >
                       Distance: {item.distance} m
                     </Text>
@@ -234,7 +229,6 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                         styles.statsText,
                         { color: theme.color, alignSelf: "center" },
                       ]}
-                      key={item.duration}
                     >
                       Duration: {item.duration} mins
                     </Text>
@@ -264,7 +258,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                                         <>
                                             <View style={styles.statsRows}>
                                                 {console.log(`distance: ${item.distance}`)}
-                                                <Text style={[styles.statsText, {color: theme.color, alignSelf: 'center'}]} key={`${item.name}Reps`}>Reps {item.reps}</Text>
+                                                <Text style={[styles.statsText, {color: theme.color, alignSelf: 'center'}]}>Reps {item.reps}</Text>
                                                 <TextInput 
                                                     style={[styles.textInput, {borderColor: theme.color}]} 
                                                     placeholder='Reps Completed' 
@@ -276,7 +270,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                                                     />
                                             </View>
                                             <View style={styles.statsRows}>
-                                                <Text style={[styles.statsText, {color: theme.color, alignSelf: 'center'}]} key={`${item.name}Weight`}>Weight {item.weight}</Text>
+                                                <Text style={[styles.statsText, {color: theme.color, alignSelf: 'center'}]}>Weight {item.weight}</Text>
                                                 <TextInput 
                                                     style={[styles.textInput, {borderColor: theme.color}]} 
                                                     placeholder='Weight' 
@@ -298,7 +292,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                                         <>
                                             <View style={styles.statsRows}>
                                                 {console.log(`distance: ${item.distance}`)}
-                                                <Text style={[styles.statsText, {color: theme.color, alignSelf: 'center'}]} key={item.reps}>Reps {rep}</Text>
+                                                <Text style={[styles.statsText, {color: theme.color, alignSelf: 'center'}]} >Reps {rep}</Text>
                                                 <TextInput 
                                                     style={[styles.textInput, {borderColor: theme.color}]} 
                                                     placeholder='Reps Completed' 
@@ -309,7 +303,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                                                     />
                                             </View>
                                             <View style={styles.statsRows}>
-                                                <Text style={[styles.statsText, {color: theme.color, alignSelf: 'center'}]} key={item.weight}>Weight {item.weight}</Text>
+                                                <Text style={[styles.statsText, {color: theme.color, alignSelf: 'center'}]}>Weight {item.weight}</Text>
                                                 <TextInput 
                                                     style={[styles.textInput, {borderColor: theme.color}]} 
                                                     placeholder='Weight' 
@@ -343,7 +337,6 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
           style={styles.fab}
           label="Track Plan"
           onPress={() => {
-            deleteWorkoutPlan(workoutName);
             navigation.pop();
           }}
         />
@@ -370,7 +363,6 @@ const setsComponent = (item, theme) => {
             styles.statsText,
             { color: theme.color, alignSelf: "center" },
           ]}
-          key={item.reps}
         >
           Reps {item.reps}
         </Text>
@@ -389,7 +381,6 @@ const setsComponent = (item, theme) => {
             styles.statsText,
             { color: theme.color, alignSelf: "center" },
           ]}
-          key={item.weight}
         >
           Weight {item.weight}
         </Text>
