@@ -439,7 +439,7 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
         >
           {selectedExercises.map((item) => (
             <TouchableOpacity
-              key={`${item.name} Selected`}
+              key={`${Math.random()}`}
               onPress={() => {
                 setModalCalories(item.calories);
                 setModalDistance(item.distance);

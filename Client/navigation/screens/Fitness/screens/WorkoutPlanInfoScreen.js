@@ -120,7 +120,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
         style={{ margin: 10, width: screenWidth * 0.9 }}
       >
         {workoutDetails.map((item) => (
-          <TouchableWithoutFeedback style={{ padding: 40 }} key={item.exercise.name}>
+          <TouchableWithoutFeedback style={{ padding: 40 }} key={`${Math.random()}`}>
             <View
               style={[styles.exerciseSection, { borderColor: theme.color }]}
             >
@@ -182,24 +182,6 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                     ? "n/a"
                     : item.exercise.equipment}
                 </Text>
-              </View>
-              <View style={styles.statsRows}>
-                <Text
-                  style={[
-                    styles.statsText,
-                    { color: theme.color, alignSelf: "center" },
-                  ]}
-                >
-                  Calories: {item.calories} kcal
-                </Text>
-                <TextInput
-                  style={[styles.textInput, { borderColor: theme.color }]}
-                  placeholder="Calories (kcal)"
-                  color={theme.color}
-                  placeholderTextColor={theme.color}
-                  keyboardType={"numeric"}
-                  textAlign={"center"}
-                />
               </View>
 
               {item.exercise.type == "cardio" ? (
@@ -318,6 +300,25 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                                 }} */}
                 </>
               )}
+
+                <View style={styles.statsRows}>
+                    <Text
+                    style={[
+                        styles.statsText,
+                        { color: theme.color, alignSelf: "center" },
+                    ]}
+                    >
+                    Calories: {item.calories} kcal
+                    </Text>
+                    <TextInput
+                    style={[styles.textInput, { borderColor: theme.color }]}
+                    placeholder="Calories (kcal)"
+                    color={theme.color}
+                    placeholderTextColor={theme.color}
+                    keyboardType={"numeric"}
+                    textAlign={"center"}
+                    />
+                </View>
             </View>
           </TouchableWithoutFeedback>
         ))}
