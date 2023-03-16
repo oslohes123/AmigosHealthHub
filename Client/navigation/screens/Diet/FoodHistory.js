@@ -4,7 +4,7 @@ import { Calendar } from 'react-native-calendars'
 import { date } from 'yup';
 import { AntDesign } from '@expo/vector-icons';
 import { PieChart } from "react-native-chart-kit";
-import { getFood, getTrackedFood,getSpecificTrackedFood } from '../../../functions/Food';
+import { getFood, getTrackedFood,getSpecificTrackedFood, getPieChartData } from '../../../functions/Food';
 import { getLatestCalorieGoal, getCaloriesRemaining } from '../../../functions/Calories';
 import { useAuthContext } from '../Authentication/context/AuthContext';
 import { useEffect } from 'react';
@@ -17,6 +17,7 @@ export default function FoodHistory({ navigation }) {
   const [selectDay, setSelectDay] = useState(new Date().toISOString().split('T')[0]);
   const [calorieGoal, setCalorieGoal] = useState(0);
   const [caloriesRemaining, setCaloriesRemaining] = useState(0);
+  const [pieChartData, setPieChartData] = useState([]);
 
   const currentDate = new Date();
   const markedDate = {
@@ -74,14 +75,21 @@ export default function FoodHistory({ navigation }) {
     setCaloriesRemaining(calories)
   }
 
+  async function updatePieChart() {
+    let data = await getPieChartData(id,selectDay);
+    setPieChartData(data);
+  }
+
+  async function gettingTrackedFood() {
+    let response = await getTrackedFood(selectDay, id);
+    setFoodData(response);
+    getCalorieData();
+  }
+
   useEffect(() => {
     setViewCalendar(false);
-    async function gettingTrackedFood() {
-      let response = await getTrackedFood(selectDay, id);
-      setFoodData(response);
-      getCalorieData();
-    }
     gettingTrackedFood();
+    updatePieChart();
   },[selectDay])
 
 
@@ -95,13 +103,8 @@ export default function FoodHistory({ navigation }) {
     navigation.navigate('Food History Details', {selectedFoodDetails,trackedFoodDetails});
   }
 
-  
-
- 
-
-
   const pressHandler = () => {
-    navigation.navigate('Nutrients');
+    navigation.navigate('Nutrients',pieChartData);
   }
 
   return (
@@ -119,10 +122,10 @@ export default function FoodHistory({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        {selectDay && !viewCalendar && (
+        {selectDay && !viewCalendar && pieChartData.length > 0 &&  (
           <TouchableOpacity style={styles.pieWidget} onPress={pressHandler}>
             <PieChart
-              data={Piedata}
+              data={pieChartData}
               width={340}
               height={210}
               paddingLeft='10'
