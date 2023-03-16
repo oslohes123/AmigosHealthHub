@@ -120,7 +120,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
         style={{ margin: 10, width: screenWidth * 0.9 }}
       >
         {workoutDetails.map((item) => (
-          <TouchableWithoutFeedback style={{ padding: 40 }}>
+          <TouchableWithoutFeedback style={{ padding: 40 }} key={item.exercise.name}>
             <View
               style={[styles.exerciseSection, { borderColor: theme.color }]}
             >
