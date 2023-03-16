@@ -1,10 +1,12 @@
 import { BarChart, LineChart } from 'react-native-chart-kit';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import React, { useContext } from 'react';
 
-import React from 'react';
+import themeContext from '../theme/themeContext';
 
 //
 const GraphWidget = (inputLabel, inputDataset, graphTitle, graphAttributes) => {
+    const theme = useContext(themeContext)
     const chartData = {
         labels: inputLabel,
         datasets: [
@@ -18,7 +20,9 @@ const GraphWidget = (inputLabel, inputDataset, graphTitle, graphAttributes) => {
     const { yAxisSuffix } = graphAttributes;
     return (
         <View>
-            <Text style={styles.title}>{graphTitle}</Text>
+            <Text style={[styles.title, { color: theme.color }]}>
+                {graphTitle}
+            </Text>
             <BarChart
                 data={chartData}
                 width={screenWidth}
