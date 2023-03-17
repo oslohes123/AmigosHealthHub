@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { BarChart } from "react-native-chart-kit";
 import { PieChart } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
@@ -100,7 +100,8 @@ export default function OverallStats() {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
+    <View >
       <TouchableOpacity style={{alignSelf: 'center', marginTop: '10%'}}>
       
       {isLoading && (
@@ -200,6 +201,7 @@ export default function OverallStats() {
       </TouchableOpacity>
 
     </View>
+    </ScrollView>
   )}
 
 
