@@ -5,6 +5,8 @@ import {
   Button,
   SafeAreaView,
   Image,
+  TouchableOpacity,
+  ScrollView
 } from "react-native";
 import widget from "../../components/widget";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -13,6 +15,7 @@ import react from "react";
 import { useAuthContext } from "../Authentication/context/AuthContext";
 import { useLogout } from "../Authentication/hooks/useLogOut";
 import CaloriesBurntTodayWidget from "../../components/CaloriesBurntTodayWidget";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function DashboardScreen({ navigation }) {
   const { logout } = useLogout();
@@ -44,9 +47,39 @@ export default function DashboardScreen({ navigation }) {
       </View>
       <Button title={"LogOut"} onPress={handleClick} />
       <CaloriesBurntTodayWidget />
+
+      <TouchableOpacity >
+          <LinearGradient
+            colors={["blue", "grey"]}
+            style={styles.widget}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+          >
+            <Text style={styles.widgetText}>
+              Word of the Day
+              
+            </Text>
+            <Ionicons name="logo-wordpress" size={40} color="white" />
+          </LinearGradient>
+        </TouchableOpacity>
+
+        <TouchableOpacity >
+          <LinearGradient
+            colors={["blue", "grey"]}
+            style={styles.widget}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+          >
+            <Text style={styles.widgetText}>
+              Calories to Goal  
+            </Text>
+            <Text style={styles.widgetText}>1250cal</Text>
+          </LinearGradient>
+        </TouchableOpacity>
+
       <View style={styles.blankSpace}>
         {/* <Image style={styles.mainImage} source=Cal{require('assets/favicon.png')} /> */}
-        {widget({})}
+        {/* {widget({})} */}
       </View>
       <StatusBar style="auto" />
     </SafeAreaView>
@@ -86,6 +119,20 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     alignItems: "flex-end",
     justifyContent: "center",
+  },
+  widget: {
+    paddingHorizontal: "15%",
+    paddingVertical: "10%",
+    borderRadius: 25,
+    width: '80%',
+    alignSelf: 'center',
+    marginTop: '5%',
+    alignItems: 'center'
+  },
+  widgetText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 25,
   },
   // settings: {
   //   flex: 1,
