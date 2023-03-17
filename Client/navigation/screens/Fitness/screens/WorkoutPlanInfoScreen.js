@@ -7,14 +7,10 @@ import {
   ScrollView,
   Dimensions,
   Modal,
-  unstable_enableLogBox,
 } from "react-native";
 import { useState, useContext, useEffect } from "react";
 import themeContext from "../../../theme/themeContext";
 import { IconButton } from "react-native-paper";
-import GreenButton from "../../../components/GreenButton";
-import RedButton from "../../../components/RedButton";
-import CommonButton from "../../../components/CommonButton";
 import { useDeleteWorkoutPlan } from "../hooks/workoutPlans/useDeleteWorkoutPlan";
 import { FAB } from "react-native-paper";
 
@@ -30,11 +26,6 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
   const [workoutDetails, setWorkoutDetails] = useState([]);
   const { getWorkoutDetails, isLoading, error } = useGetWorkoutDetails();
   const { deleteWorkoutPlan } = useDeleteWorkoutPlan();
-
-  const [setsArray, setSetsArray] = useState({});
-  const [repsArray, setRepsArray] = useState({});
-  const [weightArray, setWeightArray] = useState({});
-  const [exRepsEtc, setExRepsEtc] = useState([]);
   const workoutName = route.params;
 
   useEffect(() => {
@@ -46,6 +37,15 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
     console.log(`Route Params: ${JSON.stringify(route.params)}`);
     fetchWorkoutDetails(workoutName);
   }, []);
+
+  function setsToArray(sets) {
+    let newArray = [];
+    for (let i=0; i<sets; i++) {
+        newArray.push(1);
+    }
+    console.log(`array to map: ${newArray}`)
+    return newArray;
+  }
 
   return (
     <SafeAreaView
@@ -184,6 +184,25 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                 </Text>
               </View>
 
+              <View style={styles.statsRows}>
+                    <Text
+                    style={[
+                        styles.statsText,
+                        { color: theme.color, alignSelf: "center" },
+                    ]}
+                    >
+                    Calories: {item.calories} kcal
+                    </Text>
+                    <TextInput
+                    style={[styles.textInput, { borderColor: theme.color }]}
+                    placeholder="Calories (kcal)"
+                    color={theme.color}
+                    placeholderTextColor={theme.color}
+                    keyboardType={"numeric"}
+                    textAlign={"center"}
+                    />
+                </View>
+
               {item.exercise.type == "cardio" ? (
                 <>
                   <View style={styles.statsRows}>
@@ -212,7 +231,8 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                         { color: theme.color, alignSelf: "center" },
                       ]}
                     >
-                      Duration: {item.duration} mins
+                      Duration: {Math.trunc(Number(item.duration))}' {Math.trunc((Number(item.duration) - Math.trunc(Number(item.duration))) * 60)}''
+                      {/* {console.log(`Number(duration).round(): ${Number(item.duration)}`)} */}
                     </Text>
                     <View style={{flexDirection: 'row', width: styles.textInput.width, justifyContent: 'space-between'}}>
                       <TextInput
@@ -245,99 +265,116 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                 </>
               ) : (
                 <>
-                  {/* {(!exRepsEtc || exRepsEtc === []) && } */}
+                    {/* <View>
+                        <View style={styles.statsRows}>
+                            {console.log(`Sets: ${item.sets}`)}
+                            <Text
+                                style={[
+                                    styles.statsText,
+                                    { color: theme.color, alignSelf: "center" },
+                                ]}
+                                >
+                                Sets: {item.sets}
+                            </Text>
+                            <TextInput
+                                style={[styles.textInput, { borderColor: theme.color }]}
+                                placeholder="Sets"
+                                color={theme.color}
+                                placeholderTextColor={theme.color}
+                                keyboardType={"numeric"}
+                                textAlign={"center"}
+                                />
+                        </View>
+                        <View style={[styles.statsRows, {justifyContent: 'space-evenly'}]}>
+                            <Text
+                                style={[
+                                styles.statsText,
+                                { color: theme.color, alignSelf: "center" },
+                                ]}
+                            >
+                                Reps: {item.reps}
+                            </Text>
+                            <Text
+                                style={[
+                                styles.statsText,
+                                { color: theme.color, alignSelf: "center" },
+                                ]}
+                            >
+                                Weight: {item.weight} kg
+                            </Text>
+                        </View>
+                    </View> */}
 
-                  {/* {exRepsEtc != [] && exRepsEtc != [[item.name, item.sets, returnDataArray(item.sets, item.reps), returnDataArray(item.sets, item.weight)]] ? 
-                            setExRepsEtc(exRepsEtc.concat([[item.name, item.sets, returnDataArray(item.sets, item.reps), returnDataArray(item.sets, item.weight)]])) : 
-                            (exRepsEtc === [[item.name, item.sets, returnDataArray(item.sets, item.reps), returnDataArray(item.sets, item.weight)]] ? <></> : setExRepsEtc([[item.name, item.sets, returnDataArray(item.sets, item.reps), returnDataArray(item.sets, item.weight)]]))}
-                            
-                            {console.log(`exRepsEtc: ${JSON.stringify(exRepsEtc)}`)} */}
+                    <View style={{flexDirection: 'row', justifyContent: "space-evenly"}}>
+                        <View>
+                            <Text
+                                style={[
+                                styles.statsText,
+                                { color: theme.color, alignSelf: "center", paddingVertical: 5 },
+                                ]}
+                            >
+                                Reps: {item.reps}
+                            </Text>
+                            {setsToArray(item.sets).map(() => (
+                                <View style={[{justifyContent: 'space-evenly', paddingVertical: 5 }]}>
+                                    <TextInput
+                                        style={[styles.textInput, { borderColor: theme.color, width: styles.textInput.width * 0.9 }]}
+                                        placeholder="Reps"
+                                        color={theme.color}
+                                        placeholderTextColor={theme.color}
+                                        keyboardType={"numeric"}
+                                        textAlign={"center"}
+                                        />
+                                </View>
+                            ))}
+                        </View>
+                        <View>
+                            <Text
+                                style={[
+                                styles.statsText,
+                                { color: theme.color, alignSelf: "center", paddingVertical: 5 },
+                                ]}
+                            >
+                                Weight: {item.weight} kg
+                            </Text>
+                            {setsToArray(item.sets).map(() => (
+                                <View style={[{justifyContent: 'space-evenly', paddingVertical: 5 }]}>
+                                    <TextInput
+                                        style={[styles.textInput, { borderColor: theme.color, width: styles.textInput.width * 0.9 }]}
+                                        placeholder="Weight (kg)"
+                                        color={theme.color}
+                                        placeholderTextColor={theme.color}
+                                        keyboardType={"numeric"}
+                                        textAlign={"center"}
+                                    />
+                                </View>
+                            ))}
+                        </View>
+                    </View>
 
-                  {/* {exRepsEtc && exRepsEtc.map((ex) => {
-                                {if (ex[0] === item.name) {
-                                    ex[2].forEach(element => {
-                                        <>
-                                            <View style={styles.statsRows}>
-                                                {console.log(`distance: ${item.distance}`)}
-                                                <Text style={[styles.statsText, {color: theme.color, alignSelf: 'center'}]}>Reps {item.reps}</Text>
-                                                <TextInput 
-                                                    style={[styles.textInput, {borderColor: theme.color}]} 
-                                                    placeholder='Reps Completed' 
-                                                    color={theme.color}
-                                                    placeholderTextColor={theme.color} 
-                                                    keyboardType={'numeric'} 
-                                                    textAlign={'center'}
-                                                    defaultValue={element}
-                                                    />
-                                            </View>
-                                            <View style={styles.statsRows}>
-                                                <Text style={[styles.statsText, {color: theme.color, alignSelf: 'center'}]}>Weight {item.weight}</Text>
-                                                <TextInput 
-                                                    style={[styles.textInput, {borderColor: theme.color}]} 
-                                                    placeholder='Weight' 
-                                                    color={theme.color}
-                                                    placeholderTextColor={theme.color} 
-                                                    keyboardType={'numeric'} 
-                                                    textAlign={'center'}
-                                                    defaultValue={ex[3][0]}
-                                                    />
-                                            </View>
-                                        </>
-                                    });
-                                }}
-                            })} */}
-
-                  {/* {setsComponent(item, theme)} */}
-                  {/* {(item) => {
-                                    for (let i = 0; i < item.sets; i++) {
-                                        <>
-                                            <View style={styles.statsRows}>
-                                                {console.log(`distance: ${item.distance}`)}
-                                                <Text style={[styles.statsText, {color: theme.color, alignSelf: 'center'}]} >Reps {rep}</Text>
-                                                <TextInput 
-                                                    style={[styles.textInput, {borderColor: theme.color}]} 
-                                                    placeholder='Reps Completed' 
-                                                    color={theme.color}
-                                                    placeholderTextColor={theme.color} 
-                                                    keyboardType={'numeric'} 
-                                                    textAlign={'center'}
-                                                    />
-                                            </View>
-                                            <View style={styles.statsRows}>
-                                                <Text style={[styles.statsText, {color: theme.color, alignSelf: 'center'}]}>Weight {item.weight}</Text>
-                                                <TextInput 
-                                                    style={[styles.textInput, {borderColor: theme.color}]} 
-                                                    placeholder='Weight' 
-                                                    color={theme.color}
-                                                    placeholderTextColor={theme.color} 
-                                                    keyboardType={'numeric'} 
-                                                    textAlign={'center'}
-                                                    />
-                                            </View>
-                                        </>
-                                    }
-                                }} */}
+                    {/* {setsToArray(item.sets).map(() => (
+                        <View style={[{justifyContent: 'space-evenly'}]}>
+                            <TextInput
+                                style={[styles.textInput, { borderColor: theme.color, width: styles.textInput.width * 0.8 }]}
+                                placeholder="Reps"
+                                color={theme.color}
+                                placeholderTextColor={theme.color}
+                                keyboardType={"numeric"}
+                                textAlign={"center"}
+                            />
+                            <TextInput
+                                style={[styles.textInput, { borderColor: theme.color, width: styles.textInput.width * 0.8 }]}
+                                placeholder="Weight (kg)"
+                                color={theme.color}
+                                placeholderTextColor={theme.color}
+                                keyboardType={"numeric"}
+                                textAlign={"center"}
+                            />
+                        </View>
+                        ))
+                    } */}
                 </>
               )}
-
-                <View style={styles.statsRows}>
-                    <Text
-                    style={[
-                        styles.statsText,
-                        { color: theme.color, alignSelf: "center" },
-                    ]}
-                    >
-                    Calories: {item.calories} kcal
-                    </Text>
-                    <TextInput
-                    style={[styles.textInput, { borderColor: theme.color }]}
-                    placeholder="Calories (kcal)"
-                    color={theme.color}
-                    placeholderTextColor={theme.color}
-                    keyboardType={"numeric"}
-                    textAlign={"center"}
-                    />
-                </View>
             </View>
           </TouchableWithoutFeedback>
         ))}
@@ -364,58 +401,6 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
     </SafeAreaView>
   );
 }
-
-function returnDataArray(itemSets, itemData) {
-  let dataArray = [];
-  for (let i = 0; i < itemSets; i++) {
-    dataArray.push(itemData);
-  }
-  return dataArray;
-}
-
-const setsComponent = (item, theme) => {
-  for (let i = 0; i < item.sets; i++) {
-    <>
-      <View style={styles.statsRows}>
-        {console.log(`distance: ${item.distance}`)}
-        <Text
-          style={[
-            styles.statsText,
-            { color: theme.color, alignSelf: "center" },
-          ]}
-        >
-          Reps {item.reps}
-        </Text>
-        <TextInput
-          style={[styles.textInput, { borderColor: theme.color }]}
-          placeholder="Reps Completed"
-          color={theme.color}
-          placeholderTextColor={theme.color}
-          keyboardType={"numeric"}
-          textAlign={"center"}
-        />
-      </View>
-      <View style={styles.statsRows}>
-        <Text
-          style={[
-            styles.statsText,
-            { color: theme.color, alignSelf: "center" },
-          ]}
-        >
-          Weight {item.weight}
-        </Text>
-        <TextInput
-          style={[styles.textInput, { borderColor: theme.color }]}
-          placeholder="Weight"
-          color={theme.color}
-          placeholderTextColor={theme.color}
-          keyboardType={"numeric"}
-          textAlign={"center"}
-        />
-      </View>
-    </>;
-  }
-};
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
