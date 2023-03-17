@@ -7,8 +7,8 @@ import {
     View
 } from 'react-native';
 
+import HoursSleptGraph from '../Sleep/hoursSleptGraph';
 import { StatusBar } from 'expo-status-bar';
-import hoursSleptGraph from '../Sleep/hoursSleptGraph';
 import themeContext from '../../theme/themeContext';
 import { useAuthContext } from '../Authentication/context/AuthContext';
 
@@ -28,13 +28,11 @@ export default function DashboardScreen({ navigation }) {
         <SafeAreaView style={[styles.container, background]}>
             <Text style={[styles.title, textColour]}>{welcomeMessage}</Text>
             <SafeAreaView style={styles.widgetContainer}>
-                <View style={styles.graphContainer}>
-                    {hoursSleptGraph()}
-                    <TouchableOpacity
-                        style={[styles.graphOverlay]}
-                        onPress={() => navigation.navigate('Sleep')}
-                    />
-                </View>
+                <TouchableOpacity onPress={() => navigation.navigate('Sleep')}>
+                    <View style={styles.graphContainer}>
+                        <HoursSleptGraph />
+                    </View>
+                </TouchableOpacity>
             </SafeAreaView>
             <StatusBar style="auto" />
         </SafeAreaView>
@@ -60,12 +58,5 @@ const styles = StyleSheet.create({
     },
     graphContainer: {
         position: 'relative'
-    },
-    graphOverlay: {
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0
     }
 });
