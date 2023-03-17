@@ -7,26 +7,57 @@ import { useIsFocused } from "@react-navigation/native";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import { useGetExerciseNameFreq } from '../hooks/exercise/useGetExerciseNameFreq';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-export default function OverallStats({navigation}) {
+import { useTrackedWorkoutFreq } from '../hooks/trackedWorkouts/useTrackedWorkoutFreq';
+import { useNavigation } from '@react-navigation/native';
+import { useGetExerciseTypeFreq } from '../hooks/exercise/useGetExerciseTypeFreq';
+export default function OverallStats() {
 
   const screenWidth = Dimensions.get("window").width;
   const [getExerciseNameFreqData, setExerciseNameFreqData] = useState(null);
   const [getExerciseNameFreqLabels, setExerciseNameFreqLabels] = useState(null);
-  const {getExerciseNameFreq, isLoading, error} = useGetExerciseNameFreq();
+
+  const [getTrackedWorkoutFreqData, setTrackedWorkoutFreqData] = useState(null);
+  const [getTrackedWorkoutFreqLabels, setTrackedWorkoutFreqLabels] = useState(null);
+
+  const [getExerciseTypeFreqData, setExerciseTypeFreqData] = useState(null);
+  const [getExerciseTypeFreqLabels, setExerciseTypeFreqLabels] = useState(null);
+
+
+   const {getTrackedWorkoutFreq, isLoadingGetWorkoutFreq, getErrorGetWorkoutFreq}= useTrackedWorkoutFreq()
+   const {getExerciseTypeFreq, getErrorGetExerciseType, isLoadingExerciseType} = useGetExerciseTypeFreq()
+   const {getExerciseNameFreq, isLoading, error} = useGetExerciseNameFreq();
+
   const isFocused = useIsFocused();
+  const navigation = useNavigation()
   useEffect(() => {
     const setDataAndLabels = async () => {
       setExerciseNameFreqData(null);
+      setTrackedWorkoutFreqData(null);
+      setExerciseTypeFreqData(null);
       const result = await getExerciseNameFreq();
+       const workoutFreq= await getTrackedWorkoutFreq();
+      const exerciseTypeFreq = await getExerciseTypeFreq();
+      if(exerciseTypeFreq){
+        const {  exerciseTypeLabels,  exerciseTypeData } = exerciseTypeFreq;
+        setExerciseTypeFreqData(exerciseTypeData);
+        setExerciseTypeFreqLabels(exerciseTypeLabels);
+      }
       if (result) {
         const { exerciseNameLabels, exerciseNameData } = result;
         setExerciseNameFreqData(exerciseNameData);
         setExerciseNameFreqLabels(exerciseNameLabels);
       }
+       if (workoutFreq) {
+        const { workoutNameLabels, workoutNameData } = workoutFreq;
+        setTrackedWorkoutFreqData(workoutNameData);
+        setTrackedWorkoutFreqLabels(workoutNameLabels);
+      }
     };
     setDataAndLabels();
     console.log(`getExerciseNameFreqData:${getExerciseNameFreqData}`);
-    console.log(`getExerciseNameFreqLabels:${getExerciseNameFreqLabels}`);
+    console.log(`getTrackedWorkoutFreqData:${getTrackedWorkoutFreqData}`);
+    console.log(`getExerciseTypeFreqData:${getExerciseTypeFreqData}`);
+
   }, [navigation, isFocused]);
 
   const exerciseNameData = {
@@ -38,43 +69,24 @@ export default function OverallStats({navigation}) {
     ]
   };
 
-  const Piedata = [
-    {
-      name: "Legs",
-      amount: 60,
-      color: "orange",
-      legendFontColor: "black",
-      legendFontSize: 18,
-    },
-    {
-      name: "Arms",
-      amount: 120,
-      color: "green",
-      legendFontColor: "black",
-      legendFontSize: 18,
-    },
-    {
-      name: "Shoulder",
-      amount: 25,
-      color: "yellow",
-      legendFontColor: "black",
-      legendFontSize: 18,
-    },
-    {
-      name: "Back",
-      amount: 55,
-      color: "blue",
-      legendFontColor: "black",
-      legendFontSize: 18,
-    },
-    {
-      name: "Abs",
-      amount: 34,
-      color: "red",
-      legendFontColor: "black",
-      legendFontSize: 18,
-    },
-  ];
+  const workoutNameFreq = {
+    labels: getTrackedWorkoutFreqLabels,
+    datasets: [
+      {
+        data: getTrackedWorkoutFreqData
+      }
+    ]
+  };
+
+  const exerciseTypeData = {
+    labels: getExerciseTypeFreqLabels,
+    datasets: [
+      {
+        data: getExerciseTypeFreqData
+      }
+    ]
+  };
+
 
   const chartConfig = {
     backgroundGradientFrom: "white",
@@ -90,17 +102,21 @@ export default function OverallStats({navigation}) {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={{alignSelf: 'center', marginTop: '10%'}}>
+      
       {isLoading && (
         <>
-          {/* <Text>Refreshing.....</Text> */}
           <ActivityIndicator
             animating={true}
-            size={50}
+            size={30}
             color={MD2Colors.lightBlue400}
           />
         </>
       )}
+      {
+        error && (<Text>{error}</Text>)
+      }
        {getExerciseNameFreqData && getExerciseNameFreqLabels && (
+        
           <TouchableWithoutFeedback>
           <View style={{ marginBottom: 40 }}>
             <Text style={[styles.title]}>Number Of Times An Exercise Was Performed</Text>
@@ -117,24 +133,75 @@ export default function OverallStats({navigation}) {
           </TouchableWithoutFeedback>
         )}
 
+
+
+{isLoadingExerciseType && (
+        <>
+          <ActivityIndicator
+            animating={true}
+            size={30}
+            color={MD2Colors.lime400}
+          />
+        </>
+      )}
+      {
+        getErrorGetExerciseType && (<Text>{getErrorGetExerciseType}</Text>)
+      }
+       {getExerciseTypeFreqData && getExerciseTypeFreqLabels && (
+        
+          <TouchableWithoutFeedback>
+          <View style={{ marginBottom: 40 }}>
+            <Text style={[styles.title]}>Frequency of all exercise types</Text>
+            <BarChart
+              // style={{ borderRadius: 25 }}
+              data={exerciseTypeData}
+              width={screenWidth}
+              height={220}
+              // yAxisSuffix={` kg`}
+              chartConfig={chartConfig}
+              fromZero={true}
+            />
+          </View>
+          </TouchableWithoutFeedback>
+        )}
+
+
+{isLoadingGetWorkoutFreq && (
+        <>
+       
+          <ActivityIndicator
+            animating={true}
+            size={30}
+            color={MD2Colors.red100}
+          />
+        </>
+      )}
+      {
+        getErrorGetWorkoutFreq && (<Text>{getErrorGetWorkoutFreq}</Text>)
+      }
+       {getTrackedWorkoutFreqData && getTrackedWorkoutFreqLabels && (
+        
+          <TouchableWithoutFeedback>
+          <View style={{ marginBottom: 40 }}>
+            <Text style={[styles.title]}>Frequency of all workouts</Text>
+            <BarChart
+              // style={{ borderRadius: 25 }}
+              data={workoutNameFreq}
+              width={screenWidth}
+              height={220}
+              // yAxisSuffix={` kg`}
+              chartConfig={chartConfig}
+              fromZero={true}
+            />
+          </View>
+          </TouchableWithoutFeedback>
+        )}
+
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.pieWidget}>
-        <PieChart
-          data={Piedata}
-          width={340}
-          height={210}
-          paddingLeft="10"
-          chartConfig={{
-            color: () => "black",
-          }}
-          accessor="amount"
-          backgroundColor="transparent"
-        />
-      </TouchableOpacity>
     </View>
-  )
-}
+  )}
+
 
 const styles = StyleSheet.create({
     container: {

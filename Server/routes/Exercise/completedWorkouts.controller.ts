@@ -499,36 +499,3 @@ export const getActualExerciseTypeFrequency =async(req:Request, res: Response) =
     return res.status(200).json({mssg:`Success!`, graphLabels, graphData});
 
 }
-// export const getActualExerciseFrequency =async(req:Request, res: Response) => {
-//     const {userid} = req.headers;
-//     if(!userid){
-//         return res.status(400).json({mssg:"userid cannot be empty"});
-//     }
-//     const {data, error}: any =  await databaseQuery.selectWhere(supabase, 'CompletedWorkouts', 'userid', userid, 'completedWorkoutID');
-//     if(error){
-//         return res.status(400).json({mssg:"Something went wrong!", error})
-//        }
-//     console.log(`dataln362: ${JSON.stringify(data)}`);
-//     let arrayOfCompletedWorkoutIDs = [];
-//     //get all CompletedWorkoutIDs
-//     for (let i = 0; i< data.length; i++){
-//         arrayOfCompletedWorkoutIDs.push(data[i].completedWorkoutID);
-//     }
-//     console.log(`arrayOfCompletedWorkoutIDs: ${JSON.stringify(arrayOfCompletedWorkoutIDs)}`);
-//     //get all trackedWorkoutsWithExercises, then all AEIDs
-//     let arrayOfAEIDs = [];
-//     for (let i = 0; i< arrayOfCompletedWorkoutIDs.length; i++){
-//        const {data, error}: any =  await databaseQuery.selectWhere(supabase, 'TrackedWorkoutsWithExercises', 'completedWorkoutID',arrayOfCompletedWorkoutIDs[i], 'AEID');
-//        if(error){
-//         return res.status(400).json({mssg:"Something went wrong!", error})
-//        }
-//        else{
-//         for(let i = 0; i< data.length; i++){
-//             arrayOfAEIDs.push(data[i].AEID);
-//         }
-//        }
-//     }
-//     console.log(`arrayOfAEIDs: ${JSON.stringify(arrayOfAEIDs)}`);
-//     return res.status(200).json({mssg:`Success!`, data});
-
-// }
