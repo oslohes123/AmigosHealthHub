@@ -74,12 +74,12 @@ export default function ExerciseInfoScreen({ route, navigation }) {
           onPress={() => {
             if (
               (exerciseInfo.type === "cardio" &&
-                distance != null && distance.trim() != '' &&
-                duration != null) && duration.trim() != '' ||
+                distance != null && distance.trim() != '' && !isNaN(Number(distance)) &&
+                duration != null) && duration.trim() != '' && !isNaN(Number(duration)) ||
               (exerciseInfo.type != "cardio" &&
-                weight != null && weight.trim() != '' &&
-                reps != null && reps.trim() != '' &&
-                sets != null && sets.trim() != '')
+                weight != null && weight.trim() != '' && !isNaN(Number(weight)) &&
+                reps != null && reps.trim() != '' && !isNaN(Number(reps)) &&
+                sets != null && sets.trim() != '' && !isNaN(Number(sets)))
             ) {
               console.log(
                 `These are the previous selected exercises: ${JSON.stringify(
@@ -445,7 +445,7 @@ export default function ExerciseInfoScreen({ route, navigation }) {
         }}
         duration={3000}
       >
-        Fields left empty!
+        Fields left empty or have invalid values!
       </Snackbar>
     </SafeAreaView>
   );

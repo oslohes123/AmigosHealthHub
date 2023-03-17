@@ -271,7 +271,7 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
                     textAlign: "center",
                   }}
                 >
-                  {modalCalories} kcal
+                  { modalCalories ? modalCalories : 0 } kcal
                 </Text>
               </View>
 
