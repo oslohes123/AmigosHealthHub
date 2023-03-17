@@ -6,7 +6,8 @@ import themeContext from '../theme/themeContext';
 
 //
 const GraphWidget = (inputLabel, inputDataset, graphTitle, graphAttributes) => {
-    const theme = useContext(themeContext)
+    const theme = useContext(themeContext);
+
     const chartData = {
         labels: inputLabel,
         datasets: [
@@ -16,6 +17,7 @@ const GraphWidget = (inputLabel, inputDataset, graphTitle, graphAttributes) => {
             }
         ]
     };
+
     const screenWidth = Dimensions.get('window').width * 0.95;
     const { yAxisSuffix } = graphAttributes;
     return (
@@ -27,15 +29,18 @@ const GraphWidget = (inputLabel, inputDataset, graphTitle, graphAttributes) => {
                 data={chartData}
                 width={screenWidth}
                 height={220}
-                yAxisSuffix={yAxisSuffix}
+                yAxisSuffix={yAxisSuffix} // ' h'
                 fromZero={true}
+                showValuesOnTopOfBars={true}
+                withInnerLines={false}
                 chartConfig={{
-                    backgroundGradientFrom: 'white',
-                    backgroundGradientTo: '#38D689',
-                    fillShadowGradientFrom: '#233037',
-                    fillShadowGradientTo: '#252628',
+                    valueTextColor: 'white',
+                    backgroundGradientFrom: '#c2e7fe',
+                    backgroundGradientTo: theme.secondary,
+                    fillShadowGradientFrom: theme.color,
+                    fillShadowGradientTo: theme.color,
                     decimalPlaces: 0,
-                    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                    color: (opacity = 1) => theme.colorRGBA,
                     style: {
                         borderRadius: 16
                     }
