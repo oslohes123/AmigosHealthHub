@@ -1,18 +1,39 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { BarChart } from "react-native-chart-kit";
 import { PieChart } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
-
-export default function OverallStats() {
+import { useIsFocused } from "@react-navigation/native";
+import { ActivityIndicator, MD2Colors } from "react-native-paper";
+import { useGetExerciseNameFreq } from '../hooks/exercise/useGetExerciseNameFreq';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+export default function OverallStats({navigation}) {
 
   const screenWidth = Dimensions.get("window").width;
+  const [getExerciseNameFreqData, setExerciseNameFreqData] = useState(null);
+  const [getExerciseNameFreqLabels, setExerciseNameFreqLabels] = useState(null);
+  const {getExerciseNameFreq, isLoading, error} = useGetExerciseNameFreq();
+  const isFocused = useIsFocused();
+  useEffect(() => {
+    const setDataAndLabels = async () => {
+      setExerciseNameFreqData(null);
+      const result = await getExerciseNameFreq();
+      if (result) {
+        const { exerciseNameLabels, exerciseNameData } = result;
+        setExerciseNameFreqData(exerciseNameData);
+        setExerciseNameFreqLabels(exerciseNameLabels);
+      }
+    };
+    setDataAndLabels();
+    console.log(`getExerciseNameFreqData:${getExerciseNameFreqData}`);
+    console.log(`getExerciseNameFreqLabels:${getExerciseNameFreqLabels}`);
+  }, [navigation, isFocused]);
 
-  const data = {
-    labels: ["Legs", "Arms", "Back", "Abs", "Shoulder", "Head"],
+  const exerciseNameData = {
+    labels: getExerciseNameFreqLabels,
     datasets: [
       {
-        data: [20, 45, 28, 80, 99, 43]
+        data: getExerciseNameFreqData
       }
     ]
   };
@@ -69,15 +90,33 @@ export default function OverallStats() {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={{alignSelf: 'center', marginTop: '10%'}}>
-        <BarChart
-          style={{borderRadius: 25}}
-          data={data}
-          width={0.8 * screenWidth}
-          height={270}
-          yAxisLabel="%"
-          chartConfig={chartConfig}
-          verticalLabelRotation={30}
-        />
+      {isLoading && (
+        <>
+          {/* <Text>Refreshing.....</Text> */}
+          <ActivityIndicator
+            animating={true}
+            size={50}
+            color={MD2Colors.lightBlue400}
+          />
+        </>
+      )}
+       {getExerciseNameFreqData && getExerciseNameFreqLabels && (
+          <TouchableWithoutFeedback>
+          <View style={{ marginBottom: 40 }}>
+            <Text style={[styles.title]}>Number Of Times An Exercise Was Performed</Text>
+            <BarChart
+              // style={{ borderRadius: 25 }}
+              data={exerciseNameData}
+              width={screenWidth}
+              height={220}
+              // yAxisSuffix={` kg`}
+              chartConfig={chartConfig}
+              fromZero={true}
+            />
+          </View>
+          </TouchableWithoutFeedback>
+        )}
+
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.pieWidget}>
