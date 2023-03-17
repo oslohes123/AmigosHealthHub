@@ -8,6 +8,7 @@ import { genericSearch, specificSearch } from '../../../functions/searchFood'
 import { updateCalorieGoal, getCaloriesRemaining, getLatestCalorieGoal } from '../../../functions/Calories';
 import { useAuthContext } from "../Authentication/context/AuthContext";
 import { useIsFocused } from '@react-navigation/native';
+import { Dimensions } from "react-native";
 
 import GreenButton from '../../components/GreenButton';
 import { getPieChartData } from '../../../functions/Food';
@@ -15,48 +16,10 @@ import { getPieChartData } from '../../../functions/Food';
 
 export default function DietDashboardScreen({ navigation }) {
 
+  const screenWidth = Dimensions.get("window").width;
+
   const theme = useContext(themeContext)
   const isFocused = useIsFocused();
-  const Piedata = [
-    {
-      name: "Protein",
-      amount: 60,
-      color: "orange",
-      legendFontColor: "black",
-      legendFontSize: 18
-    },
-    {
-      name: "Carbs",
-      amount: 120,
-      color: "green",
-      legendFontColor: "black",
-      legendFontSize: 18
-
-
-
-    },
-    {
-      name: "Fat",
-      amount: 25,
-      color: "yellow",
-      legendFontColor: "black",
-      legendFontSize: 18
-    },
-    {
-      name: "Vitamins",
-      amount: 55,
-      color: "blue",
-      legendFontColor: "black",
-      legendFontSize: 18
-    },
-    {
-      name: "Fibre",
-      amount: 34,
-      color: "red",
-      legendFontColor: "black",
-      legendFontSize: 18
-    }
-  ];
 
   const { user } = useAuthContext();
   const id = user.id;
@@ -169,9 +132,9 @@ export default function DietDashboardScreen({ navigation }) {
             <TouchableOpacity style={styles.pieWidget} onPress={pieChartPress}>
               <PieChart
                 data={pieChartData}
-                width={340}
+                width={0.9 * screenWidth}
                 height={210}
-                paddingLeft='10'
+                //paddingLeft='10'
                 chartConfig={{
                   color: () => "black",
                 }}

@@ -8,10 +8,12 @@ import { getFood, getTrackedFood,getSpecificTrackedFood, getPieChartData } from 
 import { getLatestCalorieGoal, getCaloriesRemaining } from '../../../functions/Calories';
 import { useAuthContext } from '../Authentication/context/AuthContext';
 import { useEffect } from 'react';
+import { Dimensions } from "react-native";
 
 
 export default function FoodHistory({ navigation }) {
 
+  const screenWidth = Dimensions.get("window").width;
   const [foodData, setFoodData] = useState([]);
   const [viewCalendar, setViewCalendar] = useState(false);
   const [selectDay, setSelectDay] = useState(new Date().toISOString().split('T')[0]);
@@ -27,43 +29,6 @@ export default function FoodHistory({ navigation }) {
       dotColor: 'red'
     }
   };
-  const Piedata = [
-    {
-      name: "Protein",
-      amount: 60,
-      color: "orange",
-      legendFontColor: "black",
-      legendFontSize: 18
-    },
-    {
-      name: "Carbs",
-      amount: 120,
-      color: "green",
-      legendFontColor: "black",
-      legendFontSize: 18
-    },
-    {
-      name: "Fat",
-      amount: 25,
-      color: "yellow",
-      legendFontColor: "black",
-      legendFontSize: 18
-    },
-    {
-      name: "Vitamins",
-      amount: 55,
-      color: "blue",
-      legendFontColor: "black",
-      legendFontSize: 18
-    },
-    {
-      name: "Fibre",
-      amount: 34,
-      color: "red",
-      legendFontColor: "black",
-      legendFontSize: 18
-    }
-  ];
 
   const { user } = useAuthContext();
   const id = user.id;
@@ -132,9 +97,9 @@ export default function FoodHistory({ navigation }) {
           <TouchableOpacity style={styles.pieWidget} onPress={pressHandler}>
             <PieChart
               data={pieChartData}
-              width={340}
+              width={0.9 * screenWidth}
               height={210}
-              paddingLeft='10'
+              //paddingLeft='10'
               chartConfig={{
                 color: () => "black",
               }}

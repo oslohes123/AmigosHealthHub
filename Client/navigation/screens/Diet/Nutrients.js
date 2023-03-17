@@ -1,6 +1,7 @@
 import React, {useContext} from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import themeContext from '../../theme/themeContext';
+import { DataTable } from 'react-native-paper';
 
 export default function Nutrients({ route, navigation}) {
 
@@ -9,11 +10,10 @@ export default function Nutrients({ route, navigation}) {
 
   const dataItems =  data.map((item,index) => {
     return (
-      <View key = {index} style={styles.primaryView}>
-        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>{item.name}</Text>
-        <Text style={[styles.text, { color: theme.color }, {borderColor: theme.color}]}>{item.amount}</Text>
-      </View>
-
+      <DataTable.Row style={styles.row} key = {index}>
+        <DataTable.Cell style={[{  color: theme.color }, {borderColor: theme.color}]}>{item.name}</DataTable.Cell>
+        <DataTable.Cell numeric style={[{ color: theme.color }, {borderColor: theme.color}]}>{item.amount}</DataTable.Cell>
+      </DataTable.Row>
     )
   })
 
@@ -21,16 +21,19 @@ export default function Nutrients({ route, navigation}) {
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
       <Text style={[styles.header, { color: theme.color }, {borderColor: theme.color}]}>Nutrients Consumed</Text>
-      
-      <View style={styles.primaryView}>
-        <Text style={[styles.primaryHeader, { color: theme.color }, {borderColor: theme.color}]}>Nutrient</Text>
-        <Text style={[styles.primaryHeader, { color: theme.color }, {borderColor: theme.color}]}>Amount</Text>
+      <View style={styles.tableContainer}>
+        <DataTable>
+        <DataTable.Header style={{borderBottomWidth: 5, borderBottomColor: 'black'}}>
+          <DataTable.Title >Nutrient</DataTable.Title>
+          <DataTable.Title  numeric>Amount</DataTable.Title>
+        </DataTable.Header>
+        {dataItems}
+        </DataTable>
       </View>
-      {dataItems}
-
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -43,23 +46,16 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginVertical: '5%'
   },
-  primaryHeader: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    borderWidth: 2,
-    width: '70%',
-    paddingVertical: '13%',
-  },
-  primaryView: {
-    flexDirection: 'row', 
-    justifyContent: 'space-between',
-    marginHorizontal: '20%',
+  tableContainer: {
     alignSelf: 'center',
-  },
-  text: {
-    fontSize: 20,
-    borderWidth: 2,
+    borderWidth: 4, 
+    borderColor: 'black', 
+    borderRadius: 5, 
+    padding: 10,
     width: '70%',
-    paddingVertical: '7%',
+  },
+  row: {
+    marginTop: '10%',
+    borderBottomWidth: 3,
   }
 });

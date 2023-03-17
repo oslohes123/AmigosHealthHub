@@ -238,18 +238,18 @@ export async function getPieChartData(UserID:string,inputDate:string = currentDa
     let data = sumNutrients(allFoods);
     let myColours = [
         "red",
-        "darkblue",
-        "darkgreen",
-        "purple",
-        "black",
+        "blue",
+        "green",
+        "orange",
+        "yellow",
 
     ]
     const output = Object.entries(data).map(([name, amount],index) => ({
         name,
         amount,
         color: myColours[index],
-        legendFontColor: "#7F7F7F",
-        legendFontSize: 15
+        legendFontColor: "black",
+        legendFontSize: 12
       }));
     return output;
 }
