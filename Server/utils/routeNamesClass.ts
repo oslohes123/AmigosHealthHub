@@ -41,5 +41,7 @@ export default class RouteNamesClass{
     readonly fullFaceGraphURL = this.mentalHealthBaseURL + this.partialFaceGraph;
     readonly partialTodaysWord = '/todaysWord';
     readonly fullTodaysWordURL = this.mentalHealthBaseURL + this.partialTodaysWord;
+    readonly partialGetDates = '/dateValues';
+    readonly fullDateValues = this.mentalHealthBaseURL + this.partialGetDates;
 
 }

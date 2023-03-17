@@ -2,7 +2,7 @@ require('dotenv').config()
 import { Request, Response } from 'express';
 import supabase from '../../utils/supabaseSetUp'
 import {supabaseQueryClass} from '../../utils/databaseInterface'
-import {getWords, getFaces, average, getOccurrences, wordFreq} from '../../functions/mhfunctions'
+import {getWords, getFaces,getDates, average, getOccurrences, wordFreq} from '../../functions/mhfunctions'
 import { getDate } from '../../utils/convertTimeStamptz';
 import moment from 'moment';
 import{v4 as uuidv4} from 'uuid'
@@ -18,17 +18,27 @@ export const wordValues = async(req:Request,res:Response) => {
     const { id } = req.headers
     const { data,error }:any = await supabaseQuery.mostrecent(supabase, 'Mental Health','todays_word','created_at', id);
         if(error){
-            console.log("Failed to return last 7 words")
             return res.status(400).json({mssg:"Failed to retrieve last 7 words"})
         }
         else{
             const freq = wordFreq(getWords(data))
-            console.log(`this: ${JSON.stringify(data)}`)
              return res.status(200).json({mssg: "MentalHealthOverview", words: Array.from(new Set(getWords(data))), freq: freq})
         }
     }
-        
-  
+ 
+export const dateValues = async(req:Request,res:Response) =>{
+        const { id } = req.headers
+        const { data,error }:any = await supabaseQuery.mostrecent(supabase, 'Mental Health','created_at','created_at', id);
+            if(error){
+                console.log("Failed to return last 7 dates")
+                return res.status(400).json({mssg : "Failed to retrieve last 7 dates"})
+            }
+            else{
+                console.log(`data ln38: ${JSON.stringify(data)}`)
+                return res.status(200).json({mssg: "Retrieved faces",dates: getDates(data), success: "successful"}) 
+            } 
+    }
+
 export const faceValues = async(req:Request,res:Response) =>{
     const { id } = req.headers
     const { data,error }:any = await supabaseQuery.mostrecent(supabase, 'Mental Health','face_id','created_at', id);
@@ -37,7 +47,8 @@ export const faceValues = async(req:Request,res:Response) =>{
             return res.status(400).json({mssg : "Failed to retrieve last 7 faces"})
         }
         else{
-           const avg = average(getFaces(data));
+            console.log(`data ln38: ${JSON.stringify(data)}`)
+            const avg = average(getFaces(data));
             return res.status(200).json({mssg: "Retrieved faces",faces: getFaces(data), average: avg, success: "successful"}) 
         } 
 }        

@@ -24,6 +24,19 @@ export function getFaces(arr: any): string[] {
   return result;
 }
 
+export function getDates(arr: any): string[] {
+  console.log(`arr: ${JSON.stringify(arr)}`)
+  if(arr.length == 0){
+    return []
+}
+  const result: string[] = [];
+  for(let i = 0; i < arr.length; i++){
+    result.push(arr[i]["created_at"])
+    console.log(arr[i]["created_at"]) 
+  }
+  return result;
+}
+
 export function average(arr: string[]): number{
   if(arr.length == 0){
       return 0
