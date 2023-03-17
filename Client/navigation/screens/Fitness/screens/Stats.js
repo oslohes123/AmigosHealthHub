@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, TouchableOpacity, Modal } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity, Modal, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
@@ -19,6 +19,7 @@ export default function Stats({ navigation }) {
   }
   
   return (
+    <ScrollView style={styles.container}>
     <View>
       <View style={styles.container}>
         <TouchableOpacity onPress={pressHandler}>
@@ -68,10 +69,15 @@ export default function Stats({ navigation }) {
 
       </View>
     </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#203038",
+    flex: 1,
+  },
   widget: {
     paddingHorizontal: "15%",
     paddingVertical: "10%",
