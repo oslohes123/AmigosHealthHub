@@ -6,7 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator();
 
 //Screen Names
-const dashboardName = 'Dashboard Home';
+const dashboardName = 'Dashboard ';
 const sleepName = 'Sleep';
 
 export default function DashboardNavigation({ navigation }) {
@@ -14,7 +14,7 @@ export default function DashboardNavigation({ navigation }) {
         <Stack.Navigator
             initialRouteName={dashboardName}
             screenOptions={{
-                headerShown: false,
+                headerShown: true,
                 headerTitleStyle: styles.header
             }}
         >
