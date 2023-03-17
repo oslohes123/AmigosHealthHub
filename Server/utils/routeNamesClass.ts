@@ -76,4 +76,6 @@ export default class RouteNamesClass{
         readonly fullGetExerciseNameFrequencyURL = this.completedWorkoutBaseURL + this.partialGetExerciseNameFrequency;
         readonly partialGetExerciseTypeFrequency = '/exerciseTypeFreq';
         readonly fullGetExerciseTypeFrequencyURL = this.completedWorkoutBaseURL + this.partialGetExerciseTypeFrequency;
+        readonly partialGetWorkoutHistoryByDate = '/workoutHistoryByDate';
+        readonly fullGetWorkoutHistoryByDateURL = this.completedWorkoutBaseURL + this.partialGetWorkoutHistoryByDate;
     }   

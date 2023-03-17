@@ -354,6 +354,27 @@ export const getWorkoutFrequency  = async (req: Request, res:Response) => {
     return res.status(200).json({mssg:`Success!`, graphLabels, graphData});
    }
 }
+
+//given an arrayOfCompletedWorkoutIDs return the AEIDs associated
+export const getAEIDsFromCompletedWorkoutIDs =async (arrayOfCompletedWorkoutIDs: Array<String>) => {
+    const errorAndAEIDs:any = {errorHere: '', AEIDs:[{}]};
+    let arrayOfAEIDs = [];
+    for (let i = 0; i< arrayOfCompletedWorkoutIDs.length; i++){
+        const {data, error}: any =  await databaseQuery.selectWhere(supabase, 'TrackedWorkoutsWithExercises', 'completedWorkoutID',arrayOfCompletedWorkoutIDs[i], 'AEID');
+        if(error){
+            errorAndAEIDs.errorHere = error;
+         return errorAndAEIDs;
+        }
+        else{
+         for(let i = 0; i< data.length; i++){
+             arrayOfAEIDs.push(data[i].AEID);
+         }
+        }
+     }
+     errorAndAEIDs.AEIDs = arrayOfAEIDs;
+    return errorAndAEIDs;
+}
+
 //get all AEIDs of a user given an userid
 export const getAllAEIDs =async(userid: string|string[]) => {
     const errorAndIDs:any = {errorHere: '', AEIDs:[{}]};
@@ -499,3 +520,54 @@ export const getActualExerciseTypeFrequency =async(req:Request, res: Response) =
     return res.status(200).json({mssg:`Success!`, graphLabels, graphData});
 
 }
+//Return any workouts done on the day (Array of Strings)
+//Exercises done on the day
+export const getWorkoutHistoryByDate =async (req:Request, res: Response) => {
+    const {userid, date} = req.headers;
+    if(!userid ||!date){
+        return res.status(400).json({mssg:`userid nor date can be null`});
+    }
+     const {data, error}: any= await databaseQuery.selectWhere(supabase, 'CompletedWorkouts', 'userid', userid, 'completedWorkoutID, workoutname, timestamp');
+    if(error){
+        return res.status(400).json({mssg:`Something went wrong!`, error});
+    }
+    console.log(`data ln 510: ${JSON.stringify(data)}`);
+    let arrayOfWorkoutsOnDate = [];
+    let arrayOfWorkoutNames = [];
+    let arrayOfCompletedWorkoutIDs = [];
+    for(let i = 0; i< data.length; i++){
+        if(getDate(data[i].timestamp) === date){
+            arrayOfWorkoutsOnDate.push(data[i]);
+            arrayOfWorkoutNames.push(data[i].workoutname)
+            arrayOfCompletedWorkoutIDs.push(data[i].completedWorkoutID)
+        }
+    }
+    console.log(`arrayOfWorkoutsOnDate: ${JSON.stringify(arrayOfWorkoutsOnDate)}`);
+    console.log(`arrayOfWorkoutNames: ${JSON.stringify(arrayOfWorkoutNames)}`);
+    console.log(`arrayOfCompletedWorkoutIDs: ${JSON.stringify(arrayOfCompletedWorkoutIDs)}`);
+
+    const {errorHere, AEIDs} = await getAEIDsFromCompletedWorkoutIDs(arrayOfCompletedWorkoutIDs);
+    if(errorHere){
+        return res.status(400).json({mssg:`Something went wrong!`, errorHere});
+    }
+
+    const {errorGetAllExerciseIDs,exerciseIDs } = await getAllExerciseIDs(AEIDs);
+    if(errorGetAllExerciseIDs){
+        return res.status(400).json({mssg:`Something went wrong!`, errorGetAllExerciseIDs});
+    }
+
+    const {errorGetExerciseNames,exerciseNames }= await getExerciseNames(exerciseIDs);
+     if(errorGetExerciseNames){
+        return res.status(400).json({mssg:"Something went wrong!", errorGetExerciseNames})
+     }
+     console.log(`exerciseNames: ${JSON.stringify(exerciseNames)}`);
+    
+      const graphLabelsAndData= countElementsInArray(exerciseNames);   
+        const graphLabels= Object.keys(graphLabelsAndData);
+        const graphData= Object.values(graphLabelsAndData);
+     console.log(`graphLabels: ${JSON.stringify(graphLabels)}`);
+    console.log(`graphData: ${JSON.stringify(graphData)}`);
+         
+
+      return res.status(200).json({mssg:`Success!`, arrayOfWorkoutNames, graphLabels, graphData});
+    }

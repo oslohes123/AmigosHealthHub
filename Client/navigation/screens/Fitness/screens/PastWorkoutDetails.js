@@ -1,28 +1,53 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Calendar } from 'react-native-calendars'
 import { AntDesign } from '@expo/vector-icons';
 import { BarChart } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
-
-export default function PastWorkoutDetails() {
-
+import { useIsFocused } from '@react-navigation/native';
+import { useGetWorkoutHistoryByDate } from '../hooks/trackedWorkouts/useGetWorkoutHistoryByDate';
+import { ActivityIndicator, MD2Colors } from "react-native-paper";
+import { uuid } from 'uuidv4';
+export default function PastWorkoutDetails({navigation}) {
+  const isFocused = useIsFocused();
+   const {isLoading, error, getWorkoutHistoryByDate}= useGetWorkoutHistoryByDate()
   const screenWidth = Dimensions.get("window").width;
-
-  const data = {
-    labels: ["January", "February", "March", "April", "May", "June"],
-    datasets: [
-      {
-        data: [20, 45, 28, 80, 99, 43]
-      }
-    ]
-  };
-
-  const [workoutData, setWorkoutData] = useState([]);
-
+  const [getArrayOfWorkoutNames, setArrayOfWorkoutNames] = useState(null);
+  const [getExerciseData, setExerciseData] = useState(null);
+  const [getExerciseLabels, setExerciseLabels] = useState(null);
   const[selectDay, setSelectDay] = useState(null);
 
   const [viewCalendar, setViewCalendar] = useState(false);
+
+  useEffect(() => {
+    
+    const setWorkoutData = async() => {
+      setExerciseData(null);
+      setExerciseLabels(null);
+      setArrayOfWorkoutNames(null);
+      const result = await getWorkoutHistoryByDate(selectDay);
+      if(result){
+       const {arrayOfWorkoutNames, graphLabels, graphData} = result;
+
+      if(JSON.stringify(graphLabels)===JSON.stringify([]) ||JSON.stringify(graphData)===JSON.stringify([])|| JSON.stringify(arrayOfWorkoutNames)===JSON.stringify([])){
+        setArrayOfWorkoutNames(null);
+        setExerciseData(null);
+        setExerciseLabels(null);
+      }
+      else{
+        setArrayOfWorkoutNames(arrayOfWorkoutNames);
+        setExerciseData(graphData);
+        setExerciseLabels(graphLabels);
+      }
+       
+     
+      }
+    }
+    setWorkoutData();
+    console.log(`getExerciseData: ${JSON.stringify(getExerciseData)}`);
+    console.log(`getExerciseLabels: ${JSON.stringify(getExerciseLabels)}`);
+  }, [selectDay])
+
 
   const currentDate = new Date();
 
@@ -43,6 +68,15 @@ export default function PastWorkoutDetails() {
     console.log('selected day', day);
     setViewCalendar(false);
   }
+
+  const exerciseData = {
+    labels: getExerciseLabels,
+    datasets: [
+      {
+        data: getExerciseData
+      }
+    ]
+  };
 
   const chartConfig = {
     backgroundGradientFrom: "white",
@@ -69,16 +103,52 @@ export default function PastWorkoutDetails() {
         </TouchableOpacity>
       </View>
       {selectDay && !viewCalendar  &&  (
+
+
           <TouchableOpacity style={{alignSelf: 'center'}}>
+
+
+        {isLoading && (
+                <>
+                  {/* <Text>Refreshing.....</Text> */}
+                  <ActivityIndicator
+                    animating={true}
+                    size={50}
+                    color={MD2Colors.lightBlue400}
+                  />
+                </>
+              )}
+
+
+              {/* {Unique Key prop problem here!!!!!} */}
+              {/* {
+                getArrayOfWorkoutNames &&(
+                  getArrayOfWorkoutNames.map((exercise) => (<Text key={uuid()}>{exercise}</Text>)
+                ))
+              } */}
+
+              {
+                getArrayOfWorkoutNames &&(
+                <Text>{JSON.stringify(getArrayOfWorkoutNames)}</Text>
+                )
+              }
+
+              {
+                !getExerciseData && !getExerciseLabels &&!getArrayOfWorkoutNames &&(
+                  <Text>No workouts to show!</Text>
+                )
+              }
+            {getExerciseData && getExerciseLabels&& (
             <BarChart
               style={{borderRadius: 25}}
-              data={data}
+              data={exerciseData}
               width={0.8 * screenWidth}
               height={270}
-              yAxisLabel="$"
+              fromZero = {true}
+              // yAxisLabel="$"
               chartConfig={chartConfig}
               verticalLabelRotation={30}
-            />
+            />)}
           </TouchableOpacity>
         )}
       {viewCalendar && (
