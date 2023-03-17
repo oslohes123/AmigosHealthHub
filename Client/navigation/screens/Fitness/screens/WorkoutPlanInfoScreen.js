@@ -214,14 +214,33 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                     >
                       Duration: {item.duration} mins
                     </Text>
-                    <TextInput
-                      style={[styles.textInput, { borderColor: theme.color }]}
-                      placeholder="Duration (mins)"
-                      color={theme.color}
-                      placeholderTextColor={theme.color}
-                      keyboardType={"numeric"}
-                      textAlign={"center"}
-                    />
+                    <View style={{flexDirection: 'row', width: styles.textInput.width, justifyContent: 'space-between'}}>
+                      <TextInput
+                        style={[
+                          styles.textInput,
+                          { borderColor: theme.color, color: theme.color, width: styles.textInput.width/2.3},
+                        ]}
+                        placeholder="Mins"
+                        placeholderTextColor={theme.color}
+                        // onChangeText={setDurationMins}
+                        // value={durationMins}
+                        keyboardType={"numeric"}
+                        textAlign={"center"}
+                      />
+                      <Text style={{color: theme.color, alignSelf: 'center'}}>:</Text>
+                      <TextInput
+                        style={[
+                          styles.textInput,
+                          { borderColor: theme.color, color: theme.color, width: styles.textInput.width/2.3},
+                        ]}
+                        placeholder="Secs"
+                        placeholderTextColor={theme.color}
+                        // onChangeText={setDurationSecs}
+                        // value={durationSecs}
+                        keyboardType={"numeric"}
+                        textAlign={"center"}
+                      />
+                    </View>
                   </View>
                 </>
               ) : (
