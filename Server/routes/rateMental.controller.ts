@@ -45,7 +45,7 @@ export function getToday(){
     }
     const {data, error} = await getUserByEmail(email);
     if (error){
-      return res.status(400).json({mssg:"Something went wrong!", error})
+      return res.status(400).json({mssg:"Something went wrong!"})
     }
     const id  = data[0].id;
 
