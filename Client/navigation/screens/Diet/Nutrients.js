@@ -10,7 +10,7 @@ export default function Nutrients({ route, navigation}) {
 
   const dataItems =  data.map((item,index) => {
     return (
-      <DataTable.Row key = {index}>
+      <DataTable.Row style={styles.row} key = {index}>
         <DataTable.Cell style={[{  color: theme.color }, {borderColor: theme.color}]}>{item.name}</DataTable.Cell>
         <DataTable.Cell numeric style={[{ color: theme.color }, {borderColor: theme.color}]}>{item.amount}</DataTable.Cell>
       </DataTable.Row>
@@ -23,7 +23,7 @@ export default function Nutrients({ route, navigation}) {
       <Text style={[styles.header, { color: theme.color }, {borderColor: theme.color}]}>Nutrients Consumed</Text>
       <View style={styles.tableContainer}>
         <DataTable>
-        <DataTable.Header>
+        <DataTable.Header style={{borderBottomWidth: 5, borderBottomColor: 'black'}}>
           <DataTable.Title >Nutrient</DataTable.Title>
           <DataTable.Title  numeric>Amount</DataTable.Title>
         </DataTable.Header>
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     borderColor: 'black', 
     borderRadius: 5, 
     padding: 10,
-    width: '80%',
+    width: '70%',
   },
   row: {
     marginTop: '10%',
