@@ -13,6 +13,10 @@ export default function Stats({ navigation }) {
   const pressHandler1 = () => {
     navigation.navigate('Past Workout Details');
   }
+
+  const pressHandler2 = () => {
+    navigation.navigate('Overall Stats');
+  }
   
   return (
     <View>
@@ -44,6 +48,21 @@ export default function Stats({ navigation }) {
               
             </Text>
             <AntDesign name="calendar" size={35} color="white" />
+          </LinearGradient>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={pressHandler2}>
+          <LinearGradient
+            colors={["blue", "grey"]}
+            style={styles.widget}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+          >
+            <Text style={styles.header}>
+              Click to view overall Stats
+              
+            </Text>
+            <Ionicons name="stats-chart-outline" size={40} color="white" />
           </LinearGradient>
         </TouchableOpacity>
 
