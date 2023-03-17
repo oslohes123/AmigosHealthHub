@@ -71,16 +71,16 @@
      t.deepEqual(actual, expected);
    });
   
-   test('wordFreq should return an array of strings when passed an array of strings', t => {
+   test('wordFreq should return an array of strings of frequencies when passed an array of strings', t => {
      const arr: string[] = ['hello', 'goodbye', 'welcome', 'hello', 'adios', 'goodbye', 'box'];
-     const expected: string[] = ['hello', '2', 'goodbye', '2', 'welcome', '1', 'adios', '1', 'box', '1'];
+     const expected: string[] = ['2', '2', '1', '1', '1'];
      const actual = wordFreq(arr);
      t.deepEqual(actual, expected);
    });
   
    test('wordFreq should handle case-sensitive values', t => {
      const arr: string[] = ['hello', 'Goodbye', 'welcome', 'GOODBYE', 'wElcome'];
-     const expected: string[] = ['hello', '1', 'Goodbye', '1', 'welcome', '1', 'GOODBYE', '1', 'wElcome', '1'];
+     const expected: string[] = ['1', '1', '1', '1', '1'];
      const actual = wordFreq(arr);
      t.deepEqual(actual, expected);
    });

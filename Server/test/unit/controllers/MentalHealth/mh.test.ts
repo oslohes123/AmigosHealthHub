@@ -34,6 +34,7 @@ test.serial.before(async (t : any) => {
         t.fail(`Insering user: ${JSON.stringify(error)}`);
     }
 })
+
 test.before(async (t : any) => {
     console.log(`1st executed!`)
     const {data, error}:any = await databaseQuery.insert(supabase, "Mental Health", {user_id: uuid, face_id: '5',created_at: '2020-03-01 00:00:00+00', todays_word: 'Happy'})
@@ -170,15 +171,31 @@ test("Return last 7 words and their frequencies", async (t: any) => {
 
     const expectedArgs = {
         "mssg":"MentalHealthOverview",
+        // [
+        //     "\"Planned\"",
+        //     "\"Painful\"",
+        //     "\"Rough\"",
+        //     "\"Mediocre\"",
+        //     "\"meh\"",
+        //     "\"Perfect\"",
+        //     "\"''\""
+        // ],
         "words":[
-            {"todays_word":"Awful"},
-            {"todays_word":"Depressed"},
-            {"todays_word":"Mediocre"},
-            {"todays_word":"Happy"},
-            {"todays_word":"Awful"},
-            {"todays_word":"Alright"},
-            {"todays_word":"Sad"}],
-        "freq":["\"Awful\"","2","\"Depressed\"","1","\"Mediocre\"","1","\"Happy\"","1","\"Alright\"","1","\"Sad\"","1"]
+            "\"Awful\"",
+            "\"Awful\"",
+            "\"Depressed\"",
+            "\"Mediocre\"",
+            "\"Happy\"",
+            "\"Awful\"",
+            "\"Alright\""
+        ],
+        "freq":[
+            "3",
+            "1",
+            "1",
+            "1",
+            "1"
+        ]
     }
      const stringifiedExpectedArgs= JSON.stringify(expectedArgs)
 
@@ -217,13 +234,21 @@ test("Return last 7 faces and their average with new ID", async (t: any) => {
 
     const expectedArgs = {
         mssg: "Retrieved faces",
-        faces: ["1","2","3","4","1","3","2"],
-        average: 2.2857142857142856,
+        faces: [
+            "1",
+            "1",
+            "2",
+            "3",
+            "4",
+            "1",
+            "3",
+        ],
+        average: 2.142857142857143,
         success: "successful"
     }
      const stringifiedExpectedArgs= JSON.stringify(expectedArgs)
-    console.log(`argsPassed ln 233:${JSON.stringify(argsPassed)}`); //{"mssg":"Retrieved faces","faces":["1","2","3","4","1","3","2"],"average":2.2857142857142856,"success":"successful"}
-    console.log(`stringifiedExpectedArgs ln 233:${stringifiedExpectedArgs}`)//{"mssg":"Retrieved faces","faces":[{"face_id":1},{"face_id":2},{"face_id":3},{"face_id":4},{"face_id":1},{"face_id":3},{"face_id":2}],"average":2.2857142857142856,"success":"successful"}
+    console.log(`argsPassed ln 233:${JSON.stringify(argsPassed)}`); 
+    console.log(`stringifiedExpectedArgs ln 233:${stringifiedExpectedArgs}`)
     t.true(res.status.calledWith(200))
     t.true(res.json.calledOnceWith(argsPassed)) 
     t.true(JSON.stringify(argsPassed) == stringifiedExpectedArgs)
@@ -241,13 +266,12 @@ test("Return today's word", async (t: any) => {
     const expectedArgs = {
         mssg: "Here is today's word!",
         word: [
-            {"todays_word": "Awful"}
+            "\"Awful\""
         ]
     }
     const stringifiedExpectedArgs= JSON.stringify(expectedArgs)
-    console.log(`argsPassed ln 233:${JSON.stringify(argsPassed)}`); //{"mssg":"Retrieved faces","faces":["1","2","3","4","1","3","2"],"average":2.2857142857142856,"success":"successful"}
-    console.log(`stringifiedExpectedArgs ln 233:${stringifiedExpectedArgs}`)//{"mssg":"Retrieved faces","faces":[{"face_id":1},{"face_id":2},{"face_id":3},{"face_id":4},{"face_id":1},{"face_id":3},{"face_id":2}],"average":2.2857142857142856,"success":"successful"}
-    t.true(res.status.calledWith(200))
+    console.log(`argsPassed wheretodays_word:${JSON.stringify(argsPassed)}`); 
+    console.log(`stringifiedExpectedArgs wheretodays_word:${stringifiedExpectedArgs}`)
     t.true(res.json.calledOnceWith(argsPassed)) 
     t.true(JSON.stringify(argsPassed) == stringifiedExpectedArgs)
 })

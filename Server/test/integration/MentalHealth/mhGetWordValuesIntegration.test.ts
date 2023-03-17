@@ -10,6 +10,8 @@ const databaseQuery = new supabaseQueryClass();
 import RouteNamesClass from "../../../utils/routeNamesClass";
 const routeNames = new RouteNamesClass()
 import { createToken } from "../../../utils/userFunctions";
+import { getDate } from "../../../utils/convertTimeStamptz";
+import moment from "moment";
 /**
  * Refactor using objects, interfaces to prevent repeated code. 
  */
@@ -21,6 +23,7 @@ const uuid = uuidv4();
 const wrong_uuid = '1a-2345-6b7c-890d-e01f2ghij34k'
 randomEmail = `${uuid}@gmail.com`
 let token: string;
+let todayDate = getDate(moment().format());
 test.serial.before(async (t : any) => {
     // const uuid = uuidv4();
     
@@ -120,7 +123,15 @@ test.before(async (t : any) => {
         t.fail(`MHtesterror8: ${JSON.stringify(error)}`)
     }
 })
+test.before(async (t : any) => {
+    console.log(`9th executed!`)
+    const {data, error}:any = await databaseQuery.insert(supabase, "Mental Health", {user_id: uuid, face_id: '1',created_at: todayDate, todays_word: 'Awful'});
 
+    if(error){
+        // console.log()
+        t.fail(`MHtesterror9: ${JSON.stringify(error)}`)
+    }
+})
 
 test.after.always('guaranteed cleanup', async (t: any) => {
     console.log(`test.after.always executed!`)
@@ -147,14 +158,21 @@ test(`GET ${wordCloudRoute} with incorrect ID`, async (t: any) => {
    const expectedArgs = {
     "mssg":"MentalHealthOverview",
     "words":[
-        {"todays_word":"Awful"},
-        {"todays_word":"Depressed"},
-        {"todays_word":"Mediocre"},
-        {"todays_word":"Happy"},
-        {"todays_word":"Awful"},
-        {"todays_word":"Alright"},
-        {"todays_word":"Sad"}],
-    "freq":["\"Awful\"","2","\"Depressed\"","1","\"Mediocre\"","1","\"Happy\"","1","\"Alright\"","1","\"Sad\"","1"]
+        "\"Awful\"",
+        "\"Awful\"",
+        "\"Depressed\"",
+        "\"Mediocre\"",
+        "\"Happy\"",
+        "\"Awful\"",
+        "\"Alright\""
+    ],
+    "freq":[
+        "3",
+        "1",
+        "1",
+        "1",
+        "1"
+    ]
 }
    t.true(response.status === 200)
    t.true(response.headers['content-type'] === "application/json; charset=utf-8")

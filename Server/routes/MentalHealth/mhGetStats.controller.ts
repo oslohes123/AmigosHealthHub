@@ -43,19 +43,12 @@ export const faceValues = async(req:Request,res:Response) =>{
 }        
 
 export const todaysValue = async(req:Request,res:Response) => {
-    const { uuid } = req.headers
-    let randomEmail: string;
-    randomEmail = `${uuid}@gmail.com`
+    const { id } = req.headers
     let todayDate = getDate(moment().format());
-    const hashedPassword = await createHashedPassword("CorrectPassword123!")
-
-    await supabaseQuery.insert(supabase, "User", {id: uuid, firstName: "First", lastName:"User", 
-    email:randomEmail, password: hashedPassword, age: 31})
-    await supabaseQuery.insert(supabase, "Mental Health", {user_id: uuid, face_id: '1',created_at: todayDate, todays_word: 'Awful'});
-    const {data, error}:any = await supabaseQuery.todays_data(supabase, 'Mental Health','user_id', 'created_at', uuid,  todayDate, 'todays_word');
+    const {data, error}:any = await supabaseQuery.todays_data(supabase, 'Mental Health','user_id', 'created_at', id,  todayDate, 'todays_word');
     
     if(error){
-        return res.status(400).json({mssg:"Something went wrong!", error});
+        return res.status(400).json({mssg:"Something went wrong!"});
     }
     else if (data.length ==0){
         return res.status(200).json({mssg:"User has not inputted a word today"});
