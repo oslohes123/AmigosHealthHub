@@ -7,6 +7,7 @@ import WorkoutPlanInfoScreen from "../screens/WorkoutPlanInfoScreen";
 import WorkoutHistory from "../screens/WorkoutHistoryScreen";
 import trackedWorkoutInfoScreen from "../screens/TrackedWorkoutInfoScreen";
 import Graph from "../screens/Graph";
+import OverallStats from "../screens/OverallStats";
 // import WorkoutHistory from "../screens/WorkoutHistory";
 import PastWorkoutDetails from "../screens/PastWorkoutDetails";
 // import AddCustomExerciseScreen from '../screens/AddCustomExerciseScreen';
@@ -26,6 +27,7 @@ const trackedWorkoutInfoName = "Workout Information";
 const statsName = "View Stats";
 const graphName = "Graph";
 const pastWorkoutDetailsName = "Past Workout Details";
+const overallStatsName = "Overall Stats";
 // const workoutHistoryName = "Workout History";
 // const customExerciseName = "Add Custom Exercise"
 
@@ -65,6 +67,7 @@ export default function FitnessNavigationScreen({ navigation }) {
       />
       <Stack.Screen name={statsName} component={Stats} />
       <Stack.Screen name={graphName} component={Graph} />
+      <Stack.Screen name={overallStatsName} component={OverallStats} />
       <Stack.Screen name={pastWorkoutDetailsName} component={PastWorkoutDetails} />
       {/* <Stack.Screen name={workoutHistoryName} component={WorkoutHistory} /> */}
       {/* <Stack.Screen name={customExerciseName} component={AddCustomExerciseScreen} /> */}
