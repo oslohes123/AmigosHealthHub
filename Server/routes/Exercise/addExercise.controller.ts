@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 const EXERCISE_API_KEY = process.env.EXERCISE_API_KEY as string;
 import supabase from '../../utils/supabaseSetUp';
 import { supabaseQueryClass } from '../../utils/databaseInterface';
-import removeDuplicates from '../../utils/removeDuplicates';
+import { removeDuplicates } from '../../utils/arrayManipulation';
 const databaseQuery = new supabaseQueryClass();
 /**
  * Given a name, return all exercise matches from the fitness API

@@ -70,4 +70,10 @@ export default class RouteNamesClass{
         readonly fullAddCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialaddCompletedWorkout;
         readonly partialDeleteCompletedWorkout = '/delete';
         readonly fullDeleteCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialDeleteCompletedWorkout;
+        readonly partialGetWorkoutFrequency = '/workoutFreq';
+        readonly fullGetWorkoutFrequencyURL = this.completedWorkoutBaseURL + this.partialGetWorkoutFrequency;
+        readonly partialGetExerciseNameFrequency = '/exerciseNameFreq';
+        readonly fullGetExerciseNameFrequencyURL = this.completedWorkoutBaseURL + this.partialGetExerciseNameFrequency;
+        readonly partialGetExerciseTypeFrequency = '/exerciseTypeFreq';
+        readonly fullGetExerciseTypeFrequencyURL = this.completedWorkoutBaseURL + this.partialGetExerciseTypeFrequency;
     }   
