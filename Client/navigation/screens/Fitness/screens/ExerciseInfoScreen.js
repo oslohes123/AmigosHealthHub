@@ -24,7 +24,8 @@ export default function ExerciseInfoScreen({ route, navigation }) {
   const [sets, setSets] = useState(null);
   const [reps, setReps] = useState(null);
   const [distance, setDistance] = useState(null);
-  const [duration, setDuration] = useState(null);
+  const [durationMins, setDurationMins] = useState(null);
+  const [durationSecs, setDurationSecs] = useState(null);
   const [weight, setWeight] = useState(null);
   const [calories, setCalories] = useState(null);
   const [warmUpSet, setWarmUpSet] = useState(false);
@@ -74,12 +75,13 @@ export default function ExerciseInfoScreen({ route, navigation }) {
           onPress={() => {
             if (
               (exerciseInfo.type === "cardio" &&
-                distance != null && distance.trim() != '' && !isNaN(Number(distance)) &&
-                duration != null) && duration.trim() != '' && !isNaN(Number(duration)) ||
+                distance != null && distance.trim() != '' && !isNaN(Number(distance)) && Number(distance) >= 0 &&
+                durationMins != null && durationMins.trim() != '' && !isNaN(Number(durationMins)) && Number(durationMins) >= 0  &&
+                durationSecs != null && durationSecs.trim() != '' && !isNaN(Number(durationSecs)) && Number(durationSecs) >= 0  && Number(durationSecs) <= 60) ||
               (exerciseInfo.type != "cardio" &&
-                weight != null && weight.trim() != '' && !isNaN(Number(weight)) &&
-                reps != null && reps.trim() != '' && !isNaN(Number(reps)) &&
-                sets != null && sets.trim() != '' && !isNaN(Number(sets)))
+                weight != null && weight.trim() != '' && !isNaN(Number(weight)) && Number(weight) >= 0 &&
+                reps != null && reps.trim() != '' && !isNaN(Number(reps)) && Number(reps) >= 0 &&
+                sets != null && sets.trim() != '' && !isNaN(Number(sets)) && Number(sets) >= 1)
             ) {
               console.log(
                 `These are the previous selected exercises: ${JSON.stringify(
@@ -94,7 +96,7 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                     sets,
                     reps,
                     distance,
-                    duration,
+                    duration: Number(durationMins)+(Number(durationSecs)/60),
                     weight,
                     calories,
                     warmUpSet,
@@ -112,7 +114,7 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                     sets,
                     reps,
                     distance,
-                    duration,
+                    duration: Number(durationMins)+(Number(durationSecs)/60),
                     weight,
                     calories,
                     warmUpSet,
@@ -318,7 +320,7 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                     />
                   </>
                 ) : (
-                  <>
+                  <View style={{flexDirection: 'row'}}>
                     <View>
                       <TextInput
                         style={[
@@ -333,21 +335,34 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                         textAlign={"center"}
                       />
                     </View>
-                    <View>
+                    <View style={{flexDirection: 'row'}}>
                       <TextInput
                         style={[
                           styles.textInput,
-                          { borderColor: theme.color, color: theme.color },
+                          { borderColor: theme.color, color: theme.color, width: screenWidth * 0.1 },
                         ]}
-                        placeholder="Duration (mins)"
+                        placeholder="Mins"
                         placeholderTextColor={theme.color}
-                        onChangeText={setDuration}
-                        value={duration}
+                        onChangeText={setDurationMins}
+                        value={durationMins}
+                        keyboardType={"numeric"}
+                        textAlign={"center"}
+                      />
+                      <Text style={{color: theme.color, alignSelf: 'center'}}>:</Text>
+                      <TextInput
+                        style={[
+                          styles.textInput,
+                          { borderColor: theme.color, color: theme.color, width: screenWidth * 0.1 },
+                        ]}
+                        placeholder="Secs"
+                        placeholderTextColor={theme.color}
+                        onChangeText={setDurationSecs}
+                        value={durationSecs}
                         keyboardType={"numeric"}
                         textAlign={"center"}
                       />
                     </View>
-                  </>
+                  </View>
                 )}
               </View>
 
