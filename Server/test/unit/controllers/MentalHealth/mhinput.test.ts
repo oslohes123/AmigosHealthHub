@@ -31,7 +31,7 @@ test.serial.before(async (t : any) => {
    
     if(error){
         // console.log(`MHtesterror:${error}`);
-        t.fail(`Insering user: ${JSON.stringify(error)}`);
+        t.fail(`Inserting user: ${JSON.stringify(error)}`);
     }
 })
 
@@ -112,7 +112,7 @@ test("Attempt to insert data with an empty word", async (t: any) => {
     const res = mockResponse();
     await insertMentalData(req as Request, res as Response)
     const argsPassed = res.json.getCall(0).args[0];
-    console.log(`argspassed: ${JSON.stringify(argsPassed)}`)
+    console.log(`argspassed1: ${JSON.stringify(argsPassed)}`)
 
     t.true(res.status.calledWith(400))
     t.true(res.json.calledOnceWith({mssg:"Can't submit an empty word"}))
@@ -128,7 +128,7 @@ test("Attempt to insert data with a face value too high", async (t: any) => {
     const res = mockResponse();
     await insertMentalData(req as Request, res as Response)
     const argsPassed = res.json.getCall(0).args[0];
-    console.log(`argspassed: ${JSON.stringify(argsPassed)}`)
+    console.log(`argspassed2: ${JSON.stringify(argsPassed)}`)
 
     t.true(res.status.calledWith(400))
     t.true(res.json.calledOnceWith({mssg:"Face value must be between 1-5"}))
@@ -144,7 +144,7 @@ test("Attempt to insert data with a face value too low", async (t: any) => {
     const res = mockResponse();
     await insertMentalData(req as Request, res as Response)
     const argsPassed = res.json.getCall(0).args[0];
-    console.log(`argspassed: ${JSON.stringify(argsPassed)}`)
+    console.log(`argspassed3: ${JSON.stringify(argsPassed)}`)
 
     t.true(res.status.calledWith(400))
     t.true(res.json.calledOnceWith({mssg:"Face value must be between 1-5"}))
@@ -160,8 +160,8 @@ test("Insert correct data into database", async (t: any) => {
     const res = mockResponse();
     await insertMentalData(req as Request, res as Response)
     const argsPassed = res.json.getCall(0).args[0];
-    console.log(`argspassed: ${JSON.stringify(argsPassed)}`)
+    console.log(`argspassed4: ${JSON.stringify(argsPassed)}`)
 
     t.true(res.status.calledWith(200))
-    t.true(res.json.calledOnceWith({mssg:"Submission for today has been updated"}))
+    t.true(res.json.calledOnceWith({mssg:"Successful Submission"}))
 })

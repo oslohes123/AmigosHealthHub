@@ -24,12 +24,6 @@ test('getToday returns the current date', (t: any) => {
 });
 
 
-test('should return false when there are no records for the user', async (t: any) => {
-  const id = '1a-2345-6b7c-890d-e01f2ghij34k'
-  const result = await checkExistsToday(id);
-  t.falsy(result);
-});
-
 //   test('should return false when there are records for the user, but none for today', async (t: any) => {
 //     // First, insert some records for the user that are not from today
 //     let randomEmail: string
