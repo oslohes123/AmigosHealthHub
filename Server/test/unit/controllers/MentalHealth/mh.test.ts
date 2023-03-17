@@ -266,7 +266,7 @@ test("Return today's word", async (t: any) => {
     const expectedArgs = {
         mssg: "Here is today's word!",
         word: [
-            "\"Awful\""
+            {"todays_word":"Awful"}
         ]
     }
     const stringifiedExpectedArgs= JSON.stringify(expectedArgs)
