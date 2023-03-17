@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, TouchableOpacity, Modal } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity, Modal, TouchableWithoutFeedback } from "react-native";
 import React, { useEffect, useState } from "react";
 import { LineChart } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
@@ -191,6 +191,7 @@ export default function Graph({ navigation }) {
         {/* This is the WeightedGraph */}
 
         {getWeightedData && getWeightedLabels && (
+          <TouchableWithoutFeedback>
           <View style={{ marginBottom: 40 }}>
             <Text style={[styles.title]}>Weight pulled per exercise</Text>
             <LineChart
@@ -204,10 +205,12 @@ export default function Graph({ navigation }) {
               fromZero={true}
             />
           </View>
+          </TouchableWithoutFeedback>
         )}
 
         {/* This is the duration graph for an Other exercise */}
         {getDurationData && getDurationLabels && (
+          <TouchableWithoutFeedback>
           <View style={{ marginBottom: 40 }}>
             <Text style={[styles.title]}>Duration</Text>
             <LineChart
@@ -221,10 +224,12 @@ export default function Graph({ navigation }) {
               yAxisSuffix={` min`}
             />
           </View>
+          </TouchableWithoutFeedback>
         )}
 
         {/* This is the distance graph for an Other exercise */}
         {getDistanceData && getDistanceLabels && (
+          <TouchableWithoutFeedback>
           <View style={{ marginBottom: 40 }}>
             <Text style={[styles.title]}>Distance</Text>
             <LineChart
@@ -238,10 +243,12 @@ export default function Graph({ navigation }) {
               yAxisSuffix={` m`}
             />
           </View>
+          </TouchableWithoutFeedback>
         )}
 
         {/* This is the calories graph for an Other exercise */}
         {getCaloriesData && getCaloriesLabels && (
+          <TouchableWithoutFeedback>
           <View style={{ marginBottom: 40 }}>
             <Text style={[styles.title]}>Calories</Text>
             <LineChart
@@ -255,6 +262,7 @@ export default function Graph({ navigation }) {
               yAxisSuffix={" kcal"}
             />
           </View>
+          </TouchableWithoutFeedback>
         )}
       </View>
     </ScrollView>
