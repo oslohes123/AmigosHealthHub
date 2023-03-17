@@ -7,7 +7,7 @@ import moment from 'moment';
 import { useGetSleep } from './hooks/useGetSleep';
 import { useIsFocused } from '@react-navigation/native';
 
-export default function HoursSleptGraph({ navigation }) {
+export default function SleepQaulityGraph() {
     const { getSleep, isLoading, error } = useGetSleep();
     const [data, setData] = useState(['test']);
     const isFocused = useIsFocused();
@@ -15,17 +15,22 @@ export default function HoursSleptGraph({ navigation }) {
     useEffect(() => {
         const fetchData = async () => {
             const sleepData = await getSleep();
+            // console.log(
+            //     `Sleep data is in widget: ${JSON.stringify(sleepData)}`
+            // );
             setData(sleepData);
         };
-        fetchData();
-    }, [navigation, isFocused]);
 
-    const graphTitle = 'Hours slept this week';
+        fetchData();
+    }, [isFocused]);
+
+    const graphTitle = 'Sleep Quality this week';
     const label = data.map((item) => moment(item.timestamp).format('ddd'));
-    const dataset = data.map((item) => item.hoursSlept);
+    const dataset = data.map((item) => item.sleepQuality);
     const graphAttributes = {
         yAxisSuffix: ' h'
     };
+
     return (
         <View>
             {isLoading && (

@@ -10,14 +10,18 @@ export const useAddSleep = () => {
     const id = user.id;
     const token = user.token;
 
-    const addSleep = async (hoursSleptInput, sleepQualityInput, timestampInput) => {
+    const addSleep = async (
+        hoursSleptInput,
+        sleepQualityInput,
+        timestampInput
+    ) => {
         setIsLoading(true);
 
         console.log(`full addSleep user: ${JSON.stringify(user)}`);
-        console.log(`getUserInfo ip_address: ${ip_address} : Port ${port}`);
-        console.log(`id in getUserInfo: ${id}`);
+        console.log(`addSleep ip_address: ${ip_address} : Port ${port}`);
+        console.log(`id in addSleep: ${id}`);
         console.log(
-            `useAddSleep data: hoursslept ${hoursSleptInput}, sleepquality ${sleepQualityInput}, timestamp ${timestampInput}`
+            `useAddSleep data-> hoursslept ${hoursSleptInput}, sleepquality ${sleepQualityInput}, timestamp ${timestampInput}`
         );
         const response = await fetch(
             `http://${ip_address}:${port}/api/user/sleep/add`,
@@ -30,7 +34,7 @@ export const useAddSleep = () => {
                 body: JSON.stringify({
                     userID: id,
                     hoursSlept: hoursSleptInput,
-                    sleepQaulity: sleepQualityInput,
+                    sleepQuality: sleepQualityInput,
                     timestamp: timestampInput
                 })
             }
