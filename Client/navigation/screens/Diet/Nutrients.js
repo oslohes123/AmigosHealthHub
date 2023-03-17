@@ -25,12 +25,11 @@ export default function Nutrients({ route, navigation}) {
         <DataTable>
         <DataTable.Header>
           <DataTable.Title >Nutrient</DataTable.Title>
-          <DataTable.Title >Amount</DataTable.Title>
+          <DataTable.Title  numeric>Amount</DataTable.Title>
         </DataTable.Header>
         {dataItems}
         </DataTable>
       </View>
-
     </View>
   );
 }
