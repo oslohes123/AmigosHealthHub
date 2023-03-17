@@ -13,7 +13,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 export default function SettingsDashboard({ navigation }) {
   const theme = useContext(themeContext);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
 
   const pressHandler1 = () => {
     navigation.navigate("Diet Settings");

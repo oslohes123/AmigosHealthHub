@@ -6,14 +6,17 @@ import { useIsFocused } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Animated } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
-export default function CaloriesBurntTodayWidget({ navigation }) {
+
+export default function CaloriesBurntTodayWidget() {
   const { getCaloriesBurntToday, error, isLoading } =
     useGetCaloriesBurntToday();
   const isFocused = useIsFocused();
   const { user } = useAuthContext();
   const userid = user.id;
 
+  const navigation = useNavigation();
   const [getCaloriesBurnt, setCaloriesBurnt] = useState(null);
   const caloriesBurnt = async () => {
     setCaloriesBurnt(await getCaloriesBurntToday());
@@ -23,6 +26,9 @@ export default function CaloriesBurntTodayWidget({ navigation }) {
       caloriesBurnt();
     }
   }, [navigation, isFocused]);
+  const pressHandler = () => {
+    navigation.navigate("View Stats");
+  };
 
   return (
     // <View style={styles.container}>
@@ -34,41 +40,43 @@ export default function CaloriesBurntTodayWidget({ navigation }) {
     //   </View>
     // </View>
 
-    <View style={styles.container}>
-      <LinearGradient
-        // Button Linear Gradient
-        // colors={["#00BFFF", "#0040ff"]}
-        colors={["#00ffc8", "#0040ff"]}
-        style={styles.widget}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-      >
-        <Text style={styles.header}>
-          <Ionicons name="bicycle-outline" size={30} color="black" />
-          Calories Burnt Today:
-          {getCaloriesBurnt && (
-            <Text style={styles.number}>{getCaloriesBurnt}</Text>
-          )}
-        </Text>
+    <TouchableOpacity onPress={pressHandler}>
+      <View style={styles.container}>
+        <LinearGradient
+          // Button Linear Gradient
+          // colors={["#00BFFF", "#0040ff"]}
+          colors={["#00ffc8", "#0040ff"]}
+          style={styles.widget}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+        >
+          <Text style={styles.header}>
+            <Ionicons name="bicycle-outline" size={30} color="black" />
+            Calories Burnt Today:
+            {getCaloriesBurnt && (
+              <Text style={styles.number}>{getCaloriesBurnt}</Text>
+            )}
+          </Text>
 
-        {isLoading && (
-          <>
-            {/* <Text>Refreshing.....</Text> */}
-            <ActivityIndicator
-              animating={true}
-              size={25}
-              color={MD2Colors.greenA100}
-            />
-          </>
-        )}
-      </LinearGradient>
-    </View>
+          {isLoading && (
+            <>
+              {/* <Text>Refreshing.....</Text> */}
+              <ActivityIndicator
+                animating={true}
+                size={25}
+                color={MD2Colors.greenA400}
+              />
+            </>
+          )}
+        </LinearGradient>
+      </View>
+    </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   widget: {
-    paddingHorizontal: "15%",
+    paddingHorizontal: "10%",
     paddingVertical: "10%",
     borderRadius: 25,
   },

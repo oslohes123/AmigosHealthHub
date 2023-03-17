@@ -2,11 +2,16 @@ import { View, StyleSheet, Text, TouchableOpacity, Modal } from "react-native";
 import React, { useEffect, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
+import { AntDesign } from '@expo/vector-icons';
 
 export default function Stats({ navigation }) {
 
   const pressHandler = () => {
     navigation.navigate('Graph');
+  }
+
+  const pressHandler1 = () => {
+    navigation.navigate('Past Workout Details');
   }
   
   return (
@@ -26,6 +31,22 @@ export default function Stats({ navigation }) {
             <Ionicons name="bar-chart-outline" size={40} color="white" />
           </LinearGradient>
         </TouchableOpacity>
+
+        <TouchableOpacity onPress={pressHandler1}>
+          <LinearGradient
+            colors={["blue", "grey"]}
+            style={styles.widget}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+          >
+            <Text style={styles.header}>
+              Click to view Workout History
+              
+            </Text>
+            <AntDesign name="calendar" size={35} color="white" />
+          </LinearGradient>
+        </TouchableOpacity>
+
       </View>
     </View>
   );
