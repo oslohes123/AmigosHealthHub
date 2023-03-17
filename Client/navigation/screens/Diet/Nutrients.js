@@ -31,45 +31,45 @@ export default function Nutrients({ route, navigation}) {
 
   //   </View>
   // );
-
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
       <Text style={[styles.header, { color: theme.color }, {borderColor: theme.color}]}>Nutrients Consumed</Text>
       <View style={styles.tableContainer}>
-      <DataTable>
-        <DataTable.Header>
-          <DataTable.Title style={{ flex: 1.5 }}>Nutrient</DataTable.Title>
-          <DataTable.Title style={{ flex: 1 }}>Amount</DataTable.Title>
+      <DataTable >
+        <DataTable.Header style={{borderBottomWidth: 5, borderBottomColor: 'black'}}>
+          <DataTable.Title style={{ flex: 1.5}}>Nutrient</DataTable.Title>
+          <DataTable.Title style={{ flex: 1}}>Amount</DataTable.Title>
         </DataTable.Header>
-
-        <DataTable.Row>
-          <DataTable.Cell style={{ flex: 1.5 }}>Row 1, Column 1</DataTable.Cell>
-          <DataTable.Cell style={{ flex: 1 }}>Row 1, Column 2</DataTable.Cell>
+    
+        <DataTable.Row style={styles.row}>
+          <DataTable.Cell style={{ flex: 1.5,}}>item.name</DataTable.Cell>
+          <DataTable.Cell style={{ flex: 1 }}>item.amount</DataTable.Cell>
         </DataTable.Row>
 
-        <DataTable.Row>
-          <DataTable.Cell style={{ flex: 1.5 }}>Row 2, Column 1</DataTable.Cell>
-          <DataTable.Cell style={{ flex: 1 }}>Row 2, Column 2</DataTable.Cell>
+        <DataTable.Row style={styles.row}>
+          <DataTable.Cell style={{ flex: 1.5 }}>item.name</DataTable.Cell>
+          <DataTable.Cell style={{ flex: 1 }}>item.amount</DataTable.Cell>
         </DataTable.Row>
 
-        <DataTable.Row>
-          <DataTable.Cell style={{ flex: 1.5 }}>Row 3, Column 1</DataTable.Cell>
-          <DataTable.Cell style={{ flex: 1 }}>Row 3, Column 2</DataTable.Cell>
+        <DataTable.Row style={styles.row}>
+          <DataTable.Cell style={{ flex: 1.5 }}>item.name</DataTable.Cell>
+          <DataTable.Cell style={{ flex: 1 }}>item.amount</DataTable.Cell>
         </DataTable.Row>
 
-        <DataTable.Row>
-          <DataTable.Cell style={{ flex: 1.5 }}>Row 4, Column 1</DataTable.Cell>
-          <DataTable.Cell style={{ flex: 1 }}>Row 4, Column 2</DataTable.Cell>
+        <DataTable.Row style={styles.row}>
+          <DataTable.Cell style={{ flex: 1.5 }}>item.name</DataTable.Cell>
+          <DataTable.Cell style={{ flex: 1 }}>item.amount</DataTable.Cell>
         </DataTable.Row>
 
-        <DataTable.Row>
-          <DataTable.Cell style={{ flex: 1.5 }}>Row 5, Column 1</DataTable.Cell>
-          <DataTable.Cell style={{ flex: 1 }}>Row 5, Column 2</DataTable.Cell>
+        <DataTable.Row style={styles.row}>
+          <DataTable.Cell style={{ flex: 1.5 }}>item.name</DataTable.Cell>
+          <DataTable.Cell style={{ flex: 1 }}>item.amount</DataTable.Cell>
         </DataTable.Row>
 
       </DataTable>
     </View>
     </View>
+    
   )
 }
 
@@ -116,16 +116,16 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginVertical: '5%'
   },
-  text: {
-    fontSize: 20,
-    borderWidth: 2,
-    width: '70%',
-    paddingVertical: '7%',
-  },
   tableContainer: {
+    alignSelf: 'center',
     borderWidth: 4, 
     borderColor: 'black', 
     borderRadius: 5, 
-    padding: 10
+    padding: 10,
+    width: '80%',
+  },
+  row: {
+    marginTop: '10%',
+    borderBottomWidth: 3,
   }
 });
