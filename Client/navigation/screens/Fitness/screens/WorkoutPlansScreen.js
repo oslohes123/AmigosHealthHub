@@ -48,15 +48,15 @@ export default function WorkoutPlansScreen({ navigation }) {
         >
           {error && <Text>{error}</Text>}
           {results.length < 1 && (
-            <Text style={{ color: theme.color, fontWeight: "bold" }}>
+            <Text style={{ color: theme.color, fontWeight: "bold", }}>
               You currently have no custom workout plans.
             </Text>
           )}
 
           {results &&
             results.map((item) => (
-              <TouchableOpacity style={styles.textBorder} key={item} onPress={() => {navigation.navigate("Workout Plan Information", item)}}>
-                <Text style={[styles.testText, { borderColor: theme.color, color: theme.color, fontSize: 32 }]}>{item}</Text>
+              <TouchableOpacity style={[styles.textBorder, {borderColor: theme.color}]} key={item} onPress={() => {navigation.navigate("Workout Plan Information", item)}}>
+                <Text style={[styles.testText, { borderColor: theme.color, color: theme.color, fontSize: 32, textAlign: 'center' }]}>{item}</Text>
               </TouchableOpacity>
             ))}
         </ScrollView>

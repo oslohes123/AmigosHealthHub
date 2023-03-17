@@ -37,6 +37,10 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
   const [modalWarmUpSet, setModalWarmUpSet] = useState(false);
   const [modalCalories, setModalCalories] = useState(0);
   const [modalType, setModalType] = useState("");
+  const [modalMuscle, setModalMuscle] = useState("");
+  const [modalDifficulty, setModalDifficulty] = useState("");
+  const [modalInstructions, setModalInstructions] = useState("");
+  const [modalEquipment, setModalEquipment] = useState("");
 
   const { searchExercise } = useSearchExercise();
   const { addWorkout, isLoading, message } = useAddWorkout();
@@ -284,9 +288,34 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
                   icon="delete"
                   style={styles.fab}
                   onPress={() => {
+
+                    const copySelectedExercises = selectedExercises;
+
+                    const indexToDelete = copySelectedExercises.indexOf({
+                      name: modalName,
+                      sets: modalSets,
+                      reps: modalReps,
+                      weight: modalWeight,
+                      calories: modalCalories,
+                      distance: modalDistance,
+                      duration: modalDuration,
+                      warmUpSet: modalWarmUpSet,
+                      type: modalType,
+                      muscle: modalMuscle,
+                      difficulty: modalDifficulty,
+                      instructions: modalInstructions,
+                      equipment: modalEquipment
+                  });
+
+                    console.log(`IndexToDelete: ${indexToDelete}`)
+
+                    copySelectedExercises.splice(indexToDelete, 1);
+                    console.log(`deleted exlist: ${JSON.stringify(copySelectedExercises)}`);
+                    setSelectedExercises(copySelectedExercises);
+
                     setExerciseModalVisible(!exerciseModalVisible);
-                    //Remove from workout
                     console.log("Remove from workout");
+                    // console.log(selectedExercises)
                   }}
                 />
               </View>
@@ -451,12 +480,16 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
                 setModalWeight(item.weight);
                 setExerciseModalVisible(!exerciseModalVisible);
                 setModalType(item.type);
+                setModalMuscle(item.muscle);
+                setModalDifficulty(item.difficulty);
+                setModalInstructions(item.instructions);
+                setModalEquipment(item.equipment);
               }}
             >
               <Text
                 style={[
                   styles.addedText,
-                  { borderColor: theme.color, color: theme.color },
+                  { borderColor: theme.color, color: theme.color, textAlignVertical: "center" },
                 ]}
               >
                 {item.name}
@@ -503,7 +536,10 @@ const styles = {
     textAlign: "center",
   },
   addedText: {
-    fontSize: 26,
+    height: screenHeight * 0.13,
+    maxWidth: screenWidth * 0.5,
+    fontSize: 20,
+    fontWeight: 'bold',
     padding: 5,
     borderRadius: 20,
     marginHorizontal: 5,

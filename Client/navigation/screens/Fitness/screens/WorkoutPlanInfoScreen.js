@@ -71,7 +71,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
           <View
-            style={[modalStyle.modalMain, { backgroundColor: theme.secondary }]}
+            style={[modalStyle.modalMain, { backgroundColor: theme.secondary, width: screenWidth * 0.9 }]}
           >
             <Text style={[modalStyle.modalText, { color: theme.color }]}>
               Instructions
@@ -85,15 +85,15 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                 borderRadius: 26,
                 padding: 10,
                 margin: 20,
-                width: screenWidth * 0.7,
+                width: screenWidth * 0.8,
                 borderColor: theme.color,
               }}
             >
-              <Text style={{ color: theme.color }}>{instructionModalData}</Text>
+                <ScrollView style={{ maxHeight: screenHeight * 0.5 }}>
+                    <Text style={{ color: theme.color }}>{instructionModalData}</Text>
+                </ScrollView>
             </View>
-            {/* {RedButton({height: screenHeight * 0.05, width: screenWidth * 0.2, fontSize: 12, text: "Dismiss", buttonFunction: () => {
-                            setModalVisible(!modalVisible)
-                            console.log("Dismiss Info")}})} */}
+
             <FAB
               icon="close"
               style={styles.fab}
@@ -143,7 +143,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                 </Text>
                 <IconButton
                   icon="information"
-                  iconColor={theme.color}
+                  iconColor={theme.theme === 'light' ? '#000087' : theme.color}
                   size={20}
                   key={`${item.exercise.name}Instructions`}
                   onPress={() => {

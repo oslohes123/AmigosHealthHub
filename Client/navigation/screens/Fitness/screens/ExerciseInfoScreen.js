@@ -74,14 +74,12 @@ export default function ExerciseInfoScreen({ route, navigation }) {
           onPress={() => {
             if (
               (exerciseInfo.type === "cardio" &&
-                calories != null &&
-                distance != null &&
-                duration != null) ||
+                distance != null && distance.trim() != '' &&
+                duration != null) && duration.trim() != '' ||
               (exerciseInfo.type != "cardio" &&
-                calories != null &&
-                weight != null &&
-                reps != null &&
-                sets != null)
+                weight != null && weight.trim() != '' &&
+                reps != null && reps.trim() != '' &&
+                sets != null && sets.trim() != '')
             ) {
               console.log(
                 `These are the previous selected exercises: ${JSON.stringify(
