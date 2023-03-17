@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { BarChart } from "react-native-chart-kit";
+import { PieChart } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
 
 export default function OverallStats() {
@@ -8,13 +9,51 @@ export default function OverallStats() {
   const screenWidth = Dimensions.get("window").width;
 
   const data = {
-    labels: ["January", "February", "March", "April", "May", "June"],
+    labels: ["Legs", "Arms", "Back", "Abs", "Shoulder", "Head"],
     datasets: [
       {
         data: [20, 45, 28, 80, 99, 43]
       }
     ]
   };
+
+  const Piedata = [
+    {
+      name: "Legs",
+      amount: 60,
+      color: "orange",
+      legendFontColor: "black",
+      legendFontSize: 18,
+    },
+    {
+      name: "Arms",
+      amount: 120,
+      color: "green",
+      legendFontColor: "black",
+      legendFontSize: 18,
+    },
+    {
+      name: "Shoulder",
+      amount: 25,
+      color: "yellow",
+      legendFontColor: "black",
+      legendFontSize: 18,
+    },
+    {
+      name: "Back",
+      amount: 55,
+      color: "blue",
+      legendFontColor: "black",
+      legendFontSize: 18,
+    },
+    {
+      name: "Abs",
+      amount: 34,
+      color: "red",
+      legendFontColor: "black",
+      legendFontSize: 18,
+    },
+  ];
 
   const chartConfig = {
     backgroundGradientFrom: "white",
@@ -30,16 +69,30 @@ export default function OverallStats() {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={{alignSelf: 'center', marginTop: '10%'}}>
-            <BarChart
-              style={{borderRadius: 25}}
-              data={data}
-              width={0.8 * screenWidth}
-              height={270}
-              yAxisLabel="$"
-              chartConfig={chartConfig}
-              verticalLabelRotation={30}
-            />
-          </TouchableOpacity>
+        <BarChart
+          style={{borderRadius: 25}}
+          data={data}
+          width={0.8 * screenWidth}
+          height={270}
+          yAxisLabel="%"
+          chartConfig={chartConfig}
+          verticalLabelRotation={30}
+        />
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.pieWidget}>
+        <PieChart
+          data={Piedata}
+          width={340}
+          height={210}
+          paddingLeft="10"
+          chartConfig={{
+            color: () => "black",
+          }}
+          accessor="amount"
+          backgroundColor="transparent"
+        />
+      </TouchableOpacity>
     </View>
   )
 }
@@ -55,6 +108,13 @@ const styles = StyleSheet.create({
         marginTop: 30,
         color: 'white',
         alignSelf: 'center',
+      },
+      pieWidget: {
+        backgroundColor: "#c2e7fe",
+        borderRadius: 25,
+        alignSelf: "center",
+        padding: 5,
+        marginTop: '10%'
       },
 })
 
