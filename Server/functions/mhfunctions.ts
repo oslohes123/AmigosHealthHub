@@ -25,14 +25,12 @@ export function getFaces(arr: any): string[] {
 }
 
 export function getDates(arr: any): string[] {
-  console.log(`arr: ${JSON.stringify(arr)}`)
   if(arr.length == 0){
     return []
 }
   const result: string[] = [];
   for(let i = 0; i < arr.length; i++){
-    result.push(arr[i]["created_at"])
-    console.log(arr[i]["created_at"]) 
+    result.push((arr[i]["created_at"]).slice(8,10) + "/" + (arr[i]["created_at"]).slice(5,7)) 
   }
   return result;
 }
