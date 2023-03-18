@@ -34,7 +34,7 @@ export const useGetWorkoutHistoryByDate = () => {
       try {
         setIsLoading(false);
         return {
-            arrayOfWorkoutNames: getWorkoutHistoryByDateJSON.arrayOfWorkoutNames,
+          arrayOfWorkoutNamesAndIDs: getWorkoutHistoryByDateJSON.arrayOfWorkoutNamesAndIDs,
             graphLabels: getWorkoutHistoryByDateJSON.graphLabels,
             graphData: getWorkoutHistoryByDateJSON.graphData
         }

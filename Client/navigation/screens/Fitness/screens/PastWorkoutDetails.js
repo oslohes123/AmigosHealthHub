@@ -12,7 +12,7 @@ export default function PastWorkoutDetails({navigation}) {
   const isFocused = useIsFocused();
    const {isLoading, error, getWorkoutHistoryByDate}= useGetWorkoutHistoryByDate()
   const screenWidth = Dimensions.get("window").width;
-  const [getArrayOfWorkoutNames, setArrayOfWorkoutNames] = useState(null);
+  const [getArrayOfWorkoutNamesAndIDs, setArrayOfWorkoutNamesAndIDs] = useState(null);
   const [getExerciseData, setExerciseData] = useState(null);
   const [getExerciseLabels, setExerciseLabels] = useState(null);
   const[selectDay, setSelectDay] = useState(null);
@@ -24,18 +24,18 @@ export default function PastWorkoutDetails({navigation}) {
     const setWorkoutData = async() => {
       setExerciseData(null);
       setExerciseLabels(null);
-      setArrayOfWorkoutNames(null);
+      setArrayOfWorkoutNamesAndIDs(null);
       const result = await getWorkoutHistoryByDate(selectDay);
       if(result){
-       const {arrayOfWorkoutNames, graphLabels, graphData} = result;
+       const {arrayOfWorkoutNamesAndIDs, graphLabels, graphData} = result;
 
-      if(JSON.stringify(graphLabels)===JSON.stringify([]) ||JSON.stringify(graphData)===JSON.stringify([])|| JSON.stringify(arrayOfWorkoutNames)===JSON.stringify([])){
-        setArrayOfWorkoutNames(null);
+      if(JSON.stringify(graphLabels)===JSON.stringify([]) ||JSON.stringify(graphData)===JSON.stringify([])|| JSON.stringify(arrayOfWorkoutNamesAndIDs)===JSON.stringify([])){
+        setArrayOfWorkoutNamesAndIDs(null);
         setExerciseData(null);
         setExerciseLabels(null);
       }
       else{
-        setArrayOfWorkoutNames(arrayOfWorkoutNames);
+        setArrayOfWorkoutNamesAndIDs(arrayOfWorkoutNamesAndIDs);
         setExerciseData(graphData);
         setExerciseLabels(graphLabels);
       }
@@ -121,24 +121,33 @@ export default function PastWorkoutDetails({navigation}) {
 
 
               {/* {Unique Key prop problem here!!!!!} */}
-              {/* {
-                getArrayOfWorkoutNames &&(
-                  getArrayOfWorkoutNames.map((exercise) => (<Text key={uuid()}>{exercise}</Text>)
-                ))
+              {
+                getArrayOfWorkoutNamesAndIDs &&(
+
+                  <>
+                  <Text>Workouts performed on this day:</Text>
+                  {getArrayOfWorkoutNamesAndIDs.map((workout) => 
+                  (<Text key={workout.workoutID}>{workout.workoutname}</Text>
+                  )
+                )}
+                </>
+                )
+              }
+{/* 
+              {
+                getArrayOfWorkoutNamesAndIDs &&(
+                  <Text>{JSON.stringify(getArrayOfWorkoutNamesAndIDs)}</Text>)
               } */}
 
               {
-                getArrayOfWorkoutNames &&(
-                <Text>{JSON.stringify(getArrayOfWorkoutNames)}</Text>
-                )
-              }
-
-              {
-                !getExerciseData && !getExerciseLabels &&!getArrayOfWorkoutNames &&(
+                !getExerciseData && !getExerciseLabels &&!getArrayOfWorkoutNamesAndIDs &&(
                   <Text>No workouts to show!</Text>
                 )
               }
             {getExerciseData && getExerciseLabels&& (
+
+              <View>
+                <Text>Exercises performed on this day and their frequency:</Text>
             <BarChart
               style={{borderRadius: 25}}
               data={exerciseData}
@@ -148,7 +157,9 @@ export default function PastWorkoutDetails({navigation}) {
               // yAxisLabel="$"
               chartConfig={chartConfig}
               verticalLabelRotation={30}
-            />)}
+            />
+            </View>
+            )}
           </TouchableOpacity>
         )}
       {viewCalendar && (
