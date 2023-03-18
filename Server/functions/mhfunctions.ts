@@ -2,6 +2,7 @@ import {supabaseQueryClass} from '../utils/databaseInterface'
 
 const supabaseQuery = new supabaseQueryClass();
 
+//this function returns the words in the form of an array
 export function getWords(arr: any): string[] {
   if(arr.length == 0){
     return []
@@ -12,7 +13,7 @@ export function getWords(arr: any): string[] {
   }
   return result
 }
-
+//this function returns the face values in the form of an array
 export function getFaces(arr: any): string[] {
   if(arr.length == 0){
     return []
@@ -23,6 +24,7 @@ export function getFaces(arr: any): string[] {
   }
   return result;
 }
+//this function returns the date values in the form of dd/mm in an array
 
 export function getDates(arr: any): string[] {
   if(arr.length == 0){
@@ -34,7 +36,7 @@ export function getDates(arr: any): string[] {
   }
   return result;
 }
-
+//this function gets the average of the past 7 face values
 export function average(arr: string[]): number{
   if(arr.length == 0){
       return 0
@@ -47,13 +49,13 @@ export function average(arr: string[]): number{
   const average = sum/arr.length;
   return average
 }
-
+//get frequency of a word in a list
 export function getOccurrences(arr: string[], v: string): number{
   var count = 0;
   arr.forEach((elem) => (elem === v && count++));
   return count;
 }
-
+//make a list of a frequencies of the words in the array in the parameter
 export function wordFreq(arr: string[]): string[]{
   const newarr: string[] = []
   const nodupes: string[] = []

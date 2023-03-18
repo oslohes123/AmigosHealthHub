@@ -22,9 +22,11 @@ export default function App({navigation}) {
         )
     }
 }
+//make button press change current screen to form screen 
 const inputScreenButton = () => {
   navigation.navigate('ReviewYourDay')
 }
+  //make a useEffect function to get the date values
   const {getDateValues} = useGetDateValues();
   useEffect(() => {
     async function getDateValuesCall(){
@@ -33,16 +35,18 @@ const inputScreenButton = () => {
     }
       getDateValuesCall();
   }, [])
-
+//declare x/y axis values for the line graph
 const line = {
   labels: getDateValuesArray,
   datasets: [
     {
       data: getFaceValuesArray,
+      //thickness of line
       strokeWidth: 2,
     },
   ],
 };
+  //make a useEffect function to get the face values
   const {getFaceValues} = useGetFaceValues();
   useEffect(() => {
     async function getFaceValuesCall(){
@@ -52,13 +56,13 @@ const line = {
     }
       getFaceValuesCall();
   }, [])
-
+  //make a useEffect function to get the word values
   const {getWordValues} = useGetWordValues();
-  
   useEffect(() => {
     async function getWordValuesCall(){
       const wordValues = await getWordValues();
       const wordfreqcolor = [];
+      //loop through each word in the list and convert it into the form of array that is accepted by the wordcloud package
       for (let i = 0; i < wordValues.words.length; i++) {
         wordfreqcolor.push({keyword:(wordValues.words[i] + "").slice(1, -1),frequency:Math.cbrt(Number(wordValues.freq[i])),color: colours[Math.floor(Math.random() * colours.length )]})
       }
@@ -71,6 +75,7 @@ const line = {
     }
       getWordValuesCall();
   }, [])
+  //components for the screen
   return (
     <View style={styles.container}>
       <Text>Graph for the Past Submissions (max 7)</Text>

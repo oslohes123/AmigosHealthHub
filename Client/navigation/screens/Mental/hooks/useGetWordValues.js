@@ -1,4 +1,4 @@
-// import { useAuthContext } from "../../Authentication/context/AuthContext";
+//Get the most recent word values to place into the wordcloud
 const port = process.env["PORT"];
 const ip_address = process.env["IP_ADDRESS"];
 const wordValuesRoute = `http://${ip_address}:${port}/api/user/mentalHealth/wordcloud`
@@ -6,9 +6,11 @@ console.log(`WordValuesRoute:${wordValuesRoute}`)
 import { useAuthContext } from "../../Authentication/context/AuthContext";
 
 export const useGetWordValues = () => {
+  //get the current users ID thats currently logged in
   const { user } = useAuthContext();
   let userID = user.id
-const getWordValues = async () => {
+  //make a get request to get the most recent 7(max) word values
+  const getWordValues = async () => {
     const response = await fetch(
       wordValuesRoute,
       {
@@ -17,10 +19,10 @@ const getWordValues = async () => {
       } 
     );
     const json = await response.json();
-
     if (!response.ok) {
       return [0]
     }
+    //if the response shows there was no error, return the words to be provided when the hook is called
     if (response.ok) {
       try {
         return json

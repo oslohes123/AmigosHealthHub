@@ -1,4 +1,4 @@
-//Configuration
+//Configuration for contoller that sends data to supabase from mental review your day form
 // import { Request, Response } from 'express';
 const express = require('express');
 const rateMentalRouter = express.Router();

@@ -1,3 +1,4 @@
+//Make a function to call the navigation stack initiator to start the mental section 
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import Navigator from './routes/homeStack'

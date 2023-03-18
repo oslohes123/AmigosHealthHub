@@ -4,7 +4,8 @@ const databaseQuery = new supabaseQueryClass();
 import { Request, Response } from "express";
 import { getUserByEmail } from "../utils/userFunctions";
 import moment from "moment";
-//
+
+//get todays date
 const date = new Date();
 export function getToday(){
  let midnight = ''
@@ -20,8 +21,8 @@ export function getToday(){
  }
  return midnight;
 }
-//.eq user id not hardcoded
- export async function checkExistsToday(id:string) {
+//check if todays date is equal to the date of the most recent values provided by the user that is logged in
+export async function checkExistsToday(id:string) {
   const {data, error}:any = await databaseQuery.selectWhere(supabase, 'Mental Health','user_id', id,'created_at');
   if(error) {
     console.error(error);
@@ -36,6 +37,7 @@ export function getToday(){
     return !(recentValue < getToday())
   }
 }
+  //if the user has provided data already, insert in a new row in the data table, otherwise update the most recent value if the user has already submitted data
   export const insertMentalData = async(req:Request, res:Response) => {
 
     const { face, word, id } = req.body;
@@ -64,19 +66,17 @@ export function getToday(){
           return res.status(400).json({mssg: error})
         }
         return res.status(200).json({mssg:"Submission for today has been updated"})
-      //return res.status(400).json({mssg:"You have already submitted your review of your day"})
-    }
-    
-   else{    
-      const {error}: any = await databaseQuery.insert(supabase, 'Mental Health', {
-        user_id : id,
-        face_id: face,
-        todays_word: word
-        })
-        if(error){
-          return res.status(400).json({mssg: error})
-        }
-        return res.status(200).json({mssg:"Successful Submission"})
-    }
+    }    
+    else{    
+        const {error}: any = await databaseQuery.insert(supabase, 'Mental Health', {
+          user_id : id,
+          face_id: face,
+          todays_word: word
+          })
+          if(error){
+            return res.status(400).json({mssg: error})
+          }
+          return res.status(200).json({mssg:"Successful Submission"})
+      }
   }
 

@@ -1,5 +1,5 @@
+//This file makes a form that a user can use to give their word to describe their day and select a value from the slider
 import * as Yup from "yup";
-// import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
   Text,
@@ -16,6 +16,7 @@ import { Formik } from "formik";
 //npm install , npm install @react-native-community/slider --save
 import { globalStyles } from "../../../styles/global";
 import { useSubmit } from "./hooks/useAddWordFace";
+//make a list of faces to be used to show what the value of the slider that they are currently hovering over represents
 const moodImage = [
   require("../../../assets/Worst.png"),
   require("../../../assets/Sad.png"),
@@ -23,6 +24,7 @@ const moodImage = [
   require("../../../assets/Happy.png"),
   require("../../../assets/Perfect.png"),
 ];
+//make requirements using Yup for the text input word 
 const mentalHealthSchema = Yup.object().shape({
   word: Yup.string().required("Word Of Today cannot be empty!"),
   word: Yup.string().max(10, "Word/expression has to be shorter than 11 characters"),
@@ -32,15 +34,17 @@ export const rateMentalHealthForm = () => {
   const { submit, isLoading, error } = useSubmit();
   const [faceInputValue, setFaceValue] = useState(3);
   const [moodI, setRangeI] = useState(require("../../../assets/Neutral.png"));
-
+  //this function changes the slider value when slider is moved so the image changes with respect to it
   const handleFaceInputChange = (value) => {
     setFaceValue(value);
     setRangeI(moodImage[value])
   };
+  //return the components for the form
   return (
     <View style={globalStyles.container}>
       <Formik
         initialValues={{ word: ""}}
+        //increment face value as graph values from range 1-5 compared to 0-4 is more user friendly
         onSubmit={async (values) => {
           await submit(faceInputValue + 1, values.word);
         }}
