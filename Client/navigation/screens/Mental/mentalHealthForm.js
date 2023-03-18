@@ -25,7 +25,7 @@ const moodImage = [
 ];
 const mentalHealthSchema = Yup.object().shape({
   word: Yup.string().required("Word Of Today cannot be empty!"),
-  word: Yup.string().max(35, "Word/expression has to be shorter than 35 letters"),
+  word: Yup.string().max(10, "Word/expression has to be shorter than 11 characters"),
 });
 
 export const rateMentalHealthForm = () => {

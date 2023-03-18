@@ -39,7 +39,7 @@ const line = {
   datasets: [
     {
       data: getFaceValuesArray,
-      strokeWidth: 2, // optional
+      strokeWidth: 2,
     },
   ],
 };
@@ -73,7 +73,7 @@ const line = {
   }, [])
   return (
     <View style={styles.container}>
-      <Text>Graph for the Past 7 Submissions</Text>
+      <Text>Graph for the Past Submissions (max 7)</Text>
       <LineChart
       data={line}
       width={screenWidth}
@@ -95,7 +95,7 @@ const line = {
       }}
     />   
 
-    <Text>WordCloud for the Past 7 Submissions</Text>
+    <Text>WordCloud for the Past Submissions (max 7)</Text>
     <WordCloud/>
     <StatusBar style="auto" />
       <Button title="Review Your Day" onPress={inputScreenButton}></Button>      
@@ -103,16 +103,6 @@ const line = {
     </View>
   );
 }
-
-const line = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-  datasets: [
-    {
-      data: [20, 45, 28, 80, 99, 43],
-      strokeWidth: 2, // optional
-    },
-  ],
-};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
