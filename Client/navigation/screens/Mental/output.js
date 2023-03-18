@@ -8,14 +8,15 @@ import React , {useEffect, useState, Component} from 'react';
 // import { useAuthContext } from '../Authentication/context/AuthContext.js';
  import { useGetFaceValues } from './hooks/useGetFaceValues.js';
  import { useGetWordValues } from './hooks/useGetWordValues.js'
+ import { useGetDateValues } from './hooks/useGetDateValues.js'
 const screenWidth = Dimensions.get("window").width;
 const colours = ["#ABDEE6","#CBAACB","#FFFFB5","#FFCCB6","#8FCACA","#FFC8A2","#55CBCD","#FCB9AA","#ECD5E3","#C6DBDA","#FED7C3","#A2E1DB","#97C1A9"]
 
 export default function App({navigation}) {
 
   const [getFaceValuesArray, setFaceValuesArray]= useState([1]);
+  const [getDateValuesArray, setDateValuesArray]= useState([0]);
   const [getWordValuesArray, setWordValuesArray]= useState([{word:"",freq:0,colour:"#ffffff"}]);
-  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   class WordCloud extends Component {
     render() {
         return (
@@ -23,21 +24,18 @@ export default function App({navigation}) {
         )
     }
 }
-  const getCurrentDayOfWeek = () => {
-  const date = new Date();
-  const dayOfWeek = date.getDay();
-  return dayOfWeek;
-};
 
-  const currentDayOfWeek = getCurrentDayOfWeek();
-  const daysOfWeekWithCurrentDayLast = [
-    ...daysOfWeek.slice(currentDayOfWeek + 1),
-    ...daysOfWeek.slice(0, currentDayOfWeek + 1),
-  ];
-
+  const {getDateValues} = useGetDateValues();
+  useEffect(() => {
+    async function getDateValuesCall(){
+      const dateValues = await getDateValues();
+      setDateValuesArray(dateValues);
+    }
+      getDateValuesCall();
+  }, [])
 
 const line = {
-  labels: daysOfWeekWithCurrentDayLast,
+  labels: getDateValuesArray,
   datasets: [
     {
       data: getFaceValuesArray,
@@ -51,7 +49,6 @@ const line = {
       const faceValues = await getFaceValues();
       const numberFaceValues = faceValues.map(Number)
       setFaceValuesArray(numberFaceValues);
-      console.log(`faceValuesUseEffect: ${JSON.stringify(faceValues)}`)
     }
       getFaceValuesCall();
   }, [])
@@ -103,7 +100,7 @@ const line = {
       }}
     />   
 
-    <Text>Text is the WordCloud for the Past Week</Text>
+    <Text>Text is the WordCloud for the Past 7 Submissions</Text>
     <WordCloud />
     <StatusBar style="auto" />
     <Button title="<--" onPress={back}></Button>      

@@ -14,11 +14,8 @@ const getWordValues = async () => {
         headers: {id: '11f431c9-c848-4c44-a26d-5083696e6a5a'}
       } 
     );
-    console.log("Called")
     const json = await response.json();
 
-    console.log(`getWordValues json: ${JSON.stringify(json)}`);
-    console.log("Responded")
     if (!response.ok) {
       console.log(json.mssg);
       return [0]
@@ -27,7 +24,6 @@ const getWordValues = async () => {
       try {
         return json
       } catch (error) {
-        console.error(error);
         return [0]
       }
     }

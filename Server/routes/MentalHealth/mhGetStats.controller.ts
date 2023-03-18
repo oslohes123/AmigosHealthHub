@@ -41,11 +41,9 @@ export const faceValues = async(req:Request,res:Response) =>{
     const { id } = req.headers
     const { data,error }:any = await supabaseQuery.mostrecent(supabase, 'Mental Health','face_id','created_at', id);
         if(error){
-            console.log("Failed to return last 7 faces")
             return res.status(400).json({mssg : "Failed to retrieve last 7 faces"})
         }
         else{
-            console.log(`data ln38: ${JSON.stringify(data)}`)
             const avg = average(getFaces(data));
             return res.status(200).json({mssg: "Retrieved faces",faces: getFaces(data), average: avg, success: "successful"}) 
         } 
