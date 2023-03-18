@@ -15,7 +15,7 @@ let hashedPassword1: string
 let secondUserEmail: string
 let hashedPassword2: string
 let token1: string
-let token2: string
+// let token2: string
 
 const uuid = uuidv4()
 const newEmail = `CHANGED${uuid}@gmail.com`
@@ -59,7 +59,7 @@ test.before(async (t: any) => {
   const { data, error }: any = await supabaseQuery.selectWhere(supabase, 'User'
     , 'email', secondUserEmail, 'id')
 
-  token2 = createToken(data[0].id)
+  // token2 = createToken(data[0].id)
   console.log(data)
   if (error) {
     t.fail('Inserting second user failed!')
