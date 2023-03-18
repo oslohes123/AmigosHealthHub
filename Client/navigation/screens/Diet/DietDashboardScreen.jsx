@@ -313,8 +313,8 @@ export default function DietDashboardScreen({ navigation }) {
         />
 
         <View style={styles.chart}>
-          {foodInput.length === 0 && pieChartData.length > 0
-            ? (
+          {foodInput.length === 0 && pieChartData.length > 0 && (
+             
               <TouchableOpacity style={styles.pieWidget} onPress={pieChartPress}>
                 <PieChart
                   data={pieChartData}
@@ -328,8 +328,10 @@ export default function DietDashboardScreen({ navigation }) {
                   backgroundColor="transparent"
                 />
               </TouchableOpacity>
-            )
-            : <Text style={styles.info}>Add Food to view Diet Info</Text>}
+            )}
+            {foodInput.length === 0 && pieChartData.length === 0 && (
+             <Text style={styles.info}>Add Food to view Diet Info</Text>
+            )}
         </View>
 
         {foodInput.length > 2
