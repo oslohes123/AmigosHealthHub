@@ -1,6 +1,6 @@
-import {supabaseQueryClass} from '../utils/databaseInterface'
+import {SupabaseQueryClass} from '../utils/databaseInterface'
 
-const supabaseQuery = new supabaseQueryClass();
+const supabaseQuery = new SupabaseQueryClass();
 
 //this function returns the words in the form of an array
 export function getWords(arr: any): string[] {

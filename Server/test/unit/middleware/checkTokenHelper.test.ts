@@ -4,8 +4,8 @@ const sinon = require('sinon');
 import {v4 as uuidv4} from 'uuid';
 import { checkTokenHelper } from '../../../utils/checkTokenHelpers';
 import supabase from '../../../utils/supabaseSetUp';
-import { supabaseQueryClass } from '../../../utils/databaseInterface';
-const supabaseQuery = new supabaseQueryClass();
+import { SupabaseQueryClass } from '../../../utils/databaseInterface';
+const supabaseQuery = new SupabaseQueryClass();
 import { createHashedPassword, createToken, deleteUserRow } from '../../../utils/userFunctions';
 
 

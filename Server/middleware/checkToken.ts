@@ -21,8 +21,8 @@ export {}
 // import{Request, Response, NextFunction} from 'express'
 // dotenv.config();
 // import supabase from '../utils/supabaseSetUp';
-// import { supabaseQueryClass } from '../utils/databaseInterface';
-// const supabaseQuery = new supabaseQueryClass();
+// import { SupabaseQueryClass } from '../utils/databaseInterface';
+// const supabaseQuery = new SupabaseQueryClass();
 
 // /**
 //  * Middleware that checks that every request has an authenticated user

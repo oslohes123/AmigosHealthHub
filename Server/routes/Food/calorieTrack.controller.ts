@@ -1,5 +1,5 @@
 import { type Request, type Response } from 'express'
-import { supabaseQueryClass as SupabaseQueryClass } from '../../utils/databaseInterface'
+import { SupabaseQueryClass as SupabaseQueryClass } from '../../utils/databaseInterface'
 import supabase from '../../utils/supabaseSetUp'
 import { isInt } from '../../utils/validators'
 require('dotenv').config()

@@ -5,9 +5,9 @@ import { getInfo } from '../../../../routes/User/getUserInfo.controller';
 import {v4 as uuidv4} from 'uuid';
 const bcrypt = require('bcrypt');
 import supabase from '../../../../utils/supabaseSetUp';
-import { supabaseQueryClass } from '../../../../utils/databaseInterface';
+import { SupabaseQueryClass } from '../../../../utils/databaseInterface';
 import { createHashedPassword } from '../../../../utils/userFunctions';
-const supabaseQuery = new supabaseQueryClass();
+const supabaseQuery = new SupabaseQueryClass();
 
 const mockResponse = () => {
     let res: any = {};

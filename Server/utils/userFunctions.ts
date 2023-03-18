@@ -1,5 +1,5 @@
 import supabase from '../utils/supabaseSetUp'
-import { supabaseQueryClass as SupabaseQueryClass } from './databaseInterface'
+import { SupabaseQueryClass } from './databaseInterface'
 import { type UserInterface } from './userInterface'
 const bcrypt = require('bcrypt')
 const jwttoken = require('jsonwebtoken')
@@ -19,7 +19,7 @@ export const createUser = async (
 }
 
 export const getUserByEmail = async (
-  email: string,
+  email: string | string[],
   toBeSelected = '*',
   database = supabase,
   table = 'User'

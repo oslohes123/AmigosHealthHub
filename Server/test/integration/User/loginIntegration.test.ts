@@ -4,9 +4,9 @@ const test = require('ava');
 import {v4 as uuidv4} from 'uuid';
 const bcrypt = require('bcrypt');
 import supabase from "../../../utils/supabaseSetUp";
-import { supabaseQueryClass } from "../../../utils/databaseInterface";
+import { SupabaseQueryClass } from "../../../utils/databaseInterface";
 import { createHashedPassword } from "../../../utils/userFunctions";
-const supabaseQuery = new supabaseQueryClass();
+const supabaseQuery = new SupabaseQueryClass();
 import RouteNamesClass from "../../../utils/routeNamesClass";
 const routeNames = new RouteNamesClass()
 /**

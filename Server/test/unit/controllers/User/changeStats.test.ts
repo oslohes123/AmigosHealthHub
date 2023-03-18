@@ -5,9 +5,9 @@ import { changeStats } from '../../../../routes/User/changeProfileDetails.contro
 import {v4 as uuidv4} from 'uuid';
 const bcrypt = require('bcrypt');
 import supabase from '../../../../utils/supabaseSetUp';
-import { supabaseQueryClass } from '../../../../utils/databaseInterface';
+import { SupabaseQueryClass } from '../../../../utils/databaseInterface';
 import { createHashedPassword, createUser } from '../../../../utils/userFunctions';
-const supabaseQuery = new supabaseQueryClass();
+const supabaseQuery = new SupabaseQueryClass();
 
 
 //SetUp

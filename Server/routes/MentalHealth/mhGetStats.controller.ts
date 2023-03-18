@@ -1,7 +1,7 @@
 require('dotenv').config()
 import { Request, Response } from 'express';
 import supabase from '../../utils/supabaseSetUp'
-import {supabaseQueryClass} from '../../utils/databaseInterface'
+import {SupabaseQueryClass} from '../../utils/databaseInterface'
 import {getWords, getFaces,getDates, average, getOccurrences, wordFreq} from '../../functions/mhfunctions'
 import { getDate } from '../../utils/convertTimeStamptz';
 import moment from 'moment';
@@ -9,7 +9,7 @@ import{v4 as uuidv4} from 'uuid'
 import { createHashedPassword } from '../../utils/userFunctions';
 
 let randomEmail: string;
-const supabaseQuery = new supabaseQueryClass();
+const supabaseQuery = new SupabaseQueryClass();
 const uuid = uuidv4();
 randomEmail = `${uuid}@gmail.com`
 

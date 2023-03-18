@@ -8,8 +8,8 @@ import { getInfo } from "../../../routes/User/getUserInfo.controller";
 import {v4 as uuidv4} from 'uuid';
 const bcrypt = require('bcrypt');
 import supabase from "../../../utils/supabaseSetUp";
-import { supabaseQueryClass } from "../../../utils/databaseInterface"; 
-const supabaseQuery = new supabaseQueryClass();
+import { SupabaseQueryClass } from "../../../utils/databaseInterface"; 
+const supabaseQuery = new SupabaseQueryClass();
 import RouteNamesClass from "../../../utils/routeNamesClass";
 const routeNames = new RouteNamesClass()
 const getInfoRoute = routeNames.fullGetInfoURL

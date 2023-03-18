@@ -2,7 +2,7 @@ const test = require('ava');
 import { Request, Response } from 'express';
 const sinon = require('sinon');
 import { insertMentalData } from '../../../../routes/MentalHealth/rateMental.controller';
-import { supabaseQueryClass } from '../../../../utils/databaseInterface';
+import { SupabaseQueryClass } from '../../../../utils/databaseInterface';
 import supabase from '../../../../utils/supabaseSetUp';
 import {v4 as uuidv4} from 'uuid';
 import { createHashedPassword, createUser } from '../../../../utils/userFunctions';
@@ -10,7 +10,7 @@ import { getDate } from '../../../../utils/convertTimeStamptz';
 import moment from 'moment';
 
 
-const databaseQuery = new supabaseQueryClass();
+const databaseQuery = new SupabaseQueryClass();
 
 let randomEmail:string;
 const uuid = uuidv4();
