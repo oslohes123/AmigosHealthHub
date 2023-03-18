@@ -1,93 +1,86 @@
-export default class RouteNamesClass{
+export default class RouteNamesClass {
+  // All Base Routes
+  readonly userBaseURL = '/api/user'
+  readonly changeDetailsBaseURL = this.userBaseURL + '/changeProfileDetails'
+  readonly mentalHealthBaseURL = this.userBaseURL + '/mentalHealth'
 
-    // All Base Routes
-    readonly userBaseURL = '/api/user'
-    readonly changeDetailsBaseURL = this.userBaseURL + '/changeProfileDetails'
-    readonly mentalHealthBaseURL = this.userBaseURL + '/mentalHealth';
+  // Auth Routes
+  readonly partialSignupURL = '/sign_up'
+  readonly partialLoginURL = '/login'
 
-    // Auth Routes
-    readonly partialSignupURL = '/sign_up';
-    readonly partialLoginURL = '/login';
+  readonly fullSignupURL = this.userBaseURL + this.partialSignupURL
+  readonly fullLoginURL = this.userBaseURL + this.partialLoginURL
 
-    readonly fullSignupURL = this.userBaseURL + this.partialSignupURL;
-    readonly fullLoginURL = this.userBaseURL + this.partialLoginURL;
+  // Change Profile Routes
 
-    //Change Profile Routes
-     
-    readonly partialChangeStatsURL = '/stats';
-    readonly partialChangePasswordURL = '/password';
-    readonly partialDeleteAccountURL = '/deleteAccount';
+  readonly partialChangeStatsURL = '/stats'
+  readonly partialChangePasswordURL = '/password'
+  readonly partialDeleteAccountURL = '/deleteAccount'
 
-    readonly fullChangeStatsURL = this.changeDetailsBaseURL + this.partialChangeStatsURL;
-    readonly fullChangePasswordURL = this.changeDetailsBaseURL + this.partialChangePasswordURL;
-    readonly fullDeleteAccountURL = this.changeDetailsBaseURL + this.partialDeleteAccountURL;
-    
-    // Check Initial Token Route
+  readonly fullChangeStatsURL = this.changeDetailsBaseURL + this.partialChangeStatsURL
+  readonly fullChangePasswordURL = this.changeDetailsBaseURL + this.partialChangePasswordURL
+  readonly fullDeleteAccountURL = this.changeDetailsBaseURL + this.partialDeleteAccountURL
 
-    readonly partialCheckInitialTokenURL = '/checkInitialToken';
-    readonly fullCheckInitialTokenURL = this.userBaseURL + this.partialCheckInitialTokenURL;
+  // Check Initial Token Route
 
-    //  Get Info Route
-    readonly partialGetInfoURL = '/getInfo';
-    readonly fullGetInfoURL = this.userBaseURL + this.partialGetInfoURL;
-    
+  readonly partialCheckInitialTokenURL = '/checkInitialToken'
+  readonly fullCheckInitialTokenURL = this.userBaseURL + this.partialCheckInitialTokenURL
 
-    //Mental Health Routes
-    readonly partialWordCloud = '/wordCloud';
-    // http://localhost:3001/api/user/mentalHealth/wordCloud
-    readonly fullWordCloudURL = this.mentalHealthBaseURL + this.partialWordCloud;
-    readonly partialFaceGraph = '/faceGraph';
-    readonly fullFaceGraphURL = this.mentalHealthBaseURL + this.partialFaceGraph;
-    readonly partialTodaysWord = '/todaysWord';
-    readonly fullTodaysWordURL = this.mentalHealthBaseURL + this.partialTodaysWord;
-    readonly partialGetDates = '/dateValues';
-    readonly fullDateValues = this.mentalHealthBaseURL + this.partialGetDates;
+  //  Get Info Route
+  readonly partialGetInfoURL = '/getInfo'
+  readonly fullGetInfoURL = this.userBaseURL + this.partialGetInfoURL
 
-    //Mental Health Route
+  // Mental Health Routes
+  readonly partialWordCloud = '/wordCloud'
+  // http://localhost:3001/api/user/mentalHealth/wordCloud
+  readonly fullWordCloudURL = this.mentalHealthBaseURL + this.partialWordCloud
+  readonly partialFaceGraph = '/faceGraph'
+  readonly fullFaceGraphURL = this.mentalHealthBaseURL + this.partialFaceGraph
+  readonly partialTodaysWord = '/todaysWord'
+  readonly fullTodaysWordURL = this.mentalHealthBaseURL + this.partialTodaysWord
+  readonly partialGetDates = '/dateValues'
+  readonly fullDateValues = this.mentalHealthBaseURL + this.partialGetDates
 
-    readonly partialRateMental = '/rateMental';
-    readonly fullRateMentalURL = this.mentalHealthBaseURL + this.partialRateMental;
+  // Mental Health Route
 
-    // Food Search Routes
-    readonly foodBaseURL = '/api/food'
-    readonly partialFoodSearchURL = '/:code.:value'
-    readonly fullFoodSearchURL = this.foodBaseURL + this.partialFoodSearchURL
+  readonly partialRateMental = '/rateMental'
+  readonly fullRateMentalURL = this.mentalHealthBaseURL + this.partialRateMental
 
-    // Calorie Track Routes
-    readonly partialReadSpecificCaloriesURL = '/calorieTrack/Specific.:id'
-    readonly partialReadCaloriesURL = '/calorieTrack/General.:UserID'
-    readonly partialUpdateSpecificCaloriesURL = '/calorieTrack/updateCalories'
-    readonly partialCreateCalorieLogURL = '/calorieTrack/createCalorieLog'
-    readonly partialDeleteCalorieLogURL = '/calorieTrack/deleteCalorieLog'
-    
+  // Food Search Routes
+  readonly foodBaseURL = '/api/food'
+  readonly partialFoodSearchURL = '/:code.:value'
+  readonly fullFoodSearchURL = this.foodBaseURL + this.partialFoodSearchURL
 
-    // Food Update Routes
-    readonly partialUpdateFoodURL = '/updateTrackedFood'
-    readonly fullFoodUpdateURL = this.foodBaseURL + this.partialUpdateFoodURL
+  // Calorie Track Routes
+  readonly partialReadSpecificCaloriesURL = '/calorieTrack/Specific.:id'
+  readonly partialReadCaloriesURL = '/calorieTrack/General.:UserID'
+  readonly partialUpdateSpecificCaloriesURL = '/calorieTrack/updateCalories'
+  readonly partialCreateCalorieLogURL = '/calorieTrack/createCalorieLog'
+  readonly partialDeleteCalorieLogURL = '/calorieTrack/deleteCalorieLog'
 
-    // Food Add Routes
-    readonly partialAddTrackedFood = '/addTrackedFood'
-    readonly fullAddTrackedFoodURL = this.foodBaseURL + this.partialAddTrackedFood
+  // Food Update Routes
+  readonly partialUpdateFoodURL = '/updateTrackedFood'
+  readonly fullFoodUpdateURL = this.foodBaseURL + this.partialUpdateFoodURL
 
-    
-    // Food database get tracked routes
-    readonly partialGetTrackedFoodURL = '/getTrackedFood/:date.:userID'
-    readonly fullGetTrackedFoodURL = this.foodBaseURL + this.partialGetTrackedFoodURL 
+  // Food Add Routes
+  readonly partialAddTrackedFood = '/addTrackedFood'
+  readonly fullAddTrackedFoodURL = this.foodBaseURL + this.partialAddTrackedFood
 
-    // Food database get specific tracked routes
-    readonly partialGetSpecificTrackedFoodURL = '/getSpecificTrackedFood/:logID'
-    readonly fullGetSpecificTrackedFoodURL = this.foodBaseURL + this.partialGetSpecificTrackedFoodURL
+  // Food database get tracked routes
+  readonly partialGetTrackedFoodURL = '/getTrackedFood/:date.:userID'
+  readonly fullGetTrackedFoodURL = this.foodBaseURL + this.partialGetTrackedFoodURL
 
+  // Food database get specific tracked routes
+  readonly partialGetSpecificTrackedFoodURL = '/getSpecificTrackedFood/:logID'
+  readonly fullGetSpecificTrackedFoodURL = this.foodBaseURL + this.partialGetSpecificTrackedFoodURL
 
-    // Food database get routes
-    readonly partialGetFoodURL = '/getFood/:FoodID'
-    readonly fullGetFoodURL = this.foodBaseURL + this.partialGetFoodURL
+  // Food database get routes
+  readonly partialGetFoodURL = '/getFood/:FoodID'
+  readonly fullGetFoodURL = this.foodBaseURL + this.partialGetFoodURL
 
-    readonly partialGetMultipleFoodURL = '/getMultipleFood'
+  readonly partialGetMultipleFoodURL = '/getMultipleFood'
 
-    // Food database delete routes
-    readonly partialDeleteTrackedFoodURL = '/deleteTrackedFood'
-    readonly fullDeleteFoodURL = this.foodBaseURL + this.partialDeleteTrackedFoodURL
-    
-
+  // Food database delete routes
+  readonly partialDeleteTrackedFoodURL = '/deleteTrackedFood'
+  readonly fullDeleteFoodURL = this.foodBaseURL + this.partialDeleteTrackedFoodURL
 }
