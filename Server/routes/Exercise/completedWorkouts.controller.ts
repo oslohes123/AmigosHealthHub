@@ -571,3 +571,23 @@ export const getWorkoutHistoryByDate =async (req:Request, res: Response) => {
 
       return res.status(200).json({mssg:`Success!`, arrayOfWorkoutNamesAndIDs, graphLabels, graphData});
     }
+
+    export const getLastTrackedWorkout = async (req:Request, res: Response) => {
+        const {userid} = req.headers;
+        if(!userid){
+            return res.status(400).json({mssg:`userid cannot be null!`});
+        }
+       const {data, error}: any =  await databaseQuery.selectWhere(supabase, 'CompletedWorkouts','userid',userid,'workoutname');
+       if(error){
+        return res.status(400).json({mssg:"Something went wrong!", error})
+     }
+     console.log(`data ln 581: ${JSON.stringify(data)}`);
+     if(data.length === 0){
+        return res.status(200).json({mssg:`Success!`,lastTrackedWorkout: "No Tracked Workouts"});
+     }
+     else{
+         const lastTrackedWorkout= data[0].workoutname;
+         return res.status(200).json({mssg:`Success!`,lastTrackedWorkout});
+     }
+
+    }

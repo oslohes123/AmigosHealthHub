@@ -1,7 +1,7 @@
 const express = require('express');
 const completedWorkoutsRouter = express.Router();
 completedWorkoutsRouter.use(express.json());
-import { addCompletedWorkouts, getAllCompletedWorkouts, getACompletedWorkout, deleteTrackedWorkout, getWorkoutFrequency, getActualExerciseNameFrequency, getActualExerciseTypeFrequency, getWorkoutHistoryByDate } from "./completedWorkouts.controller";
+import { addCompletedWorkouts, getAllCompletedWorkouts, getACompletedWorkout, deleteTrackedWorkout, getWorkoutFrequency, getActualExerciseNameFrequency, getActualExerciseTypeFrequency, getWorkoutHistoryByDate, getLastTrackedWorkout } from "./completedWorkouts.controller";
 import RouteNamesClass from "../../utils/routeNamesClass";
 const routeNames = new RouteNamesClass()
 //Routes
@@ -13,5 +13,6 @@ completedWorkoutsRouter.get(routeNames.partialGetWorkoutFrequency, getWorkoutFre
 completedWorkoutsRouter.get(routeNames.partialGetExerciseNameFrequency, getActualExerciseNameFrequency);
 completedWorkoutsRouter.get(routeNames.partialGetExerciseTypeFrequency, getActualExerciseTypeFrequency);
 completedWorkoutsRouter.get(routeNames.partialGetWorkoutHistoryByDate, getWorkoutHistoryByDate);
+completedWorkoutsRouter.get(routeNames.partialLastCompletedWorkout, getLastTrackedWorkout);
 export default completedWorkoutsRouter;
 export {}
