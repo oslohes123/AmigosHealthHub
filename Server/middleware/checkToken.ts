@@ -1,22 +1,20 @@
-const dotenv = require("dotenv");
-import{Request, Response, NextFunction} from 'express'
-dotenv.config();
-import { checkTokenHelper } from '../utils/checkTokenHelpers';
+import { type Request, type Response, type NextFunction } from 'express'
+import { checkTokenHelper } from '../utils/checkTokenHelpers'
+const dotenv = require('dotenv')
+dotenv.config()
 
 /**
  * Middleware that checks that every request has an authenticated user
- * - Extract jwtToken from authorization header in the request, and if the jwtToken is verified, pass on 
- * the request. 
+ * - Extract jwtToken from authorization header in the request, and if the jwtToken is verified, pass on
+ * the request.
  */
 
-export const checkToken = async(req:Request, res:Response,next:NextFunction) => {
-   console.log('Middleware Executed!')
-   return checkTokenHelper(req, res, next)
+export const checkToken = async (req: Request, res: Response, next: NextFunction) => {
+  console.log('Middleware Executed!')
+  return await checkTokenHelper(req, res, next)
 }
 
-
-export {};
-
+export {}
 
 // const jwtToken = require('jsonwebtoken');
 // const dotenv = require("dotenv");
@@ -28,8 +26,8 @@ export {};
 
 // /**
 //  * Middleware that checks that every request has an authenticated user
-//  * - Extract jwtToken from authorization header in the request, and if the jwtToken is verified, pass on 
-//  * the request. 
+//  * - Extract jwtToken from authorization header in the request, and if the jwtToken is verified, pass on
+//  * the request.
 //  */
 
 // export const checkToken = async(req:Request, res:Response,next:NextFunction) => {
@@ -39,7 +37,7 @@ export {};
 //  const {authorization} = req.headers
 // //  console.log(req.headers)
 //  //NO authorisation header
-//  if(!authorization){    
+//  if(!authorization){
 //     return res.status(401).json({mssg: "No Authorization Header"})
 //  }
 //  console.log(`authorization: ${authorization}`)
@@ -49,7 +47,7 @@ export {};
 //  if((authorization.indexOf(' ') === -1)  || (!authorization.includes("bearer"))){
 //    return res.status(400).json({mssg: "Authorization header must have format 'bearer token'."})
 //  }
- 
+
 //  else{
 //    //Extract token from bearer token
 //    const token = authorization.split(' ')[1];
@@ -75,6 +73,5 @@ export {};
 //    }
 // }
 // }
-
 
 // export {};
