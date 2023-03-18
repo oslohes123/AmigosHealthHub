@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
   },
   info: {
     fontSize: 20,
-    paddingBottom: 30,
+    position: 'absolute',
     alignSelf: 'center'
   }
 });
