@@ -3,15 +3,17 @@ const port = process.env["PORT"];
 const ip_address = process.env["IP_ADDRESS"];
 const wordValuesRoute = `http://${ip_address}:${port}/api/user/mentalHealth/wordcloud`
 console.log(`WordValuesRoute:${wordValuesRoute}`)
+import { useAuthContext } from "../../Authentication/context/AuthContext";
 
 export const useGetWordValues = () => {
-
+  const { user } = useAuthContext();
+  let userID = user.id
 const getWordValues = async () => {
     const response = await fetch(
       wordValuesRoute,
       {
         method: "GET",
-        headers: {id: '11f431c9-c848-4c44-a26d-5083696e6a5a'}
+        headers: {id: userID}
       } 
     );
     const json = await response.json();

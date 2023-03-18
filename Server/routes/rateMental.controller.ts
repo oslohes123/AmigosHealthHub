@@ -38,17 +38,11 @@ export function getToday(){
 }
   export const insertMentalData = async(req:Request, res:Response) => {
 
-    const { face, word, email } = req.body;
+    const { face, word, id } = req.body;
 
-    if(email == null) {
+    if(id == null) {
       return res.status(400).json({mssg:"You must be logged in to submit data"})
     }
-    const {data, error} = await getUserByEmail(email);
-    if (error){
-      return res.status(400).json({mssg:"Something went wrong!"})
-    }
-    const id  = data[0].id;
-
     if(word == ''){
       return res.status(400).json({mssg:"Can't submit an empty word"})
     }

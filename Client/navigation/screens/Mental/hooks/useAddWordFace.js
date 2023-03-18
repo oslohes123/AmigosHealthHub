@@ -7,7 +7,7 @@ export const useSubmit = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useAuthContext();
-  let email = user.email
+  let id = user.id
 
   console.log(`port: ${port}`);
   console.log(`ip_address: ${ip_address}`);
@@ -20,7 +20,7 @@ export const useSubmit = () => {
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, face, word }),
+        body: JSON.stringify({ id, face, word }),
       }
     );
 
