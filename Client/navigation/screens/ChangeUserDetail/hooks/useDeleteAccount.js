@@ -9,13 +9,13 @@ const ip_address = process.env.IP_ADDRESS;
 
 
 export const deleteAccountWrapper = () => {
-    const [error, setError] = useState<JSON | null | boolean>(null);
-    const [isLoading, setIsLoading] = useState<Boolean | null>(null);
+    const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(null);
     const { dispatch, user } = useAuthContext();
     const {logout} = useLogout();
     //Provide just the password, email is taken from the 'user' context
     
-    const deleteAccount = async (password: string) => {
+    const deleteAccount = async (Password) => {
         setIsLoading(true);
         setError(null);
         console.log('In deleteAccount');
@@ -24,7 +24,7 @@ export const deleteAccountWrapper = () => {
             const email = user.email;
             
             const {token } = JSON.parse(
-                (await AsyncStorage.getItem('user')) as string
+                (await AsyncStorage.getItem('user'))
             );
             console.log(`In deleteAccount, email: ${email}, token:${token}`);
             console.log(`Delete Account: ${ip_address} : Port ${port}`);

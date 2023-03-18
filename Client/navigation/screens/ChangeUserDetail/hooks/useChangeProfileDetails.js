@@ -11,17 +11,17 @@ console.log(`process.env: ${JSON.stringify(process.env)}`)
 export const useChangeProfileDetails = () => {
     console.log(`port: ${port}`);
     const{logout} = useLogout();
-    const [error, setError] = useState<JSON | null | boolean>(null);
-    const [isLoading, setIsLoading] = useState<Boolean | null>(null);
+    const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(null);
     const { dispatch, user } = useAuthContext();
     console.log('In changeProfile');
 
     // const changeStats = async (a_firstName:string, a_lastName:string, a_newEmail:string, a_age:number, a_password:string) => {
     const changeStats = async (
-        a_firstName: string,
-        a_lastName: string,
-        a_newEmail: string,
-        a_age: number
+        a_firstName,
+        a_lastName,
+        a_newEmail,
+        a_age
     ) => {
         setIsLoading(true);
         setError(null);
@@ -40,8 +40,9 @@ export const useChangeProfileDetails = () => {
             const email = user.email;
             
             const {token } = JSON.parse(
-                (await AsyncStorage.getItem('user')) as string
+                (await AsyncStorage.getItem('user'))
             );
+            console.log(`user: ${JSON.stringify(user)}`)
             console.log(`In useChangeProfileDetails, email: ${email}, token:${token}`);
             console.log(`In useChangeProfileDetails : ${ip_address} : Port ${port}`);
             
