@@ -8,7 +8,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "ts-coverage": "typescript-coverage-report"
   },
   "dependencies": {
     "@expo/webpack-config": "^0.17.2",
@@ -71,7 +72,8 @@
     "nodemon": "^2.0.20",
     "react-native-dotenv": "^3.4.7",
     "ts-node": "^10.9.1",
-    "typescript": "^4.9.5"
+    "typescript": "^4.9.5",
+    "typescript-coverage-report": "^0.7.0"
   },
   "jest": {
     "preset": "react-native"
