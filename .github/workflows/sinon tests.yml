@@ -19,7 +19,7 @@ jobs:
     - name: Install Node.js and NPM
       uses: actions/setup-node@v2.5.3
       with:
-        node-version: '14.x'
+        node-version: '18.x'
     - name: Install dependencies
       run: npm install
       working-directory: ./Server
