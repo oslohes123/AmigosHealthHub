@@ -8,8 +8,7 @@
     "start": "node dist/server.js",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon dist/server.js\"",
     "test": "npx tsc && c8 ava",
-    "ts-coverage": "typescript-coverage-report",
-    "lint": "eslint --fix --ext .ts ./"
+    "ts-coverage": "typescript-coverage-report"
   },
   "author": "",
   "license": "ISC",
