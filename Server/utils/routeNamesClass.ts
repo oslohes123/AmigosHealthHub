@@ -3,6 +3,7 @@ export default class RouteNamesClass{
     // All Base Routes
     readonly userBaseURL = '/api/user'
     readonly changeDetailsBaseURL = this.userBaseURL + '/changeProfileDetails'
+    readonly mentalHealthBaseURL = this.userBaseURL + '/mentalHealth';
 
     // Auth Routes
     readonly partialSignupURL = '/sign_up';
@@ -29,6 +30,23 @@ export default class RouteNamesClass{
     //  Get Info Route
     readonly partialGetInfoURL = '/getInfo';
     readonly fullGetInfoURL = this.userBaseURL + this.partialGetInfoURL;
+    
+
+    //Mental Health Routes
+    readonly partialWordCloud = '/wordCloud';
+    // http://localhost:3001/api/user/mentalHealth/wordCloud
+    readonly fullWordCloudURL = this.mentalHealthBaseURL + this.partialWordCloud;
+    readonly partialFaceGraph = '/faceGraph';
+    readonly fullFaceGraphURL = this.mentalHealthBaseURL + this.partialFaceGraph;
+    readonly partialTodaysWord = '/todaysWord';
+    readonly fullTodaysWordURL = this.mentalHealthBaseURL + this.partialTodaysWord;
+    readonly partialGetDates = '/dateValues';
+    readonly fullDateValues = this.mentalHealthBaseURL + this.partialGetDates;
+
+    //Mental Health Route
+
+    readonly partialRateMental = '/rateMental';
+    readonly fullRateMentalURL = this.mentalHealthBaseURL + this.partialRateMental;
 
     // Food Search Routes
     readonly foodBaseURL = '/api/food'

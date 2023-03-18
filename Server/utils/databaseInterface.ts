@@ -46,6 +46,16 @@ interface dbInterface {
   //     secondcolumn: string,
   //     id: string | string[] | undefined
   //   ) => object;
+  todays_data: (
+    db: any,
+    table: string,
+    first_column: string,
+    second_cloumn: string,
+    toBeFoundFirst: any,
+    toBeFoundSecond: any,
+    toBeSelected: string,
+  ) => object;
+
 }
 
 /**
@@ -210,21 +220,64 @@ export class supabaseQueryClass implements dbInterface {
   //     .from(table)
   //     .select(toBeSelected)
   //     .eq(column, toBeFound);
-  //   async mostrecent( // returns array of objects
-  //     supabaseDb: any,
-  //     table: string,
-  //     firstcolumn: string,
-  //     secondcolumn: string,
-  //     id: string | string[] | undefined
-  //   ): Promise<object | undefined> {
-  //     try {
-  //       const { data, error } = await supabaseDb
-  //         .from(table)
-  //         .select("user_id")
-  //         .eq("user_id", id)
-  //         .select(firstcolumn, secondcolumn)
-  //         .order(secondcolumn, { ascending: false })
-  //         .range(0, 6)
+  async mostrecent( // returns array of objects 
+    supabaseDb: any,
+    table: string,
+    firstcolumn: string,
+    secondcolumn: string,
+    id: any
+  ): Promise<object | undefined> {
+    try {
+      const { data, error } = await supabaseDb
+        .from(table)
+        .select("user_id")
+        .eq("user_id", id)
+        .select(firstcolumn, secondcolumn)
+        .order(secondcolumn, { ascending: false })
+        .range(0, 6)
+
+      if (error){
+        console.error(error);
+        return {error};
+        }
+      
+      else {
+        console.log({ data });
+        return {data};
+      }
+    } catch (err: unknown) {
+      console.error(err);
+    }
+  }
+  async todays_data(
+    supabaseDb: any,
+    table: string,
+    first_column: string,
+    second_cloumn: string,
+    toBeFoundFirst: any,
+    toBeFoundSecond: any,
+    toBeSelected: string
+  ): Promise<object | undefined> {
+    try {
+      const { data, error } = await supabaseDb
+        .from(table)
+        .select(toBeSelected)
+        .eq(first_column, toBeFoundFirst)
+        .select(toBeSelected)
+        .eq(second_cloumn, toBeFoundSecond)
+
+      if (error){
+        console.error(error);
+        return {error}
+      }
+      else console.log({ data });
+
+      return { data };
+    } catch (err: unknown) {
+      console.error(err);
+    }
+  }
+  
 
   //       if (error) console.error(error);
   //       else {
@@ -237,5 +290,4 @@ export class supabaseQueryClass implements dbInterface {
   //   }
 }
 
-// module.exports = supabaseQuery;
 export {};

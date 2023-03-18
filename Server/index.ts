@@ -23,12 +23,14 @@ const supabaseQuery = require('../dist/utils/databaseInterface.js');
 
 //Authentication Routes
 // const authRouter = require('./routes/authentication')
+
 import authRouter from "./routes/User/authentication.router";
 app.use(routeNames.userBaseURL, authRouter);
 
+import mentalHealthRouter from "./routes/MentalHealth/mhGetStats.router";
+app.use(routeNames.mentalHealthBaseURL,mentalHealthRouter)
 
 //Change Profile Details Routes
-// const changeProfileDetailsRouter = require('../routes/changeProfileDetails.js');
 import changeProfileDetailsRouter from "./routes/User/changeProfileDetails.router";
 app.use(routeNames.changeDetailsBaseURL, changeProfileDetailsRouter);
 
@@ -40,6 +42,12 @@ app.use(routeNames.foodBaseURL, foodDatabaseRouter);
 
 import calorieTrackRouter from "./routes/Food/calorieTrack.router";
 app.use(routeNames.foodBaseURL, calorieTrackRouter);
+//Mental Health Routes
+import rateMentalRouter from "./routes/rateMental.router";
+app.use(routeNames.mentalHealthBaseURL, rateMentalRouter);
+
+import FoodSearchRouter from "./routes/Food/foodSearch.router";
+app.use('/api/food', FoodSearchRouter)
 
 // Get User Details Routes
 import getUserInfoRouter from "./routes/User/getUserInfo.router";
@@ -48,6 +56,7 @@ app.use(routeNames.userBaseURL, getUserInfoRouter);
 // Check initial token Route
 import checkInitialTokenRouter from "./routes/User/checkInitialToken.router";
 app.use(routeNames.userBaseURL, checkInitialTokenRouter);
+
 
 /**---------------- Routes End------------------ */
 

@@ -5,7 +5,8 @@ const port = process.env['PORT'];
 const ip_address = process.env['IP_ADDRESS'];
 
 const getUserInfo = async () => {
-    const { user, dispatch } = useAuthContext();
+    const { user } = useAuthContext();
+    console.log(`user: ${JSON.stringify(user)}`);
     const { email, token } = user;
     const {logout} = useLogout()
     // console.log(`getUserInfo user : ${JSON.stringify(user)}`);

@@ -18,6 +18,7 @@ export const createUser = async (
   return { data, error };
 };
 
+
 export const getUserByEmail = async (
   email: string,
   toBeSelected = "*",
