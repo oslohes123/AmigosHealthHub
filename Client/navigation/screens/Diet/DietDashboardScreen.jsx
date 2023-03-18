@@ -197,6 +197,11 @@ const styles = StyleSheet.create({
     width: '50%',
     height: 400,
   },
+  info: {
+    fontSize: 20,
+    paddingBottom: 30,
+    alignSelf: 'center'
+  }
 });
 
 export default function DietDashboardScreen({ navigation }) {
@@ -324,7 +329,7 @@ export default function DietDashboardScreen({ navigation }) {
                 />
               </TouchableOpacity>
             )
-            : <Text>No data available</Text>}
+            : <Text style={styles.info}>Add Food to view Diet Info</Text>}
         </View>
 
         {foodInput.length > 2
