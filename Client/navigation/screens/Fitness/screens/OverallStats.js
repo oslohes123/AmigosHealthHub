@@ -39,18 +39,39 @@ export default function OverallStats() {
       const exerciseTypeFreq = await getExerciseTypeFreq();
       if(exerciseTypeFreq){
         const {  exerciseTypeLabels,  exerciseTypeData } = exerciseTypeFreq;
-        setExerciseTypeFreqData(exerciseTypeData);
-        setExerciseTypeFreqLabels(exerciseTypeLabels);
+        if(JSON.stringify(exerciseTypeLabels) === JSON.stringify([])||JSON.stringify(exerciseTypeData) === JSON.stringify([])){
+          setExerciseTypeFreqData(null);
+          setExerciseTypeFreqLabels(null);
+        }
+        else{
+          setExerciseTypeFreqData(exerciseTypeData);
+          setExerciseTypeFreqLabels(exerciseTypeLabels);
+        }
+       
       }
       if (result) {
         const { exerciseNameLabels, exerciseNameData } = result;
-        setExerciseNameFreqData(exerciseNameData);
+        if(JSON.stringify(exerciseNameLabels) === JSON.stringify([])||JSON.stringify(exerciseNameData) === JSON.stringify([])){
+          setExerciseNameFreqData(null);
+          setExerciseNameFreqLabels(null);
+        }
+        else{
+          setExerciseNameFreqData(exerciseNameData);
         setExerciseNameFreqLabels(exerciseNameLabels);
+        }
+        
       }
        if (workoutFreq) {
         const { workoutNameLabels, workoutNameData } = workoutFreq;
-        setTrackedWorkoutFreqData(workoutNameData);
-        setTrackedWorkoutFreqLabels(workoutNameLabels);
+        if(JSON.stringify(workoutNameLabels) === JSON.stringify([])||JSON.stringify(workoutNameData) === JSON.stringify([])){
+          setTrackedWorkoutFreqData(null);
+          setTrackedWorkoutFreqLabels(null);
+        }
+        else{
+          setTrackedWorkoutFreqData(workoutNameData);
+          setTrackedWorkoutFreqLabels(workoutNameLabels);
+        }
+      
       }
     };
     setDataAndLabels();
@@ -116,6 +137,12 @@ export default function OverallStats() {
       {
         error && (<Text>{error}</Text>)
       }
+
+    {!getExerciseNameFreqData && !getExerciseNameFreqLabels && (
+        
+        <Text>No Exercise Name Freq Data!</Text>
+      )}
+
        {getExerciseNameFreqData && getExerciseNameFreqLabels && (
         
           <TouchableWithoutFeedback>
@@ -148,6 +175,11 @@ export default function OverallStats() {
       {
         getErrorGetExerciseType && (<Text>{getErrorGetExerciseType}</Text>)
       }
+
+      {!getExerciseTypeFreqData && !getExerciseTypeFreqData && (  
+        
+        <Text>No Exercise Type Freq Data!</Text>
+      )}
        {getExerciseTypeFreqData && getExerciseTypeFreqLabels && (
         
           <TouchableWithoutFeedback>
@@ -180,6 +212,11 @@ export default function OverallStats() {
       {
         getErrorGetWorkoutFreq && (<Text>{getErrorGetWorkoutFreq}</Text>)
       }
+
+      {!getTrackedWorkoutFreqData && !getTrackedWorkoutFreqData && (    
+        
+        <Text>No Tracked Workout Type Freq Data!</Text>
+      )}
        {getTrackedWorkoutFreqData && getTrackedWorkoutFreqLabels && (
         
           <TouchableWithoutFeedback>
@@ -197,6 +234,7 @@ export default function OverallStats() {
           </View>
           </TouchableWithoutFeedback>
         )}
+
 
       </TouchableOpacity>
 

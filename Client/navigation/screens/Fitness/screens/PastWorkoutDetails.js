@@ -7,7 +7,7 @@ import { Dimensions } from "react-native";
 import { useIsFocused } from '@react-navigation/native';
 import { useGetWorkoutHistoryByDate } from '../hooks/trackedWorkouts/useGetWorkoutHistoryByDate';
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
-import { uuid } from 'uuidv4';
+import { DataTable } from 'react-native-paper';
 export default function PastWorkoutDetails({navigation}) {
   const isFocused = useIsFocused();
    const {isLoading, error, getWorkoutHistoryByDate}= useGetWorkoutHistoryByDate()
@@ -133,32 +133,37 @@ export default function PastWorkoutDetails({navigation}) {
                 </>
                 )
               }
-{/* 
-              {
-                getArrayOfWorkoutNamesAndIDs &&(
-                  <Text>{JSON.stringify(getArrayOfWorkoutNamesAndIDs)}</Text>)
-              } */}
 
               {
                 !getExerciseData && !getExerciseLabels &&!getArrayOfWorkoutNamesAndIDs &&(
                   <Text>No workouts to show!</Text>
                 )
               }
-            {getExerciseData && getExerciseLabels&& (
 
-              <View>
-                <Text>Exercises performed on this day and their frequency:</Text>
-            <BarChart
-              style={{borderRadius: 25}}
-              data={exerciseData}
-              width={0.8 * screenWidth}
-              height={270}
-              fromZero = {true}
-              // yAxisLabel="$"
-              chartConfig={chartConfig}
-              verticalLabelRotation={30}
+      {getExerciseData && getExerciseLabels && (
+          <DataTable style = {{color:'white'}}>
+              <DataTable.Header>
+                <DataTable.Title style = {{color:'white'}}>Exercise Name</DataTable.Title>
+                <DataTable.Title numeric style = {{color:'white'}}>Frequency</DataTable.Title>
+              </DataTable.Header>
+
+            {getExerciseLabels.map((exercise) => (
+
+                <DataTable.Row key = {exercise}>
+                <DataTable.Cell>{exercise}</DataTable.Cell>
+                <DataTable.Cell numeric>{getExerciseData[getExerciseLabels.indexOf(exercise)]}</DataTable.Cell>
+                </DataTable.Row>
+            ))}
+
+            <DataTable.Pagination
+              page={1}
+              numberOfPages={3}
+              onPageChange={page => {
+                console.log(page);
+              }}
+              label="1-2 of 6"
             />
-            </View>
+            </DataTable>
             )}
           </TouchableOpacity>
         )}
