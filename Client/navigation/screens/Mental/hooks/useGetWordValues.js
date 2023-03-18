@@ -17,7 +17,6 @@ const getWordValues = async () => {
     const json = await response.json();
 
     if (!response.ok) {
-      console.log(json.mssg);
       return [0]
     }
     if (response.ok) {

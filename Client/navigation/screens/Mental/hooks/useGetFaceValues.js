@@ -16,7 +16,6 @@ const getFaceValues = async () => {
     );
     const json = await response.json();
     if (!response.ok) {
-      console.log(json.mssg);
       return [0]
     }
     if (response.ok) {
@@ -24,7 +23,6 @@ const getFaceValues = async () => {
       try {
         return (json.faces).reverse();
       } catch (error) {
-        console.error(error);
         return [0]
       }
     }
