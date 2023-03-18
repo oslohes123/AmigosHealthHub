@@ -149,9 +149,9 @@ export default function OverallStats() {
           <View style={{ marginBottom: 40 }}>
             <Text style={[styles.title]}>Number Of Times An Exercise Was Performed</Text>
             <BarChart
-              // style={{ borderRadius: 25 }}
+              style={{ borderRadius: 25 }}
               data={exerciseNameData}
-              width={screenWidth}
+              width={0.9 * screenWidth}
               height={220}
               // yAxisSuffix={` kg`}
               chartConfig={chartConfig}
@@ -178,7 +178,7 @@ export default function OverallStats() {
 
       {!getExerciseTypeFreqData && !getExerciseTypeFreqData && (  
         
-        <Text>No Exercise Type Freq Data!</Text>
+        <Text style={[styles.title]}>No Exercise Type Freq Data!</Text>
       )}
        {getExerciseTypeFreqData && getExerciseTypeFreqLabels && (
         
@@ -186,9 +186,9 @@ export default function OverallStats() {
           <View style={{ marginBottom: 40 }}>
             <Text style={[styles.title]}>Frequency of all exercise types</Text>
             <BarChart
-              // style={{ borderRadius: 25 }}
+              style={{ borderRadius: 25 }}
               data={exerciseTypeData}
-              width={screenWidth}
+              width={0.9 * screenWidth}
               height={220}
               // yAxisSuffix={` kg`}
               chartConfig={chartConfig}
@@ -215,7 +215,7 @@ export default function OverallStats() {
 
       {!getTrackedWorkoutFreqData && !getTrackedWorkoutFreqData && (    
         
-        <Text>No Tracked Workout Type Freq Data!</Text>
+        <Text style={[styles.title]}>No Tracked Workout Type Freq Data!</Text>
       )}
        {getTrackedWorkoutFreqData && getTrackedWorkoutFreqLabels && (
         
@@ -223,9 +223,9 @@ export default function OverallStats() {
           <View style={{ marginBottom: 40 }}>
             <Text style={[styles.title]}>Frequency of all workouts</Text>
             <BarChart
-              // style={{ borderRadius: 25 }}
+              style={{ borderRadius: 25 }}
               data={workoutNameFreq}
-              width={screenWidth}
+              width={0.9 * screenWidth}
               height={220}
               // yAxisSuffix={` kg`}
               chartConfig={chartConfig}
@@ -262,5 +262,10 @@ const styles = StyleSheet.create({
         padding: 5,
         marginTop: '10%'
       },
+      title: {
+        fontSize: 17,
+        color: 'white',
+        alignSelf: 'center'
+      }
 })
 
