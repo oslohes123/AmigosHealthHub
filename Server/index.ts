@@ -31,12 +31,15 @@ import mentalHealthRouter from "./routes/MentalHealth/mhGetStats.router";
 app.use(routeNames.mentalHealthBaseURL,mentalHealthRouter)
 
 //Change Profile Details Routes
-// const changeProfileDetailsRouter = require('../routes/changeProfileDetails.js');
 import changeProfileDetailsRouter from "./routes/User/changeProfileDetails.router";
 app.use(routeNames.changeDetailsBaseURL, changeProfileDetailsRouter);
 
-import foodSearchRouter from "./routes/Food/FoodSearchRouter";
-app.use('/api/food',foodSearchRouter)
+//Mental Health Routes
+import rateMentalRouter from "./routes/rateMental.router";
+app.use(routeNames.mentalHealthBaseURL, rateMentalRouter);
+
+import FoodSearchRouter from "./routes/Food/FoodSearchRouter";
+app.use('/api/food', FoodSearchRouter)
 
 // Get User Details Routes
 import getUserInfoRouter from "./routes/User/getUserInfo.router";
@@ -45,6 +48,7 @@ app.use(routeNames.userBaseURL, getUserInfoRouter);
 // Check initial token Route
 import checkInitialTokenRouter from "./routes/User/checkInitialToken.router";
 app.use(routeNames.userBaseURL, checkInitialTokenRouter);
+
 
 /**---------------- Routes End------------------ */
 
