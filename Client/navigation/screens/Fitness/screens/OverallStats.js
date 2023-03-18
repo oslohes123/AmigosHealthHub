@@ -118,6 +118,7 @@ export default function OverallStats() {
     strokeWidth: 2, // optional, default 3
     barPercentage: 0.5,
     useShadowColorFromDataset: false, // optional
+    decimalPlaces: 0,
   };
 
   return (
@@ -140,7 +141,7 @@ export default function OverallStats() {
 
     {!getExerciseNameFreqData && !getExerciseNameFreqLabels && (
         
-        <Text>No Exercise Name Freq Data!</Text>
+        <Text style={[styles.title]}>No Exercise Name Freq Data!</Text>
       )}
 
        {getExerciseNameFreqData && getExerciseNameFreqLabels && (
