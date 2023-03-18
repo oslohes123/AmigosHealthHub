@@ -1,11 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View , Button, TextInput,  Dimensions} from "react-native";
-import WordCloud from './components/cloud.js';
 import Cloud from "react-native-word-cloud";
 import { LineChart } from 'react-native-chart-kit';
 // npm install , npm install react-native-chart-kit , npx expo install react-native-svg ,  npm install react-native-word-cloud, npm install prop-types
 import React , {useEffect, useState, Component} from 'react';
-// import { useAuthContext } from '../Authentication/context/AuthContext.js';
  import { useGetFaceValues } from './hooks/useGetFaceValues.js';
  import { useGetWordValues } from './hooks/useGetWordValues.js'
  import { useGetDateValues } from './hooks/useGetDateValues.js'
@@ -24,7 +22,9 @@ export default function App({navigation}) {
         )
     }
 }
-
+const inputScreenButton = () => {
+  navigation.navigate('ReviewYourDay')
+}
   const {getDateValues} = useGetDateValues();
   useEffect(() => {
     async function getDateValuesCall(){
@@ -71,13 +71,9 @@ const line = {
     }
       getWordValuesCall();
   }, [])
-
-  const back = () => {
-    navigation.goBack();
-  }
   return (
     <View style={styles.container}>
-      <Text>Graph</Text>
+      <Text>Graph for the Past 7 Submissions</Text>
       <LineChart
       data={line}
       width={screenWidth}
@@ -99,20 +95,29 @@ const line = {
       }}
     />   
 
-    <Text>Text is the WordCloud for the Past 7 Submissions</Text>
-    <WordCloud />
+    <Text>WordCloud for the Past 7 Submissions</Text>
+    <WordCloud/>
     <StatusBar style="auto" />
-    <Button title="<--" onPress={back}></Button>      
+      <Button title="Review Your Day" onPress={inputScreenButton}></Button>      
+      <StatusBar style="auto" />
     </View>
   );
 }
 
-
+const line = {
+  labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+  datasets: [
+    {
+      data: [20, 45, 28, 80, 99, 43],
+      strokeWidth: 2, // optional
+    },
+  ],
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    aligItems: 'center',
+    alignItems: 'center',
     justifyContent: 'center',
   },
 });
