@@ -191,7 +191,7 @@ export async function getMultipleFood(foodIDs: string[]) {
     }
     catch (error: any | AxiosError) {
         if (axios.isAxiosError(error)) {
-            console.log("Got an error from the server");
+            console.log("Got an error when getting multiple foods");
             console.log(error.response);
         } else {
             console.log("Default error handler" + error);
@@ -202,6 +202,7 @@ export async function getMultipleFood(foodIDs: string[]) {
 
 }
 
+// This function is used to sum the nutrients of the foods that are being tracked
 function sumNutrients(data: any) {
     let protein = 0;
     let sugar = 0;
@@ -225,17 +226,18 @@ function sumNutrients(data: any) {
     
     return { protein, sugar, carbohydrates, fat, fiber };
 }
+  
 
-
+// This function is used to merge the data from the food table and the tracked food table
 export async function getPieChartData(UserID:string,inputDate:string = currentDate) {
-    let currentFood = await getTrackedFood(inputDate , UserID )
+    const currentFood = await getTrackedFood(inputDate , UserID )
     if(currentFood.length == 0 || currentFood == undefined){
         return [];
     }
-    let foodIDs = currentFood.map((food:any) => food.FoodID);
-    let foods = await getMultipleFood(foodIDs)
-    let allFoods = mergeTwoFoods(foods,currentFood)
-    let data = sumNutrients(allFoods);
+    const foodIDs = currentFood.map((food:any) => food.FoodID);
+    const foodsData = await getMultipleFood(foodIDs)
+    const allFoodsData = mergeTwoFoods(foodsData,currentFood)
+    const nutrientsData = sumNutrients(allFoodsData);
     let myColors = [
         "red",
         "blue",
@@ -244,7 +246,7 @@ export async function getPieChartData(UserID:string,inputDate:string = currentDa
         "yellow",
 
     ]
-    const output = Object.entries(data).map(([name, amount],index) => ({
+    const output = Object.entries(nutrientsData).map(([name, amount],index) => ({
         name,
         amount,
         color: myColors[index],
@@ -254,19 +256,21 @@ export async function getPieChartData(UserID:string,inputDate:string = currentDa
     return output;
 }
 
+
+// Helper function to merge the data from the food table and the tracked food table
 function mergeTwoFoods(dataArray:any[],quantityArray: any[]){
     for(let i = 0; i < quantityArray.length; i++) {
-        let currentObj = quantityArray[i]
+        let currentFood = quantityArray[i]
         for(let j = 0; j < dataArray.length; j++) {
-          let nutrientObj = dataArray[j]
-          if(currentObj.FoodID === nutrientObj.FoodID) {
+          let nutrientFood = dataArray[j]
+          if(currentFood.FoodID === nutrientFood.FoodID) {
             // merge nutrient information
-            currentObj.Calories = nutrientObj.Calories
-            currentObj.Carbohydrate = nutrientObj.Carbohydrate
-            currentObj.Fat = nutrientObj.Fat
-            currentObj.Fiber = nutrientObj.Fiber
-            currentObj.Protein = nutrientObj.Protein
-            currentObj.Sugar = nutrientObj.Sugar
+            currentFood.Calories = nutrientFood.Calories
+            currentFood.Carbohydrate = nutrientFood.Carbohydrate
+            currentFood.Fat = nutrientFood.Fat
+            currentFood.Fiber = nutrientFood.Fiber
+            currentFood.Protein = nutrientFood.Protein
+            currentFood.Sugar = nutrientFood.Sugar
             break
           }
         }
