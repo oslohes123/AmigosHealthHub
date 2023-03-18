@@ -43,7 +43,7 @@ app.use(routeNames.foodBaseURL, foodDatabaseRouter);
 import calorieTrackRouter from "./routes/Food/calorieTrack.router";
 app.use(routeNames.foodBaseURL, calorieTrackRouter);
 //Mental Health Routes
-import rateMentalRouter from "./routes/rateMental.router";
+import rateMentalRouter from "./routes/MentalHealth/rateMental.router";
 app.use(routeNames.mentalHealthBaseURL, rateMentalRouter);
 
 import FoodSearchRouter from "./routes/Food/foodSearch.router";

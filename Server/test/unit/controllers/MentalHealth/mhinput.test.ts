@@ -1,7 +1,7 @@
 const test = require('ava');
 import { Request, Response } from 'express';
 const sinon = require('sinon');
-import { insertMentalData } from '../../../../routes/rateMental.controller';
+import { insertMentalData } from '../../../../routes/MentalHealth/rateMental.controller';
 import { supabaseQueryClass } from '../../../../utils/databaseInterface';
 import supabase from '../../../../utils/supabaseSetUp';
 import {v4 as uuidv4} from 'uuid';

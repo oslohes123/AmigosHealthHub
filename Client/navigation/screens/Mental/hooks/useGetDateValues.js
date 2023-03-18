@@ -3,18 +3,23 @@ const port = process.env["PORT"];
 const ip_address = process.env["IP_ADDRESS"];
 const dateValuesRoute = `http://${ip_address}:${port}/api/user/mentalHealth/dateValues`
 import { useAuthContext } from "../../Authentication/context/AuthContext";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export const useGetDateValues = () => {
+  
   //get the current users ID thats currently logged in
   const { user } = useAuthContext();
   let userID = user.id
+  
   const getDateValues = async () => {
+    const { token } = JSON.parse(
+      (await AsyncStorage.getItem('user'))
+    );
     //make a get request to get the data of the persons account with the ID userID
     const response = await fetch(
       dateValuesRoute,
       {
         method: "GET",
-        headers: {id: userID}
+        headers: {id: userID, authorization: token}
       } 
     );
     const json = await response.json();

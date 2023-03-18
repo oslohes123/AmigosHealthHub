@@ -4,18 +4,21 @@ const ip_address = process.env["IP_ADDRESS"];
 const wordValuesRoute = `http://${ip_address}:${port}/api/user/mentalHealth/wordcloud`
 console.log(`WordValuesRoute:${wordValuesRoute}`)
 import { useAuthContext } from "../../Authentication/context/AuthContext";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export const useGetWordValues = () => {
   //get the current users ID thats currently logged in
   const { user } = useAuthContext();
   let userID = user.id
   //make a get request to get the most recent 7(max) word values
   const getWordValues = async () => {
+    const { token } = JSON.parse(
+      (await AsyncStorage.getItem('user'))
+    );
     const response = await fetch(
       wordValuesRoute,
       {
         method: "GET",
-        headers: {id: userID}
+        headers: {id: userID, authorization: token}
       } 
     );
     const json = await response.json();
