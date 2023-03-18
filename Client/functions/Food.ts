@@ -236,7 +236,7 @@ export async function getPieChartData(UserID:string,inputDate:string = currentDa
     let foods = await getMultipleFood(foodIDs)
     let allFoods = mergeTwoFoods(foods,currentFood)
     let data = sumNutrients(allFoods);
-    let myColours = [
+    let myColors = [
         "red",
         "blue",
         "green",
@@ -247,7 +247,7 @@ export async function getPieChartData(UserID:string,inputDate:string = currentDa
     const output = Object.entries(data).map(([name, amount],index) => ({
         name,
         amount,
-        color: myColours[index],
+        color: myColors[index],
         legendFontColor: "black",
         legendFontSize: 12
       }));
