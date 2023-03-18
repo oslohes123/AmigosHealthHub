@@ -9,7 +9,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "jest --coverage",
-    "ts-coverage": "typescript-coverage-report"
+    "ts-coverage": "typescript-coverage-report -t 85"
   },
   "dependencies": {
     "@expo/webpack-config": "^0.17.2",

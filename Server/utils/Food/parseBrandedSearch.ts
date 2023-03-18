@@ -1,8 +1,8 @@
-import BrandedSearchInterface from "../../interfaces/Food/api_interfaces/brandedSearchInterface";
-import specificFoodNutritionInterface from "../../interfaces/Food/specificFoodNutritionInterface";
+import type BrandedSearchInterface from '../../interfaces/Food/api_interfaces/brandedSearchInterface'
+import type specificFoodNutritionInterface from '../../interfaces/Food/specificFoodNutritionInterface'
 
-export default function transformBrandedSearchInterface(data: BrandedSearchInterface): specificFoodNutritionInterface {
-  const food = data.foods[0];
+export default function transformBrandedSearchInterface (data: BrandedSearchInterface): specificFoodNutritionInterface {
+  const food = data.foods[0]
   return {
     food_name: food.food_name,
     brand_name: food.brand_name || null,
@@ -15,7 +15,6 @@ export default function transformBrandedSearchInterface(data: BrandedSearchInter
     carbohydrates: food.nf_total_carbohydrate,
     sugar: food.nf_sugars,
     fiber: food.nf_dietary_fiber,
-    alt_measures: food.alt_measures || null,
-  };
-
+    alt_measures: food.alt_measures || null
+  }
 }
