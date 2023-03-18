@@ -24,6 +24,6 @@ export const eitherIsFloatOrInt = (containsIntOrFloat: any) => {
 }
 
 export const covertStringToNumber  = (stringWNumber: string) =>{
-    var number = Number(stringWNumber)
+    let number = Number(stringWNumber)
     return number
 }

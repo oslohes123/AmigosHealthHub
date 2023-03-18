@@ -38,10 +38,10 @@ export default class RouteNamesClass{
         //Exercise Routes
             readonly partialSearchExercise = '/search';
             readonly fullSearchExerciseURL = this.exerciseBaseURL + this.partialSearchExercise;
-            readonly partialAddToExercises = '/add';
-            readonly fullAddToExercisesURL = this.exerciseBaseURL + this.partialAddToExercises;
+            // readonly partialAddToExercises = '/add';
+            // readonly fullAddToExercisesURL = this.exerciseBaseURL + this.partialAddToExercises;
             readonly partialGetExercise = '/get';
-            readonly fullGetExerciseURL = this.exerciseBaseURL + this.partialAddToExercises;
+            readonly fullGetExerciseURL = this.exerciseBaseURL + this.partialGetExercise;
             readonly partialGetExerciseHistory = '/history';
             readonly fullGetExerciseHistoryURL = this.exerciseBaseURL + this.partialGetExerciseHistory;
             readonly partialGetAllExercises = '/getAll';
