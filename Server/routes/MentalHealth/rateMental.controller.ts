@@ -57,7 +57,8 @@ export async function checkExistsToday(id:string) {
       const recentID = (data[data.length - 1].MH_ID)
       const { error }: any = await databaseQuery.update(supabase, 'Mental Health', {
         face_id: face,
-        todays_word: word
+        todays_word: word,
+        created_at: getToday(),
         },
         'MH_ID',recentID)
         //update word,face, where column
@@ -70,7 +71,8 @@ export async function checkExistsToday(id:string) {
         const {error}: any = await databaseQuery.insert(supabase, 'Mental Health', {
           user_id : id,
           face_id: face,
-          todays_word: word
+          todays_word: word,
+          created_at: getToday(),
           })
           if(error){
             return res.status(400).json({mssg: error})
