@@ -24,6 +24,10 @@ export default function SleepQaulityGraph() {
         fetchData();
     }, [isFocused]);
 
+    if (data === undefined) {
+        return <></>;
+    }
+
     const graphTitle = 'Sleep Quality this week';
     const label = data.map((item) => moment(item.timestamp).format('ddd'));
     const dataset = data.map((item) => item.sleepQuality);

@@ -1,5 +1,5 @@
 import { BarChart, LineChart } from 'react-native-chart-kit';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, SafeAreaView, StyleSheet, Text } from 'react-native';
 import React, { useContext } from 'react';
 
 import themeContext from '../theme/themeContext';
@@ -21,7 +21,7 @@ const GraphWidget = (inputLabel, inputDataset, graphTitle, graphAttributes) => {
     const screenWidth = Dimensions.get('window').width * 0.95;
     const { yAxisSuffix } = graphAttributes;
     return (
-        <View>
+        <SafeAreaView>
             <Text style={[styles.title, { color: theme.color }]}>
                 {graphTitle}
             </Text>
@@ -50,7 +50,7 @@ const GraphWidget = (inputLabel, inputDataset, graphTitle, graphAttributes) => {
                     borderRadius: 16
                 }}
             />
-        </View>
+        </SafeAreaView>
     );
 };
 
