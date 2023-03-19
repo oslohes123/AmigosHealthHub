@@ -239,7 +239,7 @@ export class SupabaseQueryClass implements dbInterface {
         if (error) console.error(error);
         else console.log({ data });
 
-        return { data };
+        return { data, error };
     } catch (err: unknown) {
         console.error(err);
     }

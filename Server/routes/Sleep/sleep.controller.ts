@@ -6,17 +6,18 @@ export const addSleep = async (req: Request, res: Response) => {
 
     if (!userID) return res.status(400).json({ mssg: 'UUID must be provided' });
 
-    const { dataGet, errorGet }: any = await getSleepFunc(
-        userID,
-        timestamp,
-        timestamp
-    );
+    // const { dataGet, errorGet }: any = await getSleepFunc(
+    //     userID,
+    //     timestamp,
+    //     timestamp
+    // );
+    // console.log(`getSleep data is: ${errorGet}`);
 
-    if (dataGet === undefined) {
-        return res
-            .status(409)
-            .json({ mssg: 'Sleep data for this date already exists.' });
-    }
+    // if (dataGet === undefined) {
+    //     return res
+    //         .status(409)
+    //         .json({ mssg: 'Sleep data for this date already exists.' });
+    // }
 
     const { data, error }: any = await addSleepFunc(req.body);
 
@@ -38,8 +39,9 @@ export const getSleep = async (req: Request, res: Response) => {
         return res
             .status(400)
             .json({ mssg: 'Start and end date must be provided' });
+
     const { data, error }: any = await getSleepFunc(userID, startDate, endDate);
-    console.log(`getSleep data is: ${data}`);
+    console.log(`getSleep data is: ${JSON.stringify(data)}`);
     if (error || data === null)
         return res.status(400).json({ mssg: error.message });
     else if (data.length === 0)

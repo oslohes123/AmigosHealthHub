@@ -13,7 +13,7 @@ import authRouter from './routes/User/authentication.router';
 
 // Sleep Routes
 import sleepRouter from './routes/Sleep/sleep.router';
-app.use(routeNames.sleepBaseURL, sleepRouter);
+
 
 import mentalHealthRouter from './routes/MentalHealth/mhGetStats.router';
 
@@ -46,6 +46,7 @@ if (port === undefined) {
 }
 
 app.use(routeNames.userBaseURL, authRouter);
+app.use(routeNames.sleepBaseURL, sleepRouter);
 app.use(routeNames.mentalHealthBaseURL, mentalHealthRouter);
 app.use(routeNames.changeDetailsBaseURL, changeProfileDetailsRouter);
 app.use(routeNames.foodBaseURL, FoodSearchRouter);
