@@ -237,10 +237,10 @@ test("Return today's word", async (t: any) => {
   const argsPassed = res.json.getCall(0).args[0]
 
   const expectedArgs = {
-        mssg: "Here is today's word!",
-        word: [
-            {"todays_word":"Awful"}
-        ]
+    mssg: 'Here is today\'s word!',
+    word: [
+      { todays_word: 'Awful' }
+    ]
   }
   const stringifiedExpectedArgs = JSON.stringify(expectedArgs)
   console.log(`argsPassed wheretodays_word:${JSON.stringify(argsPassed)}`)
