@@ -3,8 +3,8 @@ import { useAuthContext } from "../../Authentication/context/AuthContext";
 import { useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const port = process.env["PORT"];
-const ip_address = process.env["IP_ADDRESS"];
+const port = process.env.PORT;
+const ipAddress = process.env.IP_ADDRESS;
 
 export const useSubmit = () => {
   const [error, setError] = useState(null);
@@ -21,7 +21,7 @@ export const useSubmit = () => {
     );
     //make a post request with the data and the accountID the data should be sent with respect to 
     const response = await fetch(
-      `http://${ip_address}:${port}/api/user/mentalHealth/rateMental`,
+      `http://${ipAddress}:${port}/api/user/mentalHealth/rateMental`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json",
