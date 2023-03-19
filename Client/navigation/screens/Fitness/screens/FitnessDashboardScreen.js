@@ -41,7 +41,7 @@ export default function FitnessScreen({ navigation }) {
                 }} />
              
 
-            <TouchableOpacity onPress={() => {
+            <TouchableOpacity style={{width: '107%'}} onPress={() => {
                     console.log("The user wants to see their workout history.")
                     navigation.navigate("Workout History")
                 }}>
@@ -55,7 +55,8 @@ export default function FitnessScreen({ navigation }) {
             Workout History
               
             </Text>
-            <Text>Last Tracked Workout:{getMostRecentWorkout}</Text>
+            <Text style={styles.info}>(Last Tracked Workout:</Text>
+            <Text style={styles.info}>{getMostRecentWorkout})</Text>
             {isLoading && (
             <>
               {/* <Text>Refreshing.....</Text> */}
@@ -130,7 +131,8 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         width: '80%',
         alignSelf: 'center',
-        marginTop: '5%',
+        //marginTop: '5%',
+        marginBottom: '5%',
         alignItems: 'center'
       },
       header: {
@@ -138,6 +140,9 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 25,
       },
+      info: {
+        color: 'white'
+      }
 });
 
   
