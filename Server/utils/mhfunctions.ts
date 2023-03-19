@@ -1,4 +1,4 @@
-import {SupabaseQueryClass} from '../utils/databaseInterface'
+import {SupabaseQueryClass} from './databaseInterface'
 
 const supabaseQuery = new SupabaseQueryClass();
 
