@@ -4,15 +4,15 @@ var randomColor = require('randomcolor');
 
 
 const portENV = process.env["PORT"];
-const ip_addressENV = process.env["IP_ADDRESS"];
+const ipAddressENV = process.env["ipAddress"];
 let currentDate = new Date().toISOString().split("T")[0];
 // For testing purposes
 // Update this with your own UrlService
-let ip_address = ip_addressENV;
+let ipAddress = ipAddressENV;
 let port = portENV;
 
 export async function getTrackedFood(Date, userID) {
-    let url = `http://${ip_address}:${port}/api/food/getTrackedFood/${Date}.${userID}`;
+    let url = `http://${ipAddress}:${port}/api/food/getTrackedFood/${Date}.${userID}`;
     let response;
     try {
         const {token} = JSON.parse(
@@ -36,7 +36,7 @@ export async function getTrackedFood(Date, userID) {
 }
 
 export async function getSpecificTrackedFood(logID) {
-    let url = `http://${ip_address}:${port}/api/food/getSpecificTrackedFood/${logID}`;
+    let url = `http://${ipAddress}:${port}/api/food/getSpecificTrackedFood/${logID}`;
     let response;
     try {
         const {token} = JSON.parse(
@@ -60,7 +60,7 @@ export async function getSpecificTrackedFood(logID) {
 }
 
 export async function addTrackedFood(input, userID) {
-    let url = `http://${ip_address}:${port}/api/food/addTrackedFood`;
+    let url = `http://${ipAddress}:${port}/api/food/addTrackedFood`;
     let response;
     try {
         const {token} = JSON.parse(
@@ -92,7 +92,7 @@ export async function addTrackedFood(input, userID) {
 }
 
 export async function deleteTrackedFood(logID) {
-    let url = `http://${ip_address}:${port}/api/food/deleteTrackedFood/`;
+    let url = `http://${ipAddress}:${port}/api/food/deleteTrackedFood/`;
     let response;
     try {
         const {token} = JSON.parse(
@@ -120,7 +120,7 @@ export async function deleteTrackedFood(logID) {
 }
 
 export async function updateTrackedFood(input) {
-    let url = `http://${ip_address}:${port}/api/food/updateTrackedFood`;
+    let url = `http://${ipAddress}:${port}/api/food/updateTrackedFood`;
     let response;
     try {
         const {token} = JSON.parse(
@@ -153,7 +153,7 @@ export async function updateTrackedFood(input) {
 }
 
 export async function getFood(foodID) {
-    let url = `http://${ip_address}:${port}/api/food/getFood/${foodID}`;
+    let url = `http://${ipAddress}:${port}/api/food/getFood/${foodID}`;
     let response;
     try {
         const {token} = JSON.parse(
@@ -177,7 +177,7 @@ export async function getFood(foodID) {
 }
 
 export async function getMultipleFood(foodIDs) {
-    let url = `http://${ip_address}:${port}/api/food/getMultipleFood`;
+    let url = `http://${ipAddress}:${port}/api/food/getMultipleFood`;
     let response;
     try {
         const {token} = JSON.parse(

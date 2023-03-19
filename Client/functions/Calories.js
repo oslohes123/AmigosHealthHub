@@ -4,12 +4,12 @@ import { getTrackedFood } from "./Food";
 
 
 const portENV = process.env["PORT"];
-const ip_addressENV = process.env["IP_ADDRESS"];
+const ipAddressENV = process.env["ipAddress"];
 const currentDate = new Date().toISOString().split('T')[0];
 
 // For testing purposes
 // Update this with your own UrlService
-let ip_address = ip_addressENV;
+let ipAddress = ipAddressENV;
 let port = portENV;
 
 
@@ -63,7 +63,7 @@ export async function getCaloriesRemaining(UserID, Date, calorieGoal = -1) {
 }
 
 export async function getGeneralCalorieGoal(UserID) {
-    let url = `http://${ip_address}:${port}/api/food/calorieTrack/General.${UserID}`;
+    let url = `http://${ipAddress}:${port}/api/food/calorieTrack/General.${UserID}`;
     let response;
     try {
         const { token } = JSON.parse(
@@ -87,7 +87,7 @@ export async function getGeneralCalorieGoal(UserID) {
 }
 
 export async function addCalorieGoal(UserID,CalorieGoal,Date = currentDate){
-    let url = `http://${ip_address}:${port}/api/food/calorieTrack/createCalorieLog`;
+    let url = `http://${ipAddress}:${port}/api/food/calorieTrack/createCalorieLog`;
 
     let response;
     try {
@@ -120,7 +120,7 @@ export async function addCalorieGoal(UserID,CalorieGoal,Date = currentDate){
 export async function updateCalorieGoal(UserID, CalorieGoal, Date = currentDate ) {
     // Get the latest calorie goal
     let currentCalorieGoal = await getLatestCalorieGoal(UserID);
-    let url = `http://${ip_address}:${port}/api/food/calorieTrack/`;
+    let url = `http://${ipAddress}:${port}/api/food/calorieTrack/`;
     let inputData ={};
 
     // If the latest calorie goal is for the current date, update the calorie goal 

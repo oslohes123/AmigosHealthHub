@@ -4,18 +4,18 @@ import { useState } from 'react';
 import { useAuthContext } from '../../Authentication/context/AuthContext'
 import { useLogout } from '../../Authentication/hooks/useLogOut';
 const port = process.env['PORT'];
-const ip_address = process.env['IP_ADDRESS'];
+const ipAddress = process.env['ipAddress'];
 
 
 export const useChangeProfilePassword = () => {
     console.log(`port: ${port}`)
-    const [error, setError] = useState<JSON|null|boolean>(null)
-    const [isLoading, setIsLoading] = useState<Boolean|null>(null) 
+    const [error, setError] = useState(null)
+    const [isLoading, setIsLoading] = useState(null) 
     const { dispatch, user } = useAuthContext()
     const {logout} = useLogout();
     console.log("In changePassword");
     
-    const changePassword = async (old_password:string , new_password:string) => {
+    const changePassword = async (old_password , new_password) => {
         setIsLoading(true)
         setError(null)
         console.log("In changePassword");
@@ -25,9 +25,9 @@ export const useChangeProfilePassword = () => {
             //AsyncStorage contains: firstName, email and token 
             const email = user.email;
             console.log(`in changePassword, email: ${email}`);
-             const {token}= JSON.parse(await AsyncStorage.getItem('user') as string)
-             console.log(`Change Password: ${ip_address} : Port ${port}`);
-             const response = await fetch(`http://${ip_address}:${port}/api/user/changeProfileDetails/password`, {
+             const {token}= JSON.parse(await AsyncStorage.getItem('user'))
+             console.log(`Change Password: ${ipAddress} : Port ${port}`);
+             const response = await fetch(`http://${ipAddress}:${port}/api/user/changeProfileDetails/password`, {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',
