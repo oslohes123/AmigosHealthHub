@@ -6,6 +6,18 @@ export const addSleep = async (req: Request, res: Response) => {
 
     if (!userID) return res.status(400).json({ mssg: 'UUID must be provided' });
 
+    const { dataGet, errorGet }: any = await getSleepFunc(
+        userID,
+        timestamp,
+        timestamp
+    );
+
+    if (dataGet === undefined) {
+        return res
+            .status(409)
+            .json({ mssg: 'Sleep data for this date already exists.' });
+    }
+
     const { data, error }: any = await addSleepFunc(req.body);
 
     if (error) return res.status(400).json({ mssg: error.message });
