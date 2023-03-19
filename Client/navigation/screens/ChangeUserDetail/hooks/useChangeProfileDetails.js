@@ -5,7 +5,7 @@ import { useAuthContext } from '../../Authentication/context/AuthContext';
 import { useLogout } from '../../Authentication/hooks/useLogOut';
 
 const port = process.env.PORT;
-const ipAddress = process.env.IP_ADDRESS;
+const ipAddress = process.env.ipAddress;
 
 export const useChangeProfileDetails = () => {
   console.log(`port: ${port}`);

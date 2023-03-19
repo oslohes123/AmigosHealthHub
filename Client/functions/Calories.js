@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getTrackedFood } from './Food';
 
 const portENV = process.env.PORT;
-const ipAddressENV = process.env.IP_ADDRESS;
+const ipAddressENV = process.env.ipAddress;
 const currentDate = new Date().toISOString().split('T')[0];
 
 // For testing purposes

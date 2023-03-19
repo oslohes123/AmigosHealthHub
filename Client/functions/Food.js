@@ -2,7 +2,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const portENV = process.env.PORT;
-const ipAddressEnv = process.env.IP_ADDRESS;
+const ipAddressEnv = process.env.ipAddress;
 const currentDate = new Date().toISOString().split('T')[0];
 
 // For testing purposes
