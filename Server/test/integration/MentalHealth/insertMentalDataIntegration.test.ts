@@ -1,4 +1,4 @@
-import app from '../../../index'
+import app from '../../../index';
 const request = require('supertest');
 const test = require('ava');
 import {v4 as uuidv4} from 'uuid';
@@ -46,9 +46,6 @@ test.serial.before(async (t:any) => {
     token = createToken(data[0].id)
 })
 
-
-
-
 test.after.always('guaranteed cleanup', async (t: any) => {
     console.log(`test.after.always executed!`)
     // await databaseQuery.deleteFrom(supabase, "Mental Health", "user_id", uuid);
@@ -70,9 +67,10 @@ test.after.always('guaranteed cleanup', async (t: any) => {
  test(`POST ${rateMentalRoute} has middleware execute`, async (t: any) => {
     const response = await request(app)
    .post(rateMentalRoute)
-   .send({face: 4, word: "Happy", id: uuid}) // WHERE HAVE 
-   .set("authorization", token)
-
+   .send({face: 4, word: "Happy", id: uuid})  
+   .set("authorization", token)               
+    // ARE YOU HERE? 2. LOOK AT ONLY UR FILES, CONTROLLERS. CTRL  + SHIT+P ESLINT RESTART SERVER
+// 
    console.log(`noIDResponse: ${JSON.stringify(response.body)}`)
    t.true(response.status === 400)
    t.true(response.headers['content-type'] === "application/json; charset=utf-8")
