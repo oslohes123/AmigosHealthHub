@@ -1,6 +1,6 @@
 //Get the date values for the most recent 7 (max) submissions to put into the x-axis of the line graph
-const port = process.env["PORT"];
-const ipAddress = process.env["ipAddress"];
+const port = process.env.PORT;
+const ipAddress = process.env.IP_ADDRESS;
 const dateValuesRoute = `http://${ipAddress}:${port}/api/user/mentalHealth/dateValues`
 import { useAuthContext } from "../../Authentication/context/AuthContext";
 import AsyncStorage from '@react-native-async-storage/async-storage';
