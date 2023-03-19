@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable react/destructuring-assignment */
+import React, { useState, useEffect, useContext } from 'react';
 import {
   View, StyleSheet, Text, TouchableOpacity, ScrollView,
   Dimensions,
@@ -12,10 +13,10 @@ import {
 } from '../../../functions/Food';
 import { getLatestCalorieGoal, getCaloriesRemaining } from '../../../functions/Calories';
 import { useAuthContext } from '../Authentication/context/AuthContext';
+import themeContext from '../../theme/themeContext';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#203038',
     flex: 1,
   },
   primary: {
@@ -27,12 +28,10 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
-    color: 'white',
     fontWeight: 'bold',
     padding: 10,
     borderRadius: 15,
     borderWidth: 1,
-    borderColor: 'white',
   },
   foodText: {
     fontSize: 20,
@@ -69,6 +68,7 @@ const styles = StyleSheet.create({
 });
 
 export default function FoodHistory({ navigation }) {
+  const theme = useContext(themeContext);
   const screenWidth = Dimensions.get('window').width;
   const [foodData, setFoodData] = useState([]);
   const [viewCalendar, setViewCalendar] = useState(false);
@@ -133,14 +133,16 @@ export default function FoodHistory({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
       <ScrollView style={styles.scroll}>
         <View style={styles.primary}>
           {!selectDay && (
-            <Text style={styles.text}>Select a day from the Calendar to View Food History</Text>
+            <Text style={[styles.text, { color: theme.color }]}>
+              Select a day from the Calendar to View Food History
+            </Text>
           )}
           {selectDay && (
-            <Text style={styles.text}>
+            <Text style={[styles.text, { color: theme.color }, { borderColor: theme.color }]}>
               Date:
               {' '}
               {selectDay}
@@ -155,7 +157,7 @@ export default function FoodHistory({ navigation }) {
             </Text>
           )}
           <TouchableOpacity style={styles.icon} onPress={toggleCalendar}>
-            <AntDesign name="calendar" size={35} color="white" />
+            <AntDesign name="calendar" size={35} color={theme.color} />
           </TouchableOpacity>
         </View>
 
