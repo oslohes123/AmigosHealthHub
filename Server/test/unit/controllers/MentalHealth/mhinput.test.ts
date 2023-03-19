@@ -71,7 +71,7 @@ test("Attempt to insert data without logging in", async (t: any) => {
     const req = mockRequest({
         face: 4,
         word: "Happy",
-        email: null,
+        id: null,
     });
     const res = mockResponse();
     await insertMentalData(req as Request, res as Response)
@@ -89,7 +89,7 @@ test("Attempt to insert data with incorrect email", async (t: any) => {
     const req = mockRequest({
         face: 4,
         word: "Happy",
-        email: "notindatabase@gmail.com",
+        id: wrong_uuid
     });
     const res = mockResponse();
     await insertMentalData(req as Request, res as Response)
@@ -107,7 +107,7 @@ test("Attempt to insert data with an empty word", async (t: any) => {
     const req = mockRequest({
         face: 2,
         word: "",
-        email: randomEmail,
+        id: uuid
     });
     const res = mockResponse();
     await insertMentalData(req as Request, res as Response)
@@ -123,7 +123,7 @@ test("Attempt to insert data with a face value too high", async (t: any) => {
     const req = mockRequest({
         face: 6,
         word: "Ecstatic",
-        email: randomEmail,
+        id: uuid
     });
     const res = mockResponse();
     await insertMentalData(req as Request, res as Response)
@@ -139,7 +139,7 @@ test("Attempt to insert data with a face value too low", async (t: any) => {
     const req = mockRequest({
         face: 0,
         word: "awful",
-        email: randomEmail,
+        id: uuid
     });
     const res = mockResponse();
     await insertMentalData(req as Request, res as Response)
@@ -155,7 +155,7 @@ test("Insert correct data into database", async (t: any) => {
     const req = mockRequest({
         face: 1,
         word: "Awful",
-        email: randomEmail
+        id: uuid
     });
     const res = mockResponse();
     await insertMentalData(req as Request, res as Response)

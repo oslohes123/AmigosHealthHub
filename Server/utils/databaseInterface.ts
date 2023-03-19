@@ -39,13 +39,14 @@ interface dbInterface {
   ) => object
   // returns most recent data
 
-  //   mostrecent: (
-  //     db: any,
-  //     table: string,
-  //     firstcolumn: string,
-  //     secondcolumn: string,
-  //     id: string | string[] | undefined
-  //   ) => object;
+    mostrecent: (
+      db: any,
+      table: string,
+      firstcolumn: string,
+      secondcolumn: string,
+      id: string | string[] | undefined
+    ) => object;
+
   todays_data: (
     db: any,
     table: string,
