@@ -3,6 +3,7 @@ export default class RouteNamesClass {
   readonly userBaseURL = '/api/user'
   readonly changeDetailsBaseURL = this.userBaseURL + '/changeProfileDetails'
   readonly mentalHealthBaseURL = this.userBaseURL + '/mentalHealth'
+  readonly sleepBaseURL = this.userBaseURL + '/sleep';
 
   // Auth Routes
   readonly partialSignupURL = '/sign_up'
@@ -26,6 +27,12 @@ export default class RouteNamesClass {
   readonly partialCheckInitialTokenURL = '/checkInitialToken'
   readonly fullCheckInitialTokenURL = this.userBaseURL + this.partialCheckInitialTokenURL
 
+    // Sleep Routes
+    readonly partialAddSleepURL = '/add';
+    readonly fullAddSleepURL = this.sleepBaseURL + this.partialAddSleepURL;
+
+    readonly partialGetSleepURL = '/get';
+    readonly fullGetSleepURL = this.sleepBaseURL + this.partialGetSleepURL
   //  Get Info Route
   readonly partialGetInfoURL = '/getInfo'
   readonly fullGetInfoURL = this.userBaseURL + this.partialGetInfoURL
