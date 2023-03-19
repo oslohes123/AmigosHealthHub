@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { clientSearchMethods } from '../constants';
 
 const portENV = process.env.PORT;
-const ipAddressEnv = process.env.ipAddress;
+const ipAddressEnv = process.env.IP_ADDRESS;
 // For testing purposes
 // Update this with your own UrlService
 
