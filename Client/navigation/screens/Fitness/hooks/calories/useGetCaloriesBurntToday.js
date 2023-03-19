@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { IP_ADDRESS, PORT } from "@env";
+import { ipAddress, PORT } from "@env";
 const port = PORT;
-const ip_address = IP_ADDRESS;
+const ipAddress = ipAddress;
 import { useAuthContext } from "../../../Authentication/context/AuthContext";
-const getCaloriesBurntTodayRoute = `http://${ip_address}:${port}/api/user/workout/calories/getToday`;
+const getCaloriesBurntTodayRoute = `http://${ipAddress}:${port}/api/user/workout/calories/getToday`;
 
 export const useGetCaloriesBurntToday = () => {
   const [error, setError] = useState(null);
@@ -17,7 +17,7 @@ export const useGetCaloriesBurntToday = () => {
 
     console.log("In getCaloriesBurntToday");
     // console.log(`Port in searchExercise: ${port}`);
-    // console.log(`ip_address in searchExercise: ${ip_address}`);
+    // console.log(`ipAddress in searchExercise: ${ipAddress}`);
 
     const response = await fetch(getCaloriesBurntTodayRoute, {
       method: "GET",

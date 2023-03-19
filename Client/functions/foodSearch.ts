@@ -5,15 +5,15 @@ import genericSearchInterface from '../interfaces/genericSearchInterface';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { number } from 'prop-types';
 const portENV = process.env.PORT;
-const ip_addressENV = process.env.IP_ADDRESS;
+const ipAddressENV = process.env.ipAddress;
 // For testing purposes
 // Update this with your own UrlService
-let ip_address:string|undefined = ip_addressENV;
+let ipAddress:string|undefined = ipAddressENV;
 let port:string|undefined= portENV
 
 
 export async function genericSearch(value:string):Promise<genericSearchInterface | AxiosError> {
-    let url:string = `http://${ip_address}:${port}/api/food/${clientSearchMethods.genericSearch}.${value}`;
+    let url:string = `http://${ipAddress}:${port}/api/food/${clientSearchMethods.genericSearch}.${value}`;
 
     let response:AxiosResponse;
     try {
@@ -30,7 +30,7 @@ export async function genericSearch(value:string):Promise<genericSearchInterface
 }
 
 export async function specificSearch(value:string):Promise<specificFoodNutritionInterface | AxiosError> {
-    let url:string = `http://${ip_address}:${port}/api/food/${clientSearchMethods.specificSearch}.${value}`;
+    let url:string = `http://${ipAddress}:${port}/api/food/${clientSearchMethods.specificSearch}.${value}`;
     let response:AxiosResponse;
     try {
         response = await axios.get(url);

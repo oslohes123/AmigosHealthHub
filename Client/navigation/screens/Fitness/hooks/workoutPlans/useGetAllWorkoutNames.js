@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { IP_ADDRESS, PORT } from "@env";
+import { ipAddress, PORT } from "@env";
 const port = PORT;
-const ip_address = IP_ADDRESS;
+const ipAddress = ipAddress;
 import { useAuthContext } from "../../../Authentication/context/AuthContext";
-const getAllWorkoutNamesRoute = `http://${ip_address}:${port}/api/user/workout/getAllWorkoutNames`;
+const getAllWorkoutNamesRoute = `http://${ipAddress}:${port}/api/user/workout/getAllWorkoutNames`;
 
 export const useGetAllWorkoutNames = () => {
   const [error, setError] = useState(null);
@@ -18,7 +18,7 @@ export const useGetAllWorkoutNames = () => {
 
     console.log("In getAllWorkoutNames");
     // console.log(`Port in searchExercise: ${port}`);
-    // console.log(`ip_address in searchExercise: ${ip_address}`);
+    // console.log(`ipAddress in searchExercise: ${ipAddress}`);
 
     const response = await fetch(getAllWorkoutNamesRoute, {
       method: "GET",

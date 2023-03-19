@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { IP_ADDRESS, PORT } from "@env";
+import { ipAddress, PORT } from "@env";
 const port = PORT;
-const ip_address = IP_ADDRESS;
-const getExerciseByNameRoute = `http://${ip_address}:${port}/api/user/exercise/get`;
+const ipAddress = ipAddress;
+const getExerciseByNameRoute = `http://${ipAddress}:${port}/api/user/exercise/get`;
 
 export const useGetExerciseByName = () => {
   const [error, setError] = useState(null);
@@ -15,7 +15,7 @@ export const useGetExerciseByName = () => {
 
     console.log("In getExerciseByName");
     // console.log(`Port in searchExercise: ${port}`);
-    // console.log(`ip_address in searchExercise: ${ip_address}`);
+    // console.log(`ipAddress in searchExercise: ${ipAddress}`);
 
     const response = await fetch(getExerciseByNameRoute, {
       method: "GET",

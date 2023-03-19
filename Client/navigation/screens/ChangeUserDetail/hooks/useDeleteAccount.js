@@ -2,10 +2,10 @@ import { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuthContext } from '../../Authentication/context/AuthContext';
 // const port = process.env['PORT'];
-// const ip_address = process.env['IP_ADDRESS'];
+// const ipAddress = process.env['ipAddress'];
 import { useLogout } from '../../Authentication/hooks/useLogOut';
 const port = process.env.PORT;
-const ip_address = process.env.IP_ADDRESS;
+const ipAddress = process.env.ipAddress;
 
 
 export const deleteAccountWrapper = () => {
@@ -27,9 +27,9 @@ export const deleteAccountWrapper = () => {
                 (await AsyncStorage.getItem('user'))
             );
             console.log(`In deleteAccount, email: ${email}, token:${token}`);
-            console.log(`Delete Account: ${ip_address} : Port ${port}`);
+            console.log(`Delete Account: ${ipAddress} : Port ${port}`);
             const response = await fetch(
-                `http://${ip_address}:${port}/api/user/changeProfileDetails/deleteAccount`,
+                `http://${ipAddress}:${port}/api/user/changeProfileDetails/deleteAccount`,
                 {
                     method: 'POST',
                     headers: {

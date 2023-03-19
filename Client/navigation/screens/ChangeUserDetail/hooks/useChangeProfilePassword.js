@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { useAuthContext } from '../../Authentication/context/AuthContext'
 import { useLogout } from '../../Authentication/hooks/useLogOut';
 // const port = process.env['PORT'];
-// const ip_address = process.env['IP_ADDRESS'];
+// const ipAddress = process.env['ipAddress'];
 const port = process.env.PORT;
-const ip_address = process.env.IP_ADDRESS;
+const ipAddress = process.env.ipAddress;
 
 export const useChangeProfilePassword = () => {
     console.log(`port: ${port}`)
@@ -27,8 +27,8 @@ export const useChangeProfilePassword = () => {
             const email = user.email;
             console.log(`in changePassword, email: ${email}`);
              const {token}= JSON.parse(await AsyncStorage.getItem('user'))
-             console.log(`Change Password: ${ip_address} : Port ${port}`);
-             const response = await fetch(`http://${ip_address}:${port}/api/user/changeProfileDetails/password`, {
+             console.log(`Change Password: ${ipAddress} : Port ${port}`);
+             const response = await fetch(`http://${ipAddress}:${port}/api/user/changeProfileDetails/password`, {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',

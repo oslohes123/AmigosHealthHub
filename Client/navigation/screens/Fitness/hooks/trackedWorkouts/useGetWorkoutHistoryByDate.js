@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { IP_ADDRESS, PORT } from "@env";
+import { ipAddress, PORT } from "@env";
 import { useAuthContext } from "../../../Authentication/context/AuthContext";
 const port = PORT;
-const ip_address = IP_ADDRESS;
-const getWorkoutHistoryByDateRoute = `http://${ip_address}:${port}/api/user/completedWorkouts/workoutHistoryByDate`;
+const ipAddress = ipAddress;
+const getWorkoutHistoryByDateRoute = `http://${ipAddress}:${port}/api/user/completedWorkouts/workoutHistoryByDate`;
 
 export const useGetWorkoutHistoryByDate = () => {
   const [error, setError] = useState(null);
