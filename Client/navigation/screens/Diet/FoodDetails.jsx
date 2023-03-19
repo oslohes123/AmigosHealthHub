@@ -130,8 +130,7 @@ export default function FoodDetails({ route, navigation }) {
 
   const save = useCallback(async () => {
     if (quantity > 0) {
-      const statusCode = await addTrackedFood(updatedFoodInput, id);
-      console.log(statusCode);
+      await addTrackedFood(updatedFoodInput, id);
       navigation.navigate('Diet Dashboard');
       alert('Food successfully added');
     } else {
