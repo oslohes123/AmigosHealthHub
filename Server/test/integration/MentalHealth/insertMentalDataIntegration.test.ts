@@ -26,7 +26,7 @@ test.serial.before(async (t: any) => {
   const { error }: any = await databaseQuery.insert(supabase, 'User', {
     id: uuid,
     firstName: 'First',
-    lastName: 'User', // BUT WHY IS IT CHANGIN, IVE ONL
+    lastName: 'User',
     email: randomEmail,
     password: hashedPassword,
     age: 31
