@@ -217,6 +217,34 @@ export class SupabaseQueryClass implements dbInterface {
     }
   }
 
+  async selectWhereRange(
+    supabaseDb: any,
+    table: string,
+    column: string,
+    filterColumn: string,
+    toBeFound: String,
+    startValue: String,
+    endValue: String,
+    sortBy: String
+  ): Promise<object | undefined> {
+    try {
+        const { data, error } = await supabaseDb
+            .from(table)
+            .select(column)
+            .eq(filterColumn, toBeFound)
+            .gte(sortBy, startValue)
+            .lte(sortBy, endValue)
+            .order(sortBy, { ascending: true });
+
+        if (error) console.error(error);
+        else console.log({ data });
+
+        return { data, error };
+    } catch (err: unknown) {
+        console.error(err);
+    }
+  }
+
   // try {
   //   const { data, error } = await supabaseDb
   //     .from(table)

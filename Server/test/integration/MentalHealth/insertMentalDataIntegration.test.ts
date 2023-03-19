@@ -1,4 +1,4 @@
-import app from '../../../index'
+import app from '../../../index';
 const request = require('supertest');
 const test = require('ava');
 import {v4 as uuidv4} from 'uuid';
@@ -21,14 +21,14 @@ const uuid = uuidv4();
 randomEmail = `${uuid}@gmail.com`
 let token: string;
 test.serial.before(async (t : any) => {
-    const uuid = uuidv4();
     
     
     const hashedPassword = await createHashedPassword("CorrectPassword123!")
     // const {data, error}:any = await createUser({id: uuid, firstName: "First", lastName:"User", 
     // email:randomEmail, password: hashedPassword, age: 31});
     console.log(`Inserting user`)
-    const {data, error}:any = await databaseQuery.insert(supabase, `User`, {id: uuid, firstName: "First", lastName:"User", 
+    console.log(`Inserted user uuid: ${uuid}`) // bf955626-40fc-4141-a92b-914a7608cb86
+    const {data, error}:any = await databaseQuery.insert(supabase, `User`, {id: uuid, firstName: "First", lastName:"User", // BUT WHY IS IT CHANGIN, IVE ONL
     email:randomEmail, password: hashedPassword, age: 31})
    
     if(error){
@@ -45,17 +45,6 @@ test.serial.before(async (t:any) => {
     }
     token = createToken(data[0].id)
 })
-
-// test.before(async (t : any) => {
-//     console.log(`8th executed!`)
-//     const {data, error}:any = await databaseQuery.insert(supabase, "Mental Health", {user_id: uuid, face_id: '1',created_at: '2020-03-08 00:00:00+00', todays_word: 'Awful'})
-
-//     if(error){
-//         // console.log()
-//         t.fail(`MHtesterror8: ${JSON.stringify(error)}`)
-//     }
-// })
-
 
 test.after.always('guaranteed cleanup', async (t: any) => {
     console.log(`test.after.always executed!`)
@@ -75,19 +64,21 @@ test.after.always('guaranteed cleanup', async (t: any) => {
 //    t.true(response.headers['content-type'] === "application/json; charset=utf-8")
 //    t.true(JSON.stringify(response.body) === JSON.stringify({mssg : "Failed to retrieve last 7 faces"}));
 //  })
- test(`POST ${rateMentalRoute} without being logged in`, async (t: any) => {
+ test(`POST ${rateMentalRoute} has middleware execute`, async (t: any) => {
     const response = await request(app)
    .post(rateMentalRoute)
-   .send({face: 4, word: "Happy", id: null})
-   .set("authorization", token)
-
+   .send({face: 4, word: "Happy", id: uuid})  
+   .set("authorization", token)               
+    // ARE YOU HERE? 2. LOOK AT ONLY UR FILES, CONTROLLERS. CTRL  + SHIT+P ESLINT RESTART SERVER
+// 
    console.log(`noIDResponse: ${JSON.stringify(response.body)}`)
    t.true(response.status === 400)
    t.true(response.headers['content-type'] === "application/json; charset=utf-8")
    t.true(JSON.stringify(response.body) === JSON.stringify({mssg:"You must be logged in to submit data"}));
  })
 
- test(`POST ${rateMentalRoute} with no word inputted`, async (t: any) => {
+
+ test(`POST ${rateMentalRoute} with no word inputted`, async (t: any) => {  
     const response = await request(app)
    .post(rateMentalRoute)
    .send({face: 4, word: "", id: uuid})
@@ -105,7 +96,7 @@ test.after.always('guaranteed cleanup', async (t: any) => {
    .post(rateMentalRoute)
    .send({face: 0, word: "Depressed", id: uuid})
    .set("authorization", token)
-
+   console.log(`uuid used ln101: ${uuid}`); 
    console.log(`lowFaceValueResponse: ${JSON.stringify(response.body)}`)
    t.true(response.status === 400)
    t.true(response.headers['content-type'] === "application/json; charset=utf-8")
@@ -117,7 +108,7 @@ test.after.always('guaranteed cleanup', async (t: any) => {
    .post(rateMentalRoute)
    .send({face: 6, word: "Ecstatic", id: uuid})
    .set("authorization", token)
-
+   console.log(`uuid used ln113: ${uuid}`); 
    console.log(`highFaceValueResponse: ${JSON.stringify(response.body)}`)
    t.true(response.status === 400)
    t.true(response.headers['content-type'] === "application/json; charset=utf-8")
@@ -129,24 +120,14 @@ test.after.always('guaranteed cleanup', async (t: any) => {
    .post(rateMentalRoute)
    .send({face: 4, word: "Happy", id: uuid})
    .set("authorization", token)
-
-   const{data, error}:any = await databaseQuery.selectWhere(supabase,'Mental Health'
-   ,'user_id',uuid,'*');
-
+    console.log(`uuid used ln132: ${uuid}`); //8d17ab59-70ed-409b-9d8f-e54728b32906
+   const{data, error}:any = await databaseQuery.selectWhere(supabase,'User' 
+   ,'id',uuid,'*');
+  console.log(`data selecting: ${JSON.stringify(data)}`)  //data selecting: [] 
+  console.log(`response: ${JSON.stringify(response)}`); 
    console.log(`correctInput: ${JSON.stringify(response.body)}`)
-   console.log(`data[0]: ${JSON.stringify(data[0])}`)
+   
    t.true(response.status === 200)
    t.true(response.headers['content-type'] === "application/json; charset=utf-8")
    t.true(JSON.stringify(response.body) === JSON.stringify({mssg:"Successful Submission"}));
  })
- 
-//    const expectedArgs = {
-//     mssg: "Retrieved faces",
-//     faces: ["1","2","3","4","1","3","2"],
-//     average: 2.2857142857142856,
-//     success: "successful"
-// }
-//    t.true(response.status === 200)
-//    t.true(response.headers['content-type'] === "application/json; charset=utf-8")
-//    t.true(JSON.stringify(response.body) === JSON.stringify(expectedArgs));
-//  })

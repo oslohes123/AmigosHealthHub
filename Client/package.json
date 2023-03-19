@@ -39,6 +39,7 @@
     "react-native-calendar": "^0.13.1",
     "react-native-calendars": "^1.1293.0",
     "react-native-chart-kit": "^6.12.0",
+    "react-native-dropdown-picker": "^5.4.6",
     "react-native-event-listeners": "^1.0.7",
     "react-native-gesture-handler": "~2.8.0",
     "react-native-paper": "^5.2.0",
