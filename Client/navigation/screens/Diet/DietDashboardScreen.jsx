@@ -330,7 +330,7 @@ export default function DietDashboardScreen({ navigation }) {
               </TouchableOpacity>
             )}
             {foodInput.length === 0 && pieChartData.length === 0 && (
-             <Text style={styles.info}>Add Food to view Diet Info</Text>
+             <Text style={[styles.info, {color: color}]}>Add Food to view Diet Info</Text>
             )}
         </View>
 
