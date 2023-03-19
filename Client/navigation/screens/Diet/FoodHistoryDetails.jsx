@@ -8,15 +8,12 @@ import {
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import GreenButton from '../../components/GreenButton';
-// import { TextInput } from 'react-native-paper';
 import { useAuthContext } from '../Authentication/context/AuthContext';
 import { updateTrackedFood, deleteTrackedFood } from '../../../functions/Food';
 import themeContext from '../../theme/themeContext';
 
 const styles = StyleSheet.create({
   input: {
-    // alignSelf: 'center',
-    // marginTop: '15%',
     fontSize: 16,
     borderWidth: 2,
     padding: '3%',
@@ -45,7 +42,6 @@ const styles = StyleSheet.create({
   },
   values: {
     fontSize: 20,
-    // marginLeft: 165,
     borderWidth: 2,
     borderColor: 'grey',
     padding: 5,
@@ -86,7 +82,6 @@ const styles = StyleSheet.create({
     width: '50%',
     borderBottomColor: 'grey',
     borderBottomWidth: 1,
-
   },
 });
 
@@ -130,12 +125,6 @@ export default function FoodDetails({ route, navigation }) {
     navigation.navigate('Diet Dashboard');
     alert('Food successfully updated');
   }
-
-  // async function handleDeleteFood() {
-  //     let statusCode = await deleteTrackedFood(LogID)
-  //     navigation.navigate('Diet Dashboard')
-  //     console.log(statusCode);
-  // }
 
   async function handleDeleteFood() {
     Alert.alert(

@@ -5,15 +5,12 @@ import {
   StyleSheet, View, Text, TextInput, Modal, TouchableOpacity,
 } from 'react-native';
 import GreenButton from '../../components/GreenButton';
-// import { TextInput } from 'react-native-paper';
 import { useAuthContext } from '../Authentication/context/AuthContext';
 import { addTrackedFood } from '../../../functions/Food';
 import themeContext from '../../theme/themeContext';
 
 const styles = StyleSheet.create({
   input: {
-    // alignSelf: 'center',
-    // marginTop: '15%',
     fontSize: 16,
     borderWidth: 2,
     padding: '3%',
@@ -42,7 +39,6 @@ const styles = StyleSheet.create({
   },
   values: {
     fontSize: 20,
-    // marginLeft: 165,
     borderWidth: 2,
     borderColor: 'grey',
     padding: 5,

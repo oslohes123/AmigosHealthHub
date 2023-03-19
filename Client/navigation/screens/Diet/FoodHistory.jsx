@@ -39,8 +39,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     padding: 10,
     borderRadius: 25,
-    // borderWidth: 1,
-    // borderColor: 'white',
     alignSelf: 'center',
     marginVertical: '5%',
     backgroundColor: '#3eda9b',
@@ -63,7 +61,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderTopEndRadius: 40,
     borderTopLeftRadius: 40,
-    // backgroundColor: 'black'
   },
 });
 
@@ -167,7 +164,6 @@ export default function FoodHistory({ navigation }) {
               data={pieChartData}
               width={0.9 * screenWidth}
               height={210}
-              // paddingLeft='10'
               chartConfig={{
                 color: () => 'black',
               }}
