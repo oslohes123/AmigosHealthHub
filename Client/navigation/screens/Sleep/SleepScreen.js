@@ -1,14 +1,19 @@
 import {
     Button,
     Divider,
-    FAB,
     Modal,
     Portal,
     Provider,
+    Surface,
     Text
 } from 'react-native-paper';
+import {
+    Dimensions,
+    SafeAreaView,
+    StyleSheet,
+    TouchableOpacity
+} from 'react-native';
 import React, { useContext, useState } from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
 
 import { Calendar } from 'react-native-calendars';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -25,6 +30,7 @@ export default function SleepScreen() {
     const { addSleep, isLoading, error } = useAddSleep();
 
     const [visible, setVisible] = useState(false);
+    const screenWidth = Dimensions.get('window').width * 0.95;
 
     const showModal = () => setVisible(true);
     const hideModal = () => setVisible(false);
@@ -93,6 +99,10 @@ export default function SleepScreen() {
                             enableSwipeMonths={true}
                             maxDate={moment().format('YYYY-MM-DD')}
                         />
+                        <Text variant="titleSmall">
+                            Date picked:{' '}
+                            {moment(timestamp).format('dddd Do MMM YYYY')}
+                        </Text>
                         <Divider style={styles.divider} />
                         <Text variant="titleMedium">
                             How many hours did you sleep?
@@ -136,12 +146,21 @@ export default function SleepScreen() {
                 </Portal>
 
                 <SafeAreaView style={styles.fabContainer}>
-                    <FAB
-                        style={styles.fab}
-                        label="Add sleep"
-                        icon="plus"
-                        onPress={showModal}
-                    />
+                    <TouchableOpacity
+                        onPress={() => {
+                            showModal();
+                        }}
+                    >
+                        <Surface
+                            style={[styles.surface, { width: screenWidth }]}
+                            elevation={4}
+                        >
+                            <Text variant="headlineSmall">Add sleep data.</Text>
+                        </Surface>
+                        <Text variant="titleMedium" style={styles.errorMsg}>
+                            {error}
+                        </Text>
+                    </TouchableOpacity>
                 </SafeAreaView>
                 <SafeAreaView style={styles.graphContainer}>
                     <SleepQaulityGraph />
@@ -160,7 +179,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'flex-start',
-        margin: 50
+        margin: 20
     },
     graphContainer: {
         flex: 1,
@@ -180,5 +199,17 @@ const styles = StyleSheet.create({
         marginTop: 10,
         padding: 2
     },
-    fab: {}
+    surface: {
+        backgroundColor: '#c2e7fe',
+        padding: 8,
+        height: 70,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 30
+    },
+    errorMsg: {
+        margin: 5,
+        color: 'red',
+        alignSelf: 'center'
+    }
 });
