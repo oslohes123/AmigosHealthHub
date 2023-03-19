@@ -1,58 +1,78 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, SafeAreaView, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
+import GreenButton from '../../components/GreenButton';
+import SearchBar from '../../components/SearchBar';
+import { useContext } from 'react';
+import themeContext from '../../theme/themeContext';
 
 export default function TrackExerciseScreen({ navigation }) {
+    const theme = useContext(themeContext)
     return (
-        <SafeAreaView style={styles.container}>
-
-            <Text style={styles.title} onLongPress={() => {
-                console.log("The user wants to see the workout plans that I have saved.")
-            }}>
-                Track Exercise
-            </Text>
+        <SafeAreaView style={[styles.container, {backgroundColor: theme.background}]}>
 
             <View style={styles.searchAndCreate}>
 
-                <TextInput
-                    style={styles.textInput}
-                    placeholder="Search"
-                    keyboardType='default'
-                    clearButtonMode='always'
-                />
-
-                <Button title='+' onPress={() => {
-                    console.log("Create new workout plan.")
-                }} />
+            {SearchBar({themeColor: theme.color, width: screenWidth * 0.7})}
+            {GreenButton({height: screenHeight * 0.05, width: screenWidth * 0.15, fontSize: 20, text: "+", buttonFunction: () => {console.log("Add custom exercise")}})}
 
             </View>
 
-                <Text style={styles.customWorkout}>Exercises</Text>
+                <Text style={[styles.customWorkout, {color: theme.color}]}>Exercises</Text>
         
-            <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false} alignItems={'center'}>
-                <Text style={styles.testText}>Run (5K)</Text>
-                <Text style={styles.testText}>Sprint (100m)</Text>
-                <Text style={styles.testText}>Swim (Freestyle)</Text>
-                <Text style={styles.testText}>Swim (Butterfly)</Text>
-                <Text style={styles.testText}>Cycle (10K)</Text>
-                <Text style={styles.testText}>Run (5K)</Text>
-                <Text style={styles.testText}>Sprint (100m)</Text>
-                <Text style={styles.testText}>Swim (Freestyle)</Text>
-                <Text style={styles.testText}>Swim (Butterfly)</Text>
-                <Text style={styles.testText}>Run (5K)</Text>
-                <Text style={styles.testText}>Sprint (100m)</Text>
-                <Text style={styles.testText}>Swim (Freestyle)</Text>
-                <Text style={styles.testText}>Swim (Butterfly)</Text>
-                <Text style={styles.testText}>Cycle (10K)</Text>
-                <Text style={styles.testText}>Run (5K)</Text>
-                <Text style={styles.testText}>Sprint (100m)</Text>
-                <Text style={styles.testText}>Swim (Freestyle)</Text>
-                <Text style={styles.testText}>Swim (Butterfly)</Text>
-                <Text style={styles.testText}>Cycle (10K)</Text>
+            <ScrollView style={[styles.scrollView, {borderColor: theme.color}]} showsVerticalScrollIndicator={false} alignItems={'center'}>          
+                <TouchableOpacity>
+                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Cycle (10K)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Swim (Butterfly)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Swim (Freestyle)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Sprint (100m)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Run (5K)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Cycle (10K)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Swim (Butterfly)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Swim (Freestyle)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Sprint (100m)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Run (5K)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Cycle (10K)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Swim (Butterfly)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Swim (Freestyle)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Sprint (100m)</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={[styles.testText, {borderColor: theme.color, color: theme.color}]}>Run (5K)</Text>
+                </TouchableOpacity>
             </ScrollView>
             <StatusBar style="auto" />
         </SafeAreaView>
     );
 }
+
+const screenWidth = Dimensions.get("window").width;
+const screenHeight = Dimensions.get("window").height
 
 const styles = StyleSheet.create({
     customWorkout: {

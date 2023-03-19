@@ -1,0 +1,42 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "standard-with-typescript"
+    ],
+    "overrides": [],
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "project": "./Server/tsconfig.json"
+    },
+    "plugins": [
+        "react"
+    ],
+    "ignorePatterns": [
+        "node_modules/",
+        "dist/",
+        "build/",
+        "coverage/",
+        "public/",
+        "src/",
+        "scripts/",
+        "assets/",
+        "babel.config.js",
+        "jest.config.js",
+        "metro.config.js",
+        "tsconfig.json",
+        "tsconfig.base.json",
+        "tsconfig.eslin"
+    ],
+    "rules": {
+        "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/strict-boolean-expressions": "off",
+        "brace-style": "off",
+        "@typescript-eslint/brace-style": "off"
+    }
+}
