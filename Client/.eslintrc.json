@@ -7,15 +7,27 @@
         "plugin:react/recommended",
         "airbnb"
     ],
-    "overrides": [
-    ],
+    "overrides": [],
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
+    "ignorePatterns": [
+        "node_modules/*",
+        ".next/*",
+        ".out/*",
+        "!.prettierrc.js",
+        "!.eslintrc.js"
+    ],
     "plugins": [
         "react"
     ],
     "rules": {
+        "linebreak-style": "off",
+        "array-callback-return": "off",
+        "react/prop-types": "off",
+        "react/no-array-index-key": "off",
+        "no-alert": "off",
+        "import/no-extraneous-dependencies": "off"
     }
 }
