@@ -33,27 +33,6 @@ export async function getTrackedFood(Date, userID) {
 }
 
 export async function getSpecificTrackedFood(logID) {
-<<<<<<< HEAD
-    let url = `http://${ipAddress}:${port}/api/food/getSpecificTrackedFood/${logID}`;
-    let response;
-    try {
-        const {token} = JSON.parse(
-            (await AsyncStorage.getItem("user")) 
-        );
-        response = await axios.get(url, {
-            headers: {
-                authorization: token,
-            },
-        });
-    } catch (error) {
-        if (axios.isAxiosError(error)) {
-            console.log("Error when getting specific tracked food");
-            console.log(error.response);
-        } else {
-            console.log("Default error handler" + error);
-        }
-        return error;
-=======
   const url = `http://${ipAddressEnv}:${portENV}/api/food/getSpecificTrackedFood/${logID}`;
   let response;
   try {
@@ -71,7 +50,6 @@ export async function getSpecificTrackedFood(logID) {
       console.log(error.response);
     } else {
       console.log(`Default error handler${error}`);
->>>>>>> 86833971704515330f9e58f06f98015741e96e07
     }
     return error;
   }
@@ -79,34 +57,6 @@ export async function getSpecificTrackedFood(logID) {
 }
 
 export async function addTrackedFood(input, userID) {
-<<<<<<< HEAD
-    let url = `http://${ipAddress}:${port}/api/food/addTrackedFood`;
-    let response;
-    try {
-        const {token} = JSON.parse(
-            (await AsyncStorage.getItem("user")) 
-        );
-        response = await axios.post(
-            url,
-            {
-                input,
-                userID,
-            },
-            {
-                headers: {
-                    authorization: token,
-                },
-            }
-        );
-    } catch (error) {
-        if (axios.isAxiosError(error)) {
-            console.log("Got an error from the server");
-            console.log(error.response);
-        } else {
-            console.log("Default error handler" + error);
-        }
-        return error;
-=======
   const url = `http://${ipAddressEnv}:${portENV}/api/food/addTrackedFood`;
   let response;
   try {
@@ -131,7 +81,6 @@ export async function addTrackedFood(input, userID) {
       console.log(error.response);
     } else {
       console.log(`Default error handler${error}`);
->>>>>>> 86833971704515330f9e58f06f98015741e96e07
     }
     return error;
   }
@@ -140,31 +89,6 @@ export async function addTrackedFood(input, userID) {
 }
 
 export async function deleteTrackedFood(logID) {
-<<<<<<< HEAD
-    let url = `http://${ipAddress}:${port}/api/food/deleteTrackedFood/`;
-    let response;
-    try {
-        const {token} = JSON.parse(
-            (await AsyncStorage.getItem("user")) 
-        );
-        response = await axios.post(
-            url,
-            {logID},
-            {
-                headers: {
-                    authorization: token,
-                },
-            }
-        );
-    } catch (error) {
-        if (axios.isAxiosError(error)) {
-            console.log("Got an error from the server");
-            console.log(error.response);
-        } else {
-            console.log("Default error handler" + error);
-        }
-        return error;
-=======
   const url = `http://${ipAddressEnv}:${portENV}/api/food/deleteTrackedFood/`;
   let response;
   try {
@@ -186,7 +110,6 @@ export async function deleteTrackedFood(logID) {
       console.log(error.response);
     } else {
       console.log(`Default error handler${error}`);
->>>>>>> 86833971704515330f9e58f06f98015741e96e07
     }
     return error;
   }
@@ -194,36 +117,6 @@ export async function deleteTrackedFood(logID) {
 }
 
 export async function updateTrackedFood(input) {
-<<<<<<< HEAD
-    let url = `http://${ipAddress}:${port}/api/food/updateTrackedFood`;
-    let response;
-    try {
-        const {token} = JSON.parse(
-            (await AsyncStorage.getItem("user")) 
-        );
-        response = await axios.post(
-            url,
-            {
-                Quantity: input.Quantity,
-                LogID: input.LogID,
-                Measure: input.Measure,
-                Calories: input.Calories,
-            },
-            {
-                headers: {
-                    authorization: token,
-                },
-            }
-        );
-    } catch (error) {
-        if (axios.isAxiosError(error)) {
-            console.log("Got an error from the server");
-            console.log(error.response);
-        } else {
-            console.log("Default error handler" + error);
-        }
-        return error;
-=======
   const url = `http://${ipAddressEnv}:${portENV}/api/food/updateTrackedFood`;
   let response;
   try {
@@ -250,7 +143,6 @@ export async function updateTrackedFood(input) {
       console.log(error.response);
     } else {
       console.log(`Default error handler${error}`);
->>>>>>> 86833971704515330f9e58f06f98015741e96e07
     }
     return error;
   }
@@ -258,27 +150,6 @@ export async function updateTrackedFood(input) {
 }
 
 export async function getFood(foodID) {
-<<<<<<< HEAD
-    let url = `http://${ipAddress}:${port}/api/food/getFood/${foodID}`;
-    let response;
-    try {
-        const {token} = JSON.parse(
-            (await AsyncStorage.getItem("user")) 
-        );
-        response = await axios.get(url, {
-            headers: {
-                authorization: token,
-            },
-        });
-    } catch (error) {
-        if (axios.isAxiosError(error)) {
-            console.log("Got an error from the server");
-            console.log(error.response);
-        } else {
-            console.log("Default error handler" + error);
-        }
-        return error;
-=======
   const url = `http://${ipAddressEnv}:${portENV}/api/food/getFood/${foodID}`;
   let response;
   try {
@@ -296,7 +167,6 @@ export async function getFood(foodID) {
       console.log(error.response);
     } else {
       console.log(`Default error handler${error}`);
->>>>>>> 86833971704515330f9e58f06f98015741e96e07
     }
     return error;
   }
@@ -304,19 +174,6 @@ export async function getFood(foodID) {
 }
 
 export async function getMultipleFood(foodIDs) {
-<<<<<<< HEAD
-    let url = `http://${ipAddress}:${port}/api/food/getMultipleFood`;
-    let response;
-    try {
-        const {token} = JSON.parse(
-            (await AsyncStorage.getItem("user")) 
-        );
-        response = await axios.post(url, {foodIDs}, {
-            headers: {
-                authorization: token,
-            },
-        });
-=======
   const url = `http://${ipAddressEnv}:${portENV}/api/food/getMultipleFood`;
   let response;
   try {
@@ -334,7 +191,6 @@ export async function getMultipleFood(foodIDs) {
       console.log(error.response);
     } else {
       console.log(`Default error handler${error}`);
->>>>>>> 86833971704515330f9e58f06f98015741e96e07
     }
     return error;
   }

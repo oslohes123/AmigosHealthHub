@@ -32,26 +32,6 @@ export async function genericSearch(value) {
 }
 
 export async function specificSearch(value) {
-<<<<<<< HEAD
-    let url= `http://${ipAddress}:${port}/api/food/${clientSearchMethods.specificSearch}.${value}`;
-    let response
-    try {
-        const {token } = JSON.parse(
-            (await AsyncStorage.getItem('user'))
-        );
-        response = await axios.get(url,{
-            headers: {
-                authorization:token
-        }});
-    }
-    catch (error) {
-        if(axios.isAxiosError(error)){
-            console.log(error.response);
-        }else{
-            console.log("Default error handler" + error);
-        }
-        return error;
-=======
   const url = `http://${ipAddressEnv}:${portENV}/api/food/${clientSearchMethods.specificSearch}.${value}`;
   let response;
   try {
@@ -68,7 +48,6 @@ export async function specificSearch(value) {
       console.log(error.response);
     } else {
       console.log(`Default error handler${error}`);
->>>>>>> 86833971704515330f9e58f06f98015741e96e07
     }
     return error;
   }

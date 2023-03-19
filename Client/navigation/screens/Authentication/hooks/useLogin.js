@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // const dotenv = require("dotenv");
 // dotenv.config();
 const port = process.env["PORT"];
-const ipAddress = process.env["ipAddress"];
+const ipAddress = process.env["IP_ADDRESS"];
 
 export const useLogin = () => {
   const [error, setError] = useState(null);

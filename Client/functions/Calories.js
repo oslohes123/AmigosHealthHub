@@ -2,15 +2,14 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getTrackedFood } from './Food';
 
-
-const portENV = process.env["PORT"];
-const ipAddressENV = process.env["ipAddress"];
+const portENV = process.env.PORT;
+const ipAddressENV = process.env.IP_ADDRESS;
 const currentDate = new Date().toISOString().split('T')[0];
 
 // For testing purposes
 // Update this with your own UrlService
-let ipAddress = ipAddressENV;
-let port = portENV;
+const ipAddress = ipAddressENV;
+const port = portENV;
 
 export async function getGeneralCalorieGoal(UserID) {
   const url = `http://${ipAddress}:${port}/api/food/calorieTrack/General.${UserID}`;
@@ -150,111 +149,3 @@ export async function updateCalorieGoal(UserID, CalorieGoal, Date = currentDate)
   // Return the response
   return response.data;
 }
-<<<<<<< HEAD
-
-export async function getGeneralCalorieGoal(UserID) {
-    let url = `http://${ipAddress}:${port}/api/food/calorieTrack/General.${UserID}`;
-    let response;
-    try {
-        const { token } = JSON.parse(
-            (await AsyncStorage.getItem("user"))
-        );
-        response = await axios.get(url, {
-            headers: {
-                authorization: token,
-            },
-        });
-    } catch (error) {
-        if (axios.isAxiosError(error)) {
-            console.log("Error when getting calorie goal");
-            console.log(error.response);
-        } else {
-            console.log("Default error handler" + error);
-        }
-        return error;
-    }
-    return response.data;
-}
-
-export async function addCalorieGoal(UserID,CalorieGoal,Date = currentDate){
-    let url = `http://${ipAddress}:${port}/api/food/calorieTrack/createCalorieLog`;
-
-    let response;
-    try {
-        const { token } = JSON.parse(
-            (await AsyncStorage.getItem("user"))
-        );
-        response = await axios.post(url, {
-            CalorieGoal: CalorieGoal,
-            UserID: UserID,
-            Date: Date,
-        }, {
-            headers: {
-                authorization: token,
-            },
-        });
-    } catch (error) {
-        if (axios.isAxiosError(error)) {
-            console.log("Error when inserting calorie goal");
-            console.log(error.response);
-        } else {
-            console.log("Default error handler" + error);
-        }
-        return error;
-    }
-    // Return the response
-    return response.data;
-
-}
-
-export async function updateCalorieGoal(UserID, CalorieGoal, Date = currentDate ) {
-    // Get the latest calorie goal
-    let currentCalorieGoal = await getLatestCalorieGoal(UserID);
-    let url = `http://${ipAddress}:${port}/api/food/calorieTrack/`;
-    let inputData ={};
-
-    // If the latest calorie goal is for the current date, update the calorie goal 
-    // otherwise create a new calorie goal
-    if (currentCalorieGoal.Date == currentDate) {
-        url = url + "updateCalories";
-        inputData ={
-            CalorieGoal: CalorieGoal,
-            id: currentCalorieGoal.id
-        }
-    }else{
-        url = url + "createCalorieLog";
-        
-        inputData ={
-            CalorieGoal: CalorieGoal,
-            UserID: UserID,
-            Date: Date,
-        }
-    }
-
-    // Make the api call
-    let response;
-    try {
-        const { token } = JSON.parse(
-            (await AsyncStorage.getItem("user"))
-        );
-        response = await axios.post(url, inputData, {
-            headers: {
-                authorization: token,
-            },
-        });
-    } catch (error) {
-        if (axios.isAxiosError(error)) {
-            console.log("Error when inserting calorie goal");
-            console.log(error.response);
-        } else {
-            console.log("Default error handler" + error);
-        }
-        return error;
-    }
-    // Return the response
-    return response.data;
-
-}
-
-=======
->>>>>>> 86833971704515330f9e58f06f98015741e96e07

@@ -1,25 +1,27 @@
-import * as Yup from "yup";
+import * as Yup from 'yup';
 
-import { Button, Text, TextInput, View, SafeAreaView, StyleSheet } from "react-native";
-import React, { useEffect, useState } from "react";
-import { useLogout } from "../../Authentication/hooks/useLogOut";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Formik } from "formik";
-import { globalStyles } from "../../../../styles/global";
-import { useAuthContext } from "../../Authentication/context/AuthContext";
-import { useChangeProfileDetails } from "../hooks/useChangeProfileDetails";
+import {
+  Button, Text, TextInput, View, SafeAreaView, StyleSheet,
+} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Formik } from 'formik';
+import { useLogout } from '../../Authentication/hooks/useLogOut';
+import { globalStyles } from '../../../../styles/global';
+import { useAuthContext } from '../../Authentication/context/AuthContext';
+import { useChangeProfileDetails } from '../hooks/useChangeProfileDetails';
 
 // import { getUserInfo } from '../hooks/getUserInfo';
-const getUserInfo = require("../hooks/useGetUserInfo");
+const getUserInfo = require('../hooks/useGetUserInfo');
 
 const ChangeUserDetailsSchema = Yup.object().shape({
-  firstName: Yup.string().required("Required"),
+  firstName: Yup.string().required('Required'),
 
-  lastName: Yup.string().required("Required"),
+  lastName: Yup.string().required('Required'),
 
-  email: Yup.string().email("Invalid email").required("Required"),
+  email: Yup.string().email('Invalid email').required('Required'),
 
-  age: Yup.number().positive("Age must be positive"),
+  age: Yup.number().positive('Age must be positive'),
 });
 
 // async function getUserDetails() {
@@ -54,19 +56,19 @@ export const formikChangeUserDetailsForm = () => {
   return (
     <SafeAreaView style={globalStyles.container}>
       <Formik
-        enableReinitialize={true}
+        enableReinitialize
         initialValues={{
-          email: email,
-          firstName: firstName,
-          lastName: lastName,
-          age: "" + age,
+          email,
+          firstName,
+          lastName,
+          age: `${age}`,
         }}
         onSubmit={async (values) => {
           await changeStats(
             values.firstName,
             values.lastName,
             values.email,
-            values.age
+            values.age,
           );
         }}
         validationSchema={ChangeUserDetailsSchema}
@@ -77,7 +79,7 @@ export const formikChangeUserDetailsForm = () => {
             <TextInput
               style={globalStyles.input}
               placeholder="First Name"
-              onChangeText={props.handleChange("firstName")}
+              onChangeText={props.handleChange('firstName')}
               value={props.values.firstName}
             />
             <Text>{props.errors.firstName}</Text>
@@ -86,7 +88,7 @@ export const formikChangeUserDetailsForm = () => {
             <TextInput
               style={globalStyles.input}
               placeholder="Last Name"
-              onChangeText={props.handleChange("lastName")}
+              onChangeText={props.handleChange('lastName')}
               value={props.values.lastName}
             />
             <Text>{props.errors.lastName}</Text>
@@ -95,7 +97,7 @@ export const formikChangeUserDetailsForm = () => {
             <TextInput
               style={globalStyles.input}
               placeholder="Email"
-              onChangeText={props.handleChange("email")}
+              onChangeText={props.handleChange('email')}
               value={props.values.email}
               keyboardType="email-address"
             />
@@ -105,7 +107,7 @@ export const formikChangeUserDetailsForm = () => {
             <TextInput
               style={globalStyles.input}
               placeholder="Age"
-              onChangeText={props.handleChange("age")}
+              onChangeText={props.handleChange('age')}
               value={props.values.age}
               keyboardType="number-pad"
             />
@@ -129,6 +131,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginLeft: '2%',
-    //marginTop: '2%'
+    // marginTop: '2%'
   },
-})
+});
