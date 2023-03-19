@@ -3,13 +3,14 @@ import * as Yup from 'yup';
 import {
   Button, Text, TextInput, View, SafeAreaView, StyleSheet,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Formik } from 'formik';
 import { useLogout } from '../../Authentication/hooks/useLogOut';
 import { globalStyles } from '../../../../styles/global';
 import { useAuthContext } from '../../Authentication/context/AuthContext';
 import { useChangeProfileDetails } from '../hooks/useChangeProfileDetails';
+import themeContext from '../../../theme/themeContext';
 
 // import { getUserInfo } from '../hooks/getUserInfo';
 const getUserInfo = require('../hooks/useGetUserInfo');
@@ -32,6 +33,7 @@ const ChangeUserDetailsSchema = Yup.object().shape({
 // }
 
 export const formikChangeUserDetailsForm = () => {
+  const theme = useContext(themeContext);
   const { logOut } = useLogout();
   const [email, setEmail] = useState(null);
   const [firstName, setfirstName] = useState(null);
@@ -75,38 +77,42 @@ export const formikChangeUserDetailsForm = () => {
       >
         {(props) => (
           <View>
-            <Text style={styles.head}>First Name</Text>
+            <Text style={[styles.head, {color: theme.color}]}>First Name</Text>
             <TextInput
-              style={globalStyles.input}
+              style={[globalStyles.input, {color: theme.color}]}
               placeholder="First Name"
+              placeholderTextColor={theme.color}
               onChangeText={props.handleChange('firstName')}
               value={props.values.firstName}
             />
             <Text>{props.errors.firstName}</Text>
 
-            <Text style={styles.head}>Last Name</Text>
+            <Text style={[styles.head, {color: theme.color}]}>Last Name</Text>
             <TextInput
-              style={globalStyles.input}
+              style={[globalStyles.input, {color: theme.color}]}
               placeholder="Last Name"
+              placeholderTextColor={theme.color}
               onChangeText={props.handleChange('lastName')}
               value={props.values.lastName}
             />
             <Text>{props.errors.lastName}</Text>
 
-            <Text style={styles.head}>Email</Text>
+            <Text style={[styles.head, {color: theme.color}]}>Email</Text>
             <TextInput
-              style={globalStyles.input}
+              style={[globalStyles.input, {color: theme.color}]}
               placeholder="Email"
+              placeholderTextColor={theme.color}
               onChangeText={props.handleChange('email')}
               value={props.values.email}
               keyboardType="email-address"
             />
             <Text>{props.errors.email}</Text>
 
-            <Text style={styles.head}>Age</Text>
+            <Text style={[styles.head, {color: theme.color}]}>Age</Text>
             <TextInput
-              style={globalStyles.input}
+              style={[globalStyles.input, {color: theme.color}]}
               placeholder="Age"
+              placeholderTextColor={theme.color}
               onChangeText={props.handleChange('age')}
               value={props.values.age}
               keyboardType="number-pad"
