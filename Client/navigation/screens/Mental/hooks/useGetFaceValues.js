@@ -1,6 +1,6 @@
 //get the most recent face values and return it when the hook is called
-const port = process.env["PORT"];
-const ipAddress = process.env["ipAddress"];
+const port = process.env.PORT;
+const ipAddress = process.env.IP_ADDRESS;
 const faceValuesRoute = `http://${ipAddress}:${port}/api/user/mentalHealth/faceGraph`
 console.log(`faceValuesRoute:${faceValuesRoute}`)
 import { useAuthContext } from "../../Authentication/context/AuthContext";

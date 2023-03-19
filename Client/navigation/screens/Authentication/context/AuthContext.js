@@ -2,8 +2,8 @@ import { createContext, useContext, useEffect, useReducer } from "react";
 // const jwttoken = require('jsonwebtoken');
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { useAuthContext } from "../hooks/useAuthContext";
-const port = process.env["PORT"];
-const ipAddress = process.env["ipAddress"];
+const port = process.env.PORT;
+const ipAddress = process.env.IP_ADDRESS;
 export const AuthContext = createContext();
 
 /**

@@ -2,13 +2,13 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { clientSearchMethods } from '../constants';
 
-const portENV = process.env.PORT;
-const ipAddressEnv = process.env.ipAddress;
+const port = process.env.PORT;
+const ipAddress = process.env.IP_ADDRESS;
 // For testing purposes
 // Update this with your own UrlService
 
 export async function genericSearch(value) {
-  const url = `http://${ipAddressEnv}:${portENV}/api/food/${clientSearchMethods.genericSearch}.${value}`;
+  const url = `http://${ipAddress}:${port}/api/food/${clientSearchMethods.genericSearch}.${value}`;
 
   let response;
   try {
@@ -32,7 +32,7 @@ export async function genericSearch(value) {
 }
 
 export async function specificSearch(value) {
-  const url = `http://${ipAddressEnv}:${portENV}/api/food/${clientSearchMethods.specificSearch}.${value}`;
+  const url = `http://${ipAddress}:${port}/api/food/${clientSearchMethods.specificSearch}.${value}`;
   let response;
   try {
     const { token } = JSON.parse(

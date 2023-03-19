@@ -18,7 +18,6 @@ const rateMentalRoute = routeNames.fullRateMentalURL;
 
 let randomEmail:string;
 const uuid = uuidv4();
-const wrong_uuid = '1a-2345-6b7c-890d-e01f2ghij34k'
 randomEmail = `${uuid}@gmail.com`
 let token: string;
 test.serial.before(async (t : any) => {
@@ -79,10 +78,10 @@ test.after.always('guaranteed cleanup', async (t: any) => {
  test(`POST ${rateMentalRoute} without being logged in`, async (t: any) => {
     const response = await request(app)
    .post(rateMentalRoute)
-   .send({face: 4, word: "Happy", email: null})
+   .send({face: 4, word: "Happy", id: null})
    .set("authorization", token)
 
-   console.log(`response: ${JSON.stringify(response)}`)
+   console.log(`noIDResponse: ${JSON.stringify(response.body)}`)
    t.true(response.status === 400)
    t.true(response.headers['content-type'] === "application/json; charset=utf-8")
    t.true(JSON.stringify(response.body) === JSON.stringify({mssg:"You must be logged in to submit data"}));
@@ -91,10 +90,10 @@ test.after.always('guaranteed cleanup', async (t: any) => {
  test(`POST ${rateMentalRoute} with no word inputted`, async (t: any) => {
     const response = await request(app)
    .post(rateMentalRoute)
-   .send({face: 4, word: "", email: randomEmail})
+   .send({face: 4, word: "", id: uuid})
    .set("authorization", token)
 
-   console.log(`response: ${JSON.stringify(response)}`)
+   console.log(`noWordResponse ${JSON.stringify(response.body)}`) // "You must be logged in"
    t.true(response.status === 400)
    t.true(response.headers['content-type'] === "application/json; charset=utf-8")
    t.true(JSON.stringify(response.body) === JSON.stringify({mssg:"Can't submit an empty word"}));
@@ -104,10 +103,10 @@ test.after.always('guaranteed cleanup', async (t: any) => {
  test(`POST ${rateMentalRoute} with face value too low`, async (t: any) => {
     const response = await request(app)
    .post(rateMentalRoute)
-   .send({face: 0, word: "", email: randomEmail})
+   .send({face: 0, word: "Depressed", id: uuid})
    .set("authorization", token)
 
-   console.log(`response: ${JSON.stringify(response)}`)
+   console.log(`lowFaceValueResponse: ${JSON.stringify(response.body)}`)
    t.true(response.status === 400)
    t.true(response.headers['content-type'] === "application/json; charset=utf-8")
    t.true(JSON.stringify(response.body) === JSON.stringify({mssg:"Face value must be between 1-5"}));
@@ -116,10 +115,10 @@ test.after.always('guaranteed cleanup', async (t: any) => {
  test(`POST ${rateMentalRoute} with face value too high`, async (t: any) => {
     const response = await request(app)
    .post(rateMentalRoute)
-   .send({face: 6, word: "", email: randomEmail})
+   .send({face: 6, word: "Ecstatic", id: uuid})
    .set("authorization", token)
 
-   console.log(`response: ${JSON.stringify(response)}`)
+   console.log(`highFaceValueResponse: ${JSON.stringify(response.body)}`)
    t.true(response.status === 400)
    t.true(response.headers['content-type'] === "application/json; charset=utf-8")
    t.true(JSON.stringify(response.body) === JSON.stringify({mssg:"Face value must be between 1-5"}));
@@ -128,13 +127,13 @@ test.after.always('guaranteed cleanup', async (t: any) => {
  test(`POST ${rateMentalRoute} with correct input`, async (t: any) => {
     const response = await request(app)
    .post(rateMentalRoute)
-   .send({face: 4, word: "Happy", email: randomEmail})
+   .send({face: 4, word: "Happy", id: uuid})
    .set("authorization", token)
 
    const{data, error}:any = await databaseQuery.selectWhere(supabase,'Mental Health'
    ,'user_id',uuid,'*');
 
-   console.log(`response: ${JSON.stringify(response)}`)
+   console.log(`correctInput: ${JSON.stringify(response.body)}`)
    console.log(`data[0]: ${JSON.stringify(data[0])}`)
    t.true(response.status === 200)
    t.true(response.headers['content-type'] === "application/json; charset=utf-8")

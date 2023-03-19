@@ -146,7 +146,7 @@ test(`GET ${wordCloudRoute} with incorrect ID`, async (t: any) => {
    .get(wordCloudRoute)
    .set({"authorization":token, "id": wrong_uuid})
  
-   console.log(`test1: ${ response.body }`)
+   console.log(`test1: ${ JSON.stringify(response.body) }`)
    t.true(response.status === 400)
    t.true(response.headers['content-type'] === "application/json; charset=utf-8")
    t.true(JSON.stringify(response.body) === JSON.stringify({mssg : "Failed to retrieve last 7 words"}));
@@ -160,11 +160,9 @@ test(`GET ${wordCloudRoute} with incorrect ID`, async (t: any) => {
     "mssg":"MentalHealthOverview",
     "words":[
         "\"Awful\"",
-        "\"Awful\"",
         "\"Depressed\"",
         "\"Mediocre\"",
         "\"Happy\"",
-        "\"Awful\"",
         "\"Alright\""
     ],
     "freq":[
@@ -175,7 +173,7 @@ test(`GET ${wordCloudRoute} with incorrect ID`, async (t: any) => {
         "1"
     ]
 }
-    console.log(`test2: ${ response.body }`)
+    console.log(`test2: ${ JSON.stringify(response.body) }`)
    t.true(response.status === 200)
    t.true(response.headers['content-type'] === "application/json; charset=utf-8")
    t.true(JSON.stringify(response.body) === JSON.stringify(expectedArgs));

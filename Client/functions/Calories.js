@@ -2,14 +2,13 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getTrackedFood } from './Food';
 
-const portENV = process.env.PORT;
-const ipAddressENV = process.env.ipAddress;
+const port = process.env.PORT;
+const ipAddress = process.env.IP_ADDRESS;
 const currentDate = new Date().toISOString().split('T')[0];
 
 // For testing purposes
 // Update this with your own UrlService
-const ipAddress = ipAddressENV;
-const port = portENV;
+
 
 export async function getGeneralCalorieGoal(UserID) {
   const url = `http://${ipAddress}:${port}/api/food/calorieTrack/General.${UserID}`;

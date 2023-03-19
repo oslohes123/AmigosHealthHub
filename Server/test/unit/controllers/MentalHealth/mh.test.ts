@@ -1,13 +1,14 @@
 const test = require('ava');
 import { Request, Response } from 'express';
 const sinon = require('sinon');
-import { faceValues, todaysValue, wordValues } from '../../../../routes/MentalHealth/mhGetStats.controller';
+import { dateValues, faceValues, todaysValue, wordValues } from '../../../../routes/MentalHealth/mhGetStats.controller';
 import { SupabaseQueryClass } from '../../../../utils/databaseInterface';
 import supabase from '../../../../utils/supabaseSetUp';
 import {v4 as uuidv4} from 'uuid';
 import { createHashedPassword, createUser } from '../../../../utils/userFunctions';
 import { getDate } from '../../../../utils/convertTimeStamptz';
 import moment from 'moment';
+import { getDates } from '../../../../utils/mhfunctions';
 
 
 const databaseQuery = new SupabaseQueryClass();
@@ -165,9 +166,9 @@ test("Return last 7 words and their frequencies", async (t: any) => {
     const res = mockResponse();
     await wordValues(req as Request, res as Response)
     const argsPassedFull = res.json.getCall(0);
-    console.log(`argsPassedFull: ${JSON.stringify(argsPassedFull)}`)
+    console.log(`lastsevenFull: ${JSON.stringify(argsPassedFull)}`)
     const argsPassed = res.json.getCall(0).args[0];
-    console.log(`argspassed: ${JSON.stringify(argsPassed)}`)
+    console.log(`lastseven: ${JSON.stringify(argsPassed)}`)
 
     const expectedArgs = {
         "mssg":"MentalHealthOverview",
@@ -182,11 +183,9 @@ test("Return last 7 words and their frequencies", async (t: any) => {
         // ],
         "words":[
             "\"Awful\"",
-            "\"Awful\"",
             "\"Depressed\"",
             "\"Mediocre\"",
             "\"Happy\"",
-            "\"Awful\"",
             "\"Alright\""
         ],
         "freq":[
@@ -272,6 +271,34 @@ test("Return today's word", async (t: any) => {
     const stringifiedExpectedArgs= JSON.stringify(expectedArgs)
     console.log(`argsPassed wheretodays_word:${JSON.stringify(argsPassed)}`); 
     console.log(`stringifiedExpectedArgs wheretodays_word:${stringifiedExpectedArgs}`)
+    t.true(res.json.calledOnceWith(argsPassed)) 
+    t.true(JSON.stringify(argsPassed) == stringifiedExpectedArgs)
+})
+test("Return last 7 dates", async (t: any) => {
+    const req = mockRequest({
+        id:uuid
+    });
+    const res = mockResponse();
+    await dateValues(req as Request, res as Response)
+    const argsPassedFull = res.json.getCall(0);;
+    const argsPassed = res.json.getCall(0).args[0];
+
+    const expectedArgs = {
+        mssg: "Retrieved dates",
+        dates: [
+            "19/03",
+            "08/03",
+            "07/03",
+            "06/03",
+            "05/03",
+            "04/03",
+            "03/03"
+        ],
+        success: "successful"
+    }
+    const stringifiedExpectedArgs= JSON.stringify(expectedArgs)
+    console.log(`last7dates:${JSON.stringify(argsPassed)}`); 
+    console.log(`stringifiedExpectedArgs last7dates:${stringifiedExpectedArgs}`)
     t.true(res.json.calledOnceWith(argsPassed)) 
     t.true(JSON.stringify(argsPassed) == stringifiedExpectedArgs)
 })

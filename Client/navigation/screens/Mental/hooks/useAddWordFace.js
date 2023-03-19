@@ -3,8 +3,8 @@ import { useAuthContext } from "../../Authentication/context/AuthContext";
 import { useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const port = process.env["PORT"];
-const ipAddress = process.env["ipAddress"];
+const port = process.env.PORT;
+const ipAddress = process.env.IP_ADDRESS;
 
 export const useSubmit = () => {
   const [error, setError] = useState(null);

@@ -1,15 +1,15 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const portENV = process.env.PORT;
-const ipAddressEnv = process.env.ipAddress;
+const port = process.env.PORT;
+const ipAddress = process.env.IP_ADDRESS;
 const currentDate = new Date().toISOString().split('T')[0];
 
 // For testing purposes
 // Update this with your own UrlService
 
 export async function getTrackedFood(Date, userID) {
-  const url = `http://${ipAddressEnv}:${portENV}/api/food/getTrackedFood/${Date}.${userID}`;
+  const url = `http://${ipAddress}:${port}/api/food/getTrackedFood/${Date}.${userID}`;
   let response;
   try {
     const { token } = JSON.parse(
@@ -33,7 +33,7 @@ export async function getTrackedFood(Date, userID) {
 }
 
 export async function getSpecificTrackedFood(logID) {
-  const url = `http://${ipAddressEnv}:${portENV}/api/food/getSpecificTrackedFood/${logID}`;
+  const url = `http://${ipAddress}:${port}/api/food/getSpecificTrackedFood/${logID}`;
   let response;
   try {
     const { token } = JSON.parse(
@@ -57,7 +57,7 @@ export async function getSpecificTrackedFood(logID) {
 }
 
 export async function addTrackedFood(input, userID) {
-  const url = `http://${ipAddressEnv}:${portENV}/api/food/addTrackedFood`;
+  const url = `http://${ipAddress}:${port}/api/food/addTrackedFood`;
   let response;
   try {
     const { token } = JSON.parse(
@@ -89,7 +89,7 @@ export async function addTrackedFood(input, userID) {
 }
 
 export async function deleteTrackedFood(logID) {
-  const url = `http://${ipAddressEnv}:${portENV}/api/food/deleteTrackedFood/`;
+  const url = `http://${ipAddress}:${port}/api/food/deleteTrackedFood/`;
   let response;
   try {
     const { token } = JSON.parse(
@@ -117,7 +117,7 @@ export async function deleteTrackedFood(logID) {
 }
 
 export async function updateTrackedFood(input) {
-  const url = `http://${ipAddressEnv}:${portENV}/api/food/updateTrackedFood`;
+  const url = `http://${ipAddress}:${port}/api/food/updateTrackedFood`;
   let response;
   try {
     const { token } = JSON.parse(
@@ -150,7 +150,7 @@ export async function updateTrackedFood(input) {
 }
 
 export async function getFood(foodID) {
-  const url = `http://${ipAddressEnv}:${portENV}/api/food/getFood/${foodID}`;
+  const url = `http://${ipAddress}:${port}/api/food/getFood/${foodID}`;
   let response;
   try {
     const { token } = JSON.parse(
@@ -174,7 +174,7 @@ export async function getFood(foodID) {
 }
 
 export async function getMultipleFood(foodIDs) {
-  const url = `http://${ipAddressEnv}:${portENV}/api/food/getMultipleFood`;
+  const url = `http://${ipAddress}:${port}/api/food/getMultipleFood`;
   let response;
   try {
     const { token } = JSON.parse(
