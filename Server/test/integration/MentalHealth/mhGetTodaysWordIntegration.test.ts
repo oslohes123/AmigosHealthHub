@@ -68,14 +68,16 @@ test.after.always('guaranteed cleanup', async (t: any) => {
 
 
 
-// test(`GET ${todaysWordRoute} with incorrect ID`, async (t: any) => {
-//     const response = await request(app)
-//    .get(todaysWordRoute)
-//    .set({"authorization":token, "id": wrong_uuid})
- 
-//    t.true(response.status === 400)
-//    t.true(response.headers['content-type'] === "application/json; charset=utf-8")
-//    t.true(JSON.stringify(response.body) === JSON.stringify({mssg : "Failed to retrieve last 7 faces"}));
+test(`GET ${todaysWordRoute} with incorrect ID`, async (t: any) => {
+    const response = await request(app)
+   .get(todaysWordRoute)
+   .set({"authorization":token, "id": wrong_uuid})
+
+   console.log(`incorrectIDError: ${ JSON.stringify(response.body) }`)
+   t.true(response.status === 400)
+   t.true(response.headers['content-type'] === "application/json; charset=utf-8")
+   t.true(JSON.stringify(response.body) === JSON.stringify({mssg : "Something went wrong!"}))
+});
 //  })
  test(`GET ${todaysWordRoute} with correct ID`, async (t: any) => {
     const response = await request(app)
@@ -88,8 +90,8 @@ test.after.always('guaranteed cleanup', async (t: any) => {
         {"todays_word": "Awful"}
     ]
 }
+    console.log(`correcttodaysword ${ JSON.stringify(response.body) }`)
    t.true(response.status === 200)
    t.true(response.headers['content-type'] === "application/json; charset=utf-8")
    t.true(JSON.stringify(response.body) === JSON.stringify(expectedArgs));
  })
-

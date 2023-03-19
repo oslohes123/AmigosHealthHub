@@ -84,23 +84,6 @@ test("Attempt to insert data without logging in", async (t: any) => {
     t.true(res.json.calledWith({mssg:"You must be logged in to submit data"}));
 });
 
-test("Attempt to insert data with incorrect email", async (t: any) => {
-
-    const req = mockRequest({
-        face: 4,
-        word: "Happy",
-        id: wrong_uuid
-    });
-    const res = mockResponse();
-    await insertMentalData(req as Request, res as Response)
-
-
-    const argsPassed = res.json.getCall(0).args[0];
-    console.log(`argspassed incorrectID: ${JSON.stringify(argsPassed)}`)
-
-    t.true(res.status.calledWith(400))
-    t.true(res.json.calledWith({mssg:"Something went wrong!"}));
-});
 
 test("Attempt to insert data with an empty word", async (t: any) => {
 

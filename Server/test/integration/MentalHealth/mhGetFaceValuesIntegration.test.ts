@@ -148,6 +148,7 @@ test(`GET ${faceGraphRoute} with incorrect ID`, async (t: any) => {
    .get(faceGraphRoute)
    .set({"authorization":token, "id": wrong_uuid})
  
+   
    t.true(response.status === 400)
    t.true(response.headers['content-type'] === "application/json; charset=utf-8")
    t.true(JSON.stringify(response.body) === JSON.stringify({mssg : "Failed to retrieve last 7 faces"}));

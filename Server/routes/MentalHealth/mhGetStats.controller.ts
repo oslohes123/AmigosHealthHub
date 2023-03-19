@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import supabase from '../../utils/supabaseSetUp'
 import {SupabaseQueryClass} from '../../utils/databaseInterface'
 import {getWords, getFaces,getDates, average, getOccurrences, wordFreq} from '../../utils/mhfunctions'
-import { getDate } from '../../utils/convertTimeStamptz';
+import { getDate, getTime } from '../../utils/convertTimeStamptz';
 import moment from 'moment';
 import{v4 as uuidv4} from 'uuid'
 import { createHashedPassword } from '../../utils/userFunctions';
@@ -50,9 +50,14 @@ export const faceValues = async(req:Request,res:Response) =>{
 }        
 
 export const todaysValue = async(req:Request,res:Response) => {
+    const todayDate = getDate(moment().format());
+    const todayTime = getTime(moment().format());
+    console.log(`whatistodaysdate: ${JSON.stringify(todayDate)}`)
+    console.log(`whatistodaysdate: ${JSON.stringify(todayTime)}`)
     const { id } = req.headers
-    let todayDate = getDate(moment().format());
     const {data, error}:any = await supabaseQuery.todays_data(supabase, 'Mental Health','user_id', 'created_at', id,  todayDate, 'todays_word');
+    console.log(`todaysdata: ${JSON.stringify(data)}`)
+
     
     if(error){
         return res.status(400).json({mssg:"Something went wrong!"});
