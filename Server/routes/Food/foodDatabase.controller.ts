@@ -1,5 +1,5 @@
 import { type Request, type Response } from 'express'
-import { SupabaseQueryClass as SupabaseQueryClass } from '../../utils/databaseInterface'
+import { SupabaseQueryClass } from '../../utils/databaseInterface'
 import supabase from '../../utils/supabaseSetUp'
 import type FoodInput from './../../interfaces/Food/foodInterfaces'
 require('dotenv').config()
