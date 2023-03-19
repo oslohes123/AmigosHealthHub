@@ -1,24 +1,26 @@
-import React from 'react';
+/* eslint-disable react/destructuring-assignment */
+import React, { useContext } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
+import themeContext from '../../theme/themeContext';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#203038',
     flex: 1,
   },
   header: {
     fontSize: 30,
     fontWeight: 'bold',
     marginTop: 30,
-    color: 'white',
     alignSelf: 'center',
   },
 });
 
 export default function SleepSettings() {
+  const theme = useContext(themeContext);
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Sleep Settings</Text>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
+      <Text style={[styles.header, { color: theme.color }]}>Sleep Settings</Text>
     </View>
   );
 }

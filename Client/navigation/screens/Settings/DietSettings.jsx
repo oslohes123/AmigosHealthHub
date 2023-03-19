@@ -11,7 +11,6 @@ import { useAuthContext } from '../Authentication/context/AuthContext';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#203038',
     flex: 1,
   },
   input: {
