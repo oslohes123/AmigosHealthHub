@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function DietSettings() {
+export default function DietSettings({ navigation }) {
   const theme = useContext(themeContext);
 
   const [goal, setGoal] = useState('');
@@ -51,6 +51,7 @@ export default function DietSettings() {
     } else {
       await updateCalorieGoal(id, goal);
       alert('Success: Calorie goal successfully added');
+      navigation.navigate('Settings Dashboard');
     }
   };
 
