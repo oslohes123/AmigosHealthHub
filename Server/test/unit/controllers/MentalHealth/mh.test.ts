@@ -1,14 +1,14 @@
-const test = require('ava');
-import { Request, Response } from 'express';
-const sinon = require('sinon');
-import { dateValues, faceValues, todaysValue, wordValues } from '../../../../routes/MentalHealth/mhGetStats.controller';
+const test = require('ava')
+import { Request, Response } from 'express'
+const sinon = require('sinon')
+import { dateValues, faceValues, todaysValue, wordValues } from '../../../../routes/MentalHealth/mhGetStats.controller'
 import { SupabaseQueryClass } from '../../../../utils/databaseInterface';
-import supabase from '../../../../utils/supabaseSetUp';
-import {v4 as uuidv4} from 'uuid';
-import { createHashedPassword, createUser } from '../../../../utils/userFunctions';
-import { getDate } from '../../../../utils/convertTimeStamptz';
-import moment from 'moment';
-import { getDates } from '../../../../utils/mhfunctions';
+import supabase from '../../../../utils/supabaseSetUp'
+import {v4 as uuidv4} from 'uuid'
+import { createHashedPassword, createUser } from '../../../../utils/userFunctions'
+import { getDate } from '../../../../utils/convertTimeStamptz'
+import moment from 'moment'
+import { getDates } from '../../../../utils/mhfunctions'
 
 
 const databaseQuery = new SupabaseQueryClass();

@@ -39,13 +39,13 @@ interface dbInterface {
   ) => object
   // returns most recent data
 
-    mostrecent: (
-      db: any,
-      table: string,
-      firstcolumn: string,
-      secondcolumn: string,
-      id: string | string[] | undefined
-    ) => object;
+  mostrecent: (
+    db: any,
+    table: string,
+    firstcolumn: string,
+    secondcolumn: string,
+    id: string | string[] | undefined
+  ) => object
 
   todays_data: (
     db: any,
@@ -281,8 +281,8 @@ export class SupabaseQueryClass implements dbInterface {
   async todays_data (
     supabaseDb: any,
     table: string,
-    first_column: string,
-    second_cloumn: string,
+    firstColumn: string,
+    secondColoumn: string,
     toBeFoundFirst: any,
     toBeFoundSecond: any,
     toBeSelected: string
@@ -291,9 +291,9 @@ export class SupabaseQueryClass implements dbInterface {
       const { data, error } = await supabaseDb
         .from(table)
         .select(toBeSelected)
-        .eq(first_column, toBeFoundFirst)
+        .eq(firstColumn, toBeFoundFirst)
         .select(toBeSelected)
-        .eq(second_cloumn, toBeFoundSecond)
+        .eq(secondColoumn, toBeFoundSecond)
 
       if (error) {
         console.error(error)
