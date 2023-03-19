@@ -274,6 +274,24 @@ test("Return today's word", async (t: any) => {
     t.true(res.json.calledOnceWith(argsPassed)) 
     t.true(JSON.stringify(argsPassed) == stringifiedExpectedArgs)
 })
+
+test("Getting last 7 dates with an incorrect ID should result in an error", async (t: any) => {
+
+    console.log("In returning last 7 dates")
+    const req = mockRequest({
+        id: wrong_uuid,
+    });
+    const res = mockResponse();
+    await dateValues(req as Request, res as Response)
+
+
+    const argsPassed = res.json.getCall(0).args[0];
+    console.log(`argspasseddatesincorrectID: ${JSON.stringify(argsPassed)}`)
+
+    t.true(res.status.calledWith(400))
+    t.true(res.json.calledWith({mssg : "Failed to retrieve last 7 dates"}));
+});
+
 test("Return last 7 dates", async (t: any) => {
     const req = mockRequest({
         id:uuid

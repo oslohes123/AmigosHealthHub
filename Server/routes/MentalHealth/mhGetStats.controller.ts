@@ -33,7 +33,7 @@ export const dateValues = async(req:Request,res:Response) =>{
                 return res.status(400).json({mssg : "Failed to retrieve last 7 dates"})
             }
             else{
-                return res.status(200).json({mssg: "Retrieved dates",dates: getDates(data), success: "successful"}) 
+                return res.status(200).json({mssg: "Retrieved dates", dates: getDates(data), success: "successful"}) 
             } 
     }
 
