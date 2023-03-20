@@ -1,4 +1,3 @@
-import RouteNamesClass from './utils/routeNamesClass';
 
 /** ---------------- Routes Start--------------- */
 // HomePage Route
@@ -13,7 +12,6 @@ import authRouter from './routes/User/authentication.router';
 
 // Sleep Routes
 import sleepRouter from './routes/Sleep/sleep.router';
-
 
 import mentalHealthRouter from './routes/MentalHealth/getMentalHealthStats.router';
 
@@ -38,6 +36,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 app.use(cors());
+import RouteNamesClass from './utils/routeNamesClass';
 const routeNames = new RouteNamesClass();
 
 const port = process.env.PORT;
@@ -57,6 +56,20 @@ app.use('/api/food', FoodSearchRouter);
 app.use(routeNames.userBaseURL, getUserInfoRouter);
 app.use(routeNames.userBaseURL, checkInitialTokenRouter);
 
+/**
+ * Exercise and Workout Routes
+ */
+  //Exercise Routes
+  import exerciseRouter from "./routes/Exercise/addExercise.router";
+  app.use(routeNames.exerciseBaseURL, exerciseRouter)
+  //exerciseCalories Routes
+  import exerciseCaloriesRouter from "./routes/Exercise/exerciseCalories.router";
+  app.use(routeNames.caloriesBaseURL, exerciseCaloriesRouter)
+  //Workout Routes
+  import createWorkoutRouter from "./routes/Exercise/createWorkout.router";
+  app.use(routeNames.workoutBaseURL, createWorkoutRouter)
+  import getWorkoutRouter from "./routes/Exercise/getWorkout.router";
+  app.use(routeNames.workoutBaseURL, getWorkoutRouter)
 /** ---------------- Routes End------------------ */
 
 export default app;

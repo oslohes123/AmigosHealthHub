@@ -5,7 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // dotenv.config();
 const port = process.env.PORT;
 const ipAddress = process.env.IP_ADDRESS;
-
+const loginRoute =  `http://${ipAddress}:${port}/api/user/login`;
 export const useLogin = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
@@ -13,6 +13,7 @@ export const useLogin = () => {
 
   console.log(`port: ${port}`);
   console.log(`ipAddress: ${ipAddress}`);
+  console.log(JSON.stringify(process.env));
 
   const login = async (email, password) => {
     setIsLoading(true);
@@ -20,10 +21,10 @@ export const useLogin = () => {
 
     console.log("In login");
     console.log(`Port in login: ${port}`);
-    console.log(`IP_ADDRESS in login: ${ipAddress}`);
+    console.log(`ipAddress in login: ${ipAddress}`);
 
     const response = await fetch(
-      `http://${ipAddress}:${port}/api/user/login`,
+     loginRoute,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

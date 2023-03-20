@@ -29,9 +29,10 @@ test.before(async (t: any) => {
   }
 })
 
-test.after.always(async (t: any) => {
-  await supabaseQuery.deleteFrom(supabase, 'User', 'email', alreadyExistsEmail)
-})
+
+test.after.always('guaranteed cleanup of users', async (t: any) => {
+  await supabaseQuery.deleteFrom(supabase, 'User', 'email', alreadyExistsEmail);
+});
 
 test('POST /api/user/sign_up with no fields', async (t: any) => {
   const response = await request(app)
