@@ -11,7 +11,7 @@ import {
   import themeContext from "../../../theme/themeContext";
   import { FAB, IconButton, ActivityIndicator } from "react-native-paper";
     
-  import { useGetTrackedWorkoutDetails } from "../hooks/trackedWorkouts/useGetTrackedWorkoutDetails";
+  import useGetTrackedWorkoutDetails from "../hooks/trackedWorkouts/useGetTrackedWorkoutDetails";
   import { useDeleteTrackedWorkout } from "../hooks/trackedWorkouts/useDeleteTrackedWorkout";
 
   export default function TrackedWorkoutInfoScreen({ route, navigation }) {

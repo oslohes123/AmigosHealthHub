@@ -5,7 +5,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { BarChart } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
 import { useIsFocused } from '@react-navigation/native';
-import { useGetWorkoutHistoryByDate } from '../hooks/trackedWorkouts/useGetWorkoutHistoryByDate';
+import useGetWorkoutHistoryByDate from '../hooks/trackedWorkouts/useGetWorkoutHistoryByDate';
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import { DataTable } from 'react-native-paper';
 import themeContext from '../../../theme/themeContext';

@@ -5,7 +5,7 @@ import theme from '../../../theme/theme';
 import themeContext from '../../../theme/themeContext';
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
-import { useGetLastTrackedWorkout } from '../hooks/trackedWorkouts/useGetLastTrackedWorkout';
+import useGetLastTrackedWorkout from '../hooks/trackedWorkouts/useGetLastTrackedWorkout';
 import { useIsFocused } from "@react-navigation/native";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
 //Screen Names

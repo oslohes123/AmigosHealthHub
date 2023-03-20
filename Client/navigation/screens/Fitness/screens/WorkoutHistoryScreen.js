@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import themeContext from "../../../theme/themeContext";
 import { useState, useContext, useEffect } from "react";
-import { useGetWorkoutHistory } from "../hooks/trackedWorkouts/useGetTrackedWorkoutHistory";
+import useGetWorkoutHistory from "../hooks/trackedWorkouts/useGetTrackedWorkoutHistory";
 import { useIsFocused } from "@react-navigation/native";
 import { ActivityIndicator } from "react-native-paper";
 
