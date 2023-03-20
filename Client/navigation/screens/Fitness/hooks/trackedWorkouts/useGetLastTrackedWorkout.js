@@ -1,10 +1,12 @@
-import { useState } from "react";
-import { useAuthContext } from "../../../Authentication/context/AuthContext";
+/* eslint-disable consistent-return */
+import { useState } from 'react';
+import { useAuthContext } from '../../../Authentication/context/AuthContext';
+
 const port = process.env.PORT;
 const ipAddress = process.env.IP_ADDRESS;
 const getLastTrackedWorkoutRoute = `http://${ipAddress}:${port}/api/user/completedWorkouts/lastTrackedWorkout`;
 
-export const useGetLastTrackedWorkout = () => {
+export default function useGetLastTrackedWorkout() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useAuthContext();
@@ -14,11 +16,9 @@ export const useGetLastTrackedWorkout = () => {
     setIsLoading(true);
     setError(null);
 
-    console.log("In getWorkoutHistory");
-
     const response = await fetch(getLastTrackedWorkoutRoute, {
-      method: "GET",
-      headers: { "Content-Type": "application/json", userid },
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json', userid },
     });
 
     const getLastTrackedWorkoutJSON = await response.json();
@@ -26,22 +26,19 @@ export const useGetLastTrackedWorkout = () => {
     if (!response.ok) {
       setIsLoading(false);
       setError(getLastTrackedWorkoutJSON.mssg);
-      console.log(error);
-      return "Not Available";
+      return 'Not Available';
     }
     if (response.ok) {
       try {
-        console.log(getLastTrackedWorkoutJSON);
         setIsLoading(false);
         return getLastTrackedWorkoutJSON.lastTrackedWorkout;
-      } catch (error) {
-        setError(error);
+      } catch (caughtError) {
+        setError(caughtError);
         setIsLoading(false);
-        console.error(error);
-        return "Not Available";
+        return 'Not Available';
       }
     }
   };
 
   return { getLastTrackedWorkout, isLoading, error };
-};
+}
