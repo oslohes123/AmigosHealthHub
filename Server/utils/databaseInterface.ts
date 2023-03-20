@@ -1,320 +1,323 @@
 interface dbInterface {
-  // returns column of a table
-  select: (db: any, table: string, column: any) => object
+    // returns column of a table
+    select: (db: any, table: string, column: any) => object;
 
-  // returns columns (defined by toBeSelected) of rows of the table where the column has value toBeFound
-  // to return all columns of the table with a specific value, toBeSelected=='*'
-  selectWhere: (
-    db: any,
-    table: string,
-    column: string,
-    toBeFound: any,
-    toBeSelected: string
-  ) => object
-
-  // inserts a single record or bulk create into a table.
-
-  insert: (db: any, table: string, data: object) => object
-
-  // Delete data from a table where column value == value
-
-  deleteFrom: (db: any, table: string, column: string, value: any) => void
-
-  // Update table with updatingData where a given column has some value
-
-  update: (
-    db: any,
-    table: string,
-    updatingData: object,
-    column: string,
-    value: any
-  ) => object
-
-  // Select toBeSelected where a row in the given table matches 'match'
-  match: (
-    db: any,
-    table: string,
-    toBeSelected: string,
-    toBeMatched: object
-  ) => object
-  // returns most recent data
-
-    mostrecent: (
-      db: any,
-      table: string,
-      firstcolumn: string,
-      secondcolumn: string,
-      id: string | string[] | undefined
+    // returns columns (defined by toBeSelected) of rows of the table where the column has value toBeFound
+    // to return all columns of the table with a specific value, toBeSelected=='*'
+    selectWhere: (
+        db: any,
+        table: string,
+        column: string,
+        toBeFound: any,
+        toBeSelected: string
     ) => object;
 
-  todays_data: (
-    db: any,
-    table: string,
-    first_column: string,
-    second_cloumn: string,
-    toBeFoundFirst: any,
-    toBeFoundSecond: any,
-    toBeSelected: string,
-  ) => object
+    // inserts a single record or bulk create into a table.
 
+    insert: (db: any, table: string, data: object) => object;
+
+    // Delete data from a table where column value == value
+
+    deleteFrom: (db: any, table: string, column: string, value: any) => void;
+
+    // Update table with updatingData where a given column has some value
+
+    update: (
+        db: any,
+        table: string,
+        updatingData: object,
+        column: string,
+        value: any
+    ) => object;
+
+    // Select toBeSelected where a row in the given table matches 'match'
+    match: (
+        db: any,
+        table: string,
+        toBeSelected: string,
+        toBeMatched: object
+    ) => object;
+    // returns most recent data
+
+    mostrecent: (
+        db: any,
+        table: string,
+        firstcolumn: string,
+        secondcolumn: string,
+        id: string | string[] | undefined
+    ) => object;
+
+    todays_data: (
+        db: any,
+        table: string,
+        first_column: string,
+        second_cloumn: string,
+        toBeFoundFirst: any,
+        toBeFoundSecond: any,
+        toBeSelected: string
+    ) => object;
 }
 
 /**
  * For more information, look at the supabase JS client library: https://supabase.com/docs/reference/javascript/installing
  */
 export class SupabaseQueryClass implements dbInterface {
-  async select (
-    supabaseDb: any,
-    table: string,
-    column: any
-  ): Promise<object | undefined> {
-    try {
-      const { data, error } = await supabaseDb.from(table).select(column)
+    async select(
+        supabaseDb: any,
+        table: string,
+        column: any
+    ): Promise<object | undefined> {
+        try {
+            const { data, error } = await supabaseDb.from(table).select(column);
 
-      if (error) console.error(error)
-      else console.log({ data })
+            if (error) console.error(error);
+            else console.log({ data });
 
-      return { data }
-    } catch (err: unknown) {
-      console.error(err)
+            return { data };
+        } catch (err: unknown) {
+            console.error(err);
+        }
     }
-  }
 
-  async match (
-    supabaseDb: any,
-    table: string,
-    toBeSelected: string,
-    toBeMatched: object
-  ): Promise<object | undefined> {
-    try {
-      const { data, error } = await supabaseDb
-        .from(table)
-        .select(toBeSelected)
-        .match(toBeMatched)
+    async match(
+        supabaseDb: any,
+        table: string,
+        toBeSelected: string,
+        toBeMatched: object
+    ): Promise<object | undefined> {
+        try {
+            const { data, error } = await supabaseDb
+                .from(table)
+                .select(toBeSelected)
+                .match(toBeMatched);
 
-      if (error) {
-        console.error(error)
-        return { error }
-      } else {
-        console.log({ data })
-        return { data }
-      }
-    } catch (err: unknown) {
-      console.error(err)
+            if (error) {
+                console.error(error);
+                return { error };
+            } else {
+                console.log({ data });
+                return { data };
+            }
+        } catch (err: unknown) {
+            console.error(err);
+        }
     }
-  }
 
-  async selectIn (
-    supabaseDb: any,
-    table: string,
-    column: string,
-    toBeFound: any,
-    toBeSelected: string[]
-  ): Promise<object | undefined> {
-    try {
-      const { data, error } = await supabaseDb
-        .from(table)
-        .select(column)
-        .in(toBeFound, toBeSelected)
+    async selectIn(
+        supabaseDb: any,
+        table: string,
+        column: string,
+        toBeFound: any,
+        toBeSelected: string[]
+    ): Promise<object | undefined> {
+        try {
+            const { data, error } = await supabaseDb
+                .from(table)
+                .select(column)
+                .in(toBeFound, toBeSelected);
 
-      if (error) {
-        console.log('error in selectIn')
-        console.error(error)
-        return { error }
-      } else {
-        return { data }
-      }
-    } catch (err: unknown) {
-      console.log('error in selectIn caught error')
-      console.error(err)
+            if (error) {
+                console.log('error in selectIn');
+                console.error(error);
+                return { error };
+            } else {
+                return { data };
+            }
+        } catch (err: unknown) {
+            console.log('error in selectIn caught error');
+            console.error(err);
+        }
     }
-  }
 
-  async selectWhere (
-    supabaseDb: any,
-    table: string,
-    column: string,
-    toBeFound: any,
-    toBeSelected: string
-  ): Promise<object | undefined> {
-    try {
-      const { data, error } = await supabaseDb
-        .from(table)
-        .select(toBeSelected)
-        .eq(column, toBeFound)
+    async selectWhere(
+        supabaseDb: any,
+        table: string,
+        column: string,
+        toBeFound: any,
+        toBeSelected: string
+    ): Promise<object | undefined> {
+        try {
+            const { data, error } = await supabaseDb
+                .from(table)
+                .select(toBeSelected)
+                .eq(column, toBeFound);
 
-      if (error) {
-        console.error(error)
-        return { error }
-      } else console.log({ data })
+            if (error) {
+                console.error(error);
+                return { error };
+            } else console.log({ data });
 
-      return { data }
-    } catch (err: unknown) {
-      console.error(err)
+            return { data };
+        } catch (err: unknown) {
+            console.error(err);
+        }
     }
-  }
 
-  async insert (
-    supabaseDb: any,
-    table: string,
-    dataToBeInserted: object
-  ): Promise<object | undefined> {
-    try {
-      const { data, error } = await supabaseDb
-        .from(table)
-        .insert(dataToBeInserted)
-        .select()
+    async insert(
+        supabaseDb: any,
+        table: string,
+        dataToBeInserted: object
+    ): Promise<object | undefined> {
+        try {
+            const { data, error } = await supabaseDb
+                .from(table)
+                .insert(dataToBeInserted)
+                .select();
 
-      if (error) {
-        console.error(error)
-        return { error }
-      } else console.log({ data })
+            if (error) {
+                console.error(error);
+                return { error };
+            } else console.log({ data });
 
-      return { data }
-    } catch (err: unknown) {
-      console.error(err)
+            return { data };
+        } catch (err: unknown) {
+            console.error(err);
+        }
     }
-  }
 
-  async deleteFrom (
-    supabaseDb: any,
-    table: string,
-    column: string,
-    value: any
-  ): Promise<object | undefined> {
-    try {
-      const { error } = await supabaseDb.from(table).delete().eq(column, value)
+    async deleteFrom(
+        supabaseDb: any,
+        table: string,
+        column: string,
+        value: any
+    ): Promise<object | undefined> {
+        try {
+            const { error } = await supabaseDb
+                .from(table)
+                .delete()
+                .eq(column, value);
 
-      if (error) return { error }
-      else return { error: null }
-    } catch (err: unknown) {
-      console.error(err)
-      return { error: err }
+            if (error) return { error };
+            else return { error: null };
+        } catch (err: unknown) {
+            console.error(err);
+            return { error: err };
+        }
     }
-  }
 
-  async update (
-    supabaseDb: any,
-    table: string,
-    updatingData: object,
-    column: string,
-    value: any
-  ): Promise<object | undefined> {
-    try {
-      const { data, error } = await supabaseDb
-        .from(table)
-        .update(updatingData)
-        .eq(column, value)
-        .select()
+    async update(
+        supabaseDb: any,
+        table: string,
+        updatingData: object,
+        column: string,
+        value: any
+    ): Promise<object | undefined> {
+        try {
+            const { data, error } = await supabaseDb
+                .from(table)
+                .update(updatingData)
+                .eq(column, value)
+                .select();
 
-      if (error) console.error(error)
-      else {
-        console.log({ data })
-        return { data }
-      }
-    } catch (err: unknown) {
-      console.error(err)
+            if (error) console.error(error);
+            else {
+                console.log({ data });
+                return { data };
+            }
+        } catch (err: unknown) {
+            console.error(err);
+        }
     }
-  }
 
-  async selectWhereRange(
-    supabaseDb: any,
-    table: string,
-    column: string,
-    filterColumn: string,
-    toBeFound: String,
-    startValue: String,
-    endValue: String,
-    sortBy: String
-  ): Promise<object | undefined> {
-    try {
-        const { data, error } = await supabaseDb
-            .from(table)
-            .select(column)
-            .eq(filterColumn, toBeFound)
-            .gte(sortBy, startValue)
-            .lte(sortBy, endValue)
-            .order(sortBy, { ascending: true });
+    async selectWhereRange(
+        supabaseDb: any,
+        table: string,
+        column: string,
+        filterColumn: string,
+        toBeFound: string,
+        startValue: string,
+        endValue: string,
+        sortBy: string
+    ): Promise<object | undefined> {
+        try {
+            const { data, error } = await supabaseDb
+                .from(table)
+                .select(column)
+                .eq(filterColumn, toBeFound)
+                .gte(sortBy, startValue)
+                .lte(sortBy, endValue)
+                .order(sortBy, { ascending: true });
 
-        if (error) console.error(error);
-        else console.log({ data });
+            if (error) console.error(error);
+            else console.log({ data });
 
-        return { data, error };
-    } catch (err: unknown) {
-        console.error(err);
+            return { data, error };
+        } catch (err: unknown) {
+            console.error(err);
+        }
     }
-  }
 
-  // try {
-  //   const { data, error } = await supabaseDb
-  //     .from(table)
-  //     .select(toBeSelected)
-  //     .eq(column, toBeFound);
-  async mostrecent ( // returns array of objects
-    supabaseDb: any,
-    table: string,
-    firstcolumn: string,
-    secondcolumn: string,
-    id: any
-  ): Promise<object | undefined> {
-    try {
-      const { data, error } = await supabaseDb
-        .from(table)
-        .select('user_id')
-        .eq('user_id', id)
-        .select(firstcolumn, secondcolumn)
-        .order(secondcolumn, { ascending: false })
-        .range(0, 6)
+    // try {
+    //   const { data, error } = await supabaseDb
+    //     .from(table)
+    //     .select(toBeSelected)
+    //     .eq(column, toBeFound);
+    async mostrecent(
+        // returns array of objects
+        supabaseDb: any,
+        table: string,
+        firstcolumn: string,
+        secondcolumn: string,
+        id: any
+    ): Promise<object | undefined> {
+        try {
+            const { data, error } = await supabaseDb
+                .from(table)
+                .select('user_id')
+                .eq('user_id', id)
+                .select(firstcolumn, secondcolumn)
+                .order(secondcolumn, { ascending: false })
+                .range(0, 6);
 
-      if (error) {
-        console.error(error)
-        return { error }
-      } else {
-        console.log({ data })
-        return { data }
-      }
-    } catch (err: unknown) {
-      console.error(err)
+            if (error) {
+                console.error(error);
+                return { error };
+            } else {
+                console.log({ data });
+                return { data };
+            }
+        } catch (err: unknown) {
+            console.error(err);
+        }
     }
-  }
 
-  async todays_data (
-    supabaseDb: any,
-    table: string,
-    first_column: string,
-    second_cloumn: string,
-    toBeFoundFirst: any,
-    toBeFoundSecond: any,
-    toBeSelected: string
-  ): Promise<object | undefined> {
-    try {
-      const { data, error } = await supabaseDb
-        .from(table)
-        .select(toBeSelected)
-        .eq(first_column, toBeFoundFirst)
-        .select(toBeSelected)
-        .eq(second_cloumn, toBeFoundSecond)
+    async todays_data(
+        supabaseDb: any,
+        table: string,
+        first_column: string,
+        second_cloumn: string,
+        toBeFoundFirst: any,
+        toBeFoundSecond: any,
+        toBeSelected: string
+    ): Promise<object | undefined> {
+        try {
+            const { data, error } = await supabaseDb
+                .from(table)
+                .select(toBeSelected)
+                .eq(first_column, toBeFoundFirst)
+                .select(toBeSelected)
+                .eq(second_cloumn, toBeFoundSecond);
 
-      if (error) {
-        console.error(error)
-        return { error }
-      } else console.log({ data })
+            if (error) {
+                console.error(error);
+                return { error };
+            } else console.log({ data });
 
-      return { data }
-    } catch (err: unknown) {
-      console.error(err)
+            return { data };
+        } catch (err: unknown) {
+            console.error(err);
+        }
     }
-  }
 
-  //       if (error) console.error(error);
-  //       else {
-  //         console.log({ data });
-  //         return data;
-  //       }
-  //     } catch (err: unknown) {
-  //       console.error(err);
-  //     }
-  //   }
+    //       if (error) console.error(error);
+    //       else {
+    //         console.log({ data });
+    //         return data;
+    //       }
+    //     } catch (err: unknown) {
+    //       console.error(err);
+    //     }
+    //   }
 }
 
-export {}
+export {};
