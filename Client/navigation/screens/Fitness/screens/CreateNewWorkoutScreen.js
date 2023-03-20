@@ -290,28 +290,31 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
                   onPress={() => {
 
                     const copySelectedExercises = selectedExercises;
+                    console.log(`copyExercises: ${JSON.stringify(copySelectedExercises)}`)
 
-                    const indexToDelete = copySelectedExercises.indexOf({
-                      name: modalName,
-                      sets: modalSets,
-                      reps: modalReps,
-                      weight: modalWeight,
-                      calories: modalCalories,
-                      distance: modalDistance,
-                      duration: modalDuration,
-                      warmUpSet: modalWarmUpSet,
-                      type: modalType,
-                      muscle: modalMuscle,
-                      difficulty: modalDifficulty,
-                      instructions: modalInstructions,
-                      equipment: modalEquipment
-                  });
 
-                    console.log(`IndexToDelete: ${indexToDelete}`)
+                    console.log(`name: ${modalName}`)
+                    console.log(`sets: ${modalSets}`)
+                    console.log(`reps: ${modalReps}`)
+                    console.log(`weight: ${modalWeight}`)
+                    console.log(`distance : ${modalDistance}`)
+                    console.log(`duration: ${modalDuration}`)
+
+                    const indexToDelete = copySelectedExercises.findIndex((exercise) => {
+                      if (exercise.name === modalName
+                        && exercise.sets === modalSets
+                        && exercise.reps === modalReps && exercise.weight === modalWeight
+                        && exercise.distance === modalDistance && exercise.duration === modalDuration) {
+                        return true 
+                      } else {
+                        return false 
+                      }
+                    })
+                    console.log(`ObjToDelete: ${indexToDelete}`)
 
                     copySelectedExercises.splice(indexToDelete, 1);
                     console.log(`deleted exlist: ${JSON.stringify(copySelectedExercises)}`);
-                    setSelectedExercises(copySelectedExercises);
+                    // setSelectedExercises(copySelectedExercises);
 
                     setExerciseModalVisible(!exerciseModalVisible);
                     console.log("Remove from workout");
@@ -499,7 +502,7 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
               <Text
                 style={[
                   styles.addedText,
-                  { borderColor: theme.color, color: theme.color, textAlignVertical: "center" },
+                  { borderColor: theme.color, color: theme.color},
                 ]}
               >
                 {item.name}
