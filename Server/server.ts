@@ -1,10 +1,19 @@
+const dotenv = require("dotenv");
+dotenv.config();
+import supabase from './utils/supabaseSetUp';
+const port = process.env.PORT;
 import app from './index'
-const dotenv = require('dotenv')
-dotenv.config()
-const port = process.env.PORT
 
-const server = app.listen(port, () => {
-  console.log(`[server]: Server is running at http://localhost:${port ?? 'Port Not Set'}`)
-})
+// async function supabaseTest(){
+//     const {data,error} = await supabase.rpc('hello');
+//     if(error) console.error(error);
+//     else console.log({data});
+//   }
+  
+  
+  const server = app.listen(port, () => {
+    console.log(`[server]: Server is running at http://localhost:${port}`);
+    //supabaseTest(); // should have output: { data: 'hello_world' }
+  });
 
-export default server
+  export default server;

@@ -1,26 +1,38 @@
 interface dbInterface {
-  // returns column of a table
-  select: (db: any, table: string, column: any) => object
+  //returns column of a table
+  select: (
+    db: any,
+    table: string,
+    column: any
+    ) => object;
 
-  // returns columns (defined by toBeSelected) of rows of the table where the column has value toBeFound
-  // to return all columns of the table with a specific value, toBeSelected=='*'
+  //returns columns (defined by toBeSelected) of rows of the table where the column has value toBeFound
+  //to return all columns of the table with a specific value, toBeSelected=='*'
   selectWhere: (
     db: any,
     table: string,
     column: string,
     toBeFound: any,
     toBeSelected: string
-  ) => object
+  ) => object;
 
-  // inserts a single record or bulk create into a table.
+  //inserts a single record or bulk create into a table.
 
-  insert: (db: any, table: string, data: object) => object
+  insert: (
+    db: any,
+    table: string,
+    data: object
+    ) => object;
 
-  // Delete data from a table where column value == value
+  //Delete data from a table where column value == value
 
-  deleteFrom: (db: any, table: string, column: string, value: any) => void
+  deleteFrom: (db: any,
+    table: string,
+    column: string,
+    value: any
+    ) => void;
 
-  // Update table with updatingData where a given column has some value
+  //Update table with updatingData where a given column has some value
 
   update: (
     db: any,
@@ -28,108 +40,70 @@ interface dbInterface {
     updatingData: object,
     column: string,
     value: any
-  ) => object
+  ) => object;
 
-  // Select toBeSelected where a row in the given table matches 'match'
-  match: (
-    db: any,
+  //Select toBeSelected where a row in the given table matches 'match'
+   match: (
+    db: any, 
     table: string,
     toBeSelected: string,
-    toBeMatched: object
-  ) => object
-  // returns most recent data
+    toBeMatched: Object
+  ) => object; 
 
-  mostrecent: (
-    db: any,
-    table: string,
-    firstcolumn: string,
-    secondcolumn: string,
-    id: string | string[] | undefined
-  ) => object
-
-  todays_data: (
-    db: any,
-    table: string,
-    first_column: string,
-    second_cloumn: string,
-    toBeFoundFirst: any,
-    toBeFoundSecond: any,
-    toBeSelected: string
-  ) => object
 }
+
+
 
 /**
  * For more information, look at the supabase JS client library: https://supabase.com/docs/reference/javascript/installing
  */
-export class SupabaseQueryClass implements dbInterface {
-  async select (
+export class supabaseQueryClass implements dbInterface {
+  async select(
     supabaseDb: any,
     table: string,
     column: any
   ): Promise<object | undefined> {
     try {
-      const { data, error } = await supabaseDb.from(table).select(column)
+      const { data, error } = await supabaseDb.from(table).select(column);
 
-      if (error) console.error(error)
-      else console.log({ data })
+      if (error) console.error(error);
+      else console.log({ data });
 
-      return { data }
+      return { data };
     } catch (err: unknown) {
-      console.error(err)
+      console.error(err);
     }
   }
 
-  async match (
-    supabaseDb: any,
+  async match(
+    supabaseDb: any, 
     table: string,
     toBeSelected: string,
-    toBeMatched: object
-  ): Promise<object | undefined> {
-    try {
+    toBeMatched: Object
+  ):Promise<object | undefined> {
+
+    try{
       const { data, error } = await supabaseDb
-        .from(table)
-        .select(toBeSelected)
-        .match(toBeMatched)
+      .from(table)
+      .select(toBeSelected)
+      .match(toBeMatched);
 
-      if (error) {
-        console.error(error)
-        return { error }
-      } else {
-        console.log({ data })
-        return { data }
+      if (error){
+        console.error(error);
+        return {error}
       }
-    } catch (err: unknown) {
-      console.error(err)
-    }
-  }
-
-  async selectIn (
-    supabaseDb: any,
-    table: string,
-    column: string,
-    toBeFound: any,
-    toBeSelected: string[]
-  ): Promise<object | undefined> {
-    try {
-      const { data, error } = await supabaseDb
-        .from(table)
-        .select(column)
-        .in(toBeFound, toBeSelected)
-
-      if (error) {
-        console.log('error in selectIn')
-        console.error(error)
-        return { error }
-      } else {
-        return { data }
+      else {
+        console.log({ data });
+        return { data };
       }
-    } catch (err: unknown) {
-      console.log('error in selectIn caught error')
-      console.error(err)
-    }
-  }
 
-  async selectWhere (
+    }
+    catch(err: unknown){
+      console.error(err);
+    }
+
+  }
+  async selectWhere(
     supabaseDb: any,
     table: string,
     column: string,
@@ -140,20 +114,21 @@ export class SupabaseQueryClass implements dbInterface {
       const { data, error } = await supabaseDb
         .from(table)
         .select(toBeSelected)
-        .eq(column, toBeFound)
+        .eq(column, toBeFound);
 
-      if (error) {
-        console.error(error)
-        return { error }
-      } else console.log({ data })
+      if (error){
+        console.error(error);
+        return {error}
+      }
+      else console.log({ data });
 
-      return { data }
+      return { data };
     } catch (err: unknown) {
-      console.error(err)
+      console.error(err);
     }
   }
 
-  async insert (
+  async insert(
     supabaseDb: any,
     table: string,
     dataToBeInserted: object
@@ -162,40 +137,38 @@ export class SupabaseQueryClass implements dbInterface {
       const { data, error } = await supabaseDb
         .from(table)
         .insert(dataToBeInserted)
-        .select()
+        .select();
 
-      if (error) {
-        console.error(error)
-        return { error }
-      } else console.log({ data })
+      if (error){ 
+        console.error(error);
+        return {error}
+      }
+      else console.log({ data });
 
-      return { data }
+      return { data };
     } catch (err: unknown) {
-      console.error(err)
+      console.error(err);
     }
   }
 
-  async deleteFrom (
+  async deleteFrom(
     supabaseDb: any,
     table: string,
     column: string,
     value: any
   ): Promise<object | undefined> {
     try {
-      const { error } = await supabaseDb
-        .from(table)
-        .delete()
-        .eq(column, value)
+      const { error } = await supabaseDb.from(table).delete().eq(column, value);
 
-      if (error) return { error }
-      else return { error: null }
+      if (error) return {error};
+      else return{error: null}
     } catch (err: unknown) {
-      console.error(err)
-      return { error: err }
+      console.error(err);
+      return {error: err};
     }
   }
 
-  async update (
+  async update(
     supabaseDb: any,
     table: string,
     updatingData: object,
@@ -207,117 +180,19 @@ export class SupabaseQueryClass implements dbInterface {
         .from(table)
         .update(updatingData)
         .eq(column, value)
-        .select()
+        .select();
 
-      if (error) console.error(error)
+      if (error) console.error(error);
       else {
-        console.log({ data })
-        return { data }
+        console.log({ data });
+        return { data };
       }
     } catch (err: unknown) {
-      console.error(err)
+      console.error(err);
     }
   }
 
-  async selectWhereRange (
-    supabaseDb: any,
-    table: string,
-    column: string,
-    filterColumn: string,
-    toBeFound: string,
-    startValue: string,
-    endValue: string,
-    sortBy: string
-  ): Promise<object | undefined> {
-    try {
-      const { data, error } = await supabaseDb
-        .from(table)
-        .select(column)
-        .eq(filterColumn, toBeFound)
-        .gte(sortBy, startValue)
-        .lte(sortBy, endValue)
-        .order(sortBy, { ascending: true })
 
-      if (error) console.error(error)
-      else console.log({ data })
-
-      return { data, error }
-    } catch (err: unknown) {
-      console.error(err)
-    }
-  }
-
-  // try {
-  //   const { data, error } = await supabaseDb
-  //     .from(table)
-  //     .select(toBeSelected)
-  //     .eq(column, toBeFound);
-  async mostrecent (
-    // returns array of objects
-    supabaseDb: any,
-    table: string,
-    firstcolumn: string,
-    secondcolumn: string,
-    id: any
-  ): Promise<object | undefined> {
-    try {
-      const { data, error } = await supabaseDb
-        .from(table)
-        .select('user_id')
-        .eq('user_id', id)
-        .select(firstcolumn, secondcolumn)
-        .order(secondcolumn, { ascending: false })
-        .range(0, 6)
-
-      if (error) {
-        console.error(error)
-        return { error }
-      } else {
-        console.log({ data })
-        return { data }
-      }
-    } catch (err: unknown) {
-      console.error(err)
-    }
-  }
-
-  async todays_data (
-    supabaseDb: any,
-    table: string,
-    firstColumn: string,
-    secondColoumn: string,
-    toBeFoundFirst: any,
-    toBeFoundSecond: any,
-    toBeSelected: string
-  ): Promise<object | undefined> {
-    try {
-      const { data, error } = await supabaseDb
-        .from(table)
-        .select(toBeSelected)
-        .eq(firstColumn, toBeFoundFirst)
-        .select(toBeSelected)
-        .eq(secondColoumn, toBeFoundSecond)
-
-      if (error) {
-        console.error(error)
-        return { error }
-      } else console.log({ data })
-
-      return { data }
-    } catch (err: unknown) {
-      console.error(err)
-    }
-  }
-
-  //       if (error) console.error(error);
-  //       else {
-  //         console.log({ data });
-  //         return data;
-  //       }
-  //     } catch (err: unknown) {
-  //       console.error(err);
-  //     }
-  //   }
 }
 
-export {}
+export {};

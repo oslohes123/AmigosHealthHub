@@ -13,7 +13,7 @@ export const deleteAccountWrapper = () => {
     const {logout} = useLogout();
     //Provide just the password, email is taken from the 'user' context
     
-    const deleteAccount = async (password) => {
+    const deleteAccount = async (Password) => {
         setIsLoading(true);
         setError(null);
         console.log('In deleteAccount');

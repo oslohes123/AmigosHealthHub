@@ -1,13 +1,6 @@
 import { useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-<<<<<<< HEAD
-// const dotenv = require("dotenv");
-// dotenv.config();
-const port = process.env.PORT;
-const ipAddress = process.env.IP_ADDRESS;
-=======
->>>>>>> Ex-Full-Stack
 
 const port = process.env.PORT;
 const ipAddress = process.env.IP_ADDRESS;
@@ -19,6 +12,7 @@ export const useLogin = () => {
 
   console.log(`port: ${port}`);
   console.log(`ipAddress: ${ipAddress}`);
+  console.log(JSON.stringify(process.env));
 
   const login = async (email, password) => {
     setIsLoading(true);

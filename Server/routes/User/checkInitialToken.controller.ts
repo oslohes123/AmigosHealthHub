@@ -1,9 +1,9 @@
-import { type Request, type Response } from 'express'
-import { checkTokenHelper } from '../../utils/checkTokenHelpers'
-const dotenv = require('dotenv')
-dotenv.config()
+const dotenv = require("dotenv");
+import{Request, Response} from 'express'
+dotenv.config();
+import { checkTokenHelper } from '../../utils/checkTokenHelpers';
 
-export const checkInitialToken = async (req: Request, res: Response) => {
-  console.log('checkInitialToken executed!')
-  return await checkTokenHelper(req, res, null)
+export const checkInitialToken = async(req:Request, res:Response) => {
+   console.log(`checkInitialToken executed!`)
+   return checkTokenHelper(req, res, null);
 }
