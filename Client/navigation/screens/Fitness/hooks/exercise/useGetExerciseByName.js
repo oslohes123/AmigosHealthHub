@@ -1,9 +1,11 @@
-import { useState } from "react";
+/* eslint-disable consistent-return */
+import { useState } from 'react';
+
 const port = process.env.PORT;
 const ipAddress = process.env.IP_ADDRESS;
 const getExerciseByNameRoute = `http://${ipAddress}:${port}/api/user/exercise/get`;
 
-export const useGetExerciseByName = () => {
+export default function useGetExerciseByName() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   // const { dispatch } = useAuthContext();
@@ -12,13 +14,9 @@ export const useGetExerciseByName = () => {
     setIsLoading(true);
     setError(null);
 
-    console.log("In getExerciseByName");
-    // console.log(`Port in searchExercise: ${port}`);
-    // console.log(`ipAddress in searchExercise: ${ipAddress}`);
-
     const response = await fetch(getExerciseByNameRoute, {
-      method: "GET",
-      headers: { "Content-Type": "application/json", exercisename },
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json', exercisename },
     });
 
     const getExerciseByNameJSON = await response.json();
@@ -26,22 +24,19 @@ export const useGetExerciseByName = () => {
     if (!response.ok) {
       setIsLoading(false);
       setError(getExerciseByNameJSON.mssg);
-      console.log(error);
       return null;
     }
     if (response.ok) {
       try {
-        console.log(getExerciseByNameJSON);
         setIsLoading(false);
-        return getExerciseByNameJSON.exerciseInformation; //this is an object containing information about properties of the exercise
-      } catch (error) {
-        setError(error);
+        return getExerciseByNameJSON.exerciseInformation;
+      } catch (caughtError) {
+        setError(caughtError);
         setIsLoading(false);
-        console.error(error);
         return null;
       }
     }
   };
 
   return { getExerciseByName, isLoading, error };
-};
+}
