@@ -3,10 +3,8 @@ import { useAuthContext } from '../../Authentication/context/AuthContext';
 // import { useAuthContext } from "../hooks/useAuthContext";
 import { useState } from 'react';
 import { useLogout } from '../../Authentication/hooks/useLogOut';
-// const port = process.env['PORT'];
-// const ipAddress = process.env['ipAddress'];
 const port = process.env.PORT;
-const ipAddress = process.env.ipAddress;
+const ipAddress = process.env.IP_ADDRESS;
 console.log(`process.env: ${JSON.stringify(process.env)}`)
 export const useChangeProfileDetails = () => {
     console.log(`port: ${port}`);

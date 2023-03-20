@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { ipAddress, PORT } from "@env";
-// const port = PORT;
-// const ipAddress = ipAddress;
-const getExerciseByNameRoute = `http://${ipAddress}:${PORT}/api/user/exercise/get`;
+const port = process.env.PORT;
+const ipAddress = process.env.IP_ADDRESS;
+const getExerciseByNameRoute = `http://${ipAddress}:${port}/api/user/exercise/get`;
 
 export const useGetExerciseByName = () => {
   const [error, setError] = useState(null);

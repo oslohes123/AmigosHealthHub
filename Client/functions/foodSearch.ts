@@ -5,7 +5,7 @@ import genericSearchInterface from '../interfaces/genericSearchInterface';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { number } from 'prop-types';
 const portENV = process.env.PORT;
-const ipAddressENV = process.env.ipAddress;
+const ipAddressENV = process.env.IP_ADDRESS;
 // For testing purposes
 // Update this with your own UrlService
 let ipAddress:string|undefined = ipAddressENV;

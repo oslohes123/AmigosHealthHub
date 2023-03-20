@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { ipAddress, PORT } from "@env";
-// const port = PORT;
 import { useAuthContext } from "../../../Authentication/context/AuthContext";
-// const ipAddress = ipAddress;
-const getTrackedWorkoutDetailsRoute = `http://${ipAddress}:${PORT}/api/user/completedWorkouts/get`;
+const port = process.env.PORT;
+const ipAddress = process.env.IP_ADDRESS;
+const getTrackedWorkoutDetailsRoute = `http://${ipAddress}:${port}/api/user/completedWorkouts/get`;
 
 export const useGetTrackedWorkoutDetails = () => {
   const [error, setError] = useState(null);
