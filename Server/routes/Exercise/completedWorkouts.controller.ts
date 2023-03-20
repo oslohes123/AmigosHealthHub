@@ -1,9 +1,9 @@
 import { Request, Response } from "express"
 import supabase from "../../utils/supabaseSetUp"
-import { supabaseQueryClass } from "../../utils/databaseInterface"
+import { SupbaseQueryClass } from "../../utils/databaseInterface"
 import { getDate, getTime } from "../../utils/convertTimeStamptz";
 import { removeDuplicates, countElementsInArray } from "../../utils/arrayManipulation";
-const databaseQuery = new supabaseQueryClass();
+const databaseQuery = new SupbaseQueryClass();
 
 //Get a specific workout by userid, workoutname, date and time
 export const getACompletedWorkout =async (req:Request, res:Response) => {

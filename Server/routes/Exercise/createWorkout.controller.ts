@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import supabase from "../../utils/supabaseSetUp";
-import { supabaseQueryClass } from "../../utils/databaseInterface";
+import { SupbaseQueryClass } from "../../utils/databaseInterface";
 import { eitherIsFloatOrInt, covertStringToNumber } from "../../utils/validators";
 import { type } from "os";
-const databaseQuery = new supabaseQueryClass();
+const databaseQuery = new SupbaseQueryClass();
 
 
 

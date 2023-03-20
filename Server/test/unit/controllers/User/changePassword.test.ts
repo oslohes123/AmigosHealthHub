@@ -2,12 +2,12 @@ import { type Request, type Response } from 'express'
 import { changePassword } from '../../../../routes/User/changeProfileDetails.controller'
 import { v4 as uuidv4 } from 'uuid'
 import supabase from '../../../../utils/supabaseSetUp'
-import { SupabaseQueryClass } from '../../../../utils/databaseInterface'
+import { SupbaseQueryClass } from '../../../../utils/databaseInterface'
 import { createHashedPassword, createUser } from '../../../../utils/userFunctions'
 const test = require('ava')
 const sinon = require('sinon')
 const bcrypt = require('bcrypt')
-const supabaseQuery = new SupabaseQueryClass()
+const supabaseQuery = new SupbaseQueryClass()
 
 let testEmail: string
 let hashedPassword: string

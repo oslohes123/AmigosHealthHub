@@ -44,6 +44,16 @@ if (port === undefined) {
     console.log('Please set the PORT environment variable.');
 }
 
+import exerciseRouter from "./routes/Exercise/addExercise.router";
+app.use(routeNames.exerciseBaseURL, exerciseRouter)
+//exerciseCalories Routes
+import exerciseCaloriesRouter from "./routes/Exercise/exerciseCalories.router";
+app.use(routeNames.caloriesBaseURL, exerciseCaloriesRouter)
+//Workout Routes
+import createWorkoutRouter from "./routes/Exercise/createWorkout.router";
+app.use(routeNames.workoutBaseURL, createWorkoutRouter)
+import getWorkoutRouter from "./routes/Exercise/getWorkout.router";
+app.use(routeNames.workoutBaseURL, getWorkoutRouter)
 app.use(routeNames.userBaseURL, authRouter);
 app.use(routeNames.sleepBaseURL, sleepRouter);
 app.use(routeNames.mentalHealthBaseURL, mentalHealthRouter);
@@ -60,16 +70,7 @@ app.use(routeNames.userBaseURL, checkInitialTokenRouter);
  * Exercise and Workout Routes
  */
   //Exercise Routes
-  import exerciseRouter from "./routes/Exercise/addExercise.router";
-  app.use(routeNames.exerciseBaseURL, exerciseRouter)
-  //exerciseCalories Routes
-  import exerciseCaloriesRouter from "./routes/Exercise/exerciseCalories.router";
-  app.use(routeNames.caloriesBaseURL, exerciseCaloriesRouter)
-  //Workout Routes
-  import createWorkoutRouter from "./routes/Exercise/createWorkout.router";
-  app.use(routeNames.workoutBaseURL, createWorkoutRouter)
-  import getWorkoutRouter from "./routes/Exercise/getWorkout.router";
-  app.use(routeNames.workoutBaseURL, getWorkoutRouter)
+
 /** ---------------- Routes End------------------ */
 
 export default app;

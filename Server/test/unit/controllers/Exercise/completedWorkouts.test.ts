@@ -4,9 +4,9 @@ const sinon = require('sinon');
 import {v4 as uuidv4} from 'uuid';
 const bcrypt = require('bcrypt');
 import supabase from '../../../../utils/supabaseSetUp';
-import { supabaseQueryClass } from '../../../../utils/databaseInterface';
+import { SupbaseQueryClass } from '../../../../utils/databaseInterface';
 import { createHashedPassword, createUser } from '../../../../utils/userFunctions';
-const supabaseQuery = new supabaseQueryClass();
+const supabaseQuery = new SupbaseQueryClass();
 
 
 //test getACompletedWorkout with missing headers (userid, workoutname, date, time)

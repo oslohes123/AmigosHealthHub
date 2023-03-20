@@ -1,9 +1,9 @@
 import { Request, Response } from "express"
 import supabase from "../../utils/supabaseSetUp"
-import { supabaseQueryClass } from "../../utils/databaseInterface"
+import { SupbaseQueryClass } from "../../utils/databaseInterface"
 import moment from "moment";
 import { getDate } from "../../utils/convertTimeStamptz";
-const databaseQuery = new supabaseQueryClass();
+const databaseQuery = new SupbaseQueryClass();
 
 export const getCaloriesToday =async (req:Request, res: Response) => {
     const {userid} = req.headers;

@@ -1,7 +1,7 @@
-import { SupabaseQueryClass as SupabaseQueryClass } from '../../utils/databaseInterface'
+import { SupbaseQueryClass as SupbaseQueryClass } from '../../utils/databaseInterface'
 import supabase from '../../utils/supabaseSetUp'
 require('dotenv').config()
-const databaseQuery = new SupabaseQueryClass()
+const databaseQuery = new SupbaseQueryClass()
 
 export const createCalorieGoal = async (UserID: string, CalorieGoal: number) => {
   const { data, error }: any = await databaseQuery.insert(

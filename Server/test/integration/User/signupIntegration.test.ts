@@ -1,12 +1,12 @@
 import app from '../../../index'
 import { v4 as uuidv4 } from 'uuid'
 import supabase from '../../../utils/supabaseSetUp'
-import { SupabaseQueryClass } from '../../../utils/databaseInterface'
+import { SupbaseQueryClass } from '../../../utils/databaseInterface'
 import { createHashedPassword } from '../../../utils/userFunctions'
 import RouteNamesClass from '../../../utils/routeNamesClass'
 const request = require('supertest')
 const test = require('ava')
-const supabaseQuery = new SupabaseQueryClass()
+const supabaseQuery = new SupbaseQueryClass()
 const routeNames = new RouteNamesClass()
 const signupRoute = routeNames.fullSignupURL
 

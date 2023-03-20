@@ -1,9 +1,9 @@
 import { type Request, type Response } from 'express'
-import { SupabaseQueryClass } from '../../utils/databaseInterface'
+import { SupbaseQueryClass } from '../../utils/databaseInterface'
 import supabase from '../../utils/supabaseSetUp'
 import { isInt } from '../../utils/validators'
 require('dotenv').config()
-const databaseQuery = new SupabaseQueryClass()
+const databaseQuery = new SupbaseQueryClass()
 
 export const insertCalorieGoal = async (req: Request, res: Response) => {
   const { UserID, CalorieGoal, Date } = req.body

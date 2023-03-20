@@ -1,6 +1,6 @@
-import { SupabaseQueryClass } from './databaseInterface';
+import { SupbaseQueryClass } from './databaseInterface';
 import supabase from '../utils/supabaseSetUp';
-const databaseQuery = new SupabaseQueryClass();
+const databaseQuery = new SupbaseQueryClass();
 
 export const addSleepFunc = async (
     sleepData: Object,
@@ -17,9 +17,9 @@ export const addSleepFunc = async (
 };
 
 export const getSleepFunc = async (
-    userID: String,
-    startDate: String,
-    endDate: String,
+    userID: string,
+    startDate: string,
+    endDate: string,
     database = supabase,
     table = 'Sleep Data'
 ) => {
