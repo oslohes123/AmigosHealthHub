@@ -1,25 +1,28 @@
-import * as Yup from "yup";
+import * as Yup from 'yup';
 
-import { Button, Text, TextInput, View, SafeAreaView } from "react-native";
-import React, { useEffect, useState } from "react";
-import { useLogout } from "../../Authentication/hooks/useLogOut";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Formik } from "formik";
-import { globalStyles } from "../../../../styles/global";
-import { useAuthContext } from "../../Authentication/context/AuthContext";
-import { useChangeProfileDetails } from "../hooks/useChangeProfileDetails";
+import {
+  Button, Text, TextInput, View, SafeAreaView, StyleSheet,
+} from 'react-native';
+import React, { useEffect, useState, useContext } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Formik } from 'formik';
+import { useLogout } from '../../Authentication/hooks/useLogOut';
+import { globalStyles } from '../../../../styles/global';
+import { useAuthContext } from '../../Authentication/context/AuthContext';
+import { useChangeProfileDetails } from '../hooks/useChangeProfileDetails';
+import themeContext from '../../../theme/themeContext';
 
 // import { getUserInfo } from '../hooks/getUserInfo';
-const getUserInfo = require("../hooks/useGetUserInfo");
+const getUserInfo = require('../hooks/useGetUserInfo');
 
 const ChangeUserDetailsSchema = Yup.object().shape({
-  firstName: Yup.string().required("Required"),
+  firstName: Yup.string().required('Required'),
 
-  lastName: Yup.string().required("Required"),
+  lastName: Yup.string().required('Required'),
 
-  email: Yup.string().email("Invalid email").required("Required"),
+  email: Yup.string().email('Invalid email').required('Required'),
 
-  age: Yup.number().positive("Age must be positive"),
+  age: Yup.number().positive('Age must be positive'),
 });
 
 // async function getUserDetails() {
@@ -30,6 +33,7 @@ const ChangeUserDetailsSchema = Yup.object().shape({
 // }
 
 export const formikChangeUserDetailsForm = () => {
+  const theme = useContext(themeContext);
   const { logOut } = useLogout();
   const [email, setEmail] = useState(null);
   const [firstName, setfirstName] = useState(null);
@@ -54,54 +58,62 @@ export const formikChangeUserDetailsForm = () => {
   return (
     <SafeAreaView style={globalStyles.container}>
       <Formik
-        enableReinitialize={true}
+        enableReinitialize
         initialValues={{
-          email: email,
-          firstName: firstName,
-          lastName: lastName,
-          age: "" + age,
+          email,
+          firstName,
+          lastName,
+          age: `${age}`,
         }}
         onSubmit={async (values) => {
           await changeStats(
             values.firstName,
             values.lastName,
             values.email,
-            values.age
+            values.age,
           );
         }}
         validationSchema={ChangeUserDetailsSchema}
       >
         {(props) => (
           <View>
+            <Text style={[styles.head, {color: theme.color}]}>First Name</Text>
             <TextInput
-              style={globalStyles.input}
+              style={[globalStyles.input, {color: theme.color}]}
               placeholder="First Name"
-              onChangeText={props.handleChange("firstName")}
+              placeholderTextColor={theme.color}
+              onChangeText={props.handleChange('firstName')}
               value={props.values.firstName}
             />
             <Text>{props.errors.firstName}</Text>
 
+            <Text style={[styles.head, {color: theme.color}]}>Last Name</Text>
             <TextInput
-              style={globalStyles.input}
+              style={[globalStyles.input, {color: theme.color}]}
               placeholder="Last Name"
-              onChangeText={props.handleChange("lastName")}
+              placeholderTextColor={theme.color}
+              onChangeText={props.handleChange('lastName')}
               value={props.values.lastName}
             />
             <Text>{props.errors.lastName}</Text>
 
+            <Text style={[styles.head, {color: theme.color}]}>Email</Text>
             <TextInput
-              style={globalStyles.input}
+              style={[globalStyles.input, {color: theme.color}]}
               placeholder="Email"
-              onChangeText={props.handleChange("email")}
+              placeholderTextColor={theme.color}
+              onChangeText={props.handleChange('email')}
               value={props.values.email}
               keyboardType="email-address"
             />
             <Text>{props.errors.email}</Text>
 
+            <Text style={[styles.head, {color: theme.color}]}>Age</Text>
             <TextInput
-              style={globalStyles.input}
+              style={[globalStyles.input, {color: theme.color}]}
               placeholder="Age"
-              onChangeText={props.handleChange("age")}
+              placeholderTextColor={theme.color}
+              onChangeText={props.handleChange('age')}
               value={props.values.age}
               keyboardType="number-pad"
             />
@@ -119,3 +131,12 @@ export const formikChangeUserDetailsForm = () => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  head: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginLeft: '2%',
+    // marginTop: '2%'
+  },
+});
