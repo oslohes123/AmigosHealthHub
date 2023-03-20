@@ -5,6 +5,8 @@ import SleepSettings from "./SleepSettings";
 import HealthSettings from "./HealthSettings";
 import Profile from "./Profile";
 import SettingsDashboard from "./SettingsDashboard";
+import ChangeUserPasswordForm from "../ChangeUserDetail/forms/changeUserPasswordForm";
+import DeleteAccountForm from "../ChangeUserDetail/forms/deleteAccountForm";
 
 const Stack = createStackNavigator();
 
@@ -15,6 +17,8 @@ const SleepSettingsName = "Sleep Settings";
 const HealthSettingsName = "Health Settings";
 const ProfileName = "Profile";
 const SettingsDashboardName = "Settings Dashboard";
+const ChangePasswordName = "Change User Password"
+const DeleteAccountName = "Delete Account"
 
 export default function SettingsNavigation({ navigation }) {
   return (
@@ -34,6 +38,8 @@ export default function SettingsNavigation({ navigation }) {
       <Stack.Screen name={SleepSettingsName} component={SleepSettings} />
       <Stack.Screen name={HealthSettingsName} component={HealthSettings} />
       <Stack.Screen name={ProfileName} component={Profile} />
+      <Stack.Screen name={ChangePasswordName} component={ChangeUserPasswordForm} />
+      <Stack.Screen name={DeleteAccountName} component={DeleteAccountForm} />
     </Stack.Navigator>
   );
 }
