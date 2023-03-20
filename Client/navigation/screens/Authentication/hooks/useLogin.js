@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+// const dotenv = require("dotenv");
+// dotenv.config();
 const port = process.env.PORT;
 const ipAddress = process.env.IP_ADDRESS;
 const loginRoute =  `http://${ipAddress}:${port}/api/user/login`;

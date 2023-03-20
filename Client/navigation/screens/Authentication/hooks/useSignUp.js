@@ -11,20 +11,41 @@ export const useSignUp = () => {
   const [isLoading, setIsLoading] = useState(null);
   const { dispatch } = useAuthContext();
   console.log("In useSignUp");
-  const signup = async (email, firstName, lastName, age, password) => {
+  const signup = async (
+    email,
+    firstName,
+    lastName,
+    age,
+    password,
+    calories
+  ) => {
     setIsLoading(true);
     setError(null);
     console.log("In signup");
     console.log(
-      `body: ${JSON.stringify({ email, firstName, lastName, age, password })}`
+      `body: ${JSON.stringify({
+        email,
+        firstName,
+        lastName,
+        age,
+        password,
+        calories,
+      })}`
     );
     console.log(`http://${ipAddress}:${port}/api/user/sign_up`);
     const response = await fetch(
-      signUpRoute,
+      `http://${IP_ADDRESS}:${port}/api/user/sign_up`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, firstName, lastName, age, password }),
+        body: JSON.stringify({
+          email,
+          firstName,
+          lastName,
+          age,
+          password,
+          calories,
+        }),
       }
     );
 
@@ -43,8 +64,6 @@ export const useSignUp = () => {
     }
     if (response.ok) {
       try {
-        // console.log(`in useSignUp, json:${JSON.stringify(json)}`)
-        // console.log(`in useSignUp, json:${JSON.stringify(json.token)}`)
         await AsyncStorage.setItem("user", JSON.stringify(json));
 
         dispatch({ type: "LOGIN", payload: json });

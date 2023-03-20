@@ -4,13 +4,14 @@ import { useLogout } from '../../Authentication/hooks/useLogOut';
 const port = process.env.PORT;
 const ipAddress = process.env.IP_ADDRESS;
 const getUserInfo = async () => {
-    const { user, dispatch } = useAuthContext();
+    const { user } = useAuthContext();
+    console.log(`user: ${JSON.stringify(user)}`);
     const { email, token } = user;
     const {logout} = useLogout()
     // console.log(`getUserInfo user : ${JSON.stringify(user)}`);
     const userEmail = user.email;
     // console.log(`full getUserInfo user: ${JSON.stringify(user)}`);
-    console.log(`getUserInfo ipAddress: ${ipAddress} : Port ${port}`);
+    console.log(`getUserInfo IP_ADDRESS: ${ipAddress} : Port ${port}`);
     console.log(`email in getUserInfo: ${email}`);
     const response = await fetch(
         `http://${ipAddress}:${port}/api/user/getInfo`,
