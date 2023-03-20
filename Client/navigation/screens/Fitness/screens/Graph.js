@@ -2,10 +2,10 @@ import { View, StyleSheet, Text, TouchableOpacity, Modal, TouchableWithoutFeedba
 import React, { useEffect, useState } from "react";
 import { LineChart } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
-import { useGetAllExercises } from "../hooks/exercise/useGetAllExercises";
+import useGetAllExercises from "../hooks/exercise/useGetAllExercises";
 import { useIsFocused } from "@react-navigation/native";
 import { FAB } from "react-native-paper";
-import { useGetExerciseHistory } from "../hooks/exercise/useGetExerciseHistory";
+import useGetExerciseHistory from "../hooks/exercise/useGetExerciseHistory";
 import { ScrollView } from "react-native-gesture-handler";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
 
