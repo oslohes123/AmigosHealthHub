@@ -1,6 +1,6 @@
 import { Button, SafeAreaView, StyleSheet, Text } from 'react-native';
 
-import ChangeUserPasswordForm from '../forms/changeUserPasswordsForm';
+import ChangeUserPasswordForm from '../forms/changeUserPasswordForm';
 
 export default function ChangeUserPasswordScreen({ navigation }) {
     return (
