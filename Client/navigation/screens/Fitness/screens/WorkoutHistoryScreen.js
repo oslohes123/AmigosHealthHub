@@ -10,6 +10,7 @@ import themeContext from "../../../theme/themeContext";
 import { useState, useContext, useEffect } from "react";
 import { useGetWorkoutHistory } from "../hooks/trackedWorkouts/useGetTrackedWorkoutHistory";
 import { useIsFocused } from "@react-navigation/native";
+import { ActivityIndicator } from "react-native-paper";
 
 export default function WorkoutHistoryScreen({ navigation }) {
   const theme = useContext(themeContext);
@@ -56,22 +57,31 @@ export default function WorkoutHistoryScreen({ navigation }) {
         justifyContent={results.length < 1 ? "center" : "flex-start"}
         alignItems={"center"}
       >
+
+        {isLoading && 
+          <ActivityIndicator
+            animating={true}
+            size={50}
+            color={'#c2e7fe'}
+          />
+        }
+
         {/* {error && <Text>{error}</Text>} */}
-        {results.length < 1 && (
+        {!isLoading && results.length < 1 && (
           <Text style={{ color: theme.color, fontWeight: "bold" }}>
             You currently have no Workout History data.
           </Text>
         )}
 
-        {results &&
+        {!isLoading && results &&
           results.map((item) => (
-            <TouchableOpacity key={`${item.date} ${item.time}`} style={styles.itemBorder} onPress={() => {
+            <TouchableOpacity key={`${item.date} ${item.time}`} style={[styles.itemBorder, {borderColor: theme.color}]} onPress={() => {
                 navigation.navigate("Workout Information", item)
                 console.log(`completed workout pressed: ${JSON.stringify(item)}`)}}>
-              <Text style={{ borderColor: theme.color, color: theme.color, fontSize: 32 }}>{item.workoutname}</Text>
+              <Text style={{color: theme.color, fontSize: 32, textAlign: 'center' }}>{item.workoutname}</Text>
               <View style={{flexDirection: 'row', justifyContent: "space-evenly", width: screenWidth * 0.7}}>
-                <Text style={{ borderColor: theme.color, color: theme.color, fontSize: 16, alignSelf: 'center' }}>{item.date}</Text>
-                <Text style={{ borderColor: theme.color, color: theme.color, fontSize: 16, alignSelf: 'center' }}>{item.time}</Text>
+                <Text style={{ color: theme.color, fontSize: 16, alignSelf: 'center' }}>{item.date}</Text>
+                <Text style={{ color: theme.color, fontSize: 16, alignSelf: 'center' }}>{item.time}</Text>
               </View>
             </TouchableOpacity>
           ))}

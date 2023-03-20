@@ -156,7 +156,7 @@ export const addCompletedWorkouts =async (req:Request, res: Response) => {
     if(!userid||!workoutname||!exercises){
      return res.status(400).json({mssg: "userid, workoutname or exercises is missing!"})
     }
-
+   console.log(`req.body in addCompletedWorkouts:${JSON.stringify(req.body)}`);
     for(let i = 0; i< exercises.length; i++){
         try{
          const {name}= exercises[i];

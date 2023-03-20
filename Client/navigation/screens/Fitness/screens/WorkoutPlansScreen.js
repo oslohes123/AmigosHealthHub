@@ -69,7 +69,6 @@ export default function WorkoutPlansScreen({ navigation }) {
             onPress={() => {
               navigation.navigate("Create New Workout");
             }}
-            // onLongPress={() => {navigation.navigate('Add Custom Exercise')}}
           />
         </View>
       </Provider>
