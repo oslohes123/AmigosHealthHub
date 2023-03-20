@@ -1,9 +1,12 @@
-import { createContext, useContext, useEffect, useReducer } from "react";
+/* eslint-disable react/jsx-no-constructed-context-values */
+import {
+  createContext, useContext, useEffect, useReducer, React,
+} from 'react';
 // const jwttoken = require('jsonwebtoken');
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { useAuthContext } from "../hooks/useAuthContext";
-const port = process.env["PORT"];
-const ipAddress = process.env["ipAddress"];
+const port = process.env.PORT;
+const ipAddress = process.env.IP_ADDRESS;
 export const AuthContext = createContext();
 
 /**
@@ -13,12 +16,12 @@ export const AuthContext = createContext();
  */
 export const authReducer = (state, action) => {
   switch (action.type) {
-    case "LOGIN":
+    case 'LOGIN':
       return {
         user: action.payload,
       };
 
-    case "LOGOUT":
+    case 'LOGOUT':
       return {
         user: null,
       };
@@ -30,15 +33,15 @@ export const authReducer = (state, action) => {
 export const useAuthContext = () => {
   const stateAndDispatch = useContext(AuthContext);
 
-  //stateAndDispatch are null when
-  //AuthContext is used outside of the wanted scope. So throw error
+  // stateAndDispatch are null when
+  // AuthContext is used outside of the wanted scope. So throw error
   if (!stateAndDispatch) {
-    throw Error("AuthContext is being used outside its intended scope.");
+    throw Error('AuthContext is being used outside its intended scope.');
   }
   // console.log(`state and dispatch : ${stateAndDispatch}`);
   return stateAndDispatch;
 };
-export const AuthContextProvider = ({ children }) => {
+export function AuthContextProvider({ children }) {
   //
   //  initial value: user:null
 
@@ -53,46 +56,46 @@ export const AuthContextProvider = ({ children }) => {
   console.log(`${state.user}`);
   useEffect(() => {
     async function getItem() {
-      const user = JSON.parse(await AsyncStorage.getItem("user"));
+      const user = JSON.parse(await AsyncStorage.getItem('user'));
 
       console.log(`user: ${JSON.stringify(user)}`);
       if (user) {
         // console.log(`token: ${user.token}`);
-        console.log("IN AUTHCONTEXTPROVIDER");
-        const token = user.token;
+        console.log('IN AUTHCONTEXTPROVIDER');
+        const { token } = user;
         const response = await fetch(
           `http://${ipAddress}:${port}/api/user/checkInitialToken`,
           {
-            method: "GET",
+            method: 'GET',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
               authorization: token,
             },
-          }
+          },
         );
         console.log(`response ln 90: ${JSON.stringify(response)}`);
-        //if token exists, then update user state with the token
+        // if token exists, then update user state with the token
         if (response.ok) {
-          dispatch({ type: "LOGIN", payload: user });
+          dispatch({ type: 'LOGIN', payload: user });
         } else {
-          await AsyncStorage.removeItem("user");
-          dispatch({ type: "LOGOUT" });
+          await AsyncStorage.removeItem('user');
+          dispatch({ type: 'LOGOUT' });
         }
       }
     }
     getItem();
   }, []);
-  //At the very beginning of app, check if there exists
+  // At the very beginning of app, check if there exists
   // 'user' in AsyncStorage, if so, set user state to
 
   return (
-    //All children can use state and dispatch
-    // <AuthContext.Provider value={useAuthContext()}>
-    //     {children}
-    // </AuthContext.Provider>
+  // All children can use state and dispatch
+  // <AuthContext.Provider value={useAuthContext()}>
+  //     {children}
+  // </AuthContext.Provider>
 
     <AuthContext.Provider value={{ ...state, dispatch }}>
       {children}
     </AuthContext.Provider>
   );
-};
+}
