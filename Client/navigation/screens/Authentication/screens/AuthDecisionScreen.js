@@ -56,7 +56,7 @@ export default function AuthDecisionScreen({ navigation }) {
                     loop={true}
                     speed={1.5}
                 />
-                <View style={{marginTop:'120%'}}>
+                <View style={{marginTop:'100%'}}>
                     <Button title={"Log into account"} onPress={() => {
                         console.log("go to log in screen.");
                         navigation.navigate("Log In");
