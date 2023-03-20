@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuthContext } from '../../Authentication/context/AuthContext';
-// const port = process.env['PORT'];
-// const ipAddress = process.env['ipAddress'];
 import { useLogout } from '../../Authentication/hooks/useLogOut';
 const port = process.env.PORT;
-const ipAddress = process.env.ipAddress;
+const ipAddress = process.env.IP_ADDRESS;
 
 
 export const deleteAccountWrapper = () => {

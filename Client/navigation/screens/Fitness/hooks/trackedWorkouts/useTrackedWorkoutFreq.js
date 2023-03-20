@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { ipAddress, PORT } from "@env";
 import { useAuthContext } from "../../../Authentication/context/AuthContext";
-// const port = PORT;
-// const ipAddress = ipAddress;
-const workoutFreqRoute = `http://${ipAddress}:${PORT}/api/user/completedWorkouts/workoutFreq`;
+const port = process.env.PORT;
+const ipAddress = process.env.IP_ADDRESS;
+const workoutFreqRoute = `http://${ipAddress}:${port}/api/user/completedWorkouts/workoutFreq`;
 
 export const useTrackedWorkoutFreq = () => {
   const [getErrorGetWorkoutFreq, setErrorGetWorkoutFreq] = useState(null);
