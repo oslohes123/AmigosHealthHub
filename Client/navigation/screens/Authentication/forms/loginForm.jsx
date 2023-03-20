@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 import { Formik } from 'formik';
 import PasswordInput from '../../../components/passwordInput';
 import { globalStyles } from '../../../../styles/global';
-import { useLogin } from '../hooks/useLogin';
+import useLogin from '../hooks/useLogin';
 
 const loginSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Required'),
