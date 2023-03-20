@@ -9,9 +9,8 @@ import {
   } from "react-native";
   import { useState, useContext, useEffect } from "react";
   import themeContext from "../../../theme/themeContext";
-  import { IconButton } from "react-native-paper";
-  import { FAB } from "react-native-paper";
-  
+  import { FAB, IconButton, ActivityIndicator } from "react-native-paper";
+    
   import { useGetTrackedWorkoutDetails } from "../hooks/trackedWorkouts/useGetTrackedWorkoutDetails";
   import { useDeleteTrackedWorkout } from "../hooks/trackedWorkouts/useDeleteTrackedWorkout";
 
@@ -31,7 +30,7 @@ import {
       async function fetchWorkoutDetails(workoutname, date, time) {
         const data = await getTrackedWorkoutDetails(workoutname, date, time);
         console.log(`workout data: ${JSON.stringify(data)}`);
-        setWorkoutDetails(data);
+        setWorkoutDetails(data.reverse());
       }
       console.log(`Route Params: ${JSON.stringify(route.params)}`);
       fetchWorkoutDetails(workoutname, date, time);
@@ -93,8 +92,8 @@ import {
         </Modal>
   
         <View style={{flexDirection: 'row', justifyContent: "space-evenly", width: screenWidth * 0.9}}>
-            <Text style={[styles.text, { color: theme.color, alignSelf: 'center' }]}>{workoutname}</Text>
-            <View>
+            <Text style={[styles.text, { color: theme.color, width: screenWidth * 0.6, textAlign: 'left', alignSelf: 'center' }]}>{workoutname}</Text>
+            <View style={{alignSelf: 'center'}}>
                 <Text style={{ borderColor: theme.color, color: theme.color, fontSize: 20, alignSelf: 'center', fontWeight: 'bold' }}>{date}</Text>
                 <Text style={{ borderColor: theme.color, color: theme.color, fontSize: 20, alignSelf: 'center', fontWeight: 'bold' }}>{time}</Text>
             </View>
@@ -106,10 +105,20 @@ import {
           borderRadius={26}
           borderWidth={2}
           showsVerticalScrollIndicator={false}
+          justifyContent={isLoading ? "center" : "flex-start"}
           alignItems="center"
           style={{ margin: 10, width: screenWidth * 0.9 }}
         >
-          {workoutDetails.map((item) => (
+
+          {isLoading && 
+            <ActivityIndicator
+              animating={true}
+              size={50}
+              color={'#c2e7fe'}
+            />
+          }
+
+          {!isLoading && workoutDetails.map((item) => (
             <TouchableWithoutFeedback style={{ padding: 40 }} key={`${Math.random()}`}>
               <View
                 style={[styles.exerciseSection, { borderColor: theme.color }]}
@@ -133,7 +142,7 @@ import {
                   </Text>
                   <IconButton
                     icon="information"
-                    iconColor={theme.color}
+                    iconColor={theme.theme === 'light' ? '#000087' : theme.color}
                     size={20}
                     key={`${item.exercise.name}Instructions`}
                     onPress={() => {
@@ -197,7 +206,8 @@ import {
                           { color: theme.color, alignSelf: "center" },
                         ]}
                       >
-                        Duration: {item.duration} mins
+                        Duration: {Math.trunc(Number(item.duration))}' {Math.trunc((Number(item.duration) - Math.trunc(Number(item.duration))) * 60)}''
+
                       </Text>
                     </View>
                   </>
@@ -254,6 +264,10 @@ import {
               </View>
             </TouchableWithoutFeedback>
           ))}
+
+          {!isLoading && workoutDetails.length > 0 && <Text style={{alignSelf: 'center', color: theme.color, paddingVertical: screenHeight * 0.1}}>End of exercises</Text>
+          }
+
         </ScrollView>
         <View style={styles.bottomButtons}>
           <FAB
@@ -269,44 +283,6 @@ import {
       </SafeAreaView>
     );
   }
-  
-  function returnDataArray(itemSets, itemData) {
-    let dataArray = [];
-    for (let i = 0; i < itemSets; i++) {
-      dataArray.push(itemData);
-    }
-    return dataArray;
-  }
-  
-  const setsComponent = (item, theme) => {
-    for (let i = 0; i < item.sets; i++) {
-      <>
-        <View style={styles.statsRows}>
-          {console.log(`distance: ${item.distance}`)}
-          <Text
-            style={[
-              styles.statsText,
-              { color: theme.color, alignSelf: "center" },
-            ]}
-            key={item.reps}
-          >
-            Reps {item.reps}
-          </Text>
-        </View>
-        <View style={styles.statsRows}>
-          <Text
-            style={[
-              styles.statsText,
-              { color: theme.color, alignSelf: "center" },
-            ]}
-            key={item.weight}
-          >
-            Weight {item.weight}
-          </Text>
-        </View>
-      </>;
-    }
-  };
   
   const screenWidth = Dimensions.get("window").width;
   const screenHeight = Dimensions.get("window").height;

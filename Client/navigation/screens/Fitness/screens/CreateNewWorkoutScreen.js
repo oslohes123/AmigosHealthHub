@@ -14,7 +14,7 @@ import {
 } from "react-native";
 import { useState, useContext, useEffect } from "react";
 import themeContext from "../../../theme/themeContext";
-import { FAB, Snackbar } from "react-native-paper";
+import { FAB, Snackbar, ActivityIndicator } from "react-native-paper";
 import { useSearchExercise } from "../hooks/exercise/useSearchExercise";
 import { useAddWorkout } from "../hooks/workoutPlans/useAddWorkout";
 
@@ -401,6 +401,7 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
 
       <View style={styles.searchAndSave}>
         <TextInput
+          autoFocus
           clearButtonMode="always"
           value={text}
           onChangeText={(value) => setText(value)}
@@ -435,7 +436,16 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
         style={[styles.verticalScroll, { borderColor: theme.color }]}
         bounces={false}
       >
-        {results.map((item) => (
+
+        {isLoading && 
+            <ActivityIndicator
+            animating={true}
+            size={50}
+            color={'#c2e7fe'}
+          />
+        }
+
+        {!isLoading && results.map((item) => (
           <TouchableOpacity
             onPress={() => {
               console.log(`exercises selected: ${selectedExercises}`);

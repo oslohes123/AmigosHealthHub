@@ -10,22 +10,39 @@ import {
 } from "react-native";
 import { useState, useContext, useEffect } from "react";
 import themeContext from "../../../theme/themeContext";
-import { IconButton } from "react-native-paper";
+import { ActivityIndicator, IconButton } from "react-native-paper";
 import { useDeleteWorkoutPlan } from "../hooks/workoutPlans/useDeleteWorkoutPlan";
-import { FAB } from "react-native-paper";
+import { FAB, Snackbar } from "react-native-paper";
 
 import { useGetWorkoutDetails } from "../hooks/workoutPlans/useGetWorkoutDetails";
+import { useTrackWorkout } from "../hooks/trackedWorkouts/useTrackWorkout";
 
 export default function WorkoutPlanInfoScreen({ route, navigation }) {
+  const [snackbarVisible, setSnackbarVisible] = useState(false);
   const theme = useContext(themeContext);
   const [instructionModalData, setInstructionModalData] = useState(
     "No Instructions Available"
   );
   const [modalVisible, setModalVisible] = useState(false);
+  const [warmUpSet, setWarmUpSet] = useState(false)
 
   const [workoutDetails, setWorkoutDetails] = useState([]);
   const { getWorkoutDetails, isLoading, error } = useGetWorkoutDetails();
+  const { trackWorkout, message } = useTrackWorkout();
   const { deleteWorkoutPlan } = useDeleteWorkoutPlan();
+
+  const [dataToTrack, setDataToTrack] = useState({});
+  const [repsInArray, setRepsInArray] = useState({});
+  const [weightInArray, setWeightInArray] = useState({});
+  
+  const [repsPEID, setRepsPEID] = useState(null);
+  const [repsToAdd, setRepsToAdd] = useState(null);
+  const [repsIndex, setRepsIndex] = useState(null);
+
+  const [weightPEID, setWeightPEID] = useState(null);
+  const [weightToAdd, setWeightToAdd] = useState(null);
+  const [weightIndex, setWeightIndex] = useState(null);
+
   const workoutName = route.params;
 
   useEffect(() => {
@@ -43,8 +60,55 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
     for (let i=0; i<sets; i++) {
         newArray.push(1);
     }
-    console.log(`array to map: ${newArray}`)
     return newArray;
+  }
+
+  function addWeightToArray(itemPEID, item, index) {
+    console.log(`weightInArray: ${JSON.stringify(weightInArray)}`)
+    if (weightInArray[itemPEID] === undefined) {
+      let newArray = new Array(index + 1).fill(0);
+      newArray[index] = Number(item);
+      setWeightInArray({...weightInArray, [itemPEID]: newArray})
+    } else if (weightInArray[itemPEID][index] === undefined || weightInArray[itemPEID][index] === null) {
+      let copyArray = weightInArray[itemPEID];
+      let newArray = new Array(index + 1);
+      typeof copyArray === 'object' && copyArray.map((x, i) => {
+          newArray[i] = x
+        })
+        newArray[index] = Number(item);
+        setWeightInArray({...weightInArray, [itemPEID]: newArray})
+    } else if (index === (weightInArray[itemPEID]).length - 1 && item === '') {
+      let newArray = weightInArray[itemPEID].slice(0, index)
+      setWeightInArray({...weightInArray, [itemPEID]: newArray})
+    } else {
+      let newArray = weightInArray[itemPEID]
+      newArray[index] = Number(item)
+      setWeightInArray({...weightInArray, [itemPEID]: newArray})
+    }
+  }
+
+  function addRepsToArray(itemPEID, item, index) {
+    console.log(`weightInArray: ${JSON.stringify(repsInArray)}`)
+    if (repsInArray[itemPEID] === undefined) {
+      let newArray = new Array(index + 1).fill(0);
+      newArray[index] = Number(item);
+      setRepsInArray({...repsInArray, [itemPEID]: newArray})
+    } else if (repsInArray[itemPEID][index] === undefined || repsInArray[itemPEID][index] === null) {
+      let copyArray = repsInArray[itemPEID];
+      let newArray = new Array(index + 1);
+      typeof copyArray === 'object' && copyArray.map((x, i) => {
+          newArray[i] = x
+        })
+        newArray[index] = Number(item);
+        setRepsInArray({...repsInArray, [itemPEID]: newArray})
+    } else if (index === (repsInArray[itemPEID]).length - 1 && item === '') {
+      let newArray = repsInArray[itemPEID].slice(0, index)
+      setRepsInArray({...repsInArray, [itemPEID]: newArray})
+    } else {
+      let newArray = repsInArray[itemPEID]
+      newArray[index] = Number(item)
+      setRepsInArray({...repsInArray, [itemPEID]: newArray})
+    }
   }
 
   return (
@@ -115,11 +179,21 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
         borderColor={theme.color}
         borderRadius={26}
         borderWidth={2}
+        justifyContent={isLoading ? 'center' : 'flex-start'}
         showsVerticalScrollIndicator={false}
         alignItems="center"
         style={{ margin: 10, width: screenWidth * 0.9 }}
       >
-        {workoutDetails.map((item) => (
+
+        {isLoading && 
+            <ActivityIndicator
+            animating={true}
+            size={50}
+            color={'#c2e7fe'}
+          />
+        }
+
+        {!isLoading && workoutDetails.map((item) => (
           <TouchableWithoutFeedback style={{ padding: 40 }} key={`${Math.random()}`}>
             <View
               style={[styles.exerciseSection, { borderColor: theme.color }]}
@@ -184,6 +258,18 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                 </Text>
               </View>
 
+              {(!Object.keys(dataToTrack).includes(item.PEID)) && setDataToTrack({...dataToTrack, [item.PEID] : {
+                name: item.exercise.name,
+                sets: null,
+                reps: null,
+                weight: null,
+                distance: null,
+                mins: null,
+                secs: null,
+                warmUpSet: false,
+                calories: 0, 
+              } })}
+
               <View style={styles.statsRows}>
                     <Text
                     style={[
@@ -194,12 +280,17 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                     Calories: {item.calories} kcal
                     </Text>
                     <TextInput
-                    style={[styles.textInput, { borderColor: theme.color }]}
-                    placeholder="Calories (kcal)"
-                    color={theme.color}
-                    placeholderTextColor={theme.color}
-                    keyboardType={"numeric"}
-                    textAlign={"center"}
+                        style={[styles.textInput, { borderColor: theme.color }]}
+                        placeholder="Calories (kcal)"
+                        color={theme.color}
+                        placeholderTextColor={theme.color}
+                        keyboardType={"numeric"}
+                        textAlign={"center"}
+                        value={dataToTrack[item.PEID] ? dataToTrack[item.PEID].calories : 0}
+                        onChangeText={(caloriesText) => {
+                            setDataToTrack({...dataToTrack, [item.PEID]: {...dataToTrack[item.PEID], calories: caloriesText}})
+                            console.log(`when cals Set: ${JSON.stringify(dataToTrack)}`)
+                    }}
                     />
                 </View>
 
@@ -216,12 +307,17 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                       Distance: {item.distance} m
                     </Text>
                     <TextInput
-                      style={[styles.textInput, { borderColor: theme.color }]}
-                      placeholder="Distance (m)"
-                      color={theme.color}
-                      placeholderTextColor={theme.color}
-                      keyboardType={"numeric"}
-                      textAlign={"center"}
+                        style={[styles.textInput, { borderColor: theme.color }]}
+                        placeholder="Distance (m)"
+                        color={theme.color}
+                        placeholderTextColor={theme.color}
+                        keyboardType={"numeric"}
+                        textAlign={"center"}
+                        value={dataToTrack[item.PEID] ? dataToTrack[item.PEID].distance : 0}
+                        onChangeText={(distanceText) => {
+                            setDataToTrack({...dataToTrack, [item.PEID]: {...dataToTrack[item.PEID], distance: distanceText}})
+                            console.log(`when cals Set: ${JSON.stringify(dataToTrack)}`)
+                    }}
                     />
                   </View>
                   <View style={styles.statsRows}>
@@ -246,6 +342,11 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                         // value={durationMins}
                         keyboardType={"numeric"}
                         textAlign={"center"}
+                        value={dataToTrack[item.PEID] ? dataToTrack[item.PEID].mins : 0}
+                        onChangeText={(minsText) => {
+                            setDataToTrack({...dataToTrack, [item.PEID]: {...dataToTrack[item.PEID], mins: minsText}})
+                            console.log(`when cals Set: ${JSON.stringify(dataToTrack)}`)
+                    }}
                       />
                       <Text style={{color: theme.color, alignSelf: 'center'}}>:</Text>
                       <TextInput
@@ -259,51 +360,37 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                         // value={durationSecs}
                         keyboardType={"numeric"}
                         textAlign={"center"}
+                        value={dataToTrack[item.PEID] ? dataToTrack[item.PEID].secs : 0}
+                        onChangeText={(secsText) => {
+                            setDataToTrack({...dataToTrack, [item.PEID]: {...dataToTrack[item.PEID], secs: secsText}})
+                            console.log(`when cals Set: ${JSON.stringify(dataToTrack)}`)
+                    }}
                       />
                     </View>
                   </View>
                 </>
               ) : (
                 <>
-                    {/* <View>
-                        <View style={styles.statsRows}>
-                            {console.log(`Sets: ${item.sets}`)}
-                            <Text
-                                style={[
-                                    styles.statsText,
-                                    { color: theme.color, alignSelf: "center" },
-                                ]}
-                                >
-                                Sets: {item.sets}
-                            </Text>
-                            <TextInput
-                                style={[styles.textInput, { borderColor: theme.color }]}
-                                placeholder="Sets"
-                                color={theme.color}
-                                placeholderTextColor={theme.color}
-                                keyboardType={"numeric"}
-                                textAlign={"center"}
-                                />
-                        </View>
-                        <View style={[styles.statsRows, {justifyContent: 'space-evenly'}]}>
-                            <Text
-                                style={[
-                                styles.statsText,
-                                { color: theme.color, alignSelf: "center" },
-                                ]}
-                            >
-                                Reps: {item.reps}
-                            </Text>
-                            <Text
-                                style={[
-                                styles.statsText,
-                                { color: theme.color, alignSelf: "center" },
-                                ]}
-                            >
-                                Weight: {item.weight} kg
-                            </Text>
-                        </View>
-                    </View> */}
+
+                  <View style={styles.statsRows}>
+                    <Text
+                    style={[
+                        styles.statsText,
+                        { color: theme.color, alignSelf: "center" },
+                    ]}
+                    >
+                    Warm Up Set: {item.warmUpSet ? 'Yes' : 'No'}
+                    </Text>
+
+                    {/* <Checkbox
+                      status={item.warmUpSet ? "checked" : "indeterminate"}
+                      onPress={() => {
+                        // setWarmUpSet(!warmUpSet);
+                        setDataToTrack({...dataToTrack, [item.PEID]: {...dataToTrack[item.PEID], warmUpSet: !item.warmUpSet}})
+                      }}
+                    /> */}
+
+                  </View>
 
                     <View style={{flexDirection: 'row', justifyContent: "space-evenly"}}>
                         <View>
@@ -315,8 +402,9 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                             >
                                 Reps: {item.reps}
                             </Text>
-                            {setsToArray(item.sets).map(() => (
-                                <View style={[{justifyContent: 'space-evenly', paddingVertical: 5 }]}>
+
+                            {setsToArray(item.sets).map((unusedParam, index) => (
+                                <View style={[{justifyContent: 'space-evenly', paddingVertical: 5 }]} key={`${Math.random()}`}>
                                     <TextInput
                                         style={[styles.textInput, { borderColor: theme.color, width: styles.textInput.width * 0.9 }]}
                                         placeholder="Reps"
@@ -324,6 +412,13 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                                         placeholderTextColor={theme.color}
                                         keyboardType={"numeric"}
                                         textAlign={"center"}
+                                        value={repsInArray[item.PEID] && repsInArray[item.PEID][index] ? `${repsInArray[item.PEID][index]}` : index }
+                                        onChangeText={(repsText) => {
+                                            // console.log(`when cals Set: ${JSON.stringify(dataToTrack)}`)
+                                            // console.log(`this is the index: ${index}`)
+                                            // console.log(`this is the reps array: ${JSON.stringify(repsInArray)}`)
+                                            addRepsToArray(item.PEID, repsText, index)
+                                        }}
                                         />
                                 </View>
                             ))}
@@ -337,42 +432,32 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                             >
                                 Weight: {item.weight} kg
                             </Text>
-                            {setsToArray(item.sets).map(() => (
-                                <View style={[{justifyContent: 'space-evenly', paddingVertical: 5 }]}>
+                            
+                            {setsToArray(item.sets).map((unusedParam, index) => (
+                                <View style={[{justifyContent: 'space-evenly', paddingVertical: 5 }]} key={`${Math.random()}`}>
                                     <TextInput
+                                    render
                                         style={[styles.textInput, { borderColor: theme.color, width: styles.textInput.width * 0.9 }]}
                                         placeholder="Weight (kg)"
                                         color={theme.color}
                                         placeholderTextColor={theme.color}
                                         keyboardType={"numeric"}
                                         textAlign={"center"}
-                                    />
-                                </View>
-                            ))}
+                                        value={weightInArray[item.PEID] && weightInArray[item.PEID][index] ? `${weightInArray[item.PEID][index]}` : index}
+                                        onChangeText={(weightText) => {
+                                          // setWeightPEID(item.PEID);
+                                          // setWeightToAdd(weightText);
+                                          // setWeightIndex(index);
+                                          // console.log(`when cals Set: ${JSON.stringify(dataToTrack)}`);
+                                          // console.log(`this is the index: ${index}`);
+                                          // console.log(`this is the weight array: ${JSON.stringify(weightInArray)}`);
+                                          addWeightToArray(item.PEID, weightText, index);
+                                        }} 
+                                        />
+                                </View> 
+                                ))}
                         </View>
                     </View>
-
-                    {/* {setsToArray(item.sets).map(() => (
-                        <View style={[{justifyContent: 'space-evenly'}]}>
-                            <TextInput
-                                style={[styles.textInput, { borderColor: theme.color, width: styles.textInput.width * 0.8 }]}
-                                placeholder="Reps"
-                                color={theme.color}
-                                placeholderTextColor={theme.color}
-                                keyboardType={"numeric"}
-                                textAlign={"center"}
-                            />
-                            <TextInput
-                                style={[styles.textInput, { borderColor: theme.color, width: styles.textInput.width * 0.8 }]}
-                                placeholder="Weight (kg)"
-                                color={theme.color}
-                                placeholderTextColor={theme.color}
-                                keyboardType={"numeric"}
-                                textAlign={"center"}
-                            />
-                        </View>
-                        ))
-                    } */}
                 </>
               )}
             </View>
@@ -394,10 +479,82 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
           style={styles.fab}
           label="Track Plan"
           onPress={() => {
-            navigation.pop();
+
+            //Sort out duration
+            let copyDataToTrack = dataToTrack;
+            let copyDataKeys = Object.keys(copyDataToTrack);
+
+            copyDataKeys.forEach((key) => {
+
+              if (key in repsInArray) {
+                copyDataToTrack[key].reps = repsInArray[key]
+              }
+              if (key in weightInArray) {
+                copyDataToTrack[key].weight = weightInArray[key]
+              }
+
+              if (copyDataToTrack[key].reps != null) {
+                copyDataToTrack[key].sets = (copyDataToTrack[key].reps).length
+              }
+
+              if (copyDataToTrack[key].mins || copyDataToTrack[key].secs) {
+                let mins = copyDataToTrack[key].mins
+                let secs = copyDataToTrack[key].secs
+                let duration = Number((Number(mins)+(Number(secs)/60)).toFixed(2))
+                copyDataToTrack[key].duration = duration;
+                copyDataToTrack[key].distance = Number(copyDataToTrack[key].distance)
+                
+              } else {
+                copyDataToTrack[key].duration = null;
+              }
+              delete copyDataToTrack[key].mins;
+              delete copyDataToTrack[key].secs;
+              copyDataToTrack[key].calories = Number(copyDataToTrack[key].calories)
+            })
+
+            console.log(`this is the objects saved: ${JSON.stringify(dataToTrack)}`);
+            console.log(`copyDataToTrack: ${JSON.stringify(copyDataToTrack)}`);
+            
+            let submittableState = Object.values(copyDataToTrack).map((obj) => {
+              if (((obj.sets != null && obj.sets != '' && !isNaN(Number(obj.sets)) &&
+              obj.reps != null && obj.reps != '' && obj.reps != [] && (obj.reps).length === obj.sets  &&
+              obj.weight != null && obj.weight != '' && obj.weight != [] && (obj.weight).length === obj.sets) ||
+              (obj.distance != null && obj.distance != '' && !isNaN(Number(obj.distance)) &&
+              obj.duration != null & obj.duration != '' && !isNaN(Number(obj.duration)))) && obj.calories != null & obj.calories != '' && !isNaN(Number(obj.calories))) {
+                return true;
+              } else {
+                return false;
+              }
+            })
+
+
+            if (!submittableState.includes(false)){
+              trackWorkout(workoutName, Object.values(copyDataToTrack));
+              navigation.pop();
+            }  else {
+              setSnackbarVisible(true)
+            }
+
+            if (!message || message != "Successfully tracked a workout!") {
+              setSnackbarVisible(true)
+            }
           }}
         />
       </View>
+
+      <Snackbar
+        visible={snackbarVisible}
+        onDismiss={() => setSnackbarVisible(!snackbarVisible)}
+        action={{
+          label: "Close",
+          onPress: () => {
+            setSnackbarVisible(!snackbarVisible);
+          },
+        }}
+      >
+        Unable to track workout plan, ensure all fields are valid.
+      </Snackbar>
+
     </SafeAreaView>
   );
 }

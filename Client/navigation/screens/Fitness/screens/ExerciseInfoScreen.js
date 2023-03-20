@@ -1,4 +1,4 @@
-import { FAB, Checkbox, Snackbar } from "react-native-paper";
+import { FAB, Checkbox, Snackbar, ActivityIndicator } from "react-native-paper";
 import {
   Text,
   View,
@@ -50,6 +50,17 @@ export default function ExerciseInfoScreen({ route, navigation }) {
         maxHeight: screenHeight,
       }}
     >
+
+        {isLoading && 
+            <ActivityIndicator
+            animating={true}
+            size={50}
+            color={'#c2e7fe'}
+          />
+        }
+
+      {!isLoading &&
+      <>
       <View
         style={{
           flexDirection: "row",
@@ -449,6 +460,8 @@ export default function ExerciseInfoScreen({ route, navigation }) {
           </View>
         </View>
       </View>
+    </>
+  }
       <Snackbar
         visible={snackbarVisible}
         onDismiss={() => setSnackbarVisible(!snackbarVisible)}
