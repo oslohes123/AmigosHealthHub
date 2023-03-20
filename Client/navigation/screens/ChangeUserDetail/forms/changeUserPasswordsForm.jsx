@@ -1,37 +1,37 @@
-import * as Yup from "yup";
+import * as Yup from 'yup';
 
-import { Button, Text, TextInput, TouchableOpacity, View, SafeAreaView } from "react-native";
-import React, { useState } from "react";
+import {
+  Button, Text, View, SafeAreaView,
+} from 'react-native';
+import React, { useState } from 'react';
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Formik } from "formik";
-import { MaterialIcons } from "@expo/vector-icons";
-import PasswordInput from "../../../components/passwordInput";
-import { globalStyles } from "../../../../styles/global";
-import { useChangeProfilePassword } from "../hooks/useChangeProfilePassword";
+import { Formik } from 'formik';
+import PasswordInput from '../../../components/passwordInput';
+import { globalStyles } from '../../../../styles/global';
+import { useChangeProfilePassword } from '../hooks/useChangeProfilePassword';
 
 const passwordRegex = /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*!=]).*$/;
 const ChangeUserPasswordSchema = Yup.object().shape({
   old_password: Yup.string()
-    .required("No password provided.")
-    .min(8, "Password is too short - should be 8 chars minimum.")
+    .required('No password provided.')
+    .min(8, 'Password is too short - should be 8 chars minimum.')
     .matches(
       passwordRegex,
-      "Password must contain atleast 1 lowercase letter, 1 uppercase letter and 1 special character (eg. @, #, $, %, ^, &, +, *, !, =)"
+      'Password must contain atleast 1 lowercase letter, 1 uppercase letter and 1 special character (eg. @, #, $, %, ^, &, +, *, !, =)',
     ),
   new_password: Yup.string()
-    .required("No password provided.")
-    .min(8, "Password is too short - should be 8 chars minimum.")
+    .required('No password provided.')
+    .min(8, 'Password is too short - should be 8 chars minimum.')
     .matches(
       passwordRegex,
-      "Password must contain atleast 1 lowercase letter, 1 uppercase letter and 1 special character (eg. @, #, $, %, ^, &, +, *, !, =)"
+      'Password must contain atleast 1 lowercase letter, 1 uppercase letter and 1 special character (eg. @, #, $, %, ^, &, +, *, !, =)',
     ),
   confirm_new_password: Yup.string()
-    .required("Confirm your new password")
-    .oneOf([Yup.ref("new_password"), null], "Passwords don't match!"),
+    .required('Confirm your new password')
+    .oneOf([Yup.ref('new_password'), null], "Passwords don't match!"),
 });
 
-export const formikChangeUserPasswordForm = () => {
+export default function ChangeUserPasswordForm() {
   const { changePassword, isLoading, error } = useChangeProfilePassword();
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
@@ -41,15 +41,15 @@ export const formikChangeUserPasswordForm = () => {
     <SafeAreaView style={globalStyles.container}>
       <Formik
         initialValues={{
-          old_password: "",
-          new_password: "",
-          confirm_new_password: "",
+          old_password: '',
+          new_password: '',
+          confirm_new_password: '',
         }}
         onSubmit={async (values) => {
           await changePassword(
             values.old_password,
             values.new_password,
-            values.confirm_new_password
+            values.confirm_new_password,
           );
         }}
         validationSchema={ChangeUserPasswordSchema}
@@ -59,7 +59,7 @@ export const formikChangeUserPasswordForm = () => {
             <PasswordInput
               label="Old Password"
               value={props.values.old_password}
-              onChange={props.handleChange("old_password")}
+              onChange={props.handleChange('old_password')}
               showPassword={showPassword1}
               setShowPassword={setShowPassword1}
             />
@@ -72,7 +72,7 @@ export const formikChangeUserPasswordForm = () => {
             <PasswordInput
               label="New Password"
               value={props.values.new_password}
-              onChange={props.handleChange("new_password")}
+              onChange={props.handleChange('new_password')}
               showPassword={showPassword2}
               setShowPassword={setShowPassword2}
             />
@@ -85,7 +85,7 @@ export const formikChangeUserPasswordForm = () => {
             <PasswordInput
               label="Confirm New Password"
               value={props.values.confirm_new_password}
-              onChange={props.handleChange("confirm_new_password")}
+              onChange={props.handleChange('confirm_new_password')}
               showPassword={showPassword3}
               setShowPassword={setShowPassword3}
             />
@@ -106,4 +106,4 @@ export const formikChangeUserPasswordForm = () => {
       </Formik>
     </SafeAreaView>
   );
-};
+}

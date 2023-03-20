@@ -1,11 +1,11 @@
 import { Button, SafeAreaView, StyleSheet } from 'react-native';
 
-import { formikChangeUserDetailsForm } from '../forms/changeUserDetailsForm';
+import ChangeUserDetailsForm from '../forms/changeUserDetailsForm';
 
 export default function ChangeUserDetailsScreen({ navigation }) {
     return (
         <>
-            {formikChangeUserDetailsForm()}
+            {ChangeUserDetailsForm()}
             <SafeAreaView
                 style={{
                     flex: 2,

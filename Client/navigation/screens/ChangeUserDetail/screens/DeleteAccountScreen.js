@@ -1,11 +1,11 @@
-import { Button, SafeAreaView, StyleSheet, Text } from 'react-native';
+import { SafeAreaView } from 'react-native';
 
-import { deleteAccountForm } from '../forms/deleteAccountForm';
+import DeleteAccountForm from '../forms/deleteAccountForm';
 
 export default function ChangeUserPasswordScreen({ navigation }) {
     return (
         <>
-            {deleteAccountForm()}
+            {DeleteAccountForm()}
             <SafeAreaView
                 style={{
                     flex: 2,
