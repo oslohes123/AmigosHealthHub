@@ -1,45 +1,47 @@
-import * as Yup from "yup";
+import * as Yup from 'yup';
 
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
-import React, { useState } from "react";
+import {
+  Button, Text, TextInput, View,
+} from 'react-native';
+import React, { useState } from 'react';
 
-import { Formik } from "formik";
-import PasswordInput from "../../../components/passwordInput";
-import { globalStyles } from "../../../../styles/global";
-import { useSignUp } from "../hooks/useSignUp";
+import { Formik } from 'formik';
+import PasswordInput from '../../../components/passwordInput';
+import { globalStyles } from '../../../../styles/global';
+import { useSignUp } from '../hooks/useSignUp';
 
 const passwordRegex = /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*!=]).*$/;
 const SignupSchema = Yup.object().shape({
-  firstName: Yup.string().required("Required"),
+  firstName: Yup.string().required('Required'),
 
-  lastName: Yup.string().required("Required"),
+  lastName: Yup.string().required('Required'),
 
-  email: Yup.string().email("Invalid email").required("Required"),
+  email: Yup.string().email('Invalid email').required('Required'),
 
   password: Yup.string()
-    .required("No password provided.")
-    .min(8, "Password is too short - should be 8 chars minimum.")
+    .required('No password provided.')
+    .min(8, 'Password is too short - should be 8 chars minimum.')
     .matches(
       passwordRegex,
-      "Password must contain atleast 1 lowercase letter, 1 uppercase letter and 1 special character (eg. @, #, $, %, ^, &, +, *, !, =)"
+      'Password must contain atleast 1 lowercase letter, 1 uppercase letter and 1 special character (eg. @, #, $, %, ^, &, +, *, !, =)',
     ),
   confirm_password: Yup.string()
-    .required("Confirm your new password")
-    .oneOf([Yup.ref("password"), null], "Passwords don't match!"),
+    .required('Confirm your new password')
+    .oneOf([Yup.ref('password'), null], "Passwords don't match!"),
 
   age: Yup.number()
-    .typeError("Age must be a number!")
-    .required("Age is Required")
-    .positive("Age must be positive")
-    .integer("Age must be a whole number!"),
+    .typeError('Age must be a number!')
+    .required('Age is Required')
+    .positive('Age must be positive')
+    .integer('Age must be a whole number!'),
 
   calories: Yup.number()
-    .typeError("Calories must be a number!")
-    .positive("Calories must be positive")
-    .integer("Calories must be a whole number!"),
+    .typeError('Calories must be a number!')
+    .positive('Calories must be positive')
+    .integer('Calories must be a whole number!'),
 });
 
-export const formikSignUpForm = () => {
+function SignUpForm() {
   const { signup, isLoading, error } = useSignUp();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -48,12 +50,12 @@ export const formikSignUpForm = () => {
     <View style={globalStyles.container}>
       <Formik
         initialValues={{
-          email: "",
-          firstName: "",
-          lastName: "",
-          age: "",
-          password: "",
-          calories: "",
+          email: '',
+          firstName: '',
+          lastName: '',
+          age: '',
+          password: '',
+          calories: '',
         }}
         onSubmit={async (values) => {
           await signup(
@@ -62,7 +64,7 @@ export const formikSignUpForm = () => {
             values.lastName,
             values.age,
             values.password,
-            values.calories
+            values.calories,
           );
         }}
         validationSchema={SignupSchema}
@@ -72,7 +74,7 @@ export const formikSignUpForm = () => {
             <TextInput
               style={globalStyles.input}
               placeholder="First Name"
-              onChangeText={props.handleChange("firstName")}
+              onChangeText={props.handleChange('firstName')}
               value={props.values.firstName}
             />
             <Text>{props.errors.firstName}</Text>
@@ -80,7 +82,7 @@ export const formikSignUpForm = () => {
             <TextInput
               style={globalStyles.input}
               placeholder="Last Name"
-              onChangeText={props.handleChange("lastName")}
+              onChangeText={props.handleChange('lastName')}
               value={props.values.lastName}
             />
             <Text>{props.errors.lastName}</Text>
@@ -88,7 +90,7 @@ export const formikSignUpForm = () => {
             <TextInput
               style={globalStyles.input}
               placeholder="Email"
-              onChangeText={props.handleChange("email")}
+              onChangeText={props.handleChange('email')}
               value={props.values.email}
               keyboardType="email-address"
             />
@@ -97,7 +99,7 @@ export const formikSignUpForm = () => {
             <TextInput
               style={globalStyles.input}
               placeholder="Age"
-              onChangeText={props.handleChange("age")}
+              onChangeText={props.handleChange('age')}
               value={props.values.age}
               keyboardType="number-pad"
             />
@@ -106,7 +108,7 @@ export const formikSignUpForm = () => {
             <TextInput
               style={globalStyles.input}
               placeholder="Calories"
-              onChangeText={props.handleChange("calories")}
+              onChangeText={props.handleChange('calories')}
               value={props.values.calories}
               keyboardType="number-pad"
             />
@@ -115,8 +117,8 @@ export const formikSignUpForm = () => {
             <PasswordInput
               label="Password"
               style={globalStyles.input}
-              secureTextEntry={true}
-              onChange={props.handleChange("password")}
+              secureTextEntry
+              onChange={props.handleChange('password')}
               value={props.values.password}
               showPassword={showPassword}
               setShowPassword={setShowPassword}
@@ -125,9 +127,9 @@ export const formikSignUpForm = () => {
 
             <PasswordInput
               style={globalStyles.input}
-              secureTextEntry={true}
+              secureTextEntry
               label="Confirm Password"
-              onChange={props.handleChange("confirm_password")}
+              onChange={props.handleChange('confirm_password')}
               value={props.values.confirm_password}
               showPassword={showConfirmPassword}
               setShowPassword={setShowConfirmPassword}
@@ -145,6 +147,6 @@ export const formikSignUpForm = () => {
       </Formik>
     </View>
   );
-};
+}
 
-// module.exports.signupForm = formikSignupForm;
+export default SignUpForm;
