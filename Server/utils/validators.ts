@@ -16,14 +16,14 @@ export const isInt = (containsInt: any) => {
 }
 
 export const isFloat = (containsFloat: any) => {
-    return validator.isFloat(containsFloat)
+  return validator.isFloat(containsFloat)
 }
 
 export const eitherIsFloatOrInt = (containsIntOrFloat: any) => {
-    return validator.isInt(containsIntOrFloat) || validator.isFloat(containsIntOrFloat)
+  return validator.isInt(containsIntOrFloat) || validator.isFloat(containsIntOrFloat)
 }
 
-export const covertStringToNumber  = (stringWNumber: string) =>{
-    let number = Number(stringWNumber)
-    return number
+export const covertStringToNumber = (stringWNumber: string) => {
+  const number = Number(stringWNumber)
+  return number
 }
