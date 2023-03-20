@@ -1,8 +1,8 @@
-export function removeDuplicates(arr: Array<any>) {
-    return [...new Set(arr)];
+export function removeDuplicates (arr: any[]) {
+  return [...new Set(arr)]
 }
 
-
-export function countElementsInArray(arr: Array<any>){
-    return  arr.reduce((acc: any, curr: any) => (acc[curr] = (acc[curr] || 0) + 1, acc), {});    
+export function countElementsInArray (arr: any[]) {
+  // eslint-disable-next-line no-return-assign, no-sequences
+  return arr.reduce((acc: any, curr: any) => (acc[curr] = (Number((acc[curr] || 0)) + Number(1)), acc), {})
 }
