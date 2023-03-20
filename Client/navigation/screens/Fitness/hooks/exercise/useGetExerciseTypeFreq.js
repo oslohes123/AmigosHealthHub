@@ -1,13 +1,15 @@
-import { useState } from "react";
-import { useAuthContext } from "../../../Authentication/context/AuthContext";
+/* eslint-disable consistent-return */
+import { useState } from 'react';
+import { useAuthContext } from '../../../Authentication/context/AuthContext';
+
 const port = process.env.PORT;
 const ipAddress = process.env.IP_ADDRESS;
 const getExerciseNameTypeRoute = `http://${ipAddress}:${port}/api/user/completedWorkouts/exerciseTypeFreq`;
 
-export const useGetExerciseTypeFreq = () => {
+export default function useGetExerciseTypeFreq() {
   const [getErrorGetExerciseType, setErrorGetExerciseType] = useState(null);
   const [isLoadingExerciseType, setIsLoadingExerciseType] = useState(null);
- 
+
   const { user } = useAuthContext();
   const userid = user.id;
 
@@ -15,36 +17,31 @@ export const useGetExerciseTypeFreq = () => {
     setIsLoadingExerciseType(true);
     setErrorGetExerciseType(null);
 
-    console.log("In getExerciseTypeFreq");
-
     const response = await fetch(getExerciseNameTypeRoute, {
-      method: "GET",
-      headers: { "Content-Type": "application/json", userid },
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json', userid },
     });
 
     const getExerciseTypeFreqJSON = await response.json();
-    console.log(`getExerciseTypeFreqJSON: ${JSON.stringify(getExerciseTypeFreqJSON)}`);
     if (!response.ok) {
-        setIsLoadingExerciseType(false);
-        setErrorGetExerciseType(getExerciseTypeFreqJSON.mssg);
-      console.log(error);
+      setIsLoadingExerciseType(false);
+      setErrorGetExerciseType(getExerciseTypeFreqJSON.mssg);
       return [];
     }
     if (response.ok) {
       try {
         setIsLoadingExerciseType(false);
-        return{
-           exerciseTypeLabels: getExerciseTypeFreqJSON.graphLabels,
-           exerciseTypeData: getExerciseTypeFreqJSON.graphData
-        }   
-      } catch (error) {
-        setErrorGetExerciseType(error);
+        return {
+          exerciseTypeLabels: getExerciseTypeFreqJSON.graphLabels,
+          exerciseTypeData: getExerciseTypeFreqJSON.graphData,
+        };
+      } catch (caughtError) {
+        setErrorGetExerciseType(caughtError);
         setIsLoadingExerciseType(false);
-        console.error(error);
         return [];
       }
     }
   };
 
   return { getExerciseTypeFreq, isLoadingExerciseType, getErrorGetExerciseType };
-};
+}

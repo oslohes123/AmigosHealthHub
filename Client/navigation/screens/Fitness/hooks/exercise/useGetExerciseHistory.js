@@ -1,10 +1,13 @@
-import { useState } from "react";
+/* eslint-disable consistent-return */
+import { useState } from 'react';
+import { useAuthContext } from '../../../Authentication/context/AuthContext';
+
 const port = process.env.PORT;
 const ipAddress = process.env.IP_ADDRESS;
-import { useAuthContext } from "../../../Authentication/context/AuthContext";
+
 const getExerciseHistoryRoute = `http://${ipAddress}:${port}/api/user/exercise/history`;
 
-export const useGetExerciseHistory = () => {
+export default function useGetExerciseHistory() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useAuthContext();
@@ -14,21 +17,15 @@ export const useGetExerciseHistory = () => {
     setIsLoading(true);
     setError(null);
 
-    console.log("In getExerciseHistory");
-
     const response = await fetch(getExerciseHistoryRoute, {
-      method: "GET",
-      headers: { "Content-Type": "application/json", userid, nameofexercise },
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json', userid, nameofexercise },
     });
 
     const getExerciseHistoryJSON = await response.json();
-    console.log(
-      `getExerciseHistoryJSON: ${JSON.stringify(getExerciseHistoryJSON)}`
-    );
     if (!response.ok) {
       setIsLoading(false);
       setError(getExerciseHistoryJSON.mssg);
-      console.log(error);
       return null;
     }
     if (response.ok) {
@@ -39,14 +36,13 @@ export const useGetExerciseHistory = () => {
           data: getExerciseHistoryJSON.data,
           type: getExerciseHistoryJSON.type,
         };
-      } catch (error) {
-        setError(error);
+      } catch (caughtError) {
+        setError(caughtError);
         setIsLoading(false);
-        console.error(error);
         return null;
       }
     }
   };
 
   return { getExerciseHistory, isLoading, error };
-};
+}
