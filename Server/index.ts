@@ -15,7 +15,7 @@ import authRouter from './routes/User/authentication.router';
 import sleepRouter from './routes/Sleep/sleep.router';
 
 
-import mentalHealthRouter from './routes/MentalHealth/mhGetStats.router';
+import mentalHealthRouter from './routes/MentalHealth/getMentalHealthStats.router';
 
 // Change Profile Details Routes
 import changeProfileDetailsRouter from './routes/User/changeProfileDetails.router';

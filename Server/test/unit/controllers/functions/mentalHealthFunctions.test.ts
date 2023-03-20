@@ -1,5 +1,5 @@
 import { getToday } from '../../../../routes/MentalHealth/rateMental.controller'
-import { average, getFaces, getOccurrences, getWords, wordFreq } from '../../../../utils/mhfunctions'
+import { average, getFaces, getOccurrences, getWords, wordFreq } from '../../../../utils/mentalHealthFunctions'
 const test = require('ava')
 
 test('getToday returns a string in the format YYYY-MM-DD', (t: any) => {
@@ -17,9 +17,6 @@ test('getToday returns the current date', (t: any) => {
   t.is(today, `${year}-${month}-${day}`)
 })
 
-interface Obj {
-  [word: string]: any
-}
 test('average should return the correct value for an array of numbers', (t: any) => {
   const arr: string[] = ['1', '2', '3', '4', '5']
   const expected: number = 3

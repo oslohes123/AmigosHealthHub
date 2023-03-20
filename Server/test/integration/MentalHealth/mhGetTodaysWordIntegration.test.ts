@@ -7,6 +7,7 @@ import supabase from '../../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../../utils/databaseInterface'
 import RouteNamesClass from '../../../utils/routeNamesClass'
 const test = require('ava')
+const request = require('supertest')
 const databaseQuery = new SupabaseQueryClass()
 const routeNames = new RouteNamesClass()
 

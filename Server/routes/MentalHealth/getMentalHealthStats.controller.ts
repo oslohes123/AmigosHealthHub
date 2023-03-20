@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express'
 import supabase from '../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../utils/databaseInterface'
-import { getWords, getFaces, getDates, average, wordFreq } from '../../utils/mhfunctions'
+import { getWords, getFaces, getDates, average, wordFreq } from '../../utils/mentalHealthFunctions'
 import { getDate, getTime } from '../../utils/convertTimeStamptz'
 import moment from 'moment'
 require('dotenv').config()

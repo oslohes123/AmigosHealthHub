@@ -1,4 +1,4 @@
-import { dateValues, faceValues, todaysValue, wordValues } from '../../../../routes/MentalHealth/mhGetStats.controller'
+import { dateValues, faceValues, todaysValue, wordValues } from '../../../../routes/MentalHealth/getMentalHealthStats.controller'
 import { SupabaseQueryClass } from '../../../../utils/databaseInterface'
 import supabase from '../../../../utils/supabaseSetUp'
 import { v4 as uuidv4 } from 'uuid'
