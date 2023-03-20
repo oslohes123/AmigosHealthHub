@@ -195,14 +195,16 @@ export default function Graph({ navigation }) {
           <View style={{ marginBottom: 40 }}>
             <Text style={[styles.title]}>Weight pulled per exercise</Text>
             <LineChart
-              // style={{ borderRadius: 25 }}
+              style={{ borderRadius: 15 }}
               data={weightedData}
-              width={screenWidth}
-              height={220}
+              width={0.9 * screenWidth}
+              height={280}
               yAxisSuffix={` kg`}
               chartConfig={chartConfig}
               bezier
               fromZero={true}
+              verticalLabelRotation={50}
+              xLabelsOffset={-25}
             />
           </View>
           </TouchableWithoutFeedback>
@@ -222,6 +224,8 @@ export default function Graph({ navigation }) {
               fromZero={true}
               bezier
               yAxisSuffix={` min`}
+              verticalLabelRotation={50}
+              xLabelsOffset={-25}
             />
           </View>
           </TouchableWithoutFeedback>
@@ -241,6 +245,8 @@ export default function Graph({ navigation }) {
               fromZero={true}
               bezier
               yAxisSuffix={` m`}
+              verticalLabelRotation={50}
+              xLabelsOffset={-25}
             />
           </View>
           </TouchableWithoutFeedback>
@@ -260,6 +266,8 @@ export default function Graph({ navigation }) {
               fromZero={true}
               bezier
               yAxisSuffix={" kcal"}
+              verticalLabelRotation={50}
+              xLabelsOffset={-25}
             />
           </View>
           </TouchableWithoutFeedback>

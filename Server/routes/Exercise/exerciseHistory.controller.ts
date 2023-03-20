@@ -2,7 +2,7 @@ import { Request, Response } from "express"
 import supabase from "../../utils/supabaseSetUp";
 import { supabaseQueryClass } from "../../utils/databaseInterface";
 const databaseQuery = new supabaseQueryClass();
-import removeDuplicates from "../../utils/removeDuplicates";
+import {removeDuplicates} from "../../utils/arrayManipulation";
 import { getDate, getTime } from "../../utils/convertTimeStamptz";
 //getExerciseHistory by name of exercise
 

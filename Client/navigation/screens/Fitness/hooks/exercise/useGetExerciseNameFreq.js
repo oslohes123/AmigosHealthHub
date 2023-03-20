@@ -3,38 +3,41 @@ import { ipAddress, PORT } from "@env";
 import { useAuthContext } from "../../../Authentication/context/AuthContext";
 const port = PORT;
 const ipAddress = ipAddress;
-const getWorkoutHistoryRoute = `http://${ipAddress}:${port}/api/user/completedWorkouts/getAll`;
+const getExerciseNameFreqRoute = `http://${ipAddress}:${port}/api/user/completedWorkouts/exerciseNameFreq`;
 
-export const useGetWorkoutHistory = () => {
+export const useGetExerciseNameFreq = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
+  // const { dispatch } = useAuthContext();
   const { user } = useAuthContext();
-
   const userid = user.id;
-  const getWorkoutHistory = async () => {
+
+  const getExerciseNameFreq = async () => {
     setIsLoading(true);
     setError(null);
 
-    console.log("In getWorkoutHistory");
+    console.log("In getExerciseFreq");
 
-    const response = await fetch(getWorkoutHistoryRoute, {
+    const response = await fetch(getExerciseNameFreqRoute, {
       method: "GET",
       headers: { "Content-Type": "application/json", userid },
     });
 
-    const getWorkoutHistoryJSON = await response.json();
-
+    const getExerciseNameFreqJSON = await response.json();
+    console.log(`getExerciseNameFreqJSON: ${JSON.stringify(getExerciseNameFreqJSON)}`);
     if (!response.ok) {
       setIsLoading(false);
-      setError(getWorkoutHistoryJSON.mssg);
+      setError(getExerciseNameFreqJSON.mssg);
       console.log(error);
       return [];
     }
     if (response.ok) {
       try {
-        console.log(getWorkoutHistoryJSON);
         setIsLoading(false);
-        return getWorkoutHistoryJSON.workoutsNamesAndDates; //this is an object containing information about properties of the exercise
+        return{
+           exerciseNameLabels: getExerciseNameFreqJSON.graphLabels,
+           exerciseNameData: getExerciseNameFreqJSON.graphData
+        }   
       } catch (error) {
         setError(error);
         setIsLoading(false);
@@ -44,5 +47,5 @@ export const useGetWorkoutHistory = () => {
     }
   };
 
-  return { getWorkoutHistory, isLoading, error };
+  return { getExerciseNameFreq, isLoading, error };
 };

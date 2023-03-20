@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { IP_ADDRESS, PORT } from "@env";
+import { ipAddress, PORT } from "@env";
 const port = PORT;
-const ip_address = IP_ADDRESS;
-const trackWorkoutRoute = `http://${ip_address}:${port}/api/user/completedWorkouts/add`;
+const ipAddress = ipAddress;
+const trackWorkoutRoute = `http://${ipAddress}:${port}/api/user/completedWorkouts/add`;
 import { useAuthContext } from "../../../Authentication/context/AuthContext";
 
 /**

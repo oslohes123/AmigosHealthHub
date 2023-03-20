@@ -38,10 +38,10 @@ export default class RouteNamesClass{
         //Exercise Routes
             readonly partialSearchExercise = '/search';
             readonly fullSearchExerciseURL = this.exerciseBaseURL + this.partialSearchExercise;
-            readonly partialAddToExercises = '/add';
-            readonly fullAddToExercisesURL = this.exerciseBaseURL + this.partialAddToExercises;
+            // readonly partialAddToExercises = '/add';
+            // readonly fullAddToExercisesURL = this.exerciseBaseURL + this.partialAddToExercises;
             readonly partialGetExercise = '/get';
-            readonly fullGetExerciseURL = this.exerciseBaseURL + this.partialAddToExercises;
+            readonly fullGetExerciseURL = this.exerciseBaseURL + this.partialGetExercise;
             readonly partialGetExerciseHistory = '/history';
             readonly fullGetExerciseHistoryURL = this.exerciseBaseURL + this.partialGetExerciseHistory;
             readonly partialGetAllExercises = '/getAll';
@@ -70,4 +70,14 @@ export default class RouteNamesClass{
         readonly fullAddCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialaddCompletedWorkout;
         readonly partialDeleteCompletedWorkout = '/delete';
         readonly fullDeleteCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialDeleteCompletedWorkout;
+        readonly partialGetWorkoutFrequency = '/workoutFreq';
+        readonly fullGetWorkoutFrequencyURL = this.completedWorkoutBaseURL + this.partialGetWorkoutFrequency;
+        readonly partialGetExerciseNameFrequency = '/exerciseNameFreq';
+        readonly fullGetExerciseNameFrequencyURL = this.completedWorkoutBaseURL + this.partialGetExerciseNameFrequency;
+        readonly partialGetExerciseTypeFrequency = '/exerciseTypeFreq';
+        readonly fullGetExerciseTypeFrequencyURL = this.completedWorkoutBaseURL + this.partialGetExerciseTypeFrequency;
+        readonly partialGetWorkoutHistoryByDate = '/workoutHistoryByDate';
+        readonly fullGetWorkoutHistoryByDateURL = this.completedWorkoutBaseURL + this.partialGetWorkoutHistoryByDate;
+        readonly partialLastCompletedWorkout = '/lastTrackedWorkout';
+        readonly fullLastCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialLastCompletedWorkout;
     }   

@@ -3,46 +3,46 @@ import { ipAddress, PORT } from "@env";
 import { useAuthContext } from "../../../Authentication/context/AuthContext";
 const port = PORT;
 const ipAddress = ipAddress;
-const getWorkoutHistoryRoute = `http://${ipAddress}:${port}/api/user/completedWorkouts/getAll`;
+const getLastTrackedWorkoutRoute = `http://${ipAddress}:${port}/api/user/completedWorkouts/lastTrackedWorkout`;
 
-export const useGetWorkoutHistory = () => {
+export const useGetLastTrackedWorkout = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useAuthContext();
 
   const userid = user.id;
-  const getWorkoutHistory = async () => {
+  const getLastTrackedWorkout = async () => {
     setIsLoading(true);
     setError(null);
 
     console.log("In getWorkoutHistory");
 
-    const response = await fetch(getWorkoutHistoryRoute, {
+    const response = await fetch(getLastTrackedWorkoutRoute, {
       method: "GET",
       headers: { "Content-Type": "application/json", userid },
     });
 
-    const getWorkoutHistoryJSON = await response.json();
+    const getLastTrackedWorkoutJSON = await response.json();
 
     if (!response.ok) {
       setIsLoading(false);
-      setError(getWorkoutHistoryJSON.mssg);
+      setError(getLastTrackedWorkoutJSON.mssg);
       console.log(error);
-      return [];
+      return "Not Available";
     }
     if (response.ok) {
       try {
-        console.log(getWorkoutHistoryJSON);
+        console.log(getLastTrackedWorkoutJSON);
         setIsLoading(false);
-        return getWorkoutHistoryJSON.workoutsNamesAndDates; //this is an object containing information about properties of the exercise
+        return getLastTrackedWorkoutJSON.lastTrackedWorkout;
       } catch (error) {
         setError(error);
         setIsLoading(false);
         console.error(error);
-        return [];
+        return "Not Available";
       }
     }
   };
 
-  return { getWorkoutHistory, isLoading, error };
+  return { getLastTrackedWorkout, isLoading, error };
 };

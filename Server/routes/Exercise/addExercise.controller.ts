@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 const EXERCISE_API_KEY = process.env.EXERCISE_API_KEY as string;
 import supabase from '../../utils/supabaseSetUp';
 import { supabaseQueryClass } from '../../utils/databaseInterface';
-import removeDuplicates from '../../utils/removeDuplicates';
+import { removeDuplicates } from '../../utils/arrayManipulation';
 const databaseQuery = new supabaseQueryClass();
 /**
  * Given a name, return all exercise matches from the fitness API
@@ -100,40 +100,40 @@ export const getExerciseByName =async (req:Request, res: Response) => {
 //Workoutname
 //Empty string
 
-export const addExerciseToExercises = async(req: Request, res: Response) =>{
+// export const addExerciseToExercises = async(req: Request, res: Response) =>{
 
-    const {type,name,muscle, difficulty, instructions, equipment } = req.body
+//     const {type,name,muscle, difficulty, instructions, equipment } = req.body
 
-    if(!type||!name||!muscle||! difficulty||! equipment){
-        return res.status(400).json({mssg:"One of type,name,muscle, difficulty, instructions, equipment is missing!"})
-    }
+//     if(!type||!name||!muscle||! difficulty||! equipment){
+//         return res.status(400).json({mssg:"One of type,name,muscle, difficulty, instructions, equipment is missing!"})
+//     }
 
 
-    //if that exercise name doesn't exist, then attempt to add it
-    const {data, error}: any= await databaseQuery.selectWhere(supabase, 'Exercises', 'name', name, '*'); 
+//     //if that exercise name doesn't exist, then attempt to add it
+//     const {data, error}: any= await databaseQuery.selectWhere(supabase, 'Exercises', 'name', name, '*'); 
      
-    if(error){
-        console.log("Error selecting from Exercises table!")
-        return res.status(400).json({mssg:"Error selecting from Exercises table!"});
-    }
-    if(data.length == 0){
-        const {data, error}: any =  await databaseQuery.insert(supabase, 'Exercises', {type,name, muscle, difficulty, instructions, equipment})
-        if(error){
-            console.log(`Error inserting into Exercises table!`)
-            return res.status(400).json({mssg:"Error inserting into Exercises table!"})
-        }
-        else {
-            const exerciseID = data[0].ExerciseID
-            console.log(`exerciseID: ${exerciseID}`)
-            console.log(`Exercise has been successfully added!`)
-            return res.status(200).json({mssg:"Exercise has been successfully added", exerciseID})
-        }
+//     if(error){
+//         console.log("Error selecting from Exercises table!")
+//         return res.status(400).json({mssg:"Error selecting from Exercises table!"});
+//     }
+//     if(data.length == 0){
+//         const {data, error}: any =  await databaseQuery.insert(supabase, 'Exercises', {type,name, muscle, difficulty, instructions, equipment})
+//         if(error){
+//             console.log(`Error inserting into Exercises table!`)
+//             return res.status(400).json({mssg:"Error inserting into Exercises table!"})
+//         }
+//         else {
+//             const exerciseID = data[0].ExerciseID
+//             console.log(`exerciseID: ${exerciseID}`)
+//             console.log(`Exercise has been successfully added!`)
+//             return res.status(200).json({mssg:"Exercise has been successfully added", exerciseID})
+//         }
 
-    }
-    else{
-        const exerciseID = data[0].ExerciseID 
-        console.log(`exerciseID: ${exerciseID}`)
-        console.log("Exercise is already in the Exercises table!")
-        return res.status(200).json({mssg:"Exercise is already in the Exercises table!", exerciseID})
-    }
-} 
+//     }
+//     else{
+//         const exerciseID = data[0].ExerciseID 
+//         console.log(`exerciseID: ${exerciseID}`)
+//         console.log("Exercise is already in the Exercises table!")
+//         return res.status(200).json({mssg:"Exercise is already in the Exercises table!", exerciseID})
+//     }
+// } 
