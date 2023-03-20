@@ -6,8 +6,8 @@ import { ipAddress, PORT } from "@env";
 // dotenv.config();
 // const port = process.env["PORT"];
 // const ipAddress = process.env["ipAddress"];
-const port = PORT;
-const ipAddress = ipAddress;
+// const port = PORT;
+// const ipAddress = ipAddress;
 // console.log(`process.env.PORT: ${process.env.PORT}`);
 // console.log(
 //   `process.env.ipAddress: ${process.env.ipAddress}`
@@ -17,7 +17,7 @@ export const useLogin = () => {
   const [isLoading, setIsLoading] = useState(null);
   const { dispatch } = useAuthContext();
 
-  console.log(`port: ${port}`);
+  console.log(`port: ${PORT}`);
   console.log(`ipAddress: ${ipAddress}`);
   console.log(JSON.stringify(process.env));
 
@@ -26,11 +26,11 @@ export const useLogin = () => {
     setError(null);
 
     console.log("In login");
-    console.log(`Port in login: ${port}`);
+    console.log(`Port in login: ${PORT}`);
     console.log(`ipAddress in login: ${ipAddress}`);
 
     const response = await fetch(
-      `http://${ipAddress}:${port}/api/user/login`,
+      `http://${ipAddress}:${PORT}/api/user/login`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

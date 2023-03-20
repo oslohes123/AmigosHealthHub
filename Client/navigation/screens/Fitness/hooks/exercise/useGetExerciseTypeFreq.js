@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { ipAddress, PORT } from "@env";
 import { useAuthContext } from "../../../Authentication/context/AuthContext";
-const port = PORT;
-const ipAddress = ipAddress;
-const getExerciseNameTypeRoute = `http://${ipAddress}:${port}/api/user/completedWorkouts/exerciseTypeFreq`;
+// const port = PORT;
+// const ipAddress = ipAddress;
+const getExerciseNameTypeRoute = `http://${ipAddress}:${PORT}/api/user/completedWorkouts/exerciseTypeFreq`;
 
 export const useGetExerciseTypeFreq = () => {
   const [getErrorGetExerciseType, setErrorGetExerciseType] = useState(null);

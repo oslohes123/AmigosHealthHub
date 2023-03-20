@@ -6,10 +6,10 @@ import { ipAddress, PORT } from "@env";
 // dotenv.config();
 // const port = process.env['PORT'];
 // const ipAddress = process.env['ipAddress'];
-const port = PORT;
-const ipAddress = ipAddress;
+// const port = PORT;
+// const ipAddress = ipAddress;
 export const useSignUp = () => {
-  console.log(`port in sign up: ${port}`);
+  console.log(`port in sign up: ${PORT}`);
   console.log(`ipAddress in sign up: ${ipAddress}`);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
@@ -22,9 +22,9 @@ export const useSignUp = () => {
     console.log(
       `body: ${JSON.stringify({ email, firstName, lastName, age, password })}`
     );
-    console.log(`http://${ipAddress}:${port}/api/user/sign_up`);
+    console.log(`http://${ipAddress}:${PORT}/api/user/sign_up`);
     const response = await fetch(
-      `http://${ipAddress}:${port}/api/user/sign_up`,
+      `http://${ipAddress}:${PORT}/api/user/sign_up`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

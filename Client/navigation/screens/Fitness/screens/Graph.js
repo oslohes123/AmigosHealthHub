@@ -78,6 +78,12 @@ export default function Graph({ navigation }) {
   };
 
   useEffect(() => {
+    if (isFocused) {
+      setAllExercises();
+    }
+  }, [navigation, isFocused]);
+  
+  useEffect(() => {
     const setDataAndLabels = async () => {
       setDurationData(null);
       setWeightedData(null);
@@ -111,11 +117,7 @@ export default function Graph({ navigation }) {
     console.log(`getWeightedLabels:${getWeightedLabels}`);
   }, [selected]);
 
-  useEffect(() => {
-    if (isFocused) {
-      setAllExercises();
-    }
-  }, [navigation, isFocused]);
+
 
   const screenWidth = Dimensions.get("window").width * 0.95;
 
