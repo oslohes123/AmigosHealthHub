@@ -1,14 +1,15 @@
-import { useState } from "react";
+import { useState } from 'react';
+import { useAuthContext } from '../../../Authentication/context/AuthContext';
+
 const port = process.env.PORT;
 const ipAddress = process.env.IP_ADDRESS;
 const trackWorkoutRoute = `http://${ipAddress}:${port}/api/user/completedWorkouts/add`;
-import { useAuthContext } from "../../../Authentication/context/AuthContext";
 
 /**
  *
  * @returns message state that displays either error or success message
  */
-export const useTrackWorkout = () => {
+export default function useTrackWorkout() {
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
 
@@ -19,32 +20,27 @@ export const useTrackWorkout = () => {
     setIsLoading(true);
     setMessage(null);
 
-    console.log("In addCompletedWorkout");
-
     const response = await fetch(trackWorkoutRoute, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userid, workoutname, exercises }),
     });
 
     const trackWorkoutJSON = await response.json();
-    console.log(`trackWorkoutJSON: ${JSON.stringify(trackWorkoutJSON)}`);
     if (!response.ok) {
       setIsLoading(false);
       setMessage(trackWorkoutJSON.mssg);
-      console.log(message);
     }
     if (response.ok) {
       try {
         setIsLoading(false);
         setMessage(trackWorkoutJSON.mssg);
-      } catch (error) {
-        setMessage(error);
+      } catch (caughtError) {
+        setMessage(caughtError);
         setIsLoading(false);
-        console.error(error);
       }
     }
   };
 
   return { trackWorkout, isLoading, message };
-};
+}
