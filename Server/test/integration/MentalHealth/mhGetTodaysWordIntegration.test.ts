@@ -1,17 +1,16 @@
-import app from "../../../index";
+import app from '../../..'
+import { createToken, createHashedPassword } from '../../../utils/userFunctions'
+import { getDate } from './../../utils/convertTimeStamptz'
+import moment from 'moment'
+import { v4 as uuidv4 } from 'uuid'
+import supabase from '../../../utils/supabaseSetUp'
+import { SupabaseQueryClass } from "../../../utils/databaseInterface"
+import RouteNamesClass from "../../../utils/routeNamesClass"
 const request = require('supertest');
 const test = require('ava');
-import {v4 as uuidv4} from 'uuid';
-const bcrypt = require('bcrypt');
-import supabase from '../../../utils/supabaseSetUp';
-import { SupabaseQueryClass } from "../../../utils/databaseInterface";
-import { createHashedPassword } from "../../../utils/userFunctions";
-const databaseQuery = new SupabaseQueryClass();
-import RouteNamesClass from "../../../utils/routeNamesClass";
+const databaseQuery = new SupabaseQueryClass()
 const routeNames = new RouteNamesClass()
-import { createToken } from "../../../utils/userFunctions";
-import { getDate } from "../../../utils/convertTimeStamptz";
-import moment from "moment";
+
 /**
  * Refactor using objects, interfaces to prevent repeated code. 
  */
