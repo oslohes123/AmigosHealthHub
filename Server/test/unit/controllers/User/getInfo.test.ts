@@ -27,6 +27,7 @@ test.before(async (t: any) => {
   const uuid = uuidv4()
   existingEmail = `${uuid}@gmail.com`
 
+<<<<<<< HEAD
   hashedPassword = await createHashedPassword('CorrectPassword123!')
   const { error }: any = await supabaseQuery.insert(supabase, 'User', {
     firstName: 'Already',
@@ -35,6 +36,13 @@ test.before(async (t: any) => {
     age: 30,
     password: hashedPassword
   })
+=======
+
+  test.after.always('guaranteed cleanup of user', async (t: any) => {
+    await supabaseQuery.deleteFrom(supabase, 'User', 'email', existingEmail);
+  });
+  
+>>>>>>> Ex-Full-Stack
 
   if (error) {
     t.fail(error)

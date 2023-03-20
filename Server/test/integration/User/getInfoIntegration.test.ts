@@ -39,9 +39,10 @@ test.before(async (t: any) => {
   }
 })
 
-test.after.always(async (t: any) => {
-  await supabaseQuery.deleteFrom(supabase, 'User', 'email', existingEmail)
+test.after.always('guaranteed clean up', async(t: any) => {
+  await supabaseQuery.deleteFrom(supabase, 'User', 'email', existingEmail);
 })
+
 
 test(`GET ${getInfoRoute} with no fields`, async (t: any) => {
   const response = await request(app)

@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// const dotenv = require("dotenv");
-// dotenv.config();
 const port = process.env.PORT;
 const ipAddress = process.env.IP_ADDRESS;
-
+const signUpRoute  = `http://${ipAddress}:${port}/api/user/sign_up`
 export const useSignUp = () => {
   console.log(`port in sign up: ${port}`);
   console.log(`ipAddress in sign up: ${ipAddress}`);
@@ -13,41 +11,20 @@ export const useSignUp = () => {
   const [isLoading, setIsLoading] = useState(null);
   const { dispatch } = useAuthContext();
   console.log("In useSignUp");
-  const signup = async (
-    email,
-    firstName,
-    lastName,
-    age,
-    password,
-    calories
-  ) => {
+  const signup = async (email, firstName, lastName, age, password) => {
     setIsLoading(true);
     setError(null);
     console.log("In signup");
     console.log(
-      `body: ${JSON.stringify({
-        email,
-        firstName,
-        lastName,
-        age,
-        password,
-        calories,
-      })}`
+      `body: ${JSON.stringify({ email, firstName, lastName, age, password })}`
     );
     console.log(`http://${ipAddress}:${port}/api/user/sign_up`);
     const response = await fetch(
-      `http://${IP_ADDRESS}:${port}/api/user/sign_up`,
+      signUpRoute,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          firstName,
-          lastName,
-          age,
-          password,
-          calories,
-        }),
+        body: JSON.stringify({ email, firstName, lastName, age, password }),
       }
     );
 

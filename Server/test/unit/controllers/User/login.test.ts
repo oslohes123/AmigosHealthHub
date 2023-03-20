@@ -29,9 +29,15 @@ test.before(async (t: any) => {
   }
 })
 
+<<<<<<< HEAD
 test.after.always(async () => {
   await supabaseQuery.deleteFrom(supabase, 'User', 'email', randomEmail)
 })
+=======
+test.after.always('guaranteed cleanup of user', async (t: any) => {
+    await supabaseQuery.deleteFrom(supabase, 'User', 'email', randomEmail);
+  });
+>>>>>>> Ex-Full-Stack
 
 const mockResponse = () => {
   const res: any = {}

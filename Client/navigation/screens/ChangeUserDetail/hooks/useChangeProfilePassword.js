@@ -6,7 +6,6 @@ import { useLogout } from '../../Authentication/hooks/useLogOut';
 const port = process.env.PORT;
 const ipAddress = process.env.IP_ADDRESS;
 
-
 export const useChangeProfilePassword = () => {
     console.log(`port: ${port}`)
     const [error, setError] = useState(null)

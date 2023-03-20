@@ -25,6 +25,7 @@ test.before(async (t: any) => {
     password: hashedPassword,
     age: 31
   })
+<<<<<<< HEAD
 
   if (error) {
     t.fail('Inserting second user failed!')
@@ -68,6 +69,31 @@ test('changePassword with no email should return error', async (t: any) => {
   t.true(res.status.calledWith(400))
   t.true(res.json.calledWith({ mssg: 'All Fields Must Be Filled' }))
 })
+=======
+  
+
+  test.after.always('guaranteed cleanup of user', async (t: any) => {
+    await supabaseQuery.deleteFrom(supabase, 'User', 'email', testEmail);
+});
+
+
+  
+    const mockResponse = () => {
+        let res: any = {};
+        res.status = sinon.stub().returns(res);
+        res.json = sinon.stub().returns(res);
+        return res;
+    };
+  
+    const mockRequest = (sessionData : any) => {
+        return {
+        body: sessionData,
+        };
+    };
+    /**
+     * Test changePassword with missing fields
+     */
+>>>>>>> Ex-Full-Stack
 
 test('changePassword with no oldPassword should returns error', async (t: any) => {
   const req = mockRequest({

@@ -35,7 +35,7 @@ const settingsName = 'Settings';
 const Tab = createBottomTabNavigator();
 
 export default function MainContainer() {
-    const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
 
     useEffect(() => {
         const listener = EventRegister.addEventListener(
@@ -87,49 +87,33 @@ export default function MainContainer() {
                                             : 'settings-outline';
                                     }
 
-                                    return (
-                                        <Ionicons
-                                            name={iconName}
-                                            size={size}
-                                            colour={color}
-                                        />
-                                    );
-                                },
-                                headerShown: false,
-                                headerTitleStyle: styles.header,
-                                tabBarShowLabel: false,
-                                tabBarStyle: {
-                                    paddingTop: 10,
-                                    backgroundColor: '#3eda9b'
-                                }
-                            })}
-                        >
-                            <Tab.Screen
-                                name={dietName}
-                                component={DietNavigation}
-                            />
-                            <Tab.Screen
-                                name={fitnessName}
-                                component={FitnessNavigationScreen}
-                            />
-                            <Tab.Screen
-                                name={dashboardName}
-                                component={DashboardNavigationScreen}
-                            />
-                            <Tab.Screen
-                                name={mentalName}
-                                component={MentalScreen}
-                            />
-                            <Tab.Screen
-                                name={settingsName}
-                                component={SettingsNavigation}
-                            />
-                        </Tab.Navigator>
-                    </NavigationContainer>
-                </View>
-            </TouchableWithoutFeedback>
-        </themeContext.Provider>
-    );
+                  return (
+                    <Ionicons name={iconName} size={size} colour={color} />
+                  );
+                },
+                headerShown: false,
+                headerTitleStyle: styles.header,
+                tabBarShowLabel: false,
+                tabBarStyle: { paddingTop: 10, backgroundColor: "#c2e7fe" },
+              })}
+            >
+              <Tab.Screen name={dietName} component={DietNavigation} />
+              <Tab.Screen
+                name={fitnessName}
+                component={FitnessNavigationScreen}
+              />
+              <Tab.Screen
+                name={dashboardName}
+                component={DashboardNavigationScreen}
+              />
+              <Tab.Screen name={mentalName} component={MentalScreen} />
+              <Tab.Screen name={settingsName} component={SettingsNavigation} />
+            </Tab.Navigator>
+          </NavigationContainer>
+        </View>
+      </TouchableWithoutFeedback>
+    </themeContext.Provider>
+  );
 }
 
 const styles = {

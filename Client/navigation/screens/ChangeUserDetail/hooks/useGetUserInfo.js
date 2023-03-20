@@ -3,7 +3,6 @@ import { useAuthContext } from '../../Authentication/context/AuthContext';
 import { useLogout } from '../../Authentication/hooks/useLogOut';
 const port = process.env.PORT;
 const ipAddress = process.env.IP_ADDRESS;
-
 const getUserInfo = async () => {
     const { user } = useAuthContext();
     console.log(`user: ${JSON.stringify(user)}`);

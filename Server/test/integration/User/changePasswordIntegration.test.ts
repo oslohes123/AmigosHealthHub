@@ -16,17 +16,25 @@ let hashedPassword: string
 let token: string
 
 test.before(async (t: any) => {
-  const uuid = uuidv4()
-  testEmail = `${uuid}@gmail.com`
-
-  hashedPassword = await createHashedPassword('OriginalPassword123!')
-  await supabaseQuery.insert(supabase, 'User', {
-    firstName: 'First',
-    lastName: 'User',
-    email: testEmail,
-    password: hashedPassword,
-    age: '31'
+    const uuid = uuidv4();
+    testEmail = `${uuid}@gmail.com`
+ 
+    hashedPassword = await createHashedPassword("OriginalPassword123!")
+    await supabaseQuery.insert(supabase, 'User',{firstName: "First", lastName:"User", 
+    email:testEmail, password: hashedPassword, age: "31"});
+    
+    const{data, error}:any = await supabaseQuery.selectWhere(supabase,'User'
+    ,'email',testEmail,'id');
+    if(error){
+        t.fail("Inserting first user failed!");
+    }
+    token = createToken(data[0].id)
   })
+  
+
+  test.after.always('guaranteed cleanup of user', async (t: any) => {
+    await supabaseQuery.deleteFrom(supabase, 'User', 'email', testEmail);
+  });
 
   const { data, error }: any = await supabaseQuery.selectWhere(supabase, 'User'
     , 'email', testEmail, 'id')
