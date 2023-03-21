@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// const dotenv = require("dotenv");
-// dotenv.config();
 const port = process.env.PORT;
 const ipAddress = process.env.IP_ADDRESS;
-
+const signUpRoute  = `http://${ipAddress}:${port}/api/user/sign_up`
 export const useSignUp = () => {
   console.log(`port in sign up: ${port}`);
   console.log(`ipAddress in sign up: ${ipAddress}`);

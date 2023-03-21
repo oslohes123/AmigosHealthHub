@@ -16,7 +16,7 @@ const authContainerName = "Auth screens";
 function App() {
   const { user } = useAuthContext();
   const [showMainPage, setShowMainPage] = useState(false);
-  console.log(`in app.js, user: ${JSON.stringify(user)}`);
+  // console.log(`in app.js, user: ${JSON.stringify(user)}`);
   return user === null ? <AuthContainer /> : <MainContainer />;
 }
 

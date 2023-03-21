@@ -2,11 +2,11 @@ import { type Request, type Response } from 'express'
 import { changeStats } from '../../../../routes/User/changeProfileDetails.controller'
 import { v4 as uuidv4 } from 'uuid'
 import supabase from '../../../../utils/supabaseSetUp'
-import { SupabaseQueryClass } from '../../../../utils/databaseInterface'
+import { SupbaseQueryClass } from '../../../../utils/databaseInterface'
 import { createHashedPassword, createUser } from '../../../../utils/userFunctions'
 const test = require('ava')
 const sinon = require('sinon')
-const supabaseQuery = new SupabaseQueryClass()
+const supabaseQuery = new SupbaseQueryClass()
 
 // SetUp
 let firstUserEmail: string
@@ -55,10 +55,10 @@ test.before(async (t: any) => {
   }
 })
 
-test.after.always(async (t: any) => {
-  await supabaseQuery.deleteFrom(supabase, 'User', 'email', firstUserEmail)
-  await supabaseQuery.deleteFrom(supabase, 'User', 'email', newEmail)
-})
+test.after.always('guaranteed cleanup of user', async (t: any) => {
+  await supabaseQuery.deleteFrom(supabase, 'User', 'email', firstUserEmail);
+  await supabaseQuery.deleteFrom(supabase, 'User', 'email', newEmail);
+});
 
 const mockResponse = () => {
   const res: any = {}

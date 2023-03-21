@@ -61,7 +61,7 @@ interface dbInterface {
 /**
  * For more information, look at the supabase JS client library: https://supabase.com/docs/reference/javascript/installing
  */
-export class SupabaseQueryClass implements dbInterface {
+export class SupbaseQueryClass implements dbInterface {
   async select (
     supabaseDb: any,
     table: string,

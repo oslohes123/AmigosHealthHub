@@ -2,11 +2,11 @@ import { type Request, type Response, type NextFunction } from 'express'
 import { v4 as uuidv4 } from 'uuid'
 import { checkTokenHelper } from '../../../utils/checkTokenHelpers'
 import supabase from '../../../utils/supabaseSetUp'
-import { SupabaseQueryClass } from '../../../utils/databaseInterface'
+import { SupbaseQueryClass } from '../../../utils/databaseInterface'
 import { createHashedPassword, createToken, deleteUserRow } from '../../../utils/userFunctions'
 const test = require('ava')
 const sinon = require('sinon')
-const supabaseQuery = new SupabaseQueryClass()
+const supabaseQuery = new SupbaseQueryClass()
 
 const mockResponse = () => {
   const res: any = {}

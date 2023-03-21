@@ -1,35 +1,83 @@
-import { createStackNavigator } from '@react-navigation/stack';
-import WorkoutPlansScreen from "../WorkoutPlansScreen";
-import TrackExerciseScreen from "../TrackExerciseScreen";
-import FitnessDashboardScreen from "../FitnessDashboardScreen";
-import CreateNewWorkoutScreen from "../CreateNewWorkoutScreen";
-import ExerciseScreen from "../ExerciseScreen";
-
-
+import { createStackNavigator } from "@react-navigation/stack";
+import WorkoutPlansScreen from "../screens/WorkoutPlansScreen";
+import FitnessDashboardScreen from "../screens/FitnessDashboardScreen";
+import CreateNewWorkoutScreen from "../screens/CreateNewWorkoutScreen";
+import ExerciseInfoScreen from "../screens/ExerciseInfoScreen";
+import WorkoutPlanInfoScreen from "../screens/WorkoutPlanInfoScreen";
+import WorkoutHistory from "../screens/WorkoutHistoryScreen";
+import trackedWorkoutInfoScreen from "../screens/TrackedWorkoutInfoScreen";
+import Graph from "../screens/Graph";
+import OverallStats from "../screens/OverallStats";
+// import WorkoutHistory from "../screens/WorkoutHistory";
+import PastWorkoutDetails from "../screens/PastWorkoutDetails";
+// import AddCustomExerciseScreen from '../screens/AddCustomExerciseScreen';
+import Stats from "../screens/Stats";
+import { ThemeContext } from "react-navigation";
 const Stack = createStackNavigator();
+import { useContext } from "react";
 
 //Screen Names
-const workoutPlansName = 'Workout Plans'
-const trackExerciseName = "Track Exercise"
-const fitnessDashboardName = 'Fitness Dashboard'
-const createNewWorkoutName = 'Create New Workout'
-const exerciseName = 'Exercise'
+const workoutPlansName = "Workout Plans";
+const fitnessDashboardName = "Fitness Dashboard";
+const createNewWorkoutName = "Create New Workout";
+const exerciseInformationName = "Exercise Information";
+const workoutPlanInfoName = "Workout Plan Information";
+const historyName = "Workout History";
+const trackedWorkoutInfoName = "Workout Information";
+const statsName = "View Stats";
+const graphName = "Graph";
+const pastWorkoutDetailsName = "Past Workout Details";
+const overallStatsName = "Overall Stats";
+// const workoutHistoryName = "Workout History";
+// const customExerciseName = "Add Custom Exercise"
 
 export default function FitnessNavigationScreen({ navigation }) {
-    return (
-        <Stack.Navigator initialRouteName={fitnessDashboardName} screenOptions={{ headerShown: true, headerTitleStyle: styles.header, headerStyle: {backgroundColor: '#3eda9b'} }}>
-            <Stack.Screen name={fitnessDashboardName} component={FitnessDashboardScreen} />
-            <Stack.Screen name={workoutPlansName} component={WorkoutPlansScreen} />
-            <Stack.Screen name={trackExerciseName} component={TrackExerciseScreen} />
-            <Stack.Screen name={createNewWorkoutName} component={CreateNewWorkoutScreen} />
-            <Stack.Screen name={exerciseName} component={ExerciseScreen} />
-        </Stack.Navigator>
-    );
+  const theme = useContext(ThemeContext);
+  return (
+    <Stack.Navigator
+      initialRouteName={fitnessDashboardName}
+      screenOptions={{
+        headerShown: true,
+        headerTitleStyle: styles.header,
+        headerStyle: { backgroundColor: "#c2e7fe" },
+        // headerStyle: { backgroundColor: theme.background },
+      }}
+    >
+      <Stack.Screen
+        name={fitnessDashboardName}
+        component={FitnessDashboardScreen}
+      />
+      <Stack.Screen name={workoutPlansName} component={WorkoutPlansScreen} />
+      <Stack.Screen
+        name={createNewWorkoutName}
+        component={CreateNewWorkoutScreen}
+      />
+      <Stack.Screen
+        name={exerciseInformationName}
+        component={ExerciseInfoScreen}
+      />
+      <Stack.Screen
+        name={workoutPlanInfoName}
+        component={WorkoutPlanInfoScreen}
+      />
+      <Stack.Screen name={historyName} component={WorkoutHistory} />
+      <Stack.Screen
+        name={trackedWorkoutInfoName}
+        component={trackedWorkoutInfoScreen}
+      />
+      <Stack.Screen name={statsName} component={Stats} />
+      <Stack.Screen name={graphName} component={Graph} />
+      <Stack.Screen name={overallStatsName} component={OverallStats} />
+      <Stack.Screen name={pastWorkoutDetailsName} component={PastWorkoutDetails} />
+      {/* <Stack.Screen name={workoutHistoryName} component={WorkoutHistory} /> */}
+      {/* <Stack.Screen name={customExerciseName} component={AddCustomExerciseScreen} /> */}
+    </Stack.Navigator>
+  );
 }
 
 const styles = {
-    header: {
-        fontSize: 24,
-        fontWeight: "bold",
-    }
-}
+  header: {
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+};

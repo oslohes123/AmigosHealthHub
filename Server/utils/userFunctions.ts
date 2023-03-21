@@ -1,9 +1,9 @@
 import supabase from '../utils/supabaseSetUp'
-import { SupabaseQueryClass } from './databaseInterface'
+import { SupbaseQueryClass } from './databaseInterface'
 import { type UserInterface } from './userInterface'
 const bcrypt = require('bcrypt')
 const jwttoken = require('jsonwebtoken')
-const databaseQuery = new SupabaseQueryClass()
+const databaseQuery = new SupbaseQueryClass()
 
 export const createUser = async (
   informationToInsert: UserInterface,

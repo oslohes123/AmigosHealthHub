@@ -1,12 +1,12 @@
 import type { Request, Response } from 'express'
 import supabase from '../../utils/supabaseSetUp'
-import { SupabaseQueryClass } from '../../utils/databaseInterface'
+import { SupbaseQueryClass } from '../../utils/databaseInterface'
 import { getWords, getFaces, getDates, average, wordFreq } from '../../utils/mentalHealthFunctions'
 import { getDate, getTime } from '../../utils/convertTimeStamptz'
 import moment from 'moment'
 require('dotenv').config()
 
-const supabaseQuery = new SupabaseQueryClass()
+const supabaseQuery = new SupbaseQueryClass()
 // const randomEmail = `${uuid}@gmail.com`
 
 export const wordValues = async (req: Request, res: Response) => {

@@ -3,12 +3,12 @@ import { createHashedPassword, getUserByEmail, updateUser, verifyPassword } from
 import { isEmail, isStrongPassword } from '../../utils/validators'
 
 import supabase from '../../utils/supabaseSetUp'
-import { SupabaseQueryClass } from '../../utils/databaseInterface'
+import { SupbaseQueryClass } from '../../utils/databaseInterface'
 
 require('dotenv').config()
 
 const bcrypt = require('bcrypt')
-const databaseQuery = new SupabaseQueryClass()
+const databaseQuery = new SupbaseQueryClass()
 
 export const changeStats = async (req: Request, res: Response) => {
   const { firstName, lastName, prevEmail, newEmail, age } = req.body

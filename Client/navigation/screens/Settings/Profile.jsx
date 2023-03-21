@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import themeContext from '../../theme/themeContext';
-import { formikChangeUserDetailsForm } from '../ChangeUserDetail/forms/changeUserDetailsForm';
+import ChangeUserDetailsForm from '../ChangeUserDetail/forms/changeUserDetailsForm';
 
 const styles = StyleSheet.create({
   container: {
@@ -53,7 +53,7 @@ export default function Profile({ navigation }) {
         <Ionicons name="person-circle-outline" size={80} color={theme.color} />
       </View>
 
-      {formikChangeUserDetailsForm()}
+      {ChangeUserDetailsForm()}
 
       <TouchableOpacity
         style={styles.button}
