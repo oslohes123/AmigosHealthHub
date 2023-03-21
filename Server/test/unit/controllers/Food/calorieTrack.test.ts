@@ -4,7 +4,7 @@ import supabase from '../../../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../../../utils/databaseInterface'
 import { createHashedPassword, createUser } from '../../../../utils/userFunctions'
 import { type ExecutionContext } from 'ava'
-import { insertCalorieGoal } from './../../../../routes/Food/calorieTrack.controller'
+import { insertCalorieGoal, readAllCalorieGoals } from './../../../../routes/Food/calorieTrack.controller'
 const test = require('ava')
 const sinon = require('sinon')
 const supabaseQuery = new SupabaseQueryClass()
@@ -31,6 +31,10 @@ test.before(async (t: any) => {
   } else {
     usersID = data[0].id
   }
+
+  const req = mockRequest({}, { UserID: usersID, CalorieGoal: 2000, Date: todaysDate })
+  const res = mockResponse()
+  await insertCalorieGoal(req as Request, res as Response)
 })
 
 test.after.always(async () => {
@@ -41,6 +45,7 @@ const mockResponse = () => {
   const res: any = {}
   res.status = sinon.stub().returns(res)
   res.json = sinon.stub().returns(res)
+  res.send = sinon.stub().returns(res)
   return res
 }
 
@@ -51,12 +56,23 @@ const mockRequest = (sessionParams: object, sessionData: object) => {
   }
 }
 
-test('testing Inserting a correct calorie Goal', async (t: ExecutionContext) => {
-  console.log('usersID: ', usersID)
-  const req = mockRequest({}, { UserID: usersID, CalorieGoal: 2000, Date: todaysDate })
+test('insert calorieGoal correctly', async (t: ExecutionContext) => {
+  const req = mockRequest({}, { UserID: usersID, CalorieGoal: 4000, Date: todaysDate })
   const res = mockResponse()
   await insertCalorieGoal(req as Request, res as Response)
-  console.log('Response status: ', res.status)
+  t.true(res.status.calledWith(200))
+})
 
+test('insert calorieGoal with invalid UserID', async (t: ExecutionContext) => {
+  const req = mockRequest({}, { UserID: 'Wrong ID', CalorieGoal: 4000, Date: todaysDate })
+  const res = mockResponse()
+  await insertCalorieGoal(req as Request, res as Response)
+  t.true(res.status.calledWith(400))
+})
+
+test('read all calorieGoals correctly', async (t: ExecutionContext) => {
+  const req = mockRequest({ UserID: usersID }, {})
+  const res = mockResponse()
+  await readAllCalorieGoals(req as Request, res as Response)
   t.true(res.status.calledWith(200))
 })
