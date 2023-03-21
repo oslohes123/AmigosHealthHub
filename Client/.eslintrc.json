@@ -28,6 +28,11 @@
         "react/prop-types": "off",
         "react/no-array-index-key": "off",
         "no-alert": "off",
-        "import/no-extraneous-dependencies": "off"
+        "import/no-extraneous-dependencies": "off",
+        "react/prefer-stateless-function": "off",
+        "consistent-return": "off",
+        "import/prefer-default-export": "off",
+        "no-shadow": "off",
+        "react/style-prop-object": "off"
     }
 }

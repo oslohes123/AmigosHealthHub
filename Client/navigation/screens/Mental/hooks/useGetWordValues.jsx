@@ -1,38 +1,39 @@
-//Get the most recent word values to place into the wordcloud
+// Get the most recent word values to place into the wordcloud
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useAuthContext } from '../../Authentication/context/AuthContext';
+
 const port = process.env.PORT;
 const ipAddress = process.env.IP_ADDRESS;
-const wordValuesRoute = `http://${ipAddress}:${port}/api/user/mentalHealth/wordcloud`
-console.log(`WordValuesRoute:${wordValuesRoute}`)
-import { useAuthContext } from "../../Authentication/context/AuthContext";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+const wordValuesRoute = `http://${ipAddress}:${port}/api/user/mentalHealth/wordcloud`;
+
 export const useGetWordValues = () => {
-  //get the current users ID thats currently logged in
+  // get the current users ID thats currently logged in
   const { user } = useAuthContext();
-  let userID = user.id
-  //make a get request to get the most recent 7(max) word values
+  const userID = user.id;
+  // make a get request to get the most recent 7(max) word values
   const getWordValues = async () => {
     const { token } = JSON.parse(
-      (await AsyncStorage.getItem('user'))
+      (await AsyncStorage.getItem('user')),
     );
     const response = await fetch(
       wordValuesRoute,
       {
-        method: "GET",
-        headers: {id: userID, authorization: token}
-      } 
+        method: 'GET',
+        headers: { id: userID, authorization: token },
+      },
     );
     const json = await response.json();
     if (!response.ok) {
-      return [0]
+      return [0];
     }
-    //if the response shows there was no error, return the words to be provided when the hook is called
+    // if the response shows there was no error, return the words
     if (response.ok) {
       try {
-        return json
+        return json;
       } catch (error) {
-        return [0]
+        return [0];
       }
     }
   };
-  return {getWordValues}
-}
+  return { getWordValues };
+};
