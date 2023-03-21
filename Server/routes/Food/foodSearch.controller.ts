@@ -22,11 +22,9 @@ export const generalSearch = async (req: Request, res: Response) => {
   }
 
   if (process.env.X_APP_ID === undefined) {
-    console.log('X_APP_ID is undefined')
     return res.status(500).json({ message: 'X_APP_ID is undefined' })
   }
   if (process.env.X_APP_KEY === undefined) {
-    console.log('X_APP_KEY is undefined')
     return res.status(500).json({ message: 'X_APP_KEY is undefined' })
   }
 
@@ -36,7 +34,7 @@ export const generalSearch = async (req: Request, res: Response) => {
         data = await instantSearch(inputData)
         result = transformInstantSearchInterface(data)
       } catch (error) {
-        console.log(error)
+
       }
 
       break
@@ -47,14 +45,14 @@ export const generalSearch = async (req: Request, res: Response) => {
           data = await brandedSearch(inputData)
           result = transformBrandedSearchInterface(data)
         } catch (error) {
-          console.log(error)
+
         }
       } else {
         try {
           data = await nutrientSearch(inputData)
           result = transformNutrientSearchInterface(data)
         } catch (error) {
-          console.log(error)
+
         }
       }
       break
