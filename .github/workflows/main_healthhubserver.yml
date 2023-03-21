@@ -12,6 +12,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          path: './server'
 
       - name: Set up Node.js version
         uses: actions/setup-node@v1
@@ -19,7 +21,6 @@ jobs:
           node-version: '18.x'
 
       - name: npm install, build, and test
-        working-directory: ../server
         run: |
           npm install
           npm run dev
@@ -29,7 +30,6 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: ../server
 
   deploy:
     runs-on: ubuntu-latest
