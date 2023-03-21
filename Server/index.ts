@@ -40,7 +40,6 @@ const port = process.env.PORT
 if (port === undefined) {
   console.log('Please set the PORT environment variable.')
 }
-
 app.use(routeNames.userBaseURL, authRouter)
 app.use(routeNames.mentalHealthBaseURL, mentalHealthRouter)
 app.use(routeNames.changeDetailsBaseURL, changeProfileDetailsRouter)
@@ -48,7 +47,6 @@ app.use(routeNames.foodBaseURL, FoodSearchRouter)
 app.use(routeNames.foodBaseURL, foodDatabaseRouter)
 app.use(routeNames.foodBaseURL, calorieTrackRouter)
 app.use(routeNames.mentalHealthBaseURL, rateMentalRouter)
-app.use('/api/food', FoodSearchRouter)
 app.use(routeNames.userBaseURL, getUserInfoRouter)
 app.use(routeNames.userBaseURL, checkInitialTokenRouter)
 

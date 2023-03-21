@@ -4,11 +4,10 @@ import { useAuthContext } from '../../Authentication/context/AuthContext';
 // import { useAuthContext } from "../hooks/useAuthContext";
 import { useLogout } from '../../Authentication/hooks/useLogOut';
 
-const port = process.env.PORT;
-const ipAddress = process.env.IP_ADDRESS;
+const serverURL = process.env.URL;
 
 export const useChangeProfileDetails = () => {
-  console.log(`port: ${port}`);
+  console.log(`port: `);
   const { logout } = useLogout();
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
@@ -25,8 +24,7 @@ export const useChangeProfileDetails = () => {
     setIsLoading(true);
     setError(null);
     console.log('In changeStats');
-    console.log(
-      `body Of changeStats: ${JSON.stringify({
+    console.log( `body Of changeStats: ${JSON.stringify({
         a_firstName,
         a_lastName,
         a_newEmail,
@@ -42,10 +40,10 @@ export const useChangeProfileDetails = () => {
         (await AsyncStorage.getItem('user')),
       );
       console.log(`In useChangeProfileDetails, email: ${email}, token:${token}`);
-      console.log(`In useChangeProfileDetails : ${ipAddress} : Port ${port}`);
+      console.log(`In useChangeProfileDetails :  : Port `);
 
       const response = await fetch(
-        `http://${ipAddress}:${port}/api/user/changeProfileDetails/stats`,
+        `${serverURL}/api/user/changeProfileDetails/stats`,
         {
           method: 'POST',
           headers: {

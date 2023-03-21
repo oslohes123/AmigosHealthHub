@@ -1,7 +1,8 @@
 //Get the most recent word values to place into the wordcloud
 const port = process.env["PORT"];
 const ipAddress = process.env["ipAddress"];
-const wordValuesRoute = `http://${ipAddress}:${port}/api/user/mentalHealth/wordcloud`
+const serverURL = process.env.URL;
+const wordValuesRoute = `${serverURL}/api/user/mentalHealth/wordcloud`
 console.log(`WordValuesRoute:${wordValuesRoute}`)
 import { useAuthContext } from "../../Authentication/context/AuthContext";
 import AsyncStorage from '@react-native-async-storage/async-storage';

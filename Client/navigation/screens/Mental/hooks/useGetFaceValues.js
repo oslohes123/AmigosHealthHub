@@ -1,7 +1,8 @@
 //get the most recent face values and return it when the hook is called
 const port = process.env["PORT"];
 const ipAddress = process.env["ipAddress"];
-const faceValuesRoute = `http://${ipAddress}:${port}/api/user/mentalHealth/faceGraph`
+const serverURL = process.env.URL;
+const faceValuesRoute = `${serverURL}/api/user/mentalHealth/faceGraph`
 console.log(`faceValuesRoute:${faceValuesRoute}`)
 import { useAuthContext } from "../../Authentication/context/AuthContext";
 import AsyncStorage from '@react-native-async-storage/async-storage';

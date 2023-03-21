@@ -2,17 +2,14 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getTrackedFood } from './Food';
 
-const portENV = process.env.PORT;
-const ipAddressENV = process.env.IP_ADDRESS;
+const serverURL = process.env.URL;
 const currentDate = new Date().toISOString().split('T')[0];
 
 // For testing purposes
 // Update this with your own UrlService
-const ipAddress = ipAddressENV;
-const port = portENV;
 
 export async function getGeneralCalorieGoal(UserID) {
-  const url = `http://${ipAddress}:${port}/api/food/calorieTrack/General.${UserID}`;
+  const url = `${serverURL}/api/food/calorieTrack/General.${UserID}`;
   let response;
   try {
     const { token } = JSON.parse(
@@ -36,7 +33,7 @@ export async function getGeneralCalorieGoal(UserID) {
 }
 
 export async function addCalorieGoal(UserID, CalorieGoal, Date = currentDate) {
-  const url = `http://${ipAddress}:${port}/api/food/calorieTrack/createCalorieLog`;
+  const url = `${serverURL}/api/food/calorieTrack/createCalorieLog`;
 
   let response;
   try {
@@ -105,7 +102,7 @@ export async function getCaloriesRemaining(UserID, Date, calorieGoal = -1) {
 export async function updateCalorieGoal(UserID, CalorieGoal, Date = currentDate) {
   // Get the latest calorie goal
   const currentCalorieGoal = await getLatestCalorieGoal(UserID);
-  let url = `http://${ipAddress}:${port}/api/food/calorieTrack/`;
+  let url = `${serverURL}/api/food/calorieTrack/`;
   let inputData = {};
 
   // If the latest calorie goal is for the current date, update the calorie goal

@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const port = process.env["PORT"];
 const ipAddress = process.env["ipAddress"];
+const serverURL = process.env.URL;
 
 export const useSubmit = () => {
   const [error, setError] = useState(null);
@@ -21,7 +22,7 @@ export const useSubmit = () => {
     );
     //make a post request with the data and the accountID the data should be sent with respect to 
     const response = await fetch(
-      `http://${ipAddress}:${port}/api/user/mentalHealth/rateMental`,
+      `${serverURL}/api/user/mentalHealth/rateMental`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json",

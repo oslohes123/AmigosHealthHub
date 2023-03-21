@@ -5,8 +5,7 @@ import {
 // const jwttoken = require('jsonwebtoken');
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { useAuthContext } from "../hooks/useAuthContext";
-const port = process.env.PORT;
-const ipAddress = process.env.IP_ADDRESS;
+const serverURL = process.env.URL;
 export const AuthContext = createContext();
 
 /**
@@ -64,7 +63,7 @@ export function AuthContextProvider({ children }) {
         console.log('IN AUTHCONTEXTPROVIDER');
         const { token } = user;
         const response = await fetch(
-          `http://${ipAddress}:${port}/api/user/checkInitialToken`,
+          `${serverURL}/api/user/checkInitialToken`,
           {
             method: 'GET',
             headers: {

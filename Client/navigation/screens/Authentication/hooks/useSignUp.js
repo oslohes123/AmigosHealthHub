@@ -7,8 +7,8 @@ const port = process.env["PORT"];
 const ipAddress = process.env["ipAddress"];
 
 export const useSignUp = () => {
-  console.log(`port in sign up: ${port}`);
-  console.log(`ipAddress in sign up: ${ipAddress}`);
+  console.log(`port in sign up: `);
+  console.log(`ipAddress in sign up: `);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { dispatch } = useAuthContext();
@@ -34,9 +34,9 @@ export const useSignUp = () => {
         calories,
       })}`
     );
-    console.log(`http://${ipAddress}:${port}/api/user/sign_up`);
+    console.log(`${serverURL}/api/user/sign_up`);
     const response = await fetch(
-      `http://${ipAddress}:${port}/api/user/sign_up`,
+      `${serverURL}/api/user/sign_up`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
