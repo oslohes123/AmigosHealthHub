@@ -1,7 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { useEffect, useState, useContext } from 'react';
 import {
-  View, StyleSheet, Text, TouchableOpacity,
+  View, StyleSheet, Text, TouchableOpacity, ScrollView,
 } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { AntDesign } from '@expo/vector-icons';
@@ -135,7 +135,7 @@ export default function PastWorkoutDetails() {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.background }]}>
+    <ScrollView style={[styles.container, { backgroundColor: theme.background }]}>
       <View style={styles.primary}>
         {!selectDay && (
           <Text style={[styles.text, { borderColor: theme.color }, { color: theme.color }]}>
@@ -239,6 +239,6 @@ export default function PastWorkoutDetails() {
           markedDates={markedDate}
         />
       )}
-    </View>
+    </ScrollView>
   );
 }
