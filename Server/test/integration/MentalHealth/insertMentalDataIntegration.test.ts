@@ -1,13 +1,10 @@
 import app from '../../../index'
 import { v4 as uuidv4 } from 'uuid'
-import supabase from '../../../utils/supabaseSetUp'
-import { SupabaseQueryClass } from '../../../utils/databaseInterface'
-import { createHashedPassword, createToken, deleteUserRow, getUserByEmail } from '../../../utils/userFunctions'
+import { createHashedPassword, createToken, createUserWithID, deleteUserRow, getUserByEmail } from '../../../utils/userFunctions'
 import RouteNamesClass from '../../../utils/routeNamesClass'
 
 const request = require('supertest')
 const test = require('ava')
-const databaseQuery = new SupabaseQueryClass()
 const routeNames = new RouteNamesClass()
 /**
  * Refactor using objects, interfaces to prevent repeated code.
@@ -23,7 +20,7 @@ test.serial.before(async (t: any) => {
   // email:randomEmail, password: hashedPassword, age: 31});
   console.log('Inserting user')
   console.log(`Inserted user uuid: ${uuid}`) // bf955626-40fc-4141-a92b-914a7608cb86
-  const { error }: any = await databaseQuery.insert(supabase, 'User', {
+  const { error }: any = await createUserWithID({
     id: uuid,
     firstName: 'First',
     lastName: 'User',
@@ -49,7 +46,6 @@ test.serial.before(async (t: any) => {
 
 test.after.always('guaranteed cleanup', async (t: any) => {
   console.log('test.after.always executed!')
-  // await databaseQuery.deleteFrom(supabase, "Mental Health", "user_id", uuid);
   await deleteUserRow(randomEmail)
 })
 

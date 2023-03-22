@@ -1,6 +1,6 @@
 import supabase from '../utils/supabaseSetUp'
 import { SupabaseQueryClass } from './databaseInterface'
-import { UserInterfaceWithId, type UserInterface } from './userInterface'
+import type { UserInterfaceWithId, UserInterface } from './userInterface'
 const bcrypt = require('bcrypt')
 const jwttoken = require('jsonwebtoken')
 const databaseQuery = new SupabaseQueryClass()

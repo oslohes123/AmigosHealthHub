@@ -1,14 +1,13 @@
 import app from '../../..'
-import { createToken, createHashedPassword, getUserByEmail, deleteUserRow } from '../../../utils/userFunctions'
+import { createToken, createHashedPassword, getUserByEmail, deleteUserRow, createUserWithID } from '../../../utils/userFunctions'
 import { getDate } from '../../../utils/convertTimeStamptz'
 import moment from 'moment'
 import { v4 as uuidv4 } from 'uuid'
-import supabase from '../../../utils/supabaseSetUp'
-import { SupabaseQueryClass } from '../../../utils/databaseInterface'
 import RouteNamesClass from '../../../utils/routeNamesClass'
+import { createMentalHealthUser } from '../../../utils/asyncMentalHealthFunctions'
+
 const test = require('ava')
 const request = require('supertest')
-const databaseQuery = new SupabaseQueryClass()
 const routeNames = new RouteNamesClass()
 
 /**
@@ -22,7 +21,7 @@ let token: string
 const todayDate = getDate(moment().format())
 test.serial.before(async (t: any) => {
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
-  const { error }: any = await databaseQuery.insert(supabase, 'User', {
+  const { error }: any = await createUserWithID({
     id: uuid,
     firstName: 'First',
     lastName: 'User',
@@ -45,8 +44,12 @@ test.serial.before(async (t: any) => {
 })
 test.before(async (t: any) => {
   console.log('9th executed!')
-  const { error }: any = await databaseQuery.insert(supabase, 'Mental Health',
-    { user_id: uuid, face_id: '1', created_at: todayDate, todays_word: 'Awful' })
+  const { error }: any = await createMentalHealthUser({
+    user_id: uuid,
+    face_id: '1',
+    created_at: todayDate,
+    todays_word: 'Awful'
+  })
 
   if (error) {
     t.fail(`MHtesterror9: ${JSON.stringify(error)}`)
@@ -55,7 +58,6 @@ test.before(async (t: any) => {
 
 test.after.always('guaranteed cleanup', async (t: any) => {
   console.log('test.after.always executed!')
-  await databaseQuery.deleteFrom(supabase, 'Mental Health', 'user_id', uuid)
   await deleteUserRow(randomEmail)
 })
 
