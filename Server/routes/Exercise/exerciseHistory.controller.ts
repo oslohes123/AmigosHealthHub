@@ -57,17 +57,19 @@ export const getExerciseHistory = async (req: Request, res: Response) => {
           for (let i = 0; i < exercisesMatch.length; i++) {
             const AEID = exercisesMatch[i].AEID
             arrayOfAEIDs.push(AEID)
-            const { data, error }: any = await databaseQuery.selectWhere(supabase, 'TrackedWorkoutsWithExercises', 'AEID', AEID, 'completedWorkoutID')
+            // const { data, error }: any = await databaseQuery.selectWhere(supabase, 'TrackedWorkoutsWithExercises', 'AEID', AEID, 'completedWorkoutID')
+            const { data, error }: any = await databaseQuery.selectWhere(supabase, 'TrackedWorkoutsWithExercises', 'AEID', AEID, '*')
             if (error) {
-              return res.status(400).json({ mssg: 'Exercise has never been performed' })
+              return res.status(400).json({ mssg: 'Sorry, something went wrong!' })
             }
             if (data.length > 0) {
               arrayOfCompletedWorkoutIDs.push(data[0].completedWorkoutID)
             }
             else {
+              console.log(`ln 68 of exerciseHistory!`)
               return res.status(400).json({ mssg: 'Exercise has never been performed' })
             }
-            console.log(`ln53: ${JSON.stringify(data)}`)
+            console.log(`ln72: ${JSON.stringify(data)}`)
           }
           // Not removing duplicates in case of the same workout twice in a day
           //  arrayOfCompletedWorkoutIDs = removeDuplicates(arrayOfCompletedWorkoutIDs);
@@ -124,15 +126,18 @@ export const getExerciseHistory = async (req: Request, res: Response) => {
           // for each exercise, get the corresponding TrackedWorkoutWithExercises, then get its completedWorkoutID
           for (let i = 0; i < exercisesMatch.length; i++) {
             const AEID = exercisesMatch[i].AEID
+            console.log(`AEID LN129: ${AEID}`)
             arrayOfAEIDs.push(AEID)
-            const { data, error }: any = await databaseQuery.selectWhere(supabase, 'TrackedWorkoutsWithExercises', 'AEID', AEID, 'completedWorkoutID')
+            const { data, error }: any = await databaseQuery.selectWhere(supabase, 'TrackedWorkoutsWithExercises', 'AEID', AEID, '*')
             if (error) {
-              return res.status(400).json({ mssg: 'Exercise has never been performed' })
+              console.log(`ln 131 of exerciseHistory!`)
+              return res.status(400).json({ mssg: 'Sorry, something went wrong!' })
             }
             if (data.length > 0) {
               arrayOfCompletedWorkoutIDs.push(data[0].completedWorkoutID)
             }
             else {
+              console.log(`ln 138 of exerciseHistory!`)
               return res.status(400).json({ mssg: 'Exercise has never been performed' })
             }
             console.log(`ln53: ${JSON.stringify(data)}`)
@@ -181,6 +186,7 @@ export const getExerciseHistory = async (req: Request, res: Response) => {
       }
       else {
         // Replace to return 2 empty arrays
+        console.log(`ln 131 of exerciseHistory!`)
         return res.status(400).json({ mssg: 'Exercise has never been performed' })
       }
     }

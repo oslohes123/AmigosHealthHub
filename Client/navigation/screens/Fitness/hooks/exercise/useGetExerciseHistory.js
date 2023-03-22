@@ -8,7 +8,7 @@ const ipAddress = process.env.IP_ADDRESS;
 const getExerciseHistoryRoute = `http://${ipAddress}:${port}/api/user/exercise/history`;
 
 export default function useGetExerciseHistory() {
-  const [error, setError] = useState(null);
+  const [errorExerciseHistory, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useAuthContext();
   const userid = user.id;
@@ -23,6 +23,7 @@ export default function useGetExerciseHistory() {
     });
 
     const getExerciseHistoryJSON = await response.json();
+    console.log(`getExerciseHistoryJSON: ${JSON.stringify(getExerciseHistoryJSON)}`);
     if (!response.ok) {
       setIsLoading(false);
       setError(getExerciseHistoryJSON.mssg);
@@ -44,5 +45,5 @@ export default function useGetExerciseHistory() {
     }
   };
 
-  return { getExerciseHistory, isLoading, error };
+  return { getExerciseHistory, isLoading, errorExerciseHistory };
 }

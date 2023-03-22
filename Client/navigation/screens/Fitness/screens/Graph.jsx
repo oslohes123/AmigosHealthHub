@@ -72,7 +72,7 @@ export default function Graph({ navigation }) {
   const [getCaloriesData, setCaloriesData] = useState(null);
 
   const { getAllExercises, error } = useGetAllExercises();
-  const { getExerciseHistory, isLoading } = useGetExerciseHistory();
+  const { getExerciseHistory, isLoading, errorExerciseHistory } = useGetExerciseHistory();
   const isFocused = useIsFocused();
 
   const weightedData = {
@@ -252,7 +252,7 @@ export default function Graph({ navigation }) {
             </View>
           </TouchableWithoutFeedback>
         )}
-
+        {errorExerciseHistory && <Text>{errorExerciseHistory}</Text>}
         {/* This is the duration graph for an Other exercise */}
         {getDurationData && getDurationLabels && (
           <TouchableWithoutFeedback>
