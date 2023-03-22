@@ -74,11 +74,15 @@ import {
                   borderRadius: 26,
                   padding: 10,
                   margin: 20,
-                  width: screenWidth * 0.7,
+                  width: screenWidth * 0.8,
                   borderColor: theme.color,
+                  maxHeight: screenHeight * 0.5
                 }}
               >
+              <ScrollView style={{maxHeight: screenHeight * 0.5}}>
                 <Text style={{ color: theme.color }}>{instructionModalData}</Text>
+              </ScrollView>
+
               </View>
               <FAB
                 icon="close"
@@ -329,7 +333,7 @@ import {
     modalMain: {
       justifyContent: "space-between",
       alignItems: "center",
-      width: screenWidth * 0.8,
+      width: screenWidth * 0.9,
       borderRadius: 26,
       padding: 20,
       borderWidth: 3,
