@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express'
 import supabase from '../../utils/supabaseSetUp'
 import { getWords, getFaces, getDates, average, wordFreq } from '../../utils/mentalHealthFunctions'
-import { getDate, getTime } from '../../utils/convertTimeStamptz'
+import { getDate } from '../../utils/convertTimeStamptz'
 import { returnLastSeven, returnTodaysWord } from '../../utils/asyncMentalHealthFunctions'
 import moment from 'moment'
 require('dotenv').config()
@@ -43,12 +43,8 @@ export const faceValues = async (req: Request, res: Response) => {
 
 export const todaysValue = async (req: Request, res: Response) => {
   const todayDate = getDate(moment().format())
-  const todayTime = getTime(moment().format())
-  console.log(`whatistodaysdate: ${JSON.stringify(todayDate)}`)
-  console.log(`whatistodaysdate: ${JSON.stringify(todayTime)}`)
   const { id } = req.headers
   const { data, error }: any = await returnTodaysWord(supabase, 'Mental Health', 'user_id', 'created_at', id, todayDate, 'todays_word')
-  console.log(`todaysdata: ${JSON.stringify(data)}`)
 
   if (error) {
     return res.status(400).json({ mssg: 'Something went wrong!' })

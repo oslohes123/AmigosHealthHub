@@ -1,14 +1,14 @@
 import app from '../../..'
-import { createToken, createHashedPassword } from '../../../utils/userFunctions'
+import { createToken, createHashedPassword, getUserByEmail, deleteUserRow } from '../../../utils/userFunctions'
 import { getDate } from '../../../utils/convertTimeStamptz'
 import moment from 'moment'
 import { v4 as uuidv4 } from 'uuid'
 import supabase from '../../../utils/supabaseSetUp'
-import { SupbaseQueryClass } from '../../../utils/databaseInterface'
+import { SupabaseQueryClass } from '../../../utils/databaseInterface'
 import RouteNamesClass from '../../../utils/routeNamesClass'
 const request = require('supertest')
 const test = require('ava')
-const databaseQuery = new SupbaseQueryClass()
+const databaseQuery = new SupabaseQueryClass()
 const routeNames = new RouteNamesClass()
 /**
  * Refactor using objects, interfaces to prevent repeated code.
@@ -38,8 +38,7 @@ test.serial.before(async (t: any) => {
 })
 
 test.serial.before(async (t: any) => {
-  const { data, error }: any = await databaseQuery.selectWhere(supabase, 'User'
-    , 'email', randomEmail, 'id')
+  const { data, error }: any = await getUserByEmail(randomEmail)
   if (error) {
     t.fail('Inserting first user failed!')
   }
@@ -121,7 +120,7 @@ test.before(async (t: any) => {
 test.after.always('guaranteed cleanup', async (t: any) => {
   console.log('test.after.always executed!')
   await databaseQuery.deleteFrom(supabase, 'Mental Health', 'user_id', uuid)
-  await databaseQuery.deleteFrom(supabase, 'User', 'id', uuid)
+  await deleteUserRow(randomEmail)
 })
 
 test(`GET ${wordCloudRoute} with incorrect ID`, async (t: any) => {
