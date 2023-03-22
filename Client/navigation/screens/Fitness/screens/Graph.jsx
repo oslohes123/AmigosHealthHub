@@ -142,18 +142,29 @@ export default function Graph({ navigation }) {
         // Look into have one state that manages labels as they all have the same labels
         const { labels, type, data } = result;
 
-        if (type === 'Weight') {
-          setWeightedData(data.arrayOfWeightPulled);
-          setWeightedLabels(labels);
+        if (type === 'muscle/strength') {
+          if (data.arrayOfWeightPulled.indexOf(null) === -1) {
+            setWeightedData(data.arrayOfWeightPulled);
+            setWeightedLabels(labels);
+          } else {
+            setWeightedData(null);
+            setWeightedLabels(null);
+          }
         } else if (type === 'Other') {
-          setDurationData(data.arrayOfDuration);
-          setDurationLabels(labels);
+          if (data.arrayOfDuration.indexOf(null) === -1) {
+            setDurationData(data.arrayOfDuration);
+            setDurationLabels(labels);
+          }
 
-          setDistanceData(data.arrayOfDistance);
-          setDistanceLabels(labels);
+          if (data.arrayOfDistance.indexOf(null) === -1) {
+            setDistanceData(data.arrayOfDistance);
+            setDistanceLabels(labels);
+          }
 
-          setCaloriesData(data.arrayOfCalories);
-          setCaloriesLabels(labels);
+          if (data.arrayOfCalories.indexOf(null) === -1) {
+            setCaloriesData(data.arrayOfCalories);
+            setCaloriesLabels(labels);
+          }
         }
       }
     };
