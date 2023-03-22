@@ -2,9 +2,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuthContext } from '../../Authentication/context/AuthContext';
 
-const port = process.env.PORT;
-const ipAddress = process.env.IP_ADDRESS;
-const dateValuesRoute = `http://${ipAddress}:${port}/api/user/mentalHealth/dateValues`;
+const serverURL = process.env.URL;
+const dateValuesRoute = `${serverURL}/api/user/mentalHealth/dateValues`;
 
 export default function useuseGetDateValues() {
   // get the current users ID thats currently logged in

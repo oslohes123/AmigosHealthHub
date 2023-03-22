@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import { FAB } from 'react-native-paper';
 import themeContext from '../../theme/themeContext';
-import { updateCalorieGoal } from '../../../functions/Calories';
+import { updateCalorieGoal } from '../Diet/hooks/Calories';
 import { useAuthContext } from '../Authentication/context/AuthContext';
 
 const styles = StyleSheet.create({

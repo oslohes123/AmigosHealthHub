@@ -3,12 +3,12 @@ import {
 } from 'react-native';
 import React from 'react';
 
-import { deleteAccountForm } from '../forms/deleteAccountForm';
+import DeleteAccountForm from '../forms/deleteAccountForm';
 
 export default function ChangeUserPasswordScreen() {
   return (
     <>
-      {deleteAccountForm()}
+      {DeleteAccountForm()}
       <SafeAreaView
         style={{
           flex: 2,

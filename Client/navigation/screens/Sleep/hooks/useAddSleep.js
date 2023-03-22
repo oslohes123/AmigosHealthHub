@@ -1,7 +1,6 @@
 import { useAuthContext } from '../../Authentication/context/AuthContext';
 import { useState } from 'react';
-const port = process.env['PORT'];
-const ip_address = process.env['IP_ADDRESS'];
+const serverURL = process.env.URL;
 
 export const useAddSleep = () => {
     const [error, setError] = useState(null);
@@ -24,7 +23,7 @@ export const useAddSleep = () => {
             `useAddSleep data-> hoursslept ${hoursSleptInput}, sleepquality ${sleepQualityInput}, timestamp ${timestampInput}`
         );
         const response = await fetch(
-            `http://${ip_address}:${port}/api/user/sleep/add`,
+            `${serverURL}/api/user/sleep/add`,
             {
                 method: 'POST',
                 headers: {

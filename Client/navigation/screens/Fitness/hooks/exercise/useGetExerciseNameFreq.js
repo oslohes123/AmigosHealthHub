@@ -2,9 +2,8 @@
 import { useState } from 'react';
 import { useAuthContext } from '../../../Authentication/context/AuthContext';
 
-const port = process.env.PORT;
-const ipAddress = process.env.IP_ADDRESS;
-const getExerciseNameFreqRoute = `http://${ipAddress}:${port}/api/user/completedWorkouts/exerciseNameFreq`;
+const serverURL = process.env.URL;
+const getExerciseNameFreqRoute = `${serverURL}/api/user/completedWorkouts/exerciseNameFreq`;
 
 export default function useGetExerciseNameFreq() {
   const [error, setError] = useState(null);

@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { useAuthContext } from '../../../Authentication/context/AuthContext';
 
-const port = process.env.PORT;
-const ipAddress = process.env.IP_ADDRESS;
-const getTrackedWorkoutDetailsRoute = `http://${ipAddress}:${port}/api/user/workout/delete`;
+const serverURL = process.env.URL;
+const getTrackedWorkoutDetailsRoute = `${serverURL}/api/user/workout/delete`;
 
 export default function useDeleteWorkoutPlan() {
   const [error, setError] = useState(null);

@@ -2,9 +2,8 @@
 import { useState } from 'react';
 import { useAuthContext } from '../../../Authentication/context/AuthContext';
 
-const port = process.env.PORT;
-const ipAddress = process.env.IP_ADDRESS;
-const getExerciseByNameRoute = `http://${ipAddress}:${port}/api/user/exercise/get`;
+const serverURL = process.env.URL;
+const getExerciseByNameRoute = `${serverURL}/api/user/exercise/get`;
 
 export default function useGetExerciseByName() {
   const [error, setError] = useState(null);
