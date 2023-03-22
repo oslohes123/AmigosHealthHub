@@ -2,7 +2,7 @@ import app from '../../../index'
 import { v4 as uuidv4 } from 'uuid'
 import supabase from '../../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../../utils/databaseInterface'
-import { createHashedPassword, createToken } from '../../../utils/userFunctions'
+import { createHashedPassword, createToken, deleteUserRow, getUserByEmail } from '../../../utils/userFunctions'
 import RouteNamesClass from '../../../utils/routeNamesClass'
 
 import { getDate } from '../../../utils/convertTimeStamptz'
@@ -43,8 +43,7 @@ test.serial.before(async (t: any) => {
 })
 
 test.serial.before(async (t: any) => {
-  const { data, error }: any = await databaseQuery.selectWhere(supabase, 'User'
-    , 'email', randomEmail, 'id')
+  const { data, error }: any = await getUserByEmail(randomEmail)
   if (error) {
     t.fail('Inserting first user failed!')
   }
@@ -134,8 +133,7 @@ test.before(async (t: any) => {
 
 test.after.always('guaranteed cleanup', async (t: any) => {
   console.log('test.after.always executed!')
-  await databaseQuery.deleteFrom(supabase, 'Mental Health', 'user_id', uuid)
-  await databaseQuery.deleteFrom(supabase, 'User', 'id', uuid)
+  await deleteUserRow(randomEmail)
 })
 
 test(`GET ${faceGraphRoute} with incorrect ID`, async (t: any) => {

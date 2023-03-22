@@ -11,15 +11,14 @@ export default function useGetCaloriesBurntToday() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useAuthContext();
-  const userid = user.id;
-
+  const { id, token } = user;
   const getCaloriesBurntToday = async () => {
     setIsLoading(true);
     setError(null);
 
     const response = await fetch(getCaloriesBurntTodayRoute, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json', userid },
+      headers: { 'Content-Type': 'application/json', userid: id, authorization: token },
     });
 
     const getCaloriesBurntTodayJSON = await response.json();

@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return */
 import { useState } from 'react';
+import { useAuthContext } from '../../../Authentication/context/AuthContext';
 
 const port = process.env.PORT;
 const ipAddress = process.env.IP_ADDRESS;
@@ -9,14 +10,15 @@ export default function useSearchExercise() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   // const { dispatch } = useAuthContext();
-
+  const { user } = useAuthContext();
+  const { token } = user;
   const searchExercise = async (wordToSearch) => {
     setIsLoading(true);
     setError(null);
 
     const response = await fetch(searchExerciseRoute, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json', wordToSearch },
+      headers: { 'Content-Type': 'application/json', wordToSearch, Authorization: token },
     });
 
     const searchedExercisesJson = await response.json();

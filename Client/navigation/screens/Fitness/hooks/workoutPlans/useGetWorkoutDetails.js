@@ -10,13 +10,15 @@ export default function useGetWorkoutDetails() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useAuthContext();
-  const userid = user.id;
+  const { id, token } = user;
   const getWorkoutDetails = async (workoutname) => {
     setIsLoading(true);
     setError(null);
     const response = await fetch(getWorkoutDetailsRoute, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json', userid, workoutname },
+      headers: {
+        'Content-Type': 'application/json', userid: id, workoutname, Authorization: token,
+      },
     });
 
     const getWorkoutDetailsJSON = await response.json();

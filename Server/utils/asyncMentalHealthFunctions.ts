@@ -39,3 +39,22 @@ export const returnTodaysWord = async (
   )
   return { data, error }
 }
+
+// export const createUser = async (
+//   informationToInsert: UserInterface,
+//   database = supabase,
+//   table = 'User'
+// ) => {
+//   const { data, error }: any = await databaseQuery.insert(
+//     database,
+//     table,
+//     informationToInsert
+//   )
+//   return { data, error }
+// }
+
+export const createMentalHealthUser = async (
+  informationToInsert: MentalHealthUserInterface,
+  database = supabase,
+  table = 'Mental Health'
+)
