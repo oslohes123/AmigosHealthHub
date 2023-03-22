@@ -2,8 +2,8 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 import Start from '../start';
-import { rateMentalHealthForm } from '../mentalHealthForm';
-import { outputMentalGraphs } from '../mentalGraphs';
+import rateMentalHealthForm from '../mentalHealthForm';
+import outputMentalGraphs from '../mentalGraphs';
 // list screens required for mental section
 const screens = {
   MentalHealthOverview: {

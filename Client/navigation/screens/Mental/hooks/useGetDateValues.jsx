@@ -6,7 +6,7 @@ const port = process.env.PORT;
 const ipAddress = process.env.IP_ADDRESS;
 const dateValuesRoute = `http://${ipAddress}:${port}/api/user/mentalHealth/dateValues`;
 
-export const useGetDateValues = () => {
+export default function useuseGetDateValues() {
   // get the current users ID thats currently logged in
   const { user } = useAuthContext();
   const userID = user.id;
@@ -37,4 +37,4 @@ export const useGetDateValues = () => {
     }
   };
   return { getDateValues };
-};
+}

@@ -13,7 +13,7 @@ import React, { useState } from 'react';
 import { Formik } from 'formik';
 // npm install , npm install @react-native-community/slider --save
 import { globalStyles } from '../../../styles/global';
-import { useSubmit } from './hooks/useAddWordFace';
+import useSubmit from './hooks/useAddWordFace';
 
 // make a list of faces to be selected from to be displayed in form
 const worst = require('../../../assets/Worst.png');
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const rateMentalHealthForm = () => {
+export default function rateMentalHealthForm() {
   const { submit, isLoading, error } = useSubmit();
   const [faceInputValue, setFaceValue] = useState(3);
   const [moodI, setRangeI] = useState(neutral);
@@ -105,4 +105,4 @@ export const rateMentalHealthForm = () => {
       </Formik>
     </View>
   );
-};
+}

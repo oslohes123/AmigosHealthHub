@@ -6,7 +6,7 @@ import { useAuthContext } from '../../Authentication/context/AuthContext';
 const port = process.env.PORT;
 const ipAddress = process.env.IP_ADDRESS;
 
-export const useSubmit = () => {
+export default function useSubmit() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   // get the current users ID thats currently logged in
@@ -48,4 +48,4 @@ export const useSubmit = () => {
     }
   };
   return { submit, isLoading, error };
-};
+}
