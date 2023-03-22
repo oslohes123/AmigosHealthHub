@@ -6,7 +6,7 @@ const port = process.env.PORT;
 const ipAddress = process.env.IP_ADDRESS;
 const todaysWordRoute = `http://${ipAddress}:${port}/api/user/mentalHealth/todaysWord`;
 
-export const useGetTodaysWord = () => {
+export default function useGetTodaysWord() {
   // get the current users ID thats currently logged in
   const { user } = useAuthContext();
   const userID = user.id;
@@ -36,4 +36,4 @@ export const useGetTodaysWord = () => {
     }
   };
   return { getTodaysWord };
-};
+}

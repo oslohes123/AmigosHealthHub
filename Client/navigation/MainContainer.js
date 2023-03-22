@@ -17,7 +17,7 @@ import DietNavigation from './screens/Diet/DietNavigation';
 import { EventRegister } from 'react-native-event-listeners';
 import FitnessNavigationScreen from './screens/Fitness/routes/FitnessNavigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import MentalScreen from './screens/Mental/manager';
+import MentalScreen from './screens/Mental/routes/manager';
 // import Settings from "./screens/Diet/Settings";
 import SettingsNavigation from './screens/Settings/SettingsNavigation';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
