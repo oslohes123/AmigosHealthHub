@@ -1,9 +1,9 @@
 
 export interface MentalHealthUserInterface {
   user_id: any
-  face_id: string
-  created_at: string
-  todays_word: string
+  face_id: any
+  created_at: any
+  todays_word: any
 }
 
 export {}

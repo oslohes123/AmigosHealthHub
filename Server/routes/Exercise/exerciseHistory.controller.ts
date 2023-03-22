@@ -42,6 +42,7 @@ export const getExerciseHistory = async (req: Request, res: Response) => {
     console.log(`exerciseID data: ${JSON.stringify(data)}`)
     const exerciseID = data[0].ExerciseID
     const typeOfExercise = data[0].type
+    console.log(`typeOfExercise: ${JSON.stringify(typeOfExercise)}`)
     const { errorPresent, exercisesMatch } = await matchExercise(userid, exerciseID)
     if (errorPresent) {
       return res.status(400).json({ mssg: 'Something went wrong', errorPresent })
@@ -50,7 +51,7 @@ export const getExerciseHistory = async (req: Request, res: Response) => {
       // exercisesMatch: [{"AEID":"e0cc18ef-29d2-46e0-a4d8-62eaeeda0526","userID":"e9eae359-87cc-482c-8b08-0c4ce7d32c01","exerciseID":"b2265c54-7d15-4f40-9661-2043857db62f","sets":null,"duration":60,"distance":5000,"warmUpSet":false,"calories":50,"weight":null,"reps":null}]
       console.log(`exercisesMatch: ${JSON.stringify(exercisesMatch)}`)
       if (exercisesMatch.length > 0) {
-        if (typeOfExercise === 'Weight') {
+        if (typeOfExercise === 'muscle' || typeOfExercise === 'strength') {
           const arrayOfCompletedWorkoutIDs = []
           const arrayOfAEIDs = []
           // for each exercise, get the corresponding TrackedWorkoutWithExercises, then get its completedWorkoutID
@@ -193,8 +194,8 @@ export const getExerciseHistory = async (req: Request, res: Response) => {
     arrayOfDates = arrayOfDates.map((x) => [getDate(x)])
     // arrayOfWeightPulled = arrayOfWeightPulled.map((x) => [x])
     console.log(`arrayOfDates ln219: ${JSON.stringify(arrayOfDates)}`)
-    if (typeOfExercise === 'Weight') {
-      return res.status(200).json({ mssg: 'Success!', type: 'Weight', arrayOfDates, data: { arrayOfWeightPulled } })
+    if (typeOfExercise === 'muscle' || typeOfExercise === 'strength') {
+      return res.status(200).json({ mssg: 'Success!', type: 'muscle/strength', arrayOfDates, data: { arrayOfWeightPulled } })
     }
     else {
       return res.status(200).json({ mssg: 'Success!', type: 'Other', arrayOfDates, data: { arrayOfCalories, arrayOfDistance, arrayOfDuration } })

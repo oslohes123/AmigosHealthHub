@@ -7,33 +7,22 @@ import { useLogout } from '../../Authentication/hooks/useLogOut';
 const port = process.env.PORT;
 const ipAddress = process.env.IP_ADDRESS;
 
-export const useChangeProfileDetails = () => {
+export default function useChangeProfileDetails() {
   console.log(`port: ${port}`);
   const { logout } = useLogout();
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
-  const { dispatch, user } = useAuthContext();
+  const { user } = useAuthContext();
   console.log('In changeProfile');
 
-  // const changeStats = async (a_firstName:string, a_lastName:string, a_newEmail:string, a_age:number, a_password:string) => {
   const changeStats = async (
-    a_firstName,
-    a_lastName,
-    a_newEmail,
-    a_age,
+    firstName,
+    lastName,
+    newEmail,
+    age,
   ) => {
     setIsLoading(true);
     setError(null);
-    console.log('In changeStats');
-    console.log(
-      `body Of changeStats: ${JSON.stringify({
-        a_firstName,
-        a_lastName,
-        a_newEmail,
-        a_age,
-      })}`,
-    );
-
     try {
       // AsyncStorage contains: firstName, email and token
       const { email } = user;
@@ -53,11 +42,11 @@ export const useChangeProfileDetails = () => {
             authorization: token,
           },
           body: JSON.stringify({
-            newEmail: a_newEmail,
-            firstName: a_firstName,
-            lastName: a_lastName,
-            age: a_age,
+            firstName,
+            lastName,
+            age,
             prevEmail: email,
+            newEmail,
           }),
         },
       );
