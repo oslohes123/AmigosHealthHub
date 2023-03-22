@@ -7,4 +7,8 @@ export interface UserInterface {
   age: number
 }
 
+export interface UserInterfaceWithId extends UserInterface {
+  id: string
+}
+
 export {}
