@@ -464,8 +464,6 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
                 icon="check"
                 style={styles.fab}
                 onPress={async () => {
-                  // console.log(`selected exercises: ${JSON.stringify(selectedExercises)}`)
-                  // console.log(`workout name: ${workoutName}`)
                   if (workoutName.length > 1 && selectedExercises.length > 0) {
                     await addWorkout(workoutName, selectedExercises);
 
