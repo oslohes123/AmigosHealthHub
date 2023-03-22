@@ -1,4 +1,3 @@
-import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const serverURL = process.env.URL;
@@ -14,21 +13,20 @@ export async function getTrackedFood(Date, userID) {
     const { token } = JSON.parse(
       (await AsyncStorage.getItem('user')),
     );
-    response = await axios.get(url, {
+    response = await fetch(url, {
       headers: {
         authorization: token,
       },
     });
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.log('Got an error from the server');
-      console.log(error.response);
-    } else {
-      console.log(`Default error handler${error}`);
+    if (!response.ok) {
+      throw new Error('Response not OK');
     }
+  } catch (error) {
+    console.log(`Error: ${error}`);
     return error;
   }
-  return response.data;
+  const data = await response.json();
+  return data;
 }
 
 export async function getSpecificTrackedFood(logID) {
@@ -38,21 +36,19 @@ export async function getSpecificTrackedFood(logID) {
     const { token } = JSON.parse(
       (await AsyncStorage.getItem('user')),
     );
-    response = await axios.get(url, {
+    response = await fetch(url, {
+      method: 'GET',
       headers: {
         authorization: token,
       },
     });
+    response = await response.json();
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.log('Error when getting specific tracked food');
-      console.log(error.response);
-    } else {
-      console.log(`Default error handler${error}`);
-    }
+    console.log('Error when getting specific tracked food');
+    console.log(error);
     return error;
   }
-  return response.data[0];
+  return response[0];
 }
 
 export async function addTrackedFood(input, userID) {
@@ -62,28 +58,22 @@ export async function addTrackedFood(input, userID) {
     const { token } = JSON.parse(
       (await AsyncStorage.getItem('user')),
     );
-    response = await axios.post(
-      url,
-      {
+    response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: token,
+      },
+      body: JSON.stringify({
         input,
         userID,
-      },
-      {
-        headers: {
-          authorization: token,
-        },
-      },
-    );
+      }),
+    });
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.log('Got an error from the server');
-      console.log(error.response);
-    } else {
-      console.log(`Default error handler${error}`);
-    }
+    console.log('Got an error from the server');
+    console.log(error);
     return error;
   }
-
   return response.status;
 }
 
@@ -94,22 +84,19 @@ export async function deleteTrackedFood(logID) {
     const { token } = JSON.parse(
       (await AsyncStorage.getItem('user')),
     );
-    response = await axios.post(
-      url,
-      { logID },
-      {
-        headers: {
-          authorization: token,
-        },
+    response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: token,
       },
-    );
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.log('Got an error from the server');
-      console.log(error.response);
-    } else {
-      console.log(`Default error handler${error}`);
+      body: JSON.stringify({ logID }),
+    });
+    if (!response.ok) {
+      throw new Error('Response not OK');
     }
+  } catch (error) {
+    console.log(`Error: ${error}`);
     return error;
   }
   return response.status;
@@ -122,27 +109,22 @@ export async function updateTrackedFood(input) {
     const { token } = JSON.parse(
       (await AsyncStorage.getItem('user')),
     );
-    response = await axios.post(
-      url,
-      {
+    response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: token,
+      },
+      body: JSON.stringify({
         Quantity: input.Quantity,
         LogID: input.LogID,
         Measure: input.Measure,
         Calories: input.Calories,
-      },
-      {
-        headers: {
-          authorization: token,
-        },
-      },
-    );
+      }),
+    });
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.log('Got an error from the server');
-      console.log(error.response);
-    } else {
-      console.log(`Default error handler${error}`);
-    }
+    console.log('Got an error from the server');
+    console.log(error);
     return error;
   }
   return response.status;
@@ -155,21 +137,19 @@ export async function getFood(foodID) {
     const { token } = JSON.parse(
       (await AsyncStorage.getItem('user')),
     );
-    response = await axios.get(url, {
+    response = await fetch(url, {
+      method: 'GET',
       headers: {
         authorization: token,
       },
     });
+    response = await response.json();
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.log('Got an error from the server');
-      console.log(error.response);
-    } else {
-      console.log(`Default error handler${error}`);
-    }
+    console.log('Got an error from the server');
+    console.log(error);
     return error;
   }
-  return response.data[0];
+  return response[0];
 }
 
 export async function getMultipleFood(foodIDs) {
@@ -179,23 +159,22 @@ export async function getMultipleFood(foodIDs) {
     const { token } = JSON.parse(
       (await AsyncStorage.getItem('user')),
     );
-    response = await axios.post(url, { foodIDs }, {
+    response = await fetch(url, {
+      method: 'POST',
       headers: {
+        'Content-Type': 'application/json',
         authorization: token,
       },
+      body: JSON.stringify({ foodIDs }),
     });
+    response = await response.json();
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.log('Got an error when getting multiple foods');
-      console.log(error.response);
-    } else {
-      console.log(`Default error handler${error}`);
-    }
+    console.log('Got an error when getting multiple foods');
+    console.log(error);
     return error;
   }
-  return response.data;
+  return response;
 }
-
 // This function is used to sum the nutrients of the foods that are being tracked
 function sumNutrients(data) {
   let protein = 0;
