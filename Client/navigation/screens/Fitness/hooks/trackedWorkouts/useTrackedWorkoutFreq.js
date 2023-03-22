@@ -10,14 +10,14 @@ export default function useTrackedWorkoutFreq() {
   const [getErrorGetWorkoutFreq, setErrorGetWorkoutFreq] = useState(null);
   const [isLoadingGetWorkoutFreq, setIsLoadingGetWorkoutFreq] = useState(null);
   const { user } = useAuthContext();
-  const userid = user.id;
+  const { id, token } = user;
 
   const getTrackedWorkoutFreq = async () => {
     setIsLoadingGetWorkoutFreq(true);
     setErrorGetWorkoutFreq(null);
     const response = await fetch(workoutFreqRoute, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json', userid },
+      headers: { 'Content-Type': 'application/json', userid: id, Authorization: token },
     });
 
     const getTrackedWorkoutFreqJSON = await response.json();

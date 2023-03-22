@@ -14,15 +14,15 @@ export default function useAddWorkout() {
   const [isLoading, setIsLoading] = useState(null);
 
   const { user } = useAuthContext();
-  const userid = user.id;
+  const { id, token } = user;
   const addWorkout = async (workoutname, exercises) => {
     setIsLoading(true);
     setMessage(null);
 
     const response = await fetch(addWorkoutRoute, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userid, workoutname, exercises }),
+      headers: { 'Content-Type': 'application/json', Authorization: token },
+      body: JSON.stringify({ userid: id, workoutname, exercises }),
     });
 
     const addWorkoutJSON = await response.json();

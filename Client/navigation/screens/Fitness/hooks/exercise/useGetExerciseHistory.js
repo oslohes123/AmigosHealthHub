@@ -11,7 +11,7 @@ export default function useGetExerciseHistory() {
   const [errorExerciseHistory, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useAuthContext();
-  const userid = user.id;
+  const { id, token } = user;
 
   const getExerciseHistory = async (nameofexercise) => {
     setIsLoading(true);
@@ -19,7 +19,9 @@ export default function useGetExerciseHistory() {
 
     const response = await fetch(getExerciseHistoryRoute, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json', userid, nameofexercise },
+      headers: {
+        'Content-Type': 'application/json', userid: id, nameofexercise, Authorization: token,
+      },
     });
 
     const getExerciseHistoryJSON = await response.json();
