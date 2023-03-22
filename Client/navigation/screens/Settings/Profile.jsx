@@ -19,9 +19,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
-  details: {
-    margin: '2%',
-  },
   body: {
     fontSize: 30,
   },
@@ -39,7 +36,6 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 26,
     marginLeft: '5%',
-    marginTop: '1%',
   },
 
 });
@@ -51,7 +47,7 @@ export default function Profile({ navigation }) {
     <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
 
       <View style={styles.iconView}>
-        <Ionicons name="person-circle-outline" size={70} color={theme.color} />
+        <Ionicons name="person-circle-outline" size={60} color={theme.color} />
       </View>
 
       {ChangeUserDetailsForm()}
