@@ -6,9 +6,9 @@ import Cloud from 'react-native-word-cloud';
 import { LineChart } from 'react-native-chart-kit';
 // npx expo install react-native-svg
 import React, { useEffect, useState, Component } from 'react';
-import useGetFaceValues from './hooks/useGetFaceValues';
-import useGetWordValues from './hooks/useGetWordValues';
-import useGetDateValues from './hooks/useGetDateValues';
+import useGetFaceValues from '../hooks/useGetFaceValues';
+import useGetWordValues from '../hooks/useGetWordValues';
+import useGetDateValues from '../hooks/useGetDateValues';
 
 const screenWidth = Dimensions.get('window').width;
 const colours = ['#ABDEE6', '#CBAACB', '#FFFFB5', '#FFCCB6', '#8FCACA', '#FFC8A2', '#55CBCD', '#FCB9AA', '#ECD5E3', '#C6DBDA', '#FED7C3', '#A2E1DB', '#97C1A9'];
