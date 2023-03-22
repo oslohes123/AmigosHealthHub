@@ -4,11 +4,11 @@ import { getDate } from '../../../utils/convertTimeStamptz'
 import moment from 'moment'
 import { v4 as uuidv4 } from 'uuid'
 import supabase from '../../../utils/supabaseSetUp'
-import { SupbaseQueryClass } from '../../../utils/databaseInterface'
+import { SupabaseQueryClass } from '../../../utils/databaseInterface'
 import RouteNamesClass from '../../../utils/routeNamesClass'
 const request = require('supertest')
 const test = require('ava')
-const databaseQuery = new SupbaseQueryClass()
+const databaseQuery = new SupabaseQueryClass()
 const routeNames = new RouteNamesClass()
 /**
  * Refactor using objects, interfaces to prevent repeated code.

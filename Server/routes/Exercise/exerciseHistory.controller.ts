@@ -1,9 +1,9 @@
 import { type Request, type Response } from 'express'
 import supabase from '../../utils/supabaseSetUp'
-import { SupbaseQueryClass } from '../../utils/databaseInterface'
+import { SupabaseQueryClass } from '../../utils/databaseInterface'
 import { removeDuplicates } from '../../utils/arrayManipulation'
 import { getDate } from '../../utils/convertTimeStamptz'
-const databaseQuery = new SupbaseQueryClass()
+const databaseQuery = new SupabaseQueryClass()
 // getExerciseHistory by name of exercise
 
 // return all exercises from actual exercises that match a given userid and exerciseid

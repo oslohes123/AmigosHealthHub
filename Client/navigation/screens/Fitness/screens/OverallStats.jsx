@@ -7,9 +7,9 @@ import { BarChart } from 'react-native-chart-kit';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import { useGetExerciseNameFreq } from '../hooks/exercise/useGetExerciseNameFreq';
-import { useTrackedWorkoutFreq } from '../hooks/trackedWorkouts/useTrackedWorkoutFreq';
-import { useGetExerciseTypeFreq } from '../hooks/exercise/useGetExerciseTypeFreq';
+import useGetExerciseNameFreq from '../hooks/exercise/useGetExerciseNameFreq';
+import useTrackedWorkoutFreq from '../hooks/trackedWorkouts/useTrackedWorkoutFreq';
+import useGetExerciseTypeFreq from '../hooks/exercise/useGetExerciseTypeFreq';
 
 const styles = StyleSheet.create({
   container: {

@@ -1,8 +1,8 @@
 import { type Request, type Response } from 'express'
 import supabase from '../../utils/supabaseSetUp'
-import { SupbaseQueryClass } from '../../utils/databaseInterface'
+import { SupabaseQueryClass } from '../../utils/databaseInterface'
 import { eitherIsFloatOrInt } from '../../utils/validators'
-const databaseQuery = new SupbaseQueryClass()
+const databaseQuery = new SupabaseQueryClass()
 
 const deleteWorkoutPlanByID = async (workoutPlanID: string) => {
   const errorAndIDs = { deleteError: '' }

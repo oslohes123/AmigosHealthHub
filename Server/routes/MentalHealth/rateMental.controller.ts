@@ -1,6 +1,6 @@
 import supabase from "../../utils/supabaseSetUp";
-import { SupbaseQueryClass } from "../../utils/databaseInterface";
-const databaseQuery = new SupbaseQueryClass();
+import { SupabaseQueryClass } from "../../utils/databaseInterface";
+const databaseQuery = new SupabaseQueryClass();
 import { Request, Response } from "express";
 import { getUserByEmail } from "../../utils/userFunctions";
 import moment from "moment";

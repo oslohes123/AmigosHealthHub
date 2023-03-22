@@ -1,6 +1,6 @@
 import supabase from './supabaseSetUp'
-import { SupbaseQueryClass } from './databaseInterface'
-const databaseQuery = new SupbaseQueryClass()
+import { SupabaseQueryClass } from './databaseInterface'
+const databaseQuery = new SupabaseQueryClass()
 
 export const returnLastSeven = async (
   database = supabase,

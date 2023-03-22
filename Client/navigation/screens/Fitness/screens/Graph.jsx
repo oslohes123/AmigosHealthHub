@@ -7,8 +7,8 @@ import { LineChart } from 'react-native-chart-kit';
 import { useIsFocused } from '@react-navigation/native';
 import { FAB, ActivityIndicator, MD2Colors } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useGetExerciseHistory } from '../hooks/exercise/useGetExerciseHistory';
-import { useGetAllExercises } from '../hooks/exercise/useGetAllExercises';
+import useGetExerciseHistory from '../hooks/exercise/useGetExerciseHistory';
+import useGetAllExercises from '../hooks/exercise/useGetAllExercises';
 
 const styles = StyleSheet.create({
   container: {
@@ -71,7 +71,7 @@ export default function Graph({ navigation }) {
   const [getCaloriesLabels, setCaloriesLabels] = useState(null);
   const [getCaloriesData, setCaloriesData] = useState(null);
 
-  const { getAllExercises } = useGetAllExercises();
+  const { getAllExercises, error } = useGetAllExercises();
   const { getExerciseHistory, isLoading } = useGetExerciseHistory();
   const isFocused = useIsFocused();
 
@@ -180,6 +180,7 @@ export default function Graph({ navigation }) {
             style={styles.button}
             onPress={() => setVisible(true)}
           >
+            {error && <Text>{error}</Text>}
             <Text>{selected || 'Select a Workout'}</Text>
           </TouchableOpacity>
           <Modal
