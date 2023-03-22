@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return */
 import { useState } from 'react';
+import { useAuthContext } from '../../../Authentication/context/AuthContext';
 
 const port = process.env.PORT;
 const ipAddress = process.env.IP_ADDRESS;
@@ -9,14 +10,15 @@ export default function useGetExerciseByName() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   // const { dispatch } = useAuthContext();
-
+  const { user } = useAuthContext();
+  const { token } = user;
   const getExerciseByName = async (exercisename) => {
     setIsLoading(true);
     setError(null);
 
     const response = await fetch(getExerciseByNameRoute, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json', exercisename },
+      headers: { 'Content-Type': 'application/json', exercisename, Authorization: token },
     });
 
     const getExerciseByNameJSON = await response.json();

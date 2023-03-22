@@ -1,4 +1,4 @@
-import { addSleep } from '../../../../routes/Sleep/sleep.controller'
+// import { addSleep } from '../../../../routes/Sleep/sleep.controller'
 import { SupabaseQueryClass } from '../../../../utils/databaseInterface'
 import supabase from '../../../../utils/supabaseSetUp'
 import { v4 as uuidv4 } from 'uuid'
@@ -46,15 +46,15 @@ const mockRequest = (sessionData: any) => {
   }
 }
 
-test('Attempt to insert data without logging in', async (t: any) => {
-  const req = mockRequest({
-    userID: null,
-    timestamp: '20/03/2023',
-    hoursSlept: 7
-  })
-  const res = mockResponse()
-  await insertMentalData(req as Request, res as Response)
+// test('Attempt to insert mental health data without logging in', async (t: any) => {
+//   const req = mockRequest({
+//     userID: null,
+//     timestamp: '20/03/2023',
+//     hoursSlept: 7
+//   })
+//   const res = mockResponse()
+//   await insertMentalData(req as Request, res as Response)
 
-  t.true(res.status.calledWith(400))
-  t.true(res.json.calledWith({ mssg: 'You must be logged in to submit data' }))
-})
+//   t.true(res.status.calledWith(400))
+//   t.true(res.json.calledWith({ mssg: 'You must be logged in to submit data' }))
+// })

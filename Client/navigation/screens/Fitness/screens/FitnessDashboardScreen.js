@@ -24,6 +24,7 @@ export default function FitnessScreen({ navigation }) {
             const lastTrackedWorkout= await getLastTrackedWorkout();
             setMostRecentWorkout(lastTrackedWorkout);
         }
+        console.log(`mostRecentWorkout: ${JSON.stringify(getMostRecentWorkout)}`)
         setLastTrackedWorkout();
 
     }, [navigation, isFocused])

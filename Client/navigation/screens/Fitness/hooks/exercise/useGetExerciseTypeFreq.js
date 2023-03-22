@@ -11,7 +11,7 @@ export default function useGetExerciseTypeFreq() {
   const [isLoadingExerciseType, setIsLoadingExerciseType] = useState(null);
 
   const { user } = useAuthContext();
-  const userid = user.id;
+  const { id, token } = user;
 
   const getExerciseTypeFreq = async () => {
     setIsLoadingExerciseType(true);
@@ -19,7 +19,7 @@ export default function useGetExerciseTypeFreq() {
 
     const response = await fetch(getExerciseNameTypeRoute, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json', userid },
+      headers: { 'Content-Type': 'application/json', userid: id, Authorization: token },
     });
 
     const getExerciseTypeFreqJSON = await response.json();

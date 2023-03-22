@@ -10,7 +10,7 @@ export default function useAddExerciseToExercises() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useAuthContext();
-  const userid = user.id;
+  const { id, token } = user;
 
   const addExerciseToExercises = async (
     type,
@@ -25,7 +25,7 @@ export default function useAddExerciseToExercises() {
 
     const response = await fetch(addExerciseToExercisesRoute, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', userid },
+      headers: { 'Content-Type': 'application/json', userid: id, Authorization: token },
       body: JSON.stringify({
         type,
         name,

@@ -1,8 +1,8 @@
 import supabase from '../../utils/supabaseSetUp';
-import { SupbaseQueryClass } from '../../utils/databaseInterface';
+import { SupabaseQueryClass } from '../../utils/databaseInterface';
 import { Request, Response } from 'express';
 
-const databaseQuery = new SupbaseQueryClass()
+const databaseQuery = new SupabaseQueryClass()
 
 
 // get todays date

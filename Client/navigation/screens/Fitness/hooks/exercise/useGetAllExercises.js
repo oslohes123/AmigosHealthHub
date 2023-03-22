@@ -10,7 +10,7 @@ export default function useGetAllExercises() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useAuthContext();
-  const userid = user.id;
+  const { id, token } = user;
 
   const getAllExercises = async () => {
     setIsLoading(true);
@@ -18,10 +18,11 @@ export default function useGetAllExercises() {
 
     const response = await fetch(getAllExercisesRoute, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json', userid },
+      headers: { 'Content-Type': 'application/json', userid: id, Authorization: token },
     });
 
     const getAllExercisesJSON = await response.json();
+    console.log(`getAllExercisesJSON: ${JSON.stringify(getAllExercisesJSON)}`);
     if (!response.ok) {
       setIsLoading(false);
       setError(getAllExercisesJSON.mssg);

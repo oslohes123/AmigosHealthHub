@@ -1,5 +1,5 @@
 import { insertMentalData } from '../../../../routes/MentalHealth/rateMental.controller'
-import { SupbaseQueryClass } from '../../../../utils/databaseInterface'
+import { SupabaseQueryClass } from '../../../../utils/databaseInterface'
 import supabase from '../../../../utils/supabaseSetUp'
 import { v4 as uuidv4 } from 'uuid'
 import { createHashedPassword } from '../../../../utils/userFunctions'
@@ -7,7 +7,7 @@ import type { Request, Response } from 'express'
 const test = require('ava')
 const sinon = require('sinon')
 
-const databaseQuery = new SupbaseQueryClass()
+const databaseQuery = new SupabaseQueryClass()
 
 const uuid = uuidv4()
 const randomEmail = `${uuid}@gmail.com`

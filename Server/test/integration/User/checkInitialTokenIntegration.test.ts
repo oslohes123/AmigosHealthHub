@@ -2,11 +2,11 @@ import app from '../../../index'
 import { createHashedPassword, createToken, deleteUserRow } from '../../../utils/userFunctions'
 import { v4 as uuidv4 } from 'uuid'
 import supabase from '../../../utils/supabaseSetUp'
-import { SupbaseQueryClass } from '../../../utils/databaseInterface'
+import { SupabaseQueryClass } from '../../../utils/databaseInterface'
 import RouteNamesClass from '../../../utils/routeNamesClass'
 const request = require('supertest')
 const test = require('ava')
-const supabaseQuery = new SupbaseQueryClass()
+const supabaseQuery = new SupabaseQueryClass()
 const routeNames = new RouteNamesClass()
 
 const checkInitialTokenRoute = routeNames.fullCheckInitialTokenURL

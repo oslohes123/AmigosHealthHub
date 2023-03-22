@@ -1,12 +1,25 @@
 import supabase from '../utils/supabaseSetUp'
-import { SupbaseQueryClass } from './databaseInterface'
-import { type UserInterface } from './userInterface'
+import { SupabaseQueryClass } from './databaseInterface'
+import { UserInterfaceWithId, type UserInterface } from './userInterface'
 const bcrypt = require('bcrypt')
 const jwttoken = require('jsonwebtoken')
-const databaseQuery = new SupbaseQueryClass()
+const databaseQuery = new SupabaseQueryClass()
 
 export const createUser = async (
   informationToInsert: UserInterface,
+  database = supabase,
+  table = 'User'
+) => {
+  const { data, error }: any = await databaseQuery.insert(
+    database,
+    table,
+    informationToInsert
+  )
+  return { data, error }
+}
+
+export const createUserWithID = async (
+  informationToInsert: UserInterfaceWithId,
   database = supabase,
   table = 'User'
 ) => {

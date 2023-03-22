@@ -7,8 +7,8 @@ import { LineChart } from 'react-native-chart-kit';
 import { useIsFocused } from '@react-navigation/native';
 import { FAB, ActivityIndicator, MD2Colors } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useGetExerciseHistory } from '../hooks/exercise/useGetExerciseHistory';
-import { useGetAllExercises } from '../hooks/exercise/useGetAllExercises';
+import useGetExerciseHistory from '../hooks/exercise/useGetExerciseHistory';
+import useGetAllExercises from '../hooks/exercise/useGetAllExercises';
 
 const styles = StyleSheet.create({
   container: {
@@ -71,8 +71,8 @@ export default function Graph({ navigation }) {
   const [getCaloriesLabels, setCaloriesLabels] = useState(null);
   const [getCaloriesData, setCaloriesData] = useState(null);
 
-  const { getAllExercises } = useGetAllExercises();
-  const { getExerciseHistory, isLoading } = useGetExerciseHistory();
+  const { getAllExercises, error } = useGetAllExercises();
+  const { getExerciseHistory, isLoading, errorExerciseHistory } = useGetExerciseHistory();
   const isFocused = useIsFocused();
 
   const weightedData = {
@@ -142,18 +142,29 @@ export default function Graph({ navigation }) {
         // Look into have one state that manages labels as they all have the same labels
         const { labels, type, data } = result;
 
-        if (type === 'Weight') {
-          setWeightedData(data.arrayOfWeightPulled);
-          setWeightedLabels(labels);
+        if (type === 'muscle/strength') {
+          if (data.arrayOfWeightPulled.indexOf(null) === -1) {
+            setWeightedData(data.arrayOfWeightPulled);
+            setWeightedLabels(labels);
+          } else {
+            setWeightedData(null);
+            setWeightedLabels(null);
+          }
         } else if (type === 'Other') {
-          setDurationData(data.arrayOfDuration);
-          setDurationLabels(labels);
+          if (data.arrayOfDuration.indexOf(null) === -1) {
+            setDurationData(data.arrayOfDuration);
+            setDurationLabels(labels);
+          }
 
-          setDistanceData(data.arrayOfDistance);
-          setDistanceLabels(labels);
+          if (data.arrayOfDistance.indexOf(null) === -1) {
+            setDistanceData(data.arrayOfDistance);
+            setDistanceLabels(labels);
+          }
 
-          setCaloriesData(data.arrayOfCalories);
-          setCaloriesLabels(labels);
+          if (data.arrayOfCalories.indexOf(null) === -1) {
+            setCaloriesData(data.arrayOfCalories);
+            setCaloriesLabels(labels);
+          }
         }
       }
     };
@@ -180,6 +191,7 @@ export default function Graph({ navigation }) {
             style={styles.button}
             onPress={() => setVisible(true)}
           >
+            {error && <Text>{error}</Text>}
             <Text>{selected || 'Select a Workout'}</Text>
           </TouchableOpacity>
           <Modal
@@ -251,7 +263,7 @@ export default function Graph({ navigation }) {
             </View>
           </TouchableWithoutFeedback>
         )}
-
+        {errorExerciseHistory && <Text>{errorExerciseHistory}</Text>}
         {/* This is the duration graph for an Other exercise */}
         {getDurationData && getDurationLabels && (
           <TouchableWithoutFeedback>

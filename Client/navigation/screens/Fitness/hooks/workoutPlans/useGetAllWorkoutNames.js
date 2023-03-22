@@ -11,7 +11,7 @@ export default function useGetAllWorkoutNames() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useAuthContext();
-  const userid = user.id;
+  const { id, token } = user;
   // const { dispatch } = useAuthContext();
 
   const getAllWorkoutNames = async () => {
@@ -20,7 +20,7 @@ export default function useGetAllWorkoutNames() {
 
     const response = await fetch(getAllWorkoutNamesRoute, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json', userid },
+      headers: { 'Content-Type': 'application/json', userid: id, Authorization: token },
     });
 
     const getAllWorkoutNamesJSON = await response.json();

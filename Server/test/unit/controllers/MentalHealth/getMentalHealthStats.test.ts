@@ -1,5 +1,5 @@
 import { dateValues, faceValues, todaysValue, wordValues } from '../../../../routes/MentalHealth/getMentalHealthStats.controller'
-import { SupbaseQueryClass } from '../../../../utils/databaseInterface'
+import { SupabaseQueryClass } from '../../../../utils/databaseInterface'
 import supabase from '../../../../utils/supabaseSetUp'
 import { v4 as uuidv4 } from 'uuid'
 import { createHashedPassword } from '../../../../utils/userFunctions'
@@ -10,7 +10,7 @@ const test = require('ava')
 
 const sinon = require('sinon')
 
-const databaseQuery = new SupbaseQueryClass()
+const databaseQuery = new SupabaseQueryClass()
 
 const uuid = uuidv4()
 const wrongUUID = '1a-2345-6b7c-890d-e01f2ghij34k'

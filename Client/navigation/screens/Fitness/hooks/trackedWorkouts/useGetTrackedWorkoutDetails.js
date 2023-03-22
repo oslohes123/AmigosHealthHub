@@ -10,7 +10,7 @@ export default function useGetTrackedWorkoutDetails() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useAuthContext();
-  const userid = user.id;
+  const { id, token } = user;
   // Parameters: workout, date and time.
   const getTrackedWorkoutDetails = async (workoutname, date, time) => {
     setIsLoading(true);
@@ -20,10 +20,11 @@ export default function useGetTrackedWorkoutDetails() {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        userid,
+        userid: id,
         workoutname,
         date,
         time,
+        Authorization: token,
       },
     });
 

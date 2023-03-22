@@ -10,15 +10,14 @@ export default function useGetWorkoutHistory() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useAuthContext();
-
-  const userid = user.id;
+  const { id, token } = user;
   const getWorkoutHistory = async () => {
     setIsLoading(true);
     setError(null);
 
     const response = await fetch(getWorkoutHistoryRoute, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json', userid },
+      headers: { 'Content-Type': 'application/json', userid: id, Authorization: token },
     });
 
     const getWorkoutHistoryJSON = await response.json();
