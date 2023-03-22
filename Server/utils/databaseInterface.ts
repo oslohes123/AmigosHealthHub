@@ -39,13 +39,13 @@ interface dbInterface {
   ) => object
   // returns most recent data
 
-    mostrecent: (
-      db: any,
-      table: string,
-      firstcolumn: string,
-      secondcolumn: string,
-      id: string | string[] | undefined
-    ) => object;
+  mostrecent: (
+    db: any,
+    table: string,
+    firstcolumn: string,
+    secondcolumn: string,
+    id: string | string[] | undefined
+  ) => object
 
   todays_data: (
     db: any,
@@ -54,9 +54,8 @@ interface dbInterface {
     second_cloumn: string,
     toBeFoundFirst: any,
     toBeFoundSecond: any,
-    toBeSelected: string,
+    toBeSelected: string
   ) => object
-
 }
 
 /**
@@ -183,7 +182,10 @@ export class SupabaseQueryClass implements dbInterface {
     value: any
   ): Promise<object | undefined> {
     try {
-      const { error } = await supabaseDb.from(table).delete().eq(column, value)
+      const { error } = await supabaseDb
+        .from(table)
+        .delete()
+        .eq(column, value)
 
       if (error) return { error }
       else return { error: null }
@@ -217,12 +219,41 @@ export class SupabaseQueryClass implements dbInterface {
     }
   }
 
+  async selectWhereRange (
+    supabaseDb: any,
+    table: string,
+    column: string,
+    filterColumn: string,
+    toBeFound: string,
+    startValue: string,
+    endValue: string,
+    sortBy: string
+  ): Promise<object | undefined> {
+    try {
+      const { data, error } = await supabaseDb
+        .from(table)
+        .select(column)
+        .eq(filterColumn, toBeFound)
+        .gte(sortBy, startValue)
+        .lte(sortBy, endValue)
+        .order(sortBy, { ascending: true })
+
+      if (error) console.error(error)
+      else console.log({ data })
+
+      return { data, error }
+    } catch (err: unknown) {
+      console.error(err)
+    }
+  }
+
   // try {
   //   const { data, error } = await supabaseDb
   //     .from(table)
   //     .select(toBeSelected)
   //     .eq(column, toBeFound);
-  async mostrecent ( // returns array of objects
+  async mostrecent (
+    // returns array of objects
     supabaseDb: any,
     table: string,
     firstcolumn: string,
@@ -253,8 +284,8 @@ export class SupabaseQueryClass implements dbInterface {
   async todays_data (
     supabaseDb: any,
     table: string,
-    first_column: string,
-    second_cloumn: string,
+    firstColumn: string,
+    secondColoumn: string,
     toBeFoundFirst: any,
     toBeFoundSecond: any,
     toBeSelected: string
@@ -263,9 +294,9 @@ export class SupabaseQueryClass implements dbInterface {
       const { data, error } = await supabaseDb
         .from(table)
         .select(toBeSelected)
-        .eq(first_column, toBeFoundFirst)
+        .eq(firstColumn, toBeFoundFirst)
         .select(toBeSelected)
-        .eq(second_cloumn, toBeFoundSecond)
+        .eq(secondColoumn, toBeFoundSecond)
 
       if (error) {
         console.error(error)

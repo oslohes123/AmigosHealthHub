@@ -6,32 +6,21 @@ import { useLogout } from '../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
 
-export const useChangeProfileDetails = () => {
-  console.log(`port: `);
+export default function useChangeProfileDetails() {
   const { logout } = useLogout();
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
-  const { dispatch, user } = useAuthContext();
+  const { user } = useAuthContext();
   console.log('In changeProfile');
 
-  // const changeStats = async (a_firstName:string, a_lastName:string, a_newEmail:string, a_age:number, a_password:string) => {
   const changeStats = async (
-    a_firstName,
-    a_lastName,
-    a_newEmail,
-    a_age,
+    firstName,
+    lastName,
+    newEmail,
+    age,
   ) => {
     setIsLoading(true);
     setError(null);
-    console.log('In changeStats');
-    console.log( `body Of changeStats: ${JSON.stringify({
-        a_firstName,
-        a_lastName,
-        a_newEmail,
-        a_age,
-      })}`,
-    );
-
     try {
       // AsyncStorage contains: firstName, email and token
       const { email } = user;
@@ -40,7 +29,6 @@ export const useChangeProfileDetails = () => {
         (await AsyncStorage.getItem('user')),
       );
       console.log(`In useChangeProfileDetails, email: ${email}, token:${token}`);
-      console.log(`In useChangeProfileDetails :  : Port `);
 
       const response = await fetch(
         `${serverURL}/api/user/changeProfileDetails/stats`,
@@ -51,11 +39,11 @@ export const useChangeProfileDetails = () => {
             authorization: token,
           },
           body: JSON.stringify({
-            newEmail: a_newEmail,
-            firstName: a_firstName,
-            lastName: a_lastName,
-            age: a_age,
+            firstName,
+            lastName,
+            age,
             prevEmail: email,
+            newEmail,
           }),
         },
       );
@@ -84,4 +72,4 @@ export const useChangeProfileDetails = () => {
     }
   };
   return { changeStats, isLoading, error };
-};
+}

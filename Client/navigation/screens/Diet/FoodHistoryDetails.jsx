@@ -1,25 +1,23 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   StyleSheet, View, Text, TextInput, Modal, TouchableOpacity, Alert,
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import GreenButton from '../../components/GreenButton';
-// import { TextInput } from 'react-native-paper';
 import { useAuthContext } from '../Authentication/context/AuthContext';
 import { updateTrackedFood, deleteTrackedFood } from './hooks/Food';
+import themeContext from '../../theme/themeContext';
 
 const styles = StyleSheet.create({
   input: {
-    // alignSelf: 'center',
-    // marginTop: '15%',
     fontSize: 16,
     borderWidth: 2,
     padding: '3%',
     width: '30%',
-    borderColor: 'white',
     borderRadius: 25,
     marginRight: '5%',
     textAlign: 'center',
@@ -27,10 +25,8 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 2,
-    backgroundColor: '#203038',
   },
   header: {
-    color: 'white',
     fontSize: 30,
     marginTop: 20,
     alignSelf: 'center',
@@ -42,13 +38,10 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   text: {
-    color: 'white',
     fontSize: 24,
   },
   values: {
-    color: 'white',
     fontSize: 20,
-    // marginLeft: 165,
     borderWidth: 2,
     borderColor: 'grey',
     padding: 5,
@@ -74,7 +67,6 @@ const styles = StyleSheet.create({
     height: 40,
     justifyContent: 'center',
     paddingLeft: 10,
-    backgroundColor: 'white',
   },
   modal: {
     flex: 1,
@@ -90,11 +82,11 @@ const styles = StyleSheet.create({
     width: '50%',
     borderBottomColor: 'grey',
     borderBottomWidth: 1,
-
   },
 });
 
 export default function FoodDetails({ route, navigation }) {
+  const theme = useContext(themeContext);
   const {
     Quantity: servingQty,
     Measure: servingUnit,
@@ -134,12 +126,6 @@ export default function FoodDetails({ route, navigation }) {
     alert('Food successfully updated');
   }
 
-  // async function handleDeleteFood() {
-  //     let statusCode = await deleteTrackedFood(LogID)
-  //     navigation.navigate('Diet Dashboard')
-  //     console.log(statusCode);
-  // }
-
   async function handleDeleteFood() {
     Alert.alert(
       'Confirm Delete',
@@ -160,40 +146,40 @@ export default function FoodDetails({ route, navigation }) {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>{name}</Text>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
+      <Text style={[styles.header, { color: theme.color }]}>{name}</Text>
       <View style={styles.box}>
-        <Text style={styles.text}>Calories</Text>
-        <Text style={styles.values}>{calories}</Text>
+        <Text style={[styles.text, { color: theme.color }]}>Calories</Text>
+        <Text style={[styles.values, { color: theme.color }]}>{calories}</Text>
       </View>
       <View style={styles.box}>
-        <Text style={styles.text}>Protein</Text>
-        <Text style={styles.values}>{Protein}</Text>
+        <Text style={[styles.text, { color: theme.color }]}>Protein</Text>
+        <Text style={[styles.values, { color: theme.color }]}>{Protein}</Text>
       </View>
       <View style={styles.box}>
-        <Text style={styles.text}>Carbs</Text>
-        <Text style={styles.values}>{Carbs}</Text>
+        <Text style={[styles.text, { color: theme.color }]}>Carbs</Text>
+        <Text style={[styles.values, { color: theme.color }]}>{Carbs}</Text>
       </View>
       <View style={styles.box}>
-        <Text style={styles.text}>Fat</Text>
-        <Text style={styles.values}>{Fat}</Text>
+        <Text style={[styles.text, { color: theme.color }]}>Fat</Text>
+        <Text style={[styles.values, { color: theme.color }]}>{Fat}</Text>
       </View>
       <View style={styles.box}>
-        <Text style={styles.text}>Sugars</Text>
-        <Text style={styles.values}>{Sugars}</Text>
+        <Text style={[styles.text, { color: theme.color }]}>Sugars</Text>
+        <Text style={[styles.values, { color: theme.color }]}>{Sugars}</Text>
       </View>
       <View style={styles.box}>
-        <Text style={styles.text}>Fibre</Text>
-        <Text style={styles.values}>{Fiber}</Text>
+        <Text style={[styles.text, { color: theme.color }]}>Fibre</Text>
+        <Text style={[styles.values, { color: theme.color }]}>{Fiber}</Text>
       </View>
       <View style={styles.box} justifyContent="space-between">
-        <Text style={styles.text}>Serving units</Text>
+        <Text style={[styles.text, { color: theme.color }]}>Serving units</Text>
         <View style={styles.dropDownContainer}>
           <TouchableOpacity
-            style={styles.button}
+            style={[styles.button, { backgroundColor: theme.color }]}
             onPress={() => setVisible(true)}
           >
-            <Text>{selectedServingUnit || 'Select an option'}</Text>
+            <Text style={[{ color: theme.background }]}>{selectedServingUnit || 'Select an option'}</Text>
           </TouchableOpacity>
           <Modal
             visible={visible}
@@ -211,7 +197,9 @@ export default function FoodDetails({ route, navigation }) {
                     setVisible(false);
                   }}
                 >
-                  <Text>{altMeasure.measure}</Text>
+                  <Text>
+                    {altMeasure.measure}
+                  </Text>
                 </TouchableOpacity>
               ))
 
@@ -232,12 +220,12 @@ export default function FoodDetails({ route, navigation }) {
       </View>
 
       <View style={styles.box} justifyContent="space-between">
-        <Text style={styles.text}>Serving Quantity</Text>
+        <Text style={[styles.text, { color: theme.color }]}>Serving Quantity</Text>
         <TextInput
           defaultValue={quantity}
-          placeholderTextColor="white"
-          color="white"
-          style={styles.input}
+          placeholderTextColor={theme.color}
+          color={theme.color}
+          style={[styles.input, { borderColor: theme.color }]}
           keyboardType="numeric"
           clearButtonMode="always"
           onChangeText={(input) => setQuantity(input)}
@@ -245,8 +233,8 @@ export default function FoodDetails({ route, navigation }) {
       </View>
       {Brand ? (
         <View style={styles.box}>
-          <Text style={styles.text}>Brand name</Text>
-          <Text style={styles.values}>{Brand}</Text>
+          <Text style={[styles.text, { color: theme.color }]}>Brand name</Text>
+          <Text style={[styles.values, { color: theme.color }]}>{Brand}</Text>
         </View>
       ) : null}
       <View style={styles.buttonContainer}>
@@ -259,7 +247,7 @@ export default function FoodDetails({ route, navigation }) {
           text="Update"
         />
         <TouchableOpacity onPress={handleDeleteFood}>
-          <AntDesign name="delete" size={40} color="white" />
+          <AntDesign name="delete" size={40} color={theme.color} />
         </TouchableOpacity>
       </View>
     </View>
