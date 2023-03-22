@@ -6,7 +6,7 @@ import {
 import GreenButton from '../../components/GreenButton';
 // import { TextInput } from 'react-native-paper';
 import { useAuthContext } from '../Authentication/context/AuthContext';
-import { addTrackedFood } from '../../../functions/Food';
+import { addTrackedFood } from './hooks/Food';
 
 const styles = StyleSheet.create({
   input: {

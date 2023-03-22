@@ -9,12 +9,12 @@ import { PieChart } from 'react-native-chart-kit';
 
 import { useIsFocused } from '@react-navigation/native';
 import themeContext from '../../theme/themeContext';
-import { genericSearch, specificSearch } from '../../../functions/searchFood';
-import { getCaloriesRemaining, getLatestCalorieGoal } from '../../../functions/Calories';
+import { genericSearch, specificSearch } from './hooks/searchFood';
+import { getCaloriesRemaining, getLatestCalorieGoal } from './hooks/Calories';
 import { useAuthContext } from '../Authentication/context/AuthContext';
 
 import GreenButton from '../../components/GreenButton';
-import { getPieChartData } from '../../../functions/Food';
+import { getPieChartData } from './hooks/Food';
 
 const styles = StyleSheet.create({
   container: {

@@ -5,7 +5,7 @@ import themeContext from '../../theme/themeContext';
 // import GreenButton from '../../components/GreenButton';
 import { Button, FAB } from 'react-native-paper';
 import { check } from 'prettier';
-import { updateCalorieGoal } from '../../../functions/Calories';
+import { updateCalorieGoal } from '../Diet/hooks/Calories';
 import { useAuthContext } from '../Authentication/context/AuthContext';
 
 export default function DietSettings() {

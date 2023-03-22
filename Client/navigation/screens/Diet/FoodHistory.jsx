@@ -9,8 +9,8 @@ import { PieChart } from 'react-native-chart-kit';
 
 import {
   getFood, getTrackedFood, getSpecificTrackedFood, getPieChartData,
-} from '../../../functions/Food';
-import { getLatestCalorieGoal, getCaloriesRemaining } from '../../../functions/Calories';
+} from './hooks/Food';
+import { getLatestCalorieGoal, getCaloriesRemaining } from './hooks/Calories';
 import { useAuthContext } from '../Authentication/context/AuthContext';
 
 const styles = StyleSheet.create({

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { clientSearchMethods } from '../constants';
+import { clientSearchMethods } from '../../../../constants';
 
 const serverURL = process.env.URL;
 // For testing purposes
