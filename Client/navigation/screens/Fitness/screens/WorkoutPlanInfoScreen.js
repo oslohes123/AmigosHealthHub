@@ -11,11 +11,11 @@ import {
 import { useState, useContext, useEffect } from "react";
 import themeContext from "../../../theme/themeContext";
 import { ActivityIndicator, IconButton } from "react-native-paper";
-import { useDeleteWorkoutPlan } from "../hooks/workoutPlans/useDeleteWorkoutPlan";
+import useDeleteWorkoutPlan from "../hooks/workoutPlans/useDeleteWorkoutPlan";
 import { FAB, Snackbar } from "react-native-paper";
 
-import { useGetWorkoutDetails } from "../hooks/workoutPlans/useGetWorkoutDetails";
-import { useTrackWorkout } from "../hooks/trackedWorkouts/useTrackWorkout";
+import useGetWorkoutDetails from "../hooks/workoutPlans/useGetWorkoutDetails";
+import useTrackWorkout from "../hooks/trackedWorkouts/useTrackWorkout";
 
 export default function WorkoutPlanInfoScreen({ route, navigation }) {
   const [snackbarVisible, setSnackbarVisible] = useState(false);

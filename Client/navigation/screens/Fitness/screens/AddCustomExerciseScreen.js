@@ -2,7 +2,7 @@ import { SafeAreaView, View, Text, Dimensions, TextInput } from "react-native";
 import { useState, useContext, useEffect } from "react";
 import themeContext from "../../../theme/themeContext";
 import { FAB, Snackbar } from "react-native-paper";
-import { useAddExerciseToExercises } from "../hooks/exercise/useAddExerciseToExercises";
+import useAddExerciseToExercises from "../hooks/exercise/useAddExerciseToExercises";
 
 export default function AddCustomExerciseScreen({ navigation }) {
   const theme = useContext(themeContext);

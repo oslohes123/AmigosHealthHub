@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { useContext, useState, useEffect } from "react";
 import themeContext from "../../../theme/themeContext";
-import { useGetExerciseByName } from "../hooks/exercise/useGetExerciseByName";
+import useGetExerciseByName from "../hooks/exercise/useGetExerciseByName";
 
 export default function ExerciseInfoScreen({ route, navigation }) {
   const theme = useContext(themeContext);

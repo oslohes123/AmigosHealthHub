@@ -15,8 +15,8 @@ import {
 import { useState, useContext, useEffect } from "react";
 import themeContext from "../../../theme/themeContext";
 import { FAB, Snackbar, ActivityIndicator } from "react-native-paper";
-import { useSearchExercise } from "../hooks/exercise/useSearchExercise";
-import { useAddWorkout } from "../hooks/workoutPlans/useAddWorkout";
+import useSearchExercise from "../hooks/exercise/useSearchExercise";
+import useAddWorkout from "../hooks/workoutPlans/useAddWorkout";
 
 export default function CreateNewWorkoutScreen({ navigation, route }) {
   const [exerciseModalVisible, setExerciseModalVisible] = useState(false);

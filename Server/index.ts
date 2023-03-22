@@ -32,7 +32,7 @@ import getUserInfoRouter from './routes/User/getUserInfo.router'
 // Check initial token Route
 import checkInitialTokenRouter from './routes/User/checkInitialToken.router'
 import RouteNamesClass from './utils/routeNamesClass'
-
+import exerciseHistoryRouter from './routes/Exercise/exerciseHistory.router'
 import exerciseRouter from './routes/Exercise/addExercise.router'
 // exerciseCalories Routes
 import exerciseCaloriesRouter from './routes/Exercise/exerciseCalories.router'
@@ -51,6 +51,7 @@ if (port === undefined) {
   console.log('Please set the PORT environment variable.')
 }
 app.use(routeNames.exerciseBaseURL, exerciseRouter)
+app.use(routeNames.exerciseBaseURL, exerciseHistoryRouter)
 app.use(routeNames.caloriesBaseURL, exerciseCaloriesRouter)
 app.use(routeNames.workoutBaseURL, createWorkoutRouter)
 app.use(routeNames.workoutBaseURL, getWorkoutRouter)

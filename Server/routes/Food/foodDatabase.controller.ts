@@ -1,9 +1,9 @@
 import { type Request, type Response } from 'express'
-import { SupbaseQueryClass } from '../../utils/databaseInterface'
+import { SupabaseQueryClass } from '../../utils/databaseInterface'
 import supabase from '../../utils/supabaseSetUp'
 import type FoodInput from './../../interfaces/Food/foodInterfaces'
 require('dotenv').config()
-const databaseQuery = new SupbaseQueryClass()
+const databaseQuery = new SupabaseQueryClass()
 
 export const addTrackedFood = async (req: Request, res: Response) => {
   const Data: FoodInput = req.body

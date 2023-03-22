@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { useState, useContext, useEffect } from "react";
 import themeContext from "../../../theme/themeContext";
-import { useGetAllWorkoutNames } from "../hooks/workoutPlans/useGetAllWorkoutNames";
+import useGetAllWorkoutNames from "../hooks/workoutPlans/useGetAllWorkoutNames";
 import { FAB, Provider, Portal } from "react-native-paper";
 import { useIsFocused } from "@react-navigation/native";
 

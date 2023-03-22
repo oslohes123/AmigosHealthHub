@@ -22,6 +22,7 @@ export default function useGetAllExercises() {
     });
 
     const getAllExercisesJSON = await response.json();
+    console.log(`getAllExercisesJSON: ${JSON.stringify(getAllExercisesJSON)}`);
     if (!response.ok) {
       setIsLoading(false);
       setError(getAllExercisesJSON.mssg);
