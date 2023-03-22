@@ -404,23 +404,23 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                             </Text>
 
                             {setsToArray(item.sets).map((unusedParam, index) => (
-                                <View style={[{justifyContent: 'space-evenly', paddingVertical: 5 }]} key={`${Math.random()}`}>
-                                    <TextInput
-                                        style={[styles.textInput, { borderColor: theme.color, width: styles.textInput.width * 0.9 }]}
-                                        placeholder="Reps"
-                                        color={theme.color}
-                                        placeholderTextColor={theme.color}
-                                        keyboardType={"numeric"}
-                                        textAlign={"center"}
-                                        value={repsInArray[item.PEID] && repsInArray[item.PEID][index] ? `${repsInArray[item.PEID][index]}` : index }
-                                        onChangeText={(repsText) => {
+                                  <View style={[{justifyContent: 'space-evenly', paddingVertical: 5 }]} key={`${Math.random()}`}>
+                                      <TextInput
+                                          style={[styles.textInput, { borderColor: theme.color, width: styles.textInput.width * 0.9 }]}
+                                          placeholder="Reps"
+                                          color={theme.color}
+                                          placeholderTextColor={theme.color}
+                                          keyboardType={"numeric"}
+                                          textAlign={"center"}
+                                          value={repsInArray[item.PEID] && repsInArray[item.PEID][index] ? `${repsInArray[item.PEID][index]}` : index }
+                                          onChangeText={(repsText) => {
                                             // console.log(`when cals Set: ${JSON.stringify(dataToTrack)}`)
                                             // console.log(`this is the index: ${index}`)
                                             // console.log(`this is the reps array: ${JSON.stringify(repsInArray)}`)
                                             addRepsToArray(item.PEID, repsText, index)
-                                        }}
-                                        />
-                                </View>
+                                          }}
+                                          />
+                                  </View>
                             ))}
                         </View>
                         <View>
