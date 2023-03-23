@@ -1,7 +1,7 @@
 import supabase from '../../utils/supabaseSetUp'
 import type { Request, Response } from 'express'
 import { createMentalHealthUser, getMentalHealthUserByID, selectCreatedByOfMentalHealthUser, updateMentalHealthData } from '../../utils/asyncMentalHealthFunctions'
-
+import { getDate } from '../../utils/convertTimeStamptz'
 // get todays date
 const date = new Date()
 export function getToday () {
@@ -17,6 +17,8 @@ export function getToday () {
     midnight = date.getFullYear().toString() + '-' + (date.getMonth() + 1).toString() + '-' + date.getDate().toString()
   }
   return midnight
+  // return getDate(moment().format())
+  // return new Date().toISOString().split('T')[0];
 }
 // check if todays date is equal to the date of the most recent values provided by the user that is logged in
 export async function checkExistsToday (id: string) {

@@ -60,7 +60,6 @@ export default function WordOfTheDayWidget() {
           end={{ x: 1, y: 1 }}
         >
           <Text style={styles.header}>
-            <Ionicons name="bicycle-outline" size={30} color="black" />
             Word Of The Day:
             {errorTodaysWord && <Text>{errorTodaysWord}</Text>}
             {!errorTodaysWord && todaysWord && (
