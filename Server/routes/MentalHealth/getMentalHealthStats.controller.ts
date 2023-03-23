@@ -53,6 +53,6 @@ export const todaysValue = async (req: Request, res: Response) => {
     return res.status(200).json({ mssg: 'success', word: 'User has not inputted a word today' })
   }
   else {
-    return res.status(200).json({ mssg: 'success', word: data })
+    return res.status(200).json({ mssg: 'success', word: data[0].todays_word })
   }
 }

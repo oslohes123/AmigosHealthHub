@@ -41,7 +41,7 @@ export default function useGetTodaysWord() {
       } catch (error) {
         // setError(error);
         setIsLoading(false);
-        return 'Not Available';
+        return null;
       }
     }
   };
