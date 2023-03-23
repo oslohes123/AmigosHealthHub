@@ -1,7 +1,7 @@
 import { type Request, type Response } from 'express'
 import supabase from '../../utils/supabaseSetUp'
-import { SupbaseQueryClass } from '../../utils/databaseInterface'
-const databaseQuery = new SupbaseQueryClass()
+import { SupabaseQueryClass } from '../../utils/databaseInterface'
+const databaseQuery = new SupabaseQueryClass()
 
 /**
  * @returns a Response object , if successful, containing a property named arrayOfAllWorkouts

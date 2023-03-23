@@ -10,7 +10,7 @@ export default function useDeleteWorkoutPlan() {
   const [success, setSuccess] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useAuthContext();
-  const userid = user.id;
+  const { id, token } = user;
 
   // Parameters: workoutname.
   const deleteWorkoutPlan = async (workoutname) => {
@@ -21,8 +21,9 @@ export default function useDeleteWorkoutPlan() {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: token,
       },
-      body: JSON.stringify({ userid, workoutname }),
+      body: JSON.stringify({ userid: id, workoutname }),
     });
 
     const useDeleteWorkoutPlanJSON = await response.json();

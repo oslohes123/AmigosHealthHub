@@ -10,7 +10,7 @@ export default function useDeleteTrackedWorkout() {
   const [success, setSuccess] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useAuthContext();
-  const userid = user.id;
+  const { id, token } = user;
   // Parameters: workoutname, date(format: 2023-03-15), time(format: 00:12:02)
   const deleteTrackedWorkout = async (workoutname, date, time) => {
     setIsLoading(true);
@@ -20,9 +20,10 @@ export default function useDeleteTrackedWorkout() {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: token,
       },
       body: JSON.stringify({
-        userid, workoutname, date, time,
+        userid: id, workoutname, date, time,
       }),
     });
 

@@ -6,7 +6,7 @@ import {
 import React, { useState, useContext } from 'react';
 import { Formik } from 'formik';
 import { globalStyles } from '../../../../styles/global';
-import { useChangeProfileDetails } from '../hooks/useChangeProfileDetails';
+import useChangeProfileDetails from '../hooks/useChangeProfileDetails';
 import themeContext from '../../../theme/themeContext';
 
 // import { getUserInfo } from '../hooks/getUserInfo';
@@ -35,7 +35,7 @@ export default function ChangeUserDetailsForm() {
       fontSize: 20,
       fontWeight: 'bold',
       marginLeft: '2%',
-      // marginTop: '2%'
+      marginTop: '-3%',
     },
   });
   const { color } = theme;

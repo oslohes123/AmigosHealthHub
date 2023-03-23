@@ -1,14 +1,13 @@
 import app from '../../..'
-import { createToken, createHashedPassword } from '../../../utils/userFunctions'
+import { createToken, createHashedPassword, getUserByEmail, deleteUserRow, createUserWithID } from '../../../utils/userFunctions'
 import { getDate } from '../../../utils/convertTimeStamptz'
 import moment from 'moment'
 import { v4 as uuidv4 } from 'uuid'
-import supabase from '../../../utils/supabaseSetUp'
-import { SupbaseQueryClass } from '../../../utils/databaseInterface'
 import RouteNamesClass from '../../../utils/routeNamesClass'
-const test = require('ava')
-const request = require('supertest')
-const databaseQuery = new SupbaseQueryClass()
+import { createMentalHealthUser } from '../../../utils/asyncMentalHealthFunctions'
+
+import test from 'ava'
+import request from 'supertest'
 const routeNames = new RouteNamesClass()
 
 /**
@@ -22,8 +21,7 @@ let token: string
 const todayDate = getDate(moment().format())
 test.serial.before(async (t: any) => {
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
-  console.log('Inserting user')
-  const { error }: any = await databaseQuery.insert(supabase, 'User', {
+  const { error }: any = await createUserWithID({
     id: uuid,
     firstName: 'First',
     lastName: 'User',
@@ -38,7 +36,7 @@ test.serial.before(async (t: any) => {
 })
 
 test.serial.before(async (t: any) => {
-  const { data, error }: any = await databaseQuery.selectWhere(supabase, 'User', 'email', randomEmail, 'id')
+  const { data, error }: any = await getUserByEmail(randomEmail)
   if (error) {
     t.fail('Inserting first user failed!')
   }
@@ -46,8 +44,12 @@ test.serial.before(async (t: any) => {
 })
 test.before(async (t: any) => {
   console.log('9th executed!')
-  const { error }: any = await databaseQuery.insert(supabase, 'Mental Health',
-    { user_id: uuid, face_id: '1', created_at: todayDate, todays_word: 'Awful' })
+  const { error }: any = await createMentalHealthUser({
+    user_id: uuid,
+    face_id: '1',
+    created_at: todayDate,
+    todays_word: 'Awful'
+  })
 
   if (error) {
     t.fail(`MHtesterror9: ${JSON.stringify(error)}`)
@@ -56,8 +58,7 @@ test.before(async (t: any) => {
 
 test.after.always('guaranteed cleanup', async (t: any) => {
   console.log('test.after.always executed!')
-  await databaseQuery.deleteFrom(supabase, 'Mental Health', 'user_id', uuid)
-  await databaseQuery.deleteFrom(supabase, 'User', 'id', uuid)
+  await deleteUserRow(randomEmail)
 })
 
 test(`GET ${todaysWordRoute} with incorrect ID`, async (t: any) => {

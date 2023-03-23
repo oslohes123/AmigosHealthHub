@@ -1,17 +1,13 @@
 import { dateValues, faceValues, todaysValue, wordValues } from '../../../../routes/MentalHealth/getMentalHealthStats.controller'
-import { SupbaseQueryClass } from '../../../../utils/databaseInterface'
-import supabase from '../../../../utils/supabaseSetUp'
 import { v4 as uuidv4 } from 'uuid'
-import { createHashedPassword } from '../../../../utils/userFunctions'
+import { createHashedPassword, createUserWithID, deleteUserRow } from '../../../../utils/userFunctions'
 import { getDate } from '../../../../utils/convertTimeStamptz'
 import moment from 'moment'
 import type { Request, Response } from 'express'
-const test = require('ava')
+import { createMentalHealthUser } from '../../../../utils/asyncMentalHealthFunctions'
 
+import test from 'ava'
 const sinon = require('sinon')
-
-const databaseQuery = new SupbaseQueryClass()
-
 const uuid = uuidv4()
 const wrongUUID = '1a-2345-6b7c-890d-e01f2ghij34k'
 const randomEmail = `${uuid}@gmail.com`
@@ -20,7 +16,7 @@ const todayDate = getDate(moment().format())
 test.serial.before(async (t: any) => {
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
   console.log('Inserting user')
-  const { error }: any = await databaseQuery.insert(supabase, 'User', {
+  const { error }: any = await createUserWithID({
     id: uuid,
     firstName: 'First',
     lastName: 'User',
@@ -35,7 +31,7 @@ test.serial.before(async (t: any) => {
 
 test.before(async (t: any) => {
   console.log('1st executed!')
-  const { error }: any = await databaseQuery.insert(supabase, 'Mental Health', { user_id: uuid, face_id: '5', created_at: '2020-03-01 00:00:00+00', todays_word: 'Happy' })
+  const { error }: any = await createMentalHealthUser({ user_id: uuid, face_id: '5', created_at: '2020-03-01 00:00:00+00', todays_word: 'Happy' })
 
   if (error) {
     t.fail(`inserting 1st mental health:${JSON.stringify(error)}`)
@@ -43,7 +39,7 @@ test.before(async (t: any) => {
 })
 test.before(async (t: any) => {
   console.log('2nd executed!')
-  const { error }: any = await databaseQuery.insert(supabase, 'Mental Health', { user_id: uuid, face_id: '2', created_at: '2020-03-02 00:00:00+00', todays_word: 'Sad' })
+  const { error }: any = await createMentalHealthUser({ user_id: uuid, face_id: '2', created_at: '2020-03-02 00:00:00+00', todays_word: 'Sad' })
 
   if (error) {
     t.fail(`inserting 2nd mental health:${JSON.stringify(error)}`)
@@ -51,7 +47,7 @@ test.before(async (t: any) => {
 })
 test.before(async (t: any) => {
   console.log('3rd executed!')
-  const { error }: any = await databaseQuery.insert(supabase, 'Mental Health', { user_id: uuid, face_id: '3', created_at: '2020-03-03 00:00:00+00', todays_word: 'Alright' })
+  const { error }: any = await createMentalHealthUser({ user_id: uuid, face_id: '3', created_at: '2020-03-03 00:00:00+00', todays_word: 'Alright' })
 
   if (error) {
     t.fail(t.fail(`inserting 3rd mental health:${JSON.stringify(error)}`))
@@ -59,14 +55,14 @@ test.before(async (t: any) => {
 })
 test.before(async (t: any) => {
   console.log('4th executed!')
-  const { error }: any = await databaseQuery.insert(supabase, 'Mental Health', { user_id: uuid, face_id: '1', created_at: '2020-03-04 00:03:00+00', todays_word: 'Awful' })
+  const { error }: any = await createMentalHealthUser({ user_id: uuid, face_id: '1', created_at: '2020-03-04 00:03:00+00', todays_word: 'Awful' })
   if (error) {
     t.fail(`MHtesterror4: ${JSON.stringify(error)}`)
   }
 })
 test.before(async (t: any) => {
   console.log('5th executed!')
-  const { error }: any = await databaseQuery.insert(supabase, 'Mental Health', { user_id: uuid, face_id: '4', created_at: '2020-03-05 00:00:00+00', todays_word: 'Happy' })
+  const { error }: any = await createMentalHealthUser({ user_id: uuid, face_id: '4', created_at: '2020-03-05 00:00:00+00', todays_word: 'Happy' })
 
   if (error) {
     t.fail(`MHtesterror5: ${JSON.stringify(error)}`)
@@ -74,7 +70,7 @@ test.before(async (t: any) => {
 })
 test.before(async (t: any) => {
   console.log('6th executed!')
-  const { error }: any = await databaseQuery.insert(supabase, 'Mental Health', { user_id: uuid, face_id: '3', created_at: '2020-03-06 00:00:00+00', todays_word: 'Mediocre' })
+  const { error }: any = await createMentalHealthUser({ user_id: uuid, face_id: '3', created_at: '2020-03-06 00:00:00+00', todays_word: 'Mediocre' })
 
   if (error) {
     t.fail(`MHtesterror6: ${JSON.stringify(error)}`)
@@ -82,7 +78,7 @@ test.before(async (t: any) => {
 })
 test.before(async (t: any) => {
   console.log('7th executed!')
-  const { error }: any = await databaseQuery.insert(supabase, 'Mental Health', { user_id: uuid, face_id: '2', created_at: '2020-03-07 00:00:00+00', todays_word: 'Depressed' })
+  const { error }: any = await createMentalHealthUser({ user_id: uuid, face_id: '2', created_at: '2020-03-07 00:00:00+00', todays_word: 'Depressed' })
 
   if (error) {
     t.fail(`MHtesterror7: ${JSON.stringify(error)}`)
@@ -90,7 +86,7 @@ test.before(async (t: any) => {
 })
 test.before(async (t: any) => {
   console.log('8th executed!')
-  const { error }: any = await databaseQuery.insert(supabase, 'Mental Health', { user_id: uuid, face_id: '1', created_at: '2020-03-08 00:00:00+00', todays_word: 'Awful' })
+  const { error }: any = await createMentalHealthUser({ user_id: uuid, face_id: '1', created_at: '2020-03-08 00:00:00+00', todays_word: 'Awful' })
 
   if (error) {
     t.fail(`MHtesterror8: ${JSON.stringify(error)}`)
@@ -98,7 +94,7 @@ test.before(async (t: any) => {
 })
 test.before(async (t: any) => {
   console.log('9th executed!')
-  const { error }: any = await databaseQuery.insert(supabase, 'Mental Health', { user_id: uuid, face_id: '1', created_at: todayDate, todays_word: 'Awful' })
+  const { error }: any = await createMentalHealthUser({ user_id: uuid, face_id: '1', created_at: todayDate, todays_word: 'Awful' })
 
   if (error) {
     t.fail(`MHtesterror9: ${JSON.stringify(error)}`)
@@ -107,7 +103,7 @@ test.before(async (t: any) => {
 
 test.after.always('guaranteed cleanup', async (t: any) => {
   console.log('test.after.always executed!')
-  await databaseQuery.deleteFrom(supabase, 'User', 'id', uuid)
+  await deleteUserRow(randomEmail)
 })
 
 const mockResponse = () => {

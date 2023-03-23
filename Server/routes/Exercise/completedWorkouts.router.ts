@@ -1,9 +1,11 @@
 import { addCompletedWorkouts, getAllCompletedWorkouts, getACompletedWorkout, deleteTrackedWorkout, getWorkoutFrequency, getActualExerciseNameFrequency, getActualExerciseTypeFrequency, getWorkoutHistoryByDate, getLastTrackedWorkout } from './completedWorkouts.controller'
 import RouteNamesClass from '../../utils/routeNamesClass'
+import { checkToken } from '../../middleware/checkToken'
 const express = require('express')
 const completedWorkoutsRouter = express.Router()
 completedWorkoutsRouter.use(express.json())
 const routeNames = new RouteNamesClass()
+completedWorkoutsRouter.use(checkToken)
 // Routes
 completedWorkoutsRouter.post(routeNames.partialaddCompletedWorkout, addCompletedWorkouts)
 completedWorkoutsRouter.get(routeNames.partialGetAllCompletedWorkout, getAllCompletedWorkouts)

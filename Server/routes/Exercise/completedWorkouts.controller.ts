@@ -1,9 +1,9 @@
 import { type Request, type Response } from 'express'
 import supabase from '../../utils/supabaseSetUp'
-import { SupbaseQueryClass } from '../../utils/databaseInterface'
-import { getDate, getTime } from '../../utils/convertTimeStamptz'
+import { SupabaseQueryClass } from '../../utils/databaseInterface'
+import { getDate, getTime, mostRecentTimestamp, sortArrayOfTimeStamps } from '../../utils/convertTimeStamptz'
 import { countElementsInArray } from '../../utils/arrayManipulation'
-const databaseQuery = new SupbaseQueryClass()
+const databaseQuery = new SupabaseQueryClass()
 
 // Get a specific workout by userid, workoutname, date and time
 export const getACompletedWorkout = async (req: Request, res: Response) => {
@@ -99,16 +99,37 @@ export const getAllCompletedWorkouts = async (req: Request, res: Response) => {
   }
   else {
     console.log(`data of completedWorkouts: ${JSON.stringify(data)}`)
-
+    const arrayOfTimeStamps = []
     for (let i = 0; i < data.length; i++) {
       const timestamp = data[i].timestamp
-      delete data[i].timestamp
-      data[i].date = getDate(timestamp)
-      data[i].time = getTime(timestamp)
+      arrayOfTimeStamps.push(timestamp)
     }
+    const sortedTimeStamps = sortArrayOfTimeStamps(arrayOfTimeStamps)
+    let sortedCompletedWorkouts = []
+    for (let i = 0; i < sortedTimeStamps.length; i++) {
+      // console.log(`data[i].timestamp: ${JSON.stringify(data[i].timestamp)}`)
+      // console.log(`sortedTimeStamps[i]: ${JSON.stringify(sortedTimeStamps[i])}`)
+      // if (data[i].timestamp === sortedTimeStamps[i]) {
+      //   const timestamp = data[i].timestamp
+      //   delete data[i].timestamp
+      //   data[i].date = getDate(timestamp)
+      //   data[i].time = getTime(timestamp)
+      //   sortedCompletedWorkouts.push(data[i])
+      // }
+      for (let j = 0; j < data.length; j++) {
+        if (sortedTimeStamps[i] === data[j].timestamp) {
+          const timestamp = data[i].timestamp
+          delete data[i].timestamp
+          data[i].date = getDate(timestamp)
+          data[i].time = getTime(timestamp)
+          sortedCompletedWorkouts.push(data[i])
+        }
+      }
+    }
+    console.log(`sortedCompletedWorkouts: ${JSON.stringify(sortedCompletedWorkouts)}`)
     console.log(`After mod completedWorkouts: ${JSON.stringify(data)}`)
-    const workoutsNamesAndDates = data
-    return res.status(200).json({ mssg: 'Got All Completed Workouts!', workoutsNamesAndDates })
+    // const workoutsNamesAndDates = data
+    return res.status(200).json({ mssg: 'Got All Completed Workouts!', workoutsNamesAndDates: sortedCompletedWorkouts })
   }
 }
 
@@ -528,7 +549,7 @@ export const getLastTrackedWorkout = async (req: Request, res: Response) => {
   if (!userid) {
     return res.status(400).json({ mssg: 'userid cannot be null!' })
   }
-  const { data, error }: any = await databaseQuery.selectWhere(supabase, 'CompletedWorkouts', 'userid', userid, 'workoutname')
+  const { data, error }: any = await databaseQuery.selectWhere(supabase, 'CompletedWorkouts', 'userid', userid, 'workoutname, timestamp')
   if (error) {
     return res.status(400).json({ mssg: 'Something went wrong!', error })
   }
@@ -537,7 +558,17 @@ export const getLastTrackedWorkout = async (req: Request, res: Response) => {
     return res.status(200).json({ mssg: 'Success!', lastTrackedWorkout: 'No Tracked Workouts' })
   }
   else {
-    const lastTrackedWorkout = data[0].workoutname
+    const arrayOfTimeStamps = []
+    for (let i = 0; i < data.length; i++) {
+      arrayOfTimeStamps.push(data[i].timestamp)
+    }
+    const mostRecentTimeStamp = mostRecentTimestamp(arrayOfTimeStamps)
+    let lastTrackedWorkout = ''
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].timestamp === mostRecentTimeStamp) {
+        lastTrackedWorkout = data[i].workoutname
+      }
+    }
     return res.status(200).json({ mssg: 'Success!', lastTrackedWorkout })
   }
 }

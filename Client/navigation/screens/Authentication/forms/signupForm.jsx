@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 import { Formik } from 'formik';
 import PasswordInput from '../../../components/passwordInput';
 import { globalStyles } from '../../../../styles/global';
-import { useSignUp } from '../hooks/useSignUp';
+import useSignUp from '../hooks/useSignUp';
 
 const passwordRegex = /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*!=]).*$/;
 const SignupSchema = Yup.object().shape({

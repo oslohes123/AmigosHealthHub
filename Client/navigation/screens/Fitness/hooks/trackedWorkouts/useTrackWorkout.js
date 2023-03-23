@@ -14,7 +14,7 @@ export default function useTrackWorkout() {
   const [isLoading, setIsLoading] = useState(null);
 
   const { user } = useAuthContext();
-  const userid = user.id;
+  const { id, token } = user;
 
   const trackWorkout = async (workoutname, exercises) => {
     setIsLoading(true);
@@ -22,8 +22,8 @@ export default function useTrackWorkout() {
 
     const response = await fetch(trackWorkoutRoute, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userid, workoutname, exercises }),
+      headers: { 'Content-Type': 'application/json', Authorization: token },
+      body: JSON.stringify({ userid: id, workoutname, exercises }),
     });
 
     const trackWorkoutJSON = await response.json();

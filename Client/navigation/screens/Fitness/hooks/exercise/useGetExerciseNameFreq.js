@@ -11,7 +11,7 @@ export default function useGetExerciseNameFreq() {
   const [isLoading, setIsLoading] = useState(null);
   // const { dispatch } = useAuthContext();
   const { user } = useAuthContext();
-  const userid = user.id;
+  const { id, token } = user;
 
   const getExerciseNameFreq = async () => {
     setIsLoading(true);
@@ -19,7 +19,7 @@ export default function useGetExerciseNameFreq() {
 
     const response = await fetch(getExerciseNameFreqRoute, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json', userid },
+      headers: { 'Content-Type': 'application/json', userid: id, Authorization: token },
     });
 
     const getExerciseNameFreqJSON = await response.json();

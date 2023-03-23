@@ -1,13 +1,10 @@
 import app from '../../../index'
 import { v4 as uuidv4 } from 'uuid'
-import supabase from '../../../utils/supabaseSetUp'
-import { SupbaseQueryClass } from '../../../utils/databaseInterface'
-import { createHashedPassword, createToken } from '../../../utils/userFunctions'
+import { createHashedPassword, createToken, createUserWithID, deleteUserRow, getUserByEmail } from '../../../utils/userFunctions'
 import RouteNamesClass from '../../../utils/routeNamesClass'
 
-const request = require('supertest')
-const test = require('ava')
-const databaseQuery = new SupbaseQueryClass()
+import request from 'supertest'
+import test from 'ava'
 const routeNames = new RouteNamesClass()
 /**
  * Refactor using objects, interfaces to prevent repeated code.
@@ -23,7 +20,7 @@ test.serial.before(async (t: any) => {
   // email:randomEmail, password: hashedPassword, age: 31});
   console.log('Inserting user')
   console.log(`Inserted user uuid: ${uuid}`) // bf955626-40fc-4141-a92b-914a7608cb86
-  const { error }: any = await databaseQuery.insert(supabase, 'User', {
+  const { error }: any = await createUserWithID({
     id: uuid,
     firstName: 'First',
     lastName: 'User',
@@ -39,8 +36,8 @@ test.serial.before(async (t: any) => {
 })
 
 test.serial.before(async (t: any) => {
-  const { data, error }: any = await databaseQuery.selectWhere(supabase, 'User'
-    , 'email', randomEmail, 'id')
+  // const { data, error }: any = await getUserByEmail(randomEmail)
+  const { data, error }: any = await getUserByEmail(randomEmail)
   if (error) {
     t.fail('Inserting first user failed!')
   }
@@ -49,8 +46,7 @@ test.serial.before(async (t: any) => {
 
 test.after.always('guaranteed cleanup', async (t: any) => {
   console.log('test.after.always executed!')
-  // await databaseQuery.deleteFrom(supabase, "Mental Health", "user_id", uuid);
-  await databaseQuery.deleteFrom(supabase, 'User', 'id', uuid)
+  await deleteUserRow(randomEmail)
 })
 
 // test(`POST ${rateMentalRoute} with incorrect ID`, async (t: any) => {
@@ -120,8 +116,7 @@ test(`POST ${rateMentalRoute} with correct input`, async (t: any) => {
     .send({ face: 4, word: 'Happy', id: uuid })
     .set('authorization', token)
   console.log(`uuid used ln132: ${uuid}`) // 8d17ab59-70ed-409b-9d8f-e54728b32906
-  const { data }: any = await databaseQuery.selectWhere(supabase, 'User'
-    , 'id', uuid, '*')
+  const { data }: any = await getUserByEmail(randomEmail)
   console.log(`data selecting: ${JSON.stringify(data)}`) // data selecting: []
   console.log(`response: ${JSON.stringify(response)}`)
   console.log(`correctInput: ${JSON.stringify(response.body)}`)

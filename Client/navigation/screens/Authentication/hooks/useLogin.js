@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { useAuthContext } from "../context/AuthContext";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useAuthContext } from '../context/AuthContext';
 // const dotenv = require("dotenv");
 // dotenv.config();
 const port = process.env.PORT;
 const ipAddress = process.env.IP_ADDRESS;
-const loginRoute =  `http://${ipAddress}:${port}/api/user/login`;
-export const useLogin = () => {
+const loginRoute = `http://${ipAddress}:${port}/api/user/login`;
+export default function useLogin() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { dispatch } = useAuthContext();
@@ -19,42 +19,34 @@ export const useLogin = () => {
     setIsLoading(true);
     setError(null);
 
-    console.log("In login");
-    console.log(`Port in login: ${port}`);
-    console.log(`ipAddress in login: ${ipAddress}`);
-
     const response = await fetch(
-     loginRoute,
+      loginRoute,
       {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
-      }
+      },
     );
 
     const json = await response.json();
-    console.log(json);
     if (!response.ok) {
       setIsLoading(false);
       setError(json.mssg);
-      console.log(error);
     }
     if (response.ok) {
       try {
-        //sets user properties from API to 'user' in AsyncStorage, so it can 'remember' a user
-        await AsyncStorage.setItem("user", JSON.stringify(json));
-        console.log(json);
+        // sets user properties from API to 'user' in AsyncStorage, so it can 'remember' a user
+        await AsyncStorage.setItem('user', JSON.stringify(json));
 
-        dispatch({ type: "LOGIN", payload: json });
+        dispatch({ type: 'LOGIN', payload: json });
 
         setIsLoading(false);
-      } catch (error) {
-        setError(error);
+      } catch (caughtError) {
+        setError(caughtError);
         setIsLoading(false);
-        console.error(error);
       }
     }
   };
 
   return { login, isLoading, error };
-};
+}

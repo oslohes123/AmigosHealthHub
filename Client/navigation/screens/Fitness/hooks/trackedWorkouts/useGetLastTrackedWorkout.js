@@ -10,19 +10,18 @@ export default function useGetLastTrackedWorkout() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useAuthContext();
-
-  const userid = user.id;
+  const { id, token } = user;
   const getLastTrackedWorkout = async () => {
     setIsLoading(true);
     setError(null);
 
     const response = await fetch(getLastTrackedWorkoutRoute, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json', userid },
+      headers: { 'Content-Type': 'application/json', userid: id, Authorization: token },
     });
 
     const getLastTrackedWorkoutJSON = await response.json();
-    console.log(`getLastTrackedWorkoutJSON: ${JSON.stringify(getLastTrackedWorkoutJSON)}`)
+    console.log(`getLastTrackedWorkoutJSON: ${JSON.stringify(getLastTrackedWorkoutJSON)}`);
     if (!response.ok) {
       setIsLoading(false);
       setError(getLastTrackedWorkoutJSON.mssg);

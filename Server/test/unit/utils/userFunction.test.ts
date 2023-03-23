@@ -1,4 +1,4 @@
-const test = require('ava');
+import test from 'ava';
 const sinon = require('sinon');
 import supabase from "../../../utils/supabaseSetUp";
 import { createUser, getUserByEmail, deleteUserRow } from "../../../utils/userFunctions";

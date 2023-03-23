@@ -2,11 +2,11 @@ import { type Request, type Response } from 'express'
 import { getInfo } from '../../../../routes/User/getUserInfo.controller'
 import { v4 as uuidv4 } from 'uuid'
 import supabase from '../../../../utils/supabaseSetUp'
-import { SupbaseQueryClass } from '../../../../utils/databaseInterface'
+import { SupabaseQueryClass } from '../../../../utils/databaseInterface'
 import { createHashedPassword } from '../../../../utils/userFunctions'
-const test = require('ava')
+import test from 'ava'
 const sinon = require('sinon')
-const supabaseQuery = new SupbaseQueryClass()
+const supabaseQuery = new SupabaseQueryClass()
 
 const mockResponse = () => {
   const res: any = {}

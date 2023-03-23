@@ -1,13 +1,10 @@
 import { insertMentalData } from '../../../../routes/MentalHealth/rateMental.controller'
-import { SupbaseQueryClass } from '../../../../utils/databaseInterface'
-import supabase from '../../../../utils/supabaseSetUp'
 import { v4 as uuidv4 } from 'uuid'
-import { createHashedPassword } from '../../../../utils/userFunctions'
+import { createHashedPassword, createUserWithID, deleteUserRow } from '../../../../utils/userFunctions'
 import type { Request, Response } from 'express'
-const test = require('ava')
-const sinon = require('sinon')
 
-const databaseQuery = new SupbaseQueryClass()
+import test from 'ava'
+const sinon = require('sinon')
 
 const uuid = uuidv4()
 const randomEmail = `${uuid}@gmail.com`
@@ -15,7 +12,7 @@ const randomEmail = `${uuid}@gmail.com`
 test.serial.before(async (t: any) => {
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
   console.log('Inserting user')
-  const { error }: any = await databaseQuery.insert(supabase, 'User', {
+  const { error }: any = await createUserWithID({
     id: uuid,
     firstName: 'First',
     lastName: 'User',
@@ -30,7 +27,7 @@ test.serial.before(async (t: any) => {
 })
 
 test.after.always('guaranteed cleanup', async (t: any) => {
-  await databaseQuery.deleteFrom(supabase, 'User', 'id', uuid)
+  await deleteUserRow(randomEmail)
 })
 
 const mockResponse = () => {

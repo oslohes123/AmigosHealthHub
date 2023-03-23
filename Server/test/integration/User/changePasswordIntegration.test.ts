@@ -1,13 +1,13 @@
 import app from '../../../index'
 import { v4 as uuidv4 } from 'uuid'
 import supabase from '../../../utils/supabaseSetUp'
-import { SupbaseQueryClass } from '../../../utils/databaseInterface'
+import { SupabaseQueryClass } from '../../../utils/databaseInterface'
 import { createHashedPassword, createToken } from '../../../utils/userFunctions'
 import RouteNamesClass from '../../../utils/routeNamesClass'
-const test = require('ava')
-const request = require('supertest')
+import test from 'ava'
+import request from 'supertest'
 const bcrypt = require('bcrypt')
-const supabaseQuery = new SupbaseQueryClass()
+const supabaseQuery = new SupabaseQueryClass()
 const routeNames = new RouteNamesClass()
 const changePasswordRoute = routeNames.fullChangePasswordURL
 
@@ -40,7 +40,7 @@ test.after.always(async (t: any) => {
   await supabaseQuery.deleteFrom(supabase, 'User', 'email', testEmail)
 })
 
-test(`POST ${changePasswordRoute} with no fields`, async (t: any) => {
+test.serial(`POST ${changePasswordRoute} with no fields`, async (t: any) => {
   const response = await request(app)
     .post(changePasswordRoute)
     .set('authorization', token)
@@ -52,7 +52,7 @@ test(`POST ${changePasswordRoute} with no fields`, async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test(`POST ${changePasswordRoute} with no email`, async (t: any) => {
+test.serial(`POST ${changePasswordRoute} with no email`, async (t: any) => {
   const response = await request(app)
     .post(changePasswordRoute)
     .set('authorization', token)
@@ -67,7 +67,7 @@ test(`POST ${changePasswordRoute} with no email`, async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test(`POST ${changePasswordRoute} with no oldPassword`, async (t: any) => {
+test.serial(`POST ${changePasswordRoute} with no oldPassword`, async (t: any) => {
   const response = await request(app)
     .post(changePasswordRoute)
     .set('authorization', token)
@@ -82,7 +82,7 @@ test(`POST ${changePasswordRoute} with no oldPassword`, async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test(`POST ${changePasswordRoute} with no newPassword`, async (t: any) => {
+test.serial(`POST ${changePasswordRoute} with no newPassword`, async (t: any) => {
   const response = await request(app)
     .post(changePasswordRoute)
     .set('authorization', token)
@@ -97,7 +97,7 @@ test(`POST ${changePasswordRoute} with no newPassword`, async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test(`POST ${changePasswordRoute} with non-existent user email `, async (t: any) => {
+test.serial(`POST ${changePasswordRoute} with non-existent user email `, async (t: any) => {
   const uuid = uuidv4()
   const randomEmail: string = `${uuid}@gmail.com`
 
@@ -116,7 +116,7 @@ test(`POST ${changePasswordRoute} with non-existent user email `, async (t: any)
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: "Email doesn't exist in our database" }))
 })
 
-test(`POST ${changePasswordRoute} with incorrect original password`, async (t: any) => {
+test.serial(`POST ${changePasswordRoute} with incorrect original password`, async (t: any) => {
   const response = await request(app)
     .post(changePasswordRoute)
     .set('authorization', token)
@@ -137,7 +137,7 @@ test(`POST ${changePasswordRoute} with incorrect original password`, async (t: a
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: "Old password doesn't match!" }))
 })
 
-test(`POST ${changePasswordRoute} with correct original password`, async (t: any) => {
+test.serial(`POST ${changePasswordRoute} with correct original password`, async (t: any) => {
   const response = await request(app)
     .post(changePasswordRoute)
     .set('authorization', token)
