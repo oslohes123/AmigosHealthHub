@@ -89,7 +89,6 @@ export default class RouteNamesClass {
 
   // Mental Health Routes
   readonly partialWordCloud = '/wordCloud'
-  // http://localhost:3001/api/user/mentalHealth/wordCloud
   readonly fullWordCloudURL = this.mentalHealthBaseURL + this.partialWordCloud
   readonly partialFaceGraph = '/faceGraph'
   readonly fullFaceGraphURL = this.mentalHealthBaseURL + this.partialFaceGraph

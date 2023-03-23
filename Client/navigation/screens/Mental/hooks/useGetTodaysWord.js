@@ -39,9 +39,9 @@ export default function useGetTodaysWord() {
         setIsLoading(false);
         return json.word;
       } catch (error) {
-        setError(error);
+        // setError(error);
         setIsLoading(false);
-        return 'Not Available';
+        return null;
       }
     }
   };
