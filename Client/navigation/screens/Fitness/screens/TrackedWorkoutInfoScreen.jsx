@@ -219,7 +219,7 @@ export default function TrackedWorkoutInfoScreen({ route, navigation }) {
                 </Text>
                 <IconButton
                   icon="information"
-                  iconColor={theme === 'light' ? '#000087' : theme.color}
+                  iconColor={theme === 'light' ? '#000087' : color}
                   size={20}
                   key={`${item.exercise.name}Instructions`}
                   onPress={() => {
@@ -231,11 +231,11 @@ export default function TrackedWorkoutInfoScreen({ route, navigation }) {
 
               <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
                 <View style={{ justifyContent: 'space-evenly', padding: 5 }}>
-                  <Text style={{ color: theme.color, fontSize: 10, alignSelf: 'center' }}>Muscle</Text>
+                  <Text style={{ color, fontSize: 10, alignSelf: 'center' }}>Muscle</Text>
                   <Text
                     style={{
                       fontWeight: 'bold',
-                      color: theme.color,
+                      color,
                       fontSize: 16,
                     }}
                   >
@@ -243,13 +243,13 @@ export default function TrackedWorkoutInfoScreen({ route, navigation }) {
                   </Text>
                 </View>
                 <View style={{ justifyContent: 'space-evenly', padding: 5 }}>
-                  <Text style={{ color: theme.color, fontSize: 10 }}>
+                  <Text style={{ color, fontSize: 10 }}>
                     Equipment
                   </Text>
                   <Text
                     style={{
                       fontWeight: 'bold',
-                      color: theme.color,
+                      color,
                       fontSize: 16,
                       alignSelf: 'center',
                     }}
@@ -265,7 +265,7 @@ export default function TrackedWorkoutInfoScreen({ route, navigation }) {
               {item.exercise.type === 'cardio' ? (
                 <>
                   <View style={styles.statsRows}>
-                    <Text style={[styles.statsText, { color: theme.color, alignSelf: 'center' }]}>
+                    <Text style={[styles.statsText, { color, alignSelf: 'center' }]}>
                       Distance:
                       {' '}
                       {item.distance}
@@ -274,7 +274,7 @@ export default function TrackedWorkoutInfoScreen({ route, navigation }) {
                     </Text>
                   </View>
                   <View style={styles.statsRows}>
-                    <Text style={[styles.statsText, { color: theme.color, alignSelf: 'center' }]}>
+                    <Text style={[styles.statsText, { color, alignSelf: 'center' }]}>
                       Duration:
                       {' '}
                       {Math.trunc(Number(item.duration))}
@@ -288,21 +288,21 @@ export default function TrackedWorkoutInfoScreen({ route, navigation }) {
               ) : (
                 <>
                   <View style={styles.statsRows}>
-                    <Text style={[styles.statsText, { color: theme.color, alignSelf: 'center' }]}>
+                    <Text style={[styles.statsText, { color, alignSelf: 'center' }]}>
                       Sets:
                       {' '}
                       {item.sets}
                     </Text>
                   </View>
                   <View style={styles.statsRows}>
-                    <Text style={[styles.statsText, { color: theme.color, alignSelf: 'center' }]}>
+                    <Text style={[styles.statsText, { color, alignSelf: 'center' }]}>
                       Reps:
                       {' '}
                       {JSON.stringify(item.reps)}
                     </Text>
                   </View>
                   <View style={styles.statsRows}>
-                    <Text style={[styles.statsText, { color: theme.color, alignSelf: 'center' }]}>
+                    <Text style={[styles.statsText, { color, alignSelf: 'center' }]}>
                       Weight:
                       {' '}
                       {JSON.stringify(item.weight)}
@@ -311,7 +311,7 @@ export default function TrackedWorkoutInfoScreen({ route, navigation }) {
                 </>
               )}
               <View style={styles.statsRows}>
-                <Text style={[styles.statsText, { color: theme.color, alignSelf: 'center' }]}>
+                <Text style={[styles.statsText, { color, alignSelf: 'center' }]}>
                   Calories:
                   {' '}
                   {item.calories}
@@ -323,7 +323,7 @@ export default function TrackedWorkoutInfoScreen({ route, navigation }) {
           </TouchableWithoutFeedback>
         ))}
 
-        {!isLoading && workoutDetails.length > 0 && <Text style={{ alignSelf: 'center', color: theme.color, paddingVertical: screenHeight * 0.1 }}>End of exercises</Text>}
+        {!isLoading && workoutDetails.length > 0 && <Text style={{ alignSelf: 'center', color, paddingVertical: screenHeight * 0.1 }}>End of exercises</Text>}
 
       </ScrollView>
       <View style={styles.bottomButtons}>
