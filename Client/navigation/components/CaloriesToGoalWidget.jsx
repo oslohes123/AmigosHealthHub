@@ -78,7 +78,7 @@ export default function CaloriesToGoalWidget() {
                 <Text style={styles.number}>{caloriesRemaining}</Text>
               )}
             </Text>
-            <Ionicons name="bicycle-outline" size={30} color="#fff" />
+            <Ionicons name="fast-food-outline" size={30} color="#fff" />
           </View>
 
         </LinearGradient>
