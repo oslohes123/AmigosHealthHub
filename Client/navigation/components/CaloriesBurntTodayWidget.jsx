@@ -1,6 +1,5 @@
 import {
   TouchableOpacity, Text, View, StyleSheet,
-  Animated,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
@@ -10,24 +9,41 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import useGetCaloriesBurntToday from '../screens/Fitness/hooks/calories/useGetCaloriesBurntToday';
-import { useAuthContext } from '../screens/Authentication/context/AuthContext';
-import { getLatestCalorieGoal, getCaloriesRemaining } from '../screens/Diet/hooks/Calories';
-
+// import { useAuthContext } from '../screens/Authentication/context/AuthContext';
+// import { getLatestCalorieGoal, getCaloriesRemaining } from '../screens/Diet/hooks/Calories';
+const styles = StyleSheet.create({
+  widget: {
+    paddingHorizontal: '10%',
+    paddingVertical: '10%',
+    borderRadius: 25,
+  },
+  header: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 25,
+  },
+  number: {
+    color: 'white',
+    fontSize: 25,
+    // fontWeight: "bold",
+    textAlign: 'center',
+  },
+});
 export default function CaloriesBurntTodayWidget() {
   const { getCaloriesBurntToday, error, isLoading } = useGetCaloriesBurntToday();
   const isFocused = useIsFocused();
-  const { user } = useAuthContext();
-  const userid = user.id;
-  const todaysDate = new Date().toISOString().split('T')[0];
+  // const { user } = useAuthContext();
+  // const userid = user.id;
+  // const todaysDate = new Date().toISOString().split('T')[0];
 
   const navigation = useNavigation();
   const [getCaloriesBurnt, setCaloriesBurnt] = useState(null);
-  const [latestCalorieGoal, setLatestCalorieGoal] = useState(null);
-  const [calroiesEaten, setCaloriesEaten] = useState(null);
+  // const [latestCalorieGoal, setLatestCalorieGoal] = useState(null);
+  // const [calroiesEaten, setCaloriesEaten] = useState(null);
   const caloriesBurnt = async () => {
     setCaloriesBurnt(await getCaloriesBurntToday());
-    setLatestCalorieGoal(await getLatestCalorieGoal(userid));
-    setCaloriesEaten(await getCaloriesRemaining(userid, todaysDate));
+    // setLatestCalorieGoal(await getLatestCalorieGoal(userid));
+    // setCaloriesEaten(await getCaloriesRemaining(userid, todaysDate));
   };
   useEffect(() => {
     if (isFocused) {
@@ -39,14 +55,6 @@ export default function CaloriesBurntTodayWidget() {
   };
 
   return (
-  // <View style={styles.container}>
-  //   {error && <Text>{error}</Text>}
-
-  //   <View style={styles.widget}>
-  //     <Text style={styles.header}>Calories Burnt Today:</Text>
-  //     <Text style={styles.number}>{getCaloriesBurnt}</Text>
-  //   </View>
-  // </View>
 
     <TouchableOpacity onPress={pressHandler}>
       <View style={styles.container}>
@@ -61,7 +69,8 @@ export default function CaloriesBurntTodayWidget() {
           <Text style={styles.header}>
             <Ionicons name="bicycle-outline" size={30} color="black" />
             Calories Burnt Today:
-            {getCaloriesBurnt && (
+            {error && <Text>{error}</Text>}
+            {!error && getCaloriesBurnt && (
               <Text style={styles.number}>{getCaloriesBurnt}</Text>
             )}
           </Text>
@@ -81,26 +90,3 @@ export default function CaloriesBurntTodayWidget() {
     </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({
-  widget: {
-    paddingHorizontal: '10%',
-    paddingVertical: '10%',
-    borderRadius: 25,
-  },
-  header: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 25,
-  },
-  number: {
-    color: 'white',
-    fontSize: 25,
-    // fontWeight: "bold",
-    textAlign: 'center',
-  },
-  // container: {
-  //   backgroundColor: "darkblue",
-  //   borderRadius: 25,
-  // },
-});

@@ -4,7 +4,7 @@ import {
   Button, Text, TextInput, View,
 } from 'react-native';
 import React, { useState } from 'react';
-
+import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import { Formik } from 'formik';
 import PasswordInput from '../../../components/passwordInput';
 import { globalStyles } from '../../../../styles/global';
@@ -46,12 +46,21 @@ const formikLoginForm = () => {
               setShowPassword={setShowPassword}
             />
             <Text>{props.errors.password}</Text>
-
             <Button
               title="Login"
               onPress={props.handleSubmit}
               disabled={isLoading}
             />
+            {isLoading && (
+            <>
+              {/* <Text>Refreshing.....</Text> */}
+              <ActivityIndicator
+                animating
+                size={25}
+                color={MD2Colors.greenA400}
+              />
+            </>
+            )}
             {error && <Text className="error">{error}</Text>}
           </View>
         )}
