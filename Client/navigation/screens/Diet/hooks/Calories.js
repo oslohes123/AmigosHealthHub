@@ -93,10 +93,10 @@ export async function getCaloriesRemaining(UserID, Date, calorieGoal = -1) {
   // If no calorie goal is passed in, get the latest calorie goal using the api call,
   // otherwise use the passed in calorie goal
   if (calorieGoal === -1) {
-    const currentCalorieGoal = await getLatestCalorieGoal(UserID);
-    return Number((currentCalorieGoal - totalCalories).toFixed(2));
+    const { CalorieGoal } = await getLatestCalorieGoal(UserID);
+    return Number((CalorieGoal - totalCalories).toFixed(0));
   }
-  return Number((calorieGoal - totalCalories).toFixed(2));
+  return Number((calorieGoal - totalCalories).toFixed(0));
 }
 
 export async function updateCalorieGoal(UserID, CalorieGoal, Date = currentDate) {

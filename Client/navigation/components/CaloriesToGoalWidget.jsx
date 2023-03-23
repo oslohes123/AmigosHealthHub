@@ -8,7 +8,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 
 import { useAuthContext } from '../screens/Authentication/context/AuthContext';
-import { getLatestCalorieGoal, getCaloriesRemaining } from '../screens/Diet/hooks/Calories';
+import { getCaloriesRemaining } from '../screens/Diet/hooks/Calories';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -43,12 +43,11 @@ export default function CaloriesToGoalWidget() {
   const todaysDate = new Date().toISOString().split('T')[0];
 
   const navigation = useNavigation();
-  const [latestCalorieGoal, setLatestCalorieGoal] = useState(null);
-  const [caloriesEaten, setCaloriesEaten] = useState(null);
-  const setCalorieGoal = async () => {
-    setLatestCalorieGoal(await getLatestCalorieGoal(userid));
-    setCaloriesEaten(await getCaloriesRemaining(userid, todaysDate));
-  };
+  const [caloriesRemaining, setCaloriesRemaining] = useState(0);
+  async function setCalorieGoal() {
+    const remainingCalories = await getCaloriesRemaining(userid, todaysDate);
+    setCaloriesRemaining(remainingCalories);
+  }
   useEffect(() => {
     if (isFocused) {
       setCalorieGoal();
@@ -56,7 +55,7 @@ export default function CaloriesToGoalWidget() {
   }, [navigation, isFocused]);
 
   const pressHandler = () => {
-    navigation.navigate('View Stats');
+    navigation.navigate('Diet Dashboard');
   };
 
   return (
@@ -70,17 +69,16 @@ export default function CaloriesToGoalWidget() {
           end={{ x: 1, y: 1 }}
         >
           <Text style={styles.header}>
-            Calories To Goal
+            Calories remaining
           </Text>
 
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            {/* <Text style={styles.header}>
-              {error && <Text>{error}</Text>}
-              {!error && getCaloriesBurnt && (
-                <Text style={styles.number}>{getCaloriesBurnt}</Text>
+            <Text style={styles.header}>
+              {caloriesRemaining !== undefined && (
+                <Text style={styles.number}>{caloriesRemaining}</Text>
               )}
-            </Text> */}
-            <Ionicons name="nutrition-outline" size={30} color="#fff" />
+            </Text>
+            <Ionicons name="fast-food-outline" size={30} color="#fff" />
           </View>
 
         </LinearGradient>

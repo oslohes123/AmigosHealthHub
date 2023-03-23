@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAuthContext } from '../../../Authentication/context/AuthContext';
+import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
 const trackWorkoutRoute = `${serverURL}/api/user/completedWorkouts/add`;
@@ -14,7 +15,7 @@ export default function useTrackWorkout() {
 
   const { user } = useAuthContext();
   const { id, token } = user;
-
+  const { logout } = useLogout();
   const trackWorkout = async (workoutname, exercises) => {
     setIsLoading(true);
     setMessage(null);
@@ -27,6 +28,7 @@ export default function useTrackWorkout() {
 
     const trackWorkoutJSON = await response.json();
     if (!response.ok) {
+      if (response.status === 401) { logout(); }
       setIsLoading(false);
       setMessage(trackWorkoutJSON.mssg);
     }

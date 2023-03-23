@@ -1,11 +1,13 @@
 /* eslint-disable consistent-return */
 import { useState } from 'react';
 import { useAuthContext } from '../../../Authentication/context/AuthContext';
+import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
 const addExerciseToExercisesRoute = `${serverURL}/api/user/exercise/add`;
 
 export default function useAddExerciseToExercises() {
+  const { logout } = useLogout();
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useAuthContext();
@@ -37,6 +39,7 @@ export default function useAddExerciseToExercises() {
 
     const addExerciseToExercisesJSON = await response.json();
     if (!response.ok) {
+      if (response.status === 401) { logout(); }
       setIsLoading(false);
       setError(addExerciseToExercisesJSON.mssg);
       return null;

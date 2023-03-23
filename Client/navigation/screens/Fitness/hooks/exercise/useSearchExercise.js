@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 import { useState } from 'react';
 import { useAuthContext } from '../../../Authentication/context/AuthContext';
+import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
 const searchExerciseRoute = `${serverURL}/api/user/exercise/search`;
@@ -11,6 +12,7 @@ export default function useSearchExercise() {
   // const { dispatch } = useAuthContext();
   const { user } = useAuthContext();
   const { token } = user;
+  const { logout } = useLogout();
   const searchExercise = async (wordToSearch) => {
     setIsLoading(true);
     setError(null);
@@ -22,6 +24,7 @@ export default function useSearchExercise() {
 
     const searchedExercisesJson = await response.json();
     if (!response.ok) {
+      if (response.status === 401) { logout(); }
       setIsLoading(false);
       setError(searchedExercisesJson.mssg);
       return [];

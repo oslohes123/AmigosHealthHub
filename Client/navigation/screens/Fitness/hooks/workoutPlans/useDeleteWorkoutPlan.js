@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAuthContext } from '../../../Authentication/context/AuthContext';
+import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
 const getTrackedWorkoutDetailsRoute = `${serverURL}/api/user/workout/delete`;
@@ -10,7 +11,7 @@ export default function useDeleteWorkoutPlan() {
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useAuthContext();
   const { id, token } = user;
-
+  const { logout } = useLogout();
   // Parameters: workoutname.
   const deleteWorkoutPlan = async (workoutname) => {
     setIsLoading(true);
@@ -27,6 +28,7 @@ export default function useDeleteWorkoutPlan() {
 
     const useDeleteWorkoutPlanJSON = await response.json();
     if (!response.ok) {
+      if (response.status === 401) { logout(); }
       setIsLoading(false);
       setError(useDeleteWorkoutPlanJSON.mssg);
     }

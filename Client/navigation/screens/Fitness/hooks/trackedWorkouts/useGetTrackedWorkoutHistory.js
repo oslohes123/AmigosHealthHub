@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 import { useState } from 'react';
 import { useAuthContext } from '../../../Authentication/context/AuthContext';
+import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
 const getWorkoutHistoryRoute = `${serverURL}/api/user/completedWorkouts/getAll`;
@@ -10,6 +11,7 @@ export default function useGetWorkoutHistory() {
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useAuthContext();
   const { id, token } = user;
+  const { logout } = useLogout();
   const getWorkoutHistory = async () => {
     setIsLoading(true);
     setError(null);
@@ -22,6 +24,7 @@ export default function useGetWorkoutHistory() {
     const getWorkoutHistoryJSON = await response.json();
 
     if (!response.ok) {
+      if (response.status === 401) { logout(); }
       setIsLoading(false);
       setError(getWorkoutHistoryJSON.mssg);
       return [];
