@@ -4,8 +4,8 @@ import supabase from '../../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../../utils/databaseInterface'
 import { createHashedPassword, createToken } from '../../../utils/userFunctions'
 import RouteNamesClass from '../../../utils/routeNamesClass'
-const test = require('ava')
-const request = require('supertest')
+import test from 'ava'
+import request from 'supertest'
 const supabaseQuery = new SupabaseQueryClass()
 const routeNames = new RouteNamesClass()
 const changeStatsRoute = routeNames.fullChangeStatsURL
@@ -66,12 +66,10 @@ test.before(async (t: any) => {
   }
 })
 
-
-
 test.after.always('guaranteed cleanup of users', async (t: any) => {
-  await supabaseQuery.deleteFrom(supabase, 'User', 'email', firstUserEmail);
-  await supabaseQuery.deleteFrom(supabase, 'User', 'email', newEmail);
-});
+  await supabaseQuery.deleteFrom(supabase, 'User', 'email', firstUserEmail)
+  await supabaseQuery.deleteFrom(supabase, 'User', 'email', newEmail)
+})
 
 test(`POST ${changeStatsRoute} with no fields`, async (t: any) => {
   const response = await request(app)
@@ -221,6 +219,10 @@ test(`POST ${changeStatsRoute} with new available email`, async (t: any) => {
   const { data, error }: any = await supabaseQuery.selectWhere(supabase, 'User'
     , 'email', newEmail, '*')
 
+  if (error) {
+    t.fail('selecting a user went wrong!')
+  }
+
   console.log(`response: ${JSON.stringify(response)}`)
   t.true(response.status === 200)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
@@ -242,6 +244,10 @@ test(`POST ${changeStatsRoute} with same email`, async (t: any) => {
 
   const { data, error }: any = await supabaseQuery.selectWhere(supabase, 'User'
     , 'email', firstUserEmail, '*')
+
+  if (error) {
+    t.fail('selecting a user went wrong!')
+  }
 
   t.true(response.status === 200)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')

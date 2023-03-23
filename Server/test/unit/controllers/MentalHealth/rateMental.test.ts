@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { createHashedPassword, createUserWithID, deleteUserRow } from '../../../../utils/userFunctions'
 import type { Request, Response } from 'express'
 
-const test = require('ava')
+import test from 'ava'
 const sinon = require('sinon')
 
 const uuid = uuidv4()

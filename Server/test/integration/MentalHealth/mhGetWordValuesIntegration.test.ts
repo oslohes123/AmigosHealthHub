@@ -6,8 +6,8 @@ import { v4 as uuidv4 } from 'uuid'
 import RouteNamesClass from '../../../utils/routeNamesClass'
 import { createMentalHealthUser } from '../../../utils/asyncMentalHealthFunctions'
 
-const request = require('supertest')
-const test = require('ava')
+import request from 'supertest'
+import test from 'ava'
 const routeNames = new RouteNamesClass()
 /**
  * Refactor using objects, interfaces to prevent repeated code.
