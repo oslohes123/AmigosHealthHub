@@ -1,5 +1,5 @@
 import {
-  TouchableOpacity, Text, View, StyleSheet,
+  TouchableOpacity, Text, View, StyleSheet, Dimensions,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
@@ -10,21 +10,29 @@ import { Ionicons } from '@expo/vector-icons';
 import { useAuthContext } from '../screens/Authentication/context/AuthContext';
 import { getLatestCalorieGoal, getCaloriesRemaining } from '../screens/Diet/hooks/Calories';
 
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
+
 const styles = StyleSheet.create({
   widget: {
-    paddingHorizontal: '10%',
-    paddingVertical: '10%',
+    marginVertical: 10,
+    marginBottom: 20,
+    padding: 20,
     borderRadius: 25,
+    width: screenWidth * 0.43,
+    height: screenHeight * 0.2,
+    justifyContent: 'space-between',
   },
   header: {
-    color: 'white',
+    color: '#fff',
     fontWeight: 'bold',
-    fontSize: 25,
+    fontSize: 22,
+    alignSelf: 'center',
+    textAlign: 'center',
   },
   number: {
-    color: 'white',
-    fontSize: 25,
-    // fontWeight: "bold",
+    color: '#fff',
+    fontSize: 24,
     textAlign: 'center',
   },
 });
@@ -46,6 +54,7 @@ export default function CaloriesToGoalWidget() {
       setCalorieGoal();
     }
   }, [navigation, isFocused]);
+
   const pressHandler = () => {
     navigation.navigate('View Stats');
   };
@@ -53,7 +62,7 @@ export default function CaloriesToGoalWidget() {
   return (
 
     <TouchableOpacity onPress={pressHandler}>
-      <View style={styles.container}>
+      <View>
         <LinearGradient
           colors={['#00ffc8', '#0040ff']}
           style={styles.widget}
@@ -61,12 +70,18 @@ export default function CaloriesToGoalWidget() {
           end={{ x: 1, y: 1 }}
         >
           <Text style={styles.header}>
-            Calories To Goal:
-
-            {/* {getCaloriesBurnt && (
-            <Text style={styles.number}>Test</Text>
-            )} */}
+            Calories To Goal
           </Text>
+
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            {/* <Text style={styles.header}>
+              {error && <Text>{error}</Text>}
+              {!error && getCaloriesBurnt && (
+                <Text style={styles.number}>{getCaloriesBurnt}</Text>
+              )}
+            </Text> */}
+            <Ionicons name="bicycle-outline" size={30} color="#fff" />
+          </View>
 
         </LinearGradient>
       </View>

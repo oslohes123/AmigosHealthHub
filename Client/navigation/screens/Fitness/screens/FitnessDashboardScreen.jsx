@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   widget: {
-    // margin: 10,
     marginVertical: 10,
     padding: 20,
     borderRadius: 25,

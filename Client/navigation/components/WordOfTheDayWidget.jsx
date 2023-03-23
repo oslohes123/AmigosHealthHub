@@ -1,5 +1,5 @@
 import {
-  TouchableOpacity, Text, View, StyleSheet,
+  TouchableOpacity, Text, View, StyleSheet, Dimensions,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
@@ -10,22 +10,30 @@ import { Ionicons } from '@expo/vector-icons';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import useGetTodaysWord from '../screens/Mental/hooks/useGetTodaysWord';
 
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
+
 const styles = StyleSheet.create({
   widget: {
-    paddingHorizontal: '10%',
-    paddingVertical: '10%',
+    marginVertical: 10,
+    padding: 20,
     borderRadius: 25,
+    width: screenWidth * 0.9,
+    height: screenHeight * 0.2,
+    justifyContent: 'space-between',
   },
   header: {
-    color: 'white',
+    color: '#fff',
     fontWeight: 'bold',
-    fontSize: 25,
+    fontSize: 22,
+    textAlign: 'center',
   },
   number: {
-    color: 'white',
-    fontSize: 25,
-    // fontWeight: "bold",
+    color: '#fff',
+    fontSize: 24,
+    fontWeight: 'bold',
     textAlign: 'center',
+    width: screenWidth * 0.6,
   },
 });
 export default function WordOfTheDayWidget() {
@@ -60,13 +68,15 @@ export default function WordOfTheDayWidget() {
           end={{ x: 1, y: 1 }}
         >
           <Text style={styles.header}>
-            <Ionicons name="bicycle-outline" size={30} color="black" />
-            Word Of The Day:
+            Word of the day
+          </Text>
+
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             {errorTodaysWord && <Text>{errorTodaysWord}</Text>}
             {!errorTodaysWord && todaysWord && (
-            <Text style={styles.number}>{todaysWord}</Text>
-            )}
-          </Text>
+            <Text style={styles.number}>{todaysWord}</Text>)}
+            <Ionicons style={{ alignSelf: 'flex-end' }} name="bookmarks-outline" size={30} color="#fff" />
+          </View>
 
           {isLoading && (
           <>

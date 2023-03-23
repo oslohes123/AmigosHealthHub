@@ -12,11 +12,32 @@ import moment from 'moment';
 import GraphWidget from '../../components/graphWidget';
 import useGetSleep from './hooks/useGetSleep';
 
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
+
+const styles = StyleSheet.create({
+  surface: {
+    backgroundColor: '#c2e7fe',
+    marginVertical: 10,
+    padding: 20,
+    borderRadius: 25,
+    height: screenHeight * 0.2,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  header: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 22,
+    alignSelf: 'center',
+    textAlign: 'center',
+  },
+});
+
 export default function HoursSleptGraph({ navigation }) {
   const { getSleep, isLoading, error } = useGetSleep();
   const [data, setData] = useState(['test']);
   const isFocused = useIsFocused();
-  const screenWidth = Dimensions.get('window').width * 0.95;
 
   const route = useRoute();
 
@@ -34,10 +55,10 @@ export default function HoursSleptGraph({ navigation }) {
     return (
       <View>
         <Surface
-          style={[styles.surface, { width: screenWidth }]}
+          style={[styles.surface, { width: screenWidth * 0.9 }]}
           elevation={4}
         >
-          <Text variant="headlineSmall">Add sleep data.</Text>
+          <Text style={styles.header}>Add sleep data</Text>
         </Surface>
       </View>
     );
@@ -64,14 +85,3 @@ export default function HoursSleptGraph({ navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  surface: {
-    backgroundColor: '#c2e7fe',
-    padding: 8,
-    height: 100,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 30,
-  },
-});

@@ -4,14 +4,15 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
+  Dimensions,
 } from 'react-native';
-// import Ionicons from 'react-native-vector-icons/Ionicons';
-// import { LinearGradient } from 'expo-linear-gradient';
 import HoursSleptGraph from '../Sleep/hoursSleptGraph';
 import themeContext from '../../theme/themeContext';
 import CaloriesBurntTodayWidget from '../../components/CaloriesBurntTodayWidget';
 import CaloriesToGoalWidget from '../../components/CaloriesToGoalWidget';
 import WordOfTheDayWidget from '../../components/WordOfTheDayWidget';
+
+const screenWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {
@@ -23,24 +24,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-end',
-    margin: 30,
-  },
-  graphContainer: {
-    position: 'relative',
-  },
-  widget: {
-    paddingHorizontal: '15%',
-    paddingVertical: '10%',
-    borderRadius: 25,
-    width: '80%',
-    alignSelf: 'center',
-    marginTop: '5%',
-    alignItems: 'center',
-  },
-  widgetText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 25,
+    // margin: 30,
   },
 });
 
@@ -52,21 +36,18 @@ export default function DashboardScreen({ navigation }) {
 
       <View style={styles.widgetContainer}>
         <TouchableOpacity onPress={() => navigation.navigate('Sleep')}>
-          <View style={styles.graphContainer}>
-            <HoursSleptGraph />
-          </View>
+          <HoursSleptGraph />
         </TouchableOpacity>
       </View>
-
-      <CaloriesBurntTodayWidget />
 
       <TouchableOpacity>
         <WordOfTheDayWidget />
       </TouchableOpacity>
 
-      <TouchableOpacity>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: screenWidth * 0.9 }}>
+        <CaloriesBurntTodayWidget />
         <CaloriesToGoalWidget />
-      </TouchableOpacity>
+      </View>
 
     </SafeAreaView>
   );
