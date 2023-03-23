@@ -1,5 +1,5 @@
 import { addSleep } from '../../../../routes/Sleep/sleep.controller'
-import { SupabaseQueryClass } from '../../../../utils/databaseInterface'
+import { SupbaseQueryClass } from '../../../../utils/databaseInterface'
 import supabase from '../../../../utils/supabaseSetUp'
 import { v4 as uuidv4 } from 'uuid'
 import { createHashedPassword } from '../../../../utils/userFunctions'
@@ -7,14 +7,14 @@ import type { Request, Response } from 'express'
 const test = require('ava')
 const sinon = require('sinon')
 
-const databaseQuery = new SupabaseQueryClass()
+const databaseQuery = new SupbaseQueryClass()
 
 const uuid = uuidv4()
 const randomEmail = `${uuid}@gmail.com`
 
 test.serial.before(async (t: any) => {
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
-  console.log('Inserting user')
+  // console.log('Inserting user')
   const { error }: any = await databaseQuery.insert(supabase, 'User', {
     id: uuid,
     firstName: 'addSleep',
@@ -46,15 +46,41 @@ const mockRequest = (sessionData: any) => {
   }
 }
 
-test('Attempt to insert data without logging in', async (t: any) => {
+test('Attempt to insert data without UserID', async (t: any) => {
   const req = mockRequest({
     userID: null,
     timestamp: '20/03/2023',
     hoursSlept: 7
   })
   const res = mockResponse()
-  await insertMentalData(req as Request, res as Response)
+  await addSleep(req as Request, res as Response)
 
   t.true(res.status.calledWith(400))
-  t.true(res.json.calledWith({ mssg: 'You must be logged in to submit data' }))
+  t.true(res.json.calledWith({ mssg: 'UserID must be provided' }))
+})
+
+test('Attempt to insert data without timestamp', async (t: any) => {
+  const req = mockRequest({
+    userID: uuid,
+    timestamp: null,
+    hoursSlept: 7
+  })
+  const res = mockResponse()
+  await addSleep(req as Request, res as Response)
+
+  t.true(res.status.calledWith(400))
+  t.true(res.json.calledWith({ mssg: 'timestamp must be provided' }))
+})
+
+test('Attempt to insert data without hoursSlept', async (t: any) => {
+  const req = mockRequest({
+    userID: uuid,
+    timestamp: '20/03/2023',
+    hoursSlept: null
+  })
+  const res = mockResponse()
+  await addSleep(req as Request, res as Response)
+
+  t.true(res.status.calledWith(400))
+  t.true(res.json.calledWith({ mssg: 'hourslept must be provided' }))
 })
