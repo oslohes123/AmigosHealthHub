@@ -6,7 +6,7 @@ const serverURL = process.env.URL;
 // const dotenv = require("dotenv");
 // dotenv.config();
 
-export default function () {
+export default function useLogin() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { dispatch } = useAuthContext();
