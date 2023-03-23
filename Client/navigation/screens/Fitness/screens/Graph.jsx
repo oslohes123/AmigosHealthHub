@@ -12,6 +12,7 @@ import useGetAllExercises from '../hooks/exercise/useGetAllExercises';
 import themeContext from '../../../theme/themeContext';
 
 const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   container: {
@@ -207,24 +208,25 @@ export default function Graph({ navigation }) {
               {!getArrayOfExercises && (
                 <Text style={{ color }}>No exercise data</Text>
               )}
-              {getArrayOfExercises
-                && getArrayOfExercises.map((exercise) => (
-                  <TouchableOpacity
-                    style={styles.modalButton}
-                    key={exercise}
-                    onPress={() => {
-                      setSelected(exercise);
-                      setVisible(false);
-                    }}
-                  >
-                    <Text>{exercise}</Text>
-                  </TouchableOpacity>
-                ))}
+              <ScrollView style={{ maxHeight: screenHeight * 0.2 }}>
+                {getArrayOfExercises
+                  && getArrayOfExercises.map((exercise) => (
+                    <TouchableOpacity
+                      style={styles.modalButton}
+                      key={exercise}
+                      onPress={() => {
+                        setSelected(exercise);
+                        setVisible(false);
+                      }}
+                    >
+                      <Text>{exercise}</Text>
+                    </TouchableOpacity>
+                  ))}
+              </ScrollView>
 
               <FAB
                 icon="close"
-                style={styles.fab}
-                // label="Create Plan"
+                style={{ margin: 10 }}
                 onPress={() => {
                   setVisible(!visible);
                 }}
@@ -250,7 +252,7 @@ export default function Graph({ navigation }) {
         {getWeightedData && getWeightedLabels && (
           <TouchableWithoutFeedback>
             <View style={{ marginBottom: 40 }}>
-              <Text style={[styles.title]}>Weight pulled per exercise</Text>
+              <Text style={[styles.title, { color }]}>Weight pulled per exercise</Text>
               <LineChart
                 style={{ borderRadius: 15 }}
                 data={weightedData}
@@ -271,7 +273,7 @@ export default function Graph({ navigation }) {
         {getDurationData && getDurationLabels && (
           <TouchableWithoutFeedback>
             <View style={{ marginBottom: 40 }}>
-              <Text style={[styles.title]}>Duration</Text>
+              <Text style={[styles.title, { color }]}>Duration</Text>
               <LineChart
                 style={{ borderRadius: 25 }}
                 data={durationData}
@@ -292,7 +294,7 @@ export default function Graph({ navigation }) {
         {getDistanceData && getDistanceLabels && (
           <TouchableWithoutFeedback>
             <View style={{ marginBottom: 40 }}>
-              <Text style={[styles.title]}>Distance</Text>
+              <Text style={[styles.title, { color }]}>Distance</Text>
               <LineChart
                 style={{ borderRadius: 25 }}
                 data={distanceData}
@@ -313,7 +315,7 @@ export default function Graph({ navigation }) {
         {getCaloriesData && getCaloriesLabels && (
           <TouchableWithoutFeedback>
             <View style={{ marginBottom: 40 }}>
-              <Text style={[styles.title]}>Calories</Text>
+              <Text style={[styles.title, { color }]}>Calories</Text>
               <LineChart
                 style={{ borderRadius: 25 }}
                 data={caloriesData}
