@@ -11,17 +11,23 @@ import { Ionicons } from '@expo/vector-icons';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import useGetCaloriesBurntToday from '../screens/Fitness/hooks/calories/useGetCaloriesBurntToday';
 import { useAuthContext } from '../screens/Authentication/context/AuthContext';
+import { getLatestCalorieGoal, getCaloriesRemaining } from '../screens/Diet/hooks/Calories';
 
 export default function CaloriesBurntTodayWidget() {
   const { getCaloriesBurntToday, error, isLoading } = useGetCaloriesBurntToday();
   const isFocused = useIsFocused();
   const { user } = useAuthContext();
   const userid = user.id;
+  const todaysDate = new Date().toISOString().split('T')[0];
 
   const navigation = useNavigation();
   const [getCaloriesBurnt, setCaloriesBurnt] = useState(null);
+  const [latestCalorieGoal, setLatestCalorieGoal] = useState(null);
+  const [calroiesEaten, setCaloriesEaten] = useState(null);
   const caloriesBurnt = async () => {
     setCaloriesBurnt(await getCaloriesBurntToday());
+    setLatestCalorieGoal(await getLatestCalorieGoal(userid));
+    setCaloriesEaten(await getCaloriesRemaining(userid, todaysDate));
   };
   useEffect(() => {
     if (isFocused) {

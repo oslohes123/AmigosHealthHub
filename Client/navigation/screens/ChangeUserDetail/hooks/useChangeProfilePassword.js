@@ -3,11 +3,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState } from 'react';
 import { useAuthContext } from '../../Authentication/context/AuthContext'
 import { useLogout } from '../../Authentication/hooks/useLogOut';
-const port = process.env.PORT;
-const ipAddress = process.env.IP_ADDRESS;
+const serverURL = process.env.URL;
+
 
 export const useChangeProfilePassword = () => {
-    console.log(`port: ${port}`)
+    console.log(`port: `)
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(null) 
     const { dispatch, user } = useAuthContext()
@@ -25,8 +25,8 @@ export const useChangeProfilePassword = () => {
             const email = user.email;
             console.log(`in changePassword, email: ${email}`);
              const {token}= JSON.parse(await AsyncStorage.getItem('user'))
-             console.log(`Change Password: ${ipAddress} : Port ${port}`);
-             const response = await fetch(`http://${ipAddress}:${port}/api/user/changeProfileDetails/password`, {
+             console.log(`Change Password:  : Port `);
+             const response = await fetch(`${serverURL}/api/user/changeProfileDetails/password`, {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',

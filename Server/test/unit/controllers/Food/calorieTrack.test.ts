@@ -3,24 +3,24 @@ import { v4 as uuidv4 } from 'uuid'
 import supabase from '../../../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../../../utils/databaseInterface'
 import { createHashedPassword, createUser } from '../../../../utils/userFunctions'
-import { clientSearchMethods } from '../../../../constants'
-import { generalSearch } from './../../../../routes/Food/foodSearch.controller'
 import { type ExecutionContext } from 'ava'
-import test from 'ava'
+import { insertCalorieGoal, readAllCalorieGoals } from './../../../../routes/Food/calorieTrack.controller'
+const test = require('ava')
 const sinon = require('sinon')
 const supabaseQuery = new SupabaseQueryClass()
 
 let randomEmail: string
-
+let usersID = ''
+const todaysDate = new Date().toISOString().split('T')[0]
 test.before(async (t: any) => {
   const uuid = uuidv4()
   randomEmail = `${uuid}@gmail.com`
 
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
 
-  const { error }: any = await createUser({
-    firstName: 'FoodSearchTest',
-    lastName: 'FoodSearchTest',
+  const { data, error }: any = await createUser({
+    firstName: 'CalorieTrackTest',
+    lastName: 'CalorieTrackTest',
     email: randomEmail,
     password: hashedPassword,
     age: 20
@@ -28,7 +28,13 @@ test.before(async (t: any) => {
 
   if (error) {
     t.fail('Inserting user went wrong!')
+  } else {
+    usersID = data[0].id
   }
+
+  const req = mockRequest({}, { UserID: usersID, CalorieGoal: 2000, Date: todaysDate })
+  const res = mockResponse()
+  await insertCalorieGoal(req as Request, res as Response)
 })
 
 test.after.always(async () => {
@@ -39,6 +45,7 @@ const mockResponse = () => {
   const res: any = {}
   res.status = sinon.stub().returns(res)
   res.json = sinon.stub().returns(res)
+  res.send = sinon.stub().returns(res)
   return res
 }
 
@@ -49,33 +56,23 @@ const mockRequest = (sessionParams: object, sessionData: object) => {
   }
 }
 
-test('testing InstantSearch', async (t: ExecutionContext) => {
-  const req = mockRequest({
-    value: 'apple',
-    code: clientSearchMethods.genericSearch
-  }, {})
+test('insert calorieGoal correctly', async (t: ExecutionContext) => {
+  const req = mockRequest({}, { UserID: usersID, CalorieGoal: 4000, Date: todaysDate })
   const res = mockResponse()
-  await generalSearch(req as Request, res as Response)
+  await insertCalorieGoal(req as Request, res as Response)
   t.true(res.status.calledWith(200))
 })
 
-// This test fails as 99 is not a valid code
-test('testing wrong Search code', async (t: ExecutionContext) => {
-  const req = mockRequest({
-    value: 'apple',
-    code: 99
-  }, {})
+test('insert calorieGoal with invalid UserID', async (t: ExecutionContext) => {
+  const req = mockRequest({}, { UserID: 'Wrong ID', CalorieGoal: 4000, Date: todaysDate })
   const res = mockResponse()
-  await generalSearch(req as Request, res as Response)
-  t.true(res.status.calledWith(500))
+  await insertCalorieGoal(req as Request, res as Response)
+  t.true(res.status.calledWith(400))
 })
 
-test('Testing specific search', async (t: ExecutionContext) => {
-  const req = mockRequest({
-    value: 'apple',
-    code: clientSearchMethods.specificSearch
-  }, {})
+test('read all calorieGoals correctly', async (t: ExecutionContext) => {
+  const req = mockRequest({ UserID: usersID }, {})
   const res = mockResponse()
-  await generalSearch(req as Request, res as Response)
+  await readAllCalorieGoals(req as Request, res as Response)
   t.true(res.status.calledWith(200))
 })

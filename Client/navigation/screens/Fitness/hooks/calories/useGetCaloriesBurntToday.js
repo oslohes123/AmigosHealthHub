@@ -2,10 +2,9 @@
 import { useState } from 'react';
 import { useAuthContext } from '../../../Authentication/context/AuthContext';
 
-const port = process.env.PORT;
-const ipAddress = process.env.IP_ADDRESS;
+const serverURL = process.env.URL;
 
-const getCaloriesBurntTodayRoute = `http://${ipAddress}:${port}/api/user/workout/calories/getToday`;
+const getCaloriesBurntTodayRoute = `${serverURL}/api/user/workout/calories/getToday`;
 
 export default function useGetCaloriesBurntToday() {
   const [error, setError] = useState(null);

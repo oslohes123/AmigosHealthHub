@@ -2,9 +2,8 @@
 import { useState } from 'react';
 import { useAuthContext } from '../../../Authentication/context/AuthContext';
 
-const port = process.env.PORT;
-const ipAddress = process.env.IP_ADDRESS;
-const searchExerciseRoute = `http://${ipAddress}:${port}/api/user/exercise/search`;
+const serverURL = process.env.URL;
+const searchExerciseRoute = `${serverURL}/api/user/exercise/search`;
 
 export default function useSearchExercise() {
   const [error, setError] = useState(null);

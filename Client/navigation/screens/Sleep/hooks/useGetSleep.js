@@ -2,8 +2,7 @@ import moment from 'moment';
 import { useState } from 'react';
 import { useAuthContext } from '../../Authentication/context/AuthContext';
 
-const port = process.env.PORT;
-const ip_address = process.env.IP_ADDRESS;
+const serverURL = process.env.URL;
 
 export default function useGetSleep() {
   const [error, setError] = useState(null);
@@ -22,7 +21,7 @@ export default function useGetSleep() {
     // console.log(`id in getUserInfo: ${id}`);
     // console.log(`Time from ${today} to ${sevenDaysAgo}  `);
     const response = await fetch(
-      `http://${ip_address}:${port}/api/user/sleep/get`,
+      `${serverURL}/api/user/sleep/get`,
       {
         method: 'POST',
         headers: {

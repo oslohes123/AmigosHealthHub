@@ -3,12 +3,12 @@ import {
 } from 'react-native';
 import React from 'react';
 
-import { formikChangeUserPasswordForm } from '../forms/changeUserPasswordsForm';
+import ChangeUserPasswordForm from '../forms/changeUserPasswordForm';
 
 export default function ChangeUserPasswordScreen() {
   return (
     <>
-      {formikChangeUserPasswordForm()}
+      {ChangeUserPasswordForm()}
       <SafeAreaView
         style={{
           flex: 2,

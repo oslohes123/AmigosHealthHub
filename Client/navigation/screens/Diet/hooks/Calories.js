@@ -1,67 +1,65 @@
-import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getTrackedFood } from './Food';
 
-const port = process.env.PORT;
-const ipAddress = process.env.IP_ADDRESS;
+const serverURL = process.env.URL;
 const currentDate = new Date().toISOString().split('T')[0];
 
 // For testing purposes
 // Update this with your own UrlService
 
-
 export async function getGeneralCalorieGoal(UserID) {
-  const url = `http://${ipAddress}:${port}/api/food/calorieTrack/General.${UserID}`;
+  const url = `${serverURL}/api/food/calorieTrack/General.${UserID}`;
   let response;
   try {
-    const { token } = JSON.parse(
-      (await AsyncStorage.getItem('user')),
-    );
-    response = await axios.get(url, {
+    const { token } = JSON.parse(await AsyncStorage.getItem('user'));
+    response = await fetch(url, {
+      method: 'GET',
       headers: {
         authorization: token,
       },
     });
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.log('Error when getting calorie goal');
-      console.log(error.response);
-    } else {
-      console.log(`Default error handler${error}`);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
+
+    response = await response.json();
+  } catch (error) {
+    console.log('Error when getting calorie goal');
+    console.log(error);
     return error;
   }
-  return response.data;
+  return response;
 }
 
 export async function addCalorieGoal(UserID, CalorieGoal, Date = currentDate) {
-  const url = `http://${ipAddress}:${port}/api/food/calorieTrack/createCalorieLog`;
+  const url = `${serverURL}/api/food/calorieTrack/createCalorieLog`;
 
   let response;
   try {
     const { token } = JSON.parse(
       (await AsyncStorage.getItem('user')),
     );
-    response = await axios.post(url, {
-      CalorieGoal,
-      UserID,
-      Date,
-    }, {
+    response = await fetch(url, {
+      method: 'POST',
       headers: {
+        'Content-Type': 'application/json',
         authorization: token,
       },
+      body: JSON.stringify({
+        CalorieGoal,
+        UserID,
+        Date,
+      }),
     });
+    response = await response.json();
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.log('Error when inserting calorie goal');
-      console.log(error.response);
-    } else {
-      console.log(`Default error handler${error}`);
-    }
+    console.log('Error when inserting calorie goal');
+    console.log(error);
     return error;
   }
   // Return the response
-  return response.data;
+  return response;
 }
 
 export async function getLatestCalorieGoal(UserID, inputDate = '') {
@@ -104,7 +102,7 @@ export async function getCaloriesRemaining(UserID, Date, calorieGoal = -1) {
 export async function updateCalorieGoal(UserID, CalorieGoal, Date = currentDate) {
   // Get the latest calorie goal
   const currentCalorieGoal = await getLatestCalorieGoal(UserID);
-  let url = `http://${ipAddress}:${port}/api/food/calorieTrack/`;
+  let url = `${serverURL}/api/food/calorieTrack/`;
   let inputData = {};
 
   // If the latest calorie goal is for the current date, update the calorie goal
@@ -131,20 +129,20 @@ export async function updateCalorieGoal(UserID, CalorieGoal, Date = currentDate)
     const { token } = JSON.parse(
       (await AsyncStorage.getItem('user')),
     );
-    response = await axios.post(url, inputData, {
+    response = await fetch(url, {
+      method: 'POST',
       headers: {
+        'Content-Type': 'application/json',
         authorization: token,
       },
+      body: JSON.stringify(inputData),
     });
+    response = await response.json();
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.log('Error when inserting calorie goal');
-      console.log(error.response);
-    } else {
-      console.log(`Default error handler${error}`);
-    }
+    console.log('Error when inserting calorie goal');
+    console.log(error);
     return error;
   }
   // Return the response
-  return response.data;
+  return response;
 }

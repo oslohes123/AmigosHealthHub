@@ -1,26 +1,22 @@
 import { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuthContext } from '../context/AuthContext';
+
+const serverURL = process.env.URL;
 // const dotenv = require("dotenv");
 // dotenv.config();
-const port = process.env.PORT;
-const ipAddress = process.env.IP_ADDRESS;
-const loginRoute = `http://${ipAddress}:${port}/api/user/login`;
+
 export default function useLogin() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { dispatch } = useAuthContext();
-
-  console.log(`port: ${port}`);
-  console.log(`ipAddress: ${ipAddress}`);
-  console.log(JSON.stringify(process.env));
 
   const login = async (email, password) => {
     setIsLoading(true);
     setError(null);
 
     const response = await fetch(
-      loginRoute,
+      `${serverURL}/api/user/login`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

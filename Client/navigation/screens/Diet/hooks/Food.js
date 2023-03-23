@@ -1,202 +1,180 @@
-import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const port = process.env.PORT;
-const ipAddress = process.env.IP_ADDRESS;
+const serverURL = process.env.URL;
 const currentDate = new Date().toISOString().split('T')[0];
 
 // For testing purposes
 // Update this with your own UrlService
 
 export async function getTrackedFood(Date, userID) {
-  const url = `http://${ipAddress}:${port}/api/food/getTrackedFood/${Date}.${userID}`;
+  const url = `${serverURL}/api/food/getTrackedFood/${Date}.${userID}`;
   let response;
   try {
     const { token } = JSON.parse(
       (await AsyncStorage.getItem('user')),
     );
-    response = await axios.get(url, {
+    response = await fetch(url, {
       headers: {
         authorization: token,
       },
     });
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.log('Got an error from the server');
-      console.log(error.response);
-    } else {
-      console.log(`Default error handler${error}`);
+    if (!response.ok) {
+      throw new Error('Response not OK');
     }
+  } catch (error) {
+    console.log(`Error: ${error}`);
     return error;
   }
-  return response.data;
+  const data = await response.json();
+  return data;
 }
 
 export async function getSpecificTrackedFood(logID) {
-  const url = `http://${ipAddress}:${port}/api/food/getSpecificTrackedFood/${logID}`;
+  const url = `${serverURL}/api/food/getSpecificTrackedFood/${logID}`;
   let response;
   try {
     const { token } = JSON.parse(
       (await AsyncStorage.getItem('user')),
     );
-    response = await axios.get(url, {
+    response = await fetch(url, {
+      method: 'GET',
       headers: {
         authorization: token,
       },
     });
+    response = await response.json();
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.log('Error when getting specific tracked food');
-      console.log(error.response);
-    } else {
-      console.log(`Default error handler${error}`);
-    }
+    console.log('Error when getting specific tracked food');
+    console.log(error);
     return error;
   }
-  return response.data[0];
+  return response[0];
 }
 
 export async function addTrackedFood(input, userID) {
-  const url = `http://${ipAddress}:${port}/api/food/addTrackedFood`;
+  const url = `${serverURL}/api/food/addTrackedFood`;
   let response;
   try {
     const { token } = JSON.parse(
       (await AsyncStorage.getItem('user')),
     );
-    response = await axios.post(
-      url,
-      {
+    response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: token,
+      },
+      body: JSON.stringify({
         input,
         userID,
-      },
-      {
-        headers: {
-          authorization: token,
-        },
-      },
-    );
+      }),
+    });
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.log('Got an error from the server');
-      console.log(error.response);
-    } else {
-      console.log(`Default error handler${error}`);
-    }
+    console.log('Got an error from the server');
+    console.log(error);
     return error;
   }
-
   return response.status;
 }
 
 export async function deleteTrackedFood(logID) {
-  const url = `http://${ipAddress}:${port}/api/food/deleteTrackedFood/`;
+  const url = `${serverURL}/api/food/deleteTrackedFood/`;
   let response;
   try {
     const { token } = JSON.parse(
       (await AsyncStorage.getItem('user')),
     );
-    response = await axios.post(
-      url,
-      { logID },
-      {
-        headers: {
-          authorization: token,
-        },
+    response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: token,
       },
-    );
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.log('Got an error from the server');
-      console.log(error.response);
-    } else {
-      console.log(`Default error handler${error}`);
+      body: JSON.stringify({ logID }),
+    });
+    if (!response.ok) {
+      throw new Error('Response not OK');
     }
+  } catch (error) {
+    console.log(`Error: ${error}`);
     return error;
   }
   return response.status;
 }
 
 export async function updateTrackedFood(input) {
-  const url = `http://${ipAddress}:${port}/api/food/updateTrackedFood`;
+  const url = `${serverURL}/api/food/updateTrackedFood`;
   let response;
   try {
     const { token } = JSON.parse(
       (await AsyncStorage.getItem('user')),
     );
-    response = await axios.post(
-      url,
-      {
+    response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: token,
+      },
+      body: JSON.stringify({
         Quantity: input.Quantity,
         LogID: input.LogID,
         Measure: input.Measure,
         Calories: input.Calories,
-      },
-      {
-        headers: {
-          authorization: token,
-        },
-      },
-    );
+      }),
+    });
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.log('Got an error from the server');
-      console.log(error.response);
-    } else {
-      console.log(`Default error handler${error}`);
-    }
+    console.log('Got an error from the server');
+    console.log(error);
     return error;
   }
   return response.status;
 }
 
 export async function getFood(foodID) {
-  const url = `http://${ipAddress}:${port}/api/food/getFood/${foodID}`;
+  const url = `${serverURL}/api/food/getFood/${foodID}`;
   let response;
   try {
     const { token } = JSON.parse(
       (await AsyncStorage.getItem('user')),
     );
-    response = await axios.get(url, {
+    response = await fetch(url, {
+      method: 'GET',
       headers: {
         authorization: token,
       },
     });
+    response = await response.json();
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.log('Got an error from the server');
-      console.log(error.response);
-    } else {
-      console.log(`Default error handler${error}`);
-    }
+    console.log('Got an error from the server');
+    console.log(error);
     return error;
   }
-  return response.data[0];
+  return response[0];
 }
 
 export async function getMultipleFood(foodIDs) {
-  const url = `http://${ipAddress}:${port}/api/food/getMultipleFood`;
+  const url = `${serverURL}/api/food/getMultipleFood`;
   let response;
   try {
     const { token } = JSON.parse(
       (await AsyncStorage.getItem('user')),
     );
-    response = await axios.post(url, { foodIDs }, {
+    response = await fetch(url, {
+      method: 'POST',
       headers: {
+        'Content-Type': 'application/json',
         authorization: token,
       },
+      body: JSON.stringify({ foodIDs }),
     });
+    response = await response.json();
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.log('Got an error when getting multiple foods');
-      console.log(error.response);
-    } else {
-      console.log(`Default error handler${error}`);
-    }
+    console.log('Got an error when getting multiple foods');
+    console.log(error);
     return error;
   }
-  return response.data;
+  return response;
 }
-
 // This function is used to sum the nutrients of the foods that are being tracked
 function sumNutrients(data) {
   let protein = 0;

@@ -2,9 +2,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuthContext } from '../../Authentication/context/AuthContext';
 
-const port = process.env.PORT;
-const ipAddress = process.env.IP_ADDRESS;
-const todaysWordRoute = `http://${ipAddress}:${port}/api/user/mentalHealth/todaysWord`;
+const serverURL = process.env.URL;
+const todaysWordRoute = `${serverURL}/api/user/mentalHealth/todaysWord`;
 
 export default function useGetTodaysWord() {
   // get the current users ID thats currently logged in

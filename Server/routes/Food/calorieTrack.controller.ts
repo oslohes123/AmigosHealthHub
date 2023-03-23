@@ -17,7 +17,9 @@ export const insertCalorieGoal = async (req: Request, res: Response) => {
     }
   )
   if (error) {
-    console.log('Error: ', error)
+    if (error.code === '22P02') {
+      return res.status(400).send({ message: 'Invalid input syntax for UUID', details: error.message })
+    }
     return res.status(500).send(error)
   } else {
     return res.status(200).send(data)
@@ -36,7 +38,6 @@ export const readSpecificCalorieGoal = async (req: Request, res: Response) => {
     }
   )
   if (error) {
-    console.log('Error: ', error)
     return res.status(500).send(error)
   } else {
     return res.status(200).send(data)
@@ -54,7 +55,6 @@ export const readAllCalorieGoals = async (req: Request, res: Response) => {
     }
   )
   if (error) {
-    console.log('Error: ', error)
     return res.status(500).send(error)
   } else {
     return res.status(200).send(data)
@@ -76,7 +76,6 @@ export const updateSpecificCalorieGoal = async (req: Request, res: Response) => 
     id
   )
   if (error) {
-    console.log('Error: ', error)
     return res.status(500).send(error)
   } else {
     return res.status(200).send(data)
@@ -92,7 +91,6 @@ export const deleteSpecificCalorieGoal = async (req: Request, res: Response) => 
     id
   )
   if (error) {
-    console.log('Error: ', error)
     return res.status(500).send(error)
   } else {
     return res.status(200).send(data)

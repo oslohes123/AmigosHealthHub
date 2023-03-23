@@ -70,7 +70,6 @@ export const getTrackedFood = async (req: Request, res: Response) => {
     { UserID: userID, Date: date }
   )
   if (error) {
-    console.log('Error getting tracked food')
     res.status(500).send(error)
   } else {
     res.status(200).send(returnData)
@@ -86,7 +85,6 @@ export const getSpecificTrackedFood = async (req: Request, res: Response) => {
     { LogID: logID }
   )
   if (error) {
-    console.log('Error getting specific tracked food')
     res.status(500).send(error)
   } else {
     res.status(200).send(returnData)
@@ -95,8 +93,6 @@ export const getSpecificTrackedFood = async (req: Request, res: Response) => {
 
 export const updateTrackedFood = async (req: Request, res: Response) => {
   const { Quantity, Measure, LogID, Calories } = req.body
-  console.log(req.body)
-  console.log(Quantity, Measure, LogID)
 
   const { data: returnData, error }: any = await databaseQuery.update(
     supabase,
@@ -106,7 +102,6 @@ export const updateTrackedFood = async (req: Request, res: Response) => {
     LogID
   )
   if (error) {
-    console.log('Error updating tracked food')
     res.status(500).send(error)
   } else {
     res.status(200).send(returnData)
@@ -122,7 +117,6 @@ export const deleteTrackedFood = async (req: Request, res: Response) => {
     LogID
   )
   if (error) {
-    console.log('Error deleting tracked food')
     res.status(500).send(error)
   } else {
     res.status(200).send(returnData)
@@ -138,7 +132,6 @@ export const getFood = async (req: Request, res: Response) => {
     { FoodID }
   )
   if (error) {
-    console.log('Error getting food')
     res.status(500).send(error)
   } else {
     res.status(200).send(returnData)
@@ -156,7 +149,6 @@ export const getMultipleFood = async (req: Request, res: Response) => {
     foodIDs
   )
   if (error) {
-    console.log('Error getting food')
     res.status(500).send(error)
   } else {
     res.status(200).send(data)

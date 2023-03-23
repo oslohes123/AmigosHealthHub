@@ -1,8 +1,11 @@
-import { createContext, useContext, useEffect, useReducer } from "react";
+/* eslint-disable react/jsx-no-constructed-context-values */
+import {
+  createContext, useContext, useEffect, useReducer, React,
+} from 'react';
 // const jwttoken = require('jsonwebtoken');
-import AsyncStorage from "@react-native-async-storage/async-storage";
-const port = process.env.PORT;
-const ipAddress = process.env.IP_ADDRESS;
+import AsyncStorage from '@react-native-async-storage/async-storage';
+// import { useAuthContext } from "../hooks/useAuthContext";
+const serverURL = process.env.URL;
 export const AuthContext = createContext();
 
 /**
@@ -12,12 +15,12 @@ export const AuthContext = createContext();
  */
 export const authReducer = (state, action) => {
   switch (action.type) {
-    case "LOGIN":
+    case 'LOGIN':
       return {
         user: action.payload,
       };
 
-    case "LOGOUT":
+    case 'LOGOUT':
       return {
         user: null,
       };
@@ -54,13 +57,13 @@ export const AuthContextProvider = ({ children }) => {
     async function getItem() {
       const user = JSON.parse(await AsyncStorage.getItem("user"));
 
-      // console.log(`user: ${JSON.stringify(user)}`);
+      console.log(`user: ${JSON.stringify(user)}`);
       if (user) {
         // console.log(`token: ${user.token}`);
-        // console.log("IN AUTHCONTEXTPROVIDER");
-        const token = user.token;
+        console.log('IN AUTHCONTEXTPROVIDER');
+        const { token } = user;
         const response = await fetch(
-          `http://${ipAddress}:${port}/api/user/checkInitialToken`,
+          `${serverURL}/api/user/checkInitialToken`,
           {
             method: "GET",
             headers: {
@@ -69,8 +72,8 @@ export const AuthContextProvider = ({ children }) => {
             },
           }
         );
-        // console.log(`response ln 90: ${JSON.stringify(response)}`);
-        //if token exists, then update user state with the token
+        console.log(`response ln 90: ${JSON.stringify(response)}`);
+        // if token exists, then update user state with the token
         if (response.ok) {
           dispatch({ type: "LOGIN", payload: user });
         } else {

@@ -2,9 +2,8 @@
 import { useState } from 'react';
 import { useAuthContext } from '../../../Authentication/context/AuthContext';
 
-const port = process.env.PORT;
-const ipAddress = process.env.IP_ADDRESS;
-const getLastTrackedWorkoutRoute = `http://${ipAddress}:${port}/api/user/completedWorkouts/lastTrackedWorkout`;
+const serverURL = process.env.URL;
+const getLastTrackedWorkoutRoute = `${serverURL}/api/user/completedWorkouts/lastTrackedWorkout`;
 
 export default function useGetLastTrackedWorkout() {
   const [error, setError] = useState(null);

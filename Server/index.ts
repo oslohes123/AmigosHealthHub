@@ -1,4 +1,3 @@
-
 /** ---------------- Routes Start--------------- */
 // HomePage Route
 // app.get('/', (req, res) => {
@@ -64,7 +63,6 @@ app.use(routeNames.foodBaseURL, FoodSearchRouter)
 app.use(routeNames.foodBaseURL, foodDatabaseRouter)
 app.use(routeNames.foodBaseURL, calorieTrackRouter)
 app.use(routeNames.mentalHealthBaseURL, rateMentalRouter)
-app.use('/api/food', FoodSearchRouter)
 app.use(routeNames.userBaseURL, getUserInfoRouter)
 app.use(routeNames.userBaseURL, checkInitialTokenRouter)
 
