@@ -241,7 +241,7 @@ export default function Graph({ navigation }) {
           {/* <Text>Refreshing.....</Text> */}
           <ActivityIndicator
             animating
-            size={50}
+            size={30}
             color={MD2Colors.lightBlue400}
           />
         </>
@@ -251,7 +251,7 @@ export default function Graph({ navigation }) {
 
         {getWeightedData && getWeightedLabels && (
           <TouchableWithoutFeedback>
-            <View style={{ marginBottom: 40 }}>
+            <View style={{ marginBottom: 10 }}>
               <Text style={[styles.title, { color }]}>Weight pulled per exercise</Text>
               <LineChart
                 style={{ borderRadius: 15 }}
@@ -272,7 +272,7 @@ export default function Graph({ navigation }) {
         {/* This is the duration graph for an Other exercise */}
         {getDurationData && getDurationLabels && (
           <TouchableWithoutFeedback>
-            <View style={{ marginBottom: 40 }}>
+            <View style={{ marginBottom: 10 }}>
               <Text style={[styles.title, { color }]}>Duration</Text>
               <LineChart
                 style={{ borderRadius: 25 }}
@@ -293,7 +293,7 @@ export default function Graph({ navigation }) {
         {/* This is the distance graph for an Other exercise */}
         {getDistanceData && getDistanceLabels && (
           <TouchableWithoutFeedback>
-            <View style={{ marginBottom: 40 }}>
+            <View style={{ marginBottom: 10 }}>
               <Text style={[styles.title, { color }]}>Distance</Text>
               <LineChart
                 style={{ borderRadius: 25 }}

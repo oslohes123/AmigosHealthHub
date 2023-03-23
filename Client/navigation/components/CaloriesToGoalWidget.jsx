@@ -80,7 +80,7 @@ export default function CaloriesToGoalWidget() {
                 <Text style={styles.number}>{getCaloriesBurnt}</Text>
               )}
             </Text> */}
-            <Ionicons name="bicycle-outline" size={30} color="#fff" />
+            <Ionicons name="nutrition-outline" size={30} color="#fff" />
           </View>
 
         </LinearGradient>
