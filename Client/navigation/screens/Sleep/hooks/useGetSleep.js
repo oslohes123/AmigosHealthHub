@@ -41,7 +41,7 @@ export default function useGetSleep() {
     if (!response.ok) {
       setIsLoading(false);
       setError(responseJSON.mssg);
-      console.log('Error in get sleep');
+      console.log('Error in get sleep', responseJSON.mssg);
     } else if (response.ok) {
       setError(null);
       setIsLoading(false);
