@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAuthContext } from '../../../Authentication/context/AuthContext';
+import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
 const addWorkoutRoute = `${serverURL}/api/user/workout/add`;
@@ -14,6 +15,7 @@ export default function useAddWorkout() {
 
   const { user } = useAuthContext();
   const { id, token } = user;
+  const { logout } = useLogout();
   const addWorkout = async (workoutname, exercises) => {
     setIsLoading(true);
     setMessage(null);
@@ -26,6 +28,7 @@ export default function useAddWorkout() {
 
     const addWorkoutJSON = await response.json();
     if (!response.ok) {
+      if (response.status === 401) { logout(); }
       setIsLoading(false);
       setMessage(addWorkoutJSON.mssg);
     }

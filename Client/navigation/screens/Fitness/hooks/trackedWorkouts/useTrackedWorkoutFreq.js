@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 import { useState } from 'react';
 import { useAuthContext } from '../../../Authentication/context/AuthContext';
+import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
 const workoutFreqRoute = `${serverURL}/api/user/completedWorkouts/workoutFreq`;
@@ -10,6 +11,7 @@ export default function useTrackedWorkoutFreq() {
   const [isLoadingGetWorkoutFreq, setIsLoadingGetWorkoutFreq] = useState(null);
   const { user } = useAuthContext();
   const { id, token } = user;
+  const { logout } = useLogout();
 
   const getTrackedWorkoutFreq = async () => {
     setIsLoadingGetWorkoutFreq(true);
@@ -21,6 +23,7 @@ export default function useTrackedWorkoutFreq() {
 
     const getTrackedWorkoutFreqJSON = await response.json();
     if (!response.ok) {
+      if (response.status === 401) { logout(); }
       setIsLoadingGetWorkoutFreq(false);
       setErrorGetWorkoutFreq(getTrackedWorkoutFreqJSON.mssg);
       return [];

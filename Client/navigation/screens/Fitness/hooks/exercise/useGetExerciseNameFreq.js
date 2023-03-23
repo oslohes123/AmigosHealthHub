@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 import { useState } from 'react';
 import { useAuthContext } from '../../../Authentication/context/AuthContext';
+import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
 const getExerciseNameFreqRoute = `${serverURL}/api/user/completedWorkouts/exerciseNameFreq`;
@@ -11,7 +12,7 @@ export default function useGetExerciseNameFreq() {
   // const { dispatch } = useAuthContext();
   const { user } = useAuthContext();
   const { id, token } = user;
-
+  const { logout } = useLogout();
   const getExerciseNameFreq = async () => {
     setIsLoading(true);
     setError(null);
@@ -24,6 +25,7 @@ export default function useGetExerciseNameFreq() {
     const getExerciseNameFreqJSON = await response.json();
 
     if (!response.ok) {
+      if (response.status === 401) { logout(); }
       setIsLoading(false);
       setError(getExerciseNameFreqJSON.mssg);
       return [];

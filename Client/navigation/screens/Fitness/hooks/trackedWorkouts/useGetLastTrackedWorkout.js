@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 import { useState } from 'react';
 import { useAuthContext } from '../../../Authentication/context/AuthContext';
+import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
 const getLastTrackedWorkoutRoute = `${serverURL}/api/user/completedWorkouts/lastTrackedWorkout`;
@@ -10,6 +11,7 @@ export default function useGetLastTrackedWorkout() {
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useAuthContext();
   const { id, token } = user;
+  const { logout } = useLogout();
   const getLastTrackedWorkout = async () => {
     setIsLoading(true);
     setError(null);
@@ -22,6 +24,7 @@ export default function useGetLastTrackedWorkout() {
     const getLastTrackedWorkoutJSON = await response.json();
     console.log(`getLastTrackedWorkoutJSON: ${JSON.stringify(getLastTrackedWorkoutJSON)}`);
     if (!response.ok) {
+      if (response.status === 401) { logout(); }
       setIsLoading(false);
       setError(getLastTrackedWorkoutJSON.mssg);
       return 'Not Available';

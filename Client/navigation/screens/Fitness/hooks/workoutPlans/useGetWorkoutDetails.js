@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 import { useState } from 'react';
 import { useAuthContext } from '../../../Authentication/context/AuthContext';
+import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
 const getWorkoutDetailsRoute = `${serverURL}/api/user/workout/get`;
@@ -10,6 +11,7 @@ export default function useGetWorkoutDetails() {
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useAuthContext();
   const { id, token } = user;
+  const { logout } = useLogout();
   const getWorkoutDetails = async (workoutname) => {
     setIsLoading(true);
     setError(null);
@@ -22,6 +24,7 @@ export default function useGetWorkoutDetails() {
 
     const getWorkoutDetailsJSON = await response.json();
     if (!response.ok) {
+      if (response.status === 401) { logout(); }
       setIsLoading(false);
       setError(getWorkoutDetailsJSON.mssg);
       return [];
