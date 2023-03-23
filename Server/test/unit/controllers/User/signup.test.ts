@@ -71,20 +71,6 @@ test('sign up with missing password should return error', async (t: any) => {
   t.true(res.json.calledWith({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test('sign up with missing last name should return error', async (t: any) => {
-  const req = mockRequest({
-    firstName: 'John',
-    email: 'johndoe@gmail.com',
-    password: 'CorrectPassword123!',
-    age: 0
-  })
-  const res = mockResponse()
-  await signupUser(req as Request, res as Response)
-  // await signupUser(req, res);
-  t.true(res.status.calledWith(400))
-  t.true(res.json.calledWith({ mssg: 'All Fields Must Be Filled' }))
-})
-
 test('sign up with missing first name should return error', async (t: any) => {
   const req = mockRequest({
     email: 'johndoe@gmail.com',
@@ -119,34 +105,6 @@ test('sign up with missing last name should return error', async (t: any) => {
     email: 'johndoe@gmail.com',
     password: 'CorrectPassword123!',
     age: 0
-  })
-  const res = mockResponse()
-  await signupUser(req as Request, res as Response)
-  // await signupUser(req, res);
-  t.true(res.status.calledWith(400))
-  t.true(res.json.calledWith({ mssg: 'All Fields Must Be Filled' }))
-})
-
-test('sign up with missing first name should return error', async (t: any) => {
-  const req = mockRequest({
-    email: 'johndoe@gmail.com',
-    lastName: 'Doe',
-    password: 'CorrectPassword123!',
-    age: 0
-  })
-  const res = mockResponse()
-  await signupUser(req as Request, res as Response)
-  // await signupUser(req, res);
-  t.true(res.status.calledWith(400))
-  t.true(res.json.calledWith({ mssg: 'All Fields Must Be Filled' }))
-})
-
-test('sign up with missing age should return error', async (t: any) => {
-  const req = mockRequest({
-    firstName: 'John',
-    lastName: 'Doe',
-    password: 'CorrectPassword123!',
-    email: 'johndoe@gmail.com'
   })
   const res = mockResponse()
   await signupUser(req as Request, res as Response)
