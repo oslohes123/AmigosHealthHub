@@ -1,22 +1,27 @@
 import {
-  View, StyleSheet, Text, TouchableOpacity, ScrollView,
+  StyleSheet, Text, TouchableOpacity, SafeAreaView, Dimensions,
 } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons, AntDesign } from '@expo/vector-icons';
+import themeContext from '../../../theme/themeContext';
+
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#203038',
     flex: 1,
+    justifyContent: 'flex-end',
   },
   widget: {
-    paddingHorizontal: '15%',
-    paddingVertical: '10%',
+    padding: 20,
     borderRadius: 25,
-    width: '80%',
+    width: screenWidth * 0.9,
+    height: screenHeight * 0.2,
     alignSelf: 'center',
-    marginTop: '5%',
+    marginBottom: 20,
+    justifyContent: 'space-evenly',
     alignItems: 'center',
   },
   header: {
@@ -27,6 +32,8 @@ const styles = StyleSheet.create({
 });
 
 export default function Stats({ navigation }) {
+  const { background } = useContext(themeContext);
+
   const pressHandler = () => {
     navigation.navigate('Graph');
   };
@@ -40,56 +47,52 @@ export default function Stats({ navigation }) {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <View>
-        <View style={styles.container}>
-          <TouchableOpacity onPress={pressHandler}>
-            <LinearGradient
-              colors={['blue', 'grey']}
-              style={styles.widget}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-            >
-              <Text style={styles.header}>
-                Click to view Graphs
+    <SafeAreaView style={[styles.container, { backgroundColor: background }]}>
+      <TouchableOpacity onPress={pressHandler}>
+        <LinearGradient
+          colors={['blue', 'grey']}
+          style={styles.widget}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+        >
+          <Text style={styles.header}>
+            Click to view Graphs
 
-              </Text>
-              <Ionicons name="bar-chart-outline" size={40} color="white" />
-            </LinearGradient>
-          </TouchableOpacity>
+          </Text>
+          <Ionicons name="bar-chart-outline" size={40} color="white" />
+        </LinearGradient>
+      </TouchableOpacity>
 
-          <TouchableOpacity onPress={pressHandler1}>
-            <LinearGradient
-              colors={['blue', 'grey']}
-              style={styles.widget}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-            >
-              <Text style={styles.header}>
-                Click to view Workout History
+      <TouchableOpacity onPress={pressHandler1}>
+        <LinearGradient
+          colors={['blue', 'grey']}
+          style={styles.widget}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+        >
+          <Text style={styles.header}>
+            Click to view Workout History
 
-              </Text>
-              <AntDesign name="calendar" size={35} color="white" />
-            </LinearGradient>
-          </TouchableOpacity>
+          </Text>
+          <AntDesign name="calendar" size={35} color="white" />
+        </LinearGradient>
+      </TouchableOpacity>
 
-          <TouchableOpacity onPress={pressHandler2}>
-            <LinearGradient
-              colors={['blue', 'grey']}
-              style={styles.widget}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-            >
-              <Text style={styles.header}>
-                Click to view overall Stats
+      <TouchableOpacity onPress={pressHandler2}>
+        <LinearGradient
+          colors={['blue', 'grey']}
+          style={styles.widget}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+        >
+          <Text style={styles.header}>
+            Click to view overall Stats
 
-              </Text>
-              <Ionicons name="stats-chart-outline" size={40} color="white" />
-            </LinearGradient>
-          </TouchableOpacity>
+          </Text>
+          <Ionicons name="stats-chart-outline" size={40} color="white" />
+        </LinearGradient>
+      </TouchableOpacity>
 
-        </View>
-      </View>
-    </ScrollView>
+    </SafeAreaView>
   );
 }

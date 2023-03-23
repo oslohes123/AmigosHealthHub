@@ -1,7 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { useEffect, useState, useContext } from 'react';
 import {
-  View, StyleSheet, Text, TouchableOpacity, ScrollView,
+  View, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, ScrollView, SafeAreaView,
 } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { AntDesign } from '@expo/vector-icons';
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   calendar: {
-    width: '90%',
+    width: '100%',
     alignSelf: 'center',
     borderTopEndRadius: 40,
     borderTopLeftRadius: 40,
@@ -135,11 +135,11 @@ export default function PastWorkoutDetails() {
   };
 
   return (
-    <ScrollView style={[styles.container, { backgroundColor: theme.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
       <View style={styles.primary}>
         {!selectDay && (
           <Text style={[styles.text, { borderColor: theme.color }, { color: theme.color }]}>
-            Select a day from the Calendar to View Workout History
+            Select a date
           </Text>
         )}
         {selectDay && (
@@ -153,84 +153,88 @@ export default function PastWorkoutDetails() {
           <AntDesign name="calendar" size={35} color={theme.color} />
         </TouchableOpacity>
       </View>
-      {selectDay && !viewCalendar && (
 
-      <TouchableOpacity style={{ alignSelf: 'center', width: '100%' }}>
+      <ScrollView>
+        {selectDay && !viewCalendar && (
+        <TouchableWithoutFeedback style={{ alignSelf: 'center', width: '100%' }}>
+          <>
+            {isLoading && (
+            <>
+              {/* <Text>Refreshing.....</Text> */}
+              <ActivityIndicator
+                animating
+                size={50}
+                color={MD2Colors.lightBlue400}
+              />
+            </>
+            )}
 
-        {isLoading && (
-        <>
-          {/* <Text>Refreshing.....</Text> */}
-          <ActivityIndicator
-            animating
-            size={50}
-            color={MD2Colors.lightBlue400}
-          />
-        </>
-        )}
+            {/* {Unique Key prop problem here!!!!!} */}
+            {
+              getArrayOfWorkoutNamesAndIDs && (
 
-        {/* {Unique Key prop problem here!!!!!} */}
-        {
-                getArrayOfWorkoutNamesAndIDs && (
-
-                  <>
-                    <Text style={[styles.infoText, { color: theme.color }]}>
-                      Workouts performed on this day:
-                    </Text>
-                    {getArrayOfWorkoutNamesAndIDs.map((workout) => (
-                      <Text
-                        style={[styles.infoText, { color: theme.color }]}
-                        key={workout.workoutID}
-                      >
-                        {workout.workoutname}
-                      </Text>
-                    ))}
-                  </>
-                )
-              }
-
-        {
-                !getExerciseData && !getExerciseLabels && !getArrayOfWorkoutNamesAndIDs && (
+                <>
                   <Text style={[styles.infoText, { color: theme.color }]}>
-                    No workouts to show!
+                    Workouts performed on this day:
                   </Text>
-                )
-              }
+                  {getArrayOfWorkoutNamesAndIDs.map((workout) => (
+                    <Text
+                      style={[styles.infoText, { color: theme.color }]}
+                      key={workout.workoutID}
+                    >
+                      {workout.workoutname}
+                    </Text>
+                  ))}
+                </>
+              )
+            }
 
-        {getExerciseData && getExerciseLabels && (
-        <View style={[styles.tableContainer, { borderColor: theme.color }]}>
-          <DataTable>
-            <DataTable.Header style={{ borderBottomWidth: 3, borderBottomColor: 'red' }}>
-              <DataTable.Title>
-                <Text style={[styles.tableHeader, { color: theme.color }]}>Exercise Name</Text>
-              </DataTable.Title>
-              <DataTable.Title numeric>
-                <Text style={[styles.tableHeader, { color: theme.color }]}>Frequency</Text>
-              </DataTable.Title>
-            </DataTable.Header>
+            {
+              !getExerciseData && !getExerciseLabels && !getArrayOfWorkoutNamesAndIDs && (
+                <Text style={[styles.infoText, { color: theme.color }]}>
+                  No workouts to show!
+                </Text>
+              )
+            }
 
-            {getExerciseLabels.map((exercise) => (
+            {getExerciseData && getExerciseLabels && (
+            <View style={[styles.tableContainer, { borderColor: theme.color }]}>
+              <DataTable>
+                <DataTable.Header style={{ borderBottomWidth: 3, borderBottomColor: 'red' }}>
+                  <DataTable.Title>
+                    <Text style={[styles.tableHeader, { color: theme.color }]}>Exercise Name</Text>
+                  </DataTable.Title>
+                  <DataTable.Title numeric>
+                    <Text style={[styles.tableHeader, { color: theme.color }]}>Frequency</Text>
+                  </DataTable.Title>
+                </DataTable.Header>
 
-              <DataTable.Row style={styles.row} key={exercise}>
-                <DataTable.Cell style={[{ color: theme.color }, { borderColor: theme.color }]}>
-                  <Text style={[styles.data, { color: theme.color }]}>{exercise}</Text>
-                </DataTable.Cell>
-                <DataTable.Cell
-                  numeric
-                  style={[{ color: theme.color }, { borderColor: theme.color }]}
-                >
-                  <Text
-                    style={[styles.data, { color: theme.color }]}
-                  >
-                    {getExerciseData[getExerciseLabels.indexOf(exercise)]}
-                  </Text>
-                </DataTable.Cell>
-              </DataTable.Row>
-            ))}
-          </DataTable>
-        </View>
+                {getExerciseLabels.map((exercise) => (
+
+                  <DataTable.Row style={styles.row} key={exercise}>
+                    <DataTable.Cell style={[{ color: theme.color }, { borderColor: theme.color }]}>
+                      <Text style={[styles.data, { color: theme.color }]}>{exercise}</Text>
+                    </DataTable.Cell>
+                    <DataTable.Cell
+                      numeric
+                      style={[{ color: theme.color }, { borderColor: theme.color }]}
+                    >
+                      <Text
+                        style={[styles.data, { color: theme.color }]}
+                      >
+                        {getExerciseData[getExerciseLabels.indexOf(exercise)]}
+                      </Text>
+                    </DataTable.Cell>
+                  </DataTable.Row>
+                ))}
+              </DataTable>
+            </View>
+            )}
+          </>
+        </TouchableWithoutFeedback>
         )}
-      </TouchableOpacity>
-      )}
+      </ScrollView>
+
       {viewCalendar && (
         <Calendar
           style={styles.calendar}
@@ -239,6 +243,6 @@ export default function PastWorkoutDetails() {
           markedDates={markedDate}
         />
       )}
-    </ScrollView>
+    </SafeAreaView>
   );
 }
