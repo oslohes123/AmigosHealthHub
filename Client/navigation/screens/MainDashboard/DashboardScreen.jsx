@@ -2,15 +2,16 @@ import React, { useContext } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { LinearGradient } from 'expo-linear-gradient';
+// import Ionicons from 'react-native-vector-icons/Ionicons';
+// import { LinearGradient } from 'expo-linear-gradient';
 import HoursSleptGraph from '../Sleep/hoursSleptGraph';
 import themeContext from '../../theme/themeContext';
 import CaloriesBurntTodayWidget from '../../components/CaloriesBurntTodayWidget';
+import CaloriesToGoalWidget from '../../components/CaloriesToGoalWidget';
+import WordOfTheDayWidget from '../../components/WordOfTheDayWidget';
 
 const styles = StyleSheet.create({
   container: {
@@ -60,31 +61,11 @@ export default function DashboardScreen({ navigation }) {
       <CaloriesBurntTodayWidget />
 
       <TouchableOpacity>
-        <LinearGradient
-          colors={['blue', 'grey']}
-          style={styles.widget}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-        >
-          <Text style={styles.widgetText}>
-            Word of the Day
-          </Text>
-          <Ionicons name="logo-wordpress" size={40} color="white" />
-        </LinearGradient>
+        <WordOfTheDayWidget />
       </TouchableOpacity>
 
       <TouchableOpacity>
-        <LinearGradient
-          colors={['blue', 'grey']}
-          style={styles.widget}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-        >
-          <Text style={styles.widgetText}>
-            Calories to Goal
-          </Text>
-          <Text style={styles.widgetText}>1250kcal</Text>
-        </LinearGradient>
+        <CaloriesToGoalWidget />
       </TouchableOpacity>
 
     </SafeAreaView>

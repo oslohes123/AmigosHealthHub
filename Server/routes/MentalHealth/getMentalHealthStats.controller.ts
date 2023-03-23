@@ -50,9 +50,9 @@ export const todaysValue = async (req: Request, res: Response) => {
     return res.status(400).json({ mssg: 'Something went wrong!' })
   }
   else if (data.length === 0) {
-    return res.status(200).json({ mssg: 'User has not inputted a word today' })
+    return res.status(200).json({ mssg: 'success', word: 'User has not inputted a word today' })
   }
   else {
-    return res.status(200).json({ mssg: 'Here is todays word!', word: data })
+    return res.status(200).json({ mssg: 'success', word: data })
   }
 }
