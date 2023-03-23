@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import themeContext from '../../../theme/themeContext';
 import { useContext, React } from 'react';
+import themeContext from '../../../theme/themeContext';
 import WorkoutPlansScreen from '../screens/WorkoutPlansScreen';
 import FitnessDashboardScreen from '../screens/FitnessDashboardScreen';
 import CreateNewWorkoutScreen from '../screens/CreateNewWorkoutScreen';
