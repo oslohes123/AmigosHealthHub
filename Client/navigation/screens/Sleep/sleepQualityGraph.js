@@ -5,7 +5,7 @@ import { Text, View } from 'react-native';
 import moment from 'moment';
 import { useIsFocused } from '@react-navigation/native';
 import GraphWidget from '../../components/graphWidget';
-import { useGetSleep } from './hooks/useGetSleep';
+import useGetSleep from './hooks/useGetSleep';
 
 export default function SleepQaulityGraph() {
   const { getSleep, isLoading, error } = useGetSleep();
@@ -25,7 +25,8 @@ export default function SleepQaulityGraph() {
   }, [isFocused]);
 
   if (data === undefined) {
-    return <></>;
+    return (
+    <View></View>);
   }
 
   const graphTitle = 'Sleep Quality this week';

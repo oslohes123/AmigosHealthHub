@@ -4,7 +4,7 @@ import { checkTokenHelper } from '../../../utils/checkTokenHelpers'
 import supabase from '../../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../../utils/databaseInterface'
 import { createHashedPassword, createToken, deleteUserRow } from '../../../utils/userFunctions'
-const test = require('ava')
+import test from 'ava'
 const sinon = require('sinon')
 const supabaseQuery = new SupabaseQueryClass()
 

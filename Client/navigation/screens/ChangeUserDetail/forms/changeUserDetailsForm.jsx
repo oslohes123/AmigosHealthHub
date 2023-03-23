@@ -35,7 +35,7 @@ export default function ChangeUserDetailsForm() {
       fontSize: 20,
       fontWeight: 'bold',
       marginLeft: '2%',
-      // marginTop: '2%'
+      marginTop: '-3%',
     },
   });
   const { color } = theme;

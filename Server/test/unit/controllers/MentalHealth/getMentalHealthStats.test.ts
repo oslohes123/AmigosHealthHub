@@ -6,7 +6,7 @@ import moment from 'moment'
 import type { Request, Response } from 'express'
 import { createMentalHealthUser } from '../../../../utils/asyncMentalHealthFunctions'
 
-const test = require('ava')
+import test from 'ava'
 const sinon = require('sinon')
 const uuid = uuidv4()
 const wrongUUID = '1a-2345-6b7c-890d-e01f2ghij34k'

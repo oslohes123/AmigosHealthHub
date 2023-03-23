@@ -10,7 +10,7 @@ import { useIsFocused, useRoute } from '@react-navigation/native';
 
 import moment from 'moment';
 import GraphWidget from '../../components/graphWidget';
-import { useGetSleep } from './hooks/useGetSleep';
+import useGetSleep from './hooks/useGetSleep';
 
 export default function HoursSleptGraph({ navigation }) {
   const { getSleep, isLoading, error } = useGetSleep();

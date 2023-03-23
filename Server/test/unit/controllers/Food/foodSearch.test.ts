@@ -6,7 +6,7 @@ import { createHashedPassword, createUser } from '../../../../utils/userFunction
 import { clientSearchMethods } from '../../../../constants'
 import { generalSearch } from './../../../../routes/Food/foodSearch.controller'
 import { type ExecutionContext } from 'ava'
-const test = require('ava')
+import test from 'ava'
 const sinon = require('sinon')
 const supabaseQuery = new SupabaseQueryClass()
 

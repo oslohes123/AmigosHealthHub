@@ -1,7 +1,7 @@
 import { createToken } from '../../../../utils/userFunctions'
 import { v4 as uuidv4 } from 'uuid'
 require('dotenv').config()
-const test = require('ava')
+import test from 'ava'
 const jwt = require('jsonwebtoken')
 
 test('createToken results in legitimate token', (t: any) => {

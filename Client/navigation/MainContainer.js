@@ -100,7 +100,7 @@ export default function MainContainer() {
                                 tabBarShowLabel: false,
                                 tabBarStyle: {
                                     paddingTop: 10,
-                                    backgroundColor: '#3eda9b'
+                                    backgroundColor: '#c2e7fe'
                                 }
                             })}
                         >

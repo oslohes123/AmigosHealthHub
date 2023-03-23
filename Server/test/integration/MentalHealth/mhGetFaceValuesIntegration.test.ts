@@ -6,8 +6,8 @@ import { getDate } from '../../../utils/convertTimeStamptz'
 import moment from 'moment'
 import { createMentalHealthUser } from '../../../utils/asyncMentalHealthFunctions'
 
-const request = require('supertest')
-const test = require('ava')
+import request from 'supertest'
+import test from 'ava'
 const routeNames = new RouteNamesClass()
 /**
  * Refactor using objects, interfaces to prevent repeated code.

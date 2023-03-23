@@ -1,4 +1,4 @@
-const test = require('ava');
+import test from 'ava';
 import { Request, Response } from 'express';
 const sinon = require('sinon');
 import {v4 as uuidv4} from 'uuid';
