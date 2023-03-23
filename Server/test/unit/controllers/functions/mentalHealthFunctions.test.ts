@@ -1,6 +1,6 @@
 import { getToday } from '../../../../routes/MentalHealth/rateMental.controller'
 import { average, getFaces, getOccurrences, getWords, wordFreq } from '../../../../utils/mentalHealthFunctions'
-const test = require('ava')
+import test from 'ava'
 
 test('getToday returns a string in the format YYYY-MM-DD', (t: any) => {
   const today: string = getToday()

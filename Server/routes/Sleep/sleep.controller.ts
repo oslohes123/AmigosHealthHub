@@ -6,6 +6,9 @@ export const addSleep = async (req: Request, res: Response) => {
 
   if (!userID) return res.status(400).json({ mssg: 'UUID must be provided' })
 
+  if (!timestamp) return res.status(400).json({ mssg: 'timestamp must be provided' })
+  if (!hoursSlept) return res.status(400).json({ mssg: 'hoursSlept must be provided' })
+
   // const { dataGet, errorGet }: any = await getSleepFunc(
   //     userID,
   //     timestamp,

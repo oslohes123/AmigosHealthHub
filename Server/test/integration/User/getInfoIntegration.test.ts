@@ -4,8 +4,8 @@ import { v4 as uuidv4 } from 'uuid'
 import supabase from '../../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../../utils/databaseInterface'
 import RouteNamesClass from '../../../utils/routeNamesClass'
-const request = require('supertest')
-const test = require('ava')
+import request from 'supertest'
+import test from 'ava'
 const supabaseQuery = new SupabaseQueryClass()
 const routeNames = new RouteNamesClass()
 const getInfoRoute = routeNames.fullGetInfoURL
@@ -39,10 +39,9 @@ test.before(async (t: any) => {
   }
 })
 
-test.after.always('guaranteed clean up', async(t: any) => {
-  await supabaseQuery.deleteFrom(supabase, 'User', 'email', existingEmail);
+test.after.always('guaranteed clean up', async (t: any) => {
+  await supabaseQuery.deleteFrom(supabase, 'User', 'email', existingEmail)
 })
-
 
 test(`GET ${getInfoRoute} with no fields`, async (t: any) => {
   const response = await request(app)

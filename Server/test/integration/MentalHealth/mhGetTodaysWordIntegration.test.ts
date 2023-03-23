@@ -6,8 +6,8 @@ import { v4 as uuidv4 } from 'uuid'
 import RouteNamesClass from '../../../utils/routeNamesClass'
 import { createMentalHealthUser } from '../../../utils/asyncMentalHealthFunctions'
 
-const test = require('ava')
-const request = require('supertest')
+import test from 'ava'
+import request from 'supertest'
 const routeNames = new RouteNamesClass()
 
 /**
