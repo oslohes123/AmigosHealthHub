@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-export default function CaloriesToGoalWidget() {
+export default function CaloriesRemaining() {
   const isFocused = useIsFocused();
   const { user } = useAuthContext();
   const userid = user.id;

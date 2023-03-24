@@ -8,6 +8,7 @@ require('dotenv').config()
 
 export const wordValues = async (req: Request, res: Response) => {
   const { id } = req.headers
+  // const { data, error }: any = await returnLastSeven(supabase, 'Mental Health', 'todays_word', 'created_at', id)
   const { data, error }: any = await returnLastSeven(supabase, 'Mental Health', 'todays_word', 'created_at', id)
   if (error) {
     return res.status(400).json({ mssg: 'Failed to retrieve last 7 words' })

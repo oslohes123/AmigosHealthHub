@@ -1,8 +1,7 @@
 import { type Request, type Response } from 'express'
 import supabase from '../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../utils/databaseInterface'
-import moment from 'moment'
-import { getDate } from '../../utils/convertTimeStamptz'
+import { getDate, getTodaysDate } from '../../utils/convertTimeStamptz'
 const databaseQuery = new SupabaseQueryClass()
 
 export const getCaloriesToday = async (req: Request, res: Response) => {
@@ -11,7 +10,7 @@ export const getCaloriesToday = async (req: Request, res: Response) => {
     return res.status(400).json({ mssg: 'userid is required!' })
   }
   let totalCaloriesBurnt = 0
-  const todayDate = getDate(moment().format())
+  const todaysDate = getTodaysDate()
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'CompletedWorkouts', 'userid', userid, 'completedWorkoutID, timestamp')
   if (error) {
     return res.status(400).json({ mssg: 'Something went wrong!', error })
@@ -26,7 +25,7 @@ export const getCaloriesToday = async (req: Request, res: Response) => {
       const workoutTimeStamp = data[i].timestamp
       const workoutDate = getDate(workoutTimeStamp)
       console.log(`workoutDate:${workoutDate}`)
-      if (workoutDate === todayDate) {
+      if (workoutDate === todaysDate) {
         arrayOfWorkoutsToday.push(data[i])
       }
     }

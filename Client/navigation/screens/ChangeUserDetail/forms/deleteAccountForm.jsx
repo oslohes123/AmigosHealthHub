@@ -16,17 +16,6 @@ import deleteAccountWrapper from '../hooks/useDeleteAccount';
 import { globalStyles } from '../../../../styles/global';
 import { useAuthContext } from '../../Authentication/context/AuthContext';
 
-// const passwordRegex = /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*!=]).*$/;
-// const deleteAccountSchema = Yup.object().shape({
-//   current_password: Yup.string()
-//     .required('No password provided.')
-//     .min(8, 'Password is too short - should be 8 chars minimum.')
-//     .matches(
-//       passwordRegex,
-//       'Password must contain atleast 1 lowercase letter, 1 uppercase letter and 1 special character (eg. @, #, $, %, ^, &, +, *, !, =)',
-//     ),
-// });
-
 const styles = StyleSheet.create({
   email: {
     fontSize: 23,
@@ -78,7 +67,7 @@ export default function DeleteAccountForm() {
             <Text>{props.errors.current_password}</Text>
 
             <Button
-              title="DELETE ACCOUNT"
+              title="CONFIRM DELETE ACCOUNT"
               onPress={props.handleSubmit}
               disabled={isLoading}
             />

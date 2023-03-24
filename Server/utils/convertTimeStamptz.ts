@@ -1,4 +1,4 @@
-
+import moment from 'moment'
 // 2023-03-12T17:47:47.856391+00:00
 
 // Returns date eg. 2023-03-12
@@ -50,4 +50,8 @@ export const sortArrayOfTimeStamps = (arrayOfTimeStamps: string[]): string[] => 
   const sortedArrayOfTimeStamps = arrayOfTimeStamps.sort(compareTwoDates)
   console.log(`SORTED arrayOfTimeStamps: ${JSON.stringify(sortedArrayOfTimeStamps)}`)
   return sortedArrayOfTimeStamps
+}
+
+export function getTodaysDate () {
+  return getDate(moment().format())
 }

@@ -3,14 +3,15 @@ import * as Yup from 'yup';
 import {
   Button, Text, TextInput, View, SafeAreaView, StyleSheet,
 } from 'react-native';
-import React, { useState, useContext } from 'react';
+import { ActivityIndicator, MD2Colors } from 'react-native-paper';
+import React, { useState, useContext, useEffect } from 'react';
 import { Formik } from 'formik';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { globalStyles } from '../../../../styles/global';
 import useChangeProfileDetails from '../hooks/useChangeProfileDetails';
 import themeContext from '../../../theme/themeContext';
 
-// import { getUserInfo } from '../hooks/getUserInfo';
-const getUserInfo = require('../hooks/useGetUserInfo');
+import useGetUserInfo from '../hooks/useGetUserInfo';
 
 const ChangeUserDetailsSchema = Yup.object().shape({
   firstName: Yup.string().required('Required'),
@@ -28,8 +29,9 @@ export default function ChangeUserDetailsForm() {
   const [firstName, setfirstName] = useState(null);
   const [lastName, setlastName] = useState(null);
   const [age, setage] = useState(null);
+  const { getUserInfo, isLoadingUserInfo, errorUserInfo } = useGetUserInfo();
   const { changeStats, isLoading, error } = useChangeProfileDetails();
-
+  const navigation = useNavigation();
   const styles = StyleSheet.create({
     head: {
       fontSize: 20,
@@ -39,16 +41,21 @@ export default function ChangeUserDetailsForm() {
     },
   });
   const { color } = theme;
+  const isFocused = useIsFocused();
   async function setInitialValues() {
-    const userInfo = await getUserInfo.getUserInfo();
-
-    setEmail(userInfo.user.email);
-    setfirstName(userInfo.user.firstName);
-    setlastName(userInfo.user.lastName);
-    setage(userInfo.user.age);
+    const userInfo = await getUserInfo();
+    if (userInfo) {
+      setEmail(userInfo.user.email);
+      setfirstName(userInfo.user.firstName);
+      setlastName(userInfo.user.lastName);
+      setage(userInfo.user.age);
+    }
   }
-  setInitialValues();
-
+  useEffect(() => {
+    if (isFocused) {
+      setInitialValues();
+    }
+  }, [navigation, isFocused]);
   return (
     <SafeAreaView style={globalStyles.container}>
       <Formik
@@ -69,8 +76,18 @@ export default function ChangeUserDetailsForm() {
         }}
         validationSchema={ChangeUserDetailsSchema}
       >
+
         {(props) => (
           <View>
+                {isLoadingUserInfo && (
+    <ActivityIndicator
+      animating
+      size={40}
+      color={MD2Colors.greenA400}
+    />
+)}
+{errorUserInfo && <Text>{errorUserInfo}</Text>}
+            
             <Text style={[styles.head, { color }]}>First Name</Text>
             <TextInput
               style={[globalStyles.input, { color }]}
