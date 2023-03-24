@@ -13,5 +13,8 @@ export interface SearchCriteria {
     code:apiSearchMethods,
 }
 
+//When true, routes are running on deployedServer
+export const deployedServer = true;
+
 
 

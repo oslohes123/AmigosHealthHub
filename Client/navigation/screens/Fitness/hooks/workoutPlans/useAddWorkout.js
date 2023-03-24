@@ -19,7 +19,7 @@ export default function useAddWorkout() {
   const addWorkout = async (workoutname, exercises) => {
     setIsLoading(true);
     setMessage(null);
-
+    console.log(`exercises in useAddWorkout: ${JSON.stringify(useAddWorkout)}`);
     const response = await fetch(addWorkoutRoute, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: token },

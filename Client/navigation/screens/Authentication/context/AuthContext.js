@@ -2,11 +2,17 @@
 import {
   createContext, useContext, useEffect, useReducer, React,
 } from 'react';
-// const jwttoken = require('jsonwebtoken');
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import { useAuthContext } from "../hooks/useAuthContext";
+
 const serverURL = process.env.URL;
 export const AuthContext = createContext();
+const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+let checkInitialTokenRoute;
+if (usingDeployedServer) {
+  checkInitialTokenRoute = `${serverURL}/api/user/checkInitialToken`;
+} else {
+  checkInitialTokenRoute = 'http://localhost:3001/api/user/checkInitialToken';
+}
 
 /**
  *
@@ -32,15 +38,15 @@ export const authReducer = (state, action) => {
 export const useAuthContext = () => {
   const stateAndDispatch = useContext(AuthContext);
 
-  //stateAndDispatch are null when
-  //AuthContext is used outside of the wanted scope. So throw error
+  // stateAndDispatch are null when
+  // AuthContext is used outside of the wanted scope. So throw error
   if (!stateAndDispatch) {
-    throw Error("AuthContext is being used outside its intended scope.");
+    throw Error('AuthContext is being used outside its intended scope.');
   }
   // console.log(`state and dispatch : ${stateAndDispatch}`);
   return stateAndDispatch;
 };
-export const AuthContextProvider = ({ children }) => {
+export function AuthContextProvider({ children }) {
   //
   //  initial value: user:null
 
@@ -55,7 +61,7 @@ export const AuthContextProvider = ({ children }) => {
   console.log(`${state.user}`);
   useEffect(() => {
     async function getItem() {
-      const user = JSON.parse(await AsyncStorage.getItem("user"));
+      const user = JSON.parse(await AsyncStorage.getItem('user'));
 
       console.log(`user: ${JSON.stringify(user)}`);
       if (user) {
@@ -63,38 +69,38 @@ export const AuthContextProvider = ({ children }) => {
         console.log('IN AUTHCONTEXTPROVIDER');
         const { token } = user;
         const response = await fetch(
-          `${serverURL}/api/user/checkInitialToken`,
+          checkInitialTokenRoute,
           {
-            method: "GET",
+            method: 'GET',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
               authorization: token,
             },
-          }
+          },
         );
         console.log(`response ln 90: ${JSON.stringify(response)}`);
         // if token exists, then update user state with the token
         if (response.ok) {
-          dispatch({ type: "LOGIN", payload: user });
+          dispatch({ type: 'LOGIN', payload: user });
         } else {
-          await AsyncStorage.removeItem("user");
-          dispatch({ type: "LOGOUT" });
+          await AsyncStorage.removeItem('user');
+          dispatch({ type: 'LOGOUT' });
         }
       }
     }
     getItem();
   }, []);
-  //At the very beginning of app, check if there exists
+  // At the very beginning of app, check if there exists
   // 'user' in AsyncStorage, if so, set user state to
 
   return (
-    //All children can use state and dispatch
-    // <AuthContext.Provider value={useAuthContext()}>
-    //     {children}
-    // </AuthContext.Provider>
+  // All children can use state and dispatch
+  // <AuthContext.Provider value={useAuthContext()}>
+  //     {children}
+  // </AuthContext.Provider>
 
     <AuthContext.Provider value={{ ...state, dispatch }}>
       {children}
     </AuthContext.Provider>
   );
-};
+}
