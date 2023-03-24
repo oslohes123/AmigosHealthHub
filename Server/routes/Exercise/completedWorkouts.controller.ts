@@ -91,6 +91,7 @@ const getWorkoutByID = async (completedWorkoutID: string) => {
 
 // Returns all of a user's completed workouts' names and dates
 export const getAllCompletedWorkouts = async (req: Request, res: Response) => {
+  const { userid } = req.headers
   if (!userid) {
     return res.status(400).json({ mssg: 'No userid provided!' })
   }
@@ -446,7 +447,7 @@ export const getActualExerciseNameFrequency = async (req: Request, res: Response
   if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
     return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
   }
-
+  // @ts-expect-error userid will not be undefined as it is validated against the schema
   const { errorHere, AEIDs } = await getAllAEIDs(userid)
   if (errorHere) {
     return res.status(400).json({ mssg: 'Something went wrong!', errorHere })
@@ -475,6 +476,7 @@ export const getActualExerciseTypeFrequency = async (req: Request, res: Response
   if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
     return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
   }
+  // @ts-expect-error userid will not be undefined as it is validated against the schema
   const { errorHere, AEIDs } = await getAllAEIDs(userid)
   if (errorHere) {
     return res.status(400).json({ mssg: 'Something went wrong!', errorHere })
