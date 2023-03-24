@@ -48,7 +48,7 @@ const mockRequest = (sessionData: any) => {
   }
 }
 
-test('changePassword with no fields should return error', async (t: any) => {
+test.serial('changePassword with no fields should return error', async (t: any) => {
   const req = mockRequest({})
   const res = mockResponse()
   await changePassword(req as Request, res as Response)
@@ -57,7 +57,7 @@ test('changePassword with no fields should return error', async (t: any) => {
   t.true(res.json.calledWith({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test('changePassword with no email should return error', async (t: any) => {
+test.serial('changePassword with no email should return error', async (t: any) => {
   const req = mockRequest({
     oldPassword: 'OriginalPassword123!',
     newPassword: 'NewPassword123!'
@@ -69,7 +69,7 @@ test('changePassword with no email should return error', async (t: any) => {
   t.true(res.json.calledWith({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test('changePassword with no oldPassword should returns error', async (t: any) => {
+test.serial('changePassword with no oldPassword should returns error', async (t: any) => {
   const req = mockRequest({
     email: testEmail,
     newPassword: 'NewPassword123!'
@@ -81,7 +81,7 @@ test('changePassword with no oldPassword should returns error', async (t: any) =
   t.true(res.json.calledWith({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test('changePassword with no newPassword should returns error', async (t: any) => {
+test.serial('changePassword with no newPassword should returns error', async (t: any) => {
   const req = mockRequest({
     email: testEmail,
     oldPassword: 'OriginalPassword123!'
@@ -93,7 +93,7 @@ test('changePassword with no newPassword should returns error', async (t: any) =
   t.true(res.json.calledWith({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test('changePassword with non-existent user email returns error', async (t: any) => {
+test.serial('changePassword with non-existent user email returns error', async (t: any) => {
   const uuid = uuidv4()
   const randomEmail: string = `${uuid}@gmail.com`
 
@@ -109,7 +109,7 @@ test('changePassword with non-existent user email returns error', async (t: any)
   t.true(res.json.calledWith({ mssg: "Email doesn't exist in our database" }))
 })
 
-test('changePassword with incorrect original password results in error', async (t: any) => {
+test.serial('changePassword with incorrect original password results in error', async (t: any) => {
   const req = mockRequest({
     email: testEmail,
     oldPassword: 'IncorrectPassword123!',
@@ -132,7 +132,7 @@ test('changePassword with incorrect original password results in error', async (
   t.true(res.json.calledWith({ mssg: "Old password doesn't match!" }))
 })
 
-test('changePassword with correct original password results in success', async (t: any) => {
+test.serial('changePassword with correct original password results in success', async (t: any) => {
   const req = mockRequest({
     email: testEmail,
     oldPassword: 'OriginalPassword123!',
