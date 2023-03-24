@@ -103,7 +103,6 @@ test('get specific tracked food', async (t: ExecutionContext) => {
   const req = mockRequest({ LogID }, {})
   const res = mockResponse()
   await getSpecificTrackedFood(req as Request, res as Response)
-  console.log('Error code', res.status.firstCall.args[0])
   t.true(res.status.calledWith(200))
 })
 
