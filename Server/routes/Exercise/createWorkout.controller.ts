@@ -3,6 +3,7 @@ import supabase from '../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../utils/databaseInterface'
 import { schemaForCreateWorkoutJSON } from '../../utils/JSONSchemas/schemaForCreateWorkoutJSON'
 import validateJSONSchema from '../../utils/validateJSONSchema'
+import addExerciseToExercises from '../../utils/Exercise/addExerciseToExercises'
 const databaseQuery = new SupabaseQueryClass()
 const deleteWorkoutPlanByID = async (workoutPlanID: string) => {
   const errorAndIDs = { deleteError: '' }
@@ -39,48 +40,6 @@ export const deleteWorkoutPlan = async (req: Request, res: Response) => {
   }
   else {
     return res.status(200).json({ mssg: `Workout Plan ${String(workoutname)} Deleted!` })
-  }
-}
-/**
- *
- * Get getexerciseid of a single exercise, if not in the exercise table already- add it
- */
-export const addExerciseToExercises = async (type: string, name: string, muscle: string, difficulty: string, instructions: string, equipment: string) => {
-  const errorAndIDs = { errorPresent: '', ID: '' }
-  // Allow instructions to be the empty string
-  if (!type || !name || !muscle || !difficulty || !equipment) {
-    errorAndIDs.errorPresent = 'One of type, name, muscle, difficulty or equipment are empty!'
-    return errorAndIDs
-  }
-  else {
-    const { data, error }: any = await databaseQuery.selectWhere(supabase, 'Exercises', 'name', name, '*')
-
-    if (error) {
-      console.log('Error selecting from Exercises table!')
-      errorAndIDs.errorPresent = error
-      return errorAndIDs
-    }
-    console.log(`selectWhere data: ${JSON.stringify(data)}`)
-    if (data.length === 0) {
-      console.log('data.length == 0!')
-      const { data, error }: any = await databaseQuery.insert(supabase, 'Exercises', { type, name, muscle, difficulty, instructions, equipment })
-      if (error) {
-        console.log('Error inserting into Exercises table!')
-        errorAndIDs.errorPresent = error
-        return errorAndIDs
-      }
-      else {
-        const exerciseID = data[0].ExerciseID
-        errorAndIDs.ID = exerciseID
-        return errorAndIDs
-      }
-    }
-    else {
-      const exerciseID = data[0].ExerciseID
-
-      errorAndIDs.ID = exerciseID
-      return errorAndIDs
-    }
   }
 }
 /**

@@ -4,8 +4,7 @@ export const schemaForCreateWorkoutJSON = {
   properties: {
     userid: {
       type: 'string',
-      minLength: 36,
-      maxLength: 36
+      pattern: '^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$'
     },
     workoutname: {
       type: 'string',

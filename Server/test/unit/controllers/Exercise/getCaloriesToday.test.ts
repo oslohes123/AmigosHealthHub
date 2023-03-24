@@ -47,7 +47,7 @@ test.after.always('guaranteed cleanup of user', async (t: any) => {
   }
 })
 
-test('getCaloriesToday with no id provided should return error', async (t: any) => {
+test('getCaloriesToday with no userid provided should return error', async (t: any) => {
   const req = mockRequest({})
   const res = mockResponse()
   await getCaloriesToday(req as Request, res as Response)
@@ -60,8 +60,7 @@ test('user with no workouts has burnt 0 calories', async (t: any) => {
   const req = mockRequest({ userid: uuid })
   const res = mockResponse()
   await getCaloriesToday(req as Request, res as Response)
-  const argsPassed = res.json.getCall(0).args[0]
-  console.log(`argsPassed in getCaloriesToday : ${JSON.stringify(argsPassed)}`)
+
   t.true(res.status.calledWith(200))
   t.true(res.json.calledWith({ mssg: 'User has no workouts!', totalCaloriesBurnt: 0 }))
 })
