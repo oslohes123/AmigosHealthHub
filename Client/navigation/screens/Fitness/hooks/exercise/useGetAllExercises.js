@@ -4,7 +4,8 @@ import { useAuthContext } from '../../../Authentication/context/AuthContext';
 import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
-
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
 // const getAllExercisesRoute = `${serverURL}/api/user/exercise/getAll`;
 
 const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
@@ -13,7 +14,7 @@ let getAllExercisesRoute;
 if (usingDeployedServer) {
   getAllExercisesRoute = `${serverURL}${partialGetAllExercises}`;
 } else {
-  getAllExercisesRoute = `http://localhost:3001${partialGetAllExercises}`;
+  getAllExercisesRoute = `http://${ipAddress}:${port}${partialGetAllExercises}`;
 }
 export default function useGetAllExercises() {
   const [error, setError] = useState(null);

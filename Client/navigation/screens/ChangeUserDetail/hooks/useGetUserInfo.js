@@ -3,14 +3,15 @@ import { useAuthContext } from '../../Authentication/context/AuthContext';
 import { useLogout } from '../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
-
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
 const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
 const partialGetUserInfoRoute = '/api/user/getInfo';
 let getUserInfoRoute;
 if (usingDeployedServer) {
   getUserInfoRoute = `${serverURL}${partialGetUserInfoRoute}`;
 } else {
-  getUserInfoRoute = `http://localhost:3001${partialGetUserInfoRoute}`;
+  getUserInfoRoute = `http://${ipAddress}:${port}${partialGetUserInfoRoute}`;
 }
 export default function useGetUserInfo() {
   const { user } = useAuthContext();

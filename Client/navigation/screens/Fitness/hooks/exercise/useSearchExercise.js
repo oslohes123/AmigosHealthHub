@@ -5,14 +5,15 @@ import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
 // const searchExerciseRoute = `${serverURL}/api/user/exercise/search`;
-
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
 const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
 const partialSearchExerciseRoute = '/api/user/exercise/search';
 let searchExerciseRoute;
 if (usingDeployedServer) {
   searchExerciseRoute = `${serverURL}${partialSearchExerciseRoute}`;
 } else {
-  searchExerciseRoute = `http://localhost:3001${partialSearchExerciseRoute}`;
+  searchExerciseRoute = `http://${ipAddress}:${port}${partialSearchExerciseRoute}`;
 }
 
 export default function useSearchExercise() {

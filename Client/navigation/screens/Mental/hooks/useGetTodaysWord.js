@@ -5,14 +5,15 @@ import { useAuthContext } from '../../Authentication/context/AuthContext';
 
 const serverURL = process.env.URL;
 // const todaysWordRoute = `${serverURL}/api/user/mentalHealth/todaysWord`;
-
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
 const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
 const partialTodaysWordRoute = '/api/user/mentalHealth/todaysWord';
 let todaysWordRoute;
 if (usingDeployedServer) {
   todaysWordRoute = `${serverURL}${partialTodaysWordRoute}`;
 } else {
-  todaysWordRoute = `http://localhost:3001${partialTodaysWordRoute}`;
+  todaysWordRoute = `http://${ipAddress}:${port}${partialTodaysWordRoute}`;
 }
 export default function useGetTodaysWord() {
   const [errorTodaysWord, setError] = useState(null);

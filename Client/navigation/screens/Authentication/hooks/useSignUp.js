@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuthContext } from '../context/AuthContext';
-
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
 const serverURL = process.env.URL;
 const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
 const partialSignUpRoute = '/api/user/sign_up';
@@ -9,7 +10,7 @@ let signupRoute;
 if (usingDeployedServer) {
   signupRoute = `${serverURL}${partialSignUpRoute}`;
 } else {
-  signupRoute = `http://localhost:3001${partialSignUpRoute}`;
+  signupRoute = `http://${ipAddress}:${port}${partialSignUpRoute}`;
 }
 export default function useSignUp() {
   const [error, setError] = useState(null);

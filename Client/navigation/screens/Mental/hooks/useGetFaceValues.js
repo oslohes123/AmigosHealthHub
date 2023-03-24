@@ -4,14 +4,15 @@ import { useAuthContext } from '../../Authentication/context/AuthContext';
 
 const serverURL = process.env.URL;
 // const faceValuesRoute = `${serverURL}/api/user/mentalHealth/faceGraph`;
-
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
 const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
 const partialFaceValuesRoute = '/api/user/mentalHealth/faceGraph';
 let faceValuesRoute;
 if (usingDeployedServer) {
   faceValuesRoute = `${serverURL}${partialFaceValuesRoute}`;
 } else {
-  faceValuesRoute = `http://localhost:3001${partialFaceValuesRoute}`;
+  faceValuesRoute = `http://${ipAddress}:${port}${partialFaceValuesRoute}`;
 }
 export default function useGetFaceValues() {
   // get the current users ID thats currently logged in

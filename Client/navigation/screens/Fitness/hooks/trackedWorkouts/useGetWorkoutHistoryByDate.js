@@ -4,6 +4,8 @@ import { useAuthContext } from '../../../Authentication/context/AuthContext';
 import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
 // const getWorkoutHistoryByDateRoute = `${serverURL}/api/user/completedWorkouts/workoutHistoryByDate`;
 const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
 const partialGetWorkoutHistoryByDateRoute = '/api/user/completedWorkouts/workoutHistoryByDate';
@@ -11,7 +13,7 @@ let getWorkoutHistoryByDateRoute;
 if (usingDeployedServer) {
   getWorkoutHistoryByDateRoute = `${serverURL}${partialGetWorkoutHistoryByDateRoute}`;
 } else {
-  getWorkoutHistoryByDateRoute = `http://localhost:3001${partialGetWorkoutHistoryByDateRoute}`;
+  getWorkoutHistoryByDateRoute = `http://${ipAddress}:${port}${partialGetWorkoutHistoryByDateRoute}`;
 }
 export default function useGetWorkoutHistoryByDate() {
   const [error, setError] = useState(null);

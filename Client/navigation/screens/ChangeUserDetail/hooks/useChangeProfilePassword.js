@@ -5,14 +5,15 @@ import { useAuthContext } from '../../Authentication/context/AuthContext';
 import { useLogout } from '../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
-
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
 const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
 const partialChangePasswordRoute = '/api/user/changeProfileDetails/password';
 let changePasswordRoute;
 if (usingDeployedServer) {
   changePasswordRoute = `${serverURL}${partialChangePasswordRoute}`;
 } else {
-  changePasswordRoute = `http://localhost:3001${partialChangePasswordRoute}`;
+  changePasswordRoute = `http://${ipAddress}:${port}${partialChangePasswordRoute}`;
 }
 export default function useChangeProfilePassword() {
   const [error, setError] = useState(null);

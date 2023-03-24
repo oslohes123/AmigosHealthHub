@@ -4,14 +4,15 @@ import { useAuthContext } from '../../Authentication/context/AuthContext';
 
 const serverURL = process.env.URL;
 // const wordValuesRoute = `${serverURL}/api/user/mentalHealth/wordcloud`;
-
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
 const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
 const partialWordValuesRoute = '/api/user/mentalHealth/wordcloud';
 let wordValuesRoute;
 if (usingDeployedServer) {
   wordValuesRoute = `${serverURL}${partialWordValuesRoute}`;
 } else {
-  wordValuesRoute = `http://localhost:3001${partialWordValuesRoute}`;
+  wordValuesRoute = `http://${ipAddress}:${port}${partialWordValuesRoute}`;
 }
 
 export default function useGetWordValues() {

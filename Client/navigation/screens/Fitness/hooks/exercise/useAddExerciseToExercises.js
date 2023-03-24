@@ -4,6 +4,8 @@ import { useAuthContext } from '../../../Authentication/context/AuthContext';
 import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
 // const addExerciseToExercisesRoute = `${serverURL}/api/user/exercise/add`;
 const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
 const partialAddExerciseToExercises = '/api/user/exercise/add';
@@ -11,7 +13,7 @@ let addExerciseToExercisesRoute;
 if (usingDeployedServer) {
   addExerciseToExercisesRoute = `${serverURL}${partialAddExerciseToExercises}`;
 } else {
-  addExerciseToExercisesRoute = `http://localhost:3001${partialAddExerciseToExercises}`;
+  addExerciseToExercisesRoute = `http://${ipAddress}:${port}${partialAddExerciseToExercises}`;
 }
 export default function useAddExerciseToExercises() {
   const { logout } = useLogout();

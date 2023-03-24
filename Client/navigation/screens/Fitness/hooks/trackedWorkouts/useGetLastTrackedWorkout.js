@@ -4,6 +4,8 @@ import { useAuthContext } from '../../../Authentication/context/AuthContext';
 import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
 // const getLastTrackedWorkoutRoute = `${serverURL}/api/user/completedWorkouts/lastTrackedWorkout`;
 const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
 const partialGetLastTrackedWorkoutRoute = '/api/user/completedWorkouts/lastTrackedWorkout';
@@ -11,7 +13,7 @@ let getLastTrackedWorkoutRoute;
 if (usingDeployedServer) {
   getLastTrackedWorkoutRoute = `${serverURL}${partialGetLastTrackedWorkoutRoute}`;
 } else {
-  getLastTrackedWorkoutRoute = `http://localhost:3001${partialGetLastTrackedWorkoutRoute}`;
+  getLastTrackedWorkoutRoute = `http://${ipAddress}:${port}${partialGetLastTrackedWorkoutRoute}`;
 }
 export default function useGetLastTrackedWorkout() {
   const [error, setError] = useState(null);

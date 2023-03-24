@@ -4,14 +4,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuthContext } from '../../Authentication/context/AuthContext';
 
 const serverURL = process.env.URL;
-
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
 const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
 const partialAddWordFaceValueRoute = '/api/user/mentalHealth/rateMental';
 let addWordFaceValueRoute;
 if (usingDeployedServer) {
   addWordFaceValueRoute = `${serverURL}${partialAddWordFaceValueRoute}`;
 } else {
-  addWordFaceValueRoute = `http://localhost:3001${partialAddWordFaceValueRoute}`;
+  addWordFaceValueRoute = `http://${ipAddress}:${port}${partialAddWordFaceValueRoute}`;
 }
 export default function useSubmit() {
   const [error, setError] = useState(null);

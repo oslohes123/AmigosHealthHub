@@ -4,6 +4,8 @@ import { useAuthContext } from '../../../Authentication/context/AuthContext';
 import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
 // const workoutFreqRoute = `${serverURL}/api/user/completedWorkouts/workoutFreq`;
 const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
 const partialWorkoutFreqRoute = '/api/user/completedWorkouts/workoutFreq';
@@ -11,7 +13,7 @@ let workoutFreqRoute;
 if (usingDeployedServer) {
   workoutFreqRoute = `${serverURL}${partialWorkoutFreqRoute}`;
 } else {
-  workoutFreqRoute = `http://localhost:3001${partialWorkoutFreqRoute}`;
+  workoutFreqRoute = `http://${ipAddress}:${port}${partialWorkoutFreqRoute}`;
 }
 export default function useTrackedWorkoutFreq() {
   const [getErrorGetWorkoutFreq, setErrorGetWorkoutFreq] = useState(null);

@@ -4,6 +4,8 @@ import { useAuthContext } from '../../../Authentication/context/AuthContext';
 import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
 // const getWorkoutDetailsRoute = `${serverURL}/api/user/workout/get`;
 const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
 const partialGetWorkoutDetailsRoute = '/api/user/workout/get';
@@ -11,7 +13,7 @@ let getWorkoutDetailsRoute;
 if (usingDeployedServer) {
   getWorkoutDetailsRoute = `${serverURL}${partialGetWorkoutDetailsRoute}`;
 } else {
-  getWorkoutDetailsRoute = `http://localhost:3001${partialGetWorkoutDetailsRoute}`;
+  getWorkoutDetailsRoute = `http://${ipAddress}:${port}${partialGetWorkoutDetailsRoute}`;
 }
 export default function useGetWorkoutDetails() {
   const [error, setError] = useState(null);

@@ -5,14 +5,15 @@ import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
 // const getExerciseByNameRoute = `${serverURL}/api/user/exercise/get`;
-
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
 const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
 const partialGetExerciseByNameRoute = '/api/user/exercise/get';
 let getExerciseByNameRoute;
 if (usingDeployedServer) {
   getExerciseByNameRoute = `${serverURL}${partialGetExerciseByNameRoute}`;
 } else {
-  getExerciseByNameRoute = `http://localhost:3001${partialGetExerciseByNameRoute}`;
+  getExerciseByNameRoute = `http://${ipAddress}:${port}${partialGetExerciseByNameRoute}`;
 }
 
 export default function useGetExerciseByName() {

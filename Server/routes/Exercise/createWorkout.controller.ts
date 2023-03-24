@@ -55,7 +55,7 @@ export const deleteWorkoutPlan = async (req: Request, res: Response) => {
 // Empty string
 export const createWorkout = async (req: Request, res: Response) => {
   const { userid, workoutname, exercises } = req.body
-
+  console.log(`req.body in createWorkout: ${JSON.stringify(req.body)}`)
   if (!validateJSONSchema(req.body, schemaForCreateWorkoutJSON)) {
     return res.status(400).json({ mssg: 'Something went wrong!', dev: 'req.body does not match the JSON Schema!' })
   }

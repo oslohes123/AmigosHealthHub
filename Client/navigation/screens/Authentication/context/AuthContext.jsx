@@ -4,6 +4,8 @@ import {
 } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
 const serverURL = process.env.URL;
 export const AuthContext = createContext();
 const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
@@ -11,7 +13,7 @@ let checkInitialTokenRoute;
 if (usingDeployedServer) {
   checkInitialTokenRoute = `${serverURL}/api/user/checkInitialToken`;
 } else {
-  checkInitialTokenRoute = 'http://localhost:3001/api/user/checkInitialToken';
+  checkInitialTokenRoute = `http://${ipAddress}:${port}/api/user/checkInitialToken`;
 }
 
 /**
