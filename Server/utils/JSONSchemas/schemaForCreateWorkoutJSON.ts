@@ -18,25 +18,25 @@ export const schemaForCreateWorkoutJSON = {
           type: 'object',
           properties: {
             sets: {
-              type: ['null', 'integer']
+              type: ['null', 'string']
             },
             weight: {
               type: ['null', 'string']
             },
             warmUpSet: {
-              type: 'string'
+              type: 'boolean'
             },
             reps: {
-              type: ['null', 'integer']
+              type: ['null', 'string']
             },
             calories: {
-              type: ['null', 'number']
+              type: ['null', 'string']
             },
             distance: {
-              type: ['null', 'number']
+              type: ['null', 'string']
             },
             duration: {
-              type: ['null', 'number']
+              type: ['null', 'string']
             },
             type: {
               type: 'string'

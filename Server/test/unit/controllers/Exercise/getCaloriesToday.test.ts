@@ -6,6 +6,7 @@ import { createHashedPassword, createUserWithID, deleteUserRow } from '../../../
 import { getCaloriesToday } from '../../../../routes/Exercise/exerciseCalories.controller'
 import test from 'ava'
 import sinon from 'sinon'
+import createNewWorkoutPlan from '../../../../utils/Exercise/createNewWorkoutPlan'
 // const supabaseQuery = new SupabaseQueryClass()
 let randomEmail: string
 const uuid = uuidv4()
@@ -47,7 +48,7 @@ test.after.always('guaranteed cleanup of user', async (t: any) => {
   }
 })
 
-test('getCaloriesToday with no userid provided should return error', async (t: any) => {
+test.serial('getCaloriesToday with no userid provided should return error', async (t: any) => {
   const req = mockRequest({})
   const res = mockResponse()
   await getCaloriesToday(req as Request, res as Response)
@@ -56,10 +57,17 @@ test('getCaloriesToday with no userid provided should return error', async (t: a
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' }))
 })
 
-test('user with no workouts has burnt 0 calories', async (t: any) => {
+test.serial('user with no workouts has burnt 0 calories', async (t: any) => {
   const req = mockRequest({ userid: uuid })
   const res = mockResponse()
   await getCaloriesToday(req as Request, res as Response)
   t.true(res.status.calledWith(200))
   t.true(res.json.calledWith({ mssg: 'User has no workouts!', totalCaloriesBurnt: 0 }))
 })
+
+// test('getCaloriesToday with user with a valid workoutplan returns the number of calories burnt', async (t: any) => {
+//   // const exercises = {
+
+//   // }
+// createNewWorkoutPlan(uuid, 'TestWorkoutPlan', )
+// })

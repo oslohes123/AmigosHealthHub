@@ -3,8 +3,17 @@ import { useAuthContext } from '../../../Authentication/context/AuthContext';
 import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
-const getTrackedWorkoutDetailsRoute = `${serverURL}/api/user/workout/delete`;
-
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
+// const getTrackedWorkoutDetailsRoute = `${serverURL}/api/user/workout/delete`;
+const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const partialGetTrackedWorkoutDetailsRoute = '/api/user/workout/delete';
+let getTrackedWorkoutDetailsRoute;
+if (usingDeployedServer) {
+  getTrackedWorkoutDetailsRoute = `${serverURL}${partialGetTrackedWorkoutDetailsRoute}`;
+} else {
+  getTrackedWorkoutDetailsRoute = `http://${ipAddress}:${port}${partialGetTrackedWorkoutDetailsRoute}`;
+}
 export default function useDeleteWorkoutPlan() {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
