@@ -69,7 +69,7 @@ export const getExerciseHistory = async (req: Request, res: Response) => {
               arrayOfCompletedWorkoutIDs.push(data[0].completedWorkoutID)
             }
             else {
-              console.log(`ln 68 of exerciseHistory!`)
+              console.log('ln 68 of exerciseHistory!')
               return res.status(400).json({ mssg: 'Exercise has never been performed' })
             }
             console.log(`ln72: ${JSON.stringify(data)}`)
@@ -209,7 +209,7 @@ export const getExerciseHistory = async (req: Request, res: Response) => {
 export const getAllExercises = async (req: Request, res: Response) => {
   const { userid } = req.headers
 
-   if (validateJSONSchema(req.headers, schemaForRequireduserid)) {
+   if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
     return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
   }
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'ActualExercises', 'userID', userid, 'exerciseID')

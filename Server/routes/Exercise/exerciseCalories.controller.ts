@@ -8,7 +8,7 @@ const databaseQuery = new SupabaseQueryClass()
 
 export const getCaloriesToday = async (req: Request, res: Response) => {
   const { userid } = req.headers
-  if (validateJSONSchema(req.headers, schemaForRequireduserid)) {
+  if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
     return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
   }
   let totalCaloriesBurnt = 0

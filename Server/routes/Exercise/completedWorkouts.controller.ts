@@ -310,7 +310,7 @@ export const deleteTrackedWorkout = async (req: Request, res: Response) => {
 // Returns the number of times the user has performed all workouts
 export const getWorkoutFrequency = async (req: Request, res: Response) => {
   const { userid } = req.headers
-  if (validateJSONSchema(req.headers, schemaForRequireduserid)) {
+  if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
     return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
   }
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'CompletedWorkouts', 'userid', userid, 'workoutname')
@@ -442,7 +442,8 @@ export const getExerciseTypes = async (arrayOfExerciseIDs: string[]) => {
 // returns the all exercises performed and frequency for a bar chart
 export const getActualExerciseNameFrequency = async (req: Request, res: Response) => {
   const { userid } = req.headers
-  if (validateJSONSchema(req.headers, schemaForRequireduserid)) {
+
+  if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
     return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
   }
 
@@ -470,8 +471,8 @@ export const getActualExerciseNameFrequency = async (req: Request, res: Response
 }
 
 export const getActualExerciseTypeFrequency = async (req: Request, res: Response) => {
-  req.headers
-  if (validateJSONSchema(req.headers, schemaForRequireduserid)) {
+  const { userid } = req.headers
+  if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
     return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
   }
   const { errorHere, AEIDs } = await getAllAEIDs(userid)
@@ -549,7 +550,7 @@ export const getWorkoutHistoryByDate = async (req: Request, res: Response) => {
 
 export const getLastTrackedWorkout = async (req: Request, res: Response) => {
   const { userid } = req.headers
-  if (validateJSONSchema(req.headers, schemaForRequireduserid)) {
+  if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
     return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
   }
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'CompletedWorkouts', 'userid', userid, 'workoutname, timestamp')

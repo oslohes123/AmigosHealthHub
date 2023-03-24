@@ -11,7 +11,7 @@ const databaseQuery = new SupabaseQueryClass()
  */
 export const getAllWorkoutNames = async (req: Request, res: Response) => {
   const { userid } = req.headers
-  if (validateJSONSchema(req.headers, schemaForRequireduserid)) {
+  if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
     return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
   }
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'WorkoutPlans', 'userid', userid, 'workoutname')
