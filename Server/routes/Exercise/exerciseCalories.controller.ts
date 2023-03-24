@@ -8,16 +8,20 @@ const databaseQuery = new SupabaseQueryClass()
 
 export const getCaloriesToday = async (req: Request, res: Response) => {
   const { userid } = req.headers
+  console.log('In getCaloriesToday')
   if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
+    console.log('JSON validation failed')
     return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
   }
   let totalCaloriesBurnt = 0
   const todaysDate = getTodaysDate()
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'CompletedWorkouts', 'userid', userid, 'completedWorkoutID, timestamp')
   if (error) {
+    console.log(`error in getCalories: ${JSON.stringify(error)}`)
     return res.status(400).json({ mssg: 'Something went wrong!', error })
   }
   else if (data.length === 0) {
+    console.log('User has no workouts!')
     return res.status(200).json({ mssg: 'User has no workouts!', totalCaloriesBurnt })
   }
   else {

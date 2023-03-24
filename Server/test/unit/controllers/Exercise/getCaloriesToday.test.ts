@@ -6,8 +6,12 @@ import { createHashedPassword, createUserWithID, deleteUserRow } from '../../../
 import { getCaloriesToday } from '../../../../routes/Exercise/exerciseCalories.controller'
 import test from 'ava'
 import sinon from 'sinon'
-import createNewWorkoutPlan from '../../../../utils/Exercise/createNewWorkoutPlan'
-// const supabaseQuery = new SupabaseQueryClass()
+// import createNewWorkoutPlan from '../../../../utils/Exercise/createNewWorkoutPlan'
+// import { deleteAllWorkoutPlansWithExercises } from '../../../../utils/deleteWorkoutPlans'
+import { addCompletedWorkouts } from '../../../../utils/Exercise/createNewTrackedWorkout'
+// import addExerciseToExercises from '../../../../utils/Exercise/addExerciseToExercises'
+import { deleteMultipleExercises, insertMultipleExercises } from '../../../../utils/Exercise/insertAndDeleteMultipleExercises'
+// const databaseQuery = new SupabaseQueryClass()
 let randomEmail: string
 const uuid = uuidv4()
 test.before(async (t: any) => {
@@ -46,6 +50,10 @@ test.after.always('guaranteed cleanup of user', async (t: any) => {
   if (error) {
     t.fail(`deleteUserRow of ${randomEmail} failed`)
   }
+  const { errorDeletingMultipleExercises }: any = await deleteMultipleExercises([{ name: `Test Curl ${uuid}` }, { name: `Slow Jog ${uuid}` }])
+  if (errorDeletingMultipleExercises) {
+    t.fail(JSON.stringify(errorDeletingMultipleExercises))
+  }
 })
 
 test.serial('getCaloriesToday with no userid provided should return error', async (t: any) => {
@@ -65,9 +73,50 @@ test.serial('user with no workouts has burnt 0 calories', async (t: any) => {
   t.true(res.json.calledWith({ mssg: 'User has no workouts!', totalCaloriesBurnt: 0 }))
 })
 
-// test('getCaloriesToday with user with a valid workoutplan returns the number of calories burnt', async (t: any) => {
-//   // const exercises = {
+test('getCaloriesToday with user with a valid workoutplan returns the correct number of calories burnt', async (t: any) => {
+  const exercises = {
+    exercises: [
+      {
+        name: `Test Curl ${uuid}`,
+        sets: 3,
+        weight: [12, 12, 12],
+        warmUpSet: false,
+        reps: [12, 6, 5],
+        calories: 50,
+        distance: null,
+        duration: null
+      },
+      {
+        name: `Slow Jog ${uuid}`,
+        sets: null,
+        weight: null,
+        warmUpSet: 'false',
+        reps: null,
+        calories: 50,
+        distance: 5000,
+        duration: 23.00
+      }
+    ]
+  }
+  const { errorInsertingMultipleExercises } = await insertMultipleExercises([
+    { type: 'strength', name: `Test Curl ${uuid}`, muscle: 'bicep', difficulty: 'beginner', instructions: 'curl the weight', equipment: 'dumbbell' },
+    { type: 'strength', name: `Slow Jog ${uuid}`, muscle: 'legs', difficulty: 'beginner', instructions: 'jog', equipment: 'none' }])
 
-//   // }
-// createNewWorkoutPlan(uuid, 'TestWorkoutPlan', )
-// })
+  if (errorInsertingMultipleExercises) {
+    t.fail(errorInsertingMultipleExercises)
+  }
+  const { errorAddCompletedWorkouts, success } = await addCompletedWorkouts(uuid, 'Test Tracked Workout', exercises)
+  if (errorAddCompletedWorkouts) {
+    t.fail(errorAddCompletedWorkouts)
+  }
+  if (!success) {
+    t.fail('errorsCreatingNewWorkoutPlan')
+  }
+  const req = mockRequest({ userid: uuid })
+  const res = mockResponse()
+  await getCaloriesToday(req as Request, res as Response)
+  t.log(`ln100: ${JSON.stringify(res.json.getCall(0).args[0])}`)
+  t.true(res.status.calledWith(200))
+  t.true(res.json.calledWith({ mssg: 'Success', totalCaloriesBurnt: 100 }))
+  // delete all workoutplans
+})

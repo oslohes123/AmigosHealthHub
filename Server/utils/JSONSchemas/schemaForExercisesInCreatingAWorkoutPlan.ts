@@ -9,7 +9,7 @@ export const exercisesForWorkoutPlanTestSchema = {
           type: 'object',
           properties: {
             sets: {
-              type: ['null', 'integer']
+              type: ['null', 'string']
             },
             weight: {
               type: ['null', 'string']
@@ -18,16 +18,16 @@ export const exercisesForWorkoutPlanTestSchema = {
               type: 'string'
             },
             reps: {
-              type: ['null', 'integer']
+              type: ['null', 'string']
             },
             calories: {
-              type: ['null', 'number']
+              type: ['null', 'string']
             },
             distance: {
-              type: ['null', 'number']
+              type: ['null', 'string']
             },
             duration: {
-              type: ['null', 'number']
+              type: ['null', 'string']
             },
             type: {
               type: 'string'
