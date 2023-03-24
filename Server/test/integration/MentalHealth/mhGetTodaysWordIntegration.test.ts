@@ -78,17 +78,10 @@ test(`GET ${todaysWordRoute} with correct ID`, async (t: any) => {
     .set({ authorization: token, id: uuid })
   const expectedArgs = {
     mssg: "Here is today's word!",
-    word: [
-      { todays_word: 'Awful' }
-    ]
+    word: 'Awful'
   }
   console.log(`correcttodaysword ${JSON.stringify(response.body)}`)
   t.true(response.status === 200)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify(expectedArgs))
 })
-
-// test('passing test ', (t: any) => {
-//     t.pass()
-//   })
-  

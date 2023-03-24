@@ -182,11 +182,11 @@ test(`GET ${wordCloudRoute} with correct ID`, async (t: any) => {
   const expectedArgs = {
     mssg: 'MentalHealthOverview',
     words: [
-      '\'Awful\'',
-      '\'Depressed\'',
-      '\'Mediocre\'',
-      '\'Happy\'',
-      '\'Alright\''
+      "\"Awful\"",
+      "\"Depressed\"",
+      "\"Mediocre\"",
+      "\"Happy\"",
+      "\"Alright\""
     ],
     freq: [
       '3',
@@ -201,8 +201,3 @@ test(`GET ${wordCloudRoute} with correct ID`, async (t: any) => {
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify(expectedArgs))
 })
-
-// test('passing test ', (t: any) => {
-//     t.pass()
-//   })
-  

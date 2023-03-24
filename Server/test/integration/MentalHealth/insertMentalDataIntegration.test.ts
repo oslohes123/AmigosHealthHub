@@ -125,7 +125,3 @@ test(`POST ${rateMentalRoute} with correct input`, async (t: any) => {
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Successful Submission' }))
 })
-
-// test('passing test ', (t: any) => {
-//   t.pass()
-// })

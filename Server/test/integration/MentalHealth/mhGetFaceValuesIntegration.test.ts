@@ -211,7 +211,3 @@ test(`GET ${faceGraphRoute} with correct ID`, async (t: any) => {
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify(expectedArgs))
 })
-test('passing test ', (t: any) => {
-    t.pass()
-  })
-  
