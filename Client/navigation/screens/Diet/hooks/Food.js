@@ -29,8 +29,8 @@ export async function getTrackedFood(Date, userID) {
   return data;
 }
 
-export async function getSpecificTrackedFood(logID) {
-  const url = `${serverURL}/api/food/getSpecificTrackedFood/${logID}`;
+export async function getSpecificTrackedFood(LogID) {
+  const url = `${serverURL}/api/food/getSpecificTrackedFood/${LogID}`;
   let response;
   try {
     const { token } = JSON.parse(
