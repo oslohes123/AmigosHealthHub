@@ -3,6 +3,9 @@ import supabase from '../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../utils/databaseInterface'
 import { getDate, getTime, mostRecentTimestamp, sortArrayOfTimeStamps } from '../../utils/convertTimeStamptz'
 import { countElementsInArray } from '../../utils/arrayManipulation'
+import { validate } from 'jsonschema'
+import validateJSONSchema from '../../utils/validateJSONSchema'
+import { schemaForRequireduserid } from '../../utils/JSONSchemas/schemaForRequireduserid'
 const databaseQuery = new SupabaseQueryClass()
 
 // Get a specific workout by userid, workoutname, date and time
@@ -88,7 +91,6 @@ const getWorkoutByID = async (completedWorkoutID: string) => {
 
 // Returns all of a user's completed workouts' names and dates
 export const getAllCompletedWorkouts = async (req: Request, res: Response) => {
-  const { userid } = req.headers
   if (!userid) {
     return res.status(400).json({ mssg: 'No userid provided!' })
   }
@@ -105,7 +107,7 @@ export const getAllCompletedWorkouts = async (req: Request, res: Response) => {
       arrayOfTimeStamps.push(timestamp)
     }
     const sortedTimeStamps = sortArrayOfTimeStamps(arrayOfTimeStamps)
-    let sortedCompletedWorkouts = []
+    const sortedCompletedWorkouts = []
     for (let i = 0; i < sortedTimeStamps.length; i++) {
       // console.log(`data[i].timestamp: ${JSON.stringify(data[i].timestamp)}`)
       // console.log(`sortedTimeStamps[i]: ${JSON.stringify(sortedTimeStamps[i])}`)
@@ -308,8 +310,8 @@ export const deleteTrackedWorkout = async (req: Request, res: Response) => {
 // Returns the number of times the user has performed all workouts
 export const getWorkoutFrequency = async (req: Request, res: Response) => {
   const { userid } = req.headers
-  if (!userid) {
-    return res.status(400).json({ mssg: 'userid cannot be empty' })
+  if (validateJSONSchema(req.headers, schemaForRequireduserid)) {
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
   }
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'CompletedWorkouts', 'userid', userid, 'workoutname')
 
@@ -440,9 +442,10 @@ export const getExerciseTypes = async (arrayOfExerciseIDs: string[]) => {
 // returns the all exercises performed and frequency for a bar chart
 export const getActualExerciseNameFrequency = async (req: Request, res: Response) => {
   const { userid } = req.headers
-  if (!userid) {
-    return res.status(400).json({ mssg: 'userid cannot be empty' })
+  if (validateJSONSchema(req.headers, schemaForRequireduserid)) {
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
   }
+
   const { errorHere, AEIDs } = await getAllAEIDs(userid)
   if (errorHere) {
     return res.status(400).json({ mssg: 'Something went wrong!', errorHere })
@@ -467,9 +470,9 @@ export const getActualExerciseNameFrequency = async (req: Request, res: Response
 }
 
 export const getActualExerciseTypeFrequency = async (req: Request, res: Response) => {
-  const { userid } = req.headers
-  if (!userid) {
-    return res.status(400).json({ mssg: 'userid cannot be empty' })
+  req.headers
+  if (validateJSONSchema(req.headers, schemaForRequireduserid)) {
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
   }
   const { errorHere, AEIDs } = await getAllAEIDs(userid)
   if (errorHere) {
@@ -546,8 +549,8 @@ export const getWorkoutHistoryByDate = async (req: Request, res: Response) => {
 
 export const getLastTrackedWorkout = async (req: Request, res: Response) => {
   const { userid } = req.headers
-  if (!userid) {
-    return res.status(400).json({ mssg: 'userid cannot be null!' })
+  if (validateJSONSchema(req.headers, schemaForRequireduserid)) {
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
   }
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'CompletedWorkouts', 'userid', userid, 'workoutname, timestamp')
   if (error) {

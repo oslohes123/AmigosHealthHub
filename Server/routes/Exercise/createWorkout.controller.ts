@@ -1,9 +1,8 @@
 import { type Request, type Response } from 'express'
 import supabase from '../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../utils/databaseInterface'
-import { eitherIsFloatOrInt } from '../../utils/validators'
-import { schemaForCreateWorkoutJSON } from '../../utils/Exercise/JSONSchemas/schemaForCreateWorkoutJSON'
-import validateJSONSchema from '../../utils/schemaJSONvalidate'
+import { schemaForCreateWorkoutJSON } from '../../utils/JSONSchemas/schemaForCreateWorkoutJSON'
+import validateJSONSchema from '../../utils/validateJSONSchema'
 const databaseQuery = new SupabaseQueryClass()
 const deleteWorkoutPlanByID = async (workoutPlanID: string) => {
   const errorAndIDs = { deleteError: '' }

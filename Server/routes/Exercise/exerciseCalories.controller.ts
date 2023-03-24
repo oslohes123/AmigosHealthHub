@@ -2,12 +2,14 @@ import { type Request, type Response } from 'express'
 import supabase from '../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../utils/databaseInterface'
 import { getDate, getTodaysDate } from '../../utils/convertTimeStamptz'
+import { schemaForRequireduserid } from '../../utils/JSONSchemas/schemaForRequireduserid'
+import validateJSONSchema from '../../utils/validateJSONSchema'
 const databaseQuery = new SupabaseQueryClass()
 
 export const getCaloriesToday = async (req: Request, res: Response) => {
   const { userid } = req.headers
-  if (!userid) {
-    return res.status(400).json({ mssg: 'userid is required!' })
+  if (validateJSONSchema(req.headers, schemaForRequireduserid)) {
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
   }
   let totalCaloriesBurnt = 0
   const todaysDate = getTodaysDate()

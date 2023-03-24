@@ -1,6 +1,8 @@
 import { type Request, type Response } from 'express'
 import supabase from '../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../utils/databaseInterface'
+import validateJSONSchema from '../../utils/validateJSONSchema'
+import { schemaForRequireduserid } from '../../utils/JSONSchemas/schemaForRequireduserid'
 const databaseQuery = new SupabaseQueryClass()
 
 /**
@@ -9,8 +11,8 @@ const databaseQuery = new SupabaseQueryClass()
  */
 export const getAllWorkoutNames = async (req: Request, res: Response) => {
   const { userid } = req.headers
-  if (!userid) {
-    return res.status(400).json({ mssg: 'userid cannot be empty!' })
+  if (validateJSONSchema(req.headers, schemaForRequireduserid)) {
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
   }
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'WorkoutPlans', 'userid', userid, 'workoutname')
   if (error) {
