@@ -53,7 +53,7 @@ test('getCaloriesToday with no id provided should return error', async (t: any) 
   await getCaloriesToday(req as Request, res as Response)
 
   t.true(res.status.calledWith(400))
-  t.true(res.json.calledWith({ mssg: 'userid is required!' }))
+  t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' }))
 })
 
 test('user with no workouts has burnt 0 calories', async (t: any) => {
