@@ -9,7 +9,7 @@ import {
 import HoursSleptGraph from '../Sleep/hoursSleptGraph';
 import themeContext from '../../theme/themeContext';
 import CaloriesBurntTodayWidget from '../../components/CaloriesBurntTodayWidget';
-import CaloriesToGoalWidget from '../../components/CaloriesToGoalWidget';
+import CaloriesRemaining from '../../components/CaloriesRemaining';
 import WordOfTheDayWidget from '../../components/WordOfTheDayWidget';
 
 const screenWidth = Dimensions.get('window').width;
@@ -46,7 +46,7 @@ export default function DashboardScreen({ navigation }) {
 
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: screenWidth * 0.9 }}>
         <CaloriesBurntTodayWidget />
-        <CaloriesToGoalWidget />
+        <CaloriesRemaining />
       </View>
 
     </SafeAreaView>

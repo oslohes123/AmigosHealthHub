@@ -1,27 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
-  View, StyleSheet, Text, TouchableOpacity, ScrollView,
+  View, StyleSheet, Text, TouchableWithoutFeedback, ScrollView, SafeAreaView,
   Dimensions,
 } from 'react-native';
 import { BarChart } from 'react-native-chart-kit';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import useGetExerciseNameFreq from '../hooks/exercise/useGetExerciseNameFreq';
 import useTrackedWorkoutFreq from '../hooks/trackedWorkouts/useTrackedWorkoutFreq';
 import useGetExerciseTypeFreq from '../hooks/exercise/useGetExerciseTypeFreq';
+import themeContext from '../../../theme/themeContext';
+
+const screenWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#203038',
     flex: 1,
-  },
-  header: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    marginTop: 30,
-    color: 'white',
-    alignSelf: 'center',
   },
   pieWidget: {
     backgroundColor: '#c2e7fe',
@@ -31,14 +25,16 @@ const styles = StyleSheet.create({
     marginTop: '10%',
   },
   title: {
-    fontSize: 17,
-    color: 'white',
+    fontSize: 16,
+    color: '#fff',
+    marginBottom: 5,
     alignSelf: 'center',
+    fontWeight: 'bold',
   },
 });
 
 export default function OverallStats() {
-  const screenWidth = Dimensions.get('window').width;
+  const { background, color } = useContext(themeContext);
   const [getExerciseNameFreqData, setExerciseNameFreqData] = useState(null);
   const [getExerciseNameFreqLabels, setExerciseNameFreqLabels] = useState(null);
 
@@ -142,110 +138,90 @@ export default function OverallStats() {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <View>
-        <TouchableOpacity style={{ alignSelf: 'center', marginTop: '10%' }}>
-
-          {isLoading && (
-          <ActivityIndicator
-            animating
-            size={30}
-            color={MD2Colors.lightBlue400}
-          />
-          )}
-          {
-        error && (<Text>{error}</Text>)
-      }
-
-          {!getExerciseNameFreqData && !getExerciseNameFreqLabels && (
-
-          <Text style={[styles.title]}>No Exercise Name Freq Data!</Text>
-          )}
-
-          {getExerciseNameFreqData && getExerciseNameFreqLabels && (
-
-          <TouchableWithoutFeedback>
-            <View style={{ marginBottom: 40 }}>
-              <Text style={[styles.title]}>Number Of Times An Exercise Was Performed</Text>
-              <BarChart
-                style={{ borderRadius: 25 }}
-                data={exerciseNameData}
-                width={0.9 * screenWidth}
-                height={220}
-                chartConfig={chartConfig}
-                fromZero
+    <SafeAreaView style={[styles.container, { backgroundColor: background }]}>
+      <ScrollView>
+        <TouchableWithoutFeedback style={{ alignSelf: 'center', marginTop: '10%' }}>
+          <>
+            {(isLoading || isLoadingExerciseType || isLoadingGetWorkoutFreq) && (
+              <ActivityIndicator
+                animating
+                size={30}
+                color={MD2Colors.lightBlue400}
               />
-            </View>
-          </TouchableWithoutFeedback>
-          )}
+            )}
+            {error && (<Text>{error}</Text>)}
 
-          {isLoadingExerciseType && (
-          <ActivityIndicator
-            animating
-            size={30}
-            color={MD2Colors.lime400}
-          />
-          )}
-          {
-        getErrorGetExerciseType && (<Text>{getErrorGetExerciseType}</Text>)
-      }
+            {!isLoading && !getExerciseNameFreqData && !getExerciseNameFreqLabels && (
 
-          {!getExerciseTypeFreqData && !getExerciseTypeFreqData && (
+            <Text style={[styles.title, { color }]}>No Exercise Name Freq Data!</Text>
+            )}
 
-          <Text style={[styles.title]}>No Exercise Type Freq Data!</Text>
-          )}
-          {getExerciseTypeFreqData && getExerciseTypeFreqLabels && (
+            {getExerciseNameFreqData && getExerciseNameFreqLabels && (
+              <TouchableWithoutFeedback>
+                <View style={{ marginVertical: 20, alignSelf: 'center' }}>
+                  <Text style={[styles.title, { color }]}>Exercise frequency</Text>
+                  <BarChart
+                    style={{ borderRadius: 25 }}
+                    data={exerciseNameData}
+                    width={0.9 * screenWidth}
+                    height={220}
+                    chartConfig={chartConfig}
+                    fromZero
+                  />
+                </View>
+              </TouchableWithoutFeedback>
+            )}
 
-          <TouchableWithoutFeedback>
-            <View style={{ marginBottom: 40 }}>
-              <Text style={[styles.title]}>Frequency of all exercise types</Text>
-              <BarChart
-                style={{ borderRadius: 25 }}
-                data={exerciseTypeData}
-                width={0.9 * screenWidth}
-                height={220}
-                chartConfig={chartConfig}
-                fromZero
-              />
-            </View>
-          </TouchableWithoutFeedback>
-          )}
+            {getErrorGetExerciseType && (
+              <Text>{getErrorGetExerciseType}</Text>
+            )}
 
-          {isLoadingGetWorkoutFreq && (
-          <ActivityIndicator
-            animating
-            size={30}
-            color={MD2Colors.red100}
-          />
-          )}
-          {
-        getErrorGetWorkoutFreq && (<Text>{getErrorGetWorkoutFreq}</Text>)
-      }
+            {!isLoading && !getExerciseTypeFreqData && !getExerciseTypeFreqData && (
+              <Text style={[styles.title]}>No Exercise Type Freq Data!</Text>
+            )}
 
-          {!getTrackedWorkoutFreqData && !getTrackedWorkoutFreqData && (
+            {getExerciseTypeFreqData && getExerciseTypeFreqLabels && (
+              <TouchableWithoutFeedback>
+                <View style={{ marginBottom: 20, alignSelf: 'center' }}>
+                  <Text style={[styles.title, { color }]}>Type frequency</Text>
+                  <BarChart
+                    style={{ borderRadius: 25 }}
+                    data={exerciseTypeData}
+                    width={0.9 * screenWidth}
+                    height={220}
+                    chartConfig={chartConfig}
+                    fromZero
+                  />
+                </View>
+              </TouchableWithoutFeedback>
+            )}
 
-          <Text style={[styles.title]}>No Tracked Workout Type Freq Data!</Text>
-          )}
-          {getTrackedWorkoutFreqData && getTrackedWorkoutFreqLabels && (
+            {getErrorGetWorkoutFreq && (
+              <Text>{getErrorGetWorkoutFreq}</Text>
+            )}
 
-          <TouchableWithoutFeedback>
-            <View style={{ marginBottom: 40 }}>
-              <Text style={[styles.title]}>Frequency of all workouts</Text>
-              <BarChart
-                style={{ borderRadius: 25 }}
-                data={workoutNameFreq}
-                width={0.9 * screenWidth}
-                height={220}
-                chartConfig={chartConfig}
-                fromZero
-              />
-            </View>
-          </TouchableWithoutFeedback>
-          )}
+            {!isLoading && !getTrackedWorkoutFreqData && !getTrackedWorkoutFreqData && (
+              <Text style={[styles.title]}>No Tracked Workout Type Freq Data!</Text>
+            )}
 
-        </TouchableOpacity>
-
-      </View>
-    </ScrollView>
+            {getTrackedWorkoutFreqData && getTrackedWorkoutFreqLabels && (
+              <TouchableWithoutFeedback>
+                <View style={{ marginBottom: 20, alignSelf: 'center' }}>
+                  <Text style={[styles.title, { color }]}>Workout frequency</Text>
+                  <BarChart
+                    style={{ borderRadius: 25 }}
+                    data={workoutNameFreq}
+                    width={0.9 * screenWidth}
+                    height={220}
+                    chartConfig={chartConfig}
+                    fromZero
+                  />
+                </View>
+              </TouchableWithoutFeedback>
+            )}
+          </>
+        </TouchableWithoutFeedback>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
