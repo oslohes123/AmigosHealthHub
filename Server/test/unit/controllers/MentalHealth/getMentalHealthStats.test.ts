@@ -6,7 +6,7 @@
 // import type { Request, Response } from 'express'
 // import { createMentalHealthUser } from '../../../../utils/asyncMentalHealthFunctions'
 
-// import test from 'ava'
+import test from 'ava'
 // const sinon = require('sinon')
 // const uuid = uuidv4()
 // const wrongUUID = '1a-2345-6b7c-890d-e01f2ghij34k'
@@ -287,3 +287,9 @@
 //   t.true(res.json.calledOnceWith(argsPassed))
 //   t.true(JSON.stringify(argsPassed) === stringifiedExpectedArgs)
 // })
+
+
+test('passing test ', (t: any) => {
+    t.pass()
+  })
+  

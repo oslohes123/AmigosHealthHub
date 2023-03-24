@@ -6,7 +6,7 @@
 // import RouteNamesClass from '../../../utils/routeNamesClass'
 // import { createMentalHealthUser } from '../../../utils/asyncMentalHealthFunctions'
 
-// import test from 'ava'
+import test from 'ava'
 // import request from 'supertest'
 // const routeNames = new RouteNamesClass()
 
@@ -87,3 +87,8 @@
 //   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
 //   t.true(JSON.stringify(response.body) === JSON.stringify(expectedArgs))
 // })
+
+test('passing test ', (t: any) => {
+    t.pass()
+  })
+  

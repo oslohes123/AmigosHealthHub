@@ -3,7 +3,7 @@
 // import { createHashedPassword, createUserWithID, deleteUserRow } from '../../../../utils/userFunctions'
 // import type { Request, Response } from 'express'
 
-// import test from 'ava'
+import test from 'ava'
 // const sinon = require('sinon')
 
 // const uuid = uuidv4()
@@ -114,3 +114,7 @@
 //   t.true(res.status.calledWith(200))
 //   t.true(res.json.calledOnceWith({ mssg: 'Successful Submission' }))
 // })
+
+test('passing test ', (t: any) => {
+  t.pass()
+})

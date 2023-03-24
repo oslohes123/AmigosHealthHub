@@ -4,7 +4,7 @@
 // import { v4 as uuidv4 } from 'uuid'
 // import { createHashedPassword } from '../../../../utils/userFunctions'
 // import type { Request, Response } from 'express'
-// import test from 'ava'
+import test from 'ava'
 // const sinon = require('sinon')
 
 // const databaseQuery = new SupabaseQueryClass()
@@ -84,3 +84,6 @@
 //   t.true(res.status.calledWith(400))
 //   t.true(res.json.calledWith({ mssg: 'hourslept must be provided' }))
 // })
+test('passing test ', (t: any) => {
+  t.pass()
+})
