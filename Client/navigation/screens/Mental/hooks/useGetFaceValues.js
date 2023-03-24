@@ -3,8 +3,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuthContext } from '../../Authentication/context/AuthContext';
 
 const serverURL = process.env.URL;
-const faceValuesRoute = `${serverURL}/api/user/mentalHealth/faceGraph`;
+// const faceValuesRoute = `${serverURL}/api/user/mentalHealth/faceGraph`;
 
+const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const partialFaceValuesRoute = '/api/user/mentalHealth/faceGraph';
+let faceValuesRoute;
+if (usingDeployedServer) {
+  faceValuesRoute = `${serverURL}${partialFaceValuesRoute}`;
+} else {
+  faceValuesRoute = `http://localhost:3001${partialFaceValuesRoute}`;
+}
 export default function useGetFaceValues() {
   // get the current users ID thats currently logged in
   const { user } = useAuthContext();

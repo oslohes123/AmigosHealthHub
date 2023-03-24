@@ -5,6 +5,14 @@ import { useAuthContext } from '../../Authentication/context/AuthContext';
 
 const serverURL = process.env.URL;
 
+const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const partialAddWordFaceValueRoute = '/api/user/mentalHealth/rateMental';
+let addWordFaceValueRoute;
+if (usingDeployedServer) {
+  addWordFaceValueRoute = `${serverURL}${partialAddWordFaceValueRoute}`;
+} else {
+  addWordFaceValueRoute = `http://localhost:3001${partialAddWordFaceValueRoute}`;
+}
 export default function useSubmit() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
@@ -20,7 +28,7 @@ export default function useSubmit() {
     );
     // make a post request with the data and the accountID the data should be sent with respect to
     const response = await fetch(
-      `${serverURL}/api/user/mentalHealth/rateMental`,
+      addWordFaceValueRoute,
       {
         method: 'POST',
         headers: {

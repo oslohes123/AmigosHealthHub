@@ -3,7 +3,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuthContext } from '../../Authentication/context/AuthContext';
 
 const serverURL = process.env.URL;
-const wordValuesRoute = `${serverURL}/api/user/mentalHealth/wordcloud`;
+// const wordValuesRoute = `${serverURL}/api/user/mentalHealth/wordcloud`;
+
+const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const partialWordValuesRoute = '/api/user/mentalHealth/wordcloud';
+let wordValuesRoute;
+if (usingDeployedServer) {
+  wordValuesRoute = `${serverURL}${partialWordValuesRoute}`;
+} else {
+  wordValuesRoute = `http://localhost:3001${partialWordValuesRoute}`;
+}
 
 export default function useGetWordValues() {
   // get the current users ID thats currently logged in

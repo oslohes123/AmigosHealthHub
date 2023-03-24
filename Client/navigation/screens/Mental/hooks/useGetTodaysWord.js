@@ -4,8 +4,16 @@ import { useState } from 'react';
 import { useAuthContext } from '../../Authentication/context/AuthContext';
 
 const serverURL = process.env.URL;
-const todaysWordRoute = `${serverURL}/api/user/mentalHealth/todaysWord`;
+// const todaysWordRoute = `${serverURL}/api/user/mentalHealth/todaysWord`;
 
+const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const partialTodaysWordRoute = '/api/user/mentalHealth/todaysWord';
+let todaysWordRoute;
+if (usingDeployedServer) {
+  todaysWordRoute = `${serverURL}${partialTodaysWordRoute}`;
+} else {
+  todaysWordRoute = `http://localhost:3001${partialTodaysWordRoute}`;
+}
 export default function useGetTodaysWord() {
   const [errorTodaysWord, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
