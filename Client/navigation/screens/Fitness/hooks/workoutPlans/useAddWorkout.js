@@ -3,8 +3,15 @@ import { useAuthContext } from '../../../Authentication/context/AuthContext';
 import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
-const addWorkoutRoute = `${serverURL}/api/user/workout/add`;
-
+// const addWorkoutRoute = `${serverURL}/api/user/workout/add`;
+const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const partialAddWorkoutRoute = '/api/user/workout/add';
+let addWorkoutRoute;
+if (usingDeployedServer) {
+  addWorkoutRoute = `${serverURL}${partialAddWorkoutRoute}`;
+} else {
+  addWorkoutRoute = `http://localhost:3001${partialAddWorkoutRoute}`;
+}
 /**
  *
  * @returns message state that displays either error or success message

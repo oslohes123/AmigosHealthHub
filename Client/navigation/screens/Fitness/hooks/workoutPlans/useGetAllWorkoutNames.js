@@ -5,8 +5,15 @@ import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
 
-const getAllWorkoutNamesRoute = `${serverURL}/api/user/workout/getAllWorkoutNames`;
-
+// const getAllWorkoutNamesRoute = `${serverURL}/api/user/workout/getAllWorkoutNames`;
+const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const partialGetAllWorkoutNamesRoute = '/api/user/workout/getAllWorkoutNames';
+let getAllWorkoutNamesRoute;
+if (usingDeployedServer) {
+  getAllWorkoutNamesRoute = `${serverURL}${partialGetAllWorkoutNamesRoute}`;
+} else {
+  getAllWorkoutNamesRoute = `http://localhost:3001${partialGetAllWorkoutNamesRoute}`;
+}
 export default function useGetAllWorkoutNames() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
