@@ -126,7 +126,7 @@ test('changePassword with incorrect original password results in error', async (
   }
   // check password hasn't changed
   const match = await bcrypt.compare('OriginalPassword123!', data[0].password)
-  t.truthy(match)
+  t.true(match)
 
   t.true(res.status.calledWith(400))
   t.true(res.json.calledWith({ mssg: "Old password doesn't match!" }))

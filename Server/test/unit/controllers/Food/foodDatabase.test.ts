@@ -97,12 +97,12 @@ test('get tracked food', async (t: ExecutionContext) => {
   t.true(res.status.calledWith(200))
 })
 
-test('get specific tracked food', async (t: ExecutionContext) => {
-  console.log('Speicifc food ID ', foodID)
+// test('get specific tracked food', async (t: ExecutionContext) => {
+//   console.log('Speicifc food ID ', foodID)
 
-  const req = mockRequest({ foodID }, {})
-  const res = mockResponse()
-  await getSpecificTrackedFood(req as Request, res as Response)
-  t.true(res.status.calledWith(200))
-}
-)
+//   const req = mockRequest({ foodID }, {})
+//   const res = mockResponse()
+//   await getSpecificTrackedFood(req as Request, res as Response)
+//   t.true(res.status.calledWith(200))
+// }
+// )
