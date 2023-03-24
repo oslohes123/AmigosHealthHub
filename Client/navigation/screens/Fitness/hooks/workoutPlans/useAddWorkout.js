@@ -7,12 +7,12 @@ const ipAddress = process.env.IP_ADDRESS;
 const port = process.env.PORT;
 // const addWorkoutRoute = `${serverURL}/api/user/workout/add`;
 const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
-const partialAddWorkoutRoute = 'api/user/workout/add';
+const partialAddWorkoutRoute = '/api/user/workout/add';
 let addWorkoutRoute;
 if (usingDeployedServer) {
   addWorkoutRoute = `${serverURL}${partialAddWorkoutRoute}`;
 } else {
-  addWorkoutRoute = `http://${ipAddress}:${port}/${partialAddWorkoutRoute}`;
+  addWorkoutRoute = `http://${ipAddress}:${port}${partialAddWorkoutRoute}`;
 }
 /**
  *
