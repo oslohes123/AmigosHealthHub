@@ -60,7 +60,6 @@ test('user with no workouts has burnt 0 calories', async (t: any) => {
   const req = mockRequest({ userid: uuid })
   const res = mockResponse()
   await getCaloriesToday(req as Request, res as Response)
-
   t.true(res.status.calledWith(200))
   t.true(res.json.calledWith({ mssg: 'User has no workouts!', totalCaloriesBurnt: 0 }))
 })
