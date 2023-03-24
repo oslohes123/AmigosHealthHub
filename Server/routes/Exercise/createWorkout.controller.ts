@@ -2,8 +2,9 @@ import { type Request, type Response } from 'express'
 import supabase from '../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../utils/databaseInterface'
 import { eitherIsFloatOrInt } from '../../utils/validators'
+import { schemaForCreateWorkoutJSON } from '../../utils/Exercise/JSONSchemas/schemaForCreateWorkoutJSON'
+import validateJSONSchema from '../../utils/schemaJSONvalidate'
 const databaseQuery = new SupabaseQueryClass()
-
 const deleteWorkoutPlanByID = async (workoutPlanID: string) => {
   const errorAndIDs = { deleteError: '' }
   const { error }: any = await databaseQuery.deleteFrom(supabase, 'WorkoutPlans', 'WorkoutPlanID', workoutPlanID)
@@ -97,25 +98,15 @@ export const addExerciseToExercises = async (type: string, name: string, muscle:
 export const createWorkout = async (req: Request, res: Response) => {
   const { userid, workoutname, exercises } = req.body
 
-  if (!userid || !workoutname || !exercises) {
-    return res.status(400).json({ mssg: 'userid, workoutname or exercises is missing!' })
+  if (!validateJSONSchema(req.body, schemaForCreateWorkoutJSON)) {
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'req.body does not match the JSON Schema!' })
   }
-  console.log(`ln122 req.body: ${JSON.stringify(req.body)}`)
-
   // Add the exerciseID and userid of the exercise to each exercise object's property
   for (let i = 0; i < exercises.length; i++) {
     try {
       const { type, name, muscle, difficulty, instructions, equipment } = exercises[i]
-      //  const propertiesOfExercise= Object.keys(exercises[i]);
-      //  for(let k = 0; k<propertiesOfExercise.length; k++){
 
-      //  }
-      // check if exercises has all of the destructured properties above and make sure name is not the empty string
-      if (!(Object.prototype.hasOwnProperty.call(exercises[i], 'type')) || !(Object.prototype.hasOwnProperty.call(exercises[i], 'name')) || !(Object.prototype.hasOwnProperty.call(exercises[i], 'muscle')) || !(Object.prototype.hasOwnProperty.call(exercises[i], 'difficulty')) || !(Object.prototype.hasOwnProperty.call(exercises[i], 'equipment')) || !(Object.prototype.hasOwnProperty.call(exercises[i], 'instructions'))) {
-        return res.status(400).json({ mssg: "Exercise doesn't have one of the following properties:type, name, muscle, difficulty, equipment" })
-      }
-      console.log(`exercises[i] before delete for: ${JSON.stringify(exercises[i])}`)
-
+      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
       Object.keys(exercises[i]).forEach((k) => (exercises[i])[k] == null && delete (exercises[i])[k])
       console.log(`exercises[i] after delete for:  ${JSON.stringify(exercises[i])}`)
       const { errorPresent, ID } = await addExerciseToExercises(type, name, muscle, difficulty, instructions, equipment)
@@ -167,26 +158,6 @@ export const createWorkout = async (req: Request, res: Response) => {
     const numberOfExercises = exercises.length
     const workoutPEIDs = []
     for (let i = 0; i < numberOfExercises; i++) {
-      // Check if exercises inputs are numbers!
-      if (exercises[i].calories && typeof (exercises[i].calories) === 'string' && !(eitherIsFloatOrInt(exercises[i].calories))) {
-        return res.status(400).json({ mssg: 'Make sure calories is a number!' })
-      }
-
-      if (exercises[i].sets && typeof (exercises[i].sets) === 'string' && !(eitherIsFloatOrInt(exercises[i].sets))) {
-        return res.status(400).json({ mssg: 'Make sure sets is a number!' })
-      }
-      if (exercises[i].reps && typeof (exercises[i].reps) === 'string' && !(eitherIsFloatOrInt(exercises[i].reps))) {
-        return res.status(400).json({ mssg: 'Make sure reps is a number!' })
-      }
-      if (exercises[i].weight && typeof (exercises[i].weight) === 'string' && !(eitherIsFloatOrInt(exercises[i].weight))) {
-        return res.status(400).json({ mssg: 'Make sure weight is a number!' })
-      }
-      if (exercises[i].distance && typeof (exercises[i].distance) === 'string' && !(eitherIsFloatOrInt(exercises[i].distance))) {
-        return res.status(400).json({ mssg: 'Make sure distance is a number!' })
-      }
-      if (exercises[i].duration && typeof (exercises[i].duration) === 'string' && !(eitherIsFloatOrInt(exercises[i].duration))) {
-        return res.status(400).json({ mssg: 'Make sure duration is a number!' })
-      }
       // Check if exercises inputs are numbers!
       const { data, error }: any = await databaseQuery.match(supabase, 'PossibleExercises', 'PEID', exercises[i])
       console.log(`ln41: ${JSON.stringify(data)} `)
