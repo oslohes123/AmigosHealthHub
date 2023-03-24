@@ -4,7 +4,16 @@ import { useAuthContext } from '../../../Authentication/context/AuthContext';
 import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
-const getExerciseNameTypeRoute = `${serverURL}/api/user/completedWorkouts/exerciseTypeFreq`;
+// const getExerciseNameTypeRoute = `${serverURL}/api/user/completedWorkouts/exerciseTypeFreq`;
+
+const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const partialGetExerciseNameTypeRoute = '/api/user/completedWorkouts/exerciseTypeFreq';
+let getExerciseNameTypeRoute;
+if (usingDeployedServer) {
+  getExerciseNameTypeRoute = `${serverURL}${partialGetExerciseNameTypeRoute}`;
+} else {
+  getExerciseNameTypeRoute = `http://localhost:3001${partialGetExerciseNameTypeRoute}`;
+}
 
 export default function useGetExerciseTypeFreq() {
   const [getErrorGetExerciseType, setErrorGetExerciseType] = useState(null);

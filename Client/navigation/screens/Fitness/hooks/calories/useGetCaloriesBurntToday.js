@@ -5,7 +5,14 @@ import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
 
-const getCaloriesBurntTodayRoute = `${serverURL}/api/user/workout/calories/getToday`;
+const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const partialGetCaloriesBurntTodayRoute = '/api/user/workout/calories/getToday';
+let getCaloriesBurntTodayRoute;
+if (usingDeployedServer) {
+  getCaloriesBurntTodayRoute = `${serverURL}${partialGetCaloriesBurntTodayRoute}`;
+} else {
+  getCaloriesBurntTodayRoute = `http://localhost:3001${partialGetCaloriesBurntTodayRoute}`;
+}
 
 export default function useGetCaloriesBurntToday() {
   const [error, setError] = useState(null);

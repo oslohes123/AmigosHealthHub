@@ -4,8 +4,15 @@ import { useAuthContext } from '../../../Authentication/context/AuthContext';
 import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
-const addExerciseToExercisesRoute = `${serverURL}/api/user/exercise/add`;
-
+// const addExerciseToExercisesRoute = `${serverURL}/api/user/exercise/add`;
+const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const partialAddExerciseToExercises = '/api/user/exercise/add';
+let addExerciseToExercisesRoute;
+if (usingDeployedServer) {
+  addExerciseToExercisesRoute = `${serverURL}${partialAddExerciseToExercises}`;
+} else {
+  addExerciseToExercisesRoute = `http://localhost:3001${partialAddExerciseToExercises}`;
+}
 export default function useAddExerciseToExercises() {
   const { logout } = useLogout();
   const [error, setError] = useState(null);

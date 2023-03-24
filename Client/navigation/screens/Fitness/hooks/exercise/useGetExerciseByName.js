@@ -4,7 +4,16 @@ import { useAuthContext } from '../../../Authentication/context/AuthContext';
 import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
-const getExerciseByNameRoute = `${serverURL}/api/user/exercise/get`;
+// const getExerciseByNameRoute = `${serverURL}/api/user/exercise/get`;
+
+const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const partialGetExerciseByNameRoute = '/api/user/exercise/get';
+let getExerciseByNameRoute;
+if (usingDeployedServer) {
+  getExerciseByNameRoute = `${serverURL}${partialGetExerciseByNameRoute}`;
+} else {
+  getExerciseByNameRoute = `http://localhost:3001${partialGetExerciseByNameRoute}`;
+}
 
 export default function useGetExerciseByName() {
   const [error, setError] = useState(null);

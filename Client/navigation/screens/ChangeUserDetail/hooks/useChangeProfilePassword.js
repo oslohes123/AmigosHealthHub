@@ -15,10 +15,9 @@ if (usingDeployedServer) {
   changePasswordRoute = `http://localhost:3001${partialChangePasswordRoute}`;
 }
 export default function useChangeProfilePassword() {
-  console.log('port: ');
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
-  const { dispatch, user } = useAuthContext();
+  const { user } = useAuthContext();
   const { logout } = useLogout();
   console.log('In changePassword');
 

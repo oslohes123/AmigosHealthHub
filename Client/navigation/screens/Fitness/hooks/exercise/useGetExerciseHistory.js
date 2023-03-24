@@ -5,8 +5,15 @@ import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
 
-const getExerciseHistoryRoute = `${serverURL}/api/user/exercise/history`;
-
+// const getExerciseHistoryRoute = `${serverURL}/api/user/exercise/history`;
+const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const partialGetExerciseHistoryRoute = '/api/user/exercise/history';
+let getExerciseHistoryRoute;
+if (usingDeployedServer) {
+  getExerciseHistoryRoute = `${serverURL}${partialGetExerciseHistoryRoute}`;
+} else {
+  getExerciseHistoryRoute = `http://localhost:3001${partialGetExerciseHistoryRoute}`;
+}
 export default function useGetExerciseHistory() {
   const [errorExerciseHistory, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
