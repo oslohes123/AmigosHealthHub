@@ -143,7 +143,6 @@ test('Return last 7 words and their frequencies', async (t: any) => {
   const argsPassedFull = res.json.getCall(0)
   console.log(`lastsevenFull: ${JSON.stringify(argsPassedFull)}`)
   const argsPassed = res.json.getCall(0).args[0]
-  console.log(`lastseven: ${JSON.stringify(argsPassed)}`)
 
   const expectedArgs = {
     mssg: 'MentalHealthOverview',
@@ -218,7 +217,6 @@ test('Return last 7 faces and their average with new ID', async (t: any) => {
   }
   const stringifiedExpectedArgs = JSON.stringify(expectedArgs)
   console.log(`argsPassed ln 233:${JSON.stringify(argsPassed)}`)
-  console.log(`stringifiedExpectedArgs ln 233:${stringifiedExpectedArgs}`)
   t.true(res.status.calledWith(200))
   t.true(res.json.calledOnceWith(argsPassed))
   t.true(JSON.stringify(argsPassed) === stringifiedExpectedArgs)
@@ -240,7 +238,6 @@ test("Return today's word", async (t: any) => {
   }
   const stringifiedExpectedArgs = JSON.stringify(expectedArgs)
   console.log(`argsPassed wheretodays_word:${JSON.stringify(argsPassed)}`)
-  console.log(`stringifiedExpectedArgs wheretodays_word:${stringifiedExpectedArgs}`)
   t.true(res.json.calledOnceWith(argsPassed))
   t.true(JSON.stringify(argsPassed) === stringifiedExpectedArgs)
 })
@@ -283,7 +280,6 @@ test('Return last 7 dates', async (t: any) => {
   }
   const stringifiedExpectedArgs = JSON.stringify(expectedArgs)
   console.log(`last7dates:${JSON.stringify(argsPassed)}`)
-  console.log(`stringifiedExpectedArgs last7dates:${stringifiedExpectedArgs}`)
   t.true(res.json.calledOnceWith(argsPassed))
   t.true(JSON.stringify(argsPassed) === stringifiedExpectedArgs)
 })
