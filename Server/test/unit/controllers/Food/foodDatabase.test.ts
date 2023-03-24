@@ -7,13 +7,14 @@ import { type ExecutionContext } from 'ava'
 import test from 'ava'
 import sinon from 'sinon'
 import type FoodInput from './../../../../interfaces/Food/foodInterfaces'
-import { addTrackedFood, getSpecificTrackedFood, getTrackedFood } from './../../../../routes/Food/foodDatabase.controller'
+import { addTrackedFood, deleteTrackedFood, getFood, getMultipleFood, getSpecificTrackedFood, getTrackedFood, updateTrackedFood } from './../../../../routes/Food/foodDatabase.controller'
 const supabaseQuery = new SupabaseQueryClass()
 
 let randomEmail: string
 let usersID: string = ''
 let testFood: FoodInput
-let foodID: string
+let LogID: string
+let FoodID: string
 
 const todaysDate = new Date().toISOString().split('T')[0]
 test.before(async (t: any) => {
@@ -61,7 +62,8 @@ test.before(async (t: any) => {
   const req = mockRequest({}, testFood)
   const res = mockResponse()
   await addTrackedFood(req as Request, res as Response)
-  foodID = res.json.getCall(-1)
+  LogID = res.send.firstCall.args[0][0].LogID
+  FoodID = res.send.firstCall.args[0][0].FoodID
 })
 
 test.after.always(async () => {
@@ -97,12 +99,38 @@ test('get tracked food', async (t: ExecutionContext) => {
   t.true(res.status.calledWith(200))
 })
 
-// test('get specific tracked food', async (t: ExecutionContext) => {
-//   console.log('Speicifc food ID ', foodID)
+test('get specific tracked food', async (t: ExecutionContext) => {
+  const req = mockRequest({ LogID }, {})
+  const res = mockResponse()
+  await getSpecificTrackedFood(req as Request, res as Response)
+  console.log('Error code', res.status.firstCall.args[0])
+  t.true(res.status.calledWith(200))
+})
 
-//   const req = mockRequest({ foodID }, {})
-//   const res = mockResponse()
-//   await getSpecificTrackedFood(req as Request, res as Response)
-//   t.true(res.status.calledWith(200))
-// }
-// )
+test('update tracked food', async (t: ExecutionContext) => {
+  const req = mockRequest({}, { Quantity: 1, Measure: 'g', LogID, Calories: 100 })
+  const res = mockResponse()
+  await updateTrackedFood(req as Request, res as Response)
+  t.true(res.status.calledWith(200))
+})
+
+test('get food', async (t: ExecutionContext) => {
+  const req = mockRequest({ FoodID }, { })
+  const res = mockResponse()
+  await getFood(req as Request, res as Response)
+  t.true(res.status.calledWith(200))
+})
+
+test('delete tracked food', async (t: ExecutionContext) => {
+  const req = mockRequest({}, { LogID })
+  const res = mockResponse()
+  await deleteTrackedFood(req as Request, res as Response)
+  t.true(res.status.calledWith(200))
+})
+
+test('get multiple foods', async (t: ExecutionContext) => {
+  const req = mockRequest({}, { foodIDs: [FoodID] })
+  const res = mockResponse()
+  await getMultipleFood(req as Request, res as Response)
+  t.true(res.status.calledWith(200))
+})

@@ -4,7 +4,6 @@ import supabase from '../../utils/supabaseSetUp'
 import type FoodInput from './../../interfaces/Food/foodInterfaces'
 require('dotenv').config()
 const databaseQuery = new SupabaseQueryClass()
-
 export const addTrackedFood = async (req: Request, res: Response) => {
   const Data: FoodInput = req.body
   // First match to see if the food is already in the Food table
@@ -58,14 +57,11 @@ export const addTrackedFood = async (req: Request, res: Response) => {
     }
   )
   if (error) {
-    console.log('Users ID', Data.userID)
-
     console.log('Error inserting food into Tracked Food table!', error)
     return res.status(500).send(error)
   }
   return res.status(200).send(returnData)
 }
-
 export const getTrackedFood = async (req: Request, res: Response) => {
   const { date, userID } = req.params
   const { data: returnData, error }: any = await databaseQuery.match(
@@ -80,14 +76,13 @@ export const getTrackedFood = async (req: Request, res: Response) => {
     res.status(200).send(returnData)
   }
 }
-
 export const getSpecificTrackedFood = async (req: Request, res: Response) => {
-  const { logID } = req.params
+  const { LogID } = req.params
   const { data: returnData, error }: any = await databaseQuery.match(
     supabase,
     'Tracked Food',
     '*',
-    { LogID: logID }
+    { LogID }
   )
   if (error) {
     console.log('Error getting specific tracked food!', error)
@@ -96,7 +91,6 @@ export const getSpecificTrackedFood = async (req: Request, res: Response) => {
     res.status(200).send(returnData)
   }
 }
-
 export const updateTrackedFood = async (req: Request, res: Response) => {
   const { Quantity, Measure, LogID, Calories } = req.body
 
@@ -113,9 +107,8 @@ export const updateTrackedFood = async (req: Request, res: Response) => {
     res.status(200).send(returnData)
   }
 }
-
 export const deleteTrackedFood = async (req: Request, res: Response) => {
-  const { logID: LogID } = req.body
+  const { LogID } = req.body
   const { data: returnData, error }: any = await databaseQuery.deleteFrom(
     supabase,
     'Tracked Food',
@@ -128,7 +121,6 @@ export const deleteTrackedFood = async (req: Request, res: Response) => {
     res.status(200).send(returnData)
   }
 }
-
 export const getFood = async (req: Request, res: Response) => {
   const { FoodID } = req.params
   const { data: returnData, error }: any = await databaseQuery.match(
@@ -143,7 +135,6 @@ export const getFood = async (req: Request, res: Response) => {
     res.status(200).send(returnData)
   }
 }
-
 export const getMultipleFood = async (req: Request, res: Response) => {
   const { foodIDs } = req.body
 
