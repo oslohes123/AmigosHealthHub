@@ -1,12 +1,22 @@
 /* eslint-disable consistent-return */
 import { useState } from 'react';
 import { useAuthContext } from '../../../Authentication/context/AuthContext';
+import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
-const port = process.env.PORT;
+const serverURL = process.env.URL;
 const ipAddress = process.env.IP_ADDRESS;
-const addExerciseToExercisesRoute = `http://${ipAddress}:${port}/api/user/exercise/add`;
-
+const port = process.env.PORT;
+// const addExerciseToExercisesRoute = `${serverURL}/api/user/exercise/add`;
+const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const partialAddExerciseToExercises = '/api/user/exercise/add';
+let addExerciseToExercisesRoute;
+if (usingDeployedServer) {
+  addExerciseToExercisesRoute = `${serverURL}${partialAddExerciseToExercises}`;
+} else {
+  addExerciseToExercisesRoute = `http://${ipAddress}:${port}${partialAddExerciseToExercises}`;
+}
 export default function useAddExerciseToExercises() {
+  const { logout } = useLogout();
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useAuthContext();
@@ -38,6 +48,7 @@ export default function useAddExerciseToExercises() {
 
     const addExerciseToExercisesJSON = await response.json();
     if (!response.ok) {
+      if (response.status === 401) { logout(); }
       setIsLoading(false);
       setError(addExerciseToExercisesJSON.mssg);
       return null;

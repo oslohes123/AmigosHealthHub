@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   widget: {
-    // margin: 10,
     marginVertical: 10,
     padding: 20,
     borderRadius: 25,
@@ -97,7 +96,7 @@ export default function FitnessScreen({ navigation }) {
         </LinearGradient>
       </TouchableOpacity>
 
-      <View style={{ flexDirection: 'row', width: screenWidth * 0.9, justifyContent: 'space-between' }}>
+      <View style={{ flexDirection: 'row', width: screenWidth * 0.9, justifyContent: 'space-between', marginBottom: 10 }}>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('Workout History');

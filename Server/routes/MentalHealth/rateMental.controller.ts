@@ -1,6 +1,9 @@
 import supabase from '../../utils/supabaseSetUp'
+import { SupabaseQueryClass } from '../../utils/databaseInterface'
 import type { Request, Response } from 'express'
-import { createMentalHealthUser, getMentalHealthUserByID, selectCreatedByOfMentalHealthUser, updateMentalHealthData } from '../../utils/asyncMentalHealthFunctions'
+import { getUserByEmail } from '../../utils/userFunctions'
+
+const databaseQuery = new SupabaseQueryClass()
 
 // get todays date
 const date = new Date()
@@ -20,8 +23,9 @@ export function getToday () {
 }
 // check if todays date is equal to the date of the most recent values provided by the user that is logged in
 export async function checkExistsToday (id: string) {
-  const { data, error }: any = await selectCreatedByOfMentalHealthUser(supabase, 'Mental Health', id, 'created_at')
+  const { data, error }: any = await databaseQuery.selectWhere(supabase, 'Mental Health', 'user_id', id, 'created_at')
   if (error) {
+    console.error(error)
     return true
   }
   else if (data.length === 0) {
@@ -29,6 +33,7 @@ export async function checkExistsToday (id: string) {
   }
   else {
     const recentValue = (data[data.length - 1].created_at)
+    console.log(`getToday(): ${getToday()}`)
     return !(recentValue < getToday())
   }
 }
@@ -41,16 +46,13 @@ export const insertMentalData = async (req: Request, res: Response) => {
   if (word === '') {
     return res.status(400).json({ mssg: 'Can\'t submit an empty word' })
   }
-
   if (face < 1 || face > 5) {
     return res.status(400).json({ mssg: 'Face value must be between 1-5' })
   }
-
   if (await checkExistsToday(id)) {
-    const { data }: any = await getMentalHealthUserByID(id, 'MH_ID')
+    const { data }: any = await databaseQuery.selectWhere(supabase, 'Mental Health', 'user_id', id, 'MH_ID')
     const recentID = (data[data.length - 1].MH_ID)
-    const { error }: any = await updateMentalHealthData(supabase, 'Mental Health', {
-      user_id: id,
+    const { error }: any = await databaseQuery.update(supabase, 'Mental Health', {
       face_id: face,
       todays_word: word,
       created_at: getToday()
@@ -63,7 +65,7 @@ export const insertMentalData = async (req: Request, res: Response) => {
     return res.status(200).json({ mssg: 'Submission for today has been updated' })
   }
   else {
-    const { error }: any = await createMentalHealthUser({
+    const { error }: any = await databaseQuery.insert(supabase, 'Mental Health', {
       user_id: id,
       face_id: face,
       todays_word: word,

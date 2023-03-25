@@ -89,14 +89,13 @@ export default class RouteNamesClass {
 
   // Mental Health Routes
   readonly partialWordCloud = '/wordCloud'
-  // http://localhost:3001/api/user/mentalHealth/wordCloud
   readonly fullWordCloudURL = this.mentalHealthBaseURL + this.partialWordCloud
   readonly partialFaceGraph = '/faceGraph'
   readonly fullFaceGraphURL = this.mentalHealthBaseURL + this.partialFaceGraph
   readonly partialTodaysWord = '/todaysWord'
   readonly fullTodaysWordURL = this.mentalHealthBaseURL + this.partialTodaysWord
   readonly partialGetDates = '/dateValues'
-  readonly fullDateValues = this.mentalHealthBaseURL + this.partialGetDates
+  readonly fullDateValuesURL = this.mentalHealthBaseURL + this.partialGetDates
 
   // Mental Health Route
 
@@ -128,7 +127,7 @@ export default class RouteNamesClass {
   readonly fullGetTrackedFoodURL = this.foodBaseURL + this.partialGetTrackedFoodURL
 
   // Food database get specific tracked routes
-  readonly partialGetSpecificTrackedFoodURL = '/getSpecificTrackedFood/:logID'
+  readonly partialGetSpecificTrackedFoodURL = '/getSpecificTrackedFood/:LogID'
   readonly fullGetSpecificTrackedFoodURL = this.foodBaseURL + this.partialGetSpecificTrackedFoodURL
 
   // Food database get routes

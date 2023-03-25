@@ -4,7 +4,6 @@ import supabase from '../../utils/supabaseSetUp'
 import type FoodInput from './../../interfaces/Food/foodInterfaces'
 require('dotenv').config()
 const databaseQuery = new SupabaseQueryClass()
-
 export const addTrackedFood = async (req: Request, res: Response) => {
   const Data: FoodInput = req.body
   // First match to see if the food is already in the Food table
@@ -15,6 +14,7 @@ export const addTrackedFood = async (req: Request, res: Response) => {
     { FoodID: Data.input.foodIdentifier }
   )
   if (matchingDataError) {
+    console.log('Error matching food to Food table!', matchingDataError)
     return res.status(500).send(matchingDataError)
   } else {
     // If the food is not in the Food table, insert it
@@ -36,6 +36,7 @@ export const addTrackedFood = async (req: Request, res: Response) => {
         }
       )
       if (insertFoodError) {
+        console.log('Error inserting food into Food table!', insertFoodError)
         return res.status(500).send(insertFoodError)
       }
     }
@@ -56,11 +57,11 @@ export const addTrackedFood = async (req: Request, res: Response) => {
     }
   )
   if (error) {
+    console.log('Error inserting food into Tracked Food table!', error)
     return res.status(500).send(error)
   }
   return res.status(200).send(returnData)
 }
-
 export const getTrackedFood = async (req: Request, res: Response) => {
   const { date, userID } = req.params
   const { data: returnData, error }: any = await databaseQuery.match(
@@ -70,33 +71,28 @@ export const getTrackedFood = async (req: Request, res: Response) => {
     { UserID: userID, Date: date }
   )
   if (error) {
-    console.log('Error getting tracked food')
     res.status(500).send(error)
   } else {
     res.status(200).send(returnData)
   }
 }
-
 export const getSpecificTrackedFood = async (req: Request, res: Response) => {
-  const { logID } = req.params
+  const { LogID } = req.params
   const { data: returnData, error }: any = await databaseQuery.match(
     supabase,
     'Tracked Food',
     '*',
-    { LogID: logID }
+    { LogID }
   )
   if (error) {
-    console.log('Error getting specific tracked food')
+    console.log('Error getting specific tracked food!', error)
     res.status(500).send(error)
   } else {
     res.status(200).send(returnData)
   }
 }
-
 export const updateTrackedFood = async (req: Request, res: Response) => {
   const { Quantity, Measure, LogID, Calories } = req.body
-  console.log(req.body)
-  console.log(Quantity, Measure, LogID)
 
   const { data: returnData, error }: any = await databaseQuery.update(
     supabase,
@@ -106,15 +102,13 @@ export const updateTrackedFood = async (req: Request, res: Response) => {
     LogID
   )
   if (error) {
-    console.log('Error updating tracked food')
     res.status(500).send(error)
   } else {
     res.status(200).send(returnData)
   }
 }
-
 export const deleteTrackedFood = async (req: Request, res: Response) => {
-  const { logID: LogID } = req.body
+  const { LogID } = req.body
   const { data: returnData, error }: any = await databaseQuery.deleteFrom(
     supabase,
     'Tracked Food',
@@ -122,13 +116,11 @@ export const deleteTrackedFood = async (req: Request, res: Response) => {
     LogID
   )
   if (error) {
-    console.log('Error deleting tracked food')
     res.status(500).send(error)
   } else {
     res.status(200).send(returnData)
   }
 }
-
 export const getFood = async (req: Request, res: Response) => {
   const { FoodID } = req.params
   const { data: returnData, error }: any = await databaseQuery.match(
@@ -138,13 +130,11 @@ export const getFood = async (req: Request, res: Response) => {
     { FoodID }
   )
   if (error) {
-    console.log('Error getting food')
     res.status(500).send(error)
   } else {
     res.status(200).send(returnData)
   }
 }
-
 export const getMultipleFood = async (req: Request, res: Response) => {
   const { foodIDs } = req.body
 
@@ -156,7 +146,6 @@ export const getMultipleFood = async (req: Request, res: Response) => {
     foodIDs
   )
   if (error) {
-    console.log('Error getting food')
     res.status(500).send(error)
   } else {
     res.status(200).send(data)

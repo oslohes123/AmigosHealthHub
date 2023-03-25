@@ -9,7 +9,7 @@ import {
 import { AntDesign } from '@expo/vector-icons';
 import GreenButton from '../../components/GreenButton';
 import { useAuthContext } from '../Authentication/context/AuthContext';
-import { updateTrackedFood, deleteTrackedFood } from '../../../functions/Food';
+import { updateTrackedFood, deleteTrackedFood } from './hooks/Food';
 import themeContext from '../../theme/themeContext';
 
 const styles = StyleSheet.create({

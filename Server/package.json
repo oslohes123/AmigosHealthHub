@@ -8,6 +8,7 @@
     "start": "node dist/server.js",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon dist/server.js\"",
     "testOnLinux": "rm -r dist && npx tsc && c8 ava",
+    "testOnWindows": "rd /s /q dist && npx tsc &&c8 ava",
     "test": "npx tsc && c8 ava",
     "ts-coverage": "typescript-coverage-report"
   },
@@ -23,9 +24,12 @@
     "dotenv": "^16.0.3",
     "eslint-plugin-react": "^7.32.2",
     "express": "^4.18.2",
+    "fetch-mock": "^9.11.0",
+    "jsonschema": "^1.4.1",
     "jsonwebtoken": "^9.0.0",
     "moment": "^2.29.4",
     "sinon": "^15.0.2",
+    "sinon-test": "^3.1.5",
     "uuid": "^9.0.0",
     "validator": "^13.9.0"
   },

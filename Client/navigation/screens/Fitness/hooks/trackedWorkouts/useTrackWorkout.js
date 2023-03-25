@@ -1,10 +1,19 @@
 import { useState } from 'react';
 import { useAuthContext } from '../../../Authentication/context/AuthContext';
+import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
-const port = process.env.PORT;
+const serverURL = process.env.URL;
 const ipAddress = process.env.IP_ADDRESS;
-const trackWorkoutRoute = `http://${ipAddress}:${port}/api/user/completedWorkouts/add`;
-
+const port = process.env.PORT;
+// const trackWorkoutRoute = `${serverURL}/api/user/completedWorkouts/add`;
+const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const partialTrackWorkoutRoute = '/api/user/completedWorkouts/add';
+let trackWorkoutRoute;
+if (usingDeployedServer) {
+  trackWorkoutRoute = `${serverURL}${partialTrackWorkoutRoute}`;
+} else {
+  trackWorkoutRoute = `http://${ipAddress}:${port}${partialTrackWorkoutRoute}`;
+}
 /**
  *
  * @returns message state that displays either error or success message
@@ -15,7 +24,7 @@ export default function useTrackWorkout() {
 
   const { user } = useAuthContext();
   const { id, token } = user;
-
+  const { logout } = useLogout();
   const trackWorkout = async (workoutname, exercises) => {
     setIsLoading(true);
     setMessage(null);
@@ -28,6 +37,7 @@ export default function useTrackWorkout() {
 
     const trackWorkoutJSON = await response.json();
     if (!response.ok) {
+      if (response.status === 401) { logout(); }
       setIsLoading(false);
       setMessage(trackWorkoutJSON.mssg);
     }

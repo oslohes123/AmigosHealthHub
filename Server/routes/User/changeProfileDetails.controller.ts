@@ -1,10 +1,9 @@
 import { type Request, type Response } from 'express'
-import { createHashedPassword, getUserByEmail, updateUser, verifyPassword } from '../../utils/userFunctions'
+import { createHashedPassword, getUserByID, getUserByEmail, updateUser, verifyPassword } from '../../utils/userFunctions'
 import { isEmail, isStrongPassword } from '../../utils/validators'
-
 import supabase from '../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../utils/databaseInterface'
-
+import { deleteAllWorkoutPlansWithExercises } from '../../utils/deleteWorkoutPlans'
 require('dotenv').config()
 
 const bcrypt = require('bcrypt')
@@ -99,12 +98,12 @@ export const changePassword = async (req: Request, res: Response) => {
  */
 
 export const deleteAccount = async (req: Request, res: Response) => {
-  const { email, password } = req.body
-  if (!email || !password) {
-    res.status(400).json({ mssg: 'Email or Password are empty!' })
+  const { userID, password } = req.body
+  if (!userID || !password) {
+    return res.status(400).json({ mssg: 'Id or Password are empty!' })
   }
 
-  const { data, error }: any = await getUserByEmail(email)
+  const { data, error }: any = await getUserByID(userID)
 
   if (error) {
     res.status(400).json({ error })
@@ -116,17 +115,17 @@ export const deleteAccount = async (req: Request, res: Response) => {
     const match = await bcrypt.compare(password, data[0].password)
     if (match) {
       // delete account
-      const { error }: any = await databaseQuery.deleteFrom(supabase, 'User', 'email', email)
+      const { errorPresent } = await deleteAllWorkoutPlansWithExercises(userID)
+      if (errorPresent) {
+        return res.status(400).json({ mssg: 'Failed to delete account!', errorPresent })
+      }
+      const { error }: any = await databaseQuery.deleteFrom(supabase, 'User', 'id', userID)
       if (error) {
-        console.log('Failed to delete account!')
-        console.log(error)
-        res.status(400).json({ mssg: 'Failed to delete account!' })
+        return res.status(400).json({ mssg: 'Failed to delete account!', error })
       } else {
-        console.log('Account Deleted!')
-        res.status(200).json({ mssg: 'Account Deleted!' })
+        return res.status(200).json({ mssg: 'Account Deleted!' })
       }
     } else {
-      console.log('Incorrect Password')
       return res.status(400).json({ mssg: 'Incorrect Password' })
     }
   }

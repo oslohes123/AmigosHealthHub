@@ -1,4 +1,4 @@
-import app from '../../..'
+import app from '../../../index'
 import { createToken, createHashedPassword, getUserByEmail, deleteUserRow, createUserWithID } from '../../../utils/userFunctions'
 import { getDate } from '../../../utils/convertTimeStamptz'
 import moment from 'moment'
@@ -10,9 +10,9 @@ import test from 'ava'
 import request from 'supertest'
 const routeNames = new RouteNamesClass()
 
-/**
- * Refactor using objects, interfaces to prevent repeated code.
- */
+// /**
+//  * Refactor using objects, interfaces to prevent repeated code.
+//  */
 const todaysWordRoute = routeNames.fullTodaysWordURL
 const uuid = uuidv4()
 const wrongUUID = '1a-2345-6b7c-890d-e01f2ghij34k'
@@ -77,13 +77,15 @@ test(`GET ${todaysWordRoute} with correct ID`, async (t: any) => {
     .get(todaysWordRoute)
     .set({ authorization: token, id: uuid })
   const expectedArgs = {
-    mssg: "Here is today's word!",
-    word: [
-      { todays_word: 'Awful' }
-    ]
+    mssg: 'success',
+    word: 'Awful'
   }
   console.log(`correcttodaysword ${JSON.stringify(response.body)}`)
   t.true(response.status === 200)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify(expectedArgs))
 })
+
+// test('passing test ', (t: any) => {
+//   t.pass()
+// })

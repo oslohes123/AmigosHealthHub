@@ -9,9 +9,9 @@ import { createMentalHealthUser } from '../../../utils/asyncMentalHealthFunction
 import request from 'supertest'
 import test from 'ava'
 const routeNames = new RouteNamesClass()
-/**
- * Refactor using objects, interfaces to prevent repeated code.
- */
+// /**
+//  * Refactor using objects, interfaces to prevent repeated code.
+//  */
 const faceGraphRoute = routeNames.fullFaceGraphURL
 const uuid = uuidv4()
 const wrongUUID = '1a-2345-6b7c-890d-e01f2ghij34k'
@@ -211,3 +211,6 @@ test(`GET ${faceGraphRoute} with correct ID`, async (t: any) => {
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify(expectedArgs))
 })
+// test('passing test ', (t: any) => {
+//   t.pass()
+// })

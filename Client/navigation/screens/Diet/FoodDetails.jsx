@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import GreenButton from '../../components/GreenButton';
 import { useAuthContext } from '../Authentication/context/AuthContext';
-import { addTrackedFood } from '../../../functions/Food';
+import { addTrackedFood } from './hooks/Food';
 import themeContext from '../../theme/themeContext';
 
 const styles = StyleSheet.create({

@@ -1,4 +1,4 @@
-import app from '../../..'
+import app from '../../../index'
 import { createToken, createHashedPassword, getUserByEmail, deleteUserRow, createUserWithID } from '../../../utils/userFunctions'
 import { getDate } from '../../../utils/convertTimeStamptz'
 import moment from 'moment'
@@ -9,9 +9,9 @@ import { createMentalHealthUser } from '../../../utils/asyncMentalHealthFunction
 import request from 'supertest'
 import test from 'ava'
 const routeNames = new RouteNamesClass()
-/**
- * Refactor using objects, interfaces to prevent repeated code.
- */
+// /**
+//  * Refactor using objects, interfaces to prevent repeated code.
+//  */
 const wordCloudRoute = routeNames.fullWordCloudURL
 
 const uuid = uuidv4()
@@ -182,11 +182,11 @@ test(`GET ${wordCloudRoute} with correct ID`, async (t: any) => {
   const expectedArgs = {
     mssg: 'MentalHealthOverview',
     words: [
-      '\'Awful\'',
-      '\'Depressed\'',
-      '\'Mediocre\'',
-      '\'Happy\'',
-      '\'Alright\''
+      "\"Awful\"",
+      "\"Depressed\"",
+      "\"Mediocre\"",
+      "\"Happy\"",
+      "\"Alright\""
     ],
     freq: [
       '3',
@@ -197,7 +197,12 @@ test(`GET ${wordCloudRoute} with correct ID`, async (t: any) => {
     ]
   }
   console.log(`test2: ${JSON.stringify(response.body)}`)
+  console.log(`test3: ${todayDate}`)
   t.true(response.status === 200)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify(expectedArgs))
 })
+
+// test('passing test ', (t: any) => {
+//   t.pass()
+// })

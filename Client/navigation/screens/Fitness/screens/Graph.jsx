@@ -2,37 +2,39 @@ import {
   View, StyleSheet, Text, TouchableOpacity, Modal, TouchableWithoutFeedback,
   Dimensions,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { LineChart } from 'react-native-chart-kit';
 import { useIsFocused } from '@react-navigation/native';
 import { FAB, ActivityIndicator, MD2Colors } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
 import useGetExerciseHistory from '../hooks/exercise/useGetExerciseHistory';
 import useGetAllExercises from '../hooks/exercise/useGetAllExercises';
+import themeContext from '../../../theme/themeContext';
+
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#203038',
     flex: 1,
   },
   modalContainer: {
     alignItems: 'center',
-    marginVertical: '15%',
-    width: '100%',
+    marginVertical: 20,
+    width: screenWidth,
   },
   dropDownContainer: {
     borderWidth: 2,
-    borderColor: 'white',
+    borderColor: '#fff',
     borderRadius: 15,
     overflow: 'hidden',
-    marginRight: '5%',
-    width: '50%',
+    width: screenWidth * 0.5,
   },
   button: {
     height: 40,
     justifyContent: 'center',
     paddingLeft: 10,
-    backgroundColor: 'white',
+    backgroundColor: '#fff',
   },
   modal: {
     flex: 1,
@@ -41,22 +43,24 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
   modalButton: {
-    backgroundColor: 'white',
+    backgroundColor: '#fff',
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    width: '50%',
+    width: screenWidth * 0.5,
   },
-
   title: {
-    color: 'white',
+    color: '#fff',
     alignSelf: 'center',
     fontSize: 16,
     fontWeight: 'bold',
+    margin: 5,
   },
 });
 
 export default function Graph({ navigation }) {
+  const { background, color } = useContext(themeContext);
+
   const [selected, setSelected] = useState('');
   const [visible, setVisible] = useState(false);
   const [getArrayOfExercises, setArrayOfExercises] = useState([]);
@@ -171,10 +175,8 @@ export default function Graph({ navigation }) {
     setDataAndLabels();
   }, [selected]);
 
-  const screenWidth = Dimensions.get('window').width * 0.95;
-
   const chartConfig = {
-    backgroundGradientFrom: 'white',
+    backgroundGradientFrom: '#fff',
     backgroundGradientTo: '#0040ff',
     backgroundGradientToOpacity: 0.5,
     color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
@@ -184,16 +186,18 @@ export default function Graph({ navigation }) {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={[styles.container, { backgroundColor: background }]}>
       <View style={styles.modalContainer}>
-        <View style={styles.dropDownContainer}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => setVisible(true)}
-          >
-            {error && <Text>{error}</Text>}
-            <Text>{selected || 'Select a Workout'}</Text>
-          </TouchableOpacity>
+        <View>
+
+          <FAB
+            style={{ width: screenWidth * 0.6 }}
+            label={selected || 'Select an exercise'}
+            onPress={() => {
+              setVisible(true);
+            }}
+          />
+
           <Modal
             visible={visible}
             animationType="fade"
@@ -202,26 +206,27 @@ export default function Graph({ navigation }) {
           >
             <View style={styles.modal}>
               {!getArrayOfExercises && (
-                <Text>You Haven't Performed Any Exercises Yet!</Text>
+                <Text style={{ color }}>No exercise data</Text>
               )}
-              {getArrayOfExercises
-                && getArrayOfExercises.map((exercise) => (
-                  <TouchableOpacity
-                    style={styles.modalButton}
-                    key={exercise}
-                    onPress={() => {
-                      setSelected(exercise);
-                      setVisible(false);
-                    }}
-                  >
-                    <Text>{exercise}</Text>
-                  </TouchableOpacity>
-                ))}
+              <ScrollView style={{ maxHeight: screenHeight * 0.2 }}>
+                {getArrayOfExercises
+                  && getArrayOfExercises.map((exercise) => (
+                    <TouchableOpacity
+                      style={styles.modalButton}
+                      key={exercise}
+                      onPress={() => {
+                        setSelected(exercise);
+                        setVisible(false);
+                      }}
+                    >
+                      <Text>{exercise}</Text>
+                    </TouchableOpacity>
+                  ))}
+              </ScrollView>
 
               <FAB
                 icon="close"
-                style={styles.fab}
-                // label="Create Plan"
+                style={{ margin: 10 }}
                 onPress={() => {
                   setVisible(!visible);
                 }}
@@ -236,7 +241,7 @@ export default function Graph({ navigation }) {
           {/* <Text>Refreshing.....</Text> */}
           <ActivityIndicator
             animating
-            size={50}
+            size={30}
             color={MD2Colors.lightBlue400}
           />
         </>
@@ -246,12 +251,12 @@ export default function Graph({ navigation }) {
 
         {getWeightedData && getWeightedLabels && (
           <TouchableWithoutFeedback>
-            <View style={{ marginBottom: 40 }}>
-              <Text style={[styles.title]}>Weight pulled per exercise</Text>
+            <View style={{ marginBottom: 10 }}>
+              <Text style={[styles.title, { color }]}>Weight pulled per exercise</Text>
               <LineChart
                 style={{ borderRadius: 15 }}
                 data={weightedData}
-                width={0.9 * screenWidth}
+                width={screenWidth * 0.9}
                 height={280}
                 yAxisSuffix=" kg"
                 chartConfig={chartConfig}
@@ -263,16 +268,16 @@ export default function Graph({ navigation }) {
             </View>
           </TouchableWithoutFeedback>
         )}
-        {errorExerciseHistory && <Text>{errorExerciseHistory}</Text>}
+        {errorExerciseHistory && <Text style={{ color }}>{errorExerciseHistory}</Text>}
         {/* This is the duration graph for an Other exercise */}
         {getDurationData && getDurationLabels && (
           <TouchableWithoutFeedback>
-            <View style={{ marginBottom: 40 }}>
-              <Text style={[styles.title]}>Duration</Text>
+            <View style={{ marginBottom: 10 }}>
+              <Text style={[styles.title, { color }]}>Duration</Text>
               <LineChart
                 style={{ borderRadius: 25 }}
                 data={durationData}
-                width={screenWidth}
+                width={screenWidth * 0.9}
                 height={220}
                 chartConfig={chartConfig}
                 fromZero
@@ -288,12 +293,12 @@ export default function Graph({ navigation }) {
         {/* This is the distance graph for an Other exercise */}
         {getDistanceData && getDistanceLabels && (
           <TouchableWithoutFeedback>
-            <View style={{ marginBottom: 40 }}>
-              <Text style={[styles.title]}>Distance</Text>
+            <View style={{ marginBottom: 10 }}>
+              <Text style={[styles.title, { color }]}>Distance</Text>
               <LineChart
                 style={{ borderRadius: 25 }}
                 data={distanceData}
-                width={screenWidth}
+                width={screenWidth * 0.9}
                 height={220}
                 chartConfig={chartConfig}
                 fromZero
@@ -310,11 +315,11 @@ export default function Graph({ navigation }) {
         {getCaloriesData && getCaloriesLabels && (
           <TouchableWithoutFeedback>
             <View style={{ marginBottom: 40 }}>
-              <Text style={[styles.title]}>Calories</Text>
+              <Text style={[styles.title, { color }]}>Calories</Text>
               <LineChart
                 style={{ borderRadius: 25 }}
                 data={caloriesData}
-                width={screenWidth}
+                width={screenWidth * 0.9}
                 height={220}
                 chartConfig={chartConfig}
                 fromZero

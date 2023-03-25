@@ -1,9 +1,10 @@
 import { type Request, type Response } from 'express'
 import supabase from '../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../utils/databaseInterface'
-import { eitherIsFloatOrInt } from '../../utils/validators'
+import { schemaForCreateWorkoutJSON } from '../../utils/JSONSchemas/schemaForCreateWorkoutJSON'
+import validateJSONSchema from '../../utils/validateJSONSchema'
+import addExerciseToExercises from '../../utils/Exercise/addExerciseToExercises'
 const databaseQuery = new SupabaseQueryClass()
-
 const deleteWorkoutPlanByID = async (workoutPlanID: string) => {
   const errorAndIDs = { deleteError: '' }
   const { error }: any = await databaseQuery.deleteFrom(supabase, 'WorkoutPlans', 'WorkoutPlanID', workoutPlanID)
@@ -28,10 +29,6 @@ export const deleteWorkoutPlan = async (req: Request, res: Response) => {
     return res.status(400).json({ mssg: 'User does not have a plan of that name!' })
   }
   const workoutPlanToDel = data[0].WorkoutPlanID
-  //    const {errorPresent} = await deleteWorkoutPlansWithExercisesByID(workoutPlanToDel);
-  //    if(errorPresent){
-  //     return res.status(400).json({mssg:"Fail to delete WorkoutPlanByID", errorPresent})
-  //    }
 
   const { deleteError } = await deleteWorkoutPlanByID(workoutPlanToDel)
   if (deleteError) {
@@ -39,48 +36,6 @@ export const deleteWorkoutPlan = async (req: Request, res: Response) => {
   }
   else {
     return res.status(200).json({ mssg: `Workout Plan ${String(workoutname)} Deleted!` })
-  }
-}
-/**
- *
- * Get getexerciseid of a single exercise, if not in the exercise table already- add it
- */
-export const addExerciseToExercises = async (type: string, name: string, muscle: string, difficulty: string, instructions: string, equipment: string) => {
-  const errorAndIDs = { errorPresent: '', ID: '' }
-  // Allow instructions to be the empty string
-  if (!type || !name || !muscle || !difficulty || !equipment) {
-    errorAndIDs.errorPresent = 'One of type, name, muscle, difficulty or equipment are empty!'
-    return errorAndIDs
-  }
-  else {
-    const { data, error }: any = await databaseQuery.selectWhere(supabase, 'Exercises', 'name', name, '*')
-
-    if (error) {
-      console.log('Error selecting from Exercises table!')
-      errorAndIDs.errorPresent = error
-      return errorAndIDs
-    }
-    console.log(`selectWhere data: ${JSON.stringify(data)}`)
-    if (data.length === 0) {
-      console.log('data.length == 0!')
-      const { data, error }: any = await databaseQuery.insert(supabase, 'Exercises', { type, name, muscle, difficulty, instructions, equipment })
-      if (error) {
-        console.log('Error inserting into Exercises table!')
-        errorAndIDs.errorPresent = error
-        return errorAndIDs
-      }
-      else {
-        const exerciseID = data[0].ExerciseID
-        errorAndIDs.ID = exerciseID
-        return errorAndIDs
-      }
-    }
-    else {
-      const exerciseID = data[0].ExerciseID
-
-      errorAndIDs.ID = exerciseID
-      return errorAndIDs
-    }
   }
 }
 /**
@@ -96,26 +51,16 @@ export const addExerciseToExercises = async (type: string, name: string, muscle:
 // Empty string
 export const createWorkout = async (req: Request, res: Response) => {
   const { userid, workoutname, exercises } = req.body
-
-  if (!userid || !workoutname || !exercises) {
-    return res.status(400).json({ mssg: 'userid, workoutname or exercises is missing!' })
+  console.log(`req.body in createWorkout: ${JSON.stringify(req.body)}`)
+  if (!validateJSONSchema(req.body, schemaForCreateWorkoutJSON)) {
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'req.body does not match the JSON Schema!' })
   }
-  console.log(`ln122 req.body: ${JSON.stringify(req.body)}`)
-
   // Add the exerciseID and userid of the exercise to each exercise object's property
   for (let i = 0; i < exercises.length; i++) {
     try {
       const { type, name, muscle, difficulty, instructions, equipment } = exercises[i]
-      //  const propertiesOfExercise= Object.keys(exercises[i]);
-      //  for(let k = 0; k<propertiesOfExercise.length; k++){
 
-      //  }
-      // check if exercises has all of the destructured properties above and make sure name is not the empty string
-      if (!(Object.prototype.hasOwnProperty.call(exercises[i], 'type')) || !(Object.prototype.hasOwnProperty.call(exercises[i], 'name')) || !(Object.prototype.hasOwnProperty.call(exercises[i], 'muscle')) || !(Object.prototype.hasOwnProperty.call(exercises[i], 'difficulty')) || !(Object.prototype.hasOwnProperty.call(exercises[i], 'equipment')) || !(Object.prototype.hasOwnProperty.call(exercises[i], 'instructions'))) {
-        return res.status(400).json({ mssg: "Exercise doesn't have one of the following properties:type, name, muscle, difficulty, equipment" })
-      }
-      console.log(`exercises[i] before delete for: ${JSON.stringify(exercises[i])}`)
-
+      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
       Object.keys(exercises[i]).forEach((k) => (exercises[i])[k] == null && delete (exercises[i])[k])
       console.log(`exercises[i] after delete for:  ${JSON.stringify(exercises[i])}`)
       const { errorPresent, ID } = await addExerciseToExercises(type, name, muscle, difficulty, instructions, equipment)
@@ -167,26 +112,6 @@ export const createWorkout = async (req: Request, res: Response) => {
     const numberOfExercises = exercises.length
     const workoutPEIDs = []
     for (let i = 0; i < numberOfExercises; i++) {
-      // Check if exercises inputs are numbers!
-      if (exercises[i].calories && typeof (exercises[i].calories) === 'string' && !(eitherIsFloatOrInt(exercises[i].calories))) {
-        return res.status(400).json({ mssg: 'Make sure calories is a number!' })
-      }
-
-      if (exercises[i].sets && typeof (exercises[i].sets) === 'string' && !(eitherIsFloatOrInt(exercises[i].sets))) {
-        return res.status(400).json({ mssg: 'Make sure sets is a number!' })
-      }
-      if (exercises[i].reps && typeof (exercises[i].reps) === 'string' && !(eitherIsFloatOrInt(exercises[i].reps))) {
-        return res.status(400).json({ mssg: 'Make sure reps is a number!' })
-      }
-      if (exercises[i].weight && typeof (exercises[i].weight) === 'string' && !(eitherIsFloatOrInt(exercises[i].weight))) {
-        return res.status(400).json({ mssg: 'Make sure weight is a number!' })
-      }
-      if (exercises[i].distance && typeof (exercises[i].distance) === 'string' && !(eitherIsFloatOrInt(exercises[i].distance))) {
-        return res.status(400).json({ mssg: 'Make sure distance is a number!' })
-      }
-      if (exercises[i].duration && typeof (exercises[i].duration) === 'string' && !(eitherIsFloatOrInt(exercises[i].duration))) {
-        return res.status(400).json({ mssg: 'Make sure duration is a number!' })
-      }
       // Check if exercises inputs are numbers!
       const { data, error }: any = await databaseQuery.match(supabase, 'PossibleExercises', 'PEID', exercises[i])
       console.log(`ln41: ${JSON.stringify(data)} `)

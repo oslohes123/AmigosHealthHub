@@ -1,16 +1,25 @@
 /* eslint-disable consistent-return */
 import { useState } from 'react';
 import { useAuthContext } from '../../../Authentication/context/AuthContext';
+import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
-const port = process.env.PORT;
+const serverURL = process.env.URL;
 const ipAddress = process.env.IP_ADDRESS;
-
-const getCaloriesBurntTodayRoute = `http://${ipAddress}:${port}/api/user/workout/calories/getToday`;
+const port = process.env.PORT;
+const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const partialGetCaloriesBurntTodayRoute = '/api/user/workout/calories/getToday';
+let getCaloriesBurntTodayRoute;
+if (usingDeployedServer) {
+  getCaloriesBurntTodayRoute = `${serverURL}${partialGetCaloriesBurntTodayRoute}`;
+} else {
+  getCaloriesBurntTodayRoute = `http://${ipAddress}:${port}${partialGetCaloriesBurntTodayRoute}`;
+}
 
 export default function useGetCaloriesBurntToday() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useAuthContext();
+  const { logout } = useLogout();
   const { id, token } = user;
   const getCaloriesBurntToday = async () => {
     setIsLoading(true);
@@ -23,6 +32,7 @@ export default function useGetCaloriesBurntToday() {
 
     const getCaloriesBurntTodayJSON = await response.json();
     if (!response.ok) {
+      if (response.status === 401) { logout(); }
       setIsLoading(false);
       setError(getCaloriesBurntTodayJSON.mssg);
       return null;

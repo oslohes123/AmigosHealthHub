@@ -152,16 +152,16 @@ test('Return last 7 words and their frequencies', async (t: any) => {
     //     "\"Painful\"",
     //     "\"Rough\"",
     //     "\"Mediocre\"",
-    //     "\"meh\"",
+    // "\"meh\"",
     //     "\"Perfect\"",
     //     "\"''\""
     // ],
     words: [
-      '\'Awful\'',
-      '\'Depressed\'',
-      '\'Mediocre\'',
-      '\'Happy\'',
-      '\'Alright\''
+      "\"Awful\"",
+      "\"Depressed\"",
+      "\"Mediocre\"",
+      "\"Happy\"",
+      "\"Alright\""
     ],
     freq: [
       '3',
@@ -233,10 +233,8 @@ test("Return today's word", async (t: any) => {
   const argsPassed = res.json.getCall(0).args[0]
 
   const expectedArgs = {
-    mssg: 'Here is today\'s word!',
-    word: [
-      { todays_word: 'Awful' }
-    ]
+    mssg: 'success',
+    word: 'Awful'
   }
   const stringifiedExpectedArgs = JSON.stringify(expectedArgs)
   console.log(`argsPassed wheretodays_word:${JSON.stringify(argsPassed)}`)
@@ -267,11 +265,12 @@ test('Return last 7 dates', async (t: any) => {
   const res = mockResponse()
   await dateValues(req as Request, res as Response)
   const argsPassed = res.json.getCall(0).args[0]
+  const todaysDate = todayDate.substring(8, 10) + '/' + todayDate.substring(5, 7)
 
   const expectedArgs = {
     mssg: 'Retrieved dates',
     dates: [
-      '19/03',
+      todaysDate,
       '08/03',
       '07/03',
       '06/03',
@@ -282,8 +281,12 @@ test('Return last 7 dates', async (t: any) => {
     success: 'successful'
   }
   const stringifiedExpectedArgs = JSON.stringify(expectedArgs)
-  console.log(`last7dates:${JSON.stringify(argsPassed)}`)
-  console.log(`stringifiedExpectedArgs last7dates:${stringifiedExpectedArgs}`)
+  console.log(`last7dates: ${JSON.stringify(argsPassed)}`)
+  console.log(`stringifiedExpectedArgs last7dates: ${stringifiedExpectedArgs}`)
   t.true(res.json.calledOnceWith(argsPassed))
   t.true(JSON.stringify(argsPassed) === stringifiedExpectedArgs)
 })
+
+// // test('passing test ', (t: any) => {
+//   t.pass()
+// })

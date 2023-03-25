@@ -6,9 +6,9 @@ import RouteNamesClass from '../../../utils/routeNamesClass'
 import request from 'supertest'
 import test from 'ava'
 const routeNames = new RouteNamesClass()
-/**
- * Refactor using objects, interfaces to prevent repeated code.
- */
+// /**
+//  * Refactor using objects, interfaces to prevent repeated code.
+//  */
 const rateMentalRoute = routeNames.fullRateMentalURL
 
 const uuid = uuidv4()
@@ -62,11 +62,11 @@ test.after.always('guaranteed cleanup', async (t: any) => {
 test(`POST ${rateMentalRoute} has middleware execute`, async (t: any) => {
   const response = await request(app)
     .post(rateMentalRoute)
-    .send({ face: 4, word: 'Happy', id: uuid })
+    .send({ face: 4, word: 'Happy', id: null })
     .set('authorization', token)
-    // ARE YOU HERE? 2. LOOK AT ONLY UR FILES, CONTROLLERS. CTRL  + SHIT+P ESLINT RESTART SERVER// tel when ure done
-    // by restarting u mean cdn o ..no no ctrl shit p then command pallete search bar should open up top. Then enter ESLINT: RESTART ESLINT SERVER
-    // NOTHING COMING UP did you install ESLINT in vscode extensions, if not do that ESLint by Microsfoft 25M downloads
+  // ARE YOU HERE? 2. LOOK AT ONLY UR FILES, CONTROLLERS. CTRL  + SHIT+P ESLINT RESTART SERVER// tel when ure done
+  // by restarting u mean cdn o ..no no ctrl shit p then command pallete search bar should open up top. Then enter ESLINT: RESTART ESLINT SERVER
+  // NOTHING COMING UP did you install ESLINT in vscode extensions, if not do that ESLint by Microsfoft 25M downloads
   // THERE//DO IT NOW SO I CAN SEE RIGHT CLICK AND PRESS QUICK FIX
   console.log(`noIDResponse: ${JSON.stringify(response.body)}`)
   t.true(response.status === 400)
@@ -125,3 +125,7 @@ test(`POST ${rateMentalRoute} with correct input`, async (t: any) => {
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Successful Submission' }))
 })
+
+// test('passing test ', (t: any) => {
+//   t.pass()
+// })}
