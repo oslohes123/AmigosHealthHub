@@ -1,8 +1,18 @@
+import { useState } from 'react';
 import { useAuthContext } from '../../Authentication/context/AuthContext';
 import { useLogout } from '../../Authentication/hooks/useLogOut';
-import { useState } from 'react';
-const serverURL = process.env.URL;
 
+const serverURL = process.env.URL;
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
+const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const partialGetUserInfoRoute = '/api/user/getInfo';
+let getUserInfoRoute;
+if (usingDeployedServer) {
+  getUserInfoRoute = `${serverURL}${partialGetUserInfoRoute}`;
+} else {
+  getUserInfoRoute = `http://${ipAddress}:${port}${partialGetUserInfoRoute}`;
+}
 export default function useGetUserInfo() {
   const { user } = useAuthContext();
   console.log(`user: ${JSON.stringify(user)}`);
@@ -17,7 +27,7 @@ export default function useGetUserInfo() {
     setError(null);
 
     const response = await fetch(
-      `${serverURL}/api/user/getInfo`,
+      getUserInfoRoute,
       {
         method: 'GET',
         headers: {
@@ -32,7 +42,7 @@ export default function useGetUserInfo() {
       if (response.status === 401) { logout(); }
       console.log(`response of getUserInfo: ${JSON.stringify(response)}`);
       setIsLoading(false);
-      setError('Not Available')
+      setError('Not Available');
       return null;
     } if (response.ok) {
       setIsLoading(false);
@@ -40,5 +50,5 @@ export default function useGetUserInfo() {
       return responseJSON;
     }
   }
-  return { getUserInfo, isLoadingUserInfo, errorUserInfo};
+  return { getUserInfo, isLoadingUserInfo, errorUserInfo };
 }

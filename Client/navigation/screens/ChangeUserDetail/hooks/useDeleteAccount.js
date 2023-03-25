@@ -4,7 +4,16 @@ import { useAuthContext } from '../../Authentication/context/AuthContext';
 import { useLogout } from '../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
-
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
+const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const partialDeleteAccount = '/api/user/changeProfileDetails/deleteAccount';
+let deleteAccountRoute;
+if (usingDeployedServer) {
+  deleteAccountRoute = `${serverURL}${partialDeleteAccount}`;
+} else {
+  deleteAccountRoute = `http://${ipAddress}:${port}${partialDeleteAccount}`;
+}
 export default function deleteAccountWrapper() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
@@ -24,7 +33,7 @@ export default function deleteAccountWrapper() {
         (await AsyncStorage.getItem('user')),
       );
       const response = await fetch(
-        `${serverURL}/api/user/changeProfileDetails/deleteAccount`,
+        deleteAccountRoute,
         {
           method: 'POST',
           headers: {
@@ -61,4 +70,4 @@ export default function deleteAccountWrapper() {
     }
   };
   return { deleteAccount, isLoading, error };
-};
+}

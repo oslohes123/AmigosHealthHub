@@ -3,6 +3,9 @@ import supabase from '../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../utils/databaseInterface'
 import { getDate, getTime, mostRecentTimestamp, sortArrayOfTimeStamps } from '../../utils/convertTimeStamptz'
 import { countElementsInArray } from '../../utils/arrayManipulation'
+import { schemaForNewTrackedWorkout } from '../../utils/JSONSchemas/schemaForNewTrackedWorkout'
+import validateJSONSchema from '../../utils/validateJSONSchema'
+import { schemaForRequireduserid } from '../../utils/JSONSchemas/schemaForRequireduserid'
 const databaseQuery = new SupabaseQueryClass()
 
 // Get a specific workout by userid, workoutname, date and time
@@ -105,17 +108,8 @@ export const getAllCompletedWorkouts = async (req: Request, res: Response) => {
       arrayOfTimeStamps.push(timestamp)
     }
     const sortedTimeStamps = sortArrayOfTimeStamps(arrayOfTimeStamps)
-    let sortedCompletedWorkouts = []
+    const sortedCompletedWorkouts = []
     for (let i = 0; i < sortedTimeStamps.length; i++) {
-      // console.log(`data[i].timestamp: ${JSON.stringify(data[i].timestamp)}`)
-      // console.log(`sortedTimeStamps[i]: ${JSON.stringify(sortedTimeStamps[i])}`)
-      // if (data[i].timestamp === sortedTimeStamps[i]) {
-      //   const timestamp = data[i].timestamp
-      //   delete data[i].timestamp
-      //   data[i].date = getDate(timestamp)
-      //   data[i].time = getTime(timestamp)
-      //   sortedCompletedWorkouts.push(data[i])
-      // }
       for (let j = 0; j < data.length; j++) {
         if (sortedTimeStamps[i] === data[j].timestamp) {
           const timestamp = data[i].timestamp
@@ -163,7 +157,10 @@ export const searchExerciseInExercises = async (name: string) => {
 
 export const addCompletedWorkouts = async (req: Request, res: Response) => {
   const { userid, workoutname, exercises } = req.body
-
+  console.log(`req.body in addCompletedWorkouts: ${JSON.stringify(req.body)}`)
+  // if (!validateJSONSchema(req.body, schemaForNewTrackedWorkout)) {
+  //   return res.status(400).json({ mssg: 'Something went wrong!', dev: 'req.body does not follow the schema provided' })
+  // }
   if (!userid || !workoutname || !exercises) {
     return res.status(400).json({ mssg: 'userid, workoutname or exercises is missing!' })
   }
@@ -308,8 +305,8 @@ export const deleteTrackedWorkout = async (req: Request, res: Response) => {
 // Returns the number of times the user has performed all workouts
 export const getWorkoutFrequency = async (req: Request, res: Response) => {
   const { userid } = req.headers
-  if (!userid) {
-    return res.status(400).json({ mssg: 'userid cannot be empty' })
+  if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
   }
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'CompletedWorkouts', 'userid', userid, 'workoutname')
 
@@ -440,9 +437,11 @@ export const getExerciseTypes = async (arrayOfExerciseIDs: string[]) => {
 // returns the all exercises performed and frequency for a bar chart
 export const getActualExerciseNameFrequency = async (req: Request, res: Response) => {
   const { userid } = req.headers
-  if (!userid) {
-    return res.status(400).json({ mssg: 'userid cannot be empty' })
+
+  if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
   }
+  // @ts-expect-error userid will not be undefined as it is validated against the schema
   const { errorHere, AEIDs } = await getAllAEIDs(userid)
   if (errorHere) {
     return res.status(400).json({ mssg: 'Something went wrong!', errorHere })
@@ -468,9 +467,10 @@ export const getActualExerciseNameFrequency = async (req: Request, res: Response
 
 export const getActualExerciseTypeFrequency = async (req: Request, res: Response) => {
   const { userid } = req.headers
-  if (!userid) {
-    return res.status(400).json({ mssg: 'userid cannot be empty' })
+  if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
   }
+  // @ts-expect-error userid will not be undefined as it is validated against the schema
   const { errorHere, AEIDs } = await getAllAEIDs(userid)
   if (errorHere) {
     return res.status(400).json({ mssg: 'Something went wrong!', errorHere })
@@ -546,8 +546,8 @@ export const getWorkoutHistoryByDate = async (req: Request, res: Response) => {
 
 export const getLastTrackedWorkout = async (req: Request, res: Response) => {
   const { userid } = req.headers
-  if (!userid) {
-    return res.status(400).json({ mssg: 'userid cannot be null!' })
+  if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
   }
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'CompletedWorkouts', 'userid', userid, 'workoutname, timestamp')
   if (error) {

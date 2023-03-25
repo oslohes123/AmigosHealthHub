@@ -4,9 +4,17 @@ import { useAuthContext } from '../../../Authentication/context/AuthContext';
 import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
-
-const getExerciseHistoryRoute = `${serverURL}/api/user/exercise/history`;
-
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
+// const getExerciseHistoryRoute = `${serverURL}/api/user/exercise/history`;
+const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const partialGetExerciseHistoryRoute = '/api/user/exercise/history';
+let getExerciseHistoryRoute;
+if (usingDeployedServer) {
+  getExerciseHistoryRoute = `${serverURL}${partialGetExerciseHistoryRoute}`;
+} else {
+  getExerciseHistoryRoute = `http://${ipAddress}:${port}${partialGetExerciseHistoryRoute}`;
+}
 export default function useGetExerciseHistory() {
   const [errorExerciseHistory, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);

@@ -4,8 +4,17 @@ import { useAuthContext } from '../../Authentication/context/AuthContext';
 // import { useAuthContext } from "../hooks/useAuthContext";
 import { useLogout } from '../../Authentication/hooks/useLogOut';
 
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
 const serverURL = process.env.URL;
-
+const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const partialChangeProfileDetailsRoute = '/api/user/changeProfileDetails/stats';
+let changeProfileDetailsRoute;
+if (usingDeployedServer) {
+  changeProfileDetailsRoute = `${serverURL}${partialChangeProfileDetailsRoute}`;
+} else {
+  changeProfileDetailsRoute = `http://${ipAddress}:${port}${partialChangeProfileDetailsRoute}`;
+}
 export default function useChangeProfileDetails() {
   const { logout } = useLogout();
   const [error, setError] = useState(null);
@@ -31,7 +40,7 @@ export default function useChangeProfileDetails() {
       console.log(`In useChangeProfileDetails, email: ${email}, token:${token}`);
 
       const response = await fetch(
-        `${serverURL}/api/user/changeProfileDetails/stats`,
+        changeProfileDetailsRoute,
         {
           method: 'POST',
           headers: {

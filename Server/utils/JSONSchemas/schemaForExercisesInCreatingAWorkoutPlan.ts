@@ -9,25 +9,25 @@ export const exercisesForWorkoutPlanTestSchema = {
           type: 'object',
           properties: {
             sets: {
-              type: 'null'
+              type: ['null', 'string']
             },
             weight: {
-              type: 'null'
+              type: ['null', 'string']
             },
             warmUpSet: {
               type: 'string'
             },
             reps: {
-              type: 'null'
+              type: ['null', 'string']
             },
             calories: {
-              type: 'integer'
+              type: ['null', 'string']
             },
             distance: {
-              type: 'integer'
+              type: ['null', 'string']
             },
             duration: {
-              type: 'integer'
+              type: ['null', 'string']
             },
             type: {
               type: 'string'

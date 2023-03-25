@@ -2,16 +2,27 @@
 import { useState } from 'react';
 import { useAuthContext } from '../../../Authentication/context/AuthContext';
 import { useLogout } from '../../../Authentication/hooks/useLogOut';
-const serverURL = process.env.URL;
-const getAllExercisesRoute = `${serverURL}/api/user/exercise/getAll`;
 
+const serverURL = process.env.URL;
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
+// const getAllExercisesRoute = `${serverURL}/api/user/exercise/getAll`;
+
+const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const partialGetAllExercises = '/api/user/exercise/getAll';
+let getAllExercisesRoute;
+if (usingDeployedServer) {
+  getAllExercisesRoute = `${serverURL}${partialGetAllExercises}`;
+} else {
+  getAllExercisesRoute = `http://${ipAddress}:${port}${partialGetAllExercises}`;
+}
 export default function useGetAllExercises() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useAuthContext();
   const { id, token } = user;
   const { logout } = useLogout();
-  
+
   const getAllExercises = async () => {
     setIsLoading(true);
     setError(null);

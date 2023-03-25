@@ -3,13 +3,15 @@ import supabase from '../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../utils/databaseInterface'
 import { removeDuplicates } from '../../utils/arrayManipulation'
 import { getDate } from '../../utils/convertTimeStamptz'
+import validateJSONSchema from '../../utils/validateJSONSchema'
+import { schemaForRequireduserid } from '../../utils/JSONSchemas/schemaForRequireduserid'
 const databaseQuery = new SupabaseQueryClass()
 // getExerciseHistory by name of exercise
 
 // return all exercises from actual exercises that match a given userid and exerciseid
-const matchExercise = async (userID: string | string[], exerciseID: string) => {
+const matchExercise = async (userid: string | string[], exerciseID: string) => {
   const errorAndIDs: any = { errorPresent: '', exercisesMatch: [{}, {}] }
-  const { data, error }: any = await databaseQuery.match(supabase, 'ActualExercises', '*', { userID, exerciseID })
+  const { data, error }: any = await databaseQuery.match(supabase, 'ActualExercises', '*', { userID: userid, exerciseID })
   if (error) {
     errorAndIDs.errorPresent = error
     return errorAndIDs
@@ -67,7 +69,7 @@ export const getExerciseHistory = async (req: Request, res: Response) => {
               arrayOfCompletedWorkoutIDs.push(data[0].completedWorkoutID)
             }
             else {
-              console.log(`ln 68 of exerciseHistory!`)
+              console.log('ln 68 of exerciseHistory!')
               return res.status(400).json({ mssg: 'Exercise has never been performed' })
             }
             console.log(`ln72: ${JSON.stringify(data)}`)
@@ -207,8 +209,8 @@ export const getExerciseHistory = async (req: Request, res: Response) => {
 export const getAllExercises = async (req: Request, res: Response) => {
   const { userid } = req.headers
 
-  if (!userid) {
-    return res.status(400).json({ mssg: 'userid not provided!' })
+   if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
   }
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'ActualExercises', 'userID', userid, 'exerciseID')
 

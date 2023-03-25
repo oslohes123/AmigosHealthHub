@@ -3,6 +3,16 @@ import { useState } from 'react';
 import { useAuthContext } from '../../Authentication/context/AuthContext';
 
 const serverURL = process.env.URL;
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
+const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const partialGetSleepRoute = '/api/user/sleep/get';
+let getSleepRoute;
+if (usingDeployedServer) {
+  getSleepRoute = `${serverURL}${partialGetSleepRoute}`;
+} else {
+  getSleepRoute = `http://${ipAddress}:${port}${partialGetSleepRoute}`;
+}
 
 export default function useGetSleep() {
   const [error, setError] = useState(null);
@@ -21,7 +31,7 @@ export default function useGetSleep() {
     // console.log(`id in getUserInfo: ${id}`);
     // console.log(`Time from ${today} to ${sevenDaysAgo}  `);
     const response = await fetch(
-      `${serverURL}/api/user/sleep/get`,
+      getSleepRoute,
       {
         method: 'POST',
         headers: {

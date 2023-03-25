@@ -127,7 +127,7 @@ export default class RouteNamesClass {
   readonly fullGetTrackedFoodURL = this.foodBaseURL + this.partialGetTrackedFoodURL
 
   // Food database get specific tracked routes
-  readonly partialGetSpecificTrackedFoodURL = '/getSpecificTrackedFood/:logID'
+  readonly partialGetSpecificTrackedFoodURL = '/getSpecificTrackedFood/:LogID'
   readonly fullGetSpecificTrackedFoodURL = this.foodBaseURL + this.partialGetSpecificTrackedFoodURL
 
   // Food database get routes

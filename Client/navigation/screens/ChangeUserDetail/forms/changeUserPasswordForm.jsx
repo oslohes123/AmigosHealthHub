@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 import { Formik } from 'formik';
 import PasswordInput from '../../../components/passwordInput';
 import { globalStyles } from '../../../../styles/global';
-import { useChangeProfilePassword } from '../hooks/useChangeProfilePassword';
+import useChangeProfilePassword from '../hooks/useChangeProfilePassword';
 
 const passwordRegex = /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*!=]).*$/;
 const ChangeUserPasswordSchema = Yup.object().shape({

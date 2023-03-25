@@ -4,8 +4,16 @@ import { useAuthContext } from '../../../Authentication/context/AuthContext';
 import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
-
-const getCaloriesBurntTodayRoute = `${serverURL}/api/user/workout/calories/getToday`;
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
+const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const partialGetCaloriesBurntTodayRoute = '/api/user/workout/calories/getToday';
+let getCaloriesBurntTodayRoute;
+if (usingDeployedServer) {
+  getCaloriesBurntTodayRoute = `${serverURL}${partialGetCaloriesBurntTodayRoute}`;
+} else {
+  getCaloriesBurntTodayRoute = `http://${ipAddress}:${port}${partialGetCaloriesBurntTodayRoute}`;
+}
 
 export default function useGetCaloriesBurntToday() {
   const [error, setError] = useState(null);

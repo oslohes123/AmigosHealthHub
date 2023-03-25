@@ -1,22 +1,30 @@
 import { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuthContext } from '../context/AuthContext';
-
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
 const serverURL = process.env.URL;
-// const dotenv = require("dotenv");
-// dotenv.config();
+const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const partialLoginRoute = '/api/user/login';
+let loginRoute;
+if (usingDeployedServer) {
+  loginRoute = `${serverURL}${partialLoginRoute}`;
+} else {
+  loginRoute = `http://${ipAddress}:${port}${partialLoginRoute}`;
+}
 
 export default function useLogin() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { dispatch } = useAuthContext();
-
+  console.log(`loginRoute:${JSON.stringify(loginRoute)}`);
+  console.log(`loginRoute is equal to what is:${loginRoute === 'http://${ipAddress}:${port}/api/user/login'}`);
   const login = async (email, password) => {
     setIsLoading(true);
     setError(null);
-
+  
     const response = await fetch(
-      `${serverURL}/api/user/login`,
+      loginRoute,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

@@ -3,8 +3,17 @@ import { useAuthContext } from '../../../Authentication/context/AuthContext';
 import { useLogout } from '../../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
-const trackWorkoutRoute = `${serverURL}/api/user/completedWorkouts/add`;
-
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
+// const trackWorkoutRoute = `${serverURL}/api/user/completedWorkouts/add`;
+const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const partialTrackWorkoutRoute = '/api/user/completedWorkouts/add';
+let trackWorkoutRoute;
+if (usingDeployedServer) {
+  trackWorkoutRoute = `${serverURL}${partialTrackWorkoutRoute}`;
+} else {
+  trackWorkoutRoute = `http://${ipAddress}:${port}${partialTrackWorkoutRoute}`;
+}
 /**
  *
  * @returns message state that displays either error or success message

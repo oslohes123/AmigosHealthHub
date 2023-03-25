@@ -29,8 +29,8 @@ export async function getTrackedFood(Date, userID) {
   return data;
 }
 
-export async function getSpecificTrackedFood(logID) {
-  const url = `${serverURL}/api/food/getSpecificTrackedFood/${logID}`;
+export async function getSpecificTrackedFood(LogID) {
+  const url = `${serverURL}/api/food/getSpecificTrackedFood/${LogID}`;
   let response;
   try {
     const { token } = JSON.parse(
@@ -77,7 +77,7 @@ export async function addTrackedFood(input, userID) {
   return response.status;
 }
 
-export async function deleteTrackedFood(logID) {
+export async function deleteTrackedFood(LogID) {
   const url = `${serverURL}/api/food/deleteTrackedFood/`;
   let response;
   try {
@@ -90,7 +90,7 @@ export async function deleteTrackedFood(logID) {
         'Content-Type': 'application/json',
         authorization: token,
       },
-      body: JSON.stringify({ logID }),
+      body: JSON.stringify({ LogID }),
     });
     if (!response.ok) {
       throw new Error('Response not OK');

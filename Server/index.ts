@@ -47,6 +47,7 @@ const routeNames = new RouteNamesClass()
 
 const port = process.env.PORT
 if (port === undefined) {
+  // eslint-disable-next-line no-console
   console.log('Please set the PORT environment variable.')
 }
 app.use(routeNames.exerciseBaseURL, exerciseRouter)
