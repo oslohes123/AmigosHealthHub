@@ -29,10 +29,6 @@ export const deleteWorkoutPlan = async (req: Request, res: Response) => {
     return res.status(400).json({ mssg: 'User does not have a plan of that name!' })
   }
   const workoutPlanToDel = data[0].WorkoutPlanID
-  //    const {errorPresent} = await deleteWorkoutPlansWithExercisesByID(workoutPlanToDel);
-  //    if(errorPresent){
-  //     return res.status(400).json({mssg:"Fail to delete WorkoutPlanByID", errorPresent})
-  //    }
 
   const { deleteError } = await deleteWorkoutPlanByID(workoutPlanToDel)
   if (deleteError) {

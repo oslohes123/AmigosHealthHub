@@ -8,6 +8,7 @@
     "start": "node dist/server.js",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon dist/server.js\"",
     "testOnLinux": "rm -r dist && npx tsc && c8 ava",
+    "testOnWindows": "rd /s /q dist && npx tsc &&c8 ava",
     "test": "npx tsc && c8 ava",
     "ts-coverage": "typescript-coverage-report"
   },

@@ -3,7 +3,7 @@ import supabase from '../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../utils/databaseInterface'
 import { getDate, getTime, mostRecentTimestamp, sortArrayOfTimeStamps } from '../../utils/convertTimeStamptz'
 import { countElementsInArray } from '../../utils/arrayManipulation'
-import { validate } from 'jsonschema'
+import { schemaForNewTrackedWorkout } from '../../utils/JSONSchemas/schemaForNewTrackedWorkout'
 import validateJSONSchema from '../../utils/validateJSONSchema'
 import { schemaForRequireduserid } from '../../utils/JSONSchemas/schemaForRequireduserid'
 const databaseQuery = new SupabaseQueryClass()
@@ -110,15 +110,6 @@ export const getAllCompletedWorkouts = async (req: Request, res: Response) => {
     const sortedTimeStamps = sortArrayOfTimeStamps(arrayOfTimeStamps)
     const sortedCompletedWorkouts = []
     for (let i = 0; i < sortedTimeStamps.length; i++) {
-      // console.log(`data[i].timestamp: ${JSON.stringify(data[i].timestamp)}`)
-      // console.log(`sortedTimeStamps[i]: ${JSON.stringify(sortedTimeStamps[i])}`)
-      // if (data[i].timestamp === sortedTimeStamps[i]) {
-      //   const timestamp = data[i].timestamp
-      //   delete data[i].timestamp
-      //   data[i].date = getDate(timestamp)
-      //   data[i].time = getTime(timestamp)
-      //   sortedCompletedWorkouts.push(data[i])
-      // }
       for (let j = 0; j < data.length; j++) {
         if (sortedTimeStamps[i] === data[j].timestamp) {
           const timestamp = data[i].timestamp
@@ -166,7 +157,10 @@ export const searchExerciseInExercises = async (name: string) => {
 
 export const addCompletedWorkouts = async (req: Request, res: Response) => {
   const { userid, workoutname, exercises } = req.body
-
+  console.log(`req.body in addCompletedWorkouts: ${JSON.stringify(req.body)}`)
+  // if (!validateJSONSchema(req.body, schemaForNewTrackedWorkout)) {
+  //   return res.status(400).json({ mssg: 'Something went wrong!', dev: 'req.body does not follow the schema provided' })
+  // }
   if (!userid || !workoutname || !exercises) {
     return res.status(400).json({ mssg: 'userid, workoutname or exercises is missing!' })
   }

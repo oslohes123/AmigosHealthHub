@@ -11,7 +11,7 @@ const databaseQuery = new SupabaseQueryClass()
 // return all exercises from actual exercises that match a given userid and exerciseid
 const matchExercise = async (userid: string | string[], exerciseID: string) => {
   const errorAndIDs: any = { errorPresent: '', exercisesMatch: [{}, {}] }
-  const { data, error }: any = await databaseQuery.match(supabase, 'ActualExercises', '*', { userid, exerciseID })
+  const { data, error }: any = await databaseQuery.match(supabase, 'ActualExercises', '*', { userID: userid, exerciseID })
   if (error) {
     errorAndIDs.errorPresent = error
     return errorAndIDs
