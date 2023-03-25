@@ -33,6 +33,17 @@ test.before(async (t: any) => {
   }
 })
 
+test.after.always('guaranteed cleanup of user', async (t: any) => {
+  const { error } = await deleteUserRow(randomEmail)
+  if (error) {
+    t.fail(`deleteUserRow of ${randomEmail} failed`)
+  }
+  const { errorDeletingMultipleExercises }: any = await deleteMultipleExercises([{ name: `Test Curl ${uuid}` }, { name: `Slow Jog ${uuid}` }])
+  if (errorDeletingMultipleExercises) {
+    t.fail(JSON.stringify(errorDeletingMultipleExercises))
+  }
+})
+
 const mockRequest = (sessionData: any) => {
   return {
     headers: sessionData
@@ -45,16 +56,6 @@ const mockResponse = () => {
   res.json = sinon.stub().returns(res)
   return res
 }
-test.after.always('guaranteed cleanup of user', async (t: any) => {
-  const { error } = await deleteUserRow(randomEmail)
-  if (error) {
-    t.fail(`deleteUserRow of ${randomEmail} failed`)
-  }
-  const { errorDeletingMultipleExercises }: any = await deleteMultipleExercises([{ name: `Test Curl ${uuid}` }, { name: `Slow Jog ${uuid}` }])
-  if (errorDeletingMultipleExercises) {
-    t.fail(JSON.stringify(errorDeletingMultipleExercises))
-  }
-})
 
 test.serial('getCaloriesToday with no userid provided should return error', async (t: any) => {
   const req = mockRequest({})
