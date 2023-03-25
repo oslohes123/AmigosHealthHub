@@ -22,7 +22,7 @@ export const loginUser = async (req: Request, res: Response) => {
 
   if (error) {
     return res.status(400).json({
-      mssg: error.message
+      mssg: 'Something went wrong.', dev: JSON.stringify(error)
     })
   }
 

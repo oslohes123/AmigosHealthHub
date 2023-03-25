@@ -8,7 +8,7 @@ export const getInfo = async (req: Request, res: Response) => {
 
   const { data, error }: any = await getUserByEmail(email, 'firstName, lastName, email, age')
 
-  if (error) return res.status(400).json({ mssg: error.message })
+  if (error) return res.status(400).json({ mssg: 'Something went wrong.', dev: JSON.stringify(error) })
 
   else if (data.length === 0) return res.status(400).json({ mssg: 'User not found!' })
 
