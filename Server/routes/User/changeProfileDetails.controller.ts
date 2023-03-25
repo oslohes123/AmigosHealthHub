@@ -24,7 +24,7 @@ export const changeStats = async (req: Request, res: Response) => {
     // Check that new email is available
     const { data, error }: any = await getUserByEmail(newEmail)
 
-    if (error) return res.status(500).json({ mssg: error.message })
+    if (error) return res.status(500).json({ mssg: 'Something went wrong.', dev: JSON.stringify(error) })
 
     if (data.length === 0) {
       const { error }: any = await updateUser(prevEmail, {
@@ -35,7 +35,7 @@ export const changeStats = async (req: Request, res: Response) => {
       })
 
       if (error) {
-        return res.status(500).json({ mssg: error.message })
+        return res.status(500).json({ mssg: 'Something went wrong.', dev: JSON.stringify(error) })
       }
       return res.status(200).json({ mssg: 'Successful New Email' })
     }
@@ -50,7 +50,7 @@ export const changeStats = async (req: Request, res: Response) => {
   else {
     const { error }: any = await updateUser(prevEmail, { firstName, lastName, age })
     if (error) {
-      return res.status(500).json({ mssg: error.message })
+      return res.status(500).json({ mssg: 'Something went wrong.', dev: JSON.stringify(error) })
     }
     return res.status(200).json({ mssg: 'Successful Update' })
   }
@@ -74,7 +74,7 @@ export const changePassword = async (req: Request, res: Response) => {
   const { data, error }: any = await getUserByEmail(email)
 
   if (error) {
-    return res.status(500).json({ mssg: error.message })
+    return res.status(500).json({ mssg: 'Something went wrong.', dev: JSON.stringify(error) })
   }
   if (data.length > 0) {
     const passwordMatches = await verifyPassword(oldPassword, data[0].password)

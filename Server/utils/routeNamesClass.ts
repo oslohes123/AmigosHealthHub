@@ -95,7 +95,7 @@ export default class RouteNamesClass {
   readonly partialTodaysWord = '/todaysWord'
   readonly fullTodaysWordURL = this.mentalHealthBaseURL + this.partialTodaysWord
   readonly partialGetDates = '/dateValues'
-  readonly fullDateValues = this.mentalHealthBaseURL + this.partialGetDates
+  readonly fullDateValuesURL = this.mentalHealthBaseURL + this.partialGetDates
 
   // Mental Health Route
 

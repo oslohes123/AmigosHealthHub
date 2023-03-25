@@ -603,7 +603,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
               && obj.weight != null && obj.weight !== '' && obj.weight !== [] && (obj.weight).length === obj.sets)
               || (obj.distance != null && obj.distance !== '' && !Number.isNaN(Number(obj.distance))
               && obj.duration != null && obj.duration !== '' && !Number.isNaN(Number(obj.duration))))
-              && obj.calories != null && obj.calories !== '' && !Number.isNaN(Number(obj.calories))) {
+              && !Number.isNaN(Number(obj.calories))) {
                 return true;
               }
               return false;

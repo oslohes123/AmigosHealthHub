@@ -12,18 +12,14 @@ const routeNames = new RouteNamesClass()
 // /**
 //  * Refactor using objects, interfaces to prevent repeated code.
 //  */
-const faceGraphRoute = routeNames.fullFaceGraphURL
+const dateValuesRoute = routeNames.fullDateValuesURL
 const uuid = uuidv4()
 const wrongUUID = '1a-2345-6b7c-890d-e01f2ghij34k'
 const randomEmail = `${uuid}@gmail.com`
 let token: string
 const todayDate = getDate(moment().format())
 test.serial.before(async (t: any) => {
-  // const uuid = uuidv4();
-
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
-  // const {data, error}:any = await createUser({id: uuid, firstName: "First", lastName:"User",
-  // email:randomEmail, password: hashedPassword, age: 31});
   console.log('Inserting user')
   const { error }: any = await createUserWithID({
     id: uuid,
@@ -33,7 +29,6 @@ test.serial.before(async (t: any) => {
     password: hashedPassword,
     age: 31
   })
-
   if (error) {
     // console.log(`MHtesterror:${error}`);
     t.fail(`Insering user: ${JSON.stringify(error)}`)
@@ -57,7 +52,6 @@ test.before(async (t: any) => {
   })
 
   if (error) {
-    // console.log(`MHtesterror: ${(error)}`
     t.fail(`inserting 1st mental health:${JSON.stringify(error)}`)
   }
 })
@@ -71,7 +65,6 @@ test.before(async (t: any) => {
   })
 
   if (error) {
-    // console.log(`MHtesterror: ${JSON.stringify(error)}`)
     t.fail(`inserting 2nd mental health:${JSON.stringify(error)}`)
   }
 })
@@ -85,7 +78,6 @@ test.before(async (t: any) => {
   })
 
   if (error) {
-    // console.log(`MHtesterror: ${JSON.stringify(error)}`)
     t.fail(t.fail(`inserting 3rd mental health:${JSON.stringify(error)}`))
   }
 })
@@ -99,7 +91,6 @@ test.before(async (t: any) => {
   })
 
   if (error) {
-    // console.log(`MHtesterror: ${JSON.stringify(error)}`)
     t.fail(`MHtesterror4: ${JSON.stringify(error)}`)
   }
 })
@@ -113,7 +104,6 @@ test.before(async (t: any) => {
   })
 
   if (error) {
-    // console.log(`MHtesterror: ${JSON.stringify(error)}`)
     t.fail(`MHtesterror5: ${JSON.stringify(error)}`)
   }
 })
@@ -127,7 +117,6 @@ test.before(async (t: any) => {
   })
 
   if (error) {
-    // console.log(`MHtesterror: ${JSON.stringify(error)}`)
     t.fail(`MHtesterror6: ${JSON.stringify(error)}`)
   }
 })
@@ -141,7 +130,6 @@ test.before(async (t: any) => {
   })
 
   if (error) {
-    // console.log(`MHtesterror: ${JSON.stringify(error)}`)
     t.fail(`MHtesterror7: ${JSON.stringify(error)}`)
   }
 })
@@ -155,7 +143,6 @@ test.before(async (t: any) => {
   })
 
   if (error) {
-    // console.log()
     t.fail(`MHtesterror8: ${JSON.stringify(error)}`)
   }
 })
@@ -169,7 +156,6 @@ test.before(async (t: any) => {
   })
 
   if (error) {
-    // console.log()
     t.fail(`MHtesterror9: ${JSON.stringify(error)}`)
   }
 })
@@ -179,32 +165,32 @@ test.after.always('guaranteed cleanup', async (t: any) => {
   await deleteUserRow(randomEmail)
 })
 
-test(`GET ${faceGraphRoute} with incorrect ID`, async (t: any) => {
+test(`GET ${dateValuesRoute} with incorrect ID`, async (t: any) => {
   const response = await request(app)
-    .get(faceGraphRoute)
+    .get(dateValuesRoute)
     .set({ authorization: token, id: wrongUUID })
 
   t.true(response.status === 400)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
-  t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Failed to retrieve last 7 faces' }))
+  t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Failed to retrieve last 7 dates' }))
 })
-test(`GET ${faceGraphRoute} with correct ID`, async (t: any) => {
+test(`GET ${dateValuesRoute} with correct ID`, async (t: any) => {
+  const todaysDate = todayDate.substring(8, 10) + '/' + todayDate.substring(5, 7)
   const response = await request(app)
-    .get(faceGraphRoute)
+    .get(dateValuesRoute)
     .set({ authorization: token, id: uuid })
 
   const expectedArgs = {
-    mssg: 'Retrieved faces',
-    faces: [
-      '1',
-      '1',
-      '2',
-      '3',
-      '4',
-      '1',
-      '3'
+    mssg: 'Retrieved dates',
+    dates: [
+      todaysDate,
+      '08/03',
+      '07/03',
+      '06/03',
+      '05/03',
+      '04/03',
+      '03/03'
     ],
-    average: 2.142857142857143,
     success: 'successful'
   }
   t.true(response.status === 200)

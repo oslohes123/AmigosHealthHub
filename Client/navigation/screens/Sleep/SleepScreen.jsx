@@ -28,6 +28,7 @@ export default function SleepScreen() {
   const background = { backgroundColor: theme.background };
 
   const { addSleep, error } = useAddSleep();
+  console.log(`add sleep is: ${JSON.stringify(addSleep)}`);
 
   const [visible, setVisible] = useState(false);
   const screenWidth = Dimensions.get('window').width * 0.95;
@@ -91,6 +92,9 @@ export default function SleepScreen() {
             onDismiss={hideModal}
             contentContainerStyle={styles.modal}
           >
+            <Text variant="titleSmall" style={styles.errorMsg}>
+              Picking the same date will update your previous sleep statitics.
+            </Text>
             <Calendar
               onDayPress={(date) => {
                 setTimestamp(date.dateString);
@@ -158,9 +162,6 @@ export default function SleepScreen() {
             >
               <Text variant="headlineSmall">Add sleep data.</Text>
             </Surface>
-            <Text variant="titleMedium" style={styles.errorMsg}>
-              {error}
-            </Text>
           </TouchableOpacity>
         </SafeAreaView>
         <SafeAreaView style={styles.graphContainer}>
