@@ -20,7 +20,8 @@
         "!.eslintrc.js"
     ],
     "plugins": [
-        "react"
+        "react",
+        "cypress"
     ],
     "rules": {
         "linebreak-style": "off",

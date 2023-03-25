@@ -2,7 +2,7 @@ import {
   View, Text, Button, StyleSheet,
 } from 'react-native';
 import React from 'react';
-import LottieView from 'lottie-react-native';
+// import LottieView from 'lottie-react-native';
 import * as data from '../../../../assets/animation.json';
 
 const styles = StyleSheet.create({
@@ -26,12 +26,12 @@ export default function AuthDecisionScreen({ navigation }) {
     <View style={styles.container}>
       <View style={styles.animation}>
         <Text style={styles.text}>HEALTH HUB</Text>
-        <LottieView
+        {/* <LottieView
           source={data}
           autoPlay
           loop
           speed={1.5}
-        />
+        /> */}
         <View style={{ marginTop: '120%' }}>
           <Button
             title="Log into account"
