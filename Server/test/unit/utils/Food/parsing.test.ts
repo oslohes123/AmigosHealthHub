@@ -1,7 +1,7 @@
 import test from 'ava'
-import transformBrandedSearchInterface from '../../../utils/Food/parseBrandedSearch'
-import type specificFoodNutritionInterface from '../../../interfaces/Food/specificFoodNutritionInterface'
-import type BrandedSearchInterface from './../../../interfaces/Food/api_interfaces/brandedSearchInterface'
+import transformBrandedSearchInterface from '../../../../utils/Food/parseBrandedSearch'
+import type specificFoodNutritionInterface from '../../../../interfaces/Food/specificFoodNutritionInterface'
+import type BrandedSearchInterface from '../../../../interfaces/Food/api_interfaces/brandedSearchInterface'
 
 test('transformBrandedSearchInterface should transform data correctly', (t) => {
   const inputData: BrandedSearchInterface = {
