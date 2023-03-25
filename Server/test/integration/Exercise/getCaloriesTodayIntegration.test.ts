@@ -1,15 +1,11 @@
 import app from '../../../index'
 import { v4 as uuidv4 } from 'uuid'
-import supabase from '../../../utils/supabaseSetUp'
-import { SupabaseQueryClass } from '../../../utils/databaseInterface'
 import { createHashedPassword, createToken, createUserWithID, deleteUserRow } from '../../../utils/userFunctions'
 import { deleteMultipleExercises, insertMultipleExercises } from '../../../utils/Exercise/insertAndDeleteMultipleExercises'
 import { addCompletedWorkouts } from '../../../utils/Exercise/createNewTrackedWorkout'
 import RouteNamesClass from '../../../utils/routeNamesClass'
 import test from 'ava'
 import request from 'supertest'
-const bcrypt = require('bcrypt')
-const databaseQuery = new SupabaseQueryClass()
 const routeNames = new RouteNamesClass()
 const getCaloriesTodayRoute = routeNames.fullGetCaloriesToday
 let randomEmail: string
