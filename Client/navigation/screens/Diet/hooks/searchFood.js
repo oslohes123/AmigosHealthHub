@@ -42,7 +42,6 @@ export async function genericSearch(value) {
 export async function specificSearch(value) {
   let url = `${serverURL}/api/food/${clientSearchMethods.specificSearch}.${value}`;
   if (!usingDeployedServer) {
-    console.log(`http://${ipAddress}:${port}/api/food/${clientSearchMethods.specificSearch}.${value}`);
     url = `http://${ipAddress}:${port}/api/food/${clientSearchMethods.specificSearch}.${value}`;
   }
 
