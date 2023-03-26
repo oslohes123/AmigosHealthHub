@@ -9,7 +9,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "npm run web",
-    "runCypressTests":"npx cypress run",
+    "cypressTests":"npx cypress run",
     "ts-coverage": "typescript-coverage-report -t 85"
   },
   "dependencies": {
