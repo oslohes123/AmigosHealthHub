@@ -3,8 +3,9 @@ import validateJSONSchema from '../validateJSONSchema'
 import supabase from '../supabaseSetUp'
 import { SupabaseQueryClass } from '../databaseInterface'
 import { schemaForExercisesInNewCompletedWorkout } from '../JSONSchemas/schemaForExercisesInNewCompletedWorkout'
+import { getTimeStamp } from '../convertTimeStamptz'
 const databaseQuery = new SupabaseQueryClass()
-export const addCompletedWorkouts = async (userid: string, workoutname: string, exercises: any) => {
+export const addCompletedWorkoutUnit = async (userid: string, workoutname: string, exercises: any, timestamp: string = getTimeStamp()) => {
   const errorAddCompletedWorkoutsAndSuccess = { errorAddCompletedWorkouts: '', success: false }
 
   if (!validateJSONSchema(exercises, schemaForExercisesInNewCompletedWorkout)) {
@@ -40,10 +41,8 @@ export const addCompletedWorkouts = async (userid: string, workoutname: string, 
     }
   }
 
-  console.log(`exercises after mod: ${JSON.stringify(exercises)}`)
-
   // 1. Create a record in completed workouts
-  const { data, error }: any = await databaseQuery.insert(supabase, 'CompletedWorkouts', { userid, workoutname })
+  const { data, error }: any = await databaseQuery.insert(supabase, 'CompletedWorkouts', { userid, workoutname, timestamp })
   if (error) {
     errorAddCompletedWorkoutsAndSuccess.errorAddCompletedWorkouts = JSON.stringify(error)
     return errorAddCompletedWorkoutsAndSuccess

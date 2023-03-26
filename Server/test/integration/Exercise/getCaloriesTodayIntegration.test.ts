@@ -2,7 +2,7 @@ import app from '../../../index'
 import { v4 as uuidv4 } from 'uuid'
 import { createHashedPassword, createToken, createUserWithID, deleteUserRow } from '../../../utils/userFunctions'
 import { deleteMultipleExercises, insertMultipleExercises } from '../../../utils/Exercise/insertAndDeleteMultipleExercises'
-import { addCompletedWorkouts } from '../../../utils/Exercise/createNewTrackedWorkout'
+import { addCompletedWorkoutUnit } from '../../../utils/Exercise/createNewTrackedWorkout'
 import RouteNamesClass from '../../../utils/routeNamesClass'
 import test from 'ava'
 import request from 'supertest'
@@ -94,7 +94,7 @@ test.serial(`GET ${getCaloriesTodayRoute} with a user with a valid workoutplan r
   if (errorInsertingMultipleExercises) {
     t.fail(errorInsertingMultipleExercises)
   }
-  const { errorAddCompletedWorkouts, success } = await addCompletedWorkouts(uuid, 'Test Tracked Workout', exercises)
+  const { errorAddCompletedWorkouts, success } = await addCompletedWorkoutUnit(uuid, 'Test Tracked Workout', exercises)
   if (errorAddCompletedWorkouts) {
     t.fail(errorAddCompletedWorkouts)
   }

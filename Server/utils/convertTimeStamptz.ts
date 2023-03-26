@@ -55,3 +55,8 @@ export const sortArrayOfTimeStamps = (arrayOfTimeStamps: string[]): string[] => 
 export function getTodaysDate () {
   return getDate(moment().format())
 }
+
+//  returns the timestamp right now in the format: 2023-03-26T14:03:41+01:00
+export function getTimeStamp () {
+  return moment().format()
+}
