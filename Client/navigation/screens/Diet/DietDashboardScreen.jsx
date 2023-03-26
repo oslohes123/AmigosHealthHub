@@ -205,6 +205,10 @@ export default function DietDashboardScreen({ navigation }) {
     } else {
       data = { foodData: await specificSearch(nixItemId), foodIdentifier: nixItemId };
     }
+    if(data.length == 0){
+      Alert.alert('API keys have expired. Please contact the developers.');
+      return;
+    }
     navigation.navigate('Food Details', data);
   }
 
