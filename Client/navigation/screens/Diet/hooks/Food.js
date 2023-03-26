@@ -3,6 +3,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const serverURL = process.env.URL;
 const currentDate = new Date().toISOString().split('T')[0];
 const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
 // For testing purposes
 // Update this with your own UrlService
 
@@ -10,7 +12,7 @@ export async function getTrackedFood(Date, userID) {
   let url = `${serverURL}/api/food/getTrackedFood/${Date}.${userID}`;
   if (!usingDeployedServer) {
     url = `http://${ipAddress}:${port}/api/food/getTrackedFood/${Date}.${userID}`;
-  } 
+  }
   let response;
   try {
     const { token } = JSON.parse(
@@ -36,7 +38,7 @@ export async function getSpecificTrackedFood(LogID) {
   let url = `${serverURL}/api/food/getSpecificTrackedFood/${LogID}`;
   if (!usingDeployedServer) {
     url = `http://${ipAddress}:${port}/api/food/getSpecificTrackedFood/${LogID}`;
-  } 
+  }
   let response;
   try {
     const { token } = JSON.parse(
@@ -61,7 +63,7 @@ export async function addTrackedFood(input, userID) {
   let url = `${serverURL}/api/food/addTrackedFood`;
   if (!usingDeployedServer) {
     url = `http://${ipAddress}:${port}/api/food/addTrackedFood`;
-  } 
+  }
   let response;
   try {
     const { token } = JSON.parse(
