@@ -3,12 +3,17 @@ import { getTrackedFood } from './Food';
 
 const serverURL = process.env.URL;
 const currentDate = new Date().toISOString().split('T')[0];
+const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
 
 // For testing purposes
 // Update this with your own UrlService
 
 export async function getGeneralCalorieGoal(UserID) {
-  const url = `${serverURL}/api/food/calorieTrack/General.${UserID}`;
+  
+  let url = `${serverURL}/api/food/calorieTrack/General.${UserID}`;
+  if (!usingDeployedServer) {
+    url = `http://${ipAddress}:${port}/api/food/calorieTrack/General.${UserID}`;
+  } 
   let response;
   try {
     const { token } = JSON.parse(await AsyncStorage.getItem('user'));
@@ -34,7 +39,9 @@ export async function getGeneralCalorieGoal(UserID) {
 
 export async function addCalorieGoal(UserID, CalorieGoal, Date = currentDate) {
   const url = `${serverURL}/api/food/calorieTrack/createCalorieLog`;
-
+  if (!usingDeployedServer) {
+    url = `http://${ipAddress}:${port}/api/food/calorieTrack/createCalorieLog`;
+  } 
   let response;
   try {
     const { token } = JSON.parse(
@@ -103,6 +110,9 @@ export async function updateCalorieGoal(UserID, CalorieGoal, Date = currentDate)
   // Get the latest calorie goal
   const currentCalorieGoal = await getLatestCalorieGoal(UserID);
   let url = `${serverURL}/api/food/calorieTrack/`;
+  if (!usingDeployedServer) {
+    url = `http://${ipAddress}:${port}/api/food/calorieTrack/`;
+  } 
   let inputData = {};
 
   // If the latest calorie goal is for the current date, update the calorie goal
