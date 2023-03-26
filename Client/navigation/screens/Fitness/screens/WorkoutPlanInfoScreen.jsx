@@ -537,7 +537,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                             placeholderTextColor={color}
                             keyboardType="numeric"
                             textAlign="center"
-                            value={weightInArray[item.PEID] && weightInArray[item.PEID][index] ? `${weightInArray[item.PEID][index]}` : index}
+                            value={weightInArray[item.PEID] && weightInArray[item.PEID][index] != undefined && weightInArray[item.PEID][index] != null ? `${weightInArray[item.PEID][index]}` : index}
                             onChangeText={(weightText) => {
                               addWeightToArray(item.PEID, weightText, index);
                             }}
