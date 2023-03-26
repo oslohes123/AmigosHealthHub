@@ -2,6 +2,7 @@
   "expo": {
     "name": "AmigosHealthApp",
     "slug": "healthhub",
+    "channel-"
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
@@ -10,7 +11,8 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/a5f2f698-ccb3-4104-9867-5bfc14546fa9"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -31,6 +33,10 @@
         "projectId": "a5f2f698-ccb3-4104-9867-5bfc14546fa9"
       }
     },
-    "owner": "oslohes123"
+    "owner": "oslohes123",
+    "jsEngine": "hermes",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    }
   }
 }
