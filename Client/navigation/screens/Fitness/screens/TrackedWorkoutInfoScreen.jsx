@@ -280,21 +280,21 @@ export default function TrackedWorkoutInfoScreen({ route, navigation }) {
                     <Text style={[styles.statsText, { color, alignSelf: 'center' }]}>
                       Sets:
                       {' '}
-                      {item.sets}
+                      {item.sets ? item.sets : 'n/a'}
                     </Text>
                   </View>
                   <View style={styles.statsRows}>
                     <Text style={[styles.statsText, { color, alignSelf: 'center' }]}>
                       Reps:
                       {' '}
-                      {JSON.stringify(item.reps)}
+                      {item.reps ? JSON.stringify(item.reps) : 'n/a'}
                     </Text>
                   </View>
                   <View style={styles.statsRows}>
                     <Text style={[styles.statsText, { color, alignSelf: 'center' }]}>
                       Weight:
                       {' '}
-                      {JSON.stringify(item.weight)}
+                      {item.weight ? JSON.stringify(item.weight) : 'n/a'}
                     </Text>
                   </View>
                 </>
@@ -303,7 +303,7 @@ export default function TrackedWorkoutInfoScreen({ route, navigation }) {
                 <Text style={[styles.statsText, { color, alignSelf: 'center' }]}>
                   Calories:
                   {' '}
-                  {item.calories}
+                  {item.calories ? item.calories : 'n/a'}
                   {' '}
                   kcal
                 </Text>
