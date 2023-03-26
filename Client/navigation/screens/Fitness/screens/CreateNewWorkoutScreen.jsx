@@ -436,6 +436,7 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
               style={{
                 color,
                 width: screenWidth * 0.6,
+                height: screenHeight * 0.05,
                 borderColor: color,
                 margin: 10,
               }}
