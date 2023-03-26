@@ -264,7 +264,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
             )}
 
         {!isLoading && workoutDetails.map((item) => (
-          <TouchableWithoutFeedback style={{ padding: 40 }} key={`${Math.random()}`}>
+          <TouchableWithoutFeedback style={{ padding: 40 }} key={`${item.PEID}`}>
             <View
               style={[styles.exerciseSection, { borderColor: color }]}
             >
@@ -495,7 +495,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                       </Text>
 
                       {setsToArray(item.sets).map((unusedParam, index) => (
-                        <View style={[{ justifyContent: 'space-evenly', paddingVertical: 5 }]} key={`${Math.random()}`}>
+                        <View style={[{ justifyContent: 'space-evenly', paddingVertical: 5 }]} key={`${item.PEID}reps${index}`}>
                           <TextInput
                             style={[styles.textInput,
                               { borderColor: color, width: styles.textInput.width * 0.9 }]}
@@ -527,7 +527,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                       </Text>
 
                       {setsToArray(item.sets).map((unusedParam, index) => (
-                        <View style={[{ justifyContent: 'space-evenly', paddingVertical: 5 }]} key={`${Math.random()}`}>
+                        <View style={[{ justifyContent: 'space-evenly', paddingVertical: 5 }]} key={`${item.PEID}weight${index}`}>
                           <TextInput
                             render
                             style={[styles.textInput,
