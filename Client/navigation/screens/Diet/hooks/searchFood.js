@@ -7,7 +7,7 @@ const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
 // Update this with your own UrlService
 
 export async function genericSearch(value) {
-  const url = `${serverURL}/api/food/${clientSearchMethods.genericSearch}.${value}`;
+  let url = `${serverURL}/api/food/${clientSearchMethods.genericSearch}.${value}`;
   if(!usingDeployedServer) {
     url = `http://${ipAddress}:${port}/api/food/${clientSearchMethods.genericSearch}.${value}`;
   }
@@ -36,7 +36,7 @@ export async function genericSearch(value) {
 }
 
 export async function specificSearch(value) {
-  const url = `${serverURL}/api/food/${clientSearchMethods.specificSearch}.${value}`;
+  let url = `${serverURL}/api/food/${clientSearchMethods.specificSearch}.${value}`;
   if(!usingDeployedServer) {
     url = `http://${ipAddress}:${port}/api/food/${clientSearchMethods.specificSearch}.${value}`;
   }

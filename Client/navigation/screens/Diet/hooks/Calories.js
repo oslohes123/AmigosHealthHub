@@ -38,7 +38,7 @@ export async function getGeneralCalorieGoal(UserID) {
 }
 
 export async function addCalorieGoal(UserID, CalorieGoal, Date = currentDate) {
-  const url = `${serverURL}/api/food/calorieTrack/createCalorieLog`;
+  let url = `${serverURL}/api/food/calorieTrack/createCalorieLog`;
   if (!usingDeployedServer) {
     url = `http://${ipAddress}:${port}/api/food/calorieTrack/createCalorieLog`;
   } 

@@ -7,7 +7,7 @@ const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
 // Update this with your own UrlService
 
 export async function getTrackedFood(Date, userID) {
-  const url = `${serverURL}/api/food/getTrackedFood/${Date}.${userID}`;
+  let url = `${serverURL}/api/food/getTrackedFood/${Date}.${userID}`;
   if (!usingDeployedServer) {
     url = `http://${ipAddress}:${port}/api/food/getTrackedFood/${Date}.${userID}`;
   } 
@@ -33,7 +33,7 @@ export async function getTrackedFood(Date, userID) {
 }
 
 export async function getSpecificTrackedFood(LogID) {
-  const url = `${serverURL}/api/food/getSpecificTrackedFood/${LogID}`;
+  let url = `${serverURL}/api/food/getSpecificTrackedFood/${LogID}`;
   if (!usingDeployedServer) {
     url = `http://${ipAddress}:${port}/api/food/getSpecificTrackedFood/${LogID}`;
   } 
@@ -58,7 +58,7 @@ export async function getSpecificTrackedFood(LogID) {
 }
 
 export async function addTrackedFood(input, userID) {
-  const url = `${serverURL}/api/food/addTrackedFood`;
+  let url = `${serverURL}/api/food/addTrackedFood`;
   if (!usingDeployedServer) {
     url = `http://${ipAddress}:${port}/api/food/addTrackedFood`;
   } 
@@ -87,7 +87,7 @@ export async function addTrackedFood(input, userID) {
 }
 
 export async function deleteTrackedFood(LogID) {
-  const url = `${serverURL}/api/food/deleteTrackedFood/`;
+  let url = `${serverURL}/api/food/deleteTrackedFood/`;
   if (!usingDeployedServer) {
     url = `http://${ipAddress}:${port}/api/food/deleteTrackedFood/`;
   }
@@ -115,7 +115,7 @@ export async function deleteTrackedFood(LogID) {
 }
 
 export async function updateTrackedFood(input) {
-  const url = `${serverURL}/api/food/updateTrackedFood`;
+  let url = `${serverURL}/api/food/updateTrackedFood`;
   if (!usingDeployedServer) {
     url = `http://${ipAddress}:${port}/api/food/updateTrackedFood`;
   }
@@ -147,7 +147,7 @@ export async function updateTrackedFood(input) {
 }
 
 export async function getFood(foodID) {
-  const url = `${serverURL}/api/food/getFood/${foodID}`;
+  let url = `${serverURL}/api/food/getFood/${foodID}`;
   if (!usingDeployedServer) {
     url = `http://${ipAddress}:${port}/api/food/getFood/${foodID}`;
   }
@@ -173,11 +173,11 @@ export async function getFood(foodID) {
 }
 
 export async function getMultipleFood(foodIDs) {
-  const url = `${serverURL}/api/food/getMultipleFood`;
+  let url = `${serverURL}/api/food/getMultipleFood`;
   if (!usingDeployedServer) {
     url = `http://${ipAddress}:${port}/api/food/getMultipleFood`;
   }
-  
+
   let response;
   try {
     const { token } = JSON.parse(
