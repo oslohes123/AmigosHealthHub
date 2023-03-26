@@ -71,10 +71,10 @@ const styles = StyleSheet.create({
   scroll: {
     marginTop: 10,
     height: 400,
-    position: 'absolute',
+    // position: 'absolute',
     marginLeft: '50%',
     alignSelf: 'center',
-    flex: 1,
+    // flex: 1,
     width: '50%',
   },
   chart: {
@@ -265,7 +265,8 @@ export default function DietDashboardScreen({ navigation }) {
 
         {foodInput.length > 2
           && (
-          <View style={{ flexDirection: 'row', height: '10%', marginTop: '30%' }}>
+          // <View style={{ flexDirection: 'row', height: '10%', marginTop: '30%' }}>
+            <View style={{flexDirection: 'row'}}>
             <ScrollView style={styles.scroll}>
               {genericFoodList.length > 2 && genericFoodList.map((item) => (
                 <TouchableOpacity
