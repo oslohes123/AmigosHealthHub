@@ -264,7 +264,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
             )}
 
         {!isLoading && workoutDetails.map((item) => (
-          <TouchableWithoutFeedback style={{ padding: 40 }} key={`${Math.random()}`}>
+          <TouchableWithoutFeedback style={{ padding: 40 }} key={`${item.PEID}`}>
             <View
               style={[styles.exerciseSection, { borderColor: color }]}
             >
@@ -495,7 +495,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                       </Text>
 
                       {setsToArray(item.sets).map((unusedParam, index) => (
-                        <View style={[{ justifyContent: 'space-evenly', paddingVertical: 5 }]} key={`${Math.random()}`}>
+                        <View style={[{ justifyContent: 'space-evenly', paddingVertical: 5 }]} key={`${item.PEID}reps${index}`}>
                           <TextInput
                             style={[styles.textInput,
                               { borderColor: color, width: styles.textInput.width * 0.9 }]}
@@ -527,7 +527,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                       </Text>
 
                       {setsToArray(item.sets).map((unusedParam, index) => (
-                        <View style={[{ justifyContent: 'space-evenly', paddingVertical: 5 }]} key={`${Math.random()}`}>
+                        <View style={[{ justifyContent: 'space-evenly', paddingVertical: 5 }]} key={`${item.PEID}weight${index}`}>
                           <TextInput
                             render
                             style={[styles.textInput,
@@ -583,8 +583,6 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
               if (copyDataToTrack[key].reps != null) {
                 copyDataToTrack[key].sets = (copyDataToTrack[key].reps).length;
               }
-              console.log(copyDataToTrack[key].mins)
-              console.log(copyDataToTrack[key].secs)
 
               if (copyDataToTrack[key].mins || copyDataToTrack[key].secs) {
                 const { mins } = copyDataToTrack[key];
@@ -601,15 +599,6 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
             });
 
             const submittableState = Object.values(copyDataToTrack).map((obj) => {
-              
-              console.log(obj.duration)
-              // if (((obj.sets != null && obj.sets !== '' && !Number.isNaN(Number(obj.sets))
-              // && obj.reps != null && obj.reps !== '' && obj.reps !== [] && (obj.reps).length === obj.sets
-              // && obj.weight != null && obj.weight !== '' && obj.weight !== [] && (obj.weight).length === obj.sets)
-              // || (obj.distance != null && obj.distance !== '' && !Number.isNaN(Number(obj.distance))
-              // && obj.duration != null && obj.duration !== '' && !Number.isNaN(Number(obj.duration))))
-              // && !Number.isNaN(Number(obj.calories))) {
-
               if ((!Number.isNaN(Number(obj.duration)) || !Number.isNaN(Number(obj.distance)))
               || ((obj.sets != null && obj.sets !== '' && !Number.isNaN(Number(obj.sets)) && obj.reps != null && obj.reps !== '' && obj.reps !== [] && !Number.isNaN(Number(obj.reps))) 
               || (obj.distance != null && obj.distance !== '' && !Number.isNaN(Number(obj.distance))))) {
