@@ -58,7 +58,7 @@ it('should be able to fill login form', () => {
     .click()
   cy.get('input[placeholder="Email"]').click().type('shazeen@gmail.com')
   cy.get('input[placeholder="Password"]').click().type('Password123!')
-  cy.contains('Log in').click()
+  cy.contains('Login').click()
   // cy.get('.css-textHasAncestor-1qaijid').click();
 })
 
