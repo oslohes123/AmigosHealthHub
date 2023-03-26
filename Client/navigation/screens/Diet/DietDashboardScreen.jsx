@@ -71,15 +71,12 @@ const styles = StyleSheet.create({
   scroll: {
     marginTop: 10,
     height: 400,
-    // position: 'absolute',
     marginLeft: '50%',
     alignSelf: 'center',
-    // flex: 1,
     width: '50%',
   },
   chart: {
     alignSelf: 'center',
-    //flex: 1,
     marginTop: -10,
     width: '90%',
   },
@@ -265,7 +262,6 @@ export default function DietDashboardScreen({ navigation }) {
 
         {foodInput.length > 2
           && (
-          // <View style={{ flexDirection: 'row', height: '10%', marginTop: '30%' }}>
             <View style={{flexDirection: 'row', marginTop: '-5%'}}>
             <ScrollView style={styles.scroll}>
               {genericFoodList.length > 2 && genericFoodList.map((item) => (
