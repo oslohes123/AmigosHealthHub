@@ -12,7 +12,7 @@ export async function getTrackedFood(Date, userID) {
   let url = `${serverURL}/api/food/getTrackedFood/${Date}.${userID}`;
   if (!usingDeployedServer) {
     url = `http://${ipAddress}:${port}/api/food/getTrackedFood/${Date}.${userID}`;
-  } 
+  }
   let response;
   try {
     const { token } = JSON.parse(
@@ -38,7 +38,7 @@ export async function getSpecificTrackedFood(LogID) {
   let url = `${serverURL}/api/food/getSpecificTrackedFood/${LogID}`;
   if (!usingDeployedServer) {
     url = `http://${ipAddress}:${port}/api/food/getSpecificTrackedFood/${LogID}`;
-  } 
+  }
   let response;
   try {
     const { token } = JSON.parse(
@@ -63,7 +63,7 @@ export async function addTrackedFood(input, userID) {
   let url = `${serverURL}/api/food/addTrackedFood`;
   if (!usingDeployedServer) {
     url = `http://${ipAddress}:${port}/api/food/addTrackedFood`;
-  } 
+  }
   let response;
   try {
     const { token } = JSON.parse(
