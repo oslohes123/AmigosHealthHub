@@ -4,6 +4,8 @@ import { getTrackedFood } from './Food';
 const serverURL = process.env.URL;
 const currentDate = new Date().toISOString().split('T')[0];
 const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
 
 // For testing purposes
 // Update this with your own UrlService

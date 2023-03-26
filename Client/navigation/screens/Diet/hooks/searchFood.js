@@ -3,6 +3,9 @@ import { clientSearchMethods } from '../../../../constants';
 
 const serverURL = process.env.URL;
 const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
+
 // For testing purposes
 // Update this with your own UrlService
 
