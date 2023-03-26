@@ -111,13 +111,13 @@ export default function ExerciseInfoScreen({ route, navigation }) {
             onPress={() => {
               if (
                 (exerciseInfo.type === 'cardio'
-                && distance != null && distance.trim() !== '' && !Number.isNaN(Number(distance)) && Number(distance) >= 0
-                && durationMins != null && durationMins.trim() !== '' && !Number.isNaN(Number(durationMins)) && Number(durationMins) >= 0
-                && durationSecs != null && durationSecs.trim() !== '' && !Number.isNaN(Number(durationSecs)) && Number(durationSecs) >= 0 && Number(durationSecs) <= 60)
+                && (distance != null && distance.trim() !== '' && !Number.isNaN(Number(distance)) && Number(distance) >= 0
+                || durationMins != null && durationMins.trim() !== '' && !Number.isNaN(Number(durationMins)) && Number(durationMins) >= 0
+                && durationSecs != null && durationSecs.trim() !== '' && !Number.isNaN(Number(durationSecs)) && Number(durationSecs) >= 0 && Number(durationSecs) <= 60))
               || (exerciseInfo.type !== 'cardio'
                 && weight != null && weight.trim() !== '' && !Number.isNaN(Number(weight)) && Number(weight) >= 0
                 && reps != null && reps.trim() !== '' && !Number.isNaN(Number(reps)) && Number(reps) >= 0
-                && sets != null && sets.trim() !== '' && !Number.isNaN(Number(sets)) && Number(sets) >= 1)
+                && sets != null && sets.trim() !== '' && !Number.isNaN(Number(sets)) && Number(sets) >= 0)
               ) {
                 let updatedSelectedExercises;
                 if (selectedExercises) {
@@ -359,48 +359,12 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                           keyboardType="numeric"
                           textAlign="center"
                         />
-                      </View>
-                      <View style={{ flexDirection: 'row' }}>
-                        <TextInput
-                          style={[
-                            styles.textInput,
-                            { borderColor: color, color, width: screenWidth * 0.1 },
-                          ]}
-                          placeholder="Mins"
-                          placeholderTextColor={color}
-                          onChangeText={setDurationMins}
-                          value={durationMins}
-                          keyboardType="numeric"
-                          textAlign="center"
-                        />
-                        <Text style={{ color, alignSelf: 'center' }}>:</Text>
-                        <TextInput
-                          style={[
-                            styles.textInput,
-                            { borderColor: color, color, width: screenWidth * 0.1 },
-                          ]}
-                          placeholder="Secs"
-                          placeholderTextColor={color}
-                          onChangeText={setDurationSecs}
-                          value={durationSecs}
-                          keyboardType="numeric"
-                          textAlign="center"
-                        />
-                      </View>
+                      </View> 
                     </View>
                   )}
                 </View>
 
-                <View
-                  style={{
-                    width: screenWidth * 0.4,
-                    flexDirection: 'row',
-                    justifyContent:
-                    exerciseInfo.type !== 'cardio' ? 'space-evenly' : 'center',
-                    alignContent: 'center',
-                  }}
-                >
-                  {exerciseInfo.type !== 'cardio' && (
+                {exerciseInfo.type !== 'cardio' && (
                   <TextInput
                     style={[
                       styles.textInput,
@@ -418,6 +382,46 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                     textAlign="center"
                   />
                   )}
+
+                <View
+                  style={{
+                    width: screenWidth * 0.5,
+                    flexDirection: 'row',
+                    justifyContent:
+                    exerciseInfo.type !== 'cardio' ? 'space-evenly' : 'center',
+                    alignContent: 'center',
+                    alignSelf: 'center'
+                  }}
+                >
+
+                  <View style={{ flexDirection: 'row' }}>
+                    <TextInput
+                      style={[
+                        styles.textInput,
+                        { borderColor: color, color, width: screenWidth * 0.1 },
+                      ]}
+                      placeholder="Mins"
+                      placeholderTextColor={color}
+                      onChangeText={setDurationMins}
+                      value={durationMins}
+                      keyboardType="numeric"
+                      textAlign="center"
+                    />
+                    <Text style={{ color, alignSelf: 'center', fontWeight: 'bold' }}>:</Text>
+                    <TextInput
+                      style={[
+                        styles.textInput,
+                        { borderColor: color, color, width: screenWidth * 0.1 },
+                      ]}
+                      placeholder="Secs"
+                      placeholderTextColor={color}
+                      onChangeText={setDurationSecs}
+                      value={durationSecs}
+                      keyboardType="numeric"
+                      textAlign="center"
+                    />
+                  </View>
+
                   <TextInput
                     style={[
                       styles.textInput,
