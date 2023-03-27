@@ -33,7 +33,7 @@ const styles = {
     borderRadius: 26,
     padding: 10,
     marginVertical: 10,
-    width: screenWidth * 0.8,
+    width: screenWidth * 0.9,
   },
   statsText: {
     fontWeight: 'bold',
@@ -45,7 +45,7 @@ const styles = {
     padding: 5,
   },
   bottomButtons: {
-    width: screenWidth * 0.9,
+    width: screenWidth * 0.95,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     padding: 5,
@@ -56,7 +56,7 @@ const modalStyle = {
   modalMain: {
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: screenWidth * 0.9,
+    width: screenWidth * 0.95,
     borderRadius: 26,
     padding: 20,
     borderWidth: 3,
@@ -131,7 +131,7 @@ export default function TrackedWorkoutInfoScreen({ route, navigation }) {
                 borderRadius: 26,
                 padding: 10,
                 margin: 20,
-                width: screenWidth * 0.8,
+                width: screenWidth * 0.9,
                 borderColor: color,
                 maxHeight: screenHeight * 0.5,
               }}
@@ -152,7 +152,7 @@ export default function TrackedWorkoutInfoScreen({ route, navigation }) {
         </SafeAreaView>
       </Modal>
 
-      <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: screenWidth * 0.9 }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: screenWidth * 0.95 }}>
         <Text style={[styles.text, {
           color, width: screenWidth * 0.6, textAlign: 'left', alignSelf: 'center',
         }]}
@@ -183,7 +183,7 @@ export default function TrackedWorkoutInfoScreen({ route, navigation }) {
         showsVerticalScrollIndicator={false}
         justifyContent={isLoading ? 'center' : 'flex-start'}
         alignItems="center"
-        style={{ margin: 10, width: screenWidth * 0.9 }}
+        style={{ margin: 10, width: screenWidth * 0.95 }}
       >
 
         {isLoading
@@ -329,7 +329,7 @@ export default function TrackedWorkoutInfoScreen({ route, navigation }) {
       <View style={styles.bottomButtons}>
         <FAB
           icon="delete"
-          style={[styles.fab, { width: screenWidth * 0.9 }]}
+          style={[styles.fab, { width: screenWidth * 0.95 }]}
           label="Delete Plan"
           onPress={() => {
             deleteTrackedWorkout(workoutname, date, time);

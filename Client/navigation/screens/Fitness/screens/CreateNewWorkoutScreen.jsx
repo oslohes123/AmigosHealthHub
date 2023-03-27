@@ -60,7 +60,7 @@ const styles = {
     width: '90%',
   },
   horizontalScroll: {
-    width: screenWidth * 0.9,
+    width: screenWidth * 0.95,
     height: screenHeight * 0.15,
     borderWidth: 2,
     borderRadius: 26,
@@ -100,7 +100,7 @@ const modalStyle = {
   modalMain: {
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: screenWidth * 0.8,
+    width: screenWidth * 0.9,
     borderRadius: 26,
     padding: 20,
     borderWidth: 3,

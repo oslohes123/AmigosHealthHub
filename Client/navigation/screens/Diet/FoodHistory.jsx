@@ -165,7 +165,7 @@ export default function FoodHistory({ navigation }) {
           <TouchableOpacity style={styles.pieWidget} onPress={pressHandler}>
             <PieChart
               data={pieChartData}
-              width={0.9 * screenWidth}
+              width={0.95 * screenWidth}
               height={210}
               chartConfig={{
                 color: () => 'black',

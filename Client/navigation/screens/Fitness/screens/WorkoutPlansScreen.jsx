@@ -27,7 +27,7 @@ const styles = {
     margin: 5,
     borderWidth: 1,
     textAlign: 'center',
-    width: screenWidth * 0.8,
+    width: screenWidth * 0.9,
     alignItems: 'center',
   },
   scrollView: {
@@ -36,7 +36,7 @@ const styles = {
     borderRadius: 26,
     paddingHorizontal: 16,
     margin: 10,
-    width: screenWidth * 0.9,
+    width: screenWidth * 0.95,
   },
   container: {
     alignItems: 'center',

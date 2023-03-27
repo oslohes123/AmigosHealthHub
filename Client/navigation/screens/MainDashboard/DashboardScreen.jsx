@@ -44,7 +44,7 @@ export default function DashboardScreen({ navigation }) {
         <WordOfTheDayWidget />
       </TouchableOpacity>
 
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: screenWidth * 0.9 }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: screenWidth * 0.95 }}>
         <CaloriesBurntTodayWidget />
         <CaloriesRemaining />
       </View>

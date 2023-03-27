@@ -88,7 +88,7 @@ export default function OutputMentalGraphs() {
       <Text style={{ color, fontWeight: 'bold', margin: 10 }}>Past Submissions (max 7)</Text>
       <LineChart
         data={line}
-        width={screenWidth * 0.9}
+        width={screenWidth * 0.95}
         height={220}
         chartConfig={{
           backgroundColor: '#e26a00',

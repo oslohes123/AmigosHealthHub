@@ -27,7 +27,7 @@ export default function App({ navigation }) {
     widget: {
       padding: 20,
       borderRadius: 25,
-      width: screenWidth * 0.43,
+      width: screenWidth * 0.45,
       height: screenHeight * 0.2,
       alignSelf: 'center',
       alignItems: 'center',
@@ -43,7 +43,7 @@ export default function App({ navigation }) {
   // components for the screen
   return (
     <View style={[styles.container, { backgroundColor: background }]}>
-      <View style={{ flexDirection: 'row', width: screenWidth * 0.9, justifyContent: 'space-between', marginBottom: 20 }}>
+      <View style={{ flexDirection: 'row', width: screenWidth * 0.95, justifyContent: 'space-between', marginBottom: 20 }}>
         <TouchableOpacity onPress={() => navigation.navigate("Mental History")}>
           <LinearGradient
             colors={['blue', 'grey']}

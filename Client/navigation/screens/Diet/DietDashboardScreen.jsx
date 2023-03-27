@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   },
   input: {
     color: '#fff',
-    width: screenWidth * 0.9,
+    width: screenWidth * 0.95,
     alignSelf: 'center',
     borderRadius: 25,
     paddingHorizontal: 16,
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     height: screenHeight * 0.4,
     alignSelf: 'center',
-    width: screenWidth * 0.9,
+    width: screenWidth * 0.95,
   },
   chart: {
     alignSelf: 'center',
@@ -233,7 +233,7 @@ export default function DietDashboardScreen({ navigation }) {
         />
 
         <SegmentedButtons 
-          style={{ width: screenWidth * 0.9, alignSelf: 'center' }}
+          style={{ width: screenWidth * 0.95, alignSelf: 'center' }}
           value={segValue}
           onValueChange={setSegValue}
           buttons={[
@@ -255,7 +255,7 @@ export default function DietDashboardScreen({ navigation }) {
              <TouchableOpacity style={styles.pieWidget} onPress={pieChartPress}>
              <PieChart
                data={pieChartData}
-               width={0.9 * screenWidth}
+               width={0.95 * screenWidth}
                height={210}
                chartConfig={{
                  color: () => 'black',

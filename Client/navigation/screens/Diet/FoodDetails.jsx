@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignSelf: 'center',
     fontWeight: 'bold',
-    width: screenWidth * 0.9
+    width: screenWidth * 0.95
   },
   box: {
     flexDirection: 'row',
