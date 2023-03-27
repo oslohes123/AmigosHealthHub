@@ -250,24 +250,26 @@ export default function DietDashboardScreen({ navigation }) {
         </View>
 
       <View>
+        <View style={{ height: screenHeight * 0.4, justifyContent: 'center'}}>
           {foodInput.length <= 2 && pieChartData.length > 0 && (
-             
-             <TouchableOpacity style={styles.pieWidget} onPress={pieChartPress}>
+            
+            <TouchableOpacity style={styles.pieWidget} onPress={pieChartPress}>
              <PieChart
                data={pieChartData}
                width={0.95 * screenWidth}
                height={210}
                chartConfig={{
                  color: () => 'black',
-               }}
-               accessor="amount"
-               backgroundColor="transparent"
-             />
+                }}
+                accessor="amount"
+                backgroundColor="transparent"
+                />
            </TouchableOpacity>
             )}
             {foodInput.length === 0 && pieChartData.length === 0 && (
-             <Text style={[styles.info, {color: color}]}>Add Food to view Diet Info</Text>
-            )}
+              <Text style={[styles.info, {color: color}]}>Add Food to view Diet Info</Text>
+              )}
+        </View>
 
         <View style={{flexDirection: 'row'}}>
         {foodInput.length > 2
