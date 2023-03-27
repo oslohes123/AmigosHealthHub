@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   dietView: {
     flexDirection: 'row',
-    width: '90%',
+    width: '95%',
     height: '10%',
     alignSelf: 'center',
     marginTop: '9%',
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   },
   middleView: {
     flexDirection: 'row',
-    width: '90%',
+    width: '95%',
     height: '10%',
     alignSelf: 'center',
     backgroundColor: '#c2e7fe',
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   },
   healthView: {
     flexDirection: 'row',
-    width: '90%',
+    width: '95%',
     height: '10%',
     alignSelf: 'center',
     backgroundColor: '#c2e7fe',
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   },
   profileView: {
     flexDirection: 'row',
-    width: '90%',
+    width: '95%',
     height: '15%',
     alignSelf: 'center',
     marginTop: '9%',

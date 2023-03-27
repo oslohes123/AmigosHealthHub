@@ -207,7 +207,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
           style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
         >
           <View
-            style={[modalStyle.modalMain, { backgroundColor: secondary, width: screenWidth * 0.95 }]}
+            style={[modalStyle.modalMain, { backgroundColor: secondary, width: screenWidth * 0.9 }]}
           >
             <Text style={[modalStyle.modalText, { color }]}>
               Instructions
@@ -221,7 +221,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                 borderRadius: 26,
                 padding: 10,
                 margin: 20,
-                width: screenWidth * 0.9,
+                width: screenWidth * 0.85,
                 borderColor: color,
               }}
             >

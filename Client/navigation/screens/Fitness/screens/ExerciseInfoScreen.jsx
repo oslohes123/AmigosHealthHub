@@ -295,7 +295,7 @@ export default function ExerciseInfoScreen({ route, navigation }) {
           <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <View
               style={{
-                width: screenWidth * 0.9,
+                width: screenWidth * 0.95,
                 flexDirection: 'row',
                 justifyContent: 'space-evenly',
                 alignContent: 'center',

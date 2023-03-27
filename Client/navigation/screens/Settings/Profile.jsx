@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   },
   button: {
     flexDirection: 'row',
-    width: '90%',
+    width: '95%',
     height: '10%',
     alignSelf: 'center',
     margin: '2%',

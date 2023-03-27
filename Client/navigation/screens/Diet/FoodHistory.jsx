@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     marginHorizontal: '15%',
     marginVertical: '5%',
-    width: '90%',
+    width: '95%',
     alignSelf: 'center'
   },
   text: {
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginVertical: 10,
     backgroundColor: '#c2e7fe',
-    width: '90%',
+    width: '95%',
   },
   icon: {
     margin: 5,
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     height: 400,
   },
   calendar: {
-    width: '90%',
+    width: '95%',
     alignSelf: 'center',
     borderTopEndRadius: 40,
     borderTopLeftRadius: 40,

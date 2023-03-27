@@ -56,7 +56,7 @@ const modalStyle = {
   modalMain: {
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: screenWidth * 0.95,
+    width: screenWidth * 0.9,
     borderRadius: 26,
     padding: 20,
     borderWidth: 3,
@@ -131,7 +131,7 @@ export default function TrackedWorkoutInfoScreen({ route, navigation }) {
                 borderRadius: 26,
                 padding: 10,
                 margin: 20,
-                width: screenWidth * 0.9,
+                width: screenWidth * 0.85,
                 borderColor: color,
                 maxHeight: screenHeight * 0.5,
               }}

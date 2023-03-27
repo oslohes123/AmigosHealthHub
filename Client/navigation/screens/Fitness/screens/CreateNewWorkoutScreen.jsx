@@ -57,7 +57,7 @@ const styles = {
     borderRadius: 26,
     paddingHorizontal: 16,
     margin: 10,
-    width: '90%',
+    width: '95%',
   },
   horizontalScroll: {
     width: screenWidth * 0.95,
@@ -100,7 +100,7 @@ const modalStyle = {
   modalMain: {
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: screenWidth * 0.9,
+    width: screenWidth * 0.95,
     borderRadius: 26,
     padding: 20,
     borderWidth: 3,
@@ -549,7 +549,7 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
             {
               borderColor: color,
               color,
-              width: screenWidth * 0.7,
+              width: screenWidth * 0.75,
             },
           ]}
           textAlign="center"
