@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     padding: 20,
     borderRadius: 25,
-    width: screenWidth * 0.9,
+    width: screenWidth * 0.95,
     height: screenHeight * 0.2,
     justifyContent: 'space-between',
   },
@@ -52,7 +52,7 @@ export default function WordOfTheDayWidget() {
     }
   }, [navigation, isFocused]);
   const pressHandler = () => {
-    navigation.navigate('View Stats');
+    navigation.navigate("Mental", {screen: 'Review Your Day'});
   };
 
   return (

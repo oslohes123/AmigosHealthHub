@@ -17,7 +17,7 @@ import DietNavigation from './screens/Diet/DietNavigation';
 import { EventRegister } from 'react-native-event-listeners';
 import FitnessNavigationScreen from './screens/Fitness/routes/FitnessNavigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import MentalScreen from './screens/Mental/routes/manager';
+import MentalNavigationScreen from './screens/Mental/routes/homeStack';
 // import Settings from "./screens/Diet/Settings";
 import SettingsNavigation from './screens/Settings/SettingsNavigation';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -35,7 +35,7 @@ const settingsName = 'Settings';
 const Tab = createBottomTabNavigator();
 
 export default function MainContainer() {
-    const [darkMode, setDarkMode] = useState(false);
+    const [darkMode, setDarkMode] = useState(true);
 
     useEffect(() => {
         const listener = EventRegister.addEventListener(
@@ -118,7 +118,7 @@ export default function MainContainer() {
                             />
                             <Tab.Screen
                                 name={mentalName}
-                                component={MentalScreen}
+                                component={MentalNavigationScreen}
                             />
                             <Tab.Screen
                                 name={settingsName}

@@ -7,9 +7,11 @@ import {
   TextInput,
   Button,
   Image,
+  Dimensions,
 } from 'react-native';
 import Slider from '@react-native-community/slider';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import themeContext from '../../../theme/themeContext';
 import { Formik } from 'formik';
 // npm install , npm install @react-native-community/slider --save
 import { globalStyles } from '../../../../styles/global';
@@ -21,6 +23,9 @@ const sad = require('../../../../assets/Sad.png');
 const neutral = require('../../../../assets/Neutral.png');
 const happy = require('../../../../assets/Happy.png');
 const perfect = require('../../../../assets/Perfect.png');
+
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
 
 const moodImage = [
   worst, sad, neutral, happy, perfect,
@@ -35,23 +40,36 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 20,
   },
   input: {
-    height: 40,
+    height: screenHeight * 0.05,
+    width: screenWidth * 0.5,
     margin: 12,
     borderWidth: 1,
     padding: 10,
   },
-  image: {},
+  image: {
+    alignSelf: 'center'
+  },
   button: {},
   scrollbar: {},
   label: {
     fontSize: 24,
     padding: 10,
+    alignSelf: 'center',
+    fontWeight: 'bold',
   },
 });
 
-export default function rateMentalHealthForm() {
+export default function RateMentalHealthForm() {
+  const {
+    theme,
+    background,
+    secondary,
+    color,
+  } = useContext(themeContext);
   const { submit, isLoading, error } = useSubmit();
   const [faceInputValue, setFaceValue] = useState(3);
   const [moodI, setRangeI] = useState(neutral);
@@ -62,7 +80,7 @@ export default function rateMentalHealthForm() {
   };
   // return the components for the form
   return (
-    <View style={globalStyles.container}>
+    <View style={[styles.container, { backgroundColor: background }]}>
       <Formik
         initialValues={{ word: '' }}
         // increment face value as graph values from range 1-5 compared to 0-4 is more user friendly
@@ -72,16 +90,8 @@ export default function rateMentalHealthForm() {
         validationSchema={mentalHealthSchema}
       >
         {(props) => (
-          <View>
-            <Text style={styles.label}>Word:</Text>
-            <TextInput
-              style={globalStyles.input}
-              placeholder="Word Of The Day:"
-              onChangeText={props.handleChange('word')}
-              value={props.values.word}
-            />
-            <Text>{props.errors.word}</Text>
-            <Text style={styles.label}>Face:</Text>
+          <View style={[styles.container, { backgroundColor: background }]}>
+            <Text style={[styles.label, { color }]}>Face:</Text>
             <Image source={moodI} style={styles.image} />
             <Slider
               style={{ width: 250, height: 40 }}
@@ -94,12 +104,23 @@ export default function rateMentalHealthForm() {
               step={1}
               onValueChange={(value) => handleFaceInputChange(value)}
             />
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={[styles.label, {color}]}>Word:</Text>
+              <TextInput
+                style={[styles.input, { borderColor: color, color }]}
+                placeholder="Word Of The Day:"
+                placeholderTextColor={color}
+                onChangeText={props.handleChange('word')}
+                value={props.values.word}
+              />
+            </View>
+            <Text style={{ color }}>{props.errors.word}</Text>
             <Button
               title="Submit!"
               onPress={props.handleSubmit}
               disabled={isLoading}
             />
-            {error && <Text>{error}</Text>}
+            {error && <Text style={{ color }}>{error}</Text>}
           </View>
         )}
       </Formik>

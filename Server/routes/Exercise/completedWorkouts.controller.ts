@@ -111,10 +111,10 @@ export const getAllCompletedWorkouts = async (req: Request, res: Response) => {
     for (let i = 0; i < sortedTimeStamps.length; i++) {
       for (let j = 0; j < data.length; j++) {
         if (sortedTimeStamps[i] === data[j].timestamp) {
-          const timestamp = data[i].timestamp
-          delete data[i].timestamp
-          data[i].date = getDate(timestamp)
-          data[i].time = getTime(timestamp)
+          const timestamp = data[j].timestamp
+          delete data[j].timestamp
+          data[j].date = getDate(timestamp)
+          data[j].time = getTime(timestamp)
           sortedCompletedWorkouts.push(data[i])
         }
       }

@@ -83,7 +83,7 @@ test('getACompletedWorkout with missing time returns error', async (t: any) => {
 })
 
 // test getACompletedWorkout with userid who doesn't exist
-test('getACompletedWorkout withuserid who does not exist returns error', async (t: any) => {
+test('getACompletedWorkout with userid who does not exist returns error', async (t: any) => {
   const fakeUserID = uuidv4()
   const req = mockRequest({ userid: fakeUserID, workoutname: 'Test Workout', date: '2023-05-13', time: '18:33:22' })
   const res = mockResponse()
@@ -94,7 +94,7 @@ test('getACompletedWorkout withuserid who does not exist returns error', async (
   t.true(res.json.calledWith({ mssg: 'A workout of this name at this time and date does not exist for this user!' }))
 })
 // test getACompletedWorkout with userid who has no completed workouts
-test('getACompletedWorkout with user has no workouts at given time and date returns error', async (t: any) => {
+test('getACompletedWorkout with user has does not have a workout at the given time and date returns error', async (t: any) => {
   const req = mockRequest({ userid: uuid, workoutname: 'Test Workout', date: '2023-05-13', time: '18:33:22' })
   const res = mockResponse()
 

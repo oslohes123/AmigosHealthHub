@@ -163,7 +163,7 @@ export default function OverallStats() {
                   <BarChart
                     style={{ borderRadius: 25 }}
                     data={exerciseNameData}
-                    width={0.9 * screenWidth}
+                    width={0.95 * screenWidth}
                     height={220}
                     chartConfig={chartConfig}
                     fromZero
@@ -187,7 +187,7 @@ export default function OverallStats() {
                   <BarChart
                     style={{ borderRadius: 25 }}
                     data={exerciseTypeData}
-                    width={0.9 * screenWidth}
+                    width={0.95 * screenWidth}
                     height={220}
                     chartConfig={chartConfig}
                     fromZero
@@ -211,7 +211,7 @@ export default function OverallStats() {
                   <BarChart
                     style={{ borderRadius: 25 }}
                     data={workoutNameFreq}
-                    width={0.9 * screenWidth}
+                    width={0.95 * screenWidth}
                     height={220}
                     chartConfig={chartConfig}
                     fromZero

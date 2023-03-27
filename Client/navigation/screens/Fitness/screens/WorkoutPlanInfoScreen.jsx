@@ -46,7 +46,7 @@ const styles = {
     borderRadius: 26,
     padding: 10,
     marginVertical: 10,
-    width: screenWidth * 0.8,
+    width: screenWidth * 0.9,
   },
   statsText: {
     fontWeight: 'bold',
@@ -58,7 +58,7 @@ const styles = {
     padding: 5,
   },
   bottomButtons: {
-    width: screenWidth * 0.9,
+    width: screenWidth * 0.95,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     padding: 5,
@@ -69,7 +69,7 @@ const modalStyle = {
   modalMain: {
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: screenWidth * 0.8,
+    width: screenWidth * 0.9,
     borderRadius: 26,
     padding: 20,
     borderWidth: 3,
@@ -221,7 +221,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                 borderRadius: 26,
                 padding: 10,
                 margin: 20,
-                width: screenWidth * 0.8,
+                width: screenWidth * 0.85,
                 borderColor: color,
               }}
             >
@@ -251,7 +251,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
         justifyContent={isLoading ? 'center' : 'flex-start'}
         showsVerticalScrollIndicator={false}
         alignItems="center"
-        style={{ margin: 10, width: screenWidth * 0.9 }}
+        style={{ margin: 10, width: screenWidth * 0.95 }}
       >
 
         {isLoading
@@ -498,7 +498,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                         <View style={[{ justifyContent: 'space-evenly', paddingVertical: 5 }]} key={`${item.PEID}reps${index}`}>
                           <TextInput
                             style={[styles.textInput,
-                              { borderColor: color, width: styles.textInput.width * 0.9 }]}
+                              { borderColor: color, width: styles.textInput.width * 0.95 }]}
                             placeholder="Reps"
                             color={color}
                             placeholderTextColor={color}
@@ -531,7 +531,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                           <TextInput
                             render
                             style={[styles.textInput,
-                              { borderColor: color, width: styles.textInput.width * 0.9 }]}
+                              { borderColor: color, width: styles.textInput.width * 0.95 }]}
                             placeholder="Weight (kg)"
                             color={color}
                             placeholderTextColor={color}

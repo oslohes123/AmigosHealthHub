@@ -13,7 +13,7 @@ const styles = {
 const screenWidth = Dimensions.get('window').width;
 
 export default function SearchBar({
-  placeholder = 'Search', customStyle = styles.search_bar, textAlign = 'center', themeColor = '#000', width = screenWidth * 0.9,
+  placeholder = 'Search', customStyle = styles.search_bar, textAlign = 'center', themeColor = '#000', width = screenWidth * 0.95,
 }) {
   return (
     <TextInput

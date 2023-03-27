@@ -11,6 +11,7 @@ import themeContext from '../../theme/themeContext';
 import CaloriesBurntTodayWidget from '../../components/CaloriesBurntTodayWidget';
 import CaloriesRemaining from '../../components/CaloriesRemaining';
 import WordOfTheDayWidget from '../../components/WordOfTheDayWidget';
+import { StatusBar } from 'expo-status-bar';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -33,7 +34,6 @@ export default function DashboardScreen({ navigation }) {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: background }]}>
-
       <View style={styles.widgetContainer}>
         <TouchableOpacity onPress={() => navigation.navigate('Sleep')}>
           <HoursSleptGraph />
@@ -44,7 +44,7 @@ export default function DashboardScreen({ navigation }) {
         <WordOfTheDayWidget />
       </TouchableOpacity>
 
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: screenWidth * 0.9 }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: screenWidth * 0.95 }}>
         <CaloriesBurntTodayWidget />
         <CaloriesRemaining />
       </View>
