@@ -47,6 +47,7 @@ const formikLoginForm = () => {
             />
             <Text>{props.errors.password}</Text>
             <Button
+              testID='login'
               title="Login"
               onPress={props.handleSubmit}
               disabled={isLoading}
