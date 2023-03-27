@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     height: 400,
   },
   calendar: {
-    width: '95%',
+    width: '100%',
     alignSelf: 'center',
     borderTopEndRadius: 40,
     borderTopLeftRadius: 40,
@@ -134,7 +134,7 @@ export default function FoodHistory({ navigation }) {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-      <ScrollView style={styles.scroll}>
+      <ScrollView style={styles.scroll} justifyContent={viewCalendar ? 'flex-end' : 'flex-start'}>
         <View style={styles.primary}>
           {!selectDay && (
             <Text style={[styles.text, { color: theme.color }]}>
@@ -175,15 +175,7 @@ export default function FoodHistory({ navigation }) {
             />
           </TouchableOpacity>
         )}
-        {viewCalendar && (
-          <Calendar
-            style={styles.calendar}
-            onVisibleMonthsChange={(months) => { console.log('now these months are visible', months); }}
-            onDayPress={(day) => setSelectDay(day.dateString)}
-            maxDate={new Date().toISOString().split('T')[0]}
-            markedDates={markedDate}
-          />
-        )}
+        
         {!viewCalendar && foodData && (
           <View>
             {foodData.length > 0
@@ -213,6 +205,16 @@ export default function FoodHistory({ navigation }) {
                 </View>
               )) : <Text style={styles.foodText}>No food item consumed on this day</Text>}
           </View>
+        )}
+
+        {viewCalendar && (
+          <Calendar
+            style={styles.calendar}
+            onVisibleMonthsChange={(months) => { console.log('now these months are visible', months); }}
+            onDayPress={(day) => setSelectDay(day.dateString)}
+            maxDate={new Date().toISOString().split('T')[0]}
+            markedDates={markedDate}
+          />
         )}
       </ScrollView>
     </View>
