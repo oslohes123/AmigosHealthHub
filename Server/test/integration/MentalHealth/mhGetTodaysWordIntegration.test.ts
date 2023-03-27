@@ -64,18 +64,18 @@ test.after.always('guaranteed cleanup', async (t: any) => {
 test(`GET ${todaysWordRoute} with incorrect ID`, async (t: any) => {
   const response = await request(app)
     .get(todaysWordRoute)
-    .set({ authorization: token, id: wrongUUID })
+    .set({ authorization: token, userid: wrongUUID })
 
   console.log(`incorrectIDError: ${JSON.stringify(response.body)}`)
   t.true(response.status === 400)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
-  t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!' }))
+  t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' }))
 })
 //  })
 test(`GET ${todaysWordRoute} with correct ID`, async (t: any) => {
   const response = await request(app)
     .get(todaysWordRoute)
-    .set({ authorization: token, id: uuid })
+    .set({ authorization: token, userid: uuid })
   const expectedArgs = {
     mssg: 'success',
     word: 'Awful'
