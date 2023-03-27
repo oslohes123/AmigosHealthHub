@@ -211,11 +211,11 @@ export default function DietDashboardScreen({ navigation }) {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: background }]}>
       <View style={{ flexDirection: 'row', justifyContent: 'center', marginHorizontal: 20 }}>
-        <View style={[styles.headerView, { borderColor: color, justifyContent: 'center' }]}>
+        <View testID='goal' style={[styles.headerView, { borderColor: color, justifyContent: 'center' }]}>
           <Text style={[styles.title, { color }]}>Calorie Goal</Text>
           <Text style={[styles.number, { color }, { borderColor: color }]}>{calorieGoal}</Text>
         </View>
-        <View style={[styles.headerView, { borderColor: color }]}>
+        <View testID='remaining' style={[styles.headerView, { borderColor: color }]}>
           <Text style={[styles.title, { color }]}>Calories Remaining</Text>
           <Text style={[styles.number, { color }, { borderColor: color }]}>
             {caloriesRemaining}
@@ -240,10 +240,12 @@ export default function DietDashboardScreen({ navigation }) {
             {
               value: 'Unbranded',
               label: 'Unbranded',
+              testID:'Unbranded',
             },
             {
               value: 'Branded',
               label: 'Branded',
+              testID:'branded',
             },
           ]}
           />
@@ -316,6 +318,7 @@ export default function DietDashboardScreen({ navigation }) {
 
         </View>
           <FAB 
+            testID='foodHistory'
             onPress={pressHandler3} 
             style={{ alignSelf: 'center', width: screenWidth * 0.6, margin: 20 }}
             label="View Food History" 
