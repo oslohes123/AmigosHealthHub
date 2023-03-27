@@ -136,6 +136,7 @@ function SignUpForm() {
             />
             <Text>{props.errors.confirm_password}</Text>
             <Button
+              testID='signUp'
               title="Sign Up"
               onPress={props.handleSubmit}
               disabled={isLoading}
