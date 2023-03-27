@@ -121,7 +121,7 @@ const mockRequest = (sessionData: any) => {
 test('Return last 7 words and their frequencies with incorrect ID', async (t: any) => {
   console.log('In returning last 7 words and their frequencies')
   const req = mockRequest({
-    id: wrongUUID
+    userid: wrongUUID
   })
   const res = mockResponse()
   await wordValues(req as Request, res as Response)
@@ -130,13 +130,13 @@ test('Return last 7 words and their frequencies with incorrect ID', async (t: an
   console.log(`argspassed incorrectID: ${JSON.stringify(argsPassed)}`)
 
   t.true(res.status.calledWith(400))
-  t.true(res.json.calledWith({ mssg: 'Failed to retrieve last 7 words' }))
+  t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' }))
 })
 
 test('Return last 7 words and their frequencies', async (t: any) => {
   console.log('In returning last 7 words and their frequencies with new ID')
   const req = mockRequest({
-    id: uuid
+    userid: uuid
   })
   const res = mockResponse()
   await wordValues(req as Request, res as Response)
@@ -180,7 +180,7 @@ test('Return last 7 words and their frequencies', async (t: any) => {
 test('Getting last 7 faces and their average with an incorrect ID should result in an error', async (t: any) => {
   console.log('In returning last 7 faces and their average')
   const req = mockRequest({
-    id: wrongUUID
+    userid: wrongUUID
   })
   const res = mockResponse()
   await faceValues(req as Request, res as Response)
@@ -189,12 +189,12 @@ test('Getting last 7 faces and their average with an incorrect ID should result 
   console.log(`argspassed incorrectID: ${JSON.stringify(argsPassed)}`)
 
   t.true(res.status.calledWith(400))
-  t.true(res.json.calledWith({ mssg: 'Failed to retrieve last 7 faces' }))
+  t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' }))
 })
 test('Return last 7 faces and their average with new ID', async (t: any) => {
   console.log('In returning last 7 faces and their average with new ID')
   const req = mockRequest({
-    id: uuid
+    userid: uuid
   })
   const res = mockResponse()
   await faceValues(req as Request, res as Response)
@@ -226,7 +226,7 @@ test('Return last 7 faces and their average with new ID', async (t: any) => {
 
 test("Return today's word", async (t: any) => {
   const req = mockRequest({
-    id: uuid
+    userid: uuid
   })
   const res = mockResponse()
   await todaysValue(req as Request, res as Response)
@@ -246,7 +246,7 @@ test("Return today's word", async (t: any) => {
 test('Getting last 7 dates with an incorrect ID should result in an error', async (t: any) => {
   console.log('In returning last 7 dates')
   const req = mockRequest({
-    id: wrongUUID
+    userid: wrongUUID
   })
   const res = mockResponse()
   await dateValues(req as Request, res as Response)
@@ -255,12 +255,12 @@ test('Getting last 7 dates with an incorrect ID should result in an error', asyn
   console.log(`argspasseddatesincorrectID: ${JSON.stringify(argsPassed)}`)
 
   t.true(res.status.calledWith(400))
-  t.true(res.json.calledWith({ mssg: 'Failed to retrieve last 7 dates' }))
+  t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' }))
 })
 
 test('Return last 7 dates', async (t: any) => {
   const req = mockRequest({
-    id: uuid
+    userid: uuid
   })
   const res = mockResponse()
   await dateValues(req as Request, res as Response)

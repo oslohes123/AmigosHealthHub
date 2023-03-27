@@ -39,8 +39,8 @@ export async function checkExistsToday (id: string) {
 }
 // if the user has provided data already, insert in a new row in the data table, otherwise update the most recent value if the user has already submitted data
 export const insertMentalData = async (req: Request, res: Response) => {
-  const { face, word, id } = req.body
-  if (!id) {
+  const { face, word, userid } = req.body
+  if (!userid) {
     return res.status(400).json({ mssg: 'You must be logged in to submit data' })
   }
   if (word === '') {
@@ -49,8 +49,8 @@ export const insertMentalData = async (req: Request, res: Response) => {
   if (face < 1 || face > 5) {
     return res.status(400).json({ mssg: 'Face value must be between 1-5' })
   }
-  if (await checkExistsToday(id)) {
-    const { data }: any = await databaseQuery.selectWhere(supabase, 'Mental Health', 'user_id', id, 'MH_ID')
+  if (await checkExistsToday(userid)) {
+    const { data }: any = await databaseQuery.selectWhere(supabase, 'Mental Health', 'user_id', userid, 'MH_ID')
     const recentID = (data[data.length - 1].MH_ID)
     const { error }: any = await databaseQuery.update(supabase, 'Mental Health', {
       face_id: face,
@@ -66,7 +66,7 @@ export const insertMentalData = async (req: Request, res: Response) => {
   }
   else {
     const { error }: any = await databaseQuery.insert(supabase, 'Mental Health', {
-      user_id: id,
+      user_id: userid,
       face_id: face,
       todays_word: word,
       created_at: getToday()

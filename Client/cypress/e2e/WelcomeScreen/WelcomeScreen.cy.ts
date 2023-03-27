@@ -76,7 +76,10 @@ it('should be able to fill login form', () => {
   cy.contains('apple')
     .click()
     
-  cy.contains('Add Food')
+  // cy.contains('Add Food')
+  //   .click()
+
+  cy.get('[data-testid="add"]')
     .click()
 
   cy.get('input[placeholder="Find food..."]')

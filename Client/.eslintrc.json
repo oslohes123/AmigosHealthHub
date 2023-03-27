@@ -33,6 +33,7 @@
         "react/prefer-stateless-function": "off",
         "consistent-return": "off",
         "no-shadow": "off",
-        "react/style-prop-object": "off"
+        "react/style-prop-object": "off",
+        "react/no-unstable-nested-components": "off"
     }
 }
