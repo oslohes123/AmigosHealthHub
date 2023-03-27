@@ -39,29 +39,33 @@ const styles = StyleSheet.create({
     height: '10%',
     alignSelf: 'center',
     marginTop: '9%',
-    backgroundColor: '#3eda9b',
+    backgroundColor: '#c2e7fe',
     alignItems: 'center',
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
-    borderWidth: 1,
+    borderWidth: 3,
+    borderBottomWidth: 1.5
   },
   middleView: {
     flexDirection: 'row',
     width: '90%',
     height: '10%',
     alignSelf: 'center',
-    backgroundColor: '#3eda9b',
+    backgroundColor: '#c2e7fe',
     alignItems: 'center',
-    borderWidth: 1,
+    borderWidth: 3,
+    borderTopWidth: 1.5,
+    borderBottomWidth: 1.5
   },
   healthView: {
     flexDirection: 'row',
     width: '90%',
     height: '10%',
     alignSelf: 'center',
-    backgroundColor: '#3eda9b',
+    backgroundColor: '#c2e7fe',
     alignItems: 'center',
-    borderWidth: 1,
+    borderWidth: 3,
+    borderTopWidth: 1.5,
     borderBottomLeftRadius: 15,
     borderBottomRightRadius: 15,
   },
@@ -71,7 +75,7 @@ const styles = StyleSheet.create({
     height: '15%',
     alignSelf: 'center',
     marginTop: '9%',
-    backgroundColor: '#3eda9b',
+    backgroundColor: '#c2e7fe',
     alignItems: 'center',
     borderRadius: 15,
     borderWidth: 3,
@@ -90,7 +94,7 @@ const styles = StyleSheet.create({
     width: '35%',
     height: '10%',
     alignSelf: 'center',
-    backgroundColor: '#3eda9b',
+    backgroundColor: '#c2e7fe',
     alignItems: 'center',
     borderRadius: 15,
     borderWidth: 3,
@@ -147,40 +151,40 @@ export default function SettingsDashboard({ navigation }) {
 
       <TouchableOpacity style={styles.profileView} onPress={pressHandler5}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '95%' }}>
-          <Ionicons name="person-circle-outline" size={80} color="black" />
-          <View>
+          <Ionicons style={{alignSelf: 'center' }} name="person-circle-outline" size={80} color="black" />
+          <View style={{ alignSelf: 'center', paddingLeft: 5 }}>
             <Text style={styles.username}>{user.firstName}</Text>
             <Text style={styles.profileText}>{user.email}</Text>
           </View>
-          <Ionicons name="chevron-forward-outline" size={32} color="black" />
+          <Ionicons style={{alignSelf: 'center' }} name="chevron-forward-outline" size={32} color="black" />
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.dietView} onPress={pressHandler1}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '95%' }}>
           <Text style={styles.navText}>Diet</Text>
-          <Ionicons name="chevron-forward-outline" size={32} color="black" />
+          <Ionicons style={{alignSelf: 'center' }} name="chevron-forward-outline" size={32} color="black" />
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.middleView} onPress={pressHandler3}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '95%' }}>
           <Text style={styles.navText}>Sleep</Text>
-          <Ionicons name="chevron-forward-outline" size={32} color="black" />
+          <Ionicons style={{alignSelf: 'center' }} name="chevron-forward-outline" size={32} color="black" />
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.middleView} onPress={pressHandler2}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '95%' }}>
           <Text style={styles.navText}>Exercise</Text>
-          <Ionicons name="chevron-forward-outline" size={32} color="black" />
+          <Ionicons style={{alignSelf: 'center' }} name="chevron-forward-outline" size={32} color="black" />
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.healthView} onPress={pressHandler4}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '95%' }}>
           <Text style={styles.navText}>Health</Text>
-          <Ionicons name="chevron-forward-outline" size={32} color="black" />
+          <Ionicons style={{alignSelf: 'center' }} name="chevron-forward-outline" size={32} color="black" />
         </View>
       </TouchableOpacity>
 
