@@ -5,7 +5,8 @@ import {
 import Cloud from 'react-native-word-cloud';
 import { LineChart } from 'react-native-chart-kit';
 // npx expo install react-native-svg
-import React, { useEffect, useState, Component } from 'react';
+import React, { useEffect, useState, Component, useContext } from 'react';
+import themeContext from '../../../theme/themeContext';
 import useGetFaceValues from '../hooks/useGetFaceValues';
 import useGetWordValues from '../hooks/useGetWordValues';
 import useGetDateValues from '../hooks/useGetDateValues';
@@ -20,7 +21,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-export default function outputMentalGraphs() {
+export default function OutputMentalGraphs() {
+  const { theme, background, secondary, color } = useContext(themeContext);
   const [getFaceValuesArray, setFaceValuesArray] = useState([1]);
   const [getDateValuesArray, setDateValuesArray] = useState([0]);
   const [getWordValuesArray, setWordValuesArray] = useState([{ word: '', freq: 0, colour: '#ffffff' }]);
@@ -82,11 +84,11 @@ export default function outputMentalGraphs() {
   }, []);
   // components for the screen
   return (
-    <View style={styles.container}>
-      <Text>Graph for the Past Submissions (max 7)</Text>
+    <View style={[styles.container, { backgroundColor: background }]}>
+      <Text style={{ color, fontWeight: 'bold', margin: 10 }}>Past Submissions (max 7)</Text>
       <LineChart
         data={line}
-        width={screenWidth}
+        width={screenWidth * 0.9}
         height={220}
         chartConfig={{
           backgroundColor: '#e26a00',
@@ -104,7 +106,7 @@ export default function outputMentalGraphs() {
           borderRadius: 16,
         }}
       />
-      <Text>WordCloud for the Past Submissions (max 7)</Text>
+      <Text style={{ color, fontWeight: 'bold', margin: 10 }}>WordCloud for the Past Submissions (max 7)</Text>
       <WordCloud />
       <StatusBar style="auto" />
     </View>

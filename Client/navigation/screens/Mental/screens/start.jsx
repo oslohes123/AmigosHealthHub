@@ -1,71 +1,77 @@
 import {
-  StyleSheet, Text, View, TouchableOpacity,
+  StyleSheet, Text, View, TouchableOpacity, Dimensions,
 } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
+import themeContext from '../../../theme/themeContext';
+
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
 
 export default function App({ navigation }) {
+  const { background } = useContext(themeContext);
   const inputScreenButton = () => {
     navigation.navigate('ReviewYourDay');
   };
   const outputScreenButton = () => {
     navigation.navigate('ReviewYourPast');
   };
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: '#fff',
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: 'flex-end',
     },
     widget: {
-      paddingHorizontal: '15%',
-      paddingVertical: '10%',
+      padding: 20,
       borderRadius: 25,
-      width: '80%',
+      width: screenWidth * 0.43,
+      height: screenHeight * 0.2,
       alignSelf: 'center',
-      marginTop: '5%',
       alignItems: 'center',
     },
     header: {
-      color: 'white',
+      color: '#fff',
       fontWeight: 'bold',
-      fontSize: 25,
+      fontSize: 24,
+      textAlign: 'center',
     },
   });
+
   // components for the screen
   return (
-    <View style={styles.container}>
-      {/* <Button title="Review Your Day" onPress={inputScreenButton}></Button>
-    <Button title="Review Your Past" onPress={outputScreenButton}></Button>       */}
+    <View style={[styles.container, { backgroundColor: background }]}>
+      <View style={{ flexDirection: 'row', width: screenWidth * 0.9, justifyContent: 'space-between', marginBottom: 20 }}>
+        <TouchableOpacity onPress={() => navigation.navigate("Mental History")}>
+          <LinearGradient
+            colors={['blue', 'grey']}
+            style={styles.widget}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+          >
+            <Text style={styles.header}>
+              Mental History
 
-      <TouchableOpacity onPress={inputScreenButton}>
-        <LinearGradient
-          colors={['blue', 'grey']}
-          style={styles.widget}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-        >
-          <Text style={styles.header}>
-            Review Your Day
+            </Text>
+          </LinearGradient>
+        </TouchableOpacity>
 
-          </Text>
-        </LinearGradient>
-      </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Review Your Day")}>
+          <LinearGradient
+            colors={['blue', 'grey']}
+            style={styles.widget}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+          >
+            <Text style={styles.header}>
+              Review Your Day
 
-      <TouchableOpacity onPress={outputScreenButton}>
-        <LinearGradient
-          colors={['blue', 'grey']}
-          style={styles.widget}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-        >
-          <Text style={styles.header}>
-            Review Your Past
-
-          </Text>
-        </LinearGradient>
-      </TouchableOpacity>
+            </Text>
+          </LinearGradient>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
