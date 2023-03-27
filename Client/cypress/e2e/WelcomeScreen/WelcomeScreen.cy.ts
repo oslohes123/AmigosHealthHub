@@ -54,10 +54,38 @@ it('should be able to fill sign up form', () => {
 })
 
 it('should be able to fill login form', () => {
+  
   cy.contains('Log in')
     .click()
-  cy.get('input[placeholder="Email"]').click().type('shazeen@gmail.com')
-  cy.get('input[placeholder="Password"]').click().type('Password123!')
-  cy.contains('Login').click({force: true})
-  // cy.get('span.css-textHasAncestor-1qaijid').eq(0).click();
+  
+  cy.get('input[placeholder="Email"]')
+    .click().type('shazeen@gmail.com')
+  cy.get('input[placeholder="Password"]')
+    .click().type('Password123!')
+  
+  cy.contains('Login')
+    .click({force: true})
+  
+  cy.get('span.css-textHasAncestor-1qaijid')
+    .eq(2).click();
+
+  cy.get('input[placeholder="Find food..."]')
+    .click()
+    .type('apple', {force: true})
+
+  cy.contains('apple')
+    .click()
+    
+  cy.contains('Add Food')
+    .click()
+
+  cy.get('input[placeholder="Find food..."]')
+    .click()
+    .clear({force: true})
+
+  cy.get('svg').eq(0).click()
+
+  cy.contains('Nutrients Consumed')
+  //cy.get('.css-view-175oi2r')
+  //cy.go('back')
 })

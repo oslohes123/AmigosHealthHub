@@ -24,11 +24,11 @@ const styles = StyleSheet.create({
   },
   button: {
     flexDirection: 'row',
-    width: '90%',
+    width: '95%',
     height: '10%',
     alignSelf: 'center',
     margin: '2%',
-    backgroundColor: '#3eda9b',
+    backgroundColor: '#c2e7fe',
     alignItems: 'center',
     borderRadius: 15,
     borderWidth: 1,

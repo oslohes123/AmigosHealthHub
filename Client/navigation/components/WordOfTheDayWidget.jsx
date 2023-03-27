@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     padding: 20,
     borderRadius: 25,
-    width: screenWidth * 0.9,
+    width: screenWidth * 0.95,
     height: screenHeight * 0.2,
     justifyContent: 'space-between',
   },
