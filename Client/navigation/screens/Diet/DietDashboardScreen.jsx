@@ -77,15 +77,14 @@ const styles = StyleSheet.create({
   },
   chart: {
     alignSelf: 'center',
-    width: '90%',
+    width: '85%',
   },
   pieWidget: {
-    backgroundColor: '#c2e7fe',
+    backgroundColor: '#c3e7fe',
     borderRadius: 25,
     alignSelf: 'center',
     padding: 5,
-    height: screenHeight * 0.3,
-    margin: 20,
+    marginVertical: 10
   },
   title: {
     textAlign: 'center',
@@ -251,26 +250,24 @@ export default function DietDashboardScreen({ navigation }) {
         </View>
 
       <View>
-        <View style={styles.chart}>
           {foodInput.length <= 2 && pieChartData.length > 0 && (
              
-              <TouchableOpacity style={styles.pieWidget} onPress={pieChartPress}>
-                <PieChart
-                  data={pieChartData}
-                  width={0.9 * screenWidth}
-                  height={screenHeight * 0.3}
-                  chartConfig={{
-                    color: () => 'black',
-                  }}
-                  accessor="amount"
-                  backgroundColor="transparent"
-                />
-              </TouchableOpacity>
+             <TouchableOpacity style={styles.pieWidget} onPress={pieChartPress}>
+             <PieChart
+               data={pieChartData}
+               width={0.9 * screenWidth}
+               height={210}
+               chartConfig={{
+                 color: () => 'black',
+               }}
+               accessor="amount"
+               backgroundColor="transparent"
+             />
+           </TouchableOpacity>
             )}
             {foodInput.length === 0 && pieChartData.length === 0 && (
              <Text style={[styles.info, {color: color}]}>Add Food to view Diet Info</Text>
             )}
-        </View>
 
         <View style={{flexDirection: 'row'}}>
         {foodInput.length > 2
