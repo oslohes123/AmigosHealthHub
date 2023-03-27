@@ -1,6 +1,6 @@
 // Navigation stack to keep track of pages visited, so from input/output screens to dashboard
 import { createStackNavigator } from '@react-navigation/stack';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import themeContext from '../../../theme/themeContext';
 import Start from '../screens/start';
 import RateMentalHealthForm from '../screens/mentalHealthForm';

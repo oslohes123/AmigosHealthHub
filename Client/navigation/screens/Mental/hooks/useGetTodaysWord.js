@@ -36,7 +36,6 @@ export default function useGetTodaysWord() {
       },
     );
     const json = await response.json();
-    console.log(`json ln 30: ${JSON.stringify(json)}`);
     if (!response.ok) {
       setIsLoading(false);
       setError(json.mssg);
