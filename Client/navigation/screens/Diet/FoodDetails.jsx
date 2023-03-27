@@ -141,44 +141,44 @@ export default function FoodDetails({ route, navigation }) {
   return (
     // eslint-disable-next-line react/destructuring-assignment
     <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
-      <Text style={[styles.header, { color: theme.color }]}>{name}</Text>
+      <Text style={[styles.header, { color: theme.color, margin: 10 }]}>{name}</Text>
       <ScrollView style={{ maxHeight: screenHeight * 0.6 }}>
         <TouchableWithoutFeedback>
           <>
           <TouchableWithoutFeedback>
             <View style={[styles.box, {borderColor: theme.color} ]}>
               <Text style={[styles.text, { color: theme.color }]}>Calories</Text>
-              <Text style={[styles.values, { color: theme.color }]}>{calories}</Text>
+              <Text style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{calories}</Text>
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback>
             <View style={[ styles.box, {borderColor: theme.color} ]}>
               <Text style={[styles.text, { color: theme.color }]}>Protein</Text>
-              <Text style={[styles.values, { color: theme.color }]}>{Protein}</Text>
+              <Text style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Protein}</Text>
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback>
             <View style={[ styles.box, {borderColor: theme.color} ]}>
               <Text style={[styles.text, { color: theme.color }]}>Carbs</Text>
-              <Text style={[styles.values, { color: theme.color }]}>{Carbs}</Text>
+              <Text style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Carbs}</Text>
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback>
             <View style={[ styles.box, {borderColor: theme.color} ]}>
               <Text style={[styles.text, { color: theme.color }]}>Fat</Text>
-              <Text style={[styles.values, { color: theme.color }]}>{Fat}</Text>
+              <Text style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Fat}</Text>
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback>
             <View style={[ styles.box, {borderColor: theme.color} ]}>
               <Text style={[styles.text, { color: theme.color }]}>Sugars</Text>
-              <Text style={[styles.values, { color: theme.color }]}>{Sugars}</Text>
+              <Text style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Sugars}</Text>
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback>
             <View style={[ styles.box, {borderColor: theme.color} ]}>
               <Text style={[styles.text, { color: theme.color }]}>Fibre</Text>
-              <Text style={[styles.values, { color: theme.color }]}>{Fiber}</Text>
+              <Text style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Fiber}</Text>
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback>
@@ -186,7 +186,7 @@ export default function FoodDetails({ route, navigation }) {
               <Text style={[styles.text, { color: theme.color }]}>Serving units</Text>
               <View style={styles.dropDownContainer}>
                 <TouchableOpacity
-                  style={[styles.button, { backgroundColor: theme.background, borderWidth: 2, borderColor: theme.color, borderRadius: 20 }]}
+                  style={[styles.button, { backgroundColor: theme.background }]}
                   onPress={() => setVisible(true)}
                 >
                   <Text style={[{ color: theme.color, alignSelf: 'center' }]}>{selectedServingUnit || 'Select an option'}</Text>
