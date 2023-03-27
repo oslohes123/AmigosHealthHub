@@ -101,7 +101,7 @@ export default function SettingsDashboard({ navigation }) {
   const { user } = useAuthContext();
 
   const theme = useContext(themeContext);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
 
   const { logout } = useLogout();
 
