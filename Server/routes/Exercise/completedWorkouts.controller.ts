@@ -119,6 +119,7 @@ export const getAllCompletedWorkouts = async (req: Request, res: Response) => {
         }
       }
     }
+
     console.log(`sortedCompletedWorkouts: ${JSON.stringify(sortedCompletedWorkouts)}`)
     console.log(`After mod completedWorkouts: ${JSON.stringify(data)}`)
     // const workoutsNamesAndDates = data
