@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   widget: {
     padding: 20,
     borderRadius: 25,
-    width: screenWidth * 0.9,
+    width: screenWidth * 0.95,
     height: screenHeight * 0.2,
     alignSelf: 'center',
     marginBottom: 20,

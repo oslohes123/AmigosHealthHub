@@ -177,7 +177,7 @@ export default function ExerciseInfoScreen({ route, navigation }) {
               borderRadius: 26,
               padding: 10,
               margin: 10,
-              width: screenWidth * 0.9,
+              width: screenWidth * 0.95,
               borderColor: color,
             }}
           >
@@ -217,7 +217,7 @@ export default function ExerciseInfoScreen({ route, navigation }) {
               borderRadius: 26,
               padding: 10,
               margin: 10,
-              width: screenWidth * 0.9,
+              width: screenWidth * 0.95,
               borderColor: color,
             }}
           >
@@ -295,7 +295,7 @@ export default function ExerciseInfoScreen({ route, navigation }) {
           <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <View
               style={{
-                width: screenWidth * 0.8,
+                width: screenWidth * 0.95,
                 flexDirection: 'row',
                 justifyContent: 'space-evenly',
                 alignContent: 'center',

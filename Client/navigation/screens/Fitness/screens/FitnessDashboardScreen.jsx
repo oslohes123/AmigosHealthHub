@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     padding: 20,
     borderRadius: 25,
-    width: screenWidth * 0.43,
+    width: screenWidth * 0.45,
     height: screenHeight * 0.2,
     alignItems: 'center',
     justifyContent: 'space-evenly',
@@ -83,7 +83,7 @@ export default function FitnessScreen({ navigation }) {
       >
         <LinearGradient
           colors={['blue', 'grey']}
-          style={[styles.widget, { width: screenWidth * 0.9 }]}
+          style={[styles.widget, { width: screenWidth * 0.95 }]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
         >
@@ -96,7 +96,7 @@ export default function FitnessScreen({ navigation }) {
         </LinearGradient>
       </TouchableOpacity>
 
-      <View style={{ flexDirection: 'row', width: screenWidth * 0.9, justifyContent: 'space-between', marginBottom: 10 }}>
+      <View style={{ flexDirection: 'row', width: screenWidth * 0.95, justifyContent: 'space-between', marginBottom: 10 }}>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('Workout History');

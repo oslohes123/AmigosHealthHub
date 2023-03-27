@@ -256,7 +256,7 @@ export default function Graph({ navigation }) {
               <LineChart
                 style={{ borderRadius: 15 }}
                 data={weightedData}
-                width={screenWidth * 0.9}
+                width={screenWidth * 0.95}
                 height={280}
                 yAxisSuffix=" kg"
                 chartConfig={chartConfig}
@@ -277,7 +277,7 @@ export default function Graph({ navigation }) {
               <LineChart
                 style={{ borderRadius: 25 }}
                 data={durationData}
-                width={screenWidth * 0.9}
+                width={screenWidth * 0.95}
                 height={220}
                 chartConfig={chartConfig}
                 fromZero
@@ -298,7 +298,7 @@ export default function Graph({ navigation }) {
               <LineChart
                 style={{ borderRadius: 25 }}
                 data={distanceData}
-                width={screenWidth * 0.9}
+                width={screenWidth * 0.95}
                 height={220}
                 chartConfig={chartConfig}
                 fromZero
@@ -319,7 +319,7 @@ export default function Graph({ navigation }) {
               <LineChart
                 style={{ borderRadius: 25 }}
                 data={caloriesData}
-                width={screenWidth * 0.9}
+                width={screenWidth * 0.95}
                 height={220}
                 chartConfig={chartConfig}
                 fromZero

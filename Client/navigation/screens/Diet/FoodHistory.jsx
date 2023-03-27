@@ -22,9 +22,11 @@ const styles = StyleSheet.create({
   primary: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     marginHorizontal: '15%',
     marginVertical: '5%',
+    width: '95%',
+    alignSelf: 'center'
   },
   text: {
     fontSize: 20,
@@ -40,24 +42,25 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 25,
     alignSelf: 'center',
-    marginVertical: '5%',
-    backgroundColor: '#3eda9b',
-    width: '60%',
+    marginVertical: 10,
+    backgroundColor: '#c2e7fe',
+    width: '95%',
   },
   icon: {
-    marginLeft: '4%',
+    margin: 5,
   },
   pieWidget: {
-    backgroundColor: '#3eda9b',
+    backgroundColor: '#c3e7fe',
     borderRadius: 25,
     alignSelf: 'center',
     padding: 5,
+    marginVertical: 10
   },
   scroll: {
     height: 400,
   },
   calendar: {
-    width: '90%',
+    width: '100%',
     alignSelf: 'center',
     borderTopEndRadius: 40,
     borderTopLeftRadius: 40,
@@ -131,7 +134,7 @@ export default function FoodHistory({ navigation }) {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-      <ScrollView style={styles.scroll}>
+      <ScrollView style={styles.scroll} justifyContent={viewCalendar ? 'flex-end' : 'flex-start'}>
         <View style={styles.primary}>
           {!selectDay && (
             <Text style={[styles.text, { color: theme.color }]}>
@@ -139,15 +142,15 @@ export default function FoodHistory({ navigation }) {
             </Text>
           )}
           {selectDay && (
-            <Text style={[styles.text, { color: theme.color }, { borderColor: theme.color }]}>
+            <Text style={[styles.text, { color: theme.color, borderColor: theme.color, width: screenWidth * 0.7 }]}>
               Date:
               {' '}
               {selectDay}
-              {' '}
+              {'\n'}
               Calorie-goal:
               {' '}
               {calorieGoal}
-              {' '}
+              {'\n'}
               Calories-remaining:
               {' '}
               {caloriesRemaining}
@@ -162,7 +165,7 @@ export default function FoodHistory({ navigation }) {
           <TouchableOpacity style={styles.pieWidget} onPress={pressHandler}>
             <PieChart
               data={pieChartData}
-              width={0.9 * screenWidth}
+              width={0.95 * screenWidth}
               height={210}
               chartConfig={{
                 color: () => 'black',
@@ -172,15 +175,7 @@ export default function FoodHistory({ navigation }) {
             />
           </TouchableOpacity>
         )}
-        {viewCalendar && (
-          <Calendar
-            style={styles.calendar}
-            onVisibleMonthsChange={(months) => { console.log('now these months are visible', months); }}
-            onDayPress={(day) => setSelectDay(day.dateString)}
-            maxDate={new Date().toISOString().split('T')[0]}
-            markedDates={markedDate}
-          />
-        )}
+        
         {!viewCalendar && foodData && (
           <View>
             {foodData.length > 0
@@ -210,6 +205,16 @@ export default function FoodHistory({ navigation }) {
                 </View>
               )) : <Text style={styles.foodText}>No food item consumed on this day</Text>}
           </View>
+        )}
+
+        {viewCalendar && (
+          <Calendar
+            style={styles.calendar}
+            onVisibleMonthsChange={(months) => { console.log('now these months are visible', months); }}
+            onDayPress={(day) => setSelectDay(day.dateString)}
+            maxDate={new Date().toISOString().split('T')[0]}
+            markedDates={markedDate}
+          />
         )}
       </ScrollView>
     </View>
