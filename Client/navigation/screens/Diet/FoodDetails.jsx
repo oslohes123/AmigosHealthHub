@@ -2,65 +2,72 @@
 /* eslint-disable no-undef */
 import React, { useCallback, useState, useContext } from 'react';
 import {
-  StyleSheet, View, Text, TextInput, Modal, TouchableOpacity,
+  StyleSheet, View, Text, TextInput, Modal, TouchableOpacity, SafeAreaView, Dimensions, TouchableWithoutFeedback, ScrollView
 } from 'react-native';
 import GreenButton from '../../components/GreenButton';
 import { useAuthContext } from '../Authentication/context/AuthContext';
 import { addTrackedFood } from './hooks/Food';
 import themeContext from '../../theme/themeContext';
+import { FAB } from 'react-native-paper';
+
+const screenWidth = Dimensions.get('window').width
+const screenHeight = Dimensions.get('window').height
 
 const styles = StyleSheet.create({
   input: {
     fontSize: 16,
     borderWidth: 2,
-    padding: '3%',
-    width: '30%',
-    borderRadius: 25,
-    marginRight: '5%',
+    padding: 5,
+    width: screenWidth * 0.25,
+    borderRadius: 20,
     textAlign: 'center',
     bottom: 5,
   },
   container: {
-    flex: 2,
+    flex: 1, 
+    justifyContent: 'space-between'
   },
   header: {
     fontSize: 30,
     marginTop: 20,
     alignSelf: 'center',
     fontWeight: 'bold',
+    width: screenWidth * 0.9
   },
   box: {
     flexDirection: 'row',
-    marginTop: 17,
-    marginLeft: 20,
+    margin: 10,
+    justifyContent: 'space-between'
   },
   text: {
     fontSize: 24,
+    alignSelf: 'center'
   },
   values: {
     fontSize: 20,
     borderWidth: 2,
-    borderColor: 'grey',
     padding: 5,
+    textAlign: 'center',
     borderRadius: 10,
-    position: 'absolute',
-    right: 20,
+    width: screenWidth * 0.25,
   },
   buttonContainer: {
-    marginTop: 10,
+    margin: 20,
+    width: screenWidth * 0.6,
+    alignSelf: 'center'
   },
   dropDownContainer: {
     borderWidth: 2,
     borderColor: 'white',
-    borderRadius: 15,
+    borderRadius: 20,
     overflow: 'hidden',
-    marginRight: '5%',
     width: '30%',
   },
   button: {
+    width: screenWidth * 0.25,
     height: 40,
     justifyContent: 'center',
-    paddingLeft: 10,
+    alignSelf: 'center',
   },
   modal: {
     flex: 1,
@@ -133,105 +140,127 @@ export default function FoodDetails({ route, navigation }) {
 
   return (
     // eslint-disable-next-line react/destructuring-assignment
-    <View style={[styles.container, { backgroundColor: theme.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
       <Text style={[styles.header, { color: theme.color }]}>{name}</Text>
-      <View style={styles.box}>
-        <Text style={[styles.text, { color: theme.color }]}>Calories</Text>
-        <Text style={[styles.values, { color: theme.color }]}>{calories}</Text>
-      </View>
-      <View style={styles.box}>
-        <Text style={[styles.text, { color: theme.color }]}>Protein</Text>
-        <Text style={[styles.values, { color: theme.color }]}>{Protein}</Text>
-      </View>
-      <View style={styles.box}>
-        <Text style={[styles.text, { color: theme.color }]}>Carbs</Text>
-        <Text style={[styles.values, { color: theme.color }]}>{Carbs}</Text>
-      </View>
-      <View style={styles.box}>
-        <Text style={[styles.text, { color: theme.color }]}>Fat</Text>
-        <Text style={[styles.values, { color: theme.color }]}>{Fat}</Text>
-      </View>
-      <View style={styles.box}>
-        <Text style={[styles.text, { color: theme.color }]}>Sugars</Text>
-        <Text style={[styles.values, { color: theme.color }]}>{Sugars}</Text>
-      </View>
-      <View style={styles.box}>
-        <Text style={[styles.text, { color: theme.color }]}>Fibre</Text>
-        <Text style={[styles.values, { color: theme.color }]}>{Fiber}</Text>
-      </View>
-      <View style={styles.box} justifyContent="space-between">
-        <Text style={[styles.text, { color: theme.color }]}>Serving units</Text>
-        <View style={styles.dropDownContainer}>
-          <TouchableOpacity
-            style={[styles.button, { backgroundColor: theme.color }]}
-            onPress={() => setVisible(true)}
-          >
-            <Text style={[{ color: theme.background }]}>{selectedServingUnit || 'Select an option'}</Text>
-          </TouchableOpacity>
-          <Modal
-            visible={visible}
-            animationType="fade"
-            transparent
-            onRequestClose={() => setVisible(false)}
-          >
-            <View style={styles.modal}>
-              {altMeasures ? altMeasures.map((altMeasure, index) => (
-                <TouchableOpacity
-                  key={index}
-                  style={styles.modalButton}
-                  onPress={() => {
-                    setSelectedServingUnit(altMeasure.measure);
-                    setVisible(false);
-                  }}
-                >
-                  <Text>{altMeasure.measure}</Text>
-                </TouchableOpacity>
-              ))
-
-                : (
-                  <TouchableOpacity
-                    key="undefined"
-                    style={styles.modalButton}
-                    onPress={() => {
-                      setVisible(false);
-                    }}
-                  >
-                    <Text>{selectedServingUnit}</Text>
-                  </TouchableOpacity>
-                )}
+      <ScrollView style={{ maxHeight: screenHeight * 0.6 }}>
+        <TouchableWithoutFeedback>
+          <>
+          <TouchableWithoutFeedback>
+            <View style={[styles.box, {borderColor: theme.color} ]}>
+              <Text style={[styles.text, { color: theme.color }]}>Calories</Text>
+              <Text style={[styles.values, { color: theme.color }]}>{calories}</Text>
             </View>
-          </Modal>
-        </View>
-      </View>
-
-      <View style={styles.box} justifyContent="space-between">
-        <Text style={[styles.text, { color: theme.color }]}>Serving Quantity</Text>
-        <TextInput
-          defaultValue={quantity}
-          placeholderTextColor={theme.color}
-          color={theme.color}
-          style={[styles.input, { borderColor: theme.color }]}
-          keyboardType="numeric"
-          clearButtonMode="always"
-          onChangeText={(input) => setQuantity(input)}
-        />
-      </View>
-      {Brand ? (
-        <View style={styles.box}>
-          <Text style={[styles.text, { color: theme.color }]}>Brand name</Text>
-          <Text style={[styles.values, { color: theme.color }]}>{Brand}</Text>
-        </View>
-      ) : null}
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback>
+            <View style={[ styles.box, {borderColor: theme.color} ]}>
+              <Text style={[styles.text, { color: theme.color }]}>Protein</Text>
+              <Text style={[styles.values, { color: theme.color }]}>{Protein}</Text>
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback>
+            <View style={[ styles.box, {borderColor: theme.color} ]}>
+              <Text style={[styles.text, { color: theme.color }]}>Carbs</Text>
+              <Text style={[styles.values, { color: theme.color }]}>{Carbs}</Text>
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback>
+            <View style={[ styles.box, {borderColor: theme.color} ]}>
+              <Text style={[styles.text, { color: theme.color }]}>Fat</Text>
+              <Text style={[styles.values, { color: theme.color }]}>{Fat}</Text>
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback>
+            <View style={[ styles.box, {borderColor: theme.color} ]}>
+              <Text style={[styles.text, { color: theme.color }]}>Sugars</Text>
+              <Text style={[styles.values, { color: theme.color }]}>{Sugars}</Text>
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback>
+            <View style={[ styles.box, {borderColor: theme.color} ]}>
+              <Text style={[styles.text, { color: theme.color }]}>Fibre</Text>
+              <Text style={[styles.values, { color: theme.color }]}>{Fiber}</Text>
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback>
+            <View style={[ styles.box, {borderColor: theme.color} ]} justifyContent="space-between">
+              <Text style={[styles.text, { color: theme.color }]}>Serving units</Text>
+              <View style={styles.dropDownContainer}>
+                <TouchableOpacity
+                  style={[styles.button, { backgroundColor: theme.background, borderWidth: 2, borderColor: theme.color, borderRadius: 20 }]}
+                  onPress={() => setVisible(true)}
+                >
+                  <Text style={[{ color: theme.color, alignSelf: 'center' }]}>{selectedServingUnit || 'Select an option'}</Text>
+                </TouchableOpacity>
+                <Modal
+                  visible={visible}
+                  animationType="fade"
+                  transparent
+                  onRequestClose={() => setVisible(false)}
+                >
+                  <View style={styles.modal}>
+                    {altMeasures ? altMeasures.map((altMeasure, index) => (
+                      <TouchableOpacity
+                      key={index}
+                      style={styles.modalButton}
+                      onPress={() => {
+                        setSelectedServingUnit(altMeasure.measure);
+                        setVisible(false);
+                      }}
+                      >
+                        <Text>{altMeasure.measure}</Text>
+                      </TouchableOpacity>
+                    ))
+                    
+                    : (
+                      <TouchableOpacity
+                      key="undefined"
+                      style={styles.modalButton}
+                      onPress={() => {
+                        setVisible(false);
+                      }}
+                      >
+                          <Text>{selectedServingUnit}</Text>
+                        </TouchableOpacity>
+                      )}
+                  </View>
+                </Modal>
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback>
+            <View style={[ styles.box, {borderColor: theme.color} ]} justifyContent="space-between">
+              <Text style={[styles.text, { color: theme.color }]}>Serving Quantity</Text>
+              <TextInput
+                defaultValue={quantity}
+                placeholderTextColor={theme.color}
+                color={theme.color}
+                style={[styles.input, { borderColor: theme.color }]}
+                keyboardType="numeric"
+                clearButtonMode="always"
+                onChangeText={(input) => setQuantity(input)}
+                />
+            </View>
+          </TouchableWithoutFeedback>
+          {Brand ? (
+            <TouchableWithoutFeedback>
+              <View style={[ styles.box, {borderColor: theme.color} ]}>
+                <Text style={[styles.text, { color: theme.color }]}>Brand name</Text>
+                <Text style={[styles.values, { color: theme.color }]}>{Brand}</Text>
+              </View>
+            </TouchableWithoutFeedback>
+          ) : null}
+          </>
+        </TouchableWithoutFeedback>
+      </ScrollView>
       <View style={styles.buttonContainer}>
-        <GreenButton
-          buttonFunction={save}
-          iconName="add-outline"
-          fontSize={23}
-          height={70}
-          width={200}
-          text="Add Food"
+        <FAB
+          onPress={save}
+          icon="check"
+          alignSelf={'center'}
+          width={screenWidth * 0.6}
+          label="Add Food"
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

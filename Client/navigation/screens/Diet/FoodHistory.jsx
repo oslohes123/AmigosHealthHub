@@ -22,9 +22,11 @@ const styles = StyleSheet.create({
   primary: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     marginHorizontal: '15%',
     marginVertical: '5%',
+    width: '90%',
+    alignSelf: 'center'
   },
   text: {
     fontSize: 20,
@@ -40,18 +42,19 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 25,
     alignSelf: 'center',
-    marginVertical: '5%',
-    backgroundColor: '#3eda9b',
-    width: '60%',
+    marginVertical: 10,
+    backgroundColor: '#c2e7fe',
+    width: '90%',
   },
   icon: {
-    marginLeft: '4%',
+    margin: 5,
   },
   pieWidget: {
-    backgroundColor: '#3eda9b',
+    backgroundColor: '#c3e7fe',
     borderRadius: 25,
     alignSelf: 'center',
     padding: 5,
+    marginVertical: 10
   },
   scroll: {
     height: 400,
@@ -139,15 +142,15 @@ export default function FoodHistory({ navigation }) {
             </Text>
           )}
           {selectDay && (
-            <Text style={[styles.text, { color: theme.color }, { borderColor: theme.color }]}>
+            <Text style={[styles.text, { color: theme.color, borderColor: theme.color, width: screenWidth * 0.7 }]}>
               Date:
               {' '}
               {selectDay}
-              {' '}
+              {'\n'}
               Calorie-goal:
               {' '}
               {calorieGoal}
-              {' '}
+              {'\n'}
               Calories-remaining:
               {' '}
               {caloriesRemaining}

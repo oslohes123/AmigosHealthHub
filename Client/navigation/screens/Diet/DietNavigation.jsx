@@ -1,10 +1,11 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import React from 'react';
+import React, { useContext } from 'react';
 import Nutrients from './Nutrients';
 import DietDashboardScreen from './DietDashboardScreen';
 import FoodDetails from './FoodDetails';
 import FoodHistory from './FoodHistory';
 import foodHistoryDetails from './FoodHistoryDetails';
+import themeContext from '../../theme/themeContext';
 
 const Stack = createStackNavigator();
 
@@ -23,8 +24,15 @@ const styles = {
 };
 
 export default function DietNavigation() {
+  const { background } = useContext(themeContext);
   return (
-    <Stack.Navigator screenOptions={{ headerShown: true, headerTitleStyle: styles.header, headerStyle: { backgroundColor: '#3eda9b' } }}>
+    <Stack.Navigator screenOptions={{
+      headerShown: true,
+      headerStyle: { backgroundColor: background },
+      headerTitleStyle: styles.header,
+      headerShadowVisible: false,
+    }}
+  >
       <Stack.Screen name={dietDashboardName} component={DietDashboardScreen} />
       <Stack.Screen name={nutrientsName} component={Nutrients} />
       <Stack.Screen name={foodDetailsName} component={FoodDetails} />

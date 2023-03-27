@@ -13,8 +13,11 @@ import { genericSearch, specificSearch } from './hooks/searchFood';
 import { getCaloriesRemaining, getLatestCalorieGoal } from './hooks/Calories';
 import { useAuthContext } from '../Authentication/context/AuthContext';
 
-import GreenButton from '../../components/GreenButton';
 import { getPieChartData } from './hooks/Food';
+import { FAB, SegmentedButtons } from 'react-native-paper';
+
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   container: {
@@ -34,14 +37,12 @@ const styles = StyleSheet.create({
   },
   input: {
     color: '#fff',
-    width: 350,
+    width: screenWidth * 0.9,
     alignSelf: 'center',
     borderRadius: 25,
     paddingHorizontal: 16,
     fontSize: 16,
     paddingVertical: 12,
-    marginTop: -90,
-    position: 'absolute',
     borderWidth: 1,
   },
   textData: {
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   textContainer: {
-    backgroundColor: '#3eda9b',
+    backgroundColor: '#c2e7fe',
     borderRadius: 15,
     padding: 10,
     marginVertical: 10,
@@ -70,24 +71,21 @@ const styles = StyleSheet.create({
   },
   scroll: {
     marginTop: 10,
-    height: 400,
-    // position: 'absolute',
-    marginLeft: '50%',
+    height: screenHeight * 0.4,
     alignSelf: 'center',
-    // flex: 1,
-    width: '50%',
+    width: screenWidth * 0.9,
   },
   chart: {
     alignSelf: 'center',
-    flex: 1,
-    marginTop: -10,
     width: '90%',
   },
   pieWidget: {
-    backgroundColor: '#3eda9b',
+    backgroundColor: '#c2e7fe',
     borderRadius: 25,
     alignSelf: 'center',
     padding: 5,
+    height: screenHeight * 0.3,
+    margin: 20,
   },
   title: {
     textAlign: 'center',
@@ -118,12 +116,6 @@ const styles = StyleSheet.create({
     margin: '5%',
     padding: 10,
   },
-  brandedScroll: {
-    position: 'absolute',
-    alignSelf: 'center',
-    width: '50%',
-    height: 400,
-  },
   info: {
     fontSize: 20,
     position: 'absolute',
@@ -132,7 +124,6 @@ const styles = StyleSheet.create({
 });
 
 export default function DietDashboardScreen({ navigation }) {
-  const screenWidth = Dimensions.get('window').width;
 
   const theme = useContext(themeContext);
   const { color, background } = theme;
@@ -152,6 +143,8 @@ export default function DietDashboardScreen({ navigation }) {
   const [calorieGoal, setCalorieGoal] = useState(0);
 
   const [caloriesRemaining, setCaloriesRemaining] = useState(0);
+
+  const [segValue, setSegValue] = useState('');
 
   async function getCalorieData() {
     const data = await getLatestCalorieGoal(id);
@@ -218,8 +211,8 @@ export default function DietDashboardScreen({ navigation }) {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: background }]}>
-      <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: '17%' }}>
-        <View style={[styles.headerView, { borderColor: color }]}>
+      <View style={{ flexDirection: 'row', justifyContent: 'center', marginHorizontal: 20 }}>
+        <View style={[styles.headerView, { borderColor: color, justifyContent: 'center' }]}>
           <Text style={[styles.title, { color }]}>Calorie Goal</Text>
           <Text style={[styles.number, { color }, { borderColor: color }]}>{calorieGoal}</Text>
         </View>
@@ -230,26 +223,42 @@ export default function DietDashboardScreen({ navigation }) {
           </Text>
         </View>
       </View>
-
       <View>
-
         <TextInput
           clearButtonMode="always"
           value={foodInput}
           onChangeText={(value) => setText(value)}
-          style={[styles.input, { borderColor: color }, { color }]}
+          style={[styles.input, { borderColor: color, color, margin: 10 }]}
           placeholder="Find food..."
           placeholderTextColor={color}
         />
 
+        <SegmentedButtons 
+          style={{ width: screenWidth * 0.9, alignSelf: 'center' }}
+          value={segValue}
+          onValueChange={setSegValue}
+          buttons={[
+            {
+              value: 'Unbranded',
+              label: 'Unbranded',
+            },
+            {
+              value: 'Branded',
+              label: 'Branded',
+            },
+          ]}
+          />
+        </View>
+
+      <View>
         <View style={styles.chart}>
-          {foodInput.length === 0 && pieChartData.length > 0 && (
+          {foodInput.length <= 2 && pieChartData.length > 0 && (
              
               <TouchableOpacity style={styles.pieWidget} onPress={pieChartPress}>
                 <PieChart
                   data={pieChartData}
                   width={0.9 * screenWidth}
-                  height={210}
+                  height={screenHeight * 0.3}
                   chartConfig={{
                     color: () => 'black',
                   }}
@@ -263,10 +272,9 @@ export default function DietDashboardScreen({ navigation }) {
             )}
         </View>
 
+        <View style={{flexDirection: 'row'}}>
         {foodInput.length > 2
-          && (
-          // <View style={{ flexDirection: 'row', height: '10%', marginTop: '30%' }}>
-            <View style={{flexDirection: 'row'}}>
+          && segValue === 'Unbranded' && (
             <ScrollView style={styles.scroll}>
               {genericFoodList.length > 2 && genericFoodList.map((item) => (
                 <TouchableOpacity
@@ -284,8 +292,11 @@ export default function DietDashboardScreen({ navigation }) {
                 </TouchableOpacity>
               ))}
             </ScrollView>
+          )}
 
-            <ScrollView style={styles.brandedScroll}>
+          {foodInput.length > 2
+            && segValue === 'Branded' && (
+            <ScrollView style={styles.scroll}>
               {specificFoodList.length > 2 && specificFoodList.map((item) => (
                 <TouchableOpacity
                   onPress={() => foodPress(null, item.item_id)}
@@ -302,15 +313,15 @@ export default function DietDashboardScreen({ navigation }) {
                 </TouchableOpacity>
               ))}
             </ScrollView>
-          </View>
-          )}
+            )}
 
-      </View>
-      <View style={{ marginTop: '47%' }}>
-        <GreenButton buttonFunction={pressHandler3} height={60} width="50%" text="View Food History" />
-      </View>
-      <View>
-      </View>
+        </View>
+          <FAB 
+            onPress={pressHandler3} 
+            style={{ alignSelf: 'center', width: screenWidth * 0.6, margin: 20 }}
+            label="View Food History" 
+            />
+        </View>
     </SafeAreaView>
   );
 }

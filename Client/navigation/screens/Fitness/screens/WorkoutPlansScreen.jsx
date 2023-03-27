@@ -44,7 +44,7 @@ const styles = {
   },
   fab: {
     marginBottom: 16,
-    width: screenWidth * 0.9,
+    width: screenWidth * 0.6,
     alignSelf: 'center',
   },
 };
