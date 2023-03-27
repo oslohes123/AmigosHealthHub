@@ -129,7 +129,7 @@ export default function DietDashboardScreen({ navigation }) {
   const { color, background } = theme;
   const isFocused = useIsFocused();
 
-  const { user } = useAuthContext();
+  const { user } = useAuthContext(); 
   const { id } = user;
   const todaysDate = new Date().toISOString().split('T')[0];
   const [pieChartData, setPieChartData] = useState([]);
