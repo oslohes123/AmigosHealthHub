@@ -55,7 +55,7 @@ export default function CaloriesRemaining() {
   }, [navigation, isFocused]);
 
   const pressHandler = () => {
-    navigation.navigate('Diet Dashboard');
+    navigation.navigate("Diet", {screen: 'Food History'});
   };
 
   return (

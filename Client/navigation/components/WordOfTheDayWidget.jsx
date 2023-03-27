@@ -52,7 +52,7 @@ export default function WordOfTheDayWidget() {
     }
   }, [navigation, isFocused]);
   const pressHandler = () => {
-    navigation.navigate('View Stats');
+    navigation.navigate("Mental", {screen: 'Review Your Day'});
   };
 
   return (
