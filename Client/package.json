@@ -8,7 +8,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "test": "jest --coverage",
+    "test": "npm run web",
+    "cypressTests": "npx cypress run",
     "ts-coverage": "typescript-coverage-report -t 85"
   },
   "dependencies": {
@@ -25,6 +26,7 @@
     "axios": "^1.3.4",
     "deprecated-react-native-prop-types": "^4.0.0",
     "dotenv": "^16.0.3",
+    "eslint-plugin-cypress": "^2.12.1",
     "expo": "~48.0.9",
     "expo-linear-gradient": "~12.1.2",
     "expo-status-bar": "~1.4.2",

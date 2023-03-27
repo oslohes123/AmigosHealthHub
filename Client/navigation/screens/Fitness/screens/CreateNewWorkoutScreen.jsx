@@ -50,7 +50,6 @@ const styles = {
     marginHorizontal: 5,
     borderWidth: 1,
     textAlign: 'center',
-    justifyContent: 'center',
   },
   verticalScroll: {
     height: '60%',
@@ -257,6 +256,28 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
                         >
                           {modalReps}
                         </Text>
+
+                        <Text
+                          style={{
+                            color,
+                            fontSize: 12,
+                            textAlign: 'center',
+                          }}
+                          >
+                          Duration
+                        </Text>
+                        <Text
+                          style={{
+                            fontWeight: 'bold',
+                            color,
+                            fontSize: 16,
+                            textAlign: 'center',
+                          }}
+                          >
+                          {modalDuration}
+                          {' '}
+                          mins
+                        </Text>
                       </View>
                       <View>
                         <Text
@@ -299,6 +320,29 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
                         >
                           {modalWarmUpSet ? 'Yes' : 'No'}
                         </Text>
+
+                        <Text
+                          style={{
+                            color,
+                            fontSize: 12,
+                            textAlign: 'center',
+                          }}
+                          >
+                          Calories
+                        </Text>
+                        <Text
+                          style={{
+                            fontWeight: 'bold',
+                            color,
+                            fontSize: 16,
+                            textAlign: 'center',
+                          }}
+                          >
+                          { modalCalories || 0 }
+                          {' '}
+                          kcal
+                        </Text>
+
                       </View>
                     </>
                   ) : (
@@ -326,54 +370,61 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
                           km
                         </Text>
                       </View>
-                      <View>
-                        <Text
-                          style={{
-                            color,
-                            fontSize: 12,
-                            textAlign: 'center',
-                          }}
-                        >
-                          Duration
-                        </Text>
-                        <Text
-                          style={{
-                            fontWeight: 'bold',
-                            color,
-                            fontSize: 16,
-                            textAlign: 'center',
-                          }}
-                        >
-                          {modalDuration}
-                          {' '}
-                          mins
-                        </Text>
+                      <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: screenWidth * 0.6 }}>
+                        
+                        <View>
+                          <Text
+                            style={{
+                              color,
+                              fontSize: 12,
+                              textAlign: 'center',
+                            }}
+                            >
+                            Duration
+                          </Text>
+                          <Text
+                            style={{
+                              fontWeight: 'bold',
+                              color,
+                              fontSize: 16,
+                              textAlign: 'center',
+                            }}
+                            >
+                            {modalDuration}
+                            {' '}
+                            mins
+                          </Text>
+                        </View>
+
+                        <View>
+                          <Text
+                            style={{
+                              color,
+                              fontSize: 12,
+                              textAlign: 'center',
+                            }}
+                            >
+                            Calories
+                          </Text>
+                          <Text
+                            style={{
+                              fontWeight: 'bold',
+                              color,
+                              fontSize: 16,
+                              textAlign: 'center',
+                            }}
+                            >
+                            { modalCalories || 0 }
+                            {' '}
+                            kcal
+                          </Text>
+                        </View>
+
                       </View>
                     </View>
                   )}
                 </View>
 
-                <Text
-                  style={{
-                    color,
-                    fontSize: 12,
-                    textAlign: 'center',
-                  }}
-                >
-                  Calories
-                </Text>
-                <Text
-                  style={{
-                    fontWeight: 'bold',
-                    color,
-                    fontSize: 16,
-                    textAlign: 'center',
-                  }}
-                >
-                  { modalCalories || 0 }
-                  {' '}
-                  kcal
-                </Text>
               </View>
 
               <View style={{ flexDirection: 'row' }}>
@@ -436,6 +487,7 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
               style={{
                 color,
                 width: screenWidth * 0.6,
+                height: screenHeight * 0.05,
                 borderColor: color,
                 margin: 10,
               }}
@@ -581,7 +633,7 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
               <Text
                 style={[
                   styles.addedText,
-                  { borderColor: color, color },
+                  { borderColor: color, color, textAlignVertical: 'center' },
                 ]}
               >
                 {item.name}

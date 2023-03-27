@@ -1,42 +1,42 @@
-import { SupabaseQueryClass } from './databaseInterface';
-import supabase from '../utils/supabaseSetUp';
-const databaseQuery = new SupabaseQueryClass();
+import { SupabaseQueryClass } from './databaseInterface'
+import supabase from '../utils/supabaseSetUp'
+const databaseQuery = new SupabaseQueryClass()
 
 export const addSleepFunc = async (
-    sleepData: Object,
-    database = supabase,
-    table = 'Sleep Data'
+  sleepData: object,
+  database = supabase,
+  table = 'Sleep Data'
 ) => {
-    console.log(`Sleep data TO ADD: ${sleepData}`);
-    const { data, error }: any = await databaseQuery.insert(
-        database,
-        table,
-        sleepData
-    );
-    return { data, error };
-};
+//   console.log(`Sleep data TO ADD: ${sleepData}`)
+  const { data, error }: any = await databaseQuery.insert(
+    database,
+    table,
+    sleepData
+  )
+  return { dataAddSleep: data, errorAddSleep: error }
+}
 
 export const getSleepFunc = async (
-    userID: string,
-    startDate: string,
-    endDate: string,
-    database = supabase,
-    table = 'Sleep Data'
+  userID: string,
+  startDate: string,
+  endDate: string,
+  database = supabase,
+  table = 'Sleep Data'
 ) => {
-    console.log(
-        `Getting sleep data from ${startDate} to ${endDate} for user ${userID}`
-    );
+//   console.log(
+//         `Getting sleep data from ${startDate} to ${endDate} for user ${userID}`
+//   )
 
-    const columnSelected = 'hoursSlept, timestamp, sleepQuality';
-    const { data, error }: any = await databaseQuery.selectWhereRange(
-        database,
-        table,
-        columnSelected,
-        'userID',
-        userID,
-        startDate,
-        endDate,
-        'timestamp'
-    );
-    return { data, error };
-};
+  const columnSelected = '*'
+  const { data, error }: any = await databaseQuery.selectWhereRange(
+    database,
+    table,
+    columnSelected,
+    'userID',
+    userID,
+    startDate,
+    endDate,
+    'timestamp'
+  )
+  return { dataGetSleep: data, errorGetSleep: error }
+}

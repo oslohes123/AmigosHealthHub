@@ -1,12 +1,21 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { clientSearchMethods } from '../../../../constants';
+
+import { clientSearchMethods } from '../../../../constants.ts';
 
 const serverURL = process.env.URL;
+const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
+
 // For testing purposes
 // Update this with your own UrlService
 
 export async function genericSearch(value) {
-  const url = `${serverURL}/api/food/${clientSearchMethods.genericSearch}.${value}`;
+  let url = `${serverURL}/api/food/${clientSearchMethods.genericSearch}.${value}`;
+  if (!usingDeployedServer) {
+    url = `http://${ipAddress}:${port}/api/food/${clientSearchMethods.genericSearch}.${value}`;
+  }
+
   let response;
   try {
     const { token } = JSON.parse(await AsyncStorage.getItem('user'));
@@ -31,7 +40,11 @@ export async function genericSearch(value) {
 }
 
 export async function specificSearch(value) {
-  const url = `${serverURL}/api/food/${clientSearchMethods.specificSearch}.${value}`;
+  let url = `${serverURL}/api/food/${clientSearchMethods.specificSearch}.${value}`;
+  if (!usingDeployedServer) {
+    url = `http://${ipAddress}:${port}/api/food/${clientSearchMethods.specificSearch}.${value}`;
+  }
+
   let response;
   try {
     const { token } = JSON.parse(await AsyncStorage.getItem('user'));

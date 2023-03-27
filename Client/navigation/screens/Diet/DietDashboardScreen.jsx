@@ -71,15 +71,12 @@ const styles = StyleSheet.create({
   scroll: {
     marginTop: 10,
     height: 400,
-    position: 'absolute',
     marginLeft: '50%',
     alignSelf: 'center',
-    flex: 1,
     width: '50%',
   },
   chart: {
     alignSelf: 'center',
-    flex: 1,
     marginTop: -10,
     width: '90%',
   },
@@ -205,6 +202,10 @@ export default function DietDashboardScreen({ navigation }) {
     } else {
       data = { foodData: await specificSearch(nixItemId), foodIdentifier: nixItemId };
     }
+    if(data.length == 0){
+      Alert.alert('API keys have expired. Please contact the developers.');
+      return;
+    }
     navigation.navigate('Food Details', data);
   }
 
@@ -261,7 +262,7 @@ export default function DietDashboardScreen({ navigation }) {
 
         {foodInput.length > 2
           && (
-          <View style={{ flexDirection: 'row', height: '10%', marginTop: '30%' }}>
+            <View style={{flexDirection: 'row', marginTop: '-5%'}}>
             <ScrollView style={styles.scroll}>
               {genericFoodList.length > 2 && genericFoodList.map((item) => (
                 <TouchableOpacity
@@ -301,10 +302,8 @@ export default function DietDashboardScreen({ navigation }) {
           )}
 
       </View>
-      <View style={{ marginTop: '47%' }}>
+      <View style={{ position: 'relative', marginBottom: '5%', marginTop: '1%' }}>
         <GreenButton buttonFunction={pressHandler3} height={60} width="50%" text="View Food History" />
-      </View>
-      <View>
       </View>
     </SafeAreaView>
   );

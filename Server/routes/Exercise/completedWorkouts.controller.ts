@@ -3,7 +3,7 @@ import supabase from '../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../utils/databaseInterface'
 import { getDate, getTime, mostRecentTimestamp, sortArrayOfTimeStamps } from '../../utils/convertTimeStamptz'
 import { countElementsInArray } from '../../utils/arrayManipulation'
-import { schemaForNewTrackedWorkout } from '../../utils/JSONSchemas/schemaForNewTrackedWorkout'
+import { schemaForGetCompletedWorkout } from '../../utils/JSONSchemas/schemaForGetCompletedWorkout'
 import validateJSONSchema from '../../utils/validateJSONSchema'
 import { schemaForRequireduserid } from '../../utils/JSONSchemas/schemaForRequireduserid'
 const databaseQuery = new SupabaseQueryClass()
@@ -11,9 +11,8 @@ const databaseQuery = new SupabaseQueryClass()
 // Get a specific workout by userid, workoutname, date and time
 export const getACompletedWorkout = async (req: Request, res: Response) => {
   const { userid, workoutname, date, time } = req.headers
-
-  if (!userid || !workoutname || !date || !time) {
-    return res.status(400).json({ mssg: 'No userid, workoutname, date or time' })
+  if (!validateJSONSchema(req.headers, schemaForGetCompletedWorkout)) {
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'JSON instance was invalid against its schema' })
   }
   const { data, error }: any = await databaseQuery.match(supabase, 'CompletedWorkouts', 'completedWorkoutID, timestamp', { userid, workoutname })
   if (error) {
@@ -174,6 +173,7 @@ export const addCompletedWorkouts = async (req: Request, res: Response) => {
       }
       console.log(`exercises[i] before delete for: ${JSON.stringify(exercises[i])}`)
 
+      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
       Object.keys(exercises[i]).forEach((k) => (exercises[i])[k] == null && delete (exercises[i])[k])
       console.log(`exercises[i] after delete for:  ${JSON.stringify(exercises[i])}`)
       const { errorPresent, ID } = await searchExerciseInExercises(name)

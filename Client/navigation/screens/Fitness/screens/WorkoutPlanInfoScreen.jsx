@@ -264,7 +264,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
             )}
 
         {!isLoading && workoutDetails.map((item) => (
-          <TouchableWithoutFeedback style={{ padding: 40 }} key={`${Math.random()}`}>
+          <TouchableWithoutFeedback style={{ padding: 40 }} key={`${item.PEID}`}>
             <View
               style={[styles.exerciseSection, { borderColor: color }]}
             >
@@ -361,7 +361,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                   placeholderTextColor={color}
                   keyboardType="numeric"
                   textAlign="center"
-                  value={dataToTrack[item.PEID] ? dataToTrack[item.PEID].calories : 0}
+                  value={dataToTrack[item.PEID] && dataToTrack[item.PEID].calories !== null && dataToTrack[item.PEID].calories !== undefined ? `${dataToTrack[item.PEID].calories}` : ``}
                   onChangeText={(caloriesText) => {
                     setDataToTrack(
                       {
@@ -372,41 +372,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                   }}
                 />
               </View>
-
-              {item.exercise.type === 'cardio' ? (
-                <>
-                  <View style={styles.statsRows}>
-                    <Text
-                      style={[
-                        styles.statsText,
-                        { color, alignSelf: 'center' },
-                      ]}
-                    >
-                      Distance:
-                      {' '}
-                      {item.distance}
-                      {' '}
-                      m
-                    </Text>
-                    <TextInput
-                      style={[styles.textInput, { borderColor: color }]}
-                      placeholder="Distance (m)"
-                      color={color}
-                      placeholderTextColor={color}
-                      keyboardType="numeric"
-                      textAlign="center"
-                      value={dataToTrack[item.PEID] ? dataToTrack[item.PEID].distance : 0}
-                      onChangeText={(distanceText) => {
-                        setDataToTrack(
-                          {
-                            ...dataToTrack,
-                            [item.PEID]: { ...dataToTrack[item.PEID], distance: distanceText },
-                          },
-                        );
-                      }}
-                    />
-                  </View>
-                  <View style={styles.statsRows}>
+              <View style={styles.statsRows}>
                     <Text
                       style={[
                         styles.statsText,
@@ -431,7 +397,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                         placeholderTextColor={color}
                         keyboardType="numeric"
                         textAlign="center"
-                        value={dataToTrack[item.PEID] ? dataToTrack[item.PEID].mins : 0}
+                        value={dataToTrack[item.PEID] && dataToTrack[item.PEID].mins !== null && dataToTrack[item.PEID].mins !== undefined? `${dataToTrack[item.PEID].mins}` : `${0}`}
                         onChangeText={(minsText) => {
                           setDataToTrack(
                             {
@@ -441,7 +407,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                           );
                         }}
                       />
-                      <Text style={{ color, alignSelf: 'center' }}>:</Text>
+                      <Text style={{ color, alignSelf: 'center', fontWeight: 'bold' }}>:</Text>
                       <TextInput
                         style={[
                           styles.textInput,
@@ -451,7 +417,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                         placeholderTextColor={color}
                         keyboardType="numeric"
                         textAlign="center"
-                        value={dataToTrack[item.PEID] ? dataToTrack[item.PEID].secs : 0}
+                        value={dataToTrack[item.PEID] && dataToTrack[item.PEID].secs !== null && dataToTrack[item.PEID].secs !== undefined ? `${dataToTrack[item.PEID].secs}` : `${0}`}
                         onChangeText={(secsText) => {
                           setDataToTrack(
                             {
@@ -462,6 +428,40 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                         }}
                       />
                     </View>
+                  </View>
+
+              {item.exercise.type === 'cardio' ? (
+                <>
+                  <View style={styles.statsRows}>
+                    <Text
+                      style={[
+                        styles.statsText,
+                        { color, alignSelf: 'center' },
+                      ]}
+                    >
+                      Distance:
+                      {' '}
+                      {item.distance}
+                      {' '}
+                      m
+                    </Text>
+                    <TextInput
+                      style={[styles.textInput, { borderColor: color }]}
+                      placeholder="Distance (m)"
+                      color={color}
+                      placeholderTextColor={color}
+                      keyboardType="numeric"
+                      textAlign="center"
+                      value={dataToTrack[item.PEID] && dataToTrack[item.PEID].distance !== undefined && dataToTrack[item.PEID].distance !== null ? `${dataToTrack[item.PEID].distance}` : `${''}`}
+                      onChangeText={(distanceText) => {
+                        setDataToTrack(
+                          {
+                            ...dataToTrack,
+                            [item.PEID]: { ...dataToTrack[item.PEID], distance: distanceText },
+                          },
+                        );
+                      }}
+                    />
                   </View>
                 </>
               ) : (
@@ -495,7 +495,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                       </Text>
 
                       {setsToArray(item.sets).map((unusedParam, index) => (
-                        <View style={[{ justifyContent: 'space-evenly', paddingVertical: 5 }]} key={`${Math.random()}`}>
+                        <View style={[{ justifyContent: 'space-evenly', paddingVertical: 5 }]} key={`${item.PEID}reps${index}`}>
                           <TextInput
                             style={[styles.textInput,
                               { borderColor: color, width: styles.textInput.width * 0.9 }]}
@@ -504,7 +504,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                             placeholderTextColor={color}
                             keyboardType="numeric"
                             textAlign="center"
-                            value={repsInArray[item.PEID] && repsInArray[item.PEID][index] ? `${repsInArray[item.PEID][index]}` : index}
+                            value={repsInArray[item.PEID] && repsInArray[item.PEID][index] != undefined && repsInArray[item.PEID][index] != undefined ? `${repsInArray[item.PEID][index]}` : `${''}`}
                             onChangeText={(repsText) => {
                               addRepsToArray(item.PEID, repsText, index);
                             }}
@@ -527,7 +527,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                       </Text>
 
                       {setsToArray(item.sets).map((unusedParam, index) => (
-                        <View style={[{ justifyContent: 'space-evenly', paddingVertical: 5 }]} key={`${Math.random()}`}>
+                        <View style={[{ justifyContent: 'space-evenly', paddingVertical: 5 }]} key={`${item.PEID}weight${index}`}>
                           <TextInput
                             render
                             style={[styles.textInput,
@@ -537,7 +537,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                             placeholderTextColor={color}
                             keyboardType="numeric"
                             textAlign="center"
-                            value={weightInArray[item.PEID] && weightInArray[item.PEID][index] ? `${weightInArray[item.PEID][index]}` : index}
+                            value={weightInArray[item.PEID] && weightInArray[item.PEID][index] != undefined && weightInArray[item.PEID][index] != null ? `${weightInArray[item.PEID][index]}` : `${''}`}
                             onChangeText={(weightText) => {
                               addWeightToArray(item.PEID, weightText, index);
                             }}
@@ -571,6 +571,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
             const copyDataToTrack = dataToTrack;
             const copyDataKeys = Object.keys(copyDataToTrack);
 
+            
             copyDataKeys.forEach((key) => {
               if (key in repsInArray) {
                 copyDataToTrack[key].reps = repsInArray[key];
@@ -598,12 +599,9 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
             });
 
             const submittableState = Object.values(copyDataToTrack).map((obj) => {
-              if (((obj.sets != null && obj.sets !== '' && !Number.isNaN(Number(obj.sets))
-              && obj.reps != null && obj.reps !== '' && obj.reps !== [] && (obj.reps).length === obj.sets
-              && obj.weight != null && obj.weight !== '' && obj.weight !== [] && (obj.weight).length === obj.sets)
-              || (obj.distance != null && obj.distance !== '' && !Number.isNaN(Number(obj.distance))
-              && obj.duration != null && obj.duration !== '' && !Number.isNaN(Number(obj.duration))))
-              && obj.calories != null && obj.calories !== '' && !Number.isNaN(Number(obj.calories))) {
+              if ((!Number.isNaN(Number(obj.duration)) || !Number.isNaN(Number(obj.distance)))
+              || ((obj.sets != null && obj.sets !== '' && !Number.isNaN(Number(obj.sets)) && obj.reps != null && obj.reps !== '' && obj.reps !== [] && !Number.isNaN(Number(obj.reps))) 
+              || (obj.distance != null && obj.distance !== '' && !Number.isNaN(Number(obj.distance))))) {
                 return true;
               }
               return false;

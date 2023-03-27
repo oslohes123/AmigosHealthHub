@@ -8,7 +8,7 @@ import test from 'ava'
 import sinon from 'sinon'
 // import createNewWorkoutPlan from '../../../../utils/Exercise/createNewWorkoutPlan'
 // import { deleteAllWorkoutPlansWithExercises } from '../../../../utils/deleteWorkoutPlans'
-import { addCompletedWorkouts } from '../../../../utils/Exercise/createNewTrackedWorkout'
+import { addCompletedWorkoutUnit } from '../../../../utils/Exercise/createNewTrackedWorkout'
 // import addExerciseToExercises from '../../../../utils/Exercise/addExerciseToExercises'
 import { deleteMultipleExercises, insertMultipleExercises } from '../../../../utils/Exercise/insertAndDeleteMultipleExercises'
 // const databaseQuery = new SupabaseQueryClass()
@@ -106,7 +106,7 @@ test('getCaloriesToday with user with a valid workoutplan returns the correct nu
   if (errorInsertingMultipleExercises) {
     t.fail(errorInsertingMultipleExercises)
   }
-  const { errorAddCompletedWorkouts, success } = await addCompletedWorkouts(uuid, 'Test Tracked Workout', exercises)
+  const { errorAddCompletedWorkouts, success } = await addCompletedWorkoutUnit(uuid, 'Test Tracked Workout', exercises)
   if (errorAddCompletedWorkouts) {
     t.fail(errorAddCompletedWorkouts)
   }

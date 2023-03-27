@@ -2,12 +2,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const serverURL = process.env.URL;
 const currentDate = new Date().toISOString().split('T')[0];
-
+const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
+const ipAddress = process.env.IP_ADDRESS;
+const port = process.env.PORT;
 // For testing purposes
 // Update this with your own UrlService
 
 export async function getTrackedFood(Date, userID) {
-  const url = `${serverURL}/api/food/getTrackedFood/${Date}.${userID}`;
+  let url = `${serverURL}/api/food/getTrackedFood/${Date}.${userID}`;
+  if (!usingDeployedServer) {
+    url = `http://${ipAddress}:${port}/api/food/getTrackedFood/${Date}.${userID}`;
+  }
   let response;
   try {
     const { token } = JSON.parse(
@@ -30,7 +35,10 @@ export async function getTrackedFood(Date, userID) {
 }
 
 export async function getSpecificTrackedFood(LogID) {
-  const url = `${serverURL}/api/food/getSpecificTrackedFood/${LogID}`;
+  let url = `${serverURL}/api/food/getSpecificTrackedFood/${LogID}`;
+  if (!usingDeployedServer) {
+    url = `http://${ipAddress}:${port}/api/food/getSpecificTrackedFood/${LogID}`;
+  }
   let response;
   try {
     const { token } = JSON.parse(
@@ -52,7 +60,10 @@ export async function getSpecificTrackedFood(LogID) {
 }
 
 export async function addTrackedFood(input, userID) {
-  const url = `${serverURL}/api/food/addTrackedFood`;
+  let url = `${serverURL}/api/food/addTrackedFood`;
+  if (!usingDeployedServer) {
+    url = `http://${ipAddress}:${port}/api/food/addTrackedFood`;
+  }
   let response;
   try {
     const { token } = JSON.parse(
@@ -78,7 +89,10 @@ export async function addTrackedFood(input, userID) {
 }
 
 export async function deleteTrackedFood(LogID) {
-  const url = `${serverURL}/api/food/deleteTrackedFood/`;
+  let url = `${serverURL}/api/food/deleteTrackedFood/`;
+  if (!usingDeployedServer) {
+    url = `http://${ipAddress}:${port}/api/food/deleteTrackedFood/`;
+  }
   let response;
   try {
     const { token } = JSON.parse(
@@ -103,7 +117,11 @@ export async function deleteTrackedFood(LogID) {
 }
 
 export async function updateTrackedFood(input) {
-  const url = `${serverURL}/api/food/updateTrackedFood`;
+  let url = `${serverURL}/api/food/updateTrackedFood`;
+  if (!usingDeployedServer) {
+    url = `http://${ipAddress}:${port}/api/food/updateTrackedFood`;
+  }
+
   let response;
   try {
     const { token } = JSON.parse(
@@ -131,7 +149,11 @@ export async function updateTrackedFood(input) {
 }
 
 export async function getFood(foodID) {
-  const url = `${serverURL}/api/food/getFood/${foodID}`;
+  let url = `${serverURL}/api/food/getFood/${foodID}`;
+  if (!usingDeployedServer) {
+    url = `http://${ipAddress}:${port}/api/food/getFood/${foodID}`;
+  }
+
   let response;
   try {
     const { token } = JSON.parse(
@@ -153,7 +175,11 @@ export async function getFood(foodID) {
 }
 
 export async function getMultipleFood(foodIDs) {
-  const url = `${serverURL}/api/food/getMultipleFood`;
+  let url = `${serverURL}/api/food/getMultipleFood`;
+  if (!usingDeployedServer) {
+    url = `http://${ipAddress}:${port}/api/food/getMultipleFood`;
+  }
+
   let response;
   try {
     const { token } = JSON.parse(

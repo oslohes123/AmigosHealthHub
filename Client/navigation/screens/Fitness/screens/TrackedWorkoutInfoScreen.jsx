@@ -273,7 +273,41 @@ export default function TrackedWorkoutInfoScreen({ route, navigation }) {
                       m
                     </Text>
                   </View>
+                </>
+              ) : (
+                <>
                   <View style={styles.statsRows}>
+                    <Text style={[styles.statsText, { color, alignSelf: 'center' }]}>
+                      Sets:
+                      {' '}
+                      {item.sets ? item.sets : 'n/a'}
+                    </Text>
+                  </View>
+                  <View style={styles.statsRows}>
+                    <Text style={[styles.statsText, { color, alignSelf: 'center' }]}>
+                      Reps:
+                      {' '}
+                      {item.reps ? JSON.stringify(item.reps) : 'n/a'}
+                    </Text>
+                  </View>
+                  <View style={styles.statsRows}>
+                    <Text style={[styles.statsText, { color, alignSelf: 'center' }]}>
+                      Weight:
+                      {' '}
+                      {item.weight ? JSON.stringify(item.weight) : 'n/a'}
+                    </Text>
+                  </View>
+                </>
+              )}
+              <View style={styles.statsRows}>
+                <Text style={[styles.statsText, { color, alignSelf: 'center' }]}>
+                  Calories:
+                  {' '}
+                  {item.calories ? item.calories : 'n/a'}
+                  {' '}
+                  kcal
+                </Text>
+                <View style={styles.statsRows}>
                     <Text style={[styles.statsText, { color, alignSelf: 'center' }]}>
                       Duration:
                       {' '}
@@ -284,40 +318,6 @@ export default function TrackedWorkoutInfoScreen({ route, navigation }) {
                       &quot;
                     </Text>
                   </View>
-                </>
-              ) : (
-                <>
-                  <View style={styles.statsRows}>
-                    <Text style={[styles.statsText, { color, alignSelf: 'center' }]}>
-                      Sets:
-                      {' '}
-                      {item.sets}
-                    </Text>
-                  </View>
-                  <View style={styles.statsRows}>
-                    <Text style={[styles.statsText, { color, alignSelf: 'center' }]}>
-                      Reps:
-                      {' '}
-                      {JSON.stringify(item.reps)}
-                    </Text>
-                  </View>
-                  <View style={styles.statsRows}>
-                    <Text style={[styles.statsText, { color, alignSelf: 'center' }]}>
-                      Weight:
-                      {' '}
-                      {JSON.stringify(item.weight)}
-                    </Text>
-                  </View>
-                </>
-              )}
-              <View style={styles.statsRows}>
-                <Text style={[styles.statsText, { color, alignSelf: 'center' }]}>
-                  Calories:
-                  {' '}
-                  {item.calories}
-                  {' '}
-                  kcal
-                </Text>
               </View>
             </View>
           </TouchableWithoutFeedback>
