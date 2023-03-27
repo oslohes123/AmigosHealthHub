@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   },
   scroll: {
     marginTop: 10,
-    height: screenHeight * 0.4,
+    height: screenHeight * 0.48,
     alignSelf: 'center',
     width: screenWidth * 0.95,
   },
@@ -232,7 +232,7 @@ export default function DietDashboardScreen({ navigation }) {
           placeholderTextColor={color}
         />
 
-        <SegmentedButtons 
+        {foodInput.length > 2 && (        <SegmentedButtons 
           style={{ width: screenWidth * 0.95, alignSelf: 'center' }}
           value={segValue}
           onValueChange={setSegValue}
@@ -247,6 +247,7 @@ export default function DietDashboardScreen({ navigation }) {
             },
           ]}
           />
+          )}
         </View>
 
       <View>
@@ -284,7 +285,6 @@ export default function DietDashboardScreen({ navigation }) {
                   <View>
                     <View>
                       <Text style={styles.textData} key={item.food_name}>{item.food_name}</Text>
-                      <Text style={{ fontSize: 15, alignSelf: 'center', width: '100%' }}>(Common Food)</Text>
                     </View>
                     <Ionicons name="chevron-forward-outline" size={32} color="black" />
                   </View>
@@ -305,7 +305,7 @@ export default function DietDashboardScreen({ navigation }) {
                   <View style={{ flex: 1, justifyContent: 'space-between' }}>
                     <View>
                       <Text style={styles.textData} key={item.food_name}>{item.food_name}</Text>
-                      <Text style={{ fontSize: 15, alignSelf: 'center', width: '100%' }}>(Branded Food)</Text>
+                      <Text style={{ fontSize: 15, alignSelf: 'center', width: '100%' }}>({item.brand_name})</Text>
                     </View>
                     <Ionicons name="chevron-forward-outline" size={32} color="black" />
                   </View>
@@ -315,11 +315,13 @@ export default function DietDashboardScreen({ navigation }) {
             )}
 
         </View>
+        {foodInput.length <= 2 && (
           <FAB 
-            onPress={pressHandler3} 
-            style={{ alignSelf: 'center', width: screenWidth * 0.6, margin: 20 }}
-            label="View Food History" 
-            />
+          onPress={pressHandler3} 
+          style={{ alignSelf: 'center', width: screenWidth * 0.6, margin: 20 }}
+          label="View Food History" 
+          />
+        )}
         </View>
     </SafeAreaView>
   );
