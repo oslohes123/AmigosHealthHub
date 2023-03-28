@@ -14,7 +14,7 @@ import { Formik } from 'formik';
 // import { deleteAccountWrapper } from "../hooks/deleteAccount";
 import { Checkbox } from 'react-native-paper';
 import deleteAccountWrapper from '../hooks/useDeleteAccount';
-import { globalStyles } from '../../../../styles/global';
+import globalStyles from '../../../../styles/global';
 import { useAuthContext } from '../../Authentication/context/AuthContext';
 
 const styles = StyleSheet.create({
@@ -71,13 +71,15 @@ export default function DeleteAccountForm() {
               value={props.values.current_password}
             />
             <Text>{props.errors.current_password}</Text>
-            <Checkbox
-              status={checked ? 'checked' : 'unchecked'}
-              onPress={() => {
-                setChecked(!checked);
-              }}
-            />
-            <Text style={{ fontWeight: 'bold' }}>I understand my account will be deleted permanently</Text>
+            <View style={{ flexDirection: 'row' }}>
+              <Checkbox
+                status={checked ? 'checked' : 'unchecked'}
+                onPress={() => {
+                  setChecked(!checked);
+                }}
+              />
+              <Text style={{ fontWeight: 'bold', alignSelf: 'center' }}>I understand my account will be deleted permanently</Text>
+            </View>
             {checked && (
             <Button
               title="CONFIRM DELETE ACCOUNT"
@@ -86,7 +88,7 @@ export default function DeleteAccountForm() {
             />
             ) }
 
-            {error && <Text className="error">{error}</Text>}
+            {error && <Text style={globalStyles.errorText}>{error}</Text>}
           </View>
         )}
       </Formik>

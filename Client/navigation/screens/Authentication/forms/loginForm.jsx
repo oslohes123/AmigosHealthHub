@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import { Formik } from 'formik';
 import PasswordInput from '../../../components/passwordInput';
-import { globalStyles } from '../../../../styles/global';
+import globalStyles from '../../../../styles/global';
 import useLogin from '../hooks/useLogin';
 
 const loginSchema = Yup.object().shape({
@@ -35,8 +35,11 @@ const formikLoginForm = () => {
               value={props.values.email}
               keyboardType="email-address"
             />
-            <Text>{props.errors.email}</Text>
-
+            {props.errors.email && (
+            <Text style={globalStyles.errorText}>
+              {props.errors.email}
+            </Text>
+            )}
             <PasswordInput
               label="Password"
               value={props.values.password}
@@ -45,7 +48,11 @@ const formikLoginForm = () => {
               showPassword={showPassword}
               setShowPassword={setShowPassword}
             />
-            <Text>{props.errors.password}</Text>
+            {props.errors.password && (
+            <Text style={globalStyles.errorText}>
+              {props.errors.password}
+            </Text>
+            )}
             <Button
               testID='login'
               title="Login"
@@ -62,7 +69,7 @@ const formikLoginForm = () => {
               />
             </>
             )}
-            {error && <Text className="error">{error}</Text>}
+            {error && <Text style={globalStyles.errorText}>{error}</Text>}
           </View>
         )}
       </Formik>

@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import { Formik } from 'formik';
 import PasswordInput from '../../../components/passwordInput';
-import { globalStyles } from '../../../../styles/global';
+import globalStyles from '../../../../styles/global';
 import useSignUp from '../hooks/useSignUp';
 
 const passwordRegex = /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*!=]).*$/;
@@ -77,16 +77,23 @@ function SignUpForm() {
               onChangeText={props.handleChange('firstName')}
               value={props.values.firstName}
             />
-            <Text>{props.errors.firstName}</Text>
 
+            {props.errors.firstName && (
+            <Text style={globalStyles.errorText}>
+              {props.errors.firstName}
+            </Text>
+            )}
             <TextInput
               style={globalStyles.input}
               placeholder="Last Name"
               onChangeText={props.handleChange('lastName')}
               value={props.values.lastName}
             />
-            <Text>{props.errors.lastName}</Text>
-
+            {props.errors.lastName && (
+            <Text style={globalStyles.errorText}>
+              {props.errors.lastName}
+            </Text>
+            )}
             <TextInput
               style={globalStyles.input}
               placeholder="Email"
@@ -94,8 +101,11 @@ function SignUpForm() {
               value={props.values.email}
               keyboardType="email-address"
             />
-            <Text>{props.errors.email}</Text>
-
+            {props.errors.email && (
+            <Text style={globalStyles.errorText}>
+              {props.errors.email}
+            </Text>
+            )}
             <TextInput
               style={globalStyles.input}
               placeholder="Age"
@@ -103,17 +113,23 @@ function SignUpForm() {
               value={props.values.age}
               keyboardType="number-pad"
             />
-            <Text>{props.errors.age}</Text>
-
+            {props.errors.age && (
+            <Text style={globalStyles.errorText}>
+              {props.errors.age}
+            </Text>
+            )}
             <TextInput
               style={globalStyles.input}
-              placeholder="Calories"
+              placeholder="Calorie Goal: (Default = 2000)"
               onChangeText={props.handleChange('calories')}
               value={props.values.calories}
               keyboardType="number-pad"
             />
-            <Text>{props.errors.calories}</Text>
-
+            {props.errors.calories && (
+            <Text style={globalStyles.errorText}>
+              {props.errors.calories}
+            </Text>
+            )}
             <PasswordInput
               label="Password"
               style={globalStyles.input}
@@ -123,8 +139,11 @@ function SignUpForm() {
               showPassword={showPassword}
               setShowPassword={setShowPassword}
             />
-            <Text>{props.errors.password}</Text>
-
+            {props.errors.password && (
+            <Text style={globalStyles.errorText}>
+              {props.errors.password}
+            </Text>
+            )}
             <PasswordInput
               style={globalStyles.input}
               secureTextEntry
@@ -136,7 +155,7 @@ function SignUpForm() {
             />
             <Text>{props.errors.confirm_password}</Text>
             <Button
-              testID='signUp'
+              testID="signUp"
               title="Sign Up"
               onPress={props.handleSubmit}
               disabled={isLoading}
@@ -151,7 +170,7 @@ function SignUpForm() {
               />
             </>
             )}
-            {error && <Text className="error">{error}</Text>}
+            {error && <Text style={globalStyles.errorText}>{error}</Text>}
           </View>
         )}
       </Formik>
