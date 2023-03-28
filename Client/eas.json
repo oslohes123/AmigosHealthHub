@@ -6,23 +6,14 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal",
-      "ios": {
-        "resourceClass": "m-medium"
-      }
-    },
-    "preview": {
-      "distribution": "internal",
-      "ios": {
-        "resourceClass": "m-medium"
+
+      "env":{
+        "URL": "https://healthhubunitedkingdom.azurewebsites.net",
+        "USING_DEPLOYED_SERVER": "true"
       },
       "android": {
         "buildType": "apk"
-      }
-    },
-    "preview2": {
-      "android": {
-        "gradleCommand": ":app:assembleRelease"
-      }
+     }
     },
     "production": {
       "env":{
