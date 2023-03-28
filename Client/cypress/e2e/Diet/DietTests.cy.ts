@@ -83,6 +83,46 @@ describe("Check diet food search", () => {
             .click()
             .type('Burger', {force: true})
     })
+
+    it("scroll view containing list of branded items should be displayed", () => {
+        cy.get('[data-testid="branded"]')
+            .click()
+        cy.get('input[placeholder="Find food..."]')
+            .click()
+            .type('Burger', {force: true})
+        cy.get('[data-testid="brandedScroll"]')
+            .should('be.visible')
+    })
+
+    it("scroll view containing list of unbranded items should be displayed", () => {
+        cy.get('input[placeholder="Find food..."]')
+            .click()
+            .type('apple', {force: true})
+        cy.get('[data-testid="UnbrandedScroll"]')
+            .should('be.visible')
+    })
+
+    it("clicking branded food should navigate to food details page", () => {
+        cy.get('input[placeholder="Find food..."]')
+            .click()
+            .type('apple', {force: true})
+        cy.contains('apple')
+            .click()
+        cy.contains('Food Details')
+            .should('be.visible')
+    })
+
+    it("clicking unbranded food should navigate to food details page", () => {
+        cy.get('[data-testid="branded"]')
+            .click()
+        cy.get('input[placeholder="Find food..."]')
+            .click()
+            .type('Mango Chunks', {force: true})
+        cy.contains('Mango Chunks')
+            .click()
+        cy.contains('Food Details')
+            .should('be.visible')
+    })
 })
 
 
