@@ -1,7 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { useContext } from 'react';
 import {
-  View, StyleSheet, Text, SafeAreaView, TouchableOpacity,
+  View, StyleSheet, Text, SafeAreaView, TouchableOpacity, ScrollView,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import themeContext from '../../theme/themeContext';
@@ -45,7 +45,7 @@ export default function Profile({ navigation }) {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
-
+      <ScrollView>
       <View style={styles.iconView}>
         <Ionicons name="person-circle-outline" size={60} color={theme.color} />
       </View>
@@ -73,6 +73,7 @@ export default function Profile({ navigation }) {
         <Text style={styles.buttonText}>Delete Account</Text>
         <Ionicons name="ios-arrow-forward" size={32} color="black" />
       </TouchableOpacity>
+      </ScrollView>
     </SafeAreaView>
   );
 }
