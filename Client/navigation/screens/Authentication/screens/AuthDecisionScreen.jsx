@@ -4,6 +4,7 @@ import {
 import React from 'react';
 // import LottieView from 'lottie-react-native';
 import * as data from '../../../../assets/animation.json';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const styles = StyleSheet.create({
   container: {
@@ -32,7 +33,7 @@ export default function AuthDecisionScreen({ navigation }) {
           loop
           speed={1.5}
         /> */}
-        <View style={{ marginTop: '120%' }}>
+        <SafeAreaView style={{ marginTop: '100%' }}>
           <Button
             title="Log into account"
             onPress={() => {
@@ -47,7 +48,7 @@ export default function AuthDecisionScreen({ navigation }) {
               navigation.navigate('Sign Up');
             }}
           />
-        </View>
+        </SafeAreaView>
       </View>
     </View>
   );

@@ -212,11 +212,11 @@ export default function DietDashboardScreen({ navigation }) {
     <SafeAreaView style={[styles.container, { backgroundColor: background }]}>
       <View>
       <View style={{ flexDirection: 'row', justifyContent: 'center', marginHorizontal: 20 }}>
-        <View style={[styles.headerView, { borderColor: color, justifyContent: 'center' }]}>
+        <View testID='goal' style={[styles.headerView, { borderColor: color, justifyContent: 'center' }]}>
           <Text style={[styles.title, { color }]}>Calorie Goal</Text>
           <Text style={[styles.number, { color }, { borderColor: color }]}>{calorieGoal}</Text>
         </View>
-        <View style={[styles.headerView, { borderColor: color }]}>
+        <View testID='remaining' style={[styles.headerView, { borderColor: color }]}>
           <Text style={[styles.title, { color }]}>Calories Remaining</Text>
           <Text style={[styles.number, { color }, { borderColor: color }]}>
             {caloriesRemaining}
@@ -241,10 +241,12 @@ export default function DietDashboardScreen({ navigation }) {
             {
               value: 'Unbranded',
               label: 'Unbranded',
+              testID:'Unbranded',
             },
             {
               value: 'Branded',
               label: 'Branded',
+              testID:'branded',
             },
           ]}
           />
@@ -276,7 +278,7 @@ export default function DietDashboardScreen({ navigation }) {
         <View style={{flexDirection: 'row'}}>
         {foodInput.length > 2
           && segValue === 'Unbranded' && (
-            <ScrollView style={styles.scroll}>
+            <ScrollView testID='UnbrandedScroll' style={styles.scroll}>
               {genericFoodList.length > 2 && genericFoodList.map((item) => (
                 <TouchableOpacity
                   onPress={() => foodPress(item.food_name, null)}
@@ -296,7 +298,7 @@ export default function DietDashboardScreen({ navigation }) {
 
           {foodInput.length > 2
             && segValue === 'Branded' && (
-            <ScrollView style={styles.scroll}>
+            <ScrollView testID='brandedScroll' style={styles.scroll}>
               {specificFoodList.length > 2 && specificFoodList.map((item) => (
                 <TouchableOpacity
                   onPress={() => foodPress(null, item.item_id)}
@@ -318,10 +320,11 @@ export default function DietDashboardScreen({ navigation }) {
         </View>
         {foodInput.length <= 2 && (
           <FAB 
-          onPress={pressHandler3} 
-          style={{ alignSelf: 'center', width: screenWidth * 0.6, margin: 20 }}
-          label="View Food History" 
-          />
+            testID='foodHistory'
+            onPress={pressHandler3} 
+            style={{ alignSelf: 'center', width: screenWidth * 0.6, margin: 20 }}
+            label="View Food History" 
+            />
         )}
         </View>
     </SafeAreaView>
