@@ -245,7 +245,7 @@ export default function FoodDetails({ route, navigation }) {
             <TouchableWithoutFeedback>
               <View style={[ styles.box, {borderColor: theme.color} ]}>
                 <Text style={[styles.text, { color: theme.color }]}>Brand name</Text>
-                <Text style={[styles.values, { color: theme.color }]}>{Brand}</Text>
+                <Text style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Brand}</Text>
               </View>
             </TouchableWithoutFeedback>
           ) : null}
@@ -254,6 +254,7 @@ export default function FoodDetails({ route, navigation }) {
       </ScrollView>
       <View style={styles.buttonContainer}>
         <FAB
+          testID='add'
           onPress={save}
           icon="check"
           alignSelf={'center'}

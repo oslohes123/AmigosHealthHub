@@ -97,6 +97,7 @@ export default function WorkoutHistoryScreen({ navigation }) {
         {!isLoading && results
           && results.map((item) => (
             <TouchableOpacity
+              testID={`${item.workoutname}`}
               key={`${item.date} ${item.time}`}
               style={[styles.itemBorder, { borderColor: color }]}
               onPress={() => {

@@ -8,12 +8,13 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Formik } from 'formik';
 // import { deleteAccountWrapper } from "../hooks/deleteAccount";
+import { Checkbox } from 'react-native-paper';
 import deleteAccountWrapper from '../hooks/useDeleteAccount';
-import { globalStyles } from '../../../../styles/global';
+import globalStyles from '../../../../styles/global';
 import { useAuthContext } from '../../Authentication/context/AuthContext';
 
 const styles = StyleSheet.create({
@@ -37,10 +38,15 @@ const styles = StyleSheet.create({
     marginTop: '5%',
   },
 });
+const DeleteAccountFormSchema = Yup.object().shape({
 
+  current_password: Yup.string()
+    .required('Current Password Required!'),
+});
 export default function DeleteAccountForm() {
   const { deleteAccount, isLoading, error } = deleteAccountWrapper();
   const { user } = useAuthContext();
+  const [checked, setChecked] = useState(false);
   // const userEmail = getUserDetails();
   return (
     <SafeAreaView style={globalStyles.container}>
@@ -51,7 +57,7 @@ export default function DeleteAccountForm() {
         onSubmit={async (values) => {
           await deleteAccount(values.current_password);
         }}
-        // validationSchema={deleteAccountSchema}
+        validationSchema={DeleteAccountFormSchema}
       >
         {(props) => (
           <View>
@@ -65,13 +71,24 @@ export default function DeleteAccountForm() {
               value={props.values.current_password}
             />
             <Text>{props.errors.current_password}</Text>
-
+            <View style={{ flexDirection: 'row' }}>
+              <Checkbox
+                status={checked ? 'checked' : 'unchecked'}
+                onPress={() => {
+                  setChecked(!checked);
+                }}
+              />
+              <Text style={{ fontWeight: 'bold', alignSelf: 'center' }}>I understand my account will be deleted permanently</Text>
+            </View>
+            {checked && (
             <Button
               title="CONFIRM DELETE ACCOUNT"
               onPress={props.handleSubmit}
               disabled={isLoading}
             />
-            {error && <Text className="error">{error}</Text>}
+            ) }
+
+            {error && <Text style={globalStyles.errorText}>{error}</Text>}
           </View>
         )}
       </Formik>

@@ -10,14 +10,14 @@ const screenHeight = Dimensions.get('window').height;
 
 export default function App({ navigation }) {
   const { background } = useContext(themeContext);
-  const inputScreenButton = () => {
-    navigation.navigate('ReviewYourDay');
-  };
-  const outputScreenButton = () => {
-    navigation.navigate('ReviewYourPast');
-  };
 
   const styles = StyleSheet.create({
+    view: {
+      flexDirection: 'row',
+      width: screenWidth * 0.95,
+      justifyContent: 'space-between',
+      marginBottom: 20,
+    },
     container: {
       flex: 1,
       backgroundColor: '#fff',
@@ -43,8 +43,8 @@ export default function App({ navigation }) {
   // components for the screen
   return (
     <View style={[styles.container, { backgroundColor: background }]}>
-      <View style={{ flexDirection: 'row', width: screenWidth * 0.95, justifyContent: 'space-between', marginBottom: 20 }}>
-        <TouchableOpacity onPress={() => navigation.navigate("Mental History")}>
+      <View style={styles.view}>
+        <TouchableOpacity onPress={() => navigation.navigate('Mental History')}>
           <LinearGradient
             colors={['blue', 'grey']}
             style={styles.widget}
@@ -58,7 +58,7 @@ export default function App({ navigation }) {
           </LinearGradient>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.navigate("Review Your Day")}>
+        <TouchableOpacity onPress={() => navigation.navigate('Review Your Day')}>
           <LinearGradient
             colors={['blue', 'grey']}
             style={styles.widget}

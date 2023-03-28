@@ -11,10 +11,9 @@ import {
 } from 'react-native';
 import Slider from '@react-native-community/slider';
 import React, { useState, useContext } from 'react';
-import themeContext from '../../../theme/themeContext';
 import { Formik } from 'formik';
-// npm install , npm install @react-native-community/slider --save
-import { globalStyles } from '../../../../styles/global';
+import themeContext from '../../../theme/themeContext';
+
 import useSubmit from '../hooks/useAddWordFace';
 
 // make a list of faces to be selected from to be displayed in form
@@ -51,7 +50,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   image: {
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   button: {},
   scrollbar: {},
@@ -65,14 +64,12 @@ const styles = StyleSheet.create({
 
 export default function RateMentalHealthForm() {
   const {
-    theme,
     background,
-    secondary,
     color,
   } = useContext(themeContext);
   const { submit, isLoading, error } = useSubmit();
   const [faceInputValue, setFaceValue] = useState(3);
-  const [moodI, setRangeI] = useState(neutral);
+  const [moodI, setRangeI] = useState(happy);
   // this function changes the slider value when slider is used
   const handleFaceInputChange = (value) => {
     setFaceValue(value);
@@ -105,7 +102,7 @@ export default function RateMentalHealthForm() {
               onValueChange={(value) => handleFaceInputChange(value)}
             />
             <View style={{ flexDirection: 'row' }}>
-              <Text style={[styles.label, {color}]}>Word:</Text>
+              <Text style={[styles.label, { color }]}>Word:</Text>
               <TextInput
                 style={[styles.input, { borderColor: color, color }]}
                 placeholder="Word Of The Day:"

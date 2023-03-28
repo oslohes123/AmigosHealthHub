@@ -330,7 +330,7 @@ export default function TrackedWorkoutInfoScreen({ route, navigation }) {
         <FAB
           icon="delete"
           style={[styles.fab, { width: screenWidth * 0.95 }]}
-          label="Delete Plan"
+          label="Delete History"
           onPress={() => {
             deleteTrackedWorkout(workoutname, date, time);
             navigation.pop();

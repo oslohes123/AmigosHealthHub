@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   },
   scroll: {
     marginTop: 10,
-    height: screenHeight * 0.4,
+    height: screenHeight * 0.48,
     alignSelf: 'center',
     width: screenWidth * 0.95,
   },
@@ -143,7 +143,7 @@ export default function DietDashboardScreen({ navigation }) {
 
   const [caloriesRemaining, setCaloriesRemaining] = useState(0);
 
-  const [segValue, setSegValue] = useState('');
+  const [segValue, setSegValue] = useState('Unbranded');
 
   async function getCalorieData() {
     const data = await getLatestCalorieGoal(id);
@@ -210,12 +210,13 @@ export default function DietDashboardScreen({ navigation }) {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: background }]}>
+      <View>
       <View style={{ flexDirection: 'row', justifyContent: 'center', marginHorizontal: 20 }}>
-        <View style={[styles.headerView, { borderColor: color, justifyContent: 'center' }]}>
+        <View testID='goal' style={[styles.headerView, { borderColor: color, justifyContent: 'center' }]}>
           <Text style={[styles.title, { color }]}>Calorie Goal</Text>
           <Text style={[styles.number, { color }, { borderColor: color }]}>{calorieGoal}</Text>
         </View>
-        <View style={[styles.headerView, { borderColor: color }]}>
+        <View testID='remaining' style={[styles.headerView, { borderColor: color }]}>
           <Text style={[styles.title, { color }]}>Calories Remaining</Text>
           <Text style={[styles.number, { color }, { borderColor: color }]}>
             {caloriesRemaining}
@@ -232,7 +233,7 @@ export default function DietDashboardScreen({ navigation }) {
           placeholderTextColor={color}
         />
 
-        <SegmentedButtons 
+        {foodInput.length > 2 && (        <SegmentedButtons 
           style={{ width: screenWidth * 0.95, alignSelf: 'center' }}
           value={segValue}
           onValueChange={setSegValue}
@@ -240,39 +241,44 @@ export default function DietDashboardScreen({ navigation }) {
             {
               value: 'Unbranded',
               label: 'Unbranded',
+              testID:'Unbranded',
             },
             {
               value: 'Branded',
               label: 'Branded',
+              testID:'branded',
             },
           ]}
           />
+          )}
         </View>
-
+        </View>
       <View>
           {foodInput.length <= 2 && pieChartData.length > 0 && (
-             
-             <TouchableOpacity style={styles.pieWidget} onPress={pieChartPress}>
-             <PieChart
-               data={pieChartData}
-               width={0.95 * screenWidth}
-               height={210}
-               chartConfig={{
-                 color: () => 'black',
-               }}
-               accessor="amount"
-               backgroundColor="transparent"
-             />
-           </TouchableOpacity>
-            )}
-            {foodInput.length === 0 && pieChartData.length === 0 && (
-             <Text style={[styles.info, {color: color}]}>Add Food to view Diet Info</Text>
-            )}
+            
+            <View style={{ height: screenHeight * 0.4, justifyContent: 'center'}}>
+              <TouchableOpacity style={styles.pieWidget} onPress={pieChartPress}>
+              <PieChart
+                data={pieChartData}
+                width={0.95 * screenWidth}
+                height={210}
+                chartConfig={{
+                  color: () => 'black',
+                  }}
+                  accessor="amount"
+                  backgroundColor="transparent"
+                  />
+              </TouchableOpacity>
+            </View>
+          )}
+          {foodInput.length === 0 && pieChartData.length === 0 && (
+            <Text style={[styles.info, {color: color}]}>Add Food to view Diet Info</Text>
+          )}
 
         <View style={{flexDirection: 'row'}}>
         {foodInput.length > 2
           && segValue === 'Unbranded' && (
-            <ScrollView style={styles.scroll}>
+            <ScrollView testID='UnbrandedScroll' style={styles.scroll}>
               {genericFoodList.length > 2 && genericFoodList.map((item) => (
                 <TouchableOpacity
                   onPress={() => foodPress(item.food_name, null)}
@@ -282,7 +288,6 @@ export default function DietDashboardScreen({ navigation }) {
                   <View>
                     <View>
                       <Text style={styles.textData} key={item.food_name}>{item.food_name}</Text>
-                      <Text style={{ fontSize: 15, alignSelf: 'center', width: '100%' }}>(Common Food)</Text>
                     </View>
                     <Ionicons name="chevron-forward-outline" size={32} color="black" />
                   </View>
@@ -293,7 +298,7 @@ export default function DietDashboardScreen({ navigation }) {
 
           {foodInput.length > 2
             && segValue === 'Branded' && (
-            <ScrollView style={styles.scroll}>
+            <ScrollView testID='brandedScroll' style={styles.scroll}>
               {specificFoodList.length > 2 && specificFoodList.map((item) => (
                 <TouchableOpacity
                   onPress={() => foodPress(null, item.item_id)}
@@ -303,7 +308,7 @@ export default function DietDashboardScreen({ navigation }) {
                   <View style={{ flex: 1, justifyContent: 'space-between' }}>
                     <View>
                       <Text style={styles.textData} key={item.food_name}>{item.food_name}</Text>
-                      <Text style={{ fontSize: 15, alignSelf: 'center', width: '100%' }}>(Branded Food)</Text>
+                      <Text style={{ fontSize: 15, alignSelf: 'center', width: '100%' }}>({item.brand_name})</Text>
                     </View>
                     <Ionicons name="chevron-forward-outline" size={32} color="black" />
                   </View>
@@ -313,11 +318,14 @@ export default function DietDashboardScreen({ navigation }) {
             )}
 
         </View>
+        {foodInput.length <= 2 && (
           <FAB 
+            testID='foodHistory'
             onPress={pressHandler3} 
             style={{ alignSelf: 'center', width: screenWidth * 0.6, margin: 20 }}
             label="View Food History" 
             />
+        )}
         </View>
     </SafeAreaView>
   );

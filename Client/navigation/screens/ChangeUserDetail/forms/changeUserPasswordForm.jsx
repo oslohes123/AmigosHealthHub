@@ -4,10 +4,10 @@ import {
   Button, Text, View, SafeAreaView,
 } from 'react-native';
 import React, { useState } from 'react';
-
+import { Checkbox } from 'react-native-paper';
 import { Formik } from 'formik';
 import PasswordInput from '../../../components/passwordInput';
-import { globalStyles } from '../../../../styles/global';
+import globalStyles from '../../../../styles/global';
 import useChangeProfilePassword from '../hooks/useChangeProfilePassword';
 
 const passwordRegex = /^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*!=]).*$/;
@@ -32,6 +32,7 @@ const ChangeUserPasswordSchema = Yup.object().shape({
 });
 
 export default function ChangeUserPasswordForm() {
+  const [checked, setChecked] = useState(false);
   const { changePassword, isLoading, error } = useChangeProfilePassword();
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
@@ -95,12 +96,23 @@ export default function ChangeUserPasswordForm() {
               </Text>
             )}
 
-            {error && <Text style={globalStyles.errorText}>{error}</Text>}
+            <View style={{ flexDirection: 'row' }}>
+              <Checkbox
+                status={checked ? 'checked' : 'unchecked'}
+                onPress={() => {
+                  setChecked(!checked);
+                }}
+              />
+              <Text style={{ fontWeight: 'bold', alignSelf: 'center' }}>I understand I will be logged out</Text>
+            </View>
+            {checked && (
             <Button
               title="Save"
               onPress={props.handleSubmit}
               disabled={!props.isValid || isLoading}
             />
+            )}
+            {error && <Text style={globalStyles.errorText}>{error}</Text>}
           </View>
         )}
       </Formik>

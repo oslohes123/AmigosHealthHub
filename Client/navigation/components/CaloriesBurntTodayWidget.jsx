@@ -61,7 +61,7 @@ export default function CaloriesBurntTodayWidget() {
     }
   }, [navigation, isFocused]);
   const pressHandler = () => {
-    navigation.navigate('View Stats');
+    navigation.navigate("Fitness", {screen: 'Workout History'});
   };
 
   return (

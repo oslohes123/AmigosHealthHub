@@ -7,15 +7,12 @@ import DeleteAccountForm from '../forms/deleteAccountForm';
 
 export default function ChangeUserPasswordScreen() {
   return (
-    <>
+    <SafeAreaView
+      style={{
+        flex: 2,
+      }}
+    >
       {DeleteAccountForm()}
-      <SafeAreaView
-        style={{
-          flex: 2,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      />
-    </>
+    </SafeAreaView>
   );
 }
