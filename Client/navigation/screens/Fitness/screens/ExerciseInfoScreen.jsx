@@ -81,7 +81,7 @@ export default function ExerciseInfoScreen({ route, navigation }) {
             )}
 
       {!isLoading && (exerciseInfo === null || error)
-        && <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>Unable to retreive exercise information. Try again later.</Text>}
+        && <Text style={{ textAlign: 'center', fontWeight: 'bold', color }}>Unable to retreive exercise information. Try again later.</Text>}
 
       {!isLoading && exerciseInfo !== null
       && (

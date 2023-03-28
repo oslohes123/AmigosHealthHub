@@ -504,6 +504,15 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
               borderRadius={10}
             />
 
+            {isLoading
+            && (
+              <ActivityIndicator
+              animating
+              size={50}
+              color="#c2e7fe"
+              />
+              )}
+
             <View style={{ flexDirection: 'row' }}>
               <FAB
                 icon="close"
@@ -517,13 +526,14 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
                 style={styles.fab}
                 onPress={async () => {
                   if (workoutName.length > 1 && selectedExercises.length > 0) {
+                    
                     await addWorkout(workoutName, selectedExercises);
 
-                    if (message === 'Workout Plan created!') {
-                      Keyboard.dismiss();
-                      setNameModalVisible(false);
-                      navigation.pop();
-                    }
+                    // if (message === 'Workout Plan created!') {
+                    // }
+                    Keyboard.dismiss();
+                    setNameModalVisible(false);
+                    navigation.pop();
                   } else {
                     setSnackbarText('Could not save workout plan. Make sure at least 1 exercise has been selected and you have given the plan a name.');
                     setSnackbarVisible(true);
@@ -538,47 +548,41 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
         </SafeAreaView>
       </Modal>
 
-      <View style={styles.searchAndSave}>
+      {!isLoading && (
+        <View style={styles.searchAndSave}>
         <TextInput
-          autoFocus
-          clearButtonMode="always"
-          value={text}
-          onChangeText={(value) => setText(value)}
-          style={[
-            styles.search_bar,
-            {
-              borderColor: color,
-              color,
-              width: screenWidth * 0.75,
-            },
-          ]}
-          textAlign="center"
-          placeholder="Search Exercises"
-          placeholderTextColor={color}
-        />
+            autoFocus
+            clearButtonMode="always"
+            value={text}
+            onChangeText={(value) => setText(value)}
+            style={[
+              styles.search_bar,
+              {
+                borderColor: color,
+                color,
+                width: screenWidth * 0.75,
+              },
+            ]}
+            textAlign="center"
+            placeholder="Search Exercises"
+            placeholderTextColor={color}
+            />
 
-        <FAB
-          icon="check"
-          style={styles.fab}
-          onPress={() => {
-            setNameModalVisible(!nameModalVisible);
-          }}
-        />
-      </View>
+          <FAB
+            icon="check"
+            style={styles.fab}
+            onPress={() => {
+              setNameModalVisible(!nameModalVisible);
+            }}
+          />
+        </View>
+      )}
 
       <Text style={[styles.customWorkout, { color }]}>
         Exercises
       </Text>
 
-      {isLoading
-      && (
-        <ActivityIndicator
-          animating
-          size={50}
-          color="#c2e7fe"
-        />
-      )}
-
+    {!isLoading && (
       <ScrollView
         style={[styles.verticalScroll, { borderColor: color }]}
         bounces={false}
@@ -606,8 +610,9 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
           </TouchableOpacity>
         ))}
       </ScrollView>
+    )}
 
-      {selectedExercises.length > 0 && (
+      {!isLoading && selectedExercises.length > 0 && (
         <ScrollView
           style={[styles.horizontalScroll, { borderColor: color }]}
           horizontal

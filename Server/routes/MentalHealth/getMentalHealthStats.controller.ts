@@ -4,12 +4,17 @@ import { getWords, getFaces, getDates, average, wordFreq } from '../../utils/men
 import { getDate } from '../../utils/convertTimeStamptz'
 import { returnLastSeven, returnTodaysWord } from '../../utils/asyncMentalHealthFunctions'
 import moment from 'moment'
+import validateJSONSchema from '../../utils/validateJSONSchema'
+import { schemaForRequireduserid } from '../../utils/JSONSchemas/schemaForRequireduserid'
 require('dotenv').config()
 
 export const wordValues = async (req: Request, res: Response) => {
-  const { id } = req.headers
+  const { userid } = req.headers
+  if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
+  }
   // const { data, error }: any = await returnLastSeven(supabase, 'Mental Health', 'todays_word', 'created_at', id)
-  const { data, error }: any = await returnLastSeven(supabase, 'Mental Health', 'todays_word', 'created_at', id)
+  const { data, error }: any = await returnLastSeven(supabase, 'Mental Health', 'todays_word', 'created_at', userid)
   if (error) {
     return res.status(400).json({ mssg: 'Failed to retrieve last 7 words' })
   }
@@ -20,8 +25,11 @@ export const wordValues = async (req: Request, res: Response) => {
   }
 }
 export const dateValues = async (req: Request, res: Response) => {
-  const { id } = req.headers
-  const { data, error }: any = await returnLastSeven(supabase, 'Mental Health', 'created_at', 'created_at', id)
+  const { userid } = req.headers
+  if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
+  }
+  const { data, error }: any = await returnLastSeven(supabase, 'Mental Health', 'created_at', 'created_at', userid)
   if (error) {
     return res.status(400).json({ mssg: 'Failed to retrieve last 7 dates' })
   }
@@ -31,8 +39,11 @@ export const dateValues = async (req: Request, res: Response) => {
 }
 
 export const faceValues = async (req: Request, res: Response) => {
-  const { id } = req.headers
-  const { data, error }: any = await returnLastSeven(supabase, 'Mental Health', 'face_id', 'created_at', id)
+  const { userid } = req.headers
+  if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
+  }
+  const { data, error }: any = await returnLastSeven(supabase, 'Mental Health', 'face_id', 'created_at', userid)
   if (error) {
     return res.status(400).json({ mssg: 'Failed to retrieve last 7 faces' })
   }
@@ -44,8 +55,11 @@ export const faceValues = async (req: Request, res: Response) => {
 
 export const todaysValue = async (req: Request, res: Response) => {
   const todayDate = getDate(moment().format())
-  const { id } = req.headers
-  const { data, error }: any = await returnTodaysWord(supabase, 'Mental Health', 'user_id', 'created_at', id, todayDate, 'todays_word')
+  const { userid } = req.headers
+  if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
+  }
+  const { data, error }: any = await returnTodaysWord(supabase, 'Mental Health', 'user_id', 'created_at', userid, todayDate, 'todays_word')
 
   if (error) {
     return res.status(400).json({ mssg: 'Something went wrong!' })

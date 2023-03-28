@@ -182,16 +182,16 @@ test.after.always('guaranteed cleanup', async (t: any) => {
 test(`GET ${faceGraphRoute} with incorrect ID`, async (t: any) => {
   const response = await request(app)
     .get(faceGraphRoute)
-    .set({ authorization: token, id: wrongUUID })
+    .set({ authorization: token, userid: wrongUUID })
 
   t.true(response.status === 400)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
-  t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Failed to retrieve last 7 faces' }))
+  t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' }))
 })
 test(`GET ${faceGraphRoute} with correct ID`, async (t: any) => {
   const response = await request(app)
     .get(faceGraphRoute)
-    .set({ authorization: token, id: uuid })
+    .set({ authorization: token, userid: uuid })
 
   const expectedArgs = {
     mssg: 'Retrieved faces',

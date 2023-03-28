@@ -5,7 +5,9 @@ import {
 import Cloud from 'react-native-word-cloud';
 import { LineChart } from 'react-native-chart-kit';
 // npx expo install react-native-svg
-import React, { useEffect, useState, Component, useContext } from 'react';
+import React, {
+  useEffect, useState, Component, useContext,
+} from 'react';
 import themeContext from '../../../theme/themeContext';
 import useGetFaceValues from '../hooks/useGetFaceValues';
 import useGetWordValues from '../hooks/useGetWordValues';
@@ -22,7 +24,7 @@ const styles = StyleSheet.create({
   },
 });
 export default function OutputMentalGraphs() {
-  const { theme, background, secondary, color } = useContext(themeContext);
+  const { background, color } = useContext(themeContext);
   const [getFaceValuesArray, setFaceValuesArray] = useState([1]);
   const [getDateValuesArray, setDateValuesArray] = useState([0]);
   const [getWordValuesArray, setWordValuesArray] = useState([{ word: '', freq: 0, colour: '#ffffff' }]);

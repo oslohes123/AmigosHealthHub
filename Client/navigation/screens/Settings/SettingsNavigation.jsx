@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { useContext } from 'react';
+
 import themeContext from '../../theme/themeContext';
 import DietSettings from './DietSettings';
 import ExerciseSettings from './ExerciseSettings';
@@ -40,7 +40,8 @@ export default function SettingsNavigation() {
       headerStyle: { backgroundColor: background },
       headerTitleStyle: styles.header,
       headerShadowVisible: false,
-    }}>
+    }}
+    >
       <Stack.Screen name={SettingsDashboardName} component={SettingsDashboard} />
       <Stack.Screen name={DietSettingsName} component={DietSettings} />
       <Stack.Screen name={ExerciseSettingsName} component={ExerciseSettings} />

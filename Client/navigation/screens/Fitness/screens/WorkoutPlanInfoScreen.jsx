@@ -599,9 +599,10 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
             });
 
             const submittableState = Object.values(copyDataToTrack).map((obj) => {
-              if ((!Number.isNaN(Number(obj.duration)) || !Number.isNaN(Number(obj.distance)))
-              || ((obj.sets != null && obj.sets !== '' && !Number.isNaN(Number(obj.sets)) && obj.reps != null && obj.reps !== '' && obj.reps !== [] && !Number.isNaN(Number(obj.reps))) 
-              || (obj.distance != null && obj.distance !== '' && !Number.isNaN(Number(obj.distance))))) {
+              if ((!Number.isNaN(Number(obj.sets)) && Number(obj.sets) > 0 && obj.sets != null && obj.sets != ""
+              && obj.reps != "[]" && obj.reps != null &&  obj.reps != "" && obj.weight != "[]" && obj.weight != null && obj.reps != "" && (obj.reps).length === (obj.weight).length)
+              || (Number(obj.duration) > 0 && Number(obj.duration) != null && Number(obj.duration) != null && !Number.isNaN(Number(obj.duration)))
+              || (Number(obj.distance) > 0 && Number(obj.distance) != null && Number(obj.distance) != null && !Number.isNaN(Number(obj.distance)))) {
                 return true;
               }
               return false;
