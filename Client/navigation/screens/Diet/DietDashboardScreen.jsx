@@ -210,6 +210,7 @@ export default function DietDashboardScreen({ navigation }) {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: background }]}>
+      <View>
       <View style={{ flexDirection: 'row', justifyContent: 'center', marginHorizontal: 20 }}>
         <View style={[styles.headerView, { borderColor: color, justifyContent: 'center' }]}>
           <Text style={[styles.title, { color }]}>Calorie Goal</Text>
@@ -249,7 +250,7 @@ export default function DietDashboardScreen({ navigation }) {
           />
           )}
         </View>
-
+        </View>
       <View>
           {foodInput.length <= 2 && pieChartData.length > 0 && (
             
