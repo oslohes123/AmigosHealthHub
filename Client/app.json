@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "AmigosHealthApp",
-    "slug": "AmigosHealthApp",
+    "slug": "healthhub",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
@@ -12,20 +12,34 @@
       "image":"./assets/splash.png"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/a5f2f698-ccb3-4104-9867-5bfc14546fa9"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.oslohes123.healthhub"
     },
     "android": {
       "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
+      },
+      "package": "com.oslohes123.healthhub"
+    },
+    "web": {},
+    "extra": {
+      "eas": {
+        "projectId": "a5f2f698-ccb3-4104-9867-5bfc14546fa9"
       }
     },
-    "web": {
+    "owner": "oslohes123",
+    "jsEngine": "hermes",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   }
 }
