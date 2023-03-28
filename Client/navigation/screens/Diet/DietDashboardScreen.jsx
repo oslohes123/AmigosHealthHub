@@ -276,7 +276,7 @@ export default function DietDashboardScreen({ navigation }) {
         <View style={{flexDirection: 'row'}}>
         {foodInput.length > 2
           && segValue === 'Unbranded' && (
-            <ScrollView style={styles.scroll}>
+            <ScrollView testID='UnbrandedScroll' style={styles.scroll}>
               {genericFoodList.length > 2 && genericFoodList.map((item) => (
                 <TouchableOpacity
                   onPress={() => foodPress(item.food_name, null)}
@@ -297,7 +297,7 @@ export default function DietDashboardScreen({ navigation }) {
 
           {foodInput.length > 2
             && segValue === 'Branded' && (
-            <ScrollView style={styles.scroll}>
+            <ScrollView testID='brandedScroll' style={styles.scroll}>
               {specificFoodList.length > 2 && specificFoodList.map((item) => (
                 <TouchableOpacity
                   onPress={() => foodPress(null, item.item_id)}
