@@ -254,6 +254,7 @@ export default function FoodDetails({ route, navigation }) {
       </ScrollView>
       <View style={styles.buttonContainer}>
         <FAB
+          testID='add'
           onPress={save}
           icon="check"
           alignSelf={'center'}

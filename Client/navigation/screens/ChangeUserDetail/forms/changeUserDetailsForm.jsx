@@ -3,11 +3,11 @@ import * as Yup from 'yup';
 import {
   Button, Text, TextInput, View, SafeAreaView, StyleSheet,
 } from 'react-native';
-import { ActivityIndicator, MD2Colors } from 'react-native-paper';
+import { ActivityIndicator, MD2Colors, Checkbox } from 'react-native-paper';
 import React, { useState, useContext, useEffect } from 'react';
 import { Formik } from 'formik';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
-import { globalStyles } from '../../../../styles/global';
+import globalStyles from '../../../../styles/global';
 import useChangeProfileDetails from '../hooks/useChangeProfileDetails';
 import themeContext from '../../../theme/themeContext';
 
@@ -31,13 +31,14 @@ export default function ChangeUserDetailsForm() {
   const [age, setage] = useState(null);
   const { getUserInfo, isLoadingUserInfo, errorUserInfo } = useGetUserInfo();
   const { changeStats, isLoading, error } = useChangeProfileDetails();
+  const [checked, setChecked] = useState(false);
   const navigation = useNavigation();
   const styles = StyleSheet.create({
     head: {
       fontSize: 20,
       fontWeight: 'bold',
       marginLeft: '2%',
-      marginTop: '-3%',
+      marginTop: '3%',
     },
   });
   const { color } = theme;
@@ -79,15 +80,15 @@ export default function ChangeUserDetailsForm() {
 
         {(props) => (
           <View>
-                {isLoadingUserInfo && (
-    <ActivityIndicator
-      animating
-      size={40}
-      color={MD2Colors.greenA400}
-    />
-)}
-{errorUserInfo && <Text>{errorUserInfo}</Text>}
-            
+            {isLoadingUserInfo && (
+            <ActivityIndicator
+              animating
+              size={40}
+              color={MD2Colors.greenA400}
+            />
+            )}
+            {errorUserInfo && <Text style={globalStyles.errorText}>{errorUserInfo}</Text>}
+
             <Text style={[styles.head, { color }]}>First Name</Text>
             <TextInput
               style={[globalStyles.input, { color }]}
@@ -96,8 +97,11 @@ export default function ChangeUserDetailsForm() {
               onChangeText={props.handleChange('firstName')}
               value={props.values.firstName}
             />
-            <Text>{props.errors.firstName}</Text>
-
+            {props.errors.firstName && (
+              <Text style={globalStyles.errorText}>
+                {props.errors.firstName}
+              </Text>
+            )}
             <Text style={[styles.head, { color }]}>Last Name</Text>
             <TextInput
               style={[globalStyles.input, { color }]}
@@ -106,8 +110,11 @@ export default function ChangeUserDetailsForm() {
               onChangeText={props.handleChange('lastName')}
               value={props.values.lastName}
             />
-            <Text>{props.errors.lastName}</Text>
-
+            {props.errors.lastName && (
+              <Text style={globalStyles.errorText}>
+                {props.errors.lastName}
+              </Text>
+            )}
             <Text style={[styles.head, { color }]}>Email</Text>
             <TextInput
               style={[globalStyles.input, { color }]}
@@ -117,8 +124,11 @@ export default function ChangeUserDetailsForm() {
               value={props.values.email}
               keyboardType="email-address"
             />
-            <Text>{props.errors.email}</Text>
-
+            {props.errors.email && (
+              <Text style={globalStyles.errorText}>
+                {props.errors.email}
+              </Text>
+            )}
             <Text style={[styles.head, { color }]}>Age</Text>
             <TextInput
               style={[globalStyles.input, { color }]}
@@ -128,14 +138,37 @@ export default function ChangeUserDetailsForm() {
               value={props.values.age}
               keyboardType="number-pad"
             />
-            <Text>{props.errors.age}</Text>
-
+            {props.errors.age && (
+            <Text style={globalStyles.errorText}>
+              {props.errors.age}
+            </Text>
+            )}
+  
+            {/* <View style={{ flexDirection: 'row' }}>
+              <Checkbox
+                status={checked ? 'checked' : 'unchecked'}
+                onPress={() => {
+                  setChecked(!checked);
+                }}
+              />
+              <Text style={{ fontWeight: 'bold', alignSelf: 'center' }}>I will be logged out</Text>
+            </View> */}
             <Button
               title="Save details"
               onPress={props.handleSubmit}
               disabled={isLoading}
             />
-            {error && <Text className="error">{error}</Text>}
+
+            {/* {
+              checked && (
+              <Button
+                title="Save details"
+                onPress={props.handleSubmit}
+                disabled={isLoading}
+              />
+              )
+            } */}
+            {error && <Text style={globalStyles.errorText}>{error}</Text>}
           </View>
         )}
       </Formik>

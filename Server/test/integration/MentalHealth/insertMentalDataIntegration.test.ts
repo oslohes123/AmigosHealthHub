@@ -62,7 +62,7 @@ test.after.always('guaranteed cleanup', async (t: any) => {
 test(`POST ${rateMentalRoute} has middleware execute`, async (t: any) => {
   const response = await request(app)
     .post(rateMentalRoute)
-    .send({ face: 4, word: 'Happy', id: null })
+    .send({ face: 4, word: 'Happy', userid: null })
     .set('authorization', token)
   // ARE YOU HERE? 2. LOOK AT ONLY UR FILES, CONTROLLERS. CTRL  + SHIT+P ESLINT RESTART SERVER// tel when ure done
   // by restarting u mean cdn o ..no no ctrl shit p then command pallete search bar should open up top. Then enter ESLINT: RESTART ESLINT SERVER
@@ -77,7 +77,7 @@ test(`POST ${rateMentalRoute} has middleware execute`, async (t: any) => {
 test(`POST ${rateMentalRoute} with no word inputted`, async (t: any) => {
   const response = await request(app)
     .post(rateMentalRoute)
-    .send({ face: 4, word: '', id: uuid })
+    .send({ face: 4, word: '', userid: uuid })
     .set('authorization', token)
 
   console.log(`noWordResponse ${JSON.stringify(response.body)}`) // "You must be logged in"
@@ -89,7 +89,7 @@ test(`POST ${rateMentalRoute} with no word inputted`, async (t: any) => {
 test(`POST ${rateMentalRoute} with face value too low`, async (t: any) => {
   const response = await request(app)
     .post(rateMentalRoute)
-    .send({ face: 0, word: 'Depressed', id: uuid })
+    .send({ face: 0, word: 'Depressed', userid: uuid })
     .set('authorization', token)
   console.log(`uuid used ln101: ${uuid}`)
   console.log(`lowFaceValueResponse: ${JSON.stringify(response.body)}`)
@@ -101,7 +101,7 @@ test(`POST ${rateMentalRoute} with face value too low`, async (t: any) => {
 test(`POST ${rateMentalRoute} with face value too high`, async (t: any) => {
   const response = await request(app)
     .post(rateMentalRoute)
-    .send({ face: 6, word: 'Ecstatic', id: uuid })
+    .send({ face: 6, word: 'Ecstatic', userid: uuid })
     .set('authorization', token)
   console.log(`uuid used ln113: ${uuid}`)
   console.log(`highFaceValueResponse: ${JSON.stringify(response.body)}`)
@@ -113,7 +113,7 @@ test(`POST ${rateMentalRoute} with face value too high`, async (t: any) => {
 test(`POST ${rateMentalRoute} with correct input`, async (t: any) => {
   const response = await request(app)
     .post(rateMentalRoute)
-    .send({ face: 4, word: 'Happy', id: uuid })
+    .send({ face: 4, word: 'Happy', userid: uuid })
     .set('authorization', token)
   console.log(`uuid used ln132: ${uuid}`) // 8d17ab59-70ed-409b-9d8f-e54728b32906
   const { data }: any = await getUserByEmail(randomEmail)

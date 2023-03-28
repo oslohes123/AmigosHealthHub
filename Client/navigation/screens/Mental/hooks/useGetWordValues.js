@@ -28,7 +28,7 @@ export default function useGetWordValues() {
       wordValuesRoute,
       {
         method: 'GET',
-        headers: { id: userID, authorization: token },
+        headers: { userid: userID, authorization: token },
       },
     );
     const json = await response.json();

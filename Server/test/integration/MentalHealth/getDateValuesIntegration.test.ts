@@ -30,7 +30,6 @@ test.serial.before(async (t: any) => {
     age: 31
   })
   if (error) {
-    // console.log(`MHtesterror:${error}`);
     t.fail(`Insering user: ${JSON.stringify(error)}`)
   }
 })
@@ -168,17 +167,17 @@ test.after.always('guaranteed cleanup', async (t: any) => {
 test(`GET ${dateValuesRoute} with incorrect ID`, async (t: any) => {
   const response = await request(app)
     .get(dateValuesRoute)
-    .set({ authorization: token, id: wrongUUID })
+    .set({ authorization: token, userid: wrongUUID })
 
   t.true(response.status === 400)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
-  t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Failed to retrieve last 7 dates' }))
+  t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' }))
 })
 test(`GET ${dateValuesRoute} with correct ID`, async (t: any) => {
   const todaysDate = todayDate.substring(8, 10) + '/' + todayDate.substring(5, 7)
   const response = await request(app)
     .get(dateValuesRoute)
-    .set({ authorization: token, id: uuid })
+    .set({ authorization: token, userid: uuid })
 
   const expectedArgs = {
     mssg: 'Retrieved dates',
@@ -197,6 +196,3 @@ test(`GET ${dateValuesRoute} with correct ID`, async (t: any) => {
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify(expectedArgs))
 })
-// test('passing test ', (t: any) => {
-//   t.pass()
-// })
