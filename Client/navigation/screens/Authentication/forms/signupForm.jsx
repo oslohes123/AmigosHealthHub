@@ -120,6 +120,7 @@ function SignUpForm() {
             )}
             <TextInput
               style={globalStyles.input}
+              testID='calorieInput'
               placeholder="Calorie Goal: (Default = 2000)"
               onChangeText={props.handleChange('calories')}
               value={props.values.calories}

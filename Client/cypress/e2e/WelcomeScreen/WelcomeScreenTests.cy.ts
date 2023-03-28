@@ -93,7 +93,7 @@ describe("Check if elements are visible on sign up page", () => {
   })
 
   it("Calories text input should be visible", () => {
-    cy.get('input[placeholder="Calories"]')
+    cy.get('[data-testid="calorieInput"]')
       .should('be.visible')
   })
 
@@ -120,7 +120,7 @@ it('should be able to fill sign up form', () => {
   cy.get('input[placeholder="Last Name"]').click().type('Shaheen')
   cy.get('input[placeholder="Email"]').click().type('shazeen@gmail.com')
   cy.get('input[placeholder="Age"]').click().type('20')
-  cy.get('input[placeholder="Calories"]').click().type('2500')
+  cy.get('[data-testid="calorieInput"]').click().type('2500')
   cy.get('input[placeholder="Password"]').click().type('Password123!')
   cy.get('input[placeholder="Confirm Password"]').click().type('Password123!')
   cy.contains('Sign Up').click()
