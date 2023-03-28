@@ -107,7 +107,7 @@ export const getExerciseHistory = async (req: Request, res: Response) => {
                 const numberOfSets = data[0].sets
                 const reps = data[0].reps
                 const weight = data[0].weight
-                if (reps.length === numberOfSets && weight.length === numberOfSets) {
+                if (reps && reps.length === numberOfSets && weight.length === numberOfSets) {
                   let weightPulled: number = 0
                   for (let j = 0; j < numberOfSets; j++) {
                     weightPulled = weightPulled + (reps[j] * weight[j])
