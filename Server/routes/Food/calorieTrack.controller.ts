@@ -1,12 +1,18 @@
 import { type Request, type Response } from 'express'
 import { SupabaseQueryClass } from '../../utils/databaseInterface'
 import supabase from '../../utils/supabaseSetUp'
-import { isInt } from '../../utils/validators'
+import validateJSONSchema from './../../utils/validateJSONSchema'
+import * as calorieSchemas from '../../utils/JSONSchemas/Food/calorieSchemas'
 require('dotenv').config()
 const databaseQuery = new SupabaseQueryClass()
 
 export const insertCalorieGoal = async (req: Request, res: Response) => {
   const { UserID, CalorieGoal, Date } = req.body
+
+  if (!validateJSONSchema(req.body, calorieSchemas.insertCalorieGoal)) {
+    return res.status(400).send({ mssg: 'Invalid JSON Schema', whatWeGot: req.body, schema: calorieSchemas.insertCalorieGoal })
+  }
+
   const { data, error }: any = await databaseQuery.insert(
     supabase,
     'Calories',
@@ -28,6 +34,9 @@ export const insertCalorieGoal = async (req: Request, res: Response) => {
 
 export const readSpecificCalorieGoal = async (req: Request, res: Response) => {
   const { id } = req.params
+  if (!validateJSONSchema(req.params, calorieSchemas.readSpecificCalorieGoals)) {
+    return res.status(400).send({ mssg: 'Invalid JSON Schema', whatWeGot: req.params, schema: calorieSchemas.readSpecificCalorieGoals })
+  }
 
   const { data, error }: any = await databaseQuery.match(
     supabase,
@@ -46,6 +55,10 @@ export const readSpecificCalorieGoal = async (req: Request, res: Response) => {
 
 export const readAllCalorieGoals = async (req: Request, res: Response) => {
   const { UserID } = req.params
+  if (!validateJSONSchema(req.params, calorieSchemas.readAllCalorieGoals)) {
+    return res.status(400).send({ mssg: 'Invalid JSON Schema', whatWeGot: req.params, schema: calorieSchemas.readAllCalorieGoals })
+  }
+
   const { data, error }: any = await databaseQuery.match(
     supabase,
     'Calories',
@@ -63,8 +76,8 @@ export const readAllCalorieGoals = async (req: Request, res: Response) => {
 
 export const updateSpecificCalorieGoal = async (req: Request, res: Response) => {
   const { CalorieGoal, id } = req.body
-  if (isInt(CalorieGoal) === false) {
-    return res.status(500).send('CalorieGoal must be an integer')
+  if (!validateJSONSchema(req.body, calorieSchemas.updateCalorieGoal)) {
+    return res.status(400).send({ mssg: 'Invalid JSON Schema', whatWeGot: req.body, schema: calorieSchemas.updateCalorieGoal })
   }
   const { data, error }: any = await databaseQuery.update(
     supabase,
@@ -84,6 +97,9 @@ export const updateSpecificCalorieGoal = async (req: Request, res: Response) => 
 
 export const deleteSpecificCalorieGoal = async (req: Request, res: Response) => {
   const { id } = req.body
+  if (!validateJSONSchema(req.body, calorieSchemas.deleteSpecificCalorieGoal)) {
+    return res.status(400).send({ mssg: 'Invalid JSON Schema', whatWeGot: req.body, schema: calorieSchemas.deleteSpecificCalorieGoal })
+  }
   const { data, error }: any = await databaseQuery.deleteFrom(
     supabase,
     'Calories',

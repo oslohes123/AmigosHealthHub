@@ -6,7 +6,7 @@ import { createHashedPassword, createUserWithID, deleteUserRow } from '../../../
 import { getACompletedWorkout } from '../../../../routes/Exercise/completedWorkouts.controller'
 import { deleteMultipleExercises } from '../../../../utils/Exercise/insertAndDeleteMultipleExercises'
 import { getTime, getDate } from '../../../../utils/convertTimeStamptz'
-import { setUpCompletedWorkoutForTests } from '../../../../utils/setUpCompletedWorkoutForTests'
+import { setUpCompletedWorkoutForTests } from '../../../../utils/Exercise/setUpCompletedWorkoutForTests'
 const uuid = uuidv4()
 const randomEmail = `${uuid}@example.com`
 test.before(async (t: any) => {

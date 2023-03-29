@@ -6,7 +6,7 @@ import { deleteMultipleExercises } from '../../../utils/Exercise/insertAndDelete
 import RouteNamesClass from '../../../utils/routeNamesClass'
 import test from 'ava'
 import request from 'supertest'
-import { setUpCompletedWorkoutForTests } from '../../../utils/setUpCompletedWorkoutForTests'
+import { setUpCompletedWorkoutForTests } from '../../../utils/Exercise/setUpCompletedWorkoutForTests'
 const routeNames = new RouteNamesClass()
 const getACompletedWorkoutRoute = routeNames.fullGetCompletedWorkoutURL
 
