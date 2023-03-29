@@ -83,7 +83,14 @@ export const deleteUserRow = async (
   table = 'User'
 ) => {
   const { error }: any = await databaseQuery.deleteFrom(database, table, 'email', email)
-
+  return { error }
+}
+export const deleteUserRowByID = async (
+  id: string,
+  database = supabase,
+  table = 'User'
+) => {
+  const { error }: any = await databaseQuery.deleteFrom(database, table, 'id', id)
   return { error }
 }
 

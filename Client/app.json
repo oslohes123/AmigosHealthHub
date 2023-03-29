@@ -11,32 +11,20 @@
       "backgroundColor": "#ffffff",
       "image": "./assets/splash.png"
     },
-    "updates": {
-      "fallbackToCacheTimeout": 0,
-      "url": "https://u.expo.dev/a5f2f698-ccb3-4104-9867-5bfc14546fa9"
-    },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.oslohes123.healthhub"
+      "supportsTablet": true
     },
     "android": {
       "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      },
-      "package": "com.oslohes123.healthhub"
-    },
-    "web": {},
-    "extra": {
-      "eas": {
-        "projectId": "89209e46-4dd5-4d11-9dbe-a800b17d8aa4"
       }
     },
-    "owner": "teamamigos",
+    "web": {},
     "jsEngine": "hermes",
     "runtimeVersion": {
       "policy": "sdkVersion"

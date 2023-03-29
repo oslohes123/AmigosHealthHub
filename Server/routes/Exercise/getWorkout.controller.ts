@@ -58,7 +58,7 @@ export const getWorkoutDetails = async (req: Request, res: Response) => {
 const getWorkoutByID = async (workoutPlanID: string) => {
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'WorkoutPlansWithExercises', 'WorkoutPlanID', workoutPlanID, '*')
   console.log(`getWorkoutByID: ${JSON.stringify(data)}`)
-  const errorAndWorkout = { errorPresent: '', workoutToReturn: [''] }
+  const errorAndWorkout: any = { errorPresent: '', workoutToReturn: [] }
   if (error) errorAndWorkout.errorPresent = error
   else {
     const arrayOfPEID = []

@@ -10,6 +10,7 @@ export async function deleteAllWorkoutPlansWithExercises (userID: string) {
     return deleteError
   }
   else {
+    console.log(`workoutPlanIDs: ${JSON.stringify(workoutPlanIDs)}`)
     for (let i = 0; i < workoutPlanIDs.length; i++) {
       const { error }: any = await databaseQuery.deleteFrom(supabase, 'WorkoutPlansWithExercises', 'WorkoutPlanID', workoutPlanIDs[i])
       if (error) {
@@ -23,13 +24,15 @@ export async function deleteAllWorkoutPlansWithExercises (userID: string) {
 }
 
 export async function getAllWorkoutPlanIDs (userID: string) {
-  const workoutPlanIDsAndError = { errorWorkoutPlanIDs: null, workoutPlanIDs: [''] }
+  const workoutPlanIDsAndError: any = { errorWorkoutPlanIDs: null, workoutPlanIDs: [] }
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'WorkoutPlans', 'userid', userID, 'WorkoutPlanID')
   if (error) {
     workoutPlanIDsAndError.errorWorkoutPlanIDs = error
     return workoutPlanIDsAndError
   }
-  else if (data.length === 0) {
+  console.log(`data in getAllWorkoutPlanIDs: ${JSON.stringify(data)}`)
+  if (data.length === 0) {
+    workoutPlanIDsAndError.workoutPlanIDs = []
     return workoutPlanIDsAndError
   }
   else {

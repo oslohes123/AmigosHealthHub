@@ -11,7 +11,6 @@ export const loginUser = async (req: Request, res: Response) => {
   console.log(`routeName.fullFaceGraphURL:${routeName.fullFaceGraphURL} `)
   console.log(`routeName.fullWordCloudURL:${routeName.fullWordCloudURL} `)
   const { email, password } = req.body
-
   if (!email || !password) {
     return res.status(400).json({
       mssg: 'All Fields Must Be Filled'
