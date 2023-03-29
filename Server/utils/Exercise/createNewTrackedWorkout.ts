@@ -4,6 +4,7 @@ import supabase from '../supabaseSetUp'
 import { SupabaseQueryClass } from '../databaseInterface'
 import { schemaForExercisesInNewCompletedWorkout } from '../JSONSchemas/schemaForExercisesInNewCompletedWorkout'
 import { getTimeStamp } from '../convertTimeStamptz'
+import insertCompletedWorkoutRow from './exerciseFunctions'
 const databaseQuery = new SupabaseQueryClass()
 export const addCompletedWorkoutUnit = async (userid: string, workoutname: string, exercises: any, timestamp: string = getTimeStamp()) => {
   const errorAddCompletedWorkoutsAndSuccess = { errorAddCompletedWorkouts: '', success: false }
@@ -42,12 +43,13 @@ export const addCompletedWorkoutUnit = async (userid: string, workoutname: strin
   }
 
   // 1. Create a record in completed workouts
-  const { data, error }: any = await databaseQuery.insert(supabase, 'CompletedWorkouts', { userid, workoutname, timestamp })
-  if (error) {
-    errorAddCompletedWorkoutsAndSuccess.errorAddCompletedWorkouts = JSON.stringify(error)
+  // const { data, error }: any = await databaseQuery.insert(supabase, 'CompletedWorkouts', { userid, workoutname, timestamp })
+  const { dataInsertCompletedWorkoutRow, errorInsertCompletedWorkoutRow }: any = await insertCompletedWorkoutRow(userid, workoutname, timestamp)
+  if (errorInsertCompletedWorkoutRow) {
+    errorAddCompletedWorkoutsAndSuccess.errorAddCompletedWorkouts = errorInsertCompletedWorkoutRow
     return errorAddCompletedWorkoutsAndSuccess
   }
-  const completedWorkoutID = data[0].completedWorkoutID
+  const completedWorkoutID = dataInsertCompletedWorkoutRow[0].completedWorkoutID
   // 2. Add each exercise in exercises to actual exercise
   const numberOfExercises = exercises.length
   const arrayOfAEIDs = []
