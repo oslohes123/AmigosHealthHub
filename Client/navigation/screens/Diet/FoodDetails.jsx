@@ -148,37 +148,37 @@ export default function FoodDetails({ route, navigation }) {
           <TouchableWithoutFeedback>
             <View style={[styles.box, {borderColor: theme.color} ]}>
               <Text style={[styles.text, { color: theme.color }]}>Calories</Text>
-              <Text style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{calories}</Text>
+              <Text testID='calories' style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{calories}</Text>
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback>
             <View style={[ styles.box, {borderColor: theme.color} ]}>
               <Text style={[styles.text, { color: theme.color }]}>Protein</Text>
-              <Text style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Protein}</Text>
+              <Text testID='protein' style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Protein}</Text>
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback>
             <View style={[ styles.box, {borderColor: theme.color} ]}>
               <Text style={[styles.text, { color: theme.color }]}>Carbs</Text>
-              <Text style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Carbs}</Text>
+              <Text testID='carbs' style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Carbs}</Text>
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback>
             <View style={[ styles.box, {borderColor: theme.color} ]}>
               <Text style={[styles.text, { color: theme.color }]}>Fat</Text>
-              <Text style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Fat}</Text>
+              <Text testID='fat' style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Fat}</Text>
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback>
             <View style={[ styles.box, {borderColor: theme.color} ]}>
               <Text style={[styles.text, { color: theme.color }]}>Sugars</Text>
-              <Text style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Sugars}</Text>
+              <Text testID='sugars' style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Sugars}</Text>
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback>
             <View style={[ styles.box, {borderColor: theme.color} ]}>
               <Text style={[styles.text, { color: theme.color }]}>Fibre</Text>
-              <Text style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Fiber}</Text>
+              <Text testID='fibre' style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Fiber}</Text>
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback>
@@ -189,9 +189,10 @@ export default function FoodDetails({ route, navigation }) {
                   style={[styles.button, { backgroundColor: theme.background }]}
                   onPress={() => setVisible(true)}
                 >
-                  <Text style={[{ color: theme.color, alignSelf: 'center' }]}>{selectedServingUnit || 'Select an option'}</Text>
+                  <Text testID='viewUnits' style={[{ color: theme.color, alignSelf: 'center' }]}>{selectedServingUnit || 'Select an option'}</Text>
                 </TouchableOpacity>
                 <Modal
+                  testID='modal'
                   visible={visible}
                   animationType="fade"
                   transparent
@@ -231,6 +232,7 @@ export default function FoodDetails({ route, navigation }) {
             <View style={[ styles.box, {borderColor: theme.color} ]} justifyContent="space-between">
               <Text style={[styles.text, { color: theme.color }]}>Serving Quantity</Text>
               <TextInput
+                testID='quantityInput'
                 defaultValue={quantity}
                 placeholderTextColor={theme.color}
                 color={theme.color}
@@ -245,7 +247,7 @@ export default function FoodDetails({ route, navigation }) {
             <TouchableWithoutFeedback>
               <View style={[ styles.box, {borderColor: theme.color} ]}>
                 <Text style={[styles.text, { color: theme.color }]}>Brand name</Text>
-                <Text style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Brand}</Text>
+                <Text testID='brandName' style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Brand}</Text>
               </View>
             </TouchableWithoutFeedback>
           ) : null}
