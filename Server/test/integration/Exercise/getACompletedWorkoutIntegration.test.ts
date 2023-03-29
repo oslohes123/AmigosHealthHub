@@ -2,12 +2,11 @@ import app from '../../../index'
 import { v4 as uuidv4 } from 'uuid'
 import { createHashedPassword, createToken, createUserWithID, deleteUserRow } from '../../../utils/userFunctions'
 import { getTime, getDate } from '../../../utils/convertTimeStamptz'
-import { deleteMultipleExercises, insertMultipleExercises } from '../../../utils/Exercise/insertAndDeleteMultipleExercises'
-import { addCompletedWorkoutUnit } from '../../../utils/Exercise/createNewTrackedWorkout'
+import { deleteMultipleExercises } from '../../../utils/Exercise/insertAndDeleteMultipleExercises'
 import RouteNamesClass from '../../../utils/routeNamesClass'
 import test from 'ava'
 import request from 'supertest'
-import { getExercisesForTests } from '../../../utils/setUpCompletedWorkoutForTests'
+import { setUpCompletedWorkoutForTests } from '../../../utils/setUpCompletedWorkoutForTests'
 const routeNames = new RouteNamesClass()
 const getACompletedWorkoutRoute = routeNames.fullGetCompletedWorkoutURL
 
@@ -39,8 +38,6 @@ test.after.always(async (t: any) => {
     t.fail(JSON.stringify(errorDeletingMultipleExercises))
   }
 })
-
-const exercises = getExercisesForTests(uuid)
 
 test.serial(`GET ${getACompletedWorkoutRoute}  with missing userid returns error`, async (t: any) => {
   const response = await request(app)
@@ -104,22 +101,13 @@ test(`GET ${getACompletedWorkoutRoute}with user has does not have a workout at t
 })
 
 test(`GET ${getACompletedWorkoutRoute} with created completed workout returns success`, async (t: any) => {
-  const { errorInsertingMultipleExercises } = await insertMultipleExercises([
-    { type: 'strength', name: `Test Curl ${uuid}`, muscle: 'bicep', difficulty: 'beginner', instructions: 'curl the weight', equipment: 'dumbbell' },
-    { type: 'strength', name: `Slow Jog ${uuid}`, muscle: 'legs', difficulty: 'beginner', instructions: 'jog', equipment: 'none' }])
-
-  if (errorInsertingMultipleExercises) {
-    t.fail(errorInsertingMultipleExercises)
-  }
+  const nameOfWorkout = 'Test Tracked Workout'
   const timeOfCreationOfWorkout = '2006-03-26T13:28:10+00:00'
   const dateOfCreationOfWorkout = getDate(timeOfCreationOfWorkout)
   const timeOfCreation = getTime(timeOfCreationOfWorkout)
-  const { errorAddCompletedWorkouts, success } = await addCompletedWorkoutUnit(uuid, 'Test Tracked Workout', exercises, timeOfCreationOfWorkout)
-  if (errorAddCompletedWorkouts) {
-    t.fail(errorAddCompletedWorkouts)
-  }
-  if (!success) {
-    t.fail('errorsCreatingNewWorkoutPlan')
+  const { errorSetUpCompletedWorkoutForTests, successSetUpCompletedWorkoutForTests } = await setUpCompletedWorkoutForTests(uuid, timeOfCreationOfWorkout, nameOfWorkout)
+  if (errorSetUpCompletedWorkoutForTests || !successSetUpCompletedWorkoutForTests) {
+    t.fail('Error setting up completed workout for tests')
   }
 
   const response = await request(app)

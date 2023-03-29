@@ -1,12 +1,11 @@
 import app from '../../../index'
 import { v4 as uuidv4 } from 'uuid'
 import { createHashedPassword, createToken, createUserWithID, deleteUserRow } from '../../../utils/userFunctions'
-import { deleteMultipleExercises, insertMultipleExercises } from '../../../utils/Exercise/insertAndDeleteMultipleExercises'
-import { addCompletedWorkoutUnit } from '../../../utils/Exercise/createNewTrackedWorkout'
+import { deleteMultipleExercises } from '../../../utils/Exercise/insertAndDeleteMultipleExercises'
 import RouteNamesClass from '../../../utils/routeNamesClass'
 import test from 'ava'
 import request from 'supertest'
-import { getExercisesForTests } from '../../../utils/setUpCompletedWorkoutForTests'
+import { setUpCompletedWorkoutForTests } from '../../../utils/setUpCompletedWorkoutForTests'
 const routeNames = new RouteNamesClass()
 const getCaloriesTodayRoute = routeNames.fullGetCaloriesToday
 let randomEmail: string
@@ -31,7 +30,6 @@ test.before(async (t: any) => {
   }
   token = createToken(uuid)
 })
-const exercises = getExercisesForTests(uuid)
 test.after.always('guaranteed cleanup of user', async (t: any) => {
   const { error } = await deleteUserRow(randomEmail)
   if (error) {
@@ -64,19 +62,9 @@ test.serial(`GET ${getCaloriesTodayRoute} with a user who has no workouts return
 })
 
 test.serial(`GET ${getCaloriesTodayRoute} with a user with a valid workoutplan returns the correct number of calories burnt`, async (t: any) => {
-  const { errorInsertingMultipleExercises } = await insertMultipleExercises([
-    { type: 'strength', name: `Test Curl ${uuid}`, muscle: 'bicep', difficulty: 'beginner', instructions: 'curl the weight', equipment: 'dumbbell' },
-    { type: 'strength', name: `Slow Jog ${uuid}`, muscle: 'legs', difficulty: 'beginner', instructions: 'jog', equipment: 'none' }])
-
-  if (errorInsertingMultipleExercises) {
-    t.fail(errorInsertingMultipleExercises)
-  }
-  const { errorAddCompletedWorkouts, success } = await addCompletedWorkoutUnit(uuid, 'Test Tracked Workout', exercises)
-  if (errorAddCompletedWorkouts) {
-    t.fail(errorAddCompletedWorkouts)
-  }
-  if (!success) {
-    t.fail('errorsCreatingNewWorkoutPlan')
+  const { errorSetUpCompletedWorkoutForTests, successSetUpCompletedWorkoutForTests } = await setUpCompletedWorkoutForTests(uuid)
+  if (errorSetUpCompletedWorkoutForTests || !successSetUpCompletedWorkoutForTests) {
+    t.fail('Error setting up completed workout for tests')
   }
 
   const response = await request(app)
