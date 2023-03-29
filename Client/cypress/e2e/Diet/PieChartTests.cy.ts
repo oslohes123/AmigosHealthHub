@@ -7,6 +7,10 @@ beforeEach(() => {
     cy.get('input[placeholder="Password"]').click().type('Password123!');
     cy.contains('Login').click()
     cy.get('a[href="/Diet"]').click();
+    cy.get('input[placeholder="Find food..."]').click().type('apple', {force: true})
+    cy.contains('apple').click()
+    cy.get('[data-testid="add"]').click()
+    cy.get('input[placeholder="Find food..."]').clear()
 })
 
 describe("Check diet pie chart", () => {
