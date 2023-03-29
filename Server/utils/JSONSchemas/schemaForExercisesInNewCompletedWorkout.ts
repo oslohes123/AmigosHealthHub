@@ -12,13 +12,13 @@ export const schemaForExercisesInNewCompletedWorkout = {
               type: 'string'
             },
             sets: {
-              type: ['null', 'integer']
+              type: ['null', 'integer', 'string']
             },
             weight: {
               type: ['null', 'array']
             },
             warmUpSet: {
-              type: 'boolean'
+              type: ['boolean', 'string']
             },
             reps: {
               type: ['null', 'array']
@@ -51,25 +51,25 @@ export const schemaForExercisesInNewCompletedWorkout = {
               type: 'string'
             },
             sets: {
-              type: 'null'
+              type: ['null', 'integer', 'string']
             },
             weight: {
-              type: 'null'
+              type: ['null', 'array']
             },
             warmUpSet: {
-              type: 'string'
+              type: ['boolean', 'string']
             },
             reps: {
-              type: 'null'
+              type: ['null', 'array']
             },
             calories: {
-              type: 'integer'
+              type: ['null', 'number']
             },
             distance: {
-              type: 'integer'
+              type: ['null', 'number']
             },
             duration: {
-              type: 'number'
+              type: ['null', 'number']
             }
           },
           required: [

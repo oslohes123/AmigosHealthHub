@@ -1,7 +1,7 @@
 import { type Request, type Response } from 'express'
 import supabase from '../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../utils/databaseInterface'
-import { getDate, getTime, mostRecentTimestamp, sortArrayOfTimeStamps } from '../../utils/convertTimeStamptz'
+import { getDate, getTime, getTimeStamp, mostRecentTimestamp, sortArrayOfTimeStamps } from '../../utils/convertTimeStamptz'
 import { countElementsInArray } from '../../utils/arrayManipulation'
 import { schemaForGetCompletedWorkout } from '../../utils/JSONSchemas/schemaForGetCompletedWorkout'
 import validateJSONSchema from '../../utils/validateJSONSchema'
@@ -160,12 +160,17 @@ export const searchExerciseInExercises = async (name: string) => {
 
 export const addCompletedWorkouts = async (req: Request, res: Response) => {
   const { userid, workoutname, exercises } = req.body
+  console.log(`req.body in addCompletedWorkouts: ${JSON.stringify(req.body)}`)
+  let { timestamp } = req.body
   if (!validateJSONSchema(req.body, schemaForNewTrackedWorkout)) {
     return res.status(400).json({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' })
   }
-  const { errorAddCompletedWorkouts, success } = await addCompletedWorkoutUnit(userid, workoutname, exercises)
+  if (!timestamp) {
+    timestamp = getTimeStamp()
+  }
+  const { errorAddCompletedWorkouts, success } = await addCompletedWorkoutUnit(userid, workoutname, { exercises }, timestamp)
   if (errorAddCompletedWorkouts || !success) {
-    res.status(400).json({ mssg: 'Something went wrong!', dev: JSON.stringify(errorAddCompletedWorkouts) })
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: errorAddCompletedWorkouts })
   }
   return res.status(200).json({ mssg: 'Successfully tracked a workout!' })
 }

@@ -91,8 +91,15 @@ test('addCompletedWorkouts with missing exercises results in error', async (t: a
   const req = mockRequest({ userid: uuid, workoutname: 'Test Track Workout Name' })
   const res = mockResponse()
   await addCompletedWorkouts(req as Request, res as Response)
-  const argsPassed = res.json.getCall(0).args[0]
-  t.log(`argsPassed in addCompletedWorkouts: ${JSON.stringify(argsPassed)}`)
   t.true(res.status.calledWith(400))
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
+})
+
+test('addCompletedWorkouts with bad timestamp format results in error', async (t: any) => {
+  const req = mockRequest({ userid: uuid, workoutname: 'Test Track Workout Name', exercises: exercisesWorkoutPlan, timestamp: uuid })
+  const res = mockResponse()
+  await addCompletedWorkouts(req as Request, res as Response)
+  const argsPassed = res.json.getCall(0).args[0]
+  t.true(res.status.calledWith(400))
+  t.true(argsPassed.mssg === 'Something went wrong!')
 })
