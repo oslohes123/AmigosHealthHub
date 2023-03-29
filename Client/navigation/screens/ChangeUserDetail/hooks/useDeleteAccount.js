@@ -32,6 +32,7 @@ export default function deleteAccountWrapper() {
       const { token } = JSON.parse(
         (await AsyncStorage.getItem('user')),
       );
+      console.log(`id in deleteAccount: ${id}`);
       const response = await fetch(
         deleteAccountRoute,
         {
@@ -41,7 +42,7 @@ export default function deleteAccountWrapper() {
             authorization: token,
           },
           body: JSON.stringify({
-            userID: id,
+            userid: id,
             password,
           }),
         },

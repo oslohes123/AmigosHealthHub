@@ -36,7 +36,7 @@ export default function useSubmit() {
           'Content-Type': 'application/json',
           authorization: token,
         },
-        body: JSON.stringify({ id, face, word }),
+        body: JSON.stringify({ userid: id, face, word }),
       },
     );
     // get the response and test if it returns an ok or error response

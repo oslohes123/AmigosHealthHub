@@ -2,11 +2,11 @@ import app from '../../../index'
 import { v4 as uuidv4 } from 'uuid'
 import { createHashedPassword, createToken, createUserWithID, deleteUserRow } from '../../../utils/userFunctions'
 import { getTime, getDate } from '../../../utils/convertTimeStamptz'
-import { insertMultipleExercises } from '../../../utils/Exercise/insertAndDeleteMultipleExercises'
-import { addCompletedWorkoutUnit } from '../../../utils/Exercise/createNewTrackedWorkout'
+import { deleteMultipleExercises } from '../../../utils/Exercise/insertAndDeleteMultipleExercises'
 import RouteNamesClass from '../../../utils/routeNamesClass'
 import test from 'ava'
 import request from 'supertest'
+import { setUpCompletedWorkoutForTests } from '../../../utils/setUpCompletedWorkoutForTests'
 const routeNames = new RouteNamesClass()
 const getACompletedWorkoutRoute = routeNames.fullGetCompletedWorkoutURL
 
@@ -32,6 +32,10 @@ test.after.always(async (t: any) => {
   const { error } = await deleteUserRow(randomEmail)
   if (error) {
     t.fail('Deleting user went wrong!')
+  }
+  const { errorDeletingMultipleExercises }: any = await deleteMultipleExercises([{ name: `Test Curl ${uuid}` }, { name: `Slow Jog ${uuid}` }])
+  if (errorDeletingMultipleExercises) {
+    t.fail(JSON.stringify(errorDeletingMultipleExercises))
   }
 })
 
@@ -97,47 +101,13 @@ test(`GET ${getACompletedWorkoutRoute}with user has does not have a workout at t
 })
 
 test(`GET ${getACompletedWorkoutRoute} with created completed workout returns success`, async (t: any) => {
-  const exercises = {
-    exercises: [
-      {
-        name: `Test Curl ${uuid}`,
-        sets: 3,
-        weight: [12, 12, 12],
-        warmUpSet: false,
-        reps: [12, 6, 5],
-        calories: 500,
-        distance: null,
-        duration: null
-      },
-      {
-        name: `Slow Jog ${uuid}`,
-        sets: null,
-        weight: null,
-        warmUpSet: 'false',
-        reps: null,
-        calories: 500,
-        distance: 5000,
-        duration: 23.00
-      }
-    ]
-  }
-
-  const { errorInsertingMultipleExercises } = await insertMultipleExercises([
-    { type: 'strength', name: `Test Curl ${uuid}`, muscle: 'bicep', difficulty: 'beginner', instructions: 'curl the weight', equipment: 'dumbbell' },
-    { type: 'strength', name: `Slow Jog ${uuid}`, muscle: 'legs', difficulty: 'beginner', instructions: 'jog', equipment: 'none' }])
-
-  if (errorInsertingMultipleExercises) {
-    t.fail(errorInsertingMultipleExercises)
-  }
+  const nameOfWorkout = 'Test Tracked Workout'
   const timeOfCreationOfWorkout = '2006-03-26T13:28:10+00:00'
   const dateOfCreationOfWorkout = getDate(timeOfCreationOfWorkout)
   const timeOfCreation = getTime(timeOfCreationOfWorkout)
-  const { errorAddCompletedWorkouts, success } = await addCompletedWorkoutUnit(uuid, 'Test Tracked Workout', exercises, timeOfCreationOfWorkout)
-  if (errorAddCompletedWorkouts) {
-    t.fail(errorAddCompletedWorkouts)
-  }
-  if (!success) {
-    t.fail('errorsCreatingNewWorkoutPlan')
+  const { errorSetUpCompletedWorkoutForTests, successSetUpCompletedWorkoutForTests } = await setUpCompletedWorkoutForTests(uuid, nameOfWorkout, timeOfCreationOfWorkout)
+  if (errorSetUpCompletedWorkoutForTests || !successSetUpCompletedWorkoutForTests) {
+    t.fail('Error setting up completed workout for tests')
   }
 
   const response = await request(app)

@@ -1,9 +1,11 @@
 import { type Request, type Response } from 'express'
-import { createHashedPassword, getUserByID, getUserByEmail, updateUser, verifyPassword } from '../../utils/userFunctions'
+import { createHashedPassword, getUserByID, getUserByEmail, updateUser, verifyPassword, deleteUserRowByID } from '../../utils/userFunctions'
 import { isEmail, isStrongPassword } from '../../utils/validators'
 import supabase from '../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../utils/databaseInterface'
 import { deleteAllWorkoutPlansWithExercises } from '../../utils/deleteWorkoutPlans'
+import validateJSONSchema from '../../utils/validateJSONSchema'
+import { schemaForRequireduserid } from '../../utils/JSONSchemas/schemaForRequireduserid'
 require('dotenv').config()
 
 const bcrypt = require('bcrypt')
@@ -98,12 +100,16 @@ export const changePassword = async (req: Request, res: Response) => {
  */
 
 export const deleteAccount = async (req: Request, res: Response) => {
-  const { userID, password } = req.body
-  if (!userID || !password) {
+  const { userid, password } = req.body
+  console.log(`deleteAccount req.body: ${JSON.stringify(req.body)}`)
+  if (!validateJSONSchema(req.body, schemaForRequireduserid)) {
+    return res.status(400).json({ mssg: 'Something went wrong', dev: 'JSON instance does not follow the JSON schema' })
+  }
+  if (!userid || !password) {
     return res.status(400).json({ mssg: 'Id or Password are empty!' })
   }
 
-  const { data, error }: any = await getUserByID(userID)
+  const { data, error }: any = await getUserByID(userid)
 
   if (error) {
     res.status(400).json({ error })
@@ -112,14 +118,13 @@ export const deleteAccount = async (req: Request, res: Response) => {
     res.status(400).json({ mssg: 'Incorrect Email!' })
   } else {
     // email is present in database, check if email & password are correct
-    const match = await bcrypt.compare(password, data[0].password)
+    const match = await verifyPassword(password, data[0].password)
     if (match) {
-      // delete account
-      const { errorPresent } = await deleteAllWorkoutPlansWithExercises(userID)
+      const { errorPresent } = await deleteAllWorkoutPlansWithExercises(userid)
       if (errorPresent) {
         return res.status(400).json({ mssg: 'Failed to delete account!', errorPresent })
       }
-      const { error }: any = await databaseQuery.deleteFrom(supabase, 'User', 'id', userID)
+      const { error }: any = await deleteUserRowByID(userid)
       if (error) {
         return res.status(400).json({ mssg: 'Failed to delete account!', error })
       } else {
