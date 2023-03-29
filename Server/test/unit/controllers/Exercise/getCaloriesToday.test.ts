@@ -5,7 +5,7 @@ import { getCaloriesToday } from '../../../../routes/Exercise/exerciseCalories.c
 import test from 'ava'
 import sinon from 'sinon'
 import { deleteMultipleExercises } from '../../../../utils/Exercise/insertAndDeleteMultipleExercises'
-import { setUpCompletedWorkoutForTests } from '../../../../utils/setUpCompletedWorkoutForTests'
+import { setUpCompletedWorkoutForTests } from '../../../../utils/Exercise/setUpCompletedWorkoutForTests'
 let randomEmail: string
 const uuid = uuidv4()
 test.before(async (t: any) => {

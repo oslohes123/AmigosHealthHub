@@ -3,6 +3,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import {
   StyleSheet, SafeAreaView, View, Text, TouchableOpacity, ScrollView, TextInput,
   Dimensions,
+  Alert,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { PieChart } from 'react-native-chart-kit';
@@ -167,6 +168,9 @@ export default function DietDashboardScreen({ navigation }) {
   useEffect(() => {
     async function fetchData() {
       const data = await genericSearch(foodInput);
+      if (data.items.length == 0) {
+        Alert.alert('Api keys have expired for food, please contact the developers');
+      }
       const brandedList = [];
       const genericList = [];
       data.items.map((item) => {

@@ -118,17 +118,18 @@ export async function updateCalorieGoal(UserID, CalorieGoal, Date = currentDate)
 
   // If the latest calorie goal is for the current date, update the calorie goal
   // otherwise create a new calorie goal
+  const intCalorieGoal = parseInt(CalorieGoal, 10);
   if (currentCalorieGoal.Date === currentDate) {
     url += 'updateCalories';
     inputData = {
-      CalorieGoal,
+      CalorieGoal: intCalorieGoal,
       id: currentCalorieGoal.id,
     };
   } else {
     url += 'createCalorieLog';
 
     inputData = {
-      CalorieGoal,
+      CalorieGoal: intCalorieGoal,
       UserID,
       Date,
     };

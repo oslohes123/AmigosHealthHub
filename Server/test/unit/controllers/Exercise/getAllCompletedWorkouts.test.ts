@@ -4,7 +4,7 @@ import test from 'ava'
 import sinon from 'sinon'
 import { createHashedPassword, createUserWithID, deleteUserRow } from '../../../../utils/userFunctions'
 import { getAllCompletedWorkouts } from '../../../../routes/Exercise/completedWorkouts.controller'
-import { setUpCompletedWorkoutForTests } from '../../../../utils/setUpCompletedWorkoutForTests'
+import { setUpCompletedWorkoutForTests } from '../../../../utils/Exercise/setUpCompletedWorkoutForTests'
 import { deleteMultipleExercises } from '../../../../utils/Exercise/insertAndDeleteMultipleExercises'
 let randomEmail: string
 const uuid = uuidv4()

@@ -26,7 +26,7 @@ const matchExercise = async (userid: string | string[], exerciseID: string) => {
 export const getExerciseHistory = async (req: Request, res: Response) => {
   const { nameofexercise, userid } = req.headers
   if (!nameofexercise || !userid) {
-    return res.status(400).json({ mssg: 'nameofexercise not provided!' })
+    return res.status(400).json({ mssg: 'Select an exercise!' })
   }
 
   const arrayOfWeightPulled = []
