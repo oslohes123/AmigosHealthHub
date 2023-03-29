@@ -6,6 +6,8 @@ import { countElementsInArray } from '../../utils/arrayManipulation'
 import { schemaForGetCompletedWorkout } from '../../utils/JSONSchemas/schemaForGetCompletedWorkout'
 import validateJSONSchema from '../../utils/validateJSONSchema'
 import { schemaForRequireduserid } from '../../utils/JSONSchemas/schemaForRequireduserid'
+import { schemaForNewTrackedWorkout } from '../../utils/JSONSchemas/schemaForNewTrackedWorkout'
+import { addCompletedWorkoutUnit } from '../../utils/Exercise/createNewTrackedWorkout'
 const databaseQuery = new SupabaseQueryClass()
 
 // Get a specific workout by userid, workoutname, date and time
@@ -43,7 +45,7 @@ const getWorkoutByID = async (completedWorkoutID: string) => {
 
   console.log(`getWorkoutByID: ${JSON.stringify(data)}`)
 
-  const errorAndWorkout:any = { errorPresent: '', workoutToReturn: [] }
+  const errorAndWorkout: any = { errorPresent: '', workoutToReturn: [] }
   if (error) errorAndWorkout.errorPresent = error
 
   else {
@@ -158,74 +160,12 @@ export const searchExerciseInExercises = async (name: string) => {
 
 export const addCompletedWorkouts = async (req: Request, res: Response) => {
   const { userid, workoutname, exercises } = req.body
-  console.log(`req.body in addCompletedWorkouts: ${JSON.stringify(req.body)}`)
-  // if (!validateJSONSchema(req.body, schemaForNewTrackedWorkout)) {
-  //   return res.status(400).json({ mssg: 'Something went wrong!', dev: 'req.body does not follow the schema provided' })
-  // }
-  if (!userid || !workoutname || !exercises) {
-    return res.status(400).json({ mssg: 'userid, workoutname or exercises is missing!' })
+  if (!validateJSONSchema(req.body, schemaForNewTrackedWorkout)) {
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' })
   }
-  console.log(`req.body in addCompletedWorkouts:${JSON.stringify(req.body)}`)
-  for (let i = 0; i < exercises.length; i++) {
-    try {
-      const { name } = exercises[i]
-
-      if (!Object.prototype.hasOwnProperty.call(exercises[i], 'name')) {
-        return res.status(400).json({ mssg: "Exercise doesn't have one of the following properties:name" })
-      }
-      console.log(`exercises[i] before delete for: ${JSON.stringify(exercises[i])}`)
-
-      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-      Object.keys(exercises[i]).forEach((k) => (exercises[i])[k] == null && delete (exercises[i])[k])
-      console.log(`exercises[i] after delete for:  ${JSON.stringify(exercises[i])}`)
-      const { errorPresent, ID } = await searchExerciseInExercises(name)
-      if (errorPresent) {
-        console.log(`errorPresent: ${errorPresent}`)
-        return res.status(400).json({ mssg: errorPresent, error: 'error' })
-      }
-      else {
-        exercises[i].exerciseID = ID
-        exercises[i].userID = userid
-        delete exercises[i].type
-        delete exercises[i].name
-        delete exercises[i].muscle
-        delete exercises[i].difficulty
-        delete exercises[i].instructions
-        delete exercises[i].equipment
-      }
-    }
-    catch (error) {
-      return res.status(400).json({ mssg: 'Failure', error })
-    }
-  }
-
-  console.log(`exercises after mod: ${JSON.stringify(exercises)}`)
-
-  // 1. Create a record in completed workouts
-  const { data, error }: any = await databaseQuery.insert(supabase, 'CompletedWorkouts', { userid, workoutname })
-  if (error) {
-    return res.status(400).json({ mssg: 'Sorry something went wrong!', error })
-  }
-  const completedWorkoutID = data[0].completedWorkoutID
-  // 2. Add each exercise in exercises to actual exercise
-  const numberOfExercises = exercises.length
-  const arrayOfAEIDs = []
-  for (let i = 0; i < numberOfExercises; i++) {
-    const { data, error }: any = await databaseQuery.insert(supabase, 'ActualExercises', exercises[i])
-
-    if (error) {
-      console.log(error)
-      return res.status(400).json({ mssg: 'Tracking a Workout Failed!', err: error })
-    }
-    arrayOfAEIDs.push(data[0].AEID)
-    // possible exercise already exists
-  }
-  // 3.  Create a record in TrackedWorkoutsWithExercises for each exercise in the workoutplan.
-  for (let i = 0; i < arrayOfAEIDs.length; i++) {
-    const { error }: any = await databaseQuery.insert(supabase, 'TrackedWorkoutsWithExercises', { completedWorkoutID, AEID: arrayOfAEIDs[i] })
-    if (error) {
-      return res.status(400).json({ mssg: 'Something went wrong!', error })
-    }
+  const { errorAddCompletedWorkouts, success } = await addCompletedWorkoutUnit(userid, workoutname, exercises)
+  if (errorAddCompletedWorkouts || !success) {
+    res.status(400).json({ mssg: 'Something went wrong!', dev: JSON.stringify(errorAddCompletedWorkouts) })
   }
   return res.status(200).json({ mssg: 'Successfully tracked a workout!' })
 }
