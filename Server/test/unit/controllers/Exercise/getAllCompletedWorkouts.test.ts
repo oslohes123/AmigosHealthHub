@@ -71,7 +71,8 @@ test('getAllCompletedWorkouts with no workouts returns success and empty array',
 })
 // test with user with some workouts and that workout history is ordered
 test('getAllCompletedWorkouts with workouts returns success and ordered array by time', async (t: any) => {
-  const { errorSetUpCompletedWorkoutForTests, successSetUpCompletedWorkoutForTests } = await setUpCompletedWorkoutForTests(uuid)
+  const nameOfWorkout = 'Test Tracked Workout'
+  const { errorSetUpCompletedWorkoutForTests, successSetUpCompletedWorkoutForTests } = await setUpCompletedWorkoutForTests(uuid, nameOfWorkout)
   if (errorSetUpCompletedWorkoutForTests || !successSetUpCompletedWorkoutForTests) {
     t.fail('Error setting up completed workout for tests')
   }
@@ -82,4 +83,6 @@ test('getAllCompletedWorkouts with workouts returns success and ordered array by
   t.true(res.status.calledWith(200))
   t.log(`argsPassed in last test of getAllCompletedWorkouts: ${JSON.stringify(argsPassed)}`)
   t.true(argsPassed.mssg === 'Got All Completed Workouts!')
+  t.true(argsPassed.workoutsNamesAndDates.length === 1)
+  t.true(argsPassed.workoutsNamesAndDates[0].workoutname === 'Test Tracked Workout')
 })

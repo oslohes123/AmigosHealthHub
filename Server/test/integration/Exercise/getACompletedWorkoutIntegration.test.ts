@@ -105,7 +105,7 @@ test(`GET ${getACompletedWorkoutRoute} with created completed workout returns su
   const timeOfCreationOfWorkout = '2006-03-26T13:28:10+00:00'
   const dateOfCreationOfWorkout = getDate(timeOfCreationOfWorkout)
   const timeOfCreation = getTime(timeOfCreationOfWorkout)
-  const { errorSetUpCompletedWorkoutForTests, successSetUpCompletedWorkoutForTests } = await setUpCompletedWorkoutForTests(uuid, timeOfCreationOfWorkout, nameOfWorkout)
+  const { errorSetUpCompletedWorkoutForTests, successSetUpCompletedWorkoutForTests } = await setUpCompletedWorkoutForTests(uuid, nameOfWorkout, timeOfCreationOfWorkout)
   if (errorSetUpCompletedWorkoutForTests || !successSetUpCompletedWorkoutForTests) {
     t.fail('Error setting up completed workout for tests')
   }
