@@ -3,7 +3,7 @@ import { createHashedPassword, getUserByID, getUserByEmail, updateUser, verifyPa
 import { isEmail, isStrongPassword } from '../../utils/validators'
 import supabase from '../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../utils/databaseInterface'
-import { deleteAllWorkoutPlansWithExercises } from '../../utils/deleteWorkoutPlans'
+import { deleteAllWorkoutPlansWithExercises } from '../../utils/Exercise/deleteWorkoutPlans'
 import validateJSONSchema from '../../utils/validateJSONSchema'
 import { schemaForRequireduserid } from '../../utils/JSONSchemas/schemaForRequireduserid'
 require('dotenv').config()
