@@ -43,7 +43,7 @@ const getWorkoutByID = async (completedWorkoutID: string) => {
 
   console.log(`getWorkoutByID: ${JSON.stringify(data)}`)
 
-  const errorAndWorkout = { errorPresent: '', workoutToReturn: [''] }
+  const errorAndWorkout:any = { errorPresent: '', workoutToReturn: [] }
   if (error) errorAndWorkout.errorPresent = error
 
   else {
