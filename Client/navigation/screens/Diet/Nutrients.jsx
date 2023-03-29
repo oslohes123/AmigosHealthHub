@@ -43,7 +43,7 @@ export default function Nutrients({ route }) {
         <Text style={[styles.data, { color }]}>{item.name}</Text>
       </DataTable.Cell>
       <DataTable.Cell numeric style={[{ color }, { borderColor: color }]}>
-        <Text style={[styles.data, { color }]}>{item.amount}</Text>
+        <Text testID='value' style={[styles.data, { color }]}>{item.amount}</Text>
       </DataTable.Cell>
     </DataTable.Row>
   ));
@@ -52,13 +52,13 @@ export default function Nutrients({ route }) {
     <View style={[styles.container, { backgroundColor: background }]}>
       <Text style={[styles.header, { color }, { borderColor: color }]}>Nutrients Consumed</Text>
       <View style={[styles.tableContainer, { borderColor: color }]}>
-        <DataTable>
+        <DataTable testID='table'>
           <DataTable.Header style={{ borderBottomWidth: 5, borderBottomColor: 'red' }}>
             <DataTable.Title>
-              <Text style={[styles.tableHeader, { color }]}>Nutrient</Text>
+              <Text testID='nutrient' style={[styles.tableHeader, { color }]}>Nutrient</Text>
             </DataTable.Title>
             <DataTable.Title numeric>
-              <Text style={[styles.tableHeader, { color }]}>Amount</Text>
+              <Text testID='amount' style={[styles.tableHeader, { color }]}>Amount</Text>
             </DataTable.Title>
           </DataTable.Header>
           {dataItems}
