@@ -257,7 +257,7 @@ export default function DietDashboardScreen({ navigation }) {
           {foodInput.length <= 2 && pieChartData.length > 0 && (
             
             <View style={{ height: screenHeight * 0.4, justifyContent: 'center'}}>
-              <TouchableOpacity style={styles.pieWidget} onPress={pieChartPress}>
+              <TouchableOpacity testID='pie' style={styles.pieWidget} onPress={pieChartPress}>
               <PieChart
                 data={pieChartData}
                 width={0.95 * screenWidth}
