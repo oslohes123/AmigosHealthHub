@@ -7,6 +7,7 @@ import { getACompletedWorkout } from '../../../../routes/Exercise/completedWorko
 import { addCompletedWorkoutUnit } from '../../../../utils/Exercise/createNewTrackedWorkout'
 import { insertMultipleExercises } from '../../../../utils/Exercise/insertAndDeleteMultipleExercises'
 import { getTime, getDate } from '../../../../utils/convertTimeStamptz'
+import { getExercisesForTests } from '../../../../utils/setUpCompletedWorkoutForTests'
 const uuid = uuidv4()
 const randomEmail = `${uuid}@example.com`
 test.before(async (t: any) => {
@@ -29,6 +30,8 @@ test.after.always(async (t: any) => {
     t.fail('Deleting user went wrong!')
   }
 })
+
+const exercises = getExercisesForTests(uuid)
 const mockResponse = () => {
   const res: any = {}
   res.status = sinon.stub().returns(res)
@@ -105,30 +108,6 @@ test('getACompletedWorkout with user has does not have a workout at the given ti
 })
 // test getACompletedWorkout with userid who has a completed workout
 test('getACompletedWorkout with created completed workout returns success', async (t: any) => {
-  const exercises = {
-    exercises: [
-      {
-        name: `Test Curl ${uuid}`,
-        sets: 3,
-        weight: [12, 12, 12],
-        warmUpSet: false,
-        reps: [12, 6, 5],
-        calories: 500,
-        distance: null,
-        duration: null
-      },
-      {
-        name: `Slow Jog ${uuid}`,
-        sets: null,
-        weight: null,
-        warmUpSet: 'false',
-        reps: null,
-        calories: 500,
-        distance: 5000,
-        duration: 23.00
-      }
-    ]
-  }
   const { errorInsertingMultipleExercises } = await insertMultipleExercises([
     { type: 'strength', name: `Test Curl ${uuid}`, muscle: 'bicep', difficulty: 'beginner', instructions: 'curl the weight', equipment: 'dumbbell' },
     { type: 'strength', name: `Slow Jog ${uuid}`, muscle: 'legs', difficulty: 'beginner', instructions: 'jog', equipment: 'none' }])
@@ -144,7 +123,7 @@ test('getACompletedWorkout with created completed workout returns success', asyn
     t.fail(errorAddCompletedWorkouts)
   }
   if (!success) {
-    t.fail('errorsCreatingNewWorkoutPlan')
+    t.fail('errorsCreatingNewCompletedWorkout')
   }
   const req = mockRequest({ userid: uuid, workoutname: 'Test Tracked Workout', date: dateOfCreationOfWorkout, time: timeOfCreation })
   const res = mockResponse()

@@ -91,8 +91,9 @@ const getWorkoutByID = async (completedWorkoutID: string) => {
 // Returns all of a user's completed workouts' names and dates
 export const getAllCompletedWorkouts = async (req: Request, res: Response) => {
   const { userid } = req.headers
-  if (!userid) {
-    return res.status(400).json({ mssg: 'No userid provided!' })
+
+  if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'JSON instance was invalid against its schema' })
   }
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'CompletedWorkouts', 'userid', userid, 'workoutname, timestamp')
 
@@ -122,7 +123,7 @@ export const getAllCompletedWorkouts = async (req: Request, res: Response) => {
 
     console.log(`sortedCompletedWorkouts: ${JSON.stringify(sortedCompletedWorkouts)}`)
     console.log(`After mod completedWorkouts: ${JSON.stringify(data)}`)
-    // const workoutsNamesAndDates = data
+
     return res.status(200).json({ mssg: 'Got All Completed Workouts!', workoutsNamesAndDates: sortedCompletedWorkouts })
   }
 }

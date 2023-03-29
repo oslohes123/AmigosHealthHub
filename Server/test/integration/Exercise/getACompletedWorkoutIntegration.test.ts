@@ -2,11 +2,12 @@ import app from '../../../index'
 import { v4 as uuidv4 } from 'uuid'
 import { createHashedPassword, createToken, createUserWithID, deleteUserRow } from '../../../utils/userFunctions'
 import { getTime, getDate } from '../../../utils/convertTimeStamptz'
-import { insertMultipleExercises } from '../../../utils/Exercise/insertAndDeleteMultipleExercises'
+import { deleteMultipleExercises, insertMultipleExercises } from '../../../utils/Exercise/insertAndDeleteMultipleExercises'
 import { addCompletedWorkoutUnit } from '../../../utils/Exercise/createNewTrackedWorkout'
 import RouteNamesClass from '../../../utils/routeNamesClass'
 import test from 'ava'
 import request from 'supertest'
+import { getExercisesForTests } from '../../../utils/setUpCompletedWorkoutForTests'
 const routeNames = new RouteNamesClass()
 const getACompletedWorkoutRoute = routeNames.fullGetCompletedWorkoutURL
 
@@ -33,7 +34,13 @@ test.after.always(async (t: any) => {
   if (error) {
     t.fail('Deleting user went wrong!')
   }
+  const { errorDeletingMultipleExercises }: any = await deleteMultipleExercises([{ name: `Test Curl ${uuid}` }, { name: `Slow Jog ${uuid}` }])
+  if (errorDeletingMultipleExercises) {
+    t.fail(JSON.stringify(errorDeletingMultipleExercises))
+  }
 })
+
+const exercises = getExercisesForTests(uuid)
 
 test.serial(`GET ${getACompletedWorkoutRoute}  with missing userid returns error`, async (t: any) => {
   const response = await request(app)
@@ -97,31 +104,6 @@ test(`GET ${getACompletedWorkoutRoute}with user has does not have a workout at t
 })
 
 test(`GET ${getACompletedWorkoutRoute} with created completed workout returns success`, async (t: any) => {
-  const exercises = {
-    exercises: [
-      {
-        name: `Test Curl ${uuid}`,
-        sets: 3,
-        weight: [12, 12, 12],
-        warmUpSet: false,
-        reps: [12, 6, 5],
-        calories: 500,
-        distance: null,
-        duration: null
-      },
-      {
-        name: `Slow Jog ${uuid}`,
-        sets: null,
-        weight: null,
-        warmUpSet: 'false',
-        reps: null,
-        calories: 500,
-        distance: 5000,
-        duration: 23.00
-      }
-    ]
-  }
-
   const { errorInsertingMultipleExercises } = await insertMultipleExercises([
     { type: 'strength', name: `Test Curl ${uuid}`, muscle: 'bicep', difficulty: 'beginner', instructions: 'curl the weight', equipment: 'dumbbell' },
     { type: 'strength', name: `Slow Jog ${uuid}`, muscle: 'legs', difficulty: 'beginner', instructions: 'jog', equipment: 'none' }])

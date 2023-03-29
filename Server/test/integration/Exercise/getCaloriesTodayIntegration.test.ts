@@ -6,6 +6,7 @@ import { addCompletedWorkoutUnit } from '../../../utils/Exercise/createNewTracke
 import RouteNamesClass from '../../../utils/routeNamesClass'
 import test from 'ava'
 import request from 'supertest'
+import { getExercisesForTests } from '../../../utils/setUpCompletedWorkoutForTests'
 const routeNames = new RouteNamesClass()
 const getCaloriesTodayRoute = routeNames.fullGetCaloriesToday
 let randomEmail: string
@@ -30,7 +31,7 @@ test.before(async (t: any) => {
   }
   token = createToken(uuid)
 })
-
+const exercises = getExercisesForTests(uuid)
 test.after.always('guaranteed cleanup of user', async (t: any) => {
   const { error } = await deleteUserRow(randomEmail)
   if (error) {
@@ -63,30 +64,6 @@ test.serial(`GET ${getCaloriesTodayRoute} with a user who has no workouts return
 })
 
 test.serial(`GET ${getCaloriesTodayRoute} with a user with a valid workoutplan returns the correct number of calories burnt`, async (t: any) => {
-  const exercises = {
-    exercises: [
-      {
-        name: `Test Curl ${uuid}`,
-        sets: 3,
-        weight: [12, 12, 12],
-        warmUpSet: false,
-        reps: [12, 6, 5],
-        calories: 500,
-        distance: null,
-        duration: null
-      },
-      {
-        name: `Slow Jog ${uuid}`,
-        sets: null,
-        weight: null,
-        warmUpSet: 'false',
-        reps: null,
-        calories: 500,
-        distance: 5000,
-        duration: 23.00
-      }
-    ]
-  }
   const { errorInsertingMultipleExercises } = await insertMultipleExercises([
     { type: 'strength', name: `Test Curl ${uuid}`, muscle: 'bicep', difficulty: 'beginner', instructions: 'curl the weight', equipment: 'dumbbell' },
     { type: 'strength', name: `Slow Jog ${uuid}`, muscle: 'legs', difficulty: 'beginner', instructions: 'jog', equipment: 'none' }])
