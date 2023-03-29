@@ -157,7 +157,7 @@ export default function FoodHistory({ navigation }) {
             </Text>
           )}
           <TouchableOpacity style={styles.icon} onPress={toggleCalendar}>
-            <AntDesign name="calendar" size={35} color={theme.color} />
+            <AntDesign testID='calendarIcon' name="calendar" size={35} color={theme.color} />
           </TouchableOpacity>
         </View>
 
@@ -209,6 +209,7 @@ export default function FoodHistory({ navigation }) {
 
         {viewCalendar && (
           <Calendar
+            testID='calendar'
             style={styles.calendar}
             onVisibleMonthsChange={(months) => { console.log('now these months are visible', months); }}
             onDayPress={(day) => setSelectDay(day.dateString)}
