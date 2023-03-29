@@ -118,7 +118,7 @@ export const deleteAccount = async (req: Request, res: Response) => {
     res.status(400).json({ mssg: 'Incorrect Email!' })
   } else {
     // email is present in database, check if email & password are correct
-    const match = await bcrypt.compare(password, data[0].password)
+    const match = await verifyPassword(password, data[0].password)
     if (match) {
       const { errorPresent } = await deleteAllWorkoutPlansWithExercises(userid)
       if (errorPresent) {

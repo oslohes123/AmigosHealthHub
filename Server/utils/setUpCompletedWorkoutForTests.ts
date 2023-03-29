@@ -35,7 +35,7 @@ export function exercisesToInsert (uuid: string) {
   return exercises
 }
 // set up for a completed workout in tests
-export async function setUpCompletedWorkoutForTests (uuid: string, timestamp: string = getTimeStamp(), nameOfWorkout: string = 'Test Tracked Workout') {
+export async function setUpCompletedWorkoutForTests (uuid: string, nameOfWorkout: string = 'Test Tracked Workout', timestamp: string = getTimeStamp()) {
   const exercises = exercisesToInsert(uuid)
   const exerciseWorkouts = getExercisesForTests(uuid)
   const resultOfSetUpCompletedWorkoutForTests = { errorSetUpCompletedWorkoutForTests: '', successSetUpCompletedWorkoutForTests: false }
