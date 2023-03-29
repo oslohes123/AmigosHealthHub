@@ -15,11 +15,7 @@ before(() => {
   cy.get('[data-testid="calorieInput"]').click().type('2500')
   cy.get('input[placeholder="Password"]').click().type(testPassword)
   cy.get('input[placeholder="Confirm Password"]').click().type(testPassword)
-  cy.contains('Sign Up').click().wait(5000)
-  cy.get('a[href="/Settings"]').click()
-  cy.contains('Log out').click()
-  cy.contains('Logout').click()
-
+  cy.contains('Sign Up').click()
 })
 
 beforeEach(() => {
@@ -41,6 +37,7 @@ describe("Check navigate to profile page", () => {
   it("Should from navigate to profile page" ,() => {
     cy.get('a[href="/Settings"]').click()
     cy.contains(testEmail).click()
+
   })
 })
 
