@@ -91,7 +91,7 @@ test('read specific calorieGoal', async (t: ExecutionContext) => {
 })
 
 test('update specific Calorie Goal', async (t: ExecutionContext) => {
-  const req = mockRequest({ }, { CalorieGoal: '2001', id: calorieGoalID })
+  const req = mockRequest({ }, { CalorieGoal: 2001, id: calorieGoalID })
   const res = mockResponse()
   await calorieFunctions.updateSpecificCalorieGoal(req as Request, res as Response)
   t.true(res.status.calledWith(200))
