@@ -231,3 +231,40 @@ export async function getWorkoutByID (completedWorkoutID: string) {
   }
   return errorAndWorkout
 }
+
+// helper function to getWorkoutDetails
+export async function getWorkoutPlanByID(workoutPlanID: string) {
+  const { data, error }: any = await databaseQuery.selectWhere(supabase, 'WorkoutPlansWithExercises', 'WorkoutPlanID', workoutPlanID, '*')
+  console.log(`getWorkoutByID: ${JSON.stringify(data)}`)
+  const errorAndWorkout: any = { errorPresent: '', workoutToReturn: [] }
+  if (error) errorAndWorkout.errorPresent = error
+  else {
+    const arrayOfPEID = []
+    for (let i = 0; i < data.length; i++) {
+      arrayOfPEID.push(data[i].PEID)
+    }
+
+    const arrayOfPossibleExercises = []
+    for (let j = 0; j < arrayOfPEID.length; j++) {
+      const { data, error }: any = await databaseQuery.selectWhere(supabase, 'PossibleExercises', 'PEID', arrayOfPEID[j], '*')
+      if (error) errorAndWorkout.errorPresent = error
+      else {
+        arrayOfPossibleExercises.push(data[0])
+        console.log(`data ln50 getWorkout: ${JSON.stringify(data)}`)
+        console.log(`arrayOfPossibleExercises ln: ${JSON.stringify(arrayOfPossibleExercises)}`)
+      }
+    }
+
+    for (let i = 0; i < arrayOfPossibleExercises.length; i++) {
+      const { data, error }: any = await databaseQuery.selectWhere(supabase, 'Exercises', 'ExerciseID', arrayOfPossibleExercises[i].exerciseID, '*')
+      if (error) errorAndWorkout.errorPresent = error
+      else {
+        delete arrayOfPossibleExercises[i].exerciseID
+        delete arrayOfPossibleExercises[i].userID
+        arrayOfPossibleExercises[i].exercise = data[0]
+      }
+    }
+    errorAndWorkout.workoutToReturn = arrayOfPossibleExercises
+  }
+  return errorAndWorkout
+}
