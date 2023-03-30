@@ -147,7 +147,7 @@ export default function FoodDetails({ route, navigation }) {
           <>
             <TouchableWithoutFeedback>
               <View style={[styles.box, { borderColor: theme.color }]}>
-                <Text style={[styles.text, { color: theme.color }]}>Calories</Text>
+                <Text testID='caloriesName' style={[styles.text, { color: theme.color }]}>Calories</Text>
                 <Text testID="calories" style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{calories}</Text>
               </View>
             </TouchableWithoutFeedback>
