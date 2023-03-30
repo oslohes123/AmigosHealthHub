@@ -2,16 +2,16 @@
 /* eslint-disable no-undef */
 import React, { useCallback, useState, useContext } from 'react';
 import {
-  StyleSheet, View, Text, TextInput, Modal, TouchableOpacity, SafeAreaView, Dimensions, TouchableWithoutFeedback, ScrollView
+  StyleSheet, View, Text, TextInput, Modal,
+  TouchableOpacity, SafeAreaView, Dimensions, TouchableWithoutFeedback, ScrollView,
 } from 'react-native';
-import GreenButton from '../../components/GreenButton';
+import { FAB } from 'react-native-paper';
 import { useAuthContext } from '../Authentication/context/AuthContext';
 import { addTrackedFood } from './hooks/Food';
 import themeContext from '../../theme/themeContext';
-import { FAB } from 'react-native-paper';
 
-const screenWidth = Dimensions.get('window').width
-const screenHeight = Dimensions.get('window').height
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   input: {
@@ -24,24 +24,24 @@ const styles = StyleSheet.create({
     bottom: 5,
   },
   container: {
-    flex: 1, 
-    justifyContent: 'space-between'
+    flex: 1,
+    justifyContent: 'space-between',
   },
   header: {
     fontSize: 30,
     marginTop: 20,
     alignSelf: 'center',
     fontWeight: 'bold',
-    width: screenWidth * 0.95
+    width: screenWidth * 0.95,
   },
   box: {
     flexDirection: 'row',
     margin: 10,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   text: {
     fontSize: 24,
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   values: {
     fontSize: 20,
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     margin: 20,
     width: screenWidth * 0.6,
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   dropDownContainer: {
     borderWidth: 2,
@@ -122,7 +122,7 @@ export default function FoodDetails({ route, navigation }) {
     ...foodInput,
     foodData: {
       ...foodInput.foodData,
-      serving_qty: quantity,
+      serving_qty: parseInt(quantity, 10),
       serving_unit: selectedServingUnit,
     },
 
@@ -145,121 +145,121 @@ export default function FoodDetails({ route, navigation }) {
       <ScrollView style={{ maxHeight: screenHeight * 0.6 }}>
         <TouchableWithoutFeedback>
           <>
-          <TouchableWithoutFeedback>
-            <View style={[styles.box, {borderColor: theme.color} ]}>
-              <Text style={[styles.text, { color: theme.color }]}>Calories</Text>
-              <Text testID='calories' style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{calories}</Text>
-            </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback>
-            <View style={[ styles.box, {borderColor: theme.color} ]}>
-              <Text style={[styles.text, { color: theme.color }]}>Protein</Text>
-              <Text testID='protein' style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Protein}</Text>
-            </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback>
-            <View style={[ styles.box, {borderColor: theme.color} ]}>
-              <Text style={[styles.text, { color: theme.color }]}>Carbs</Text>
-              <Text testID='carbs' style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Carbs}</Text>
-            </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback>
-            <View style={[ styles.box, {borderColor: theme.color} ]}>
-              <Text style={[styles.text, { color: theme.color }]}>Fat</Text>
-              <Text testID='fat' style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Fat}</Text>
-            </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback>
-            <View style={[ styles.box, {borderColor: theme.color} ]}>
-              <Text style={[styles.text, { color: theme.color }]}>Sugars</Text>
-              <Text testID='sugars' style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Sugars}</Text>
-            </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback>
-            <View style={[ styles.box, {borderColor: theme.color} ]}>
-              <Text style={[styles.text, { color: theme.color }]}>Fibre</Text>
-              <Text testID='fibre' style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Fiber}</Text>
-            </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback>
-            <View style={[ styles.box, {borderColor: theme.color} ]} justifyContent="space-between">
-              <Text style={[styles.text, { color: theme.color }]}>Serving units</Text>
-              <View style={styles.dropDownContainer}>
-                <TouchableOpacity
-                  style={[styles.button, { backgroundColor: theme.background }]}
-                  onPress={() => setVisible(true)}
-                >
-                  <Text testID='viewUnits' style={[{ color: theme.color, alignSelf: 'center' }]}>{selectedServingUnit || 'Select an option'}</Text>
-                </TouchableOpacity>
-                <Modal
-                  testID='modal'
-                  visible={visible}
-                  animationType="fade"
-                  transparent
-                  onRequestClose={() => setVisible(false)}
-                >
-                  <View style={styles.modal}>
-                    {altMeasures ? altMeasures.map((altMeasure, index) => (
-                      <TouchableOpacity
-                      key={index}
-                      style={styles.modalButton}
-                      onPress={() => {
-                        setSelectedServingUnit(altMeasure.measure);
-                        setVisible(false);
-                      }}
-                      >
-                        <Text>{altMeasure.measure}</Text>
-                      </TouchableOpacity>
-                    ))
-                    
-                    : (
-                      <TouchableOpacity
-                      key="undefined"
-                      style={styles.modalButton}
-                      onPress={() => {
-                        setVisible(false);
-                      }}
-                      >
-                          <Text>{selectedServingUnit}</Text>
-                        </TouchableOpacity>
-                      )}
-                  </View>
-                </Modal>
-              </View>
-            </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback>
-            <View style={[ styles.box, {borderColor: theme.color} ]} justifyContent="space-between">
-              <Text style={[styles.text, { color: theme.color }]}>Serving Quantity</Text>
-              <TextInput
-                testID='quantityInput'
-                defaultValue={quantity}
-                placeholderTextColor={theme.color}
-                color={theme.color}
-                style={[styles.input, { borderColor: theme.color }]}
-                keyboardType="numeric"
-                clearButtonMode="always"
-                onChangeText={(input) => setQuantity(input)}
-                />
-            </View>
-          </TouchableWithoutFeedback>
-          {Brand ? (
             <TouchableWithoutFeedback>
-              <View style={[ styles.box, {borderColor: theme.color} ]}>
-                <Text style={[styles.text, { color: theme.color }]}>Brand name</Text>
-                <Text testID='brandName' style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Brand}</Text>
+              <View style={[styles.box, { borderColor: theme.color }]}>
+                <Text style={[styles.text, { color: theme.color }]}>Calories</Text>
+                <Text testID="calories" style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{calories}</Text>
               </View>
             </TouchableWithoutFeedback>
-          ) : null}
+            <TouchableWithoutFeedback>
+              <View style={[styles.box, { borderColor: theme.color }]}>
+                <Text style={[styles.text, { color: theme.color }]}>Protein</Text>
+                <Text testID="protein" style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Protein}</Text>
+              </View>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback>
+              <View style={[styles.box, { borderColor: theme.color }]}>
+                <Text style={[styles.text, { color: theme.color }]}>Carbs</Text>
+                <Text testID="carbs" style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Carbs}</Text>
+              </View>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback>
+              <View style={[styles.box, { borderColor: theme.color }]}>
+                <Text style={[styles.text, { color: theme.color }]}>Fat</Text>
+                <Text testID="fat" style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Fat}</Text>
+              </View>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback>
+              <View style={[styles.box, { borderColor: theme.color }]}>
+                <Text style={[styles.text, { color: theme.color }]}>Sugars</Text>
+                <Text testID="sugars" style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Sugars}</Text>
+              </View>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback>
+              <View style={[styles.box, { borderColor: theme.color }]}>
+                <Text style={[styles.text, { color: theme.color }]}>Fibre</Text>
+                <Text testID="fibre" style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Fiber}</Text>
+              </View>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback>
+              <View style={[styles.box, { borderColor: theme.color }]} justifyContent="space-between">
+                <Text style={[styles.text, { color: theme.color }]}>Serving units</Text>
+                <View style={styles.dropDownContainer}>
+                  <TouchableOpacity
+                    style={[styles.button, { backgroundColor: theme.background }]}
+                    onPress={() => setVisible(true)}
+                  >
+                    <Text testID="viewUnits" style={[{ color: theme.color, alignSelf: 'center' }]}>{selectedServingUnit || 'Select an option'}</Text>
+                  </TouchableOpacity>
+                  <Modal
+                    testID="modal"
+                    visible={visible}
+                    animationType="fade"
+                    transparent
+                    onRequestClose={() => setVisible(false)}
+                  >
+                    <View style={styles.modal}>
+                      {altMeasures ? altMeasures.map((altMeasure, index) => (
+                        <TouchableOpacity
+                          key={index}
+                          style={styles.modalButton}
+                          onPress={() => {
+                            setSelectedServingUnit(altMeasure.measure);
+                            setVisible(false);
+                          }}
+                        >
+                          <Text>{altMeasure.measure}</Text>
+                        </TouchableOpacity>
+                      ))
+
+                        : (
+                          <TouchableOpacity
+                            key="undefined"
+                            style={styles.modalButton}
+                            onPress={() => {
+                              setVisible(false);
+                            }}
+                          >
+                            <Text>{selectedServingUnit}</Text>
+                          </TouchableOpacity>
+                        )}
+                    </View>
+                  </Modal>
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback>
+              <View style={[styles.box, { borderColor: theme.color }]} justifyContent="space-between">
+                <Text style={[styles.text, { color: theme.color }]}>Serving Quantity</Text>
+                <TextInput
+                  testID="quantityInput"
+                  defaultValue={quantity}
+                  placeholderTextColor={theme.color}
+                  color={theme.color}
+                  style={[styles.input, { borderColor: theme.color }]}
+                  keyboardType="numeric"
+                  clearButtonMode="always"
+                  onChangeText={(input) => setQuantity(input)}
+                />
+              </View>
+            </TouchableWithoutFeedback>
+            {Brand ? (
+              <TouchableWithoutFeedback>
+                <View style={[styles.box, { borderColor: theme.color }]}>
+                  <Text style={[styles.text, { color: theme.color }]}>Brand name</Text>
+                  <Text testID="brandName" style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{Brand}</Text>
+                </View>
+              </TouchableWithoutFeedback>
+            ) : null}
           </>
         </TouchableWithoutFeedback>
       </ScrollView>
       <View style={styles.buttonContainer}>
         <FAB
-          testID='add'
+          testID="add"
           onPress={save}
           icon="check"
-          alignSelf={'center'}
+          alignSelf="center"
           width={screenWidth * 0.6}
           label="Add Food"
         />

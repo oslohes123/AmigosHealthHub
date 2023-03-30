@@ -23,7 +23,7 @@ export const addTrackedFood = {
               ]
             },
             serving_qty: {
-              type: 'string'
+              type: 'number'
             },
             serving_unit: {
               type: 'string'

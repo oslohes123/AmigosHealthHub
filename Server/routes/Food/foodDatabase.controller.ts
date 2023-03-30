@@ -10,6 +10,9 @@ const databaseQuery = new SupabaseQueryClass()
 export const addTrackedFood = async (req: Request, res: Response) => {
   const Data: FoodInput = req.body
   if (!validateJSONSchema(req.body, foodSchemas.addTrackedFood)) {
+    console.log('We got: ', req.body)
+    console.log('Schema: ', foodSchemas.addTrackedFood)
+
     return res.status(400).send({ mssg: 'Invalid JSON Schema', whatWeGot: req.body, schema: foodSchemas.addTrackedFood })
   }
   // First match to see if the food is already in the Food table

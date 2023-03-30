@@ -16,6 +16,8 @@ require('dotenv').config()
 export const generalSearch = async (req: Request, res: Response) => {
   // const {value:inputData,code}:SearchCriteria = req.query.value
   if (!validateJSONSchema(req.params, searchSchema.generalSearch)) {
+    console.log('We got: ', req.params)
+    console.log('Schema: ', searchSchema.generalSearch)
     return res.status(400).json({ message: 'Invalid JSON Schema', whatWeGot: req.params, schema: searchSchema.generalSearch })
   }
   const inputData = req.params.value

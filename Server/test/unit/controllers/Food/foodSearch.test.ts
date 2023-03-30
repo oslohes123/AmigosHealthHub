@@ -52,7 +52,7 @@ const mockRequest = (sessionParams: object, sessionData: object) => {
 test('testing InstantSearch', async (t: ExecutionContext) => {
   const req = mockRequest({
     value: 'apple',
-    code: clientSearchMethods.genericSearch
+    code: (clientSearchMethods.genericSearch).toString()
   }, {})
   const res = mockResponse()
   await generalSearch(req as Request, res as Response)
@@ -63,7 +63,7 @@ test('testing InstantSearch', async (t: ExecutionContext) => {
 test('testing wrong Search code', async (t: ExecutionContext) => {
   const req = mockRequest({
     value: 'apple',
-    code: 99
+    code: '99'
   }, {})
   const res = mockResponse()
   await generalSearch(req as Request, res as Response)
@@ -73,7 +73,7 @@ test('testing wrong Search code', async (t: ExecutionContext) => {
 test('Testing specific search', async (t: ExecutionContext) => {
   const req = mockRequest({
     value: 'apple',
-    code: clientSearchMethods.specificSearch
+    code: (clientSearchMethods.specificSearch).toString()
   }, {})
   const res = mockResponse()
   await generalSearch(req as Request, res as Response)
