@@ -10,7 +10,7 @@ beforeEach(() => {
     cy.get('input[placeholder="Find food..."]').click().type('apple', {force: true})
     cy.contains('apple').click()
     cy.get('[data-testid="add"]').click()
-    cy.get('input[placeholder="Find food..."]').clear()
+    cy.get('input[placeholder="Find food..."]').clear({force:true})
 })
 
 describe("Check diet pie chart", () => {
