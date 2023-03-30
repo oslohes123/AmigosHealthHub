@@ -66,7 +66,7 @@ export default function Stats({ navigation }) {
         </LinearGradient>
       </TouchableOpacity>
 
-      <TouchableOpacity 
+      <TouchableOpacity
         testID="history_widget"
         onPress={pressHandler1}
       >

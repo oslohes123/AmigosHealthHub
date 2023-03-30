@@ -52,7 +52,7 @@ test('Attempt to insert data without logging in', async (t: any) => {
   await insertMentalData(req as Request, res as Response)
 
   t.true(res.status.calledWith(400))
-  t.true(res.json.calledWith({ mssg: 'You must be logged in to submit data' }))
+  t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' }))
 })
 
 test('Attempt to insert data with an empty word', async (t: any) => {

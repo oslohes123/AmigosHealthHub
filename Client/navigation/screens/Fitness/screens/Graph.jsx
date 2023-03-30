@@ -75,7 +75,7 @@ export default function Graph({ navigation }) {
   const [getCaloriesLabels, setCaloriesLabels] = useState(null);
   const [getCaloriesData, setCaloriesData] = useState(null);
 
-  const { getAllExercises, error } = useGetAllExercises();
+  const { getAllExercises } = useGetAllExercises();
   const { getExerciseHistory, isLoading, errorExerciseHistory } = useGetExerciseHistory();
   const isFocused = useIsFocused();
 

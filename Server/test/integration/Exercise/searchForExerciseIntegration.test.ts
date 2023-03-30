@@ -6,7 +6,7 @@ import RouteNamesClass from '../../../utils/routeNamesClass'
 import { createUserWithID, createHashedPassword, createToken, deleteUserRow } from '../../../utils/userFunctions'
 import { cloneDeep } from 'lodash'
 const routeNames = new RouteNamesClass()
-const searchExerciseRoute = routeNames.fullSearchExerciseURL
+const searchForExerciseRoute = routeNames.fullSearchExerciseURL
 
 let randomEmail: string
 const uuid = uuidv4()
@@ -45,24 +45,24 @@ const validRequest: searchForExerciseRequest = {
   wordtosearch: 'bench press'
 }
 
-test('searchExerciseRoute is correct', (t: any) => {
-  t.true(searchExerciseRoute === '/api/user/exercise/search')
+test('searchForExerciseRoute is correct', (t: any) => {
+  t.true(searchForExerciseRoute === '/api/user/exercise/search')
 })
 // test searchForExercise when wordtosearch is empty
 
-test('searchForExercise with empty word results in empty array and success', async (t: any) => {
+test(`GET ${searchForExerciseRoute} with empty word results in empty array and success`, async (t: any) => {
   const validRequestWithNoWordtosearch = cloneDeep(validRequest)
   delete validRequestWithNoWordtosearch.wordtosearch
   const response = await request(app)
-    .get(searchExerciseRoute)
+    .get(searchForExerciseRoute)
     .set({ authorization: token, ...validRequestWithNoWordtosearch })
   t.true(response.status === 200)
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'wordtosearch is empty', searchedWords: [] }))
 })
 
-test('searchForExercise with bench press results in success', async (t: any) => {
+test(`GET ${searchForExerciseRoute} with bench press results in success`, async (t: any) => {
   const response = await request(app)
-    .get(searchExerciseRoute)
+    .get(searchForExerciseRoute)
     .set({ authorization: token, ...validRequest })
   t.true(response.status === 200)
   t.true(response.body.mssg === 'Successful Search!')

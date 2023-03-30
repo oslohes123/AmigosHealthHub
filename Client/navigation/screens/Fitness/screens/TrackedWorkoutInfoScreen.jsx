@@ -263,17 +263,15 @@ export default function TrackedWorkoutInfoScreen({ route, navigation }) {
               </View>
 
               {item.exercise.type === 'cardio' ? (
-                <>
-                  <View style={styles.statsRows}>
-                    <Text style={[styles.statsText, { color, alignSelf: 'center' }]}>
-                      Distance:
-                      {' '}
-                      {item.distance}
-                      {' '}
-                      m
-                    </Text>
-                  </View>
-                </>
+                <View style={styles.statsRows}>
+                  <Text style={[styles.statsText, { color, alignSelf: 'center' }]}>
+                    Distance:
+                    {' '}
+                    {item.distance}
+                    {' '}
+                    m
+                  </Text>
+                </View>
               ) : (
                 <>
                   <View style={styles.statsRows}>
@@ -308,16 +306,16 @@ export default function TrackedWorkoutInfoScreen({ route, navigation }) {
                   kcal
                 </Text>
                 <View style={styles.statsRows}>
-                    <Text style={[styles.statsText, { color, alignSelf: 'center' }]}>
-                      Duration:
-                      {' '}
-                      {Math.trunc(Number(item.duration))}
-                      &apos;
-                      {' '}
-                      {Math.trunc((Number(item.duration) - Math.trunc(Number(item.duration))) * 60)}
-                      &quot;
-                    </Text>
-                  </View>
+                  <Text style={[styles.statsText, { color, alignSelf: 'center' }]}>
+                    Duration:
+                    {' '}
+                    {Math.trunc(Number(item.duration))}
+                    &apos;
+                    {' '}
+                    {Math.trunc((Number(item.duration) - Math.trunc(Number(item.duration))) * 60)}
+                    &quot;
+                  </Text>
+                </View>
               </View>
             </View>
           </TouchableWithoutFeedback>

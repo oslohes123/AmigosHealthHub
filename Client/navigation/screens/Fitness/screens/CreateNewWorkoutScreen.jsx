@@ -264,7 +264,7 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
                             fontSize: 12,
                             textAlign: 'center',
                           }}
-                          >
+                        >
                           Duration
                         </Text>
                         <Text
@@ -274,7 +274,7 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
                             fontSize: 16,
                             textAlign: 'center',
                           }}
-                          >
+                        >
                           {modalDuration}
                           {' '}
                           mins
@@ -328,7 +328,7 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
                             fontSize: 12,
                             textAlign: 'center',
                           }}
-                          >
+                        >
                           Calories
                         </Text>
                         <Text
@@ -338,7 +338,7 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
                             fontSize: 16,
                             textAlign: 'center',
                           }}
-                          >
+                        >
                           { modalCalories || 0 }
                           {' '}
                           kcal
@@ -372,7 +372,7 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
                         </Text>
                       </View>
                       <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: screenWidth * 0.6 }}>
-                        
+
                         <View>
                           <Text
                             style={{
@@ -380,7 +380,7 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
                               fontSize: 12,
                               textAlign: 'center',
                             }}
-                            >
+                          >
                             Duration
                           </Text>
                           <Text
@@ -390,7 +390,7 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
                               fontSize: 16,
                               textAlign: 'center',
                             }}
-                            >
+                          >
                             {modalDuration}
                             {' '}
                             mins
@@ -404,7 +404,7 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
                               fontSize: 12,
                               textAlign: 'center',
                             }}
-                            >
+                          >
                             Calories
                           </Text>
                           <Text
@@ -414,7 +414,7 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
                               fontSize: 16,
                               textAlign: 'center',
                             }}
-                            >
+                          >
                             { modalCalories || 0 }
                             {' '}
                             kcal
@@ -510,11 +510,11 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
             {isLoading
             && (
               <ActivityIndicator
-              animating
-              size={50}
-              color="#c2e7fe"
+                animating
+                size={50}
+                color="#c2e7fe"
               />
-              )}
+            )}
 
             <View style={{ flexDirection: 'row' }}>
               <FAB
@@ -530,7 +530,6 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
                 style={styles.fab}
                 onPress={async () => {
                   if (workoutName.length > 1 && selectedExercises.length > 0) {
-                    
                     await addWorkout(workoutName, selectedExercises);
 
                     // if (message === 'Workout Plan created!') {
@@ -589,35 +588,35 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
         Exercises
       </Text>
 
-    {!isLoading && (
-      <ScrollView
-        style={[styles.verticalScroll, { borderColor: color }]}
-        bounces={false}
-      >
+      {!isLoading && (
+        <ScrollView
+          style={[styles.verticalScroll, { borderColor: color }]}
+          bounces={false}
+        >
 
-        {!isLoading && results.map((item) => (
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('Exercise Information', {
-                item,
-                selectedExercises,
-              });
-            }}
-            key={item}
-          >
-            <Text
-              style={[
-                styles.resultsText,
-                { borderColor: color, color },
-              ]}
+          {!isLoading && results.map((item) => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Exercise Information', {
+                  item,
+                  selectedExercises,
+                });
+              }}
               key={item}
             >
-              {item}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-    )}
+              <Text
+                style={[
+                  styles.resultsText,
+                  { borderColor: color, color },
+                ]}
+                key={item}
+              >
+                {item}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      )}
 
       {!isLoading && selectedExercises.length > 0 && (
         <ScrollView
@@ -643,7 +642,7 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
                 setExerciseModalVisible(!exerciseModalVisible);
                 setModalType(item.type);
               }}
-              >
+            >
               <Text
                 style={[
                   styles.addedText,

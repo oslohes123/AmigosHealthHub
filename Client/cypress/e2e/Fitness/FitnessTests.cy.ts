@@ -226,6 +226,17 @@ describe("Check Workout Plans Screen", () => {
     cy.get('[data-testid="Jog In Place secs_input"]').click().clear({force: true}).type("03", {force: true})
     cy.get('[data-testid="Jog In Place distance_input"]').click().clear({force: true}).type("5.002", {force: true})
     cy.get('[data-testid="Machine Bicep Curl reps 0"]').click().clear({force: true}).type("3", {force: true})
+    cy.get('[data-testid="Machine Bicep Curl weight 0"]').click().clear({force: true}).type("7", {force: true})
+    cy.get('[data-testid="Machine Bicep Curl weight 1"]').click().clear({force: true}).type("8", {force: true})
+    cy.get('[data-testid="track_plan_button"]').click()
+    cy.get('[data-testid="snackbar"]').should("be.visible")
+    cy.contains("Close").click()
+
+    cy.get('[data-testid="Jog In Place calories_input"]').click().clear({force: true}).type("280", {force: true})
+    cy.get('[data-testid="Jog In Place mins_input"]').click().clear({force: true}).type("25", {force: true})
+    cy.get('[data-testid="Jog In Place secs_input"]').click().clear({force: true}).type("03", {force: true})
+    cy.get('[data-testid="Jog In Place distance_input"]').click().clear({force: true}).type("5.002", {force: true})
+    cy.get('[data-testid="Machine Bicep Curl reps 0"]').click().clear({force: true}).type("3", {force: true})
     cy.get('[data-testid="Machine Bicep Curl reps 1"]').click().clear({force: true}).type("5", {force: true})
     cy.get('[data-testid="Machine Bicep Curl weight 0"]').click().clear({force: true}).type("7", {force: true})
     cy.get('[data-testid="Machine Bicep Curl weight 1"]').click().clear({force: true}).type("8", {force: true})
@@ -234,13 +245,30 @@ describe("Check Workout Plans Screen", () => {
   })  
 
   it("Checks the user can delete a workout plan", () => {
+      cy.get('[data-testid="create_plan_button"]').click()
+      cy.contains("h1", "Create New Workout").should("be.visible")
+
+      cy.get('[data-testid="searchbar"]').clear({force: true}).type("gobl", {force: true})
+      cy.contains("Goblet Squat").should("be.visible")
+      cy.contains("Goblet Squat").click()
+      cy.get('[data-testid="sets_input"]').click().clear({force: true}).type("9", {force: true})
+      cy.get('[data-testid="reps_input"]').click().clear({force: true}).type("8", {force: true})
+      cy.get('[data-testid="weight_input"]').click().clear({force: true}).type("7", {force: true})
+      cy.get('[data-testid="save_exercise_button"]').click()
+
+      cy.get('[data-testID="enter_name_button"').click()
+      cy.contains("Save Workout").should("be.visible") 
+      cy.get('[data-testid="workout_name_input"]').click().type("Workout to delete", {force: true})
+      cy.get('[data-testid="save_plan_button"]').click()
+      cy.contains("h1", "Workout Plans").should("be.visible")
+
     cy.get('[data-testid="plans_scrollView"]').should("be.visible")
-    cy.get('[data-testid="Custom workout name"]').should("be.visible")
-    cy.get('[data-testid="Custom workout name"]').click()
+    cy.contains("Workout to delete").should("be.visible")
+    cy.contains("Workout to delete" ).click()
     cy.contains("h1", "Workout Plan Information").should("be.visible")
     cy.get('[data-testid="delete_plan_button"]').click()
     cy.get('[data-testid="plans_scrollView"]').should("be.visible")
-    cy.get('[data-testid="Custom workout name"]').should("not.exist")
+    cy.contains("Workout to delete").should("not.exist")
   })
 })
 
@@ -278,7 +306,8 @@ describe("Check workout Stats Screen", () => {
   it("Checks graph widget navigates to history screen and user can select data to see", () => {
     cy.get('[data-testid="history_widget"]').click()
     cy.contains("h1", "Past Workout Details").should("be.visible")
-    cy.get('[data-testid="calendar_button"]')
+    cy.get('[data-testid="calendar_button"]').click()
+    cy.get('[aria-label="today Thursday 30 March 2023 selected You have entries for this day "]').click()
   })
 
   it("Checks graph widget navigates to overall screen", () => {
