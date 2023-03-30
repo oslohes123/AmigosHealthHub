@@ -4,16 +4,18 @@ import {
 
 import { FontAwesome } from '@expo/vector-icons';
 import React from 'react';
+import { globalStyles } from '../../styles/global';
 
 const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     padding: 10,
     fontSize: 18,
-    borderRadius: 20,
+    borderRadius: 5,
     width: '95%',
     alignSelf: 'center',
     margin: '5%',
+    borderColor: 'lightgrey'
   },
 });
 
