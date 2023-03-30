@@ -55,7 +55,7 @@ export default function HoursSleptGraph({ navigation }) {
     return (
       <View>
         <Surface
-          style={[styles.surface, { width: screenWidth * 0.9 }]}
+          style={[styles.surface, { width: screenWidth * 0.95 }]}
           elevation={4}
         >
           <Text style={styles.header}>Add sleep data</Text>
