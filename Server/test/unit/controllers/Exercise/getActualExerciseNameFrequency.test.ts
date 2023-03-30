@@ -6,7 +6,7 @@ import { createHashedPassword, createUserWithID, deleteUserRow } from '../../../
 import cloneDeep from 'lodash/cloneDeep'
 import { getActualExerciseNameFrequency } from '../../../../routes/Exercise/completedWorkouts.controller'
 import { deleteMultipleExercises } from '../../../../utils/Exercise/insertAndDeleteMultipleExercises'
-// import { setUpCompletedWorkoutForTests } from '../../../../utils/Exercise/setUpCompletedWorkoutForTests'
+import { setUpCompletedWorkoutForTests } from '../../../../utils/Exercise/setUpCompletedWorkoutForTests'
 const uuid = uuidv4()
 const randomEmail = `${uuid}@example.com`
 test.before(async (t: any) => {
@@ -69,4 +69,35 @@ test.serial('getActualExerciseNameFrequency returns empty arrays when user has n
   await getActualExerciseNameFrequency(req as Request, res as Response)
   t.true(res.status.calledWith(200))
   t.true(res.json.calledWith({ mssg: 'Success!', graphLabels: [], graphData: [] }))
+})
+
+test.serial('getActualExerciseNameFrequency with user with 1 workout returns array of size 1', async (t: any) => {
+  const nameOfWorkout = 'Workout Plan 1'
+  // Adds exercises of names: `Slow Jog ${uuid}` and [`Test Curl ${uuid}`
+  const { errorSetUpCompletedWorkoutForTests, successSetUpCompletedWorkoutForTests } = await setUpCompletedWorkoutForTests(uuid, nameOfWorkout)
+  if (errorSetUpCompletedWorkoutForTests || !successSetUpCompletedWorkoutForTests) {
+    t.fail('Error setting up completed workout for tests')
+  }
+  const req = mockRequest(validRequest)
+  const res = mockResponse()
+  await getActualExerciseNameFrequency(req as Request, res as Response)
+  const argsPassed = res.json.getCall(0).args[0]
+  t.log(`argsPassed in getActualExerciseNameFrequency workout: ${JSON.stringify(argsPassed)}`)
+  t.true(res.status.calledWith(200))
+  t.true(res.json.calledWith({ mssg: 'Success!', graphLabels: [`Test Curl ${uuid}`, `Slow Jog ${uuid}`], graphData: [1, 1] }))
+})
+
+test.serial('getActualExerciseNameFrequency with user with 2 workouts returns correct graph labels and data', async (t: any) => {
+  const nameOfWorkout = 'Workout Plan 2'
+  const { errorSetUpCompletedWorkoutForTests, successSetUpCompletedWorkoutForTests } = await setUpCompletedWorkoutForTests(uuid, nameOfWorkout)
+  if (errorSetUpCompletedWorkoutForTests || !successSetUpCompletedWorkoutForTests) {
+    t.fail('Error setting up completed workout for tests')
+  }
+  const req = mockRequest(validRequest)
+  const res = mockResponse()
+  await getActualExerciseNameFrequency(req as Request, res as Response)
+  const argsPassed = res.json.getCall(0).args[0]
+  t.log(`argsPassed in getWorkoutFrequency 2 workout: ${JSON.stringify(argsPassed)}`)
+  t.true(res.status.calledWith(200))
+  t.true(res.json.calledWith({ mssg: 'Success!', graphLabels: [`Test Curl ${uuid}`, `Slow Jog ${uuid}`], graphData: [2, 2] }))
 })
