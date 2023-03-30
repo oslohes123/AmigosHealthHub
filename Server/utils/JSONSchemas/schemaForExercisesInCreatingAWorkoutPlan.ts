@@ -15,7 +15,7 @@ export const exercisesForWorkoutPlanTestSchema = {
               type: ['null', 'string']
             },
             warmUpSet: {
-              type: 'string'
+              type: 'boolean'
             },
             reps: {
               type: ['null', 'string']

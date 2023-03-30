@@ -44,7 +44,7 @@ interface getWorkoutFrequencyRequest {
 const validRequest: getWorkoutFrequencyRequest = {
   userid: uuid
 }
-test('getWorkoutFrequency route is correct', (t: any) => {
+test.serial('getWorkoutFrequency route is correct', (t: any) => {
   t.true(getWorkoutFrequencyRoute === '/api/user/completedWorkouts/workoutFreq')
 })
 test.serial(`GET ${getWorkoutFrequencyRoute} returns error when userid is missing`, async (t: any) => {
