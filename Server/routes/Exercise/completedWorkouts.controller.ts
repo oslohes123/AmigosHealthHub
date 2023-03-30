@@ -282,7 +282,7 @@ export const getWorkoutHistoryByDate = async (req: Request, res: Response) => {
 export const getLastTrackedWorkout = async (req: Request, res: Response) => {
   const { userid } = req.headers
   if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
-    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' })
   }
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'CompletedWorkouts', 'userid', userid, 'workoutname, timestamp')
   if (error) {
