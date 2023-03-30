@@ -1,33 +1,28 @@
 {
-  "expo": {
-    "name": "AmigosHealthApp",
-    "slug": "healthhub",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "userInterfaceStyle": "light",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff",
-      "image": "./assets/splash.png"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "softwareKeyboardLayoutMode": "pan",
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
-    },
-    "web": {},
-    "jsEngine": "hermes",
-    "runtimeVersion": {
-      "policy": "sdkVersion"
+    "expo": {
+        "name": "AmigosHealthApp",
+        "slug": "healthhub",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "userInterfaceStyle": "light",
+        "icon": "./assets/icon.png",
+        "splash": {
+            "resizeMode": "contain",
+            "backgroundColor": "#ffffff",
+            "image": "./assets/splash.png"
+        },
+        "assetBundlePatterns": ["**/*"],
+        "ios": {
+            "supportsTablet": true
+        },
+        "android": {
+            "softwareKeyboardLayoutMode": "pan",
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/adaptive-icon.png",
+                "backgroundColor": "#FFFFFF"
+            }
+        },
+        "web": {},
+        "jsEngine": "hermes"
     }
-  }
 }

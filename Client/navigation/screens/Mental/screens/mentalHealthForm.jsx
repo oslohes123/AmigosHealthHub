@@ -31,8 +31,7 @@ const moodImage = [
 ];
 // make requirements using Yup for the text input word
 const mentalHealthSchema = Yup.object().shape({
-  word: Yup.string().required('Word Of Today cannot be empty!'),
-  word1: Yup.string().max(10, 'Word/expression has to be shorter than 11 characters'),
+  word: Yup.string().required('Word Of Today cannot be empty!').max(11, 'Word/expression has to be shorter than 12 characters'),
 });
 const styles = StyleSheet.create({
   container: {
@@ -91,6 +90,7 @@ export default function RateMentalHealthForm() {
             <Text style={[styles.label, { color }]}>Face:</Text>
             <Image source={moodI} style={styles.image} />
             <Slider
+              testID="slider"
               style={{ width: 250, height: 40 }}
               minimumValue={0}
               maximumValue={4}
@@ -113,11 +113,12 @@ export default function RateMentalHealthForm() {
             </View>
             <Text style={{ color }}>{props.errors.word}</Text>
             <Button
+              testID="submitButton"
               title="Submit!"
               onPress={props.handleSubmit}
               disabled={isLoading}
             />
-            {error && <Text style={{ color }}>{error}</Text>}
+            {error && <Text testID="statusMessage" style={{ color }}>{error}</Text>}
           </View>
         )}
       </Formik>

@@ -31,7 +31,7 @@ export function getExercisesForTests (uuid: string) {
 export function exercisesToInsert (uuid: string) {
   const exercises = [
     { type: 'strength', name: `Test Curl ${uuid}`, muscle: 'bicep', difficulty: 'beginner', instructions: 'curl the weight', equipment: 'dumbbell' },
-    { type: 'strength', name: `Slow Jog ${uuid}`, muscle: 'legs', difficulty: 'beginner', instructions: 'jog', equipment: 'none' }]
+    { type: 'cardio', name: `Slow Jog ${uuid}`, muscle: 'legs', difficulty: 'beginner', instructions: 'jog', equipment: 'none' }]
   return exercises
 }
 // set up for a completed workout in tests

@@ -355,6 +355,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                   kcal
                 </Text>
                 <TextInput
+                  testID={`${item.exercise.name} calories_input`}
                   style={[styles.textInput, { borderColor: color }]}
                   placeholder="Calories (kcal)"
                   color={color}
@@ -389,6 +390,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                     </Text>
                     <View style={{ flexDirection: 'row', width: styles.textInput.width, justifyContent: 'space-between' }}>
                       <TextInput
+                        testID={`${item.exercise.name} mins_input`}
                         style={[
                           styles.textInput,
                           { borderColor: color, color, width: styles.textInput.width / 2.3 },
@@ -409,6 +411,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                       />
                       <Text style={{ color, alignSelf: 'center', fontWeight: 'bold' }}>:</Text>
                       <TextInput
+                        testID={`${item.exercise.name} secs_input`}
                         style={[
                           styles.textInput,
                           { borderColor: color, color, width: styles.textInput.width / 2.3 },
@@ -441,13 +444,14 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                     >
                       Distance:
                       {' '}
-                      {item.distance}
+                      {(item.distance >= 1) ? item.distance : `${Number(item.distance) / 1000}`}
                       {' '}
-                      m
+                      {(item.distance >= 1) ? 'km' : 'm'}
                     </Text>
                     <TextInput
+                      testID={`${item.exercise.name} distance_input`}
                       style={[styles.textInput, { borderColor: color }]}
-                      placeholder="Distance (m)"
+                      placeholder="Distance (km)"
                       color={color}
                       placeholderTextColor={color}
                       keyboardType="numeric"
@@ -497,6 +501,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                       {setsToArray(item.sets).map((unusedParam, index) => (
                         <View style={[{ justifyContent: 'space-evenly', paddingVertical: 5 }]} key={`${item.PEID}reps${index}`}>
                           <TextInput
+                            testID={`${item.exercise.name} reps ${index}`}
                             style={[styles.textInput,
                               { borderColor: color, width: styles.textInput.width * 0.95 }]}
                             placeholder="Reps"
@@ -529,6 +534,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                       {setsToArray(item.sets).map((unusedParam, index) => (
                         <View style={[{ justifyContent: 'space-evenly', paddingVertical: 5 }]} key={`${item.PEID}weight${index}`}>
                           <TextInput
+                            testID={`${item.exercise.name} weight ${index}`}
                             render
                             style={[styles.textInput,
                               { borderColor: color, width: styles.textInput.width * 0.95 }]}
@@ -554,6 +560,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
       </ScrollView>
       <View style={styles.bottomButtons}>
         <FAB
+          testID="delete_plan_button"
           icon="delete"
           style={styles.fab}
           label="Delete Plan"
@@ -563,6 +570,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
           }}
         />
         <FAB
+          testID="track_plan_button"
           icon="check"
           style={styles.fab}
           label="Track Plan"
@@ -623,6 +631,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
       </View>
 
       <Snackbar
+        testID="snackbar"
         visible={snackbarVisible}
         onDismiss={() => setSnackbarVisible(!snackbarVisible)}
         action={{

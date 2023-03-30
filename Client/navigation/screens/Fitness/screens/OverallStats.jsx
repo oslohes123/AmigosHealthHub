@@ -157,7 +157,7 @@ export default function OverallStats() {
             )}
 
             {getExerciseNameFreqData && getExerciseNameFreqLabels && (
-              <TouchableWithoutFeedback>
+              <TouchableWithoutFeedback testID="exercise_frequency_graph">
                 <View style={{ marginVertical: 20, alignSelf: 'center' }}>
                   <Text style={[styles.title, { color }]}>Exercise frequency</Text>
                   <BarChart
@@ -181,7 +181,7 @@ export default function OverallStats() {
             )}
 
             {getExerciseTypeFreqData && getExerciseTypeFreqLabels && (
-              <TouchableWithoutFeedback>
+              <TouchableWithoutFeedback testID="type_frequency_graph">
                 <View style={{ marginBottom: 20, alignSelf: 'center' }}>
                   <Text style={[styles.title, { color }]}>Type frequency</Text>
                   <BarChart
@@ -205,7 +205,7 @@ export default function OverallStats() {
             )}
 
             {getTrackedWorkoutFreqData && getTrackedWorkoutFreqLabels && (
-              <TouchableWithoutFeedback>
+              <TouchableWithoutFeedback testID="workout_frequency_graph">
                 <View style={{ marginBottom: 20, alignSelf: 'center' }}>
                   <Text style={[styles.title, { color }]}>Workout frequency</Text>
                   <BarChart

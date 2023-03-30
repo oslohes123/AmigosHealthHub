@@ -7,6 +7,7 @@ import cloneDeep from 'lodash/cloneDeep'
 import { setUpCompletedWorkoutForTests } from '../../../utils/Exercise/setUpCompletedWorkoutForTests'
 import { getTime, getTodaysDate, getDate } from '../../../utils/convertTimeStamptz'
 import RouteNamesClass from '../../../utils/routeNamesClass'
+import { deleteMultipleExercises } from '../../../utils/Exercise/insertAndDeleteMultipleExercises'
 const routeNames = new RouteNamesClass()
 const deleteTrackedWorkoutRoute = routeNames.fullDeleteCompletedWorkoutURL
 let randomEmail: string
@@ -36,6 +37,10 @@ test.after.always('guaranteed cleanup of user and delete exercises', async (t: a
   const { error } = await deleteUserRow(randomEmail)
   if (error) {
     t.fail(`deleteUserRow of ${randomEmail} failed`)
+  }
+  const { errorDeletingMultipleExercises }: any = await deleteMultipleExercises([{ name: `Test Curl ${uuid}` }, { name: `Slow Jog ${uuid}` }])
+  if (errorDeletingMultipleExercises) {
+    t.fail(JSON.stringify(errorDeletingMultipleExercises))
   }
 })
 

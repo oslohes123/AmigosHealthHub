@@ -328,6 +328,7 @@ export default function TrackedWorkoutInfoScreen({ route, navigation }) {
       </ScrollView>
       <View style={styles.bottomButtons}>
         <FAB
+          testID="delete_button"
           icon="delete"
           style={[styles.fab, { width: screenWidth * 0.95 }]}
           label="Delete History"

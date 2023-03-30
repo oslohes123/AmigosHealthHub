@@ -44,7 +44,7 @@ export default function App({ navigation }) {
   return (
     <View style={[styles.container, { backgroundColor: background }]}>
       <View style={styles.view}>
-        <TouchableOpacity onPress={() => navigation.navigate('Mental History')}>
+        <TouchableOpacity testID="reviewPast" onPress={() => navigation.navigate('Mental History')}>
           <LinearGradient
             colors={['blue', 'grey']}
             style={styles.widget}
@@ -58,7 +58,7 @@ export default function App({ navigation }) {
           </LinearGradient>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.navigate('Review Your Day')}>
+        <TouchableOpacity testID="reviewDay" onPress={() => navigation.navigate('Review Your Day')}>
           <LinearGradient
             colors={['blue', 'grey']}
             style={styles.widget}

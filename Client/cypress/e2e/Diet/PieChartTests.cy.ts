@@ -7,26 +7,47 @@ beforeEach(() => {
     cy.get('input[placeholder="Password"]').click().type('Password123!');
     cy.contains('Login').click({force:true})
     cy.get('a[href="/Diet"]').click();
-    cy.get('input[placeholder="Find food..."]').click().type('apple', {force: true})
-    cy.contains('apple').click()
-    cy.get('[data-testid="add"]').click()
-    cy.get('input[placeholder="Find food..."]').clear({force:true})
 })
 
 describe("Check diet pie chart", () => {
-    it("pie chart should be visible on diet dashboard", () => {
+    beforeEach(() => {
+        cy.get('input[placeholder="Find food..."]').click().type('apple', {force: true})
+        cy.contains('apple').click()
+        cy.get('[data-testid="add"]').click()
+        cy.get('input[placeholder="Find food..."]').clear({force:true})
+    })
+    it("pie chart should be visible on diet dashboard, clickable and navigates correctly", () => {
         cy.get('[data-testid="pie"]')
             .should('be.visible')
-    })
-
-    it("pie chart should be clickable", () => {
-        cy.get('[data-testid="pie"]')
             .click()
+            cy.contains('Nutrients Consumed')
     })
+})
 
-    it("pie chart should navigate to nutrients page", () => {
+describe("Check nutrients screen", () => {
+    beforeEach(() => {
         cy.get('[data-testid="pie"]')
-            .click()
+        .click()
+    })
+    it("should contain the page title", () => {
         cy.contains('Nutrients Consumed')
+            .should('be.visible')
+
+        cy.get('[data-testid="table"]')
+            .should('be.visible')
+
+        cy.get('[data-testid="nutrient"]')
+            .should('be.visible')
+
+        cy.get('[data-testid="amount"]')
+            .should('be.visible')
+
+        cy.contains('protein')
+        cy.contains('sugar')
+        cy.contains('carbohydrates')
+        cy.contains('fat')
+        
+        cy.get('[data-testid="value"]')
+            .should('not.have.text', '')
     })
 })

@@ -48,7 +48,10 @@ export default function Stats({ navigation }) {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: background }]}>
-      <TouchableOpacity onPress={pressHandler}>
+      <TouchableOpacity
+        testID="graph_widget"
+        onPress={pressHandler}
+      >
         <LinearGradient
           colors={['blue', 'grey']}
           style={styles.widget}
@@ -63,7 +66,10 @@ export default function Stats({ navigation }) {
         </LinearGradient>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={pressHandler1}>
+      <TouchableOpacity 
+        testID="history_widget"
+        onPress={pressHandler1}
+      >
         <LinearGradient
           colors={['blue', 'grey']}
           style={styles.widget}
@@ -78,7 +84,10 @@ export default function Stats({ navigation }) {
         </LinearGradient>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={pressHandler2}>
+      <TouchableOpacity
+        testID="overall_widget"
+        onPress={pressHandler2}
+      >
         <LinearGradient
           colors={['blue', 'grey']}
           style={styles.widget}

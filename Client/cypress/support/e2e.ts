@@ -16,5 +16,29 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
 
+// before(() => {
+//   cy.visit('http://localhost:19006');
+//   cy.contains('Sign up for account')
+//     .click()
+//   cy.get('input[placeholder="First Name"]').click().type('Test')
+//   cy.get('input[placeholder="Last Name"]').click().type('Manik')
+//   cy.get('input[placeholder="Email"]').click().type('testmanik@gmail.com')
+//   cy.get('input[placeholder="Age"]').click().type('50')
+//   cy.get('[data-testid="calorieInput"]').click().type('2500')
+//   cy.get('input[placeholder="Password"]').click().type('Password123!')
+//   cy.get('input[placeholder="Confirm Password"]').click().type('Password123!')
+//   cy.contains('Sign Up').click().wait(1000)
+// })
+
+// after(() => {
+//   cy.get('a[href="/Settings"]').click()
+//   cy.contains('test@gmail.com').click()
+//   cy.contains("Delete Account").click()
+//   cy.get('input[placeholder="Your password:"]').click().type('Password123!', {force: true})
+//   cy.get('[data-testid="deletePasswordCheck"]').click()
+//   cy.contains("CONFIRM DELETE ACCOUNT").click()
+// })
+
+
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
