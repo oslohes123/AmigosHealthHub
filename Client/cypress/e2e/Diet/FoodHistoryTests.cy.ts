@@ -7,21 +7,24 @@ beforeEach(() => {
     cy.get('input[placeholder="Password"]').click().type('Password123!');
     cy.contains('Login').click({force:true})
     cy.get('a[href="/Diet"]').click();
+    // cy.get('input[placeholder="Find food..."]').click().type('apple', {force: true})
+    // cy.contains('apple').click()
+    // cy.get('[data-testid="add"]').click()
+    // cy.get('input[placeholder="Find food..."]').clear({force:true})
     cy.get('[data-testid="foodHistory"]').click()
 })
 
 describe("Check food history page", () => {
     it("should contain the page title", () => {
         cy.contains('Food History')
-    })
 
-    it("should contain a calender icon", () => {
+        //open calendar
         cy.get('[data-testid="calendarIcon"]')
-            .should('be.visible')
-    })
+            .should('be.visible').click()
 
-    it("calender icon should be clickable", () => {
+        //close calendar
         cy.get('[data-testid="calendarIcon"]')
-            .click()
+            .should('be.visible').click()
+            
     })
 })
