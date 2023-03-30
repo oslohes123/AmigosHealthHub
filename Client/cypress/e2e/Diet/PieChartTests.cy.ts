@@ -29,7 +29,7 @@ describe("Check nutrients screen", () => {
         cy.get('[data-testid="pie"]')
         .click()
     })
-    it("should contain the page title", () => {
+    it("should contain all required elements and functionality", () => {
         cy.contains('Nutrients Consumed')
             .should('be.visible')
 

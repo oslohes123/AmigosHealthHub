@@ -260,7 +260,7 @@ export default function Graph({ navigation }) {
                 style={{ borderRadius: 15 }}
                 data={weightedData}
                 width={screenWidth * 0.95}
-                height={280}
+                height={300}
                 yAxisSuffix=" kg"
                 chartConfig={chartConfig}
                 bezier
@@ -281,7 +281,7 @@ export default function Graph({ navigation }) {
                 style={{ borderRadius: 25 }}
                 data={durationData}
                 width={screenWidth * 0.95}
-                height={220}
+                height={300}
                 chartConfig={chartConfig}
                 fromZero
                 bezier
@@ -302,7 +302,7 @@ export default function Graph({ navigation }) {
                 style={{ borderRadius: 25 }}
                 data={distanceData}
                 width={screenWidth * 0.95}
-                height={220}
+                height={300}
                 chartConfig={chartConfig}
                 fromZero
                 bezier
@@ -323,7 +323,7 @@ export default function Graph({ navigation }) {
                 style={{ borderRadius: 25 }}
                 data={caloriesData}
                 width={screenWidth * 0.95}
-                height={220}
+                height={300}
                 chartConfig={chartConfig}
                 fromZero
                 bezier

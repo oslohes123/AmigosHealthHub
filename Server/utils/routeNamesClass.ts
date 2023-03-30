@@ -51,7 +51,7 @@ export default class RouteNamesClass {
   readonly partialDeleteWorkout = '/delete'
   readonly fullDeleteWorkoutURL = this.workoutBaseURL + this.partialDeleteWorkout
   readonly partialGetAllWorkoutNames = '/getAllWorkoutNames'
-  readonly fullGetAllWorkoutNames = this.workoutBaseURL + this.partialGetAllWorkoutNames
+  readonly fullGetAllWorkoutNamesURL = this.workoutBaseURL + this.partialGetAllWorkoutNames
 
   // Calories Routes
   readonly partialGetCaloriesToday = '/getToday'

@@ -2,6 +2,8 @@ import supabase from '../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../utils/databaseInterface'
 import type { Request, Response } from 'express'
 import { getTodaysDate } from '../../utils/convertTimeStamptz'
+import { rateMentalSchema } from '../../utils/JSONSchemas/Mental Health/rateMentalHealthSchema'
+import validateJSONSchema from '../../utils/validateJSONSchema'
 const databaseQuery = new SupabaseQueryClass()
 
 // check if todays date is equal to the date of the most recent values provided by the user that is logged in
@@ -23,6 +25,9 @@ export async function checkExistsToday (id: string) {
 // if the user has provided data already, insert in a new row in the data table, otherwise update the most recent value if the user has already submitted data
 export const insertMentalData = async (req: Request, res: Response) => {
   const { face, word, userid } = req.body
+  if (!validateJSONSchema(req.body, rateMentalSchema)) {
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
+  }
   if (!userid) {
     return res.status(400).json({ mssg: 'You must be logged in to submit data' })
   }

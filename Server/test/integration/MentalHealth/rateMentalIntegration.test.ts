@@ -58,7 +58,7 @@ test(`POST ${rateMentalRoute} has middleware execute`, async (t: any) => {
   console.log(`noIDResponse: ${JSON.stringify(response.body)}`)
   t.true(response.status === 400)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
-  t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'You must be logged in to submit data' }))
+  t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' }))
 })
 
 test(`POST ${rateMentalRoute} with no word inputted`, async (t: any) => {

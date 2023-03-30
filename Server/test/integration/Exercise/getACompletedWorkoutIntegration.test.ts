@@ -38,7 +38,9 @@ test.after.always(async (t: any) => {
     t.fail(JSON.stringify(errorDeletingMultipleExercises))
   }
 })
-
+test('getACompletedWorkout route is correct', (t: any) => {
+  t.true(getACompletedWorkoutRoute === '/api/user/completedWorkouts/get')
+})
 test.serial(`GET ${getACompletedWorkoutRoute}  with missing userid returns error`, async (t: any) => {
   const response = await request(app)
     .get(getACompletedWorkoutRoute)

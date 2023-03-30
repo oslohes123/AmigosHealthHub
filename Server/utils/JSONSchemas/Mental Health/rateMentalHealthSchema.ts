@@ -3,14 +3,13 @@ export const rateMentalSchema = {
   type: 'object',
   properties: {
     face: {
-      type: 'string'
+      type: 'integer'
     },
     word: {
       type: 'string'
     },
     userid: {
-      type: 'string',
-      format: 'uuid'
+      type: 'string'
     }
   },
   required: [
