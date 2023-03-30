@@ -1,10 +1,8 @@
 import supabase from '../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../utils/databaseInterface'
 import type { Request, Response } from 'express'
-import { getUserByEmail } from '../../utils/userFunctions'
 import { getTodaysDate } from '../../utils/convertTimeStamptz'
 const databaseQuery = new SupabaseQueryClass()
-
 
 // check if todays date is equal to the date of the most recent values provided by the user that is logged in
 export async function checkExistsToday (id: string) {
