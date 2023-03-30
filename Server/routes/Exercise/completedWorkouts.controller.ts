@@ -9,6 +9,7 @@ import { schemaForRequireduserid } from '../../utils/JSONSchemas/schemaForRequir
 import { schemaForNewTrackedWorkout } from '../../utils/JSONSchemas/schemaForNewTrackedWorkout'
 import { addCompletedWorkoutUnit } from '../../utils/Exercise/createNewTrackedWorkout'
 import { deleteWorkoutPlanByID, selectAEIDs, getAEIDsFromCompletedWorkoutIDs, getAllAEIDs, getAllExerciseIDs, getExerciseNames, getExerciseTypes, getWorkoutByID } from '../../utils/Exercise/exerciseFunctions'
+import { useridAndDateSchema } from '../../utils/JSONSchemas/Exercise/useridAndDateSchema'
 const databaseQuery = new SupabaseQueryClass()
 
 // Get a specific workout by userid, workoutname, date and time
@@ -231,8 +232,8 @@ export const getActualExerciseTypeFrequency = async (req: Request, res: Response
 // Exercises done on the day
 export const getWorkoutHistoryByDate = async (req: Request, res: Response) => {
   const { userid, date } = req.headers
-  if (!userid || !date) {
-    return res.status(400).json({ mssg: 'userid nor date can be null' })
+  if (!validateJSONSchema(req.headers, useridAndDateSchema)) {
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' })
   }
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'CompletedWorkouts', 'userid', userid, 'completedWorkoutID, workoutname, timestamp')
   if (error) {
