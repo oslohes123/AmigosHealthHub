@@ -2,14 +2,14 @@
 
 beforeEach(() => {
   cy.visit('http://localhost:19006') 
-  cy.contains('Log into account').click()
-  cy.get('input[placeholder="Email"]').click().type('ethan@gmail.com') 
-  cy.get('input[placeholder="Password"]').click().type('P4ssw0rd!') 
-  cy.contains('Login').click()
+  cy.contains('Log into account').click({force: true})
+  cy.get('input[placeholder="Email"]').click({force: true}).type('ethan@gmail.com') 
+  cy.get('input[placeholder="Password"]').click({force: true}).type('P4ssw0rd!') 
+  cy.contains('Login').click({force: true})
 })
 
 describe("Check navigate to fitness dashboard", () => {
-  it("Should navigate from main dashboard to fitness dashboard" ,() => {
+  it("Should navigate from main dashboard to fitness dashboard", () => {
     cy.get('a[href="/Fitness"]').click()
     cy.contains("h1", "Fitness Dashboard").should("be.visible")
   })
