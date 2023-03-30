@@ -129,9 +129,6 @@ export const deleteTrackedWorkout = async (req: Request, res: Response) => {
   if (deleteError) {
     return res.status(400).json({ mssg: 'Fail to delete WorkoutPlanByID', deleteError })
   }
-  if (deleteError) {
-    return res.status(400).json({ mssg: 'Fail to delete WorkoutPlanByID', deleteError })
-  }
   for (let i = 0; i < AEIDs.length; i++) {
     const AEID = AEIDs[i].AEID
     const { error }: any = await databaseQuery.deleteFrom(supabase, 'ActualExercises', 'AEID', AEID)

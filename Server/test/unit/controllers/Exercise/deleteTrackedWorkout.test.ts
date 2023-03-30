@@ -7,7 +7,7 @@ import { deleteTrackedWorkout } from '../../../../routes/Exercise/completedWorko
 import cloneDeep from 'lodash/cloneDeep'
 import { setUpCompletedWorkoutForTests } from '../../../../utils/Exercise/setUpCompletedWorkoutForTests'
 // import { selectAllActualExercises, selectAllCompletedWorkoutNames, selectAllTrackedWorkoutsWithExercises } from '../../../../utils/Exercise/exerciseFunctions'
-import { getTodaysDate } from '../../../../utils/convertTimeStamptz'
+import { getTime, getTodaysDate, getDate } from '../../../../utils/convertTimeStamptz'
 
 let randomEmail: string
 const uuid = uuidv4()
@@ -104,7 +104,7 @@ test('deleteTrackedWorkout results in error when time is missing', async (t: any
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
-test('deleteTrackedWorkout results in error when user has no completed workouts', async (t: any) => {
+test.serial('deleteTrackedWorkout results in error when user has no completed workouts', async (t: any) => {
   const fakeWorkoutRequest = cloneDeep(validRequest)
 
   const req = mockRequest(fakeWorkoutRequest)
@@ -116,7 +116,28 @@ test('deleteTrackedWorkout results in error when user has no completed workouts'
   t.true(res.json.calledWith({ mssg: 'User does not have any completed workouts!' }))
 })
 
-test('deleteTrackedWorkout results in error when user has workout of the same name but at a different given time/date', async (t: any) => {
+test.serial('deleteTrackedWorkout results in success when given correct workout details', async (t: any) => {
+  const nameOfWorkout = validRequest.workoutname
+  const timestampOfCreationOfWorkout = '2006-03-26T13:28:10+00:00'
+  const dateOfCreationOfWorkout = getDate(timestampOfCreationOfWorkout)
+  const timeOfCreationOfWorkout = getTime(timestampOfCreationOfWorkout)
+  const { errorSetUpCompletedWorkoutForTests, successSetUpCompletedWorkoutForTests } = await setUpCompletedWorkoutForTests(uuid, nameOfWorkout, timestampOfCreationOfWorkout)
+  if (errorSetUpCompletedWorkoutForTests || !successSetUpCompletedWorkoutForTests) {
+    t.fail('Error setting up completed workout for tests')
+  }
+  const validWorkoutRequest = cloneDeep(validRequest)
+  validWorkoutRequest.date = dateOfCreationOfWorkout
+  validWorkoutRequest.time = timeOfCreationOfWorkout
+  const req = mockRequest(validWorkoutRequest)
+  const res = mockResponse()
+  await deleteTrackedWorkout(req as Request, res as Response)
+  const argsPassed = res.json.getCall(0).args[0]
+  t.log(`deleteTrackedWorkout success test argsPassed: ${JSON.stringify(argsPassed)}`)
+  t.true(res.status.calledWith(200))
+  t.true(res.json.calledWith({ mssg: `Success deleting trackedWorkout ${String(validWorkoutRequest.workoutname)}!` }))
+})
+
+test.serial('deleteTrackedWorkout results in error when user has workout of the same name but at a different given time/date', async (t: any) => {
   const nameOfWorkout = validRequest.workoutname
   const { errorSetUpCompletedWorkoutForTests, successSetUpCompletedWorkoutForTests } = await setUpCompletedWorkoutForTests(uuid, nameOfWorkout)
   if (errorSetUpCompletedWorkoutForTests || !successSetUpCompletedWorkoutForTests) {
