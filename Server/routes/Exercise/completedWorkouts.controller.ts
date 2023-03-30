@@ -93,10 +93,7 @@ const getWorkoutByID = async (completedWorkoutID: string) => {
 // Returns all of a user's completed workouts' names and dates
 export const getAllCompletedWorkouts = async (req: Request, res: Response) => {
   const { userid } = req.headers
-  console.log(`req.headers in getAllCompletedWorkouts: ${JSON.stringify(req.headers)}`)
   if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
-    console.log(`ln 98, req.headers: ${JSON.stringify(req.headers)}, schemaForRequireduserid: ${JSON.stringify(schemaForRequireduserid)}`);
-    console.log('ln99 in this branch!')
     return res.status(400).json({ mssg: 'Something went wrong!', dev: 'JSON instance was invalid against its schema' })
   }
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'CompletedWorkouts', 'userid', userid, 'workoutname, timestamp')
@@ -105,7 +102,6 @@ export const getAllCompletedWorkouts = async (req: Request, res: Response) => {
     return res.status(400).json({ mssg: 'Something went wrong!', error })
   }
   else {
-    console.log(`data of completedWorkouts: ${JSON.stringify(data)}`)
     const arrayOfTimeStamps = []
     for (let i = 0; i < data.length; i++) {
       const timestamp = data[i].timestamp
@@ -125,38 +121,7 @@ export const getAllCompletedWorkouts = async (req: Request, res: Response) => {
       }
     }
 
-    console.log(`sortedCompletedWorkouts: ${JSON.stringify(sortedCompletedWorkouts)}`)
-    console.log(`After mod completedWorkouts: ${JSON.stringify(data)}`)
-
     return res.status(200).json({ mssg: 'Got All Completed Workouts!', workoutsNamesAndDates: sortedCompletedWorkouts })
-  }
-}
-
-// search for an exercise by name in the Exercises table
-export const searchExerciseInExercises = async (name: string) => {
-  const errorAndIDs = { errorPresent: '', ID: '' }
-  // Allow instructions to be the empty string
-  if (!name) {
-    errorAndIDs.errorPresent = 'Name is empty!'
-    return errorAndIDs
-  }
-  else {
-    const { data, error }: any = await databaseQuery.selectWhere(supabase, 'Exercises', 'name', name, '*')
-
-    if (error) {
-      console.log('Error selecting from Exercises table!')
-      errorAndIDs.errorPresent = error
-      return errorAndIDs
-    }
-    if (data.length <= 0) {
-      errorAndIDs.errorPresent = 'No exercise of given name exists!'
-      return errorAndIDs
-    }
-    else {
-      const exerciseID = data[0].ExerciseID
-      errorAndIDs.ID = exerciseID
-      return errorAndIDs
-    }
   }
 }
 

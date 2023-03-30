@@ -21,3 +21,35 @@ export async function selectAllActualExercises (userid: string, table = 'ActualE
   const { data, error }: any = await databaseQuery.selectWhere(database, table, 'userID', userid, 'AEID')
   return { dataSelectAllActualExercises: data, errorSelectAllActualExercises: error }
 }
+
+/**
+ *
+ * @param name name of exercise
+ * @returns {errorPresent, ID} ID is the exerciseID
+ */
+export const searchExerciseInExercises = async (name: string) => {
+  const errorAndIDs = { errorPresent: '', ID: '' }
+  // Allow instructions to be the empty string
+  if (!name) {
+    errorAndIDs.errorPresent = 'Name is empty!'
+    return errorAndIDs
+  }
+  else {
+    const { data, error }: any = await databaseQuery.selectWhere(supabase, 'Exercises', 'name', name, '*')
+
+    if (error) {
+      console.log('Error selecting from Exercises table!')
+      errorAndIDs.errorPresent = error
+      return errorAndIDs
+    }
+    if (data.length <= 0) {
+      errorAndIDs.errorPresent = 'No exercise of given name exists!'
+      return errorAndIDs
+    }
+    else {
+      const exerciseID = data[0].ExerciseID
+      errorAndIDs.ID = exerciseID
+      return errorAndIDs
+    }
+  }
+}

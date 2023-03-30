@@ -1,10 +1,9 @@
-import { searchExerciseInExercises } from '../../routes/Exercise/completedWorkouts.controller'
 import validateJSONSchema from '../validateJSONSchema'
 import supabase from '../supabaseSetUp'
 import { SupabaseQueryClass } from '../databaseInterface'
 import { schemaForExercisesInNewCompletedWorkout } from '../JSONSchemas/schemaForExercisesInNewCompletedWorkout'
 import { getTimeStamp } from '../convertTimeStamptz'
-import { insertCompletedWorkoutRow } from './exerciseFunctions'
+import { insertCompletedWorkoutRow, searchExerciseInExercises } from './exerciseFunctions'
 const databaseQuery = new SupabaseQueryClass()
 export const addCompletedWorkoutUnit = async (userid: string, workoutname: string, exercises: any, timestamp: string = getTimeStamp()) => {
   const errorAddCompletedWorkoutsAndSuccess = { errorAddCompletedWorkouts: '', success: false }
