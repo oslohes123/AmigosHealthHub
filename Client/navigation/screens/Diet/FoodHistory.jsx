@@ -164,6 +164,7 @@ export default function FoodHistory({ navigation }) {
         {selectDay && !viewCalendar && pieChartData.length > 0 && (
           <TouchableOpacity style={styles.pieWidget} onPress={pressHandler}>
             <PieChart
+              testID='historyPie'
               data={pieChartData}
               width={0.95 * screenWidth}
               height={210}
