@@ -1,4 +1,4 @@
-export const schemaForGetCompletedWorkout = {
+export const schemaForASpecificTrackedWorkout = {
   $schema: 'http://json-schema.org/draft-04/schema#',
   type: 'object',
   properties: {

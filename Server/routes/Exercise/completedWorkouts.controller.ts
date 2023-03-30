@@ -3,7 +3,7 @@ import supabase from '../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../utils/databaseInterface'
 import { getDate, getTime, getTimeStamp, mostRecentTimestamp, sortArrayOfTimeStamps } from '../../utils/convertTimeStamptz'
 import { countElementsInArray } from '../../utils/arrayManipulation'
-import { schemaForGetCompletedWorkout } from '../../utils/JSONSchemas/schemaForGetCompletedWorkout'
+import { schemaForASpecificTrackedWorkout } from '../../utils/JSONSchemas/schemaForASpecificTrackedWorkout'
 import validateJSONSchema from '../../utils/validateJSONSchema'
 import { schemaForRequireduserid } from '../../utils/JSONSchemas/schemaForRequireduserid'
 import { schemaForNewTrackedWorkout } from '../../utils/JSONSchemas/schemaForNewTrackedWorkout'
@@ -14,7 +14,7 @@ const databaseQuery = new SupabaseQueryClass()
 // Get a specific workout by userid, workoutname, date and time
 export const getACompletedWorkout = async (req: Request, res: Response) => {
   const { userid, workoutname, date, time } = req.headers
-  if (!validateJSONSchema(req.headers, schemaForGetCompletedWorkout)) {
+  if (!validateJSONSchema(req.headers, schemaForASpecificTrackedWorkout)) {
     return res.status(400).json({ mssg: 'Something went wrong!', dev: 'JSON instance was invalid against its schema' })
   }
   const { data, error }: any = await databaseQuery.match(supabase, 'CompletedWorkouts', 'completedWorkoutID, timestamp', { userid, workoutname })
@@ -96,8 +96,8 @@ export const addCompletedWorkouts = async (req: Request, res: Response) => {
 export const deleteTrackedWorkout = async (req: Request, res: Response) => {
   const { userid, workoutname, date, time } = req.body
 
-  if (!userid || !workoutname || !date || !time) {
-    return res.status(400).json({ mssg: 'No userid, workoutname, date or time' })
+  if (!validateJSONSchema(req.body, schemaForASpecificTrackedWorkout)) {
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'JSON instance was invalid against its schema' })
   }
   const { data, error }: any = await databaseQuery.match(supabase, 'CompletedWorkouts', 'completedWorkoutID, timestamp', { userid, workoutname })
   if (error) {
@@ -148,7 +148,7 @@ export const deleteTrackedWorkout = async (req: Request, res: Response) => {
 export const getWorkoutFrequency = async (req: Request, res: Response) => {
   const { userid } = req.headers
   if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
-    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'JSON instance was invalid against its schema' })
   }
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'CompletedWorkouts', 'userid', userid, 'workoutname')
 
@@ -177,7 +177,7 @@ export const getActualExerciseNameFrequency = async (req: Request, res: Response
   const { userid } = req.headers
 
   if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
-    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'JSON instance was invalid against its schema' })
   }
   // @ts-expect-error userid will not be undefined as it is validated against the schema
   const { errorHere, AEIDs } = await getAllAEIDs(userid)
@@ -206,7 +206,7 @@ export const getActualExerciseNameFrequency = async (req: Request, res: Response
 export const getActualExerciseTypeFrequency = async (req: Request, res: Response) => {
   const { userid } = req.headers
   if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
-    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'JSON instance was invalid against its schema' })
   }
   // @ts-expect-error userid will not be undefined as it is validated against the schema
   const { errorHere, AEIDs } = await getAllAEIDs(userid)
