@@ -97,14 +97,16 @@ export const deleteTrackedWorkout = async (req: Request, res: Response) => {
   const { userid, workoutname, date, time } = req.body
 
   if (!validateJSONSchema(req.body, schemaForASpecificTrackedWorkout)) {
-    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'JSON instance was invalid against its schema' })
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' })
   }
   const { data, error }: any = await databaseQuery.match(supabase, 'CompletedWorkouts', 'completedWorkoutID, timestamp', { userid, workoutname })
   if (error) {
     return res.status(400).json({ mssg: 'Something went wrong!', error })
   }
   console.log(`getACompletedWorkout: ${JSON.stringify(data)}`)
-
+  if (data.length === 0) {
+    return res.status(400).json({ mssg: 'User does not have any completed workouts!' })
+  }
   // Break down each completed workouts' timestamp and match that with the one given in the headers
   let selectedWorkout
   for (let i = 0; i < data.length; i++) {
@@ -114,9 +116,6 @@ export const deleteTrackedWorkout = async (req: Request, res: Response) => {
   }
   if (!selectedWorkout) {
     return res.status(400).json({ mssg: 'A workout of this name at this time and date does not exist for this user!' })
-  }
-  if (data.length === 0) {
-    return res.status(400).json({ mssg: 'User does not have a plan of that name!' })
   }
   const workoutPlanToDel = selectedWorkout
 
