@@ -8,6 +8,7 @@ import validateJSONSchema from '../../utils/validateJSONSchema'
 import { schemaForRequireduserid } from '../../utils/JSONSchemas/schemaForRequireduserid'
 import { schemaForNewTrackedWorkout } from '../../utils/JSONSchemas/schemaForNewTrackedWorkout'
 import { addCompletedWorkoutUnit } from '../../utils/Exercise/createNewTrackedWorkout'
+import { deleteWorkoutPlanByID, selectAEIDs, getAEIDsFromCompletedWorkoutIDs, getAllAEIDs, getAllExerciseIDs, getExerciseNames, getExerciseTypes, getWorkoutByID } from '../../utils/Exercise/exerciseFunctions'
 const databaseQuery = new SupabaseQueryClass()
 
 // Get a specific workout by userid, workoutname, date and time
@@ -38,56 +39,6 @@ export const getACompletedWorkout = async (req: Request, res: Response) => {
     return res.status(400).json({ mssg: 'getWorkoutPlanById failed!', err: errorPresent })
   }
   return res.status(200).json({ mssg: 'Success!', workoutToReturn })
-}
-
-const getWorkoutByID = async (completedWorkoutID: string) => {
-  const { data, error }: any = await databaseQuery.selectWhere(supabase, 'TrackedWorkoutsWithExercises', 'completedWorkoutID', completedWorkoutID, '*')
-
-  console.log(`getWorkoutByID: ${JSON.stringify(data)}`)
-
-  const errorAndWorkout: any = { errorPresent: '', workoutToReturn: [] }
-  if (error) errorAndWorkout.errorPresent = error
-
-  else {
-    const arrayOfAEID = []
-    for (let i = 0; i < data.length; i++) {
-      arrayOfAEID.push(data[i].AEID)
-    }
-
-    const arrayOfPossibleExercises = []
-    for (let j = 0; j < arrayOfAEID.length; j++) {
-      const { data, error }: any = await databaseQuery.selectWhere(supabase, 'ActualExercises', 'AEID', arrayOfAEID[j], '*')
-      if (error) errorAndWorkout.errorPresent = error
-      else {
-        arrayOfPossibleExercises.push(data[0])
-        console.log(`data ln50 getWorkout: ${JSON.stringify(data)}`)
-        console.log(`arrayOfPossibleExercises ln: ${JSON.stringify(arrayOfPossibleExercises)}`)
-      }
-    }
-    for (let i = 0; i < arrayOfPossibleExercises.length; i++) {
-      const { data, error }: any = await databaseQuery.selectWhere(supabase, 'Exercises', 'ExerciseID', arrayOfPossibleExercises[i].exerciseID, '*')
-      if (error) errorAndWorkout.errorPresent = error
-      else {
-        delete arrayOfPossibleExercises[i].exerciseID
-        delete arrayOfPossibleExercises[i].userID
-        arrayOfPossibleExercises[i].exercise = data[0]
-        console.log(`data ln65 getWorkout: ${JSON.stringify(data)}`)
-        console.log(`arrayOfPossibleExercises ln 66: ${JSON.stringify(arrayOfPossibleExercises)}`)
-      }
-    }
-    for (let i = 0; i < arrayOfPossibleExercises.length; i++) {
-      const { data, error }: any = await databaseQuery.selectWhere(supabase, 'ActualExercises', 'AEID', arrayOfPossibleExercises[i].AEID, '*')
-      if (error) errorAndWorkout.errorPresent = error
-      else {
-        // arrayOfPossibleExercises[i].exercise = data[0];
-        console.log(`data ln65 getWorkout: ${JSON.stringify(data)}`)
-        console.log(`arrayOfPossibleExercises ln 66: ${JSON.stringify(arrayOfPossibleExercises)}`)
-      }
-    }
-
-    errorAndWorkout.workoutToReturn = arrayOfPossibleExercises
-  }
-  return errorAndWorkout
 }
 
 // Returns all of a user's completed workouts' names and dates
@@ -140,29 +91,6 @@ export const addCompletedWorkouts = async (req: Request, res: Response) => {
     return res.status(400).json({ mssg: 'Something went wrong!', dev: errorAddCompletedWorkouts })
   }
   return res.status(200).json({ mssg: 'Successfully tracked a workout!' })
-}
-
-const deleteWorkoutPlanByID = async (completedWorkoutID: string) => {
-  const errorAndIDs = { deleteError: '' }
-  const { error }: any = await databaseQuery.deleteFrom(supabase, 'CompletedWorkouts', 'completedWorkoutID', completedWorkoutID)
-  if (error) {
-    errorAndIDs.deleteError = error
-    return errorAndIDs
-  }
-  return errorAndIDs
-}
-const selectAEIDs = async (workoutPlanToDel: string) => {
-  console.log(`workoutPlanToDel ln253: ${workoutPlanToDel}`)
-  const errorAndIDs: any = { errorHere: '', AEIDs: [{}] }
-  // const {data, error}:any = await databaseQuery.selectWhere(supabase, 'TrackedWorkoutsWithExercises','completedWorkoutID', "d05a8235-98f9-4a90-b982-306655813916",'AEID');
-  const { data, error }: any = await databaseQuery.selectWhere(supabase, 'TrackedWorkoutsWithExercises', 'completedWorkoutID', workoutPlanToDel, 'AEID')
-  console.log(`data ln 257: ${JSON.stringify(data)}`)
-  if (error) {
-    errorAndIDs.errorHere = error
-    return errorAndIDs
-  }
-  errorAndIDs.AEIDs = data
-  return errorAndIDs
 }
 
 export const deleteTrackedWorkout = async (req: Request, res: Response) => {
@@ -244,110 +172,6 @@ export const getWorkoutFrequency = async (req: Request, res: Response) => {
   }
 }
 
-// given an arrayOfCompletedWorkoutIDs return the AEIDs associated
-export const getAEIDsFromCompletedWorkoutIDs = async (arrayOfCompletedWorkoutIDs: string[]) => {
-  const errorAndAEIDs: any = { errorHere: '', AEIDs: [{}] }
-  const arrayOfAEIDs = []
-  for (let i = 0; i < arrayOfCompletedWorkoutIDs.length; i++) {
-    const { data, error }: any = await databaseQuery.selectWhere(supabase, 'TrackedWorkoutsWithExercises', 'completedWorkoutID', arrayOfCompletedWorkoutIDs[i], 'AEID')
-    if (error) {
-      errorAndAEIDs.errorHere = error
-      return errorAndAEIDs
-    }
-    else {
-      for (let i = 0; i < data.length; i++) {
-        arrayOfAEIDs.push(data[i].AEID)
-      }
-    }
-  }
-  errorAndAEIDs.AEIDs = arrayOfAEIDs
-  return errorAndAEIDs
-}
-
-// get all AEIDs of a user given an userid
-export const getAllAEIDs = async (userid: string | string[]) => {
-  const errorAndIDs: any = { errorHere: '', AEIDs: [{}] }
-  const { data, error }: any = await databaseQuery.selectWhere(supabase, 'CompletedWorkouts', 'userid', userid, 'completedWorkoutID')
-  if (error) {
-    errorAndIDs.errorHere = error
-    return errorAndIDs
-  }
-  console.log(`dataln362: ${JSON.stringify(data)}`)
-  const arrayOfCompletedWorkoutIDs = []
-  // get all CompletedWorkoutIDs
-  for (let i = 0; i < data.length; i++) {
-    arrayOfCompletedWorkoutIDs.push(data[i].completedWorkoutID)
-  }
-  console.log(`arrayOfCompletedWorkoutIDs: ${JSON.stringify(arrayOfCompletedWorkoutIDs)}`)
-  // get all trackedWorkoutsWithExercises, then all AEIDs
-  const arrayOfAEIDs = []
-  for (let i = 0; i < arrayOfCompletedWorkoutIDs.length; i++) {
-    const { data, error }: any = await databaseQuery.selectWhere(supabase, 'TrackedWorkoutsWithExercises', 'completedWorkoutID', arrayOfCompletedWorkoutIDs[i], 'AEID')
-    if (error) {
-      errorAndIDs.errorHere = error
-      return errorAndIDs
-    }
-    else {
-      for (let i = 0; i < data.length; i++) {
-        arrayOfAEIDs.push(data[i].AEID)
-      }
-    }
-  }
-  console.log(`arrayOfAEIDs: ${JSON.stringify(arrayOfAEIDs)}`)
-  errorAndIDs.AEIDs = arrayOfAEIDs
-  return errorAndIDs
-}
-// Given a list of AEIDs, return an array of exerciseIDs
-export const getAllExerciseIDs = async (AEIDs: string[]) => {
-  const errorAndExerciseIDs: any = { errorGetAllExerciseIDs: '', exerciseIDs: [{}] }
-  const arrayOfExerciseIDs = []
-  for (let i = 0; i < AEIDs.length; i++) {
-    const { data, error }: any = await databaseQuery.selectWhere(supabase, 'ActualExercises', 'AEID', AEIDs[i], 'exerciseID')
-    if (error) {
-      errorAndExerciseIDs.errorGetAllExerciseIDs = error
-      return errorAndExerciseIDs
-    }
-    else {
-      arrayOfExerciseIDs.push(data[0].exerciseID)
-    }
-  }
-  console.log(`arrayOfExerciseIDs ln405: ${JSON.stringify(arrayOfExerciseIDs)}`)
-  errorAndExerciseIDs.exerciseIDs = arrayOfExerciseIDs
-  return errorAndExerciseIDs
-}
-
-export const getExerciseNames = async (arrayOfExerciseIDs: string[]) => {
-  const errorAndExerciseNames: any = { errorGetExerciseNames: '', exerciseNames: [{}] }
-  const arrayOfExerciseNames = []
-  for (let i = 0; i < arrayOfExerciseIDs.length; i++) {
-    const { data, error }: any = await databaseQuery.selectWhere(supabase, 'Exercises', 'ExerciseID', arrayOfExerciseIDs[i], 'name')
-    if (error) {
-      errorAndExerciseNames.errorGetExerciseNames = error
-      return errorAndExerciseNames
-    }
-    else {
-      arrayOfExerciseNames.push(data[0].name)
-    }
-  }
-  errorAndExerciseNames.exerciseNames = arrayOfExerciseNames
-  return errorAndExerciseNames
-}
-export const getExerciseTypes = async (arrayOfExerciseIDs: string[]) => {
-  const errorAndExerciseTypes: any = { errorGetExerciseTypes: '', exerciseTypes: [{}] }
-  const arrayOfExerciseTypes = []
-  for (let i = 0; i < arrayOfExerciseIDs.length; i++) {
-    const { data, error }: any = await databaseQuery.selectWhere(supabase, 'Exercises', 'ExerciseID', arrayOfExerciseIDs[i], 'type')
-    if (error) {
-      errorAndExerciseTypes.errorGetExerciseTypes = error
-      return errorAndExerciseTypes
-    }
-    else {
-      arrayOfExerciseTypes.push(data[0].type)
-    }
-  }
-  errorAndExerciseTypes.exerciseTypes = arrayOfExerciseTypes
-  return errorAndExerciseTypes
-}
 // returns the all exercises performed and frequency for a bar chart
 export const getActualExerciseNameFrequency = async (req: Request, res: Response) => {
   const { userid } = req.headers
