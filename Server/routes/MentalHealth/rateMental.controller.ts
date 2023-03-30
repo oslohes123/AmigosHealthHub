@@ -5,6 +5,7 @@ import { getUserByEmail } from '../../utils/userFunctions'
 import { getTodaysDate } from '../../utils/convertTimeStamptz'
 const databaseQuery = new SupabaseQueryClass()
 
+
 // check if todays date is equal to the date of the most recent values provided by the user that is logged in
 export async function checkExistsToday (id: string) {
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'Mental Health', 'user_id', id, 'created_at')

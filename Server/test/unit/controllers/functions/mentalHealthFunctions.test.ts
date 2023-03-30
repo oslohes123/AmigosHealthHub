@@ -1,15 +1,15 @@
-import { getToday } from '../../../../routes/MentalHealth/rateMental.controller'
+import { getTodaysDate } from '../../../../utils/convertTimeStamptz'
 import { average, getFaces, getOccurrences, getWords, wordFreq } from '../../../../utils/mentalHealthFunctions'
 import test from 'ava'
 
 test('getToday returns a string in the format YYYY-MM-DD', (t: any) => {
-  const today: string = getToday()
+  const today: string = getTodaysDate()
   const regex: RegExp = /^\d{4}-\d{2}-\d{2}$/
   t.true(regex.test(today))
 })
 
 test('getToday returns the current date', (t: any) => {
-  const today: string = getToday()
+  const today: string = getTodaysDate()
   const date: Date = new Date()
   const year: string = date.getFullYear().toString()
   const month: string = (date.getMonth() + 1).toString().padStart(2, '0')
