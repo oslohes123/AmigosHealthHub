@@ -3,11 +3,11 @@ import sinon from 'sinon'
 import { type Request, type Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
 import { createUserWithID, deleteUserRow, createHashedPassword } from '../../../../utils/userFunctions'
-import { deleteTrackedWorkout, getWorkoutHistoryByDate } from '../../../../routes/Exercise/completedWorkouts.controller'
+import { getWorkoutHistoryByDate } from '../../../../routes/Exercise/completedWorkouts.controller'
 import cloneDeep from 'lodash/cloneDeep'
 import { setUpCompletedWorkoutForTests } from '../../../../utils/Exercise/setUpCompletedWorkoutForTests'
 // import { selectAllActualExercises, selectAllCompletedWorkoutNames, selectAllTrackedWorkoutsWithExercises } from '../../../../utils/Exercise/exerciseFunctions'
-import { getTime, getTodaysDate, getDate } from '../../../../utils/convertTimeStamptz'
+import { getTodaysDate } from '../../../../utils/convertTimeStamptz'
 import { deleteMultipleExercises } from '../../../../utils/Exercise/insertAndDeleteMultipleExercises'
 
 const uuid = uuidv4()
@@ -58,7 +58,7 @@ const validRequest: getWorkoutHistoryByDateRequest = {
   date: getTodaysDate()
 }
 
-test.serial('getWorkoutHistoryByDate returns error when userid is missing', async (t: any) => {
+test('getWorkoutHistoryByDate returns error when userid is missing', async (t: any) => {
   const invalidRequest = cloneDeep(validRequest)
   delete invalidRequest.userid
   const req = mockRequest(invalidRequest)
@@ -68,7 +68,7 @@ test.serial('getWorkoutHistoryByDate returns error when userid is missing', asyn
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
-test.serial('getWorkoutHistoryByDate returns error when date is missing', async (t: any) => {
+test('getWorkoutHistoryByDate returns error when date is missing', async (t: any) => {
   const invalidRequest = cloneDeep(validRequest)
   delete invalidRequest.date
   const req = mockRequest(invalidRequest)
@@ -76,4 +76,39 @@ test.serial('getWorkoutHistoryByDate returns error when date is missing', async 
   await getWorkoutHistoryByDate(req as Request, res as Response)
   t.true(res.status.calledWith(400))
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
+})
+
+test.serial('getWorkoutHistoryByDate returns empty arrays with user who has no workouts', async (t: any) => {
+  const req = mockRequest(validRequest)
+  const res = mockResponse()
+  await getWorkoutHistoryByDate(req as Request, res as Response)
+  const argsPassed = res.json.getCall(0).args[0]
+  t.log(`argsPassed in getWorkoutHistoryByDate:${JSON.stringify(argsPassed)} `)
+  t.true(res.status.calledWith(200))
+  t.true(res.json.calledWith({ mssg: 'Success!', arrayOfWorkoutNamesAndIDs: [], graphLabels: [], graphData: [] }))
+})
+
+test.serial('getWorkoutHistoryByDate returns arrays of data with user who has workouts', async (t: any) => {
+  const nameOfWorkout = 'Test Workout Plan'
+  const { errorSetUpCompletedWorkoutForTests, successSetUpCompletedWorkoutForTests } = await setUpCompletedWorkoutForTests(uuid, nameOfWorkout)
+  if (errorSetUpCompletedWorkoutForTests || !successSetUpCompletedWorkoutForTests) {
+    t.fail('Error setting up completed workout for tests')
+  }
+  const req = mockRequest(validRequest)
+  const res = mockResponse()
+  await getWorkoutHistoryByDate(req as Request, res as Response)
+  const argsPassed = res.json.getCall(0).args[0]
+  t.log(`argsPassed in getWorkoutHistoryByDate:${JSON.stringify(argsPassed)} `)
+  t.log(`argsPassed.graphLabels:${JSON.stringify(argsPassed.graphLabels)} `)
+  t.log(`argsPassed.graphData:${JSON.stringify(argsPassed.graphData)} `)
+  t.true(res.status.calledWith(200))
+  t.true(argsPassed.mssg === 'Success!')
+  t.true(JSON.stringify(argsPassed.graphLabels) === JSON.stringify([`Test Curl ${uuid}`, `Slow Jog ${uuid}`]))
+  t.true(JSON.stringify(argsPassed.graphData) === JSON.stringify([1, 1]))
+  try {
+    t.true(argsPassed.arrayOfWorkoutNamesAndIDs[0].workoutname === nameOfWorkout)
+  }
+  catch (error) {
+    t.fail('Failed to get first index of array or workoutname property')
+  }
 })
