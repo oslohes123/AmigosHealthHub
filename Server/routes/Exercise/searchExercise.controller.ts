@@ -38,7 +38,7 @@ export const searchForExercise = async (req: Request, res: Response) => {
 export const getExerciseByName = async (req: Request, res: Response) => {
   const { exercisename } = req.headers
   if (!exercisename) {
-    return res.status(400).json({ mssg: 'exercisename is empty' })
+    return res.status(400).json({ mssg: 'Something went wrong', dev: 'JSON instance does not follow JSON schema' })
   }
   try {
     const response = await searchAPIForExercise(exercisename)
