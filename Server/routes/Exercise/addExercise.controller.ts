@@ -1,39 +1,30 @@
 import { type Request, type Response } from 'express'
 import { removeDuplicates } from '../../utils/arrayManipulation'
-require('dotenv').config()
-const EXERCISE_API_KEY = process.env.EXERCISE_API_KEY as string
+import searchAPIForExercise from '../../utils/Exercise/fetchExerciseAPI'
 /**
  * Given a name, return all exercise matches from the fitness API
  */
 export const searchForExercise = async (req: Request, res: Response) => {
   const { wordtosearch } = req.headers
   if (!wordtosearch) {
+    // searching no word
     return res.status(200).json({ mssg: 'wordtosearch is empty', searchedWords: [] })
   }
   try {
-    const nameFitnessURL = 'https://api.api-ninjas.com/v1/exercises?name=' + String(wordtosearch)
-    console.log(`nameFitnessURL: ${nameFitnessURL}`)
-    const response = await fetch(
-      nameFitnessURL,
-      {
-        method: 'GET',
-        headers: { 'X-Api-Key': EXERCISE_API_KEY }
-      }
-    )
+    const response = await searchAPIForExercise(wordtosearch)
 
-    const arrayOfExercises = await response.json()
-    console.log(`arrayOfExercises: ${JSON.stringify(arrayOfExercises)}`)
-    let arrayOfExerciseNames = []
-    for (let i = 0; i < arrayOfExercises.length; i++) {
-      arrayOfExerciseNames.push(arrayOfExercises[i].name)
-    }
-
-    arrayOfExerciseNames = removeDuplicates(arrayOfExerciseNames)
-    if (response.ok) {
-      return res.status(200).json({ mssg: 'Successful Search!', searchedWords: arrayOfExerciseNames })
+    if (!response.ok) {
+      return res.status(400).json({ mssg: 'Fetching fitness api went wrong!' })
     }
     else {
-      return res.status(400).json({ mssg: 'Fetching fitness api went wrong!' })
+      const arrayOfExercises = await response.json()
+      let arrayOfExerciseNames = []
+      for (let i = 0; i < arrayOfExercises.length; i++) {
+        arrayOfExerciseNames.push(arrayOfExercises[i].name)
+      }
+
+      arrayOfExerciseNames = removeDuplicates(arrayOfExerciseNames)
+      return res.status(200).json({ mssg: 'Successful Search!', searchedWords: arrayOfExerciseNames })
     }
   }
   catch (error) {
@@ -50,16 +41,7 @@ export const getExerciseByName = async (req: Request, res: Response) => {
     return res.status(400).json({ mssg: 'exercisename is empty' })
   }
   try {
-    const nameFitnessURL = 'https://api.api-ninjas.com/v1/exercises?name=' + String(exercisename)
-    console.log(`nameFitnessURL: ${nameFitnessURL}`)
-    const response = await fetch(
-      nameFitnessURL,
-      {
-        method: 'GET',
-        headers: { 'X-Api-Key': EXERCISE_API_KEY }
-      }
-    )
-
+    const response = await searchAPIForExercise(exercisename)
     const exerciseInformation = await response.json()
 
     if (response.ok) {
