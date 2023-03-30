@@ -182,7 +182,7 @@ export default function FoodHistory({ navigation }) {
             {foodData.length > 0
               ? foodData.map((item, index) => (
                 <View key={index}>
-                  <TouchableOpacity onPress={() => foodPress(item)}>
+                  <TouchableOpacity testID='foods' onPress={() => foodPress(item)}>
                     <Text style={styles.foodText}>
                       Name:
                       {' '}
