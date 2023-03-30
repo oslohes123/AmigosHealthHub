@@ -1,4 +1,4 @@
-import { getExerciseByName, searchForExercise } from './addExercise.controller'
+import { getExerciseByName, searchForExercise } from './searchExercise.controller'
 import RouteNamesClass from '../../utils/routeNamesClass'
 import { checkToken } from '../../middleware/checkToken'
 const express = require('express')
