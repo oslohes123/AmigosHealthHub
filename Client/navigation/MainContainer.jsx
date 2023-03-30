@@ -5,12 +5,10 @@ import {
 } from '@react-navigation/native';
 import {
   Keyboard,
-  SafeAreaView,
-  Text,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import react, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { EventRegister } from 'react-native-event-listeners';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -23,6 +21,13 @@ import MentalNavigationScreen from './screens/Mental/routes/homeStack';
 import SettingsNavigation from './screens/Settings/SettingsNavigation';
 import theme from './theme/theme';
 import themeContext from './theme/themeContext';
+
+const styles = {
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+};
 
 // Screen Names
 
@@ -131,10 +136,3 @@ export default function MainContainer() {
     </themeContext.Provider>
   );
 }
-
-const styles = {
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-};

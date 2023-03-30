@@ -152,6 +152,7 @@ export default function SleepScreen() {
             </Text>
             <DropDownPicker
               open={openHoursSlept}
+              dropDownDirection="TOP"
               value={selectedHoursSlept}
               items={itemsHoursSlept}
               setOpen={setOpenHoursSlept}

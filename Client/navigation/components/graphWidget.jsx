@@ -3,7 +3,8 @@ import {
   Dimensions, StyleSheet, Text, View,
 } from 'react-native';
 
-import React from 'react';
+import React, { useContext } from 'react';
+import themeContext from '../theme/themeContext';
 
 const styles = StyleSheet.create({
   title: {
@@ -16,6 +17,7 @@ const styles = StyleSheet.create({
 
 //
 function GraphWidget(inputLabel, inputDataset, graphTitle, graphAttributes) {
+  const theme = useContext(themeContext);
   const chartData = {
     labels: inputLabel,
     datasets: [
@@ -29,7 +31,7 @@ function GraphWidget(inputLabel, inputDataset, graphTitle, graphAttributes) {
   const { yAxisSuffix } = graphAttributes;
   return (
     <View>
-      <Text style={styles.title}>{graphTitle}</Text>
+      <Text style={[styles.title, { color: theme.color }]}>{graphTitle}</Text>
       <BarChart
         data={chartData}
         width={screenWidth}
@@ -37,12 +39,12 @@ function GraphWidget(inputLabel, inputDataset, graphTitle, graphAttributes) {
         yAxisSuffix={yAxisSuffix}
         fromZero
         chartConfig={{
-          backgroundGradientFrom: 'white',
-          backgroundGradientTo: '#38D689',
-          fillShadowGradientFrom: '#233037',
-          fillShadowGradientTo: '#252628',
+          backgroundGradientFrom: theme.secondary,
+          backgroundGradientTo: '#c2e7fe',
+          fillShadowGradientFrom: theme.color,
+          fillShadowGradientTo: theme.color,
           decimalPlaces: 0,
-          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          color: (opacity = 1) => theme.colorRGBA,
           style: {
             borderRadius: 16,
           },
