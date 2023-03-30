@@ -15,6 +15,6 @@ completedWorkoutsRouter.get(routeNames.partialGetWorkoutFrequency, getWorkoutFre
 completedWorkoutsRouter.get(routeNames.partialGetExerciseNameFrequency, getActualExerciseNameFrequency)
 completedWorkoutsRouter.get(routeNames.partialGetExerciseTypeFrequency, getActualExerciseTypeFrequency)
 completedWorkoutsRouter.get(routeNames.partialGetWorkoutHistoryByDate, getWorkoutHistoryByDate)
-completedWorkoutsRouter.get(routeNames.partialLastCompletedWorkout, getLastTrackedWorkout)
+completedWorkoutsRouter.get(routeNames.partialLastTrackedWorkout, getLastTrackedWorkout)
 export default completedWorkoutsRouter
 export {}
