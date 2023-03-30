@@ -23,12 +23,54 @@ import SleepQaulityGraph from './sleepQualityGraph';
 import themeContext from '../../theme/themeContext';
 import useAddSleep from './hooks/useAddSleep';
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  fabContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    margin: 20,
+  },
+  graphContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    marginBottom: 20,
+  },
+  modal: {
+    backgroundColor: 'white',
+    paddingHorizontal: 20,
+    paddingVertical: 7,
+  },
+  picker: {
+    width: 200,
+  },
+  divider: {
+    marginTop: 10,
+    padding: 2,
+  },
+  surface: {
+    backgroundColor: '#c2e7fe',
+    padding: 8,
+    height: 70,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 30,
+  },
+  errorMsg: {
+    margin: 5,
+    color: 'red',
+    alignSelf: 'center',
+  },
+});
+
 export default function SleepScreen() {
   const theme = useContext(themeContext);
   const background = { backgroundColor: theme.background };
 
-  const { addSleep, error } = useAddSleep();
-  console.log(`add sleep is: ${JSON.stringify(addSleep)}`);
+  const { addSleep } = useAddSleep();
 
   const [visible, setVisible] = useState(false);
   const screenWidth = Dimensions.get('window').width * 0.95;
@@ -77,9 +119,6 @@ export default function SleepScreen() {
   ]);
 
   const submitSleepData = () => {
-    console.log(
-      `hours: ${selectedHoursSlept}, quality: ${selectedSleepQuality}, date: ${timestamp}`,
-    );
     addSleep(selectedHoursSlept, selectedSleepQuality, timestamp);
   };
 
@@ -98,7 +137,6 @@ export default function SleepScreen() {
             <Calendar
               onDayPress={(date) => {
                 setTimestamp(date.dateString);
-                console.log(date.dateString);
               }}
               enableSwipeMonths
               maxDate={moment().format('YYYY-MM-DD')}
@@ -172,46 +210,3 @@ export default function SleepScreen() {
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  fabContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    margin: 20,
-  },
-  graphContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    marginBottom: 20,
-  },
-  modal: {
-    backgroundColor: 'white',
-    paddingHorizontal: 20,
-    paddingVertical: 7,
-  },
-  picker: {
-    width: 200,
-  },
-  divider: {
-    marginTop: 10,
-    padding: 2,
-  },
-  surface: {
-    backgroundColor: '#c2e7fe',
-    padding: 8,
-    height: 70,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 30,
-  },
-  errorMsg: {
-    margin: 5,
-    color: 'red',
-    alignSelf: 'center',
-  },
-});

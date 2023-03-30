@@ -1,21 +1,21 @@
 import * as Yup from 'yup';
 
 import {
-  Button,
   SafeAreaView,
   Text,
   StyleSheet,
   TextInput,
   View,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import { Formik } from 'formik';
 // import { deleteAccountWrapper } from "../hooks/deleteAccount";
-import { Checkbox } from 'react-native-paper';
+import { Checkbox, Button } from 'react-native-paper';
 import deleteAccountWrapper from '../hooks/useDeleteAccount';
 import globalStyles from '../../../../styles/global';
 import { useAuthContext } from '../../Authentication/context/AuthContext';
+import themeContext from '../../../theme/themeContext';
 
 const styles = StyleSheet.create({
   email: {
@@ -37,6 +37,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: '5%',
   },
+  checkBoxText: {
+    fontWeight: 'bold',
+    alignSelf: 'center',
+  },
 });
 const DeleteAccountFormSchema = Yup.object().shape({
 
@@ -44,14 +48,16 @@ const DeleteAccountFormSchema = Yup.object().shape({
     .required('Current Password Required!'),
 });
 export default function DeleteAccountForm() {
+  const theme = useContext(themeContext);
   const { deleteAccount, isLoading, error } = deleteAccountWrapper();
   const { user } = useAuthContext();
   const [checked, setChecked] = useState(false);
+  const { color } = theme;
   // const userEmail = getUserDetails();
   return (
     <SafeAreaView style={globalStyles.container}>
-      <Text style={styles.head}>Email</Text>
-      <Text style={styles.email}>{user.email}</Text>
+      <Text style={[styles.head, { color }]}>Email</Text>
+      <Text style={[styles.email, { color }]}>{user.email}</Text>
       <Formik
         initialValues={{ current_password: '' }}
         onSubmit={async (values) => {
@@ -62,8 +68,9 @@ export default function DeleteAccountForm() {
         {(props) => (
           <View>
             <TextInput
-              style={styles.input}
+              style={[globalStyles.input, { color }]}
               secureTextEntry
+              placeholderTextColor={color}
               placeholder="Your password:"
               onChangeText={props.handleChange(
                 'current_password',
@@ -77,15 +84,24 @@ export default function DeleteAccountForm() {
                 onPress={() => {
                   setChecked(!checked);
                 }}
+                color={theme.color}
+                testID="deletePasswordCheck"
               />
-              <Text style={{ fontWeight: 'bold', alignSelf: 'center' }}>I understand my account will be deleted permanently</Text>
+              <Text style={[styles.checkBoxText, { color }]}>
+                I understand my account will be deleted permanently
+              </Text>
             </View>
             {checked && (
             <Button
-              title="CONFIRM DELETE ACCOUNT"
+              icon="delete"
+              buttonColor="#C2E7FE"
+              mode="contained"
+              dark={theme.isDark}
               onPress={props.handleSubmit}
               disabled={isLoading}
-            />
+            >
+              CONFIRM DELETE ACCOUNT
+            </Button>
             ) }
 
             {error && <Text style={globalStyles.errorText}>{error}</Text>}
