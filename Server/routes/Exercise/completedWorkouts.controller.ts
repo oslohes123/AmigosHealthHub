@@ -173,7 +173,7 @@ export const getActualExerciseNameFrequency = async (req: Request, res: Response
   const { userid } = req.headers
 
   if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
-    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'JSON instance was invalid against its schema' })
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' })
   }
   // @ts-expect-error userid will not be undefined as it is validated against the schema
   const { errorHere, AEIDs } = await getAllAEIDs(userid)
@@ -202,7 +202,7 @@ export const getActualExerciseNameFrequency = async (req: Request, res: Response
 export const getActualExerciseTypeFrequency = async (req: Request, res: Response) => {
   const { userid } = req.headers
   if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
-    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'JSON instance was invalid against its schema' })
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' })
   }
   // @ts-expect-error userid will not be undefined as it is validated against the schema
   const { errorHere, AEIDs } = await getAllAEIDs(userid)
