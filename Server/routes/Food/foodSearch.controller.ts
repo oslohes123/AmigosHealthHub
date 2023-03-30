@@ -9,10 +9,15 @@ import transformNutrientSearchInterface from '../../utils/Food/parseNutritionSea
 import type genericSearchInterface from '../../interfaces/Food/genericSearchInterface'
 import type specificFoodNutritionInterface from '../../interfaces/Food/specificFoodNutritionInterface'
 import { isBranded } from '../../utils/Food/genericOrBrandedIdentifier'
+import validateJSONSchema from './../../utils/validateJSONSchema'
+import * as searchSchema from '../../utils/JSONSchemas/Food/searchSchema'
 require('dotenv').config()
 
 export const generalSearch = async (req: Request, res: Response) => {
   // const {value:inputData,code}:SearchCriteria = req.query.value
+  if (!validateJSONSchema(req.params, searchSchema.generalSearch)) {
+    return res.status(400).json({ message: 'Invalid JSON Schema', whatWeGot: req.params, schema: searchSchema.generalSearch })
+  }
   const inputData = req.params.value
   const clientCode: clientSearchMethods = parseInt(req.params.code)
   const code: number = clientCode
