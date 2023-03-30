@@ -1,7 +1,7 @@
 import test from 'ava'
 import sinon from 'sinon'
 import { type Request, type Response } from 'express'
-import { searchForExercise } from '../../../../routes/Exercise/addExercise.controller'
+import { searchForExercise } from '../../../../routes/Exercise/searchExercise.controller'
 import cloneDeep from 'lodash/cloneDeep'
 
 const mockRequest = (sessionData: any) => {
