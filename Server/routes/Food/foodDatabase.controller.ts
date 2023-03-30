@@ -2,10 +2,16 @@ import { type Request, type Response } from 'express'
 import { SupabaseQueryClass } from '../../utils/databaseInterface'
 import supabase from '../../utils/supabaseSetUp'
 import type FoodInput from './../../interfaces/Food/foodInterfaces'
+import validateJSONSchema from './../../utils/validateJSONSchema'
+import * as foodSchemas from '../../utils/JSONSchemas/Food/foodDatabaseSchemas'
 require('dotenv').config()
 const databaseQuery = new SupabaseQueryClass()
+
 export const addTrackedFood = async (req: Request, res: Response) => {
   const Data: FoodInput = req.body
+  if (!validateJSONSchema(req.body, foodSchemas.addTrackedFood)) {
+    return res.status(400).send({ mssg: 'Invalid JSON Schema', whatWeGot: req.body, schema: foodSchemas.addTrackedFood })
+  }
   // First match to see if the food is already in the Food table
   const { data: matchingData, error: matchingDataError }: any = await databaseQuery.match(
     supabase,
@@ -64,6 +70,9 @@ export const addTrackedFood = async (req: Request, res: Response) => {
 }
 export const getTrackedFood = async (req: Request, res: Response) => {
   const { date, userID } = req.params
+  if (!validateJSONSchema(req.params, foodSchemas.getTrackedFood)) {
+    return res.status(400).send({ mssg: 'Invalid JSON Schema', whatWeGot: req.params, schema: foodSchemas.getTrackedFood })
+  }
   const { data: returnData, error }: any = await databaseQuery.match(
     supabase,
     'Tracked Food',
@@ -78,6 +87,9 @@ export const getTrackedFood = async (req: Request, res: Response) => {
 }
 export const getSpecificTrackedFood = async (req: Request, res: Response) => {
   const { LogID } = req.params
+  if (!validateJSONSchema(req.params, foodSchemas.getSpecificTrackedFood)) {
+    return res.status(400).send({ mssg: 'Invalid JSON Schema', whatWeGot: req.params, schema: foodSchemas.getSpecificTrackedFood })
+  }
   const { data: returnData, error }: any = await databaseQuery.match(
     supabase,
     'Tracked Food',
@@ -93,6 +105,9 @@ export const getSpecificTrackedFood = async (req: Request, res: Response) => {
 }
 export const updateTrackedFood = async (req: Request, res: Response) => {
   const { Quantity, Measure, LogID, Calories } = req.body
+  if (!validateJSONSchema(req.body, foodSchemas.updateTrackedFood)) {
+    return res.status(400).send({ mssg: 'Invalid JSON Schema', whatWeGot: req.body, schema: foodSchemas.updateTrackedFood })
+  }
 
   const { data: returnData, error }: any = await databaseQuery.update(
     supabase,
@@ -109,6 +124,10 @@ export const updateTrackedFood = async (req: Request, res: Response) => {
 }
 export const deleteTrackedFood = async (req: Request, res: Response) => {
   const { LogID } = req.body
+  if (!validateJSONSchema(req.body, foodSchemas.deleteTrackedFood)) {
+    return res.status(400).send({ mssg: 'Invalid JSON Schema', whatWeGot: req.body, schema: foodSchemas.deleteTrackedFood })
+  }
+
   const { data: returnData, error }: any = await databaseQuery.deleteFrom(
     supabase,
     'Tracked Food',
@@ -123,6 +142,10 @@ export const deleteTrackedFood = async (req: Request, res: Response) => {
 }
 export const getFood = async (req: Request, res: Response) => {
   const { FoodID } = req.params
+  if (!validateJSONSchema(req.params, foodSchemas.getFood)) {
+    return res.status(400).send({ mssg: 'Invalid JSON Schema', whatWeGot: req.params, schema: foodSchemas.getFood })
+  }
+
   const { data: returnData, error }: any = await databaseQuery.match(
     supabase,
     'Food',
@@ -137,6 +160,9 @@ export const getFood = async (req: Request, res: Response) => {
 }
 export const getMultipleFood = async (req: Request, res: Response) => {
   const { foodIDs } = req.body
+  if (!validateJSONSchema(req.body, foodSchemas.getMultipleFood)) {
+    return res.status(400).send({ mssg: 'Invalid JSON Schema', whatWeGot: req.body, schema: foodSchemas.getMultipleFood })
+  }
 
   const { data, error }: any = await databaseQuery.selectIn(
     supabase,

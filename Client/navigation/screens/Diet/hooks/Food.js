@@ -134,7 +134,7 @@ export async function updateTrackedFood(input) {
         authorization: token,
       },
       body: JSON.stringify({
-        Quantity: input.Quantity,
+        Quantity: parseInt(input.Quantity, 10),
         LogID: input.LogID,
         Measure: input.Measure,
         Calories: input.Calories,
