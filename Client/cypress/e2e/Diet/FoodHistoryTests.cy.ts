@@ -15,7 +15,7 @@ beforeEach(() => {
 })
 
 describe("Check food history page", () => {
-    it("should contain the page title", () => {
+    it("should contain all elements and functionality", () => {
         cy.contains('Food History')
 
         //open calendar
@@ -26,5 +26,42 @@ describe("Check food history page", () => {
         cy.get('[data-testid="calendarIcon"]')
             .should('be.visible').click()
             
+        cy.get('[data-testid="foods"]').eq(0)
+            .should('be.visible').click()
+        
+        cy.get('[data-testid="caloriesName1"]')
+            .should('be.visible')
+        
+        cy.contains('Protein')
+            .should('be.visible')
+
+        cy.contains('Carbs')
+            .should('be.visible')
+
+        cy.contains('Fat')
+            .should('be.visible')
+
+        cy.contains('Sugars')
+            .should('be.visible')
+
+        cy.contains('Fibre')
+            .should('be.visible')
+
+        cy.contains('Serving units')
+            .should('be.visible')
+
+        cy.contains('Serving Quantity')
+            .scrollIntoView()
+            .should('be.visible')
+
+        cy.get('[data-testid="update"]')
+            .should('be.visible').click()
+
+        cy.get('[data-testid="foodHistory"]').click()
+        cy.get('[data-testid="foods"]').eq(0)
+            .should('be.visible').click()
+        
+        cy.get('[data-testid="delete"]')
+            .should('be.visible').click()
     })
 })
