@@ -5,7 +5,7 @@ beforeEach(() => {
     cy.contains('Log into account').click()
     cy.get('input[placeholder="Email"]').click().type('shazeen@gmail.com');
     cy.get('input[placeholder="Password"]').click().type('Password123!');
-    cy.contains('Login').click()
+    cy.contains('Login').click({force:true})
     cy.get('a[href="/Diet"]').click();
     cy.get('input[placeholder="Find food..."]').click().type('apple', {force: true})
     cy.contains('apple').click()
