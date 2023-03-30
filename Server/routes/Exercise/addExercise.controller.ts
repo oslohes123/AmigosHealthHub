@@ -30,14 +30,14 @@ export const searchForExercise = async (req: Request, res: Response) => {
 
     arrayOfExerciseNames = removeDuplicates(arrayOfExerciseNames)
     if (response.ok) {
-      res.status(200).json({ mssg: 'Successful Search!', searchedWords: arrayOfExerciseNames })
+      return res.status(200).json({ mssg: 'Successful Search!', searchedWords: arrayOfExerciseNames })
     }
     else {
-      res.status(400).json({ mssg: 'Fetching fitness api went wrong!' })
+      return res.status(400).json({ mssg: 'Fetching fitness api went wrong!' })
     }
   }
   catch (error) {
-    res.status(400).json({ mssg: 'Fetching fitness api went wrong!' })
+    return res.status(400).json({ mssg: 'Fetching fitness api went wrong!' })
   }
 }
 
@@ -65,17 +65,17 @@ export const getExerciseByName = async (req: Request, res: Response) => {
     if (response.ok) {
       console.log(`exerciseInformation: ${JSON.stringify(exerciseInformation)}`)
       if (exerciseInformation.length > 0) {
-        res.status(200).json({ mssg: 'Exercise Matched!', exerciseInformation: exerciseInformation[0] })
+        return res.status(200).json({ mssg: 'Exercise Matched!', exerciseInformation: exerciseInformation[0] })
       }
       else {
-        res.status(400).json({ mssg: 'No exercise of that name was found!' })
+        return res.status(400).json({ mssg: 'No exercise of that name was found!' })
       }
     }
     else {
-      res.status(400).json({ mssg: 'Fetching fitness api went wrong!' })
+      return res.status(400).json({ mssg: 'Fetching fitness api went wrong!' })
     }
   }
   catch (error) {
-    res.status(400).json({ mssg: 'Fetching fitness api went wrong!' })
+    return res.status(400).json({ mssg: 'Fetching fitness api went wrong!' })
   }
 }
