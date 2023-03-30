@@ -1,7 +1,6 @@
 import supabase from '../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../utils/databaseInterface'
 import type { Request, Response } from 'express'
-import { getUserByEmail } from '../../utils/userFunctions'
 
 const databaseQuery = new SupabaseQueryClass()
 

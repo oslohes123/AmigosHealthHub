@@ -49,25 +49,12 @@ test.after.always('guaranteed cleanup', async (t: any) => {
   await deleteUserRow(randomEmail)
 })
 
-// test(`POST ${rateMentalRoute} with incorrect ID`, async (t: any) => {
-//     const response = await request(app)
-//    .get(rateMentalRoute)
-//    .set({"authorization":token, "id": wrong_uuid})
-//    //add body as well
-
-//    t.true(response.status === 400)
-//    t.true(response.headers['content-type'] === "application/json; charset=utf-8")
-//    t.true(JSON.stringify(response.body) === JSON.stringify({mssg : "Failed to retrieve last 7 faces"}));
-//  })
 test(`POST ${rateMentalRoute} has middleware execute`, async (t: any) => {
   const response = await request(app)
     .post(rateMentalRoute)
     .send({ face: 4, word: 'Happy', userid: null })
     .set('authorization', token)
-  // ARE YOU HERE? 2. LOOK AT ONLY UR FILES, CONTROLLERS. CTRL  + SHIT+P ESLINT RESTART SERVER// tel when ure done
-  // by restarting u mean cdn o ..no no ctrl shit p then command pallete search bar should open up top. Then enter ESLINT: RESTART ESLINT SERVER
-  // NOTHING COMING UP did you install ESLINT in vscode extensions, if not do that ESLint by Microsfoft 25M downloads
-  // THERE//DO IT NOW SO I CAN SEE RIGHT CLICK AND PRESS QUICK FIX
+
   console.log(`noIDResponse: ${JSON.stringify(response.body)}`)
   t.true(response.status === 400)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
