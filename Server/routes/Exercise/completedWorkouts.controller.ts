@@ -96,7 +96,7 @@ export const getAllCompletedWorkouts = async (req: Request, res: Response) => {
   console.log(`req.headers in getAllCompletedWorkouts: ${JSON.stringify(req.headers)}`)
   if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
     console.log(`ln 98, req.headers: ${JSON.stringify(req.headers)}, schemaForRequireduserid: ${JSON.stringify(schemaForRequireduserid)}`);
-    
+    console.log('ln99 in this branch!')
     return res.status(400).json({ mssg: 'Something went wrong!', dev: 'JSON instance was invalid against its schema' })
   }
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'CompletedWorkouts', 'userid', userid, 'workoutname, timestamp')

@@ -61,7 +61,7 @@ export default class RouteNamesClass {
   readonly partialgetCompletedWorkout = '/get'
   readonly fullGetCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialgetCompletedWorkout
   readonly partialGetAllCompletedWorkout = '/getAll'
-  readonly fullGetAllCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialgetCompletedWorkout
+  readonly fullGetAllCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialGetAllCompletedWorkout
   readonly partialaddCompletedWorkout = '/add'
   readonly fullAddCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialaddCompletedWorkout
   readonly partialDeleteCompletedWorkout = '/delete'

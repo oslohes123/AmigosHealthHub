@@ -41,38 +41,42 @@ test.after.always('guaranteed cleanup of user and delete exercises', async (t: a
     t.fail(JSON.stringify(errorDeletingMultipleExercises))
   }
 })
-
+test('getAllCompletedWorkoutsRoute is correct', (t: any) => {
+  t.true(getAllCompletedWorkoutsRoute === '/api/user/completedWorkouts/getAll')
+})
 // test for missing userid results in error
 test.serial(`GET ${getAllCompletedWorkoutsRoute} with missing userid results in error`, async (t: any) => {
-  const res = await request(app)
+  const response = await request(app)
     .get(getAllCompletedWorkoutsRoute)
     .set({ authorization: token })
-  t.true(res.status === 400)
-  t.true(JSON.stringify(res.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'JSON instance was invalid against its schema' }))
+
+  t.true(response.status === 400)
+  t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'JSON instance was invalid against its schema' }))
 })
 // test with user with no workouts
-// test.serial(`GET ${getAllCompletedWorkoutsRoute}with no workouts returns success and empty array`, async (t: any) => {
-//   const res = await request(app)
-//     .get(getAllCompletedWorkoutsRoute)
-//     .set({ authorization: token, userid: uuid })
-//     t.log(`test res: ${JSON.stringify(res)}`)
-//   t.true(res.status === 200)
-//   t.true(res.body.mssg === 'Got All Completed Workouts!')
-//   t.true(JSON.stringify(res.body.workoutsNamesAndDates) === '[]')
-// })
-// // test with user with some workouts and that workout history is ordered
-// test.serial(`GET ${getAllCompletedWorkoutsRoute} with workouts returns success and ordered array by time`, async (t: any) => {
-//   const nameOfWorkout = 'Test Tracked Workout'
-//   const { errorSetUpCompletedWorkoutForTests, successSetUpCompletedWorkoutForTests } = await setUpCompletedWorkoutForTests(uuid, nameOfWorkout)
-//   if (errorSetUpCompletedWorkoutForTests || !successSetUpCompletedWorkoutForTests) {
-//     t.fail('Error setting up completed workout for tests')
-//   }
-//   const res = await request(app)
-//     .get(getAllCompletedWorkoutsRoute)
-//     .set({ authorization: token, userid: uuid })
+test.serial(`GET ${getAllCompletedWorkoutsRoute}with no workouts returns success and empty array`, async (t: any) => {
+  const response = await request(app)
+    .get(getAllCompletedWorkoutsRoute)
+    .set({ authorization: token, userid: uuid })
 
-//   t.true(res.status === 200)
-//   t.true(res.body.mssg === 'Got All Completed Workouts!')
-//   t.true(res.body.workoutsNamesAndDates.length === 1)
-//   t.true(res.body.workoutsNamesAndDates[0].workoutname === 'Test Tracked Workout')
-// })
+  t.log(`test res: ${JSON.stringify(response)}`)
+  t.true(response.status === 200)
+  t.true(response.body.mssg === 'Got All Completed Workouts!')
+  t.true(JSON.stringify(response.body.workoutsNamesAndDates) === '[]')
+})
+// test with user with some workouts and that workout history is ordered
+test.serial(`GET ${getAllCompletedWorkoutsRoute} with workouts returns success and ordered array by time`, async (t: any) => {
+  const nameOfWorkout = 'Test Tracked Workout'
+  const { errorSetUpCompletedWorkoutForTests, successSetUpCompletedWorkoutForTests } = await setUpCompletedWorkoutForTests(uuid, nameOfWorkout)
+  if (errorSetUpCompletedWorkoutForTests || !successSetUpCompletedWorkoutForTests) {
+    t.fail('Error setting up completed workout for tests')
+  }
+  const res = await request(app)
+    .get(getAllCompletedWorkoutsRoute)
+    .set({ authorization: token, userid: uuid })
+
+  t.true(res.status === 200)
+  t.true(res.body.mssg === 'Got All Completed Workouts!')
+  t.true(res.body.workoutsNamesAndDates.length === 1)
+  t.true(res.body.workoutsNamesAndDates[0].workoutname === 'Test Tracked Workout')
+})
