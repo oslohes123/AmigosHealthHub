@@ -191,6 +191,7 @@ export default function Graph({ navigation }) {
         <View>
 
           <FAB
+            testID="select_exercise_button"
             style={{ width: screenWidth * 0.6 }}
             label={selected || 'Select an exercise'}
             onPress={() => {
@@ -199,6 +200,7 @@ export default function Graph({ navigation }) {
           />
 
           <Modal
+            testID="selection_modal"
             visible={visible}
             animationType="fade"
             transparent
@@ -212,6 +214,7 @@ export default function Graph({ navigation }) {
                 {getArrayOfExercises
                   && getArrayOfExercises.map((exercise) => (
                     <TouchableOpacity
+                      testID={exercise}
                       style={styles.modalButton}
                       key={exercise}
                       onPress={() => {
@@ -250,7 +253,7 @@ export default function Graph({ navigation }) {
         {/* This is the WeightedGraph */}
 
         {getWeightedData && getWeightedLabels && (
-          <TouchableWithoutFeedback>
+          <TouchableWithoutFeedback testID="weight_pulled_graph">
             <View style={{ marginBottom: 10 }}>
               <Text style={[styles.title, { color }]}>Weight pulled per exercise</Text>
               <LineChart
@@ -271,7 +274,7 @@ export default function Graph({ navigation }) {
         {errorExerciseHistory && <Text style={{ color }}>{errorExerciseHistory}</Text>}
         {/* This is the duration graph for an Other exercise */}
         {getDurationData && getDurationLabels && (
-          <TouchableWithoutFeedback>
+          <TouchableWithoutFeedback testID="duration_graph">
             <View style={{ marginBottom: 10 }}>
               <Text style={[styles.title, { color }]}>Duration</Text>
               <LineChart
@@ -292,7 +295,7 @@ export default function Graph({ navigation }) {
 
         {/* This is the distance graph for an Other exercise */}
         {getDistanceData && getDistanceLabels && (
-          <TouchableWithoutFeedback>
+          <TouchableWithoutFeedback testID="distance_graph">
             <View style={{ marginBottom: 10 }}>
               <Text style={[styles.title, { color }]}>Distance</Text>
               <LineChart
@@ -313,7 +316,7 @@ export default function Graph({ navigation }) {
 
         {/* This is the calories graph for an Other exercise */}
         {getCaloriesData && getCaloriesLabels && (
-          <TouchableWithoutFeedback>
+          <TouchableWithoutFeedback testID="calories_graph">
             <View style={{ marginBottom: 40 }}>
               <Text style={[styles.title, { color }]}>Calories</Text>
               <LineChart

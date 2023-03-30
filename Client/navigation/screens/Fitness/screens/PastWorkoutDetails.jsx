@@ -149,7 +149,7 @@ export default function PastWorkoutDetails() {
             {selectDay}
           </Text>
         )}
-        <TouchableOpacity style={styles.icon} onPress={toggleCalendar}>
+        <TouchableOpacity testID="calendar_button" style={styles.icon} onPress={toggleCalendar}>
           <AntDesign name="calendar" size={35} color={theme.color} />
         </TouchableOpacity>
       </View>

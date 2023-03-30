@@ -175,6 +175,7 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
     >
       {/* Exercise Info Modal */}
       <Modal
+        testID="info_modal"
         animationType="slide"
         transparent
         visible={exerciseModalVisible}
@@ -365,7 +366,7 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
                             textAlign: 'center',
                           }}
                         >
-                          {modalDistance}
+                          {(modalDistance >= 1) ? modalDistance : `${Number(modalDistance) / 1000}`}
                           {' '}
                           km
                         </Text>
@@ -429,6 +430,7 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
 
               <View style={{ flexDirection: 'row' }}>
                 <FAB
+                  testID="close_info_modal"
                   icon="close"
                   style={styles.fab}
                   onPress={() => {
@@ -484,6 +486,7 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
             </Text>
 
             <TextInput
+              testID="workout_name_input"
               style={{
                 color,
                 width: screenWidth * 0.6,
@@ -522,6 +525,7 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
                 }}
               />
               <FAB
+                testID="save_plan_button"
                 icon="check"
                 style={styles.fab}
                 onPress={async () => {
@@ -550,7 +554,9 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
 
       {!isLoading && (
         <View style={styles.searchAndSave}>
-        <TextInput
+          <TextInput
+            disabled={false}
+            testID="searchbar"
             autoFocus
             clearButtonMode="always"
             value={text}
@@ -566,9 +572,10 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
             textAlign="center"
             placeholder="Search Exercises"
             placeholderTextColor={color}
-            />
+          />
 
           <FAB
+            testID="enter_name_button"
             icon="check"
             style={styles.fab}
             onPress={() => {
@@ -614,13 +621,15 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
 
       {!isLoading && selectedExercises.length > 0 && (
         <ScrollView
+          testID="horizontal_scroll"
           style={[styles.horizontalScroll, { borderColor: color }]}
           horizontal
           alignItems="center"
           showsHorizontalScrollIndicator={false}
         >
-          {selectedExercises.map((item) => (
+          {selectedExercises.map((item, index) => (
             <TouchableOpacity
+              testID={`${item}${index}`}
               key={`${Math.random()}`}
               onPress={() => {
                 setModalCalories(item.calories);
@@ -634,7 +643,7 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
                 setExerciseModalVisible(!exerciseModalVisible);
                 setModalType(item.type);
               }}
-            >
+              >
               <Text
                 style={[
                   styles.addedText,
@@ -651,6 +660,7 @@ export default function CreateNewWorkoutScreen({ navigation, route }) {
       {message === 'Internal server error' && setSnackbarText(message)}
 
       <Snackbar
+        testID="snackbar"
         visible={snackbarVisible}
         onDismiss={() => setSnackbarVisible(!snackbarVisible)}
         action={{
