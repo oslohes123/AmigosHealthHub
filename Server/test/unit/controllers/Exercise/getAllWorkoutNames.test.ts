@@ -67,7 +67,7 @@ test.serial('getAllWorkoutNames results in error when userid is missing', async 
   const res = mockResponse()
   await getAllWorkoutNames(req as Request, res as Response)
   t.true(res.status.calledWith(400))
-  t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' }))
+  t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
 test.serial('getAllWorkoutNames with userid with no workouts results in ', async (t: any) => {
