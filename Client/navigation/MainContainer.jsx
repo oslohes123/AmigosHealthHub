@@ -42,7 +42,7 @@ const settingsName = 'Settings';
 const Tab = createBottomTabNavigator();
 
 export default function MainContainer() {
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     const listener = EventRegister.addEventListener(
