@@ -34,7 +34,10 @@ export default function DashboardScreen({ navigation }) {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: background }]}>
       <View style={styles.widgetContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate('Sleep')}>
+        <TouchableOpacity
+          testID="addSleepButton"
+          onPress={() => navigation.navigate('Sleep')}
+        >
           <HoursSleptGraph />
         </TouchableOpacity>
       </View>
