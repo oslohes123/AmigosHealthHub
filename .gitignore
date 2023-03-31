@@ -732,3 +732,7 @@ $RECYCLE.BIN/
 
 #Prettier
 .prettierrc
+
+# Ignore cypress media
+Client/cypress/videos/*
+Client/cypress/screenshots/*
