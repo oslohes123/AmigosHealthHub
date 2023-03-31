@@ -81,3 +81,29 @@ test.serial('getWorkoutDetails results in error when workoutname is missing', as
   t.true(res.status.calledWith(400))
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
+
+test.serial('getWorkoutDetails with userid with no workouts', async (t: any) => {
+  const req = mockRequest(validRequest)
+  const res = mockResponse()
+  await getWorkoutDetails(req as Request, res as Response)
+  t.true(res.status.calledWith(400))
+  t.true(res.json.calledWith({ mssg: "User doesn't have a workout of that name!" }))
+})
+
+test.serial('getWorkoutDetails with userid with a workout results in a success', async (t: any) => {
+  const nameOfWorkout = 'Test Workout'
+  const validAndCorrectReq = cloneDeep(validRequest)
+  validAndCorrectReq.workoutname = nameOfWorkout
+  const { errorsSettingUpWorkoutPlan, success } = await setUpWorkoutPlan(uuid, nameOfWorkout)
+  if (errorsSettingUpWorkoutPlan || !success) {
+    t.fail(errorsSettingUpWorkoutPlan)
+  }
+  const req = mockRequest(validAndCorrectReq)
+  const res = mockResponse()
+  await getWorkoutDetails(req as Request, res as Response)
+  const argsPassed = res.json.getCall(0).args[0]
+  t.log(`argsPassed in getWorkoutDetails: ${JSON.stringify(argsPassed)}`)
+  t.true(res.status.calledWith(200))
+  t.true(argsPassed.mssg === 'Success!')
+  t.true(argsPassed.workoutToReturn.length === 1)
+})
