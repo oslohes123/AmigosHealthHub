@@ -4,6 +4,7 @@ import { createHashedPassword, createToken, createUserWithID, deleteUserRow } fr
 import { deleteMultipleExercises } from '../../../utils/Exercise/insertAndDeleteMultipleExercises'
 import RouteNamesClass from '../../../utils/routeNamesClass'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import request from 'supertest'
 import { setUpCompletedWorkoutForTests } from '../../../utils/Exercise/setUpCompletedWorkoutForTests'
 const routeNames = new RouteNamesClass()
@@ -11,7 +12,7 @@ const getCaloriesTodayRoute = routeNames.fullGetCaloriesToday
 let randomEmail: string
 let token: string
 const uuid = uuidv4()
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   randomEmail = `${uuid}@gmail.com`
 
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
@@ -30,7 +31,7 @@ test.before(async (t: any) => {
   }
   token = createToken(uuid)
 })
-test.after.always('guaranteed cleanup of user', async (t: any) => {
+test.after.always('guaranteed cleanup of user', async (t: ExecutionContext) => {
   const { error } = await deleteUserRow(randomEmail)
   if (error) {
     t.fail(`deleteUserRow of ${randomEmail} failed`)
@@ -41,7 +42,7 @@ test.after.always('guaranteed cleanup of user', async (t: any) => {
   }
 })
 
-test.serial(`GET ${getCaloriesTodayRoute} with no userid provided should return error`, async (t: any) => {
+test.serial(`GET ${getCaloriesTodayRoute} with no userid provided should return error`, async (t: ExecutionContext) => {
   const response = await request(app)
     .get(getCaloriesTodayRoute)
     .set('authorization', token)
@@ -51,7 +52,7 @@ test.serial(`GET ${getCaloriesTodayRoute} with no userid provided should return 
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' }))
 })
 
-test.serial(`GET ${getCaloriesTodayRoute} with a user who has no workouts returns 0 calories`, async (t: any) => {
+test.serial(`GET ${getCaloriesTodayRoute} with a user who has no workouts returns 0 calories`, async (t: ExecutionContext) => {
   const response = await request(app)
     .get(getCaloriesTodayRoute)
     .set({ authorization: token, userid: uuid })
@@ -61,7 +62,7 @@ test.serial(`GET ${getCaloriesTodayRoute} with a user who has no workouts return
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'User has no workouts!', totalCaloriesBurnt: 0 }))
 })
 
-test.serial(`GET ${getCaloriesTodayRoute} with a user with a valid workoutplan returns the correct number of calories burnt`, async (t: any) => {
+test.serial(`GET ${getCaloriesTodayRoute} with a user with a valid workoutplan returns the correct number of calories burnt`, async (t: ExecutionContext) => {
   const { errorSetUpCompletedWorkoutForTests, successSetUpCompletedWorkoutForTests } = await setUpCompletedWorkoutForTests(uuid)
   if (errorSetUpCompletedWorkoutForTests || !successSetUpCompletedWorkoutForTests) {
     t.fail('Error setting up completed workout for tests')

@@ -5,6 +5,7 @@ import supabase from '../../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../../utils/databaseInterface'
 import { createHashedPassword, createToken, deleteUserRow } from '../../../utils/userFunctions'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 const sinon = require('sinon')
 const supabaseQuery = new SupabaseQueryClass()
 
@@ -21,7 +22,7 @@ const mockRequest = (sessionData: any) => {
   }
 }
 
-test('checkTokenHelper with missing authorization header results in error', async (t: any) => {
+test('checkTokenHelper with missing authorization header results in error', async (t: ExecutionContext) => {
   const req = mockRequest({})
   const res = mockResponse()
   // const next = mockNext();
@@ -34,7 +35,7 @@ test('checkTokenHelper with missing authorization header results in error', asyn
 })
 
 // Not in format 'bearer token'
-test('checkToken with authorization header with 0 spaces results in error', async (t: any) => {
+test('checkToken with authorization header with 0 spaces results in error', async (t: ExecutionContext) => {
   const req = mockRequest({
     authorization: 'tokenvalue'
   })
@@ -48,7 +49,7 @@ test('checkToken with authorization header with 0 spaces results in error', asyn
   t.true(res.json.calledWith({ mssg: "Authorization header must have format 'bearer token'." }))
 })
 
-test('checkToken with no bearer substring in authorization header results in error', async (t: any) => {
+test('checkToken with no bearer substring in authorization header results in error', async (t: ExecutionContext) => {
   const req = mockRequest({
     authorization: ' tokenvalue'
   })
@@ -62,7 +63,7 @@ test('checkToken with no bearer substring in authorization header results in err
   t.true(res.json.calledWith({ mssg: "Authorization header must have format 'bearer token'." }))
 })
 
-test('checkToken with illegitimate token in authorization header results in error', async (t: any) => {
+test('checkToken with illegitimate token in authorization header results in error', async (t: ExecutionContext) => {
   const req = mockRequest({
     authorization: 'bearer tokenvalue'
   })
@@ -76,7 +77,7 @@ test('checkToken with illegitimate token in authorization header results in erro
   t.true(res.json.calledWith({ mssg: 'Request Failed due to Authentication' }))
 })
 
-test('checkToken with jwttoken with incorrect payload results in error', async (t: any) => {
+test('checkToken with jwttoken with incorrect payload results in error', async (t: ExecutionContext) => {
   // create token with this random uuid, token payload
   // id doesn't exist in database
   const uuid = uuidv4()
@@ -95,7 +96,7 @@ test('checkToken with jwttoken with incorrect payload results in error', async (
   t.true(res.json.calledWith({ mssg: 'Request Failed due to Authentication' }))
 })
 
-test('checkToken with legitimate token results in next() if next exists', async (t: any) => {
+test('checkToken with legitimate token results in next() if next exists', async (t: ExecutionContext) => {
   const uuid = uuidv4()
   const testUser = `${uuid}@gmail.com`
 

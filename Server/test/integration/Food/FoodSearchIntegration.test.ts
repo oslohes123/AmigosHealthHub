@@ -5,6 +5,7 @@ import { SupabaseQueryClass } from '../../../utils/databaseInterface'
 import { createHashedPassword, createToken } from '../../../utils/userFunctions'
 import RouteNamesClass from '../../../utils/routeNamesClass'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import request from 'supertest'
 const supabaseQuery = new SupabaseQueryClass()
 const routeNames = new RouteNamesClass()
@@ -13,7 +14,7 @@ let testEmail: string
 let hashedPassword: string
 let token: string
 
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const uuid = uuidv4()
   testEmail = `${uuid}@gmail.com`
 
@@ -34,11 +35,11 @@ test.before(async (t: any) => {
   token = createToken(data[0].id)
 })
 
-test.after.always(async (t: any) => {
+test.after.always(async (t: ExecutionContext) => {
   await supabaseQuery.deleteFrom(supabase, 'User', 'email', testEmail)
 })
 
-test(`GET ${routeNames.foodBaseURL} correctly `, async (t: any) => {
+test(`GET ${routeNames.foodBaseURL} correctly `, async (t: ExecutionContext) => {
   const response = await request(app)
     .get(routeNames.foodBaseURL + '/0.apple')
     .set('authorization', token)

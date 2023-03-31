@@ -2,9 +2,10 @@ import { createToken } from '../../../../utils/userFunctions'
 import { v4 as uuidv4 } from 'uuid'
 require('dotenv').config()
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 const jwt = require('jsonwebtoken')
 
-test('createToken results in legitimate token', (t: any) => {
+test('createToken results in legitimate token', (t: ExecutionContext) => {
   const uuid = uuidv4()
   const token = createToken(uuid).split(' ')[1] // default second param is correct secret in .env
 
@@ -17,7 +18,7 @@ test('createToken results in legitimate token', (t: any) => {
   }
 })
 
-test('createToken with incorrect secret results in illegitimate token ', (t: any) => {
+test('createToken with incorrect secret results in illegitimate token ', (t: ExecutionContext) => {
   const uuid = uuidv4()
   const secret = uuidv4()
   const token = createToken(uuid, secret).split(' ')[1]

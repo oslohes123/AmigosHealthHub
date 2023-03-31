@@ -3,12 +3,13 @@ import { v4 as uuidv4 } from 'uuid'
 import { createHashedPassword, createUserWithID, deleteUserRow } from '../../../../utils/userFunctions'
 import { getCaloriesToday } from '../../../../routes/Exercise/exerciseCalories.controller'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import sinon from 'sinon'
 import { deleteMultipleExercises } from '../../../../utils/Exercise/insertAndDeleteMultipleExercises'
 import { setUpCompletedWorkoutForTests } from '../../../../utils/Exercise/setUpCompletedWorkoutForTests'
 let randomEmail: string
 const uuid = uuidv4()
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   randomEmail = `${uuid}@gmail.com`
 
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
@@ -27,7 +28,7 @@ test.before(async (t: any) => {
   }
 })
 
-test.after.always('guaranteed cleanup of user', async (t: any) => {
+test.after.always('guaranteed cleanup of user', async (t: ExecutionContext) => {
   const { error } = await deleteUserRow(randomEmail)
   if (error) {
     t.fail(`deleteUserRow of ${randomEmail} failed`)
@@ -50,7 +51,7 @@ const mockResponse = () => {
   return res
 }
 
-test.serial('getCaloriesToday with no userid provided should return error', async (t: any) => {
+test.serial('getCaloriesToday with no userid provided should return error', async (t: ExecutionContext) => {
   const req = mockRequest({})
   const res = mockResponse()
   await getCaloriesToday(req as Request, res as Response)
@@ -59,7 +60,7 @@ test.serial('getCaloriesToday with no userid provided should return error', asyn
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' }))
 })
 
-test.serial('user with no workouts has burnt 0 calories', async (t: any) => {
+test.serial('user with no workouts has burnt 0 calories', async (t: ExecutionContext) => {
   const req = mockRequest({ userid: uuid })
   const res = mockResponse()
   await getCaloriesToday(req as Request, res as Response)
@@ -67,7 +68,7 @@ test.serial('user with no workouts has burnt 0 calories', async (t: any) => {
   t.true(res.json.calledWith({ mssg: 'User has no workouts!', totalCaloriesBurnt: 0 }))
 })
 
-test.serial('getCaloriesToday with user with a valid workoutplan returns the correct number of calories burnt', async (t: any) => {
+test.serial('getCaloriesToday with user with a valid workoutplan returns the correct number of calories burnt', async (t: ExecutionContext) => {
   const { errorSetUpCompletedWorkoutForTests, successSetUpCompletedWorkoutForTests } = await setUpCompletedWorkoutForTests(uuid)
   if (errorSetUpCompletedWorkoutForTests || !successSetUpCompletedWorkoutForTests) {
     t.fail('Error setting up completed workout for tests')

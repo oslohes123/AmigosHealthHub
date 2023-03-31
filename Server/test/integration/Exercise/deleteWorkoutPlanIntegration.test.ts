@@ -1,5 +1,6 @@
 import app from '../../../index'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import request from 'supertest'
 import { v4 as uuidv4 } from 'uuid'
 import { createUserWithID, deleteUserRow, createHashedPassword, createToken } from '../../../utils/userFunctions'
@@ -14,7 +15,7 @@ const deleteWorkoutPlanRoute = routeNames.fullDeleteWorkoutURL
 let token: string
 let randomEmail: string
 const uuid = uuidv4()
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   randomEmail = `${uuid}@gmail.com`
 
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
@@ -34,7 +35,7 @@ test.before(async (t: any) => {
   token = createToken(uuid)
 })
 
-test.after.always('guaranteed cleanup of user and delete exercises', async (t: any) => {
+test.after.always('guaranteed cleanup of user and delete exercises', async (t: ExecutionContext) => {
   const { errorPresent } = await deleteAllWorkoutPlansWithExercises(uuid)
   if (errorPresent) {
     t.fail(errorPresent)
@@ -54,10 +55,10 @@ const validRequest: deleteWorkoutPlanRequest = {
   workoutname: 'Test Track Workout Name'
 }
 
-test('deleteWorkoutPlanRoute is correct', (t: any) => {
+test('deleteWorkoutPlanRoute is correct', (t: ExecutionContext) => {
   t.true(deleteWorkoutPlanRoute === '/api/user/workout/delete')
 })
-test.serial(`DELETE ${deleteWorkoutPlanRoute} results in error when userid is missing`, async (t: any) => {
+test.serial(`DELETE ${deleteWorkoutPlanRoute} results in error when userid is missing`, async (t: ExecutionContext) => {
   const invalidReqWithNouserid = cloneDeep(validRequest)
   delete invalidReqWithNouserid.userid
   const response = await request(app)
@@ -68,7 +69,7 @@ test.serial(`DELETE ${deleteWorkoutPlanRoute} results in error when userid is mi
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
-test.serial(`DELETE ${deleteWorkoutPlanRoute} results in error when workoutname is missing`, async (t: any) => {
+test.serial(`DELETE ${deleteWorkoutPlanRoute} results in error when workoutname is missing`, async (t: ExecutionContext) => {
   const invalidReqWithNoWorkoutname = cloneDeep(validRequest)
   delete invalidReqWithNoWorkoutname.workoutname
   const response = await request(app)
@@ -79,7 +80,7 @@ test.serial(`DELETE ${deleteWorkoutPlanRoute} results in error when workoutname 
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
-test.serial(`DELETE ${deleteWorkoutPlanRoute} with non-existent workoutplan results in error`, async (t: any) => {
+test.serial(`DELETE ${deleteWorkoutPlanRoute} with non-existent workoutplan results in error`, async (t: ExecutionContext) => {
   const response = await request(app)
     .delete(deleteWorkoutPlanRoute)
     .set({ authorization: token })
@@ -88,7 +89,7 @@ test.serial(`DELETE ${deleteWorkoutPlanRoute} with non-existent workoutplan resu
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'User does not have a plan of that name!' }))
 })
 
-test.serial(`DELETE ${deleteWorkoutPlanRoute} with valid workout plan results in success`, async (t: any) => {
+test.serial(`DELETE ${deleteWorkoutPlanRoute} with valid workout plan results in success`, async (t: ExecutionContext) => {
   const nameOfWorkout = 'Test Cannot create a Workoutplan with same name'
   const { errorsSettingUpWorkoutPlan, success } = await setUpWorkoutPlan(uuid, nameOfWorkout)
   if (errorsSettingUpWorkoutPlan || !success) {

@@ -1,4 +1,5 @@
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import sinon from 'sinon'
 import { type Request, type Response } from 'express'
 import { getExerciseByName } from '../../../../routes/Exercise/searchExercise.controller'
@@ -24,7 +25,7 @@ const validRequest: getExerciseByNameRequest = {
   exercisename: 'bench press'
 }
 
-test('getExerciseByName with missing exercisename results in error', async (t: any) => {
+test('getExerciseByName with missing exercisename results in error', async (t: ExecutionContext) => {
   const invalidReqWithNoExercisename = cloneDeep(validRequest)
   delete invalidReqWithNoExercisename.exercisename
   const req = mockRequest(invalidReqWithNoExercisename)
@@ -34,7 +35,7 @@ test('getExerciseByName with missing exercisename results in error', async (t: a
   t.true(res.json.calledWith({ mssg: 'Something went wrong', dev: 'JSON instance does not follow JSON schema' }))
 })
 
-test('getExerciseByName with correct exercisename results in success', async (t: any) => {
+test('getExerciseByName with correct exercisename results in success', async (t: ExecutionContext) => {
   const req = mockRequest(validRequest)
   const res = mockResponse()
   await getExerciseByName(req as Request, res as Response)
@@ -45,7 +46,7 @@ test('getExerciseByName with correct exercisename results in success', async (t:
   t.true(argsPassed.exerciseInformation.name === 'Dumbbell Bench Press')
 })
 
-test('getExerciseByName with random and incorrect exercisename results in error', async (t: any) => {
+test('getExerciseByName with random and incorrect exercisename results in error', async (t: ExecutionContext) => {
   const invalidRequest = cloneDeep(validRequest)
   invalidRequest.exercisename = 'asdad1d12wdasdaasdsd'
   const req = mockRequest(invalidRequest)

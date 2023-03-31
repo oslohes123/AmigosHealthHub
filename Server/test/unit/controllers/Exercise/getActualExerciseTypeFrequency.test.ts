@@ -1,4 +1,5 @@
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import sinon from 'sinon'
 import { type Request, type Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
@@ -9,7 +10,7 @@ import { deleteMultipleExercises } from '../../../../utils/Exercise/insertAndDel
 import { setUpCompletedWorkoutForTests } from '../../../../utils/Exercise/setUpCompletedWorkoutForTests'
 const uuid = uuidv4()
 const randomEmail = `${uuid}@example.com`
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const hashedPassword = await createHashedPassword('Password123!')
   const { error } = await createUserWithID({
     id: uuid,
@@ -23,7 +24,7 @@ test.before(async (t: any) => {
     t.fail(JSON.stringify(error))
   }
 })
-test.after.always(async (t: any) => {
+test.after.always(async (t: ExecutionContext) => {
   const { error } = await deleteUserRow(randomEmail)
   if (error) {
     t.fail('Deleting user went wrong!')
@@ -53,7 +54,7 @@ const validRequest: getActualExerciseTypeRequest = {
   userid: uuid
 }
 
-test.serial('getActualExerciseTypeFrequency returns error when userid is missing', async (t: any) => {
+test.serial('getActualExerciseTypeFrequency returns error when userid is missing', async (t: ExecutionContext) => {
   const invalidRequest = cloneDeep(validRequest)
   delete invalidRequest.userid
   const req = mockRequest(invalidRequest)
@@ -63,7 +64,7 @@ test.serial('getActualExerciseTypeFrequency returns error when userid is missing
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
-test.serial('getActualExerciseTypeFrequency returns empty arrays when user has no completed workouts', async (t: any) => {
+test.serial('getActualExerciseTypeFrequency returns empty arrays when user has no completed workouts', async (t: ExecutionContext) => {
   const req = mockRequest(validRequest)
   const res = mockResponse()
   await getActualExerciseTypeFrequency(req as Request, res as Response)
@@ -71,7 +72,7 @@ test.serial('getActualExerciseTypeFrequency returns empty arrays when user has n
   t.true(res.json.calledWith({ mssg: 'Success!', graphLabels: [], graphData: [] }))
 })
 
-test.serial('getActualExerciseTypeFrequency with user with 1 workout returns array of size 1', async (t: any) => {
+test.serial('getActualExerciseTypeFrequency with user with 1 workout returns array of size 1', async (t: ExecutionContext) => {
   const nameOfWorkout = 'Workout Plan 1'
   // Adds exercises of names: `Slow Jog ${uuid}` and [`Test Curl ${uuid}`
   const { errorSetUpCompletedWorkoutForTests, successSetUpCompletedWorkoutForTests } = await setUpCompletedWorkoutForTests(uuid, nameOfWorkout)
@@ -87,7 +88,7 @@ test.serial('getActualExerciseTypeFrequency with user with 1 workout returns arr
   t.true(res.json.calledWith({ mssg: 'Success!', graphLabels: ['strength', 'cardio'], graphData: [1, 1] }))
 })
 
-test.serial('getActualExerciseTypeFrequency with user with 2 workouts returns correct graph labels and data', async (t: any) => {
+test.serial('getActualExerciseTypeFrequency with user with 2 workouts returns correct graph labels and data', async (t: ExecutionContext) => {
   const nameOfWorkout = 'Workout Plan 2'
   const { errorSetUpCompletedWorkoutForTests, successSetUpCompletedWorkoutForTests } = await setUpCompletedWorkoutForTests(uuid, nameOfWorkout)
   if (errorSetUpCompletedWorkoutForTests || !successSetUpCompletedWorkoutForTests) {

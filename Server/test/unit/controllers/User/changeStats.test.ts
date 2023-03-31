@@ -5,6 +5,7 @@ import supabase from '../../../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../../../utils/databaseInterface'
 import { createHashedPassword, createUser } from '../../../../utils/userFunctions'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 const sinon = require('sinon')
 const supabaseQuery = new SupabaseQueryClass()
 
@@ -17,7 +18,7 @@ let hashedPassword2: string
 const uuid = uuidv4()
 const newEmail = `CHANGED${uuid}@gmail.com`
 
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const uuid1 = uuidv4()
   firstUserEmail = `${uuid1}@gmail.com`
 
@@ -36,7 +37,7 @@ test.before(async (t: any) => {
   }
 })
 
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const uuid2 = uuidv4()
   secondUserEmail = `${uuid2}@gmail.com`
 
@@ -55,7 +56,7 @@ test.before(async (t: any) => {
   }
 })
 
-test.after.always('guaranteed cleanup of user', async (t: any) => {
+test.after.always('guaranteed cleanup of user', async (t: ExecutionContext) => {
   await supabaseQuery.deleteFrom(supabase, 'User', 'email', firstUserEmail);
   await supabaseQuery.deleteFrom(supabase, 'User', 'email', newEmail);
 });
@@ -77,7 +78,7 @@ const mockRequest = (sessionData: any) => {
    * Test changeStats with any missing fields
    */
 
-test('changeStats with no fields should return error', async (t: any) => {
+test('changeStats with no fields should return error', async (t: ExecutionContext) => {
   const req = mockRequest({})
   const res = mockResponse()
   await changeStats(req as Request, res as Response)
@@ -86,7 +87,7 @@ test('changeStats with no fields should return error', async (t: any) => {
   t.true(res.json.calledWith({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test('changeStats with missing first name should return error', async (t: any) => {
+test('changeStats with missing first name should return error', async (t: ExecutionContext) => {
   const req = mockRequest({
     lastName: 'Doe',
     prevEmail: 'prevEmail@example.com',
@@ -100,7 +101,7 @@ test('changeStats with missing first name should return error', async (t: any) =
   t.true(res.json.calledWith({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test('changeStats with missing last name should return error', async (t: any) => {
+test('changeStats with missing last name should return error', async (t: ExecutionContext) => {
   const req = mockRequest({
     firstName: 'John',
     prevEmail: 'prevEmail@example.com',
@@ -114,7 +115,7 @@ test('changeStats with missing last name should return error', async (t: any) =>
   t.true(res.json.calledWith({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test('changeStats with missing prevEmail should return error', async (t: any) => {
+test('changeStats with missing prevEmail should return error', async (t: ExecutionContext) => {
   const req = mockRequest({
     firstName: 'John',
     lastName: 'Doe',
@@ -127,7 +128,7 @@ test('changeStats with missing prevEmail should return error', async (t: any) =>
   t.true(res.status.calledWith(400))
   t.true(res.json.calledWith({ mssg: 'All Fields Must Be Filled' }))
 })
-test('changeStats with missing newEmail should return error', async (t: any) => {
+test('changeStats with missing newEmail should return error', async (t: ExecutionContext) => {
   const req = mockRequest({
     firstName: 'John',
     lastName: 'Doe',
@@ -141,7 +142,7 @@ test('changeStats with missing newEmail should return error', async (t: any) => 
   t.true(res.json.calledWith({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test('changeStats with missing age should return error', async (t: any) => {
+test('changeStats with missing age should return error', async (t: ExecutionContext) => {
   const req = mockRequest({
     firstName: 'John',
     lastName: 'Doe',
@@ -159,7 +160,7 @@ test('changeStats with missing age should return error', async (t: any) => {
    * Bad inputs for changeStats
    */
 
-test('changeStats with bad new email structure', async (t: any) => {
+test('changeStats with bad new email structure', async (t: ExecutionContext) => {
   const req = mockRequest({
     firstName: 'John',
     lastName: 'Doe',
@@ -174,7 +175,7 @@ test('changeStats with bad new email structure', async (t: any) => {
   t.true(res.json.calledWith({ mssg: 'Invalid New Email' }))
 })
 
-test('changeStats with new email that already exists results in error', async (t: any) => {
+test('changeStats with new email that already exists results in error', async (t: ExecutionContext) => {
   const req = mockRequest({
     firstName: 'John',
     lastName: 'Doe',
@@ -189,7 +190,7 @@ test('changeStats with new email that already exists results in error', async (t
   t.true(res.json.calledWith({ mssg: 'Email Already Exists' }))
 })
 
-test('changeStats with new available email results in success', async (t: any) => {
+test('changeStats with new available email results in success', async (t: ExecutionContext) => {
   const req = mockRequest({
     firstName: 'Second',
     lastName: 'User',
@@ -211,7 +212,7 @@ test('changeStats with new available email results in success', async (t: any) =
   t.true(data[0].email === newEmail)
 })
 
-test('changeStats with same email results in success', async (t: any) => {
+test('changeStats with same email results in success', async (t: ExecutionContext) => {
   // change age 31 -> 33
   // change firstName "First" -> "Changedfirst"
   const req = mockRequest({

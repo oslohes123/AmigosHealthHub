@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { createHashedPassword } from '../../../../utils/userFunctions'
 import type { Request, Response } from 'express'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 const sinon = require('sinon')
 
 const databaseQuery = new SupabaseQueryClass()
@@ -12,7 +13,7 @@ const databaseQuery = new SupabaseQueryClass()
 const uuid = uuidv4()
 const randomEmail = `${uuid}@gmail.com`
 
-test.serial.before(async (t: any) => {
+test.serial.before(async (t: ExecutionContext) => {
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
   // console.log('Inserting user')
   const { error }: any = await databaseQuery.insert(supabase, 'User', {
@@ -29,7 +30,7 @@ test.serial.before(async (t: any) => {
   }
 })
 
-test.after.always('guaranteed cleanup', async (t: any) => {
+test.after.always('guaranteed cleanup', async (t: ExecutionContext) => {
   await databaseQuery.deleteFrom(supabase, 'User', 'id', uuid)
 })
 
@@ -46,7 +47,7 @@ const mockRequest = (sessionData: any) => {
   }
 }
 
-test('Attempt to insert data without UserID', async (t: any) => {
+test('Attempt to insert data without UserID', async (t: ExecutionContext) => {
   const req = mockRequest({
     userID: null,
     timestamp: '20-03-2023',
@@ -60,7 +61,7 @@ test('Attempt to insert data without UserID', async (t: any) => {
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'addSleep req.body does not match the JSON Schema!' }))
 })
 
-test('Attempt to insert data without timestamp', async (t: any) => {
+test('Attempt to insert data without timestamp', async (t: ExecutionContext) => {
   const req = mockRequest({
     userID: uuid,
     timestamp: null,
@@ -74,7 +75,7 @@ test('Attempt to insert data without timestamp', async (t: any) => {
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'addSleep req.body does not match the JSON Schema!' }))
 })
 
-test('Attempt to insert data without hoursSlept', async (t: any) => {
+test('Attempt to insert data without hoursSlept', async (t: ExecutionContext) => {
   const req = mockRequest({
     userID: uuid,
     timestamp: '20-03-2023',
@@ -88,7 +89,7 @@ test('Attempt to insert data without hoursSlept', async (t: any) => {
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'addSleep req.body does not match the JSON Schema!' }))
 })
 
-test('Successful insertion of sleep data', async (t: any) => {
+test('Successful insertion of sleep data', async (t: ExecutionContext) => {
   const req = mockRequest({
     userID: uuid,
     sleepQuality: 3,

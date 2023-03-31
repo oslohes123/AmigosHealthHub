@@ -6,13 +6,14 @@ import { createHashedPassword } from '../../../utils/userFunctions'
 import RouteNamesClass from '../../../utils/routeNamesClass'
 import request from 'supertest'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 const supabaseQuery = new SupabaseQueryClass()
 const routeNames = new RouteNamesClass()
 const signupRoute = routeNames.fullSignupURL
 
 let alreadyExistsEmail: string
 let hashedPassword: string
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const uuid = uuidv4()
   alreadyExistsEmail = `${uuid}@gmail.com`
 
@@ -30,11 +31,11 @@ test.before(async (t: any) => {
 })
 
 
-test.after.always('guaranteed cleanup of users', async (t: any) => {
+test.after.always('guaranteed cleanup of users', async (t: ExecutionContext) => {
   await supabaseQuery.deleteFrom(supabase, 'User', 'email', alreadyExistsEmail);
 });
 
-test('POST /api/user/sign_up with no fields', async (t: any) => {
+test('POST /api/user/sign_up with no fields', async (t: ExecutionContext) => {
   const response = await request(app)
     .post(signupRoute)
     .send({})
@@ -44,7 +45,7 @@ test('POST /api/user/sign_up with no fields', async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test('POST /api/user/sign_up with missing email', async (t: any) => {
+test('POST /api/user/sign_up with missing email', async (t: ExecutionContext) => {
   const response = await request(app)
     .post(signupRoute)
     .send({
@@ -59,7 +60,7 @@ test('POST /api/user/sign_up with missing email', async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test('POST /api/user/sign_up with missing password', async (t: any) => {
+test('POST /api/user/sign_up with missing password', async (t: ExecutionContext) => {
   const response = await request(app)
     .post(signupRoute)
     .send({
@@ -74,7 +75,7 @@ test('POST /api/user/sign_up with missing password', async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test('POST /api/user/sign_up with missing last name', async (t: any) => {
+test('POST /api/user/sign_up with missing last name', async (t: ExecutionContext) => {
   const response = await request(app)
     .post(signupRoute)
     .send({
@@ -89,7 +90,7 @@ test('POST /api/user/sign_up with missing last name', async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test('POST /api/user/sign_up with missing first name', async (t: any) => {
+test('POST /api/user/sign_up with missing first name', async (t: ExecutionContext) => {
   const response = await request(app)
     .post(signupRoute)
     .send({
@@ -104,7 +105,7 @@ test('POST /api/user/sign_up with missing first name', async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test('POST /api/user/sign_up with missing age', async (t: any) => {
+test('POST /api/user/sign_up with missing age', async (t: ExecutionContext) => {
   const response = await request(app)
     .post(signupRoute)
     .send({
@@ -119,7 +120,7 @@ test('POST /api/user/sign_up with missing age', async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test('POST /api/user/sign_up with invalid email structure', async (t: any) => {
+test('POST /api/user/sign_up with invalid email structure', async (t: ExecutionContext) => {
   const response = await request(app)
     .post(signupRoute)
     .send({
@@ -135,7 +136,7 @@ test('POST /api/user/sign_up with invalid email structure', async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Invalid Email' }))
 })
 
-test('POST /api/user/sign_up with  first or last name containing non-letter characters', async (t: any) => {
+test('POST /api/user/sign_up with  first or last name containing non-letter characters', async (t: ExecutionContext) => {
   const response = await request(app)
     .post(signupRoute)
     .send({
@@ -151,7 +152,7 @@ test('POST /api/user/sign_up with  first or last name containing non-letter char
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'First name and last name must only contains letters a-z or A-Z' }))
 })
 
-test('POST /api/user/sign_up with weak password', async (t: any) => {
+test('POST /api/user/sign_up with weak password', async (t: ExecutionContext) => {
   const response = await request(app)
     .post(signupRoute)
     .send({
@@ -167,7 +168,7 @@ test('POST /api/user/sign_up with weak password', async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Password Structure must have atleast 8 characters, 1 lower case,1 upper case, 1 number, 1 symbol' }))
 })
 
-test('POST /api/user/sign_up with already existing email', async (t: any) => {
+test('POST /api/user/sign_up with already existing email', async (t: ExecutionContext) => {
   const response = await request(app)
     .post(signupRoute)
     .send({
@@ -183,7 +184,7 @@ test('POST /api/user/sign_up with already existing email', async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'User already exists!' }))
 })
 
-test('POST /api/user/sign_up with valid details', async (t: any) => {
+test('POST /api/user/sign_up with valid details', async (t: ExecutionContext) => {
   const uuid = uuidv4()
   const randomEmail = `${uuid}@gmail.com`
 

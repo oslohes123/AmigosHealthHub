@@ -1,5 +1,6 @@
 import app from '../../../index'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import request from 'supertest'
 import { v4 as uuidv4 } from 'uuid'
 import { createUserWithID, deleteUserRow, createHashedPassword, createToken } from '../../../utils/userFunctions'
@@ -11,7 +12,7 @@ const addCompletedWorkoutRoute = routeNames.fullAddCompletedWorkoutURL
 let randomEmail: string
 const uuid = uuidv4()
 let token: string
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   randomEmail = `${uuid}@gmail.com`
 
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
@@ -31,7 +32,7 @@ test.before(async (t: any) => {
   token = createToken(uuid)
 })
 
-test.after.always('guaranteed cleanup of user and delete exercises', async (t: any) => {
+test.after.always('guaranteed cleanup of user and delete exercises', async (t: ExecutionContext) => {
   const { error } = await deleteUserRow(randomEmail)
   if (error) {
     t.fail(`deleteUserRow of ${randomEmail} failed`)
@@ -60,11 +61,11 @@ const exercisesWorkoutPlan = [
     duration: 23.00
   }
 ]
-test('addCompletedWorkoutRoute is correct', (t: any) => {
+test('addCompletedWorkoutRoute is correct', (t: ExecutionContext) => {
   t.true(addCompletedWorkoutRoute === '/api/user/completedWorkouts/add')
 })
 // test for missing userid results in error
-test(`POST ${addCompletedWorkoutRoute} with missing userid results in error`, async (t: any) => {
+test(`POST ${addCompletedWorkoutRoute} with missing userid results in error`, async (t: ExecutionContext) => {
   const response = await request(app)
     .post(addCompletedWorkoutRoute)
     .set({ authorization: token })
@@ -76,7 +77,7 @@ test(`POST ${addCompletedWorkoutRoute} with missing userid results in error`, as
   t.true(response.status === 400)
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
-test(`POST ${addCompletedWorkoutRoute} with missing workoutname results in error`, async (t: any) => {
+test(`POST ${addCompletedWorkoutRoute} with missing workoutname results in error`, async (t: ExecutionContext) => {
   const response = await request(app)
     .post(addCompletedWorkoutRoute)
     .set({ authorization: token })
@@ -87,7 +88,7 @@ test(`POST ${addCompletedWorkoutRoute} with missing workoutname results in error
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
-test(`POST ${addCompletedWorkoutRoute} with missing exercises results in error`, async (t: any) => {
+test(`POST ${addCompletedWorkoutRoute} with missing exercises results in error`, async (t: ExecutionContext) => {
   const response = await request(app)
     .post(addCompletedWorkoutRoute)
     .set({ authorization: token })
@@ -100,7 +101,7 @@ test(`POST ${addCompletedWorkoutRoute} with missing exercises results in error`,
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
-test(`POST ${addCompletedWorkoutRoute} with bad timestamp format results in error`, async (t: any) => {
+test(`POST ${addCompletedWorkoutRoute} with bad timestamp format results in error`, async (t: ExecutionContext) => {
   const response = await request(app)
     .post(addCompletedWorkoutRoute)
     .set({ authorization: token })
@@ -115,7 +116,7 @@ test(`POST ${addCompletedWorkoutRoute} with bad timestamp format results in erro
   t.true(response.body.mssg === 'Something went wrong!')
 })
 
-test(`POST ${addCompletedWorkoutRoute} with correct inputs adds a completed workout`, async (t: any) => {
+test(`POST ${addCompletedWorkoutRoute} with correct inputs adds a completed workout`, async (t: ExecutionContext) => {
   const response = await request(app)
     .post(addCompletedWorkoutRoute)
     .set({

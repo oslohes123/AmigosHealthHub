@@ -1,4 +1,5 @@
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import fetchMock from 'fetch-mock'
 import brandedSearch from '../../../../../utils/Food/searches/brandedSearch'
 import { baseUrl } from '../../../../../constants'

@@ -5,12 +5,13 @@ import supabase from '../../../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../../../utils/databaseInterface'
 import { createHashedPassword, createUser } from '../../../../utils/userFunctions'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 const sinon = require('sinon')
 const supabaseQuery = new SupabaseQueryClass()
 
 let randomEmail: string
 
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const uuid = uuidv4()
   randomEmail = `${uuid}@gmail.com`
 
@@ -29,7 +30,7 @@ test.before(async (t: any) => {
   }
 })
 
-test.after.always('guaranteed cleanup of user', async (t: any) => {
+test.after.always('guaranteed cleanup of user', async (t: ExecutionContext) => {
   await supabaseQuery.deleteFrom(supabase, 'User', 'email', randomEmail)
 })
 
@@ -46,7 +47,7 @@ const mockRequest = (sessionData: any) => {
   }
 }
 
-test('Login with missing email', async (t: any) => {
+test('Login with missing email', async (t: ExecutionContext) => {
   console.log('In Login with missing email')
   const req = mockRequest({ password: 'Password123' })
   const res = mockResponse()
@@ -57,7 +58,7 @@ test('Login with missing email', async (t: any) => {
   t.true(res.json.calledWith({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test('Login with missing password', async (t: any) => {
+test('Login with missing password', async (t: ExecutionContext) => {
   const req = mockRequest({ email: 'testemail@gmail.com' })
   const res = mockResponse()
 
@@ -66,7 +67,7 @@ test('Login with missing password', async (t: any) => {
   t.true(res.json.calledWith({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test('Login with missing password and email', async (t: any) => {
+test('Login with missing password and email', async (t: ExecutionContext) => {
   const req = mockRequest({})
   const res = mockResponse()
 
@@ -75,7 +76,7 @@ test('Login with missing password and email', async (t: any) => {
   t.true(res.json.calledWith({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test('Login with non-existent email results in incorrect email message', async (t: any) => {
+test('Login with non-existent email results in incorrect email message', async (t: ExecutionContext) => {
   const req = mockRequest({
     email: `${uuidv4()}@gmail.com`,
     password: 'CorrectPassword123!'
@@ -88,7 +89,7 @@ test('Login with non-existent email results in incorrect email message', async (
   t.true(res.json.calledWith({ mssg: 'Incorrect Email' }))
 })
 
-test('Login with existent email but wrong password', async (t: any) => {
+test('Login with existent email but wrong password', async (t: ExecutionContext) => {
   const req = mockRequest({
     email: randomEmail,
     password: 'WrongPassword123!'
@@ -101,7 +102,7 @@ test('Login with existent email but wrong password', async (t: any) => {
   t.true(res.json.calledWith({ mssg: 'Incorrect Password' }))
 })
 
-test('Login with correct email and correct password', async (t: any) => {
+test('Login with correct email and correct password', async (t: ExecutionContext) => {
   const req = mockRequest({
     email: randomEmail,
     password: 'CorrectPassword123!'
