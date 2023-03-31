@@ -158,7 +158,7 @@ export default function FoodDetails({ route, navigation }) {
           <>
           <TouchableWithoutFeedback>
             <View style={[styles.box, {borderColor: theme.color} ]}>
-              <Text style={[styles.text, { color: theme.color }]}>Calories</Text>
+              <Text testID='caloriesName1' style={[styles.text, { color: theme.color }]}>Calories</Text>
               <Text style={[styles.values, { color: theme.color, borderColor: theme.color }]}>{calories}</Text>
             </View>
           </TouchableWithoutFeedback>
@@ -265,12 +265,13 @@ export default function FoodDetails({ route, navigation }) {
       </ScrollView>
       <View style={styles.buttonContainer}>
         <FAB
+          testID='update'
           onPress={update}
           width={screenWidth * 0.6}
           icon="check"
           label="Update"
         />
-        <TouchableOpacity onPress={handleDeleteFood}>
+        <TouchableOpacity testID='delete' onPress={handleDeleteFood}>
           <AntDesign name="delete" size={40} color={theme.color} />
         </TouchableOpacity>
       </View>

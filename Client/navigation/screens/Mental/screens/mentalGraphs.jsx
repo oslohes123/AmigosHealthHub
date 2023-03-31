@@ -87,7 +87,7 @@ export default function OutputMentalGraphs() {
   // components for the screen
   return (
     <View style={[styles.container, { backgroundColor: background }]}>
-      <Text style={{ color, fontWeight: 'bold', margin: 10 }}>Past Submissions (max 7)</Text>
+      <Text style={{ color, fontWeight: 'bold', margin: 10 }}>Graph For Past Face Submissions (max 7)</Text>
       <LineChart
         data={line}
         width={screenWidth * 0.95}
@@ -107,6 +107,7 @@ export default function OutputMentalGraphs() {
           marginVertical: 8,
           borderRadius: 16,
         }}
+        testID="lineGraph"
       />
       <Text style={{ color, fontWeight: 'bold', margin: 10 }}>WordCloud for the Past Submissions (max 7)</Text>
       <WordCloud />

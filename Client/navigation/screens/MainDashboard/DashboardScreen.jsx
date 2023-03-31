@@ -11,7 +11,6 @@ import themeContext from '../../theme/themeContext';
 import CaloriesBurntTodayWidget from '../../components/CaloriesBurntTodayWidget';
 import CaloriesRemaining from '../../components/CaloriesRemaining';
 import WordOfTheDayWidget from '../../components/WordOfTheDayWidget';
-import { StatusBar } from 'expo-status-bar';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -40,9 +39,7 @@ export default function DashboardScreen({ navigation }) {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity>
-        <WordOfTheDayWidget />
-      </TouchableOpacity>
+      <WordOfTheDayWidget />
 
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: screenWidth * 0.95 }}>
         <CaloriesBurntTodayWidget />

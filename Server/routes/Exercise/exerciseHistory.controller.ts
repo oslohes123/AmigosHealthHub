@@ -65,6 +65,8 @@ export const getExerciseHistory = async (req: Request, res: Response) => {
             if (error) {
               return res.status(400).json({ mssg: 'Sorry, something went wrong!' })
             }
+            console.log(`data ln68 of exerciseHistory: ${JSON.stringify(data)}`);
+            
             if (data.length > 0) {
               arrayOfCompletedWorkoutIDs.push(data[0].completedWorkoutID)
             }

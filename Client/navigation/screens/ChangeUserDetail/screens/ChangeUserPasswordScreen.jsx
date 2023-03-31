@@ -17,7 +17,7 @@ export default function ChangeUserPasswordScreen() {
   const theme = useContext(themeContext);
   return (
     <SafeAreaView
-      style={[styles.container, { backgroundColor: theme.background }]}
+      style={[styles.container, { backgroundColor: 'white' }]}
     >
       {ChangeUserPasswordForm()}
     </SafeAreaView>

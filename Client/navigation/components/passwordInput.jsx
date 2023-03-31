@@ -10,10 +10,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     fontSize: 18,
-    borderRadius: 20,
-    width: '95%',
+    width: '100%',
     alignSelf: 'center',
     margin: '5%',
+    borderColor: 'lightgrey',
   },
 });
 
