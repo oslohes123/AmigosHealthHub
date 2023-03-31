@@ -7,7 +7,7 @@ beforeEach(() => {
     cy.get('input[placeholder="Email"]').click().type('sasha@gmail.com');
     cy.get('input[placeholder="Password"]').click().type('Password123!');
     cy.contains('Login').click({force:true})
-})
+}) 
 
 describe("Check navigation to mental dashboard", () => {
     it("Should navigate from main dashboard to mental dashboard" ,() => {
