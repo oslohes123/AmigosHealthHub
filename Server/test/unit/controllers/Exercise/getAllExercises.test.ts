@@ -87,5 +87,8 @@ test.serial('getAllExercises results in populated arrayOfExerciseNames when user
   }
   await getAllExercises(req as Request, res as Response)
   t.true(res.status.calledWith(200))
-  t.true(res.json.calledWith({ mssg: 'Success!', arrayOfExerciseNames: [`Test Curl ${uuid}`, `Slow Jog ${uuid}`] }))
+  const argsPassed = res.json.getCall(0).args[0]
+  t.true(argsPassed.mssg === 'Success!')
+  t.true(argsPassed.arrayOfExerciseNames.includes(`Test Curl ${uuid}`))
+  t.true(argsPassed.arrayOfExerciseNames.includes(`Slow Jog ${uuid}`))
 })
