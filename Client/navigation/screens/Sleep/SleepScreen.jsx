@@ -176,6 +176,7 @@ export default function SleepScreen() {
             />
             <Button
               style={[styles.divider]}
+              testID="addSleepData"
               icon="check"
               mode="outlined"
                             // textColor={theme.color}
