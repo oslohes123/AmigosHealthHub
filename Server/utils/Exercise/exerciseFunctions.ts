@@ -40,6 +40,19 @@ export async function selectAllActualExercises (userid: string, table = 'ActualE
   const { data, error }: any = await databaseQuery.selectWhere(database, table, 'userID', userid, 'AEID')
   return { dataSelectAllActualExercises: data, errorSelectAllActualExercises: error }
 }
+// return all exercises from actual exercises that match a given userid and exerciseid
+export async function matchExercise (userid: string | string[], exerciseID: string) {
+  const errorAndIDs: any = { errorPresent: '', exercisesMatch: [{}, {}] }
+  const { data, error }: any = await databaseQuery.match(supabase, 'ActualExercises', '*', { userID: userid, exerciseID })
+  if (error) {
+    errorAndIDs.errorPresent = error
+    return errorAndIDs
+  }
+  else {
+    errorAndIDs.exercisesMatch = data
+    return errorAndIDs
+  }
+}
 
 /**
  *

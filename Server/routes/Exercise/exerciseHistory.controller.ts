@@ -5,22 +5,9 @@ import { removeDuplicates } from '../../utils/arrayManipulation'
 import { getDate } from '../../utils/convertTimeStamptz'
 import validateJSONSchema from '../../utils/validateJSONSchema'
 import { schemaForRequireduserid } from '../../utils/JSONSchemas/schemaForRequireduserid'
+import { matchExercise } from '../../utils/Exercise/exerciseFunctions'
 const databaseQuery = new SupabaseQueryClass()
 // getExerciseHistory by name of exercise
-
-// return all exercises from actual exercises that match a given userid and exerciseid
-const matchExercise = async (userid: string | string[], exerciseID: string) => {
-  const errorAndIDs: any = { errorPresent: '', exercisesMatch: [{}, {}] }
-  const { data, error }: any = await databaseQuery.match(supabase, 'ActualExercises', '*', { userID: userid, exerciseID })
-  if (error) {
-    errorAndIDs.errorPresent = error
-    return errorAndIDs
-  }
-  else {
-    errorAndIDs.exercisesMatch = data
-    return errorAndIDs
-  }
-}
 // for weighted exercise return 2 arrays: array of dates(x-axis), array of weight pulled(y-axis)
 // else return arrayOfCalories, arrayOfDuration, arrayOfDistance
 export const getExerciseHistory = async (req: Request, res: Response) => {
@@ -65,8 +52,8 @@ export const getExerciseHistory = async (req: Request, res: Response) => {
             if (error) {
               return res.status(400).json({ mssg: 'Sorry, something went wrong!' })
             }
-            console.log(`data ln68 of exerciseHistory: ${JSON.stringify(data)}`);
-            
+            console.log(`data ln68 of exerciseHistory: ${JSON.stringify(data)}`)
+
             if (data.length > 0) {
               arrayOfCompletedWorkoutIDs.push(data[0].completedWorkoutID)
             }
@@ -135,14 +122,14 @@ export const getExerciseHistory = async (req: Request, res: Response) => {
             arrayOfAEIDs.push(AEID)
             const { data, error }: any = await databaseQuery.selectWhere(supabase, 'TrackedWorkoutsWithExercises', 'AEID', AEID, '*')
             if (error) {
-              console.log(`ln 131 of exerciseHistory!`)
+              console.log('ln 131 of exerciseHistory!')
               return res.status(400).json({ mssg: 'Sorry, something went wrong!' })
             }
             if (data.length > 0) {
               arrayOfCompletedWorkoutIDs.push(data[0].completedWorkoutID)
             }
             else {
-              console.log(`ln 138 of exerciseHistory!`)
+              console.log('ln 138 of exerciseHistory!')
               return res.status(400).json({ mssg: 'Exercise has never been performed' })
             }
             console.log(`ln53: ${JSON.stringify(data)}`)
@@ -191,7 +178,7 @@ export const getExerciseHistory = async (req: Request, res: Response) => {
       }
       else {
         // Replace to return 2 empty arrays
-        console.log(`ln 131 of exerciseHistory!`)
+        console.log('ln 131 of exerciseHistory!')
         return res.status(400).json({ mssg: 'Exercise has never been performed' })
       }
     }
@@ -211,8 +198,8 @@ export const getExerciseHistory = async (req: Request, res: Response) => {
 export const getAllExercises = async (req: Request, res: Response) => {
   const { userid } = req.headers
 
-   if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
-    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
+  if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' })
   }
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'ActualExercises', 'userID', userid, 'exerciseID')
 
