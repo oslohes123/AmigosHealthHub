@@ -64,7 +64,6 @@ export const addCompletedWorkoutUnit = async (userid: string, workoutname: strin
   }
   // 3.  Create a record in TrackedWorkoutsWithExercises for each exercise in the workoutplan.
   for (let i = 0; i < arrayOfAEIDs.length; i++) {
-    console.log('Record in TrackedWorkoutsWithExercises Executed!')
     const { error }: any = await databaseQuery.insert(supabase, 'TrackedWorkoutsWithExercises', { completedWorkoutID, AEID: arrayOfAEIDs[i] })
     if (error) {
       errorAddCompletedWorkoutsAndSuccess.errorAddCompletedWorkouts = JSON.stringify(error)

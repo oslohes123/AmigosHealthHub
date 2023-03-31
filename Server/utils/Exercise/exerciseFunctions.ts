@@ -70,7 +70,6 @@ export const searchExerciseInExercises = async (name: string) => {
     const { data, error }: any = await databaseQuery.selectWhere(supabase, 'Exercises', 'name', name, '*')
 
     if (error) {
-      console.log('Error selecting from Exercises table!')
       errorAndIDs.errorPresent = error
       return errorAndIDs
     }
@@ -96,11 +95,8 @@ export async function deleteWorkoutPlanByID (completedWorkoutID: string) {
   return errorAndIDs
 }
 export async function selectAEIDs (workoutPlanToDel: string) {
-  console.log(`workoutPlanToDel ln253: ${workoutPlanToDel}`)
   const errorAndIDs: any = { errorHere: '', AEIDs: [{}] }
-  // const {data, error}:any = await databaseQuery.selectWhere(supabase, 'TrackedWorkoutsWithExercises','completedWorkoutID', "d05a8235-98f9-4a90-b982-306655813916",'AEID');
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'TrackedWorkoutsWithExercises', 'completedWorkoutID', workoutPlanToDel, 'AEID')
-  console.log(`data ln 257: ${JSON.stringify(data)}`)
   if (error) {
     errorAndIDs.errorHere = error
     return errorAndIDs
@@ -137,13 +133,11 @@ export async function getAllAEIDs (userid: string | string[]) {
     errorAndIDs.errorHere = error
     return errorAndIDs
   }
-  console.log(`dataln362: ${JSON.stringify(data)}`)
   const arrayOfCompletedWorkoutIDs = []
   // get all CompletedWorkoutIDs
   for (let i = 0; i < data.length; i++) {
     arrayOfCompletedWorkoutIDs.push(data[i].completedWorkoutID)
   }
-  console.log(`arrayOfCompletedWorkoutIDs: ${JSON.stringify(arrayOfCompletedWorkoutIDs)}`)
   // get all trackedWorkoutsWithExercises, then all AEIDs
   const arrayOfAEIDs = []
   for (let i = 0; i < arrayOfCompletedWorkoutIDs.length; i++) {
@@ -158,7 +152,6 @@ export async function getAllAEIDs (userid: string | string[]) {
       }
     }
   }
-  console.log(`arrayOfAEIDs: ${JSON.stringify(arrayOfAEIDs)}`)
   errorAndIDs.AEIDs = arrayOfAEIDs
   return errorAndIDs
 }
@@ -176,7 +169,6 @@ export async function getAllExerciseIDs (AEIDs: string[]) {
       arrayOfExerciseIDs.push(data[0].exerciseID)
     }
   }
-  console.log(`arrayOfExerciseIDs ln405: ${JSON.stringify(arrayOfExerciseIDs)}`)
   errorAndExerciseIDs.exerciseIDs = arrayOfExerciseIDs
   return errorAndExerciseIDs
 }
@@ -217,8 +209,6 @@ export async function getExerciseTypes (arrayOfExerciseIDs: string[]) {
 export async function getWorkoutByID (completedWorkoutID: string) {
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'TrackedWorkoutsWithExercises', 'completedWorkoutID', completedWorkoutID, '*')
 
-  console.log(`getWorkoutByID: ${JSON.stringify(data)}`)
-
   const errorAndWorkout: any = { errorPresent: '', workoutToReturn: [] }
   if (error) errorAndWorkout.errorPresent = error
 
@@ -234,8 +224,6 @@ export async function getWorkoutByID (completedWorkoutID: string) {
       if (error) errorAndWorkout.errorPresent = error
       else {
         arrayOfPossibleExercises.push(data[0])
-        console.log(`data ln50 getWorkout: ${JSON.stringify(data)}`)
-        console.log(`arrayOfPossibleExercises ln: ${JSON.stringify(arrayOfPossibleExercises)}`)
       }
     }
     for (let i = 0; i < arrayOfPossibleExercises.length; i++) {
@@ -245,8 +233,6 @@ export async function getWorkoutByID (completedWorkoutID: string) {
         delete arrayOfPossibleExercises[i].exerciseID
         delete arrayOfPossibleExercises[i].userID
         arrayOfPossibleExercises[i].exercise = data[0]
-        console.log(`data ln65 getWorkout: ${JSON.stringify(data)}`)
-        console.log(`arrayOfPossibleExercises ln 66: ${JSON.stringify(arrayOfPossibleExercises)}`)
       }
     }
     for (let i = 0; i < arrayOfPossibleExercises.length; i++) {
@@ -267,7 +253,6 @@ export async function getWorkoutByID (completedWorkoutID: string) {
 // helper function to getWorkoutDetails
 export async function getWorkoutPlanByID (workoutPlanID: string) {
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'WorkoutPlansWithExercises', 'WorkoutPlanID', workoutPlanID, '*')
-  console.log(`getWorkoutByID: ${JSON.stringify(data)}`)
   const errorAndWorkout: any = { errorPresent: '', workoutToReturn: [] }
   if (error) errorAndWorkout.errorPresent = error
   else {
@@ -282,8 +267,6 @@ export async function getWorkoutPlanByID (workoutPlanID: string) {
       if (error) errorAndWorkout.errorPresent = error
       else {
         arrayOfPossibleExercises.push(data[0])
-        console.log(`data ln50 getWorkout: ${JSON.stringify(data)}`)
-        console.log(`arrayOfPossibleExercises ln: ${JSON.stringify(arrayOfPossibleExercises)}`)
       }
     }
 

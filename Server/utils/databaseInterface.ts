@@ -70,12 +70,10 @@ export class SupabaseQueryClass implements dbInterface {
     try {
       const { data, error } = await supabaseDb.from(table).select(column)
 
-      if (error) console.error(error)
-      else console.log({ data })
-
-      return { data }
+      if (error) return { data: null, error }
+      else return { data, error: undefined }
     } catch (err: unknown) {
-      console.error(err)
+      return { data: null, error: err }
     }
   }
 
@@ -92,14 +90,12 @@ export class SupabaseQueryClass implements dbInterface {
         .match(toBeMatched)
 
       if (error) {
-        console.error(error)
-        return { error }
+        return { data: null, error }
       } else {
-        console.log({ data })
-        return { data }
+        return { data, error: undefined }
       }
     } catch (err: unknown) {
-      console.error(err)
+      return { data: null, error: err }
     }
   }
 
@@ -117,15 +113,12 @@ export class SupabaseQueryClass implements dbInterface {
         .in(toBeFound, toBeSelected)
 
       if (error) {
-        console.log('error in selectIn')
-        console.error(error)
-        return { error }
+        return { data: null, error }
       } else {
-        return { data }
+        return { data, error: undefined }
       }
     } catch (err: unknown) {
-      console.log('error in selectIn caught error')
-      console.error(err)
+      return { data: null, error: err }
     }
   }
 
@@ -143,13 +136,10 @@ export class SupabaseQueryClass implements dbInterface {
         .eq(column, toBeFound)
 
       if (error) {
-        console.error(error)
-        return { error }
-      } else console.log({ data })
-
-      return { data }
+        return { data: null, error }
+      } else return { data, error: undefined }
     } catch (err: unknown) {
-      console.error(err)
+      return { data: null, error: err }
     }
   }
 
@@ -165,13 +155,10 @@ export class SupabaseQueryClass implements dbInterface {
         .select()
 
       if (error) {
-        console.error(error)
-        return { error }
-      } else console.log({ data })
-
-      return { data }
+        return { data: null, error }
+      } else return { data, error: undefined }
     } catch (err: unknown) {
-      console.error(err)
+      return { data: null, error: err }
     }
   }
 
@@ -188,9 +175,8 @@ export class SupabaseQueryClass implements dbInterface {
         .eq(column, value)
 
       if (error) return { error }
-      else return { error: null }
+      else return { error: undefined }
     } catch (err: unknown) {
-      console.error(err)
       return { error: err }
     }
   }
@@ -209,13 +195,12 @@ export class SupabaseQueryClass implements dbInterface {
         .eq(column, value)
         .select()
 
-      if (error) console.error(error)
+      if (error) return { data: null, error }
       else {
-        console.log({ data })
-        return { data }
+        return { data, error: undefined }
       }
     } catch (err: unknown) {
-      console.error(err)
+      return { data: null, error: err }
     }
   }
 
@@ -238,22 +223,14 @@ export class SupabaseQueryClass implements dbInterface {
         .lte(sortBy, endValue)
         .order(sortBy, { ascending: true })
 
-      if (error) console.error(error)
-      else console.log({ data })
-
-      return { data, error }
+      if (error) return { data: null, error }
+      else return { data, error: undefined }
     } catch (err: unknown) {
-      console.error(err)
+      return { data: null, error: err }
     }
   }
 
-  // try {
-  //   const { data, error } = await supabaseDb
-  //     .from(table)
-  //     .select(toBeSelected)
-  //     .eq(column, toBeFound);
   async mostrecent (
-    // returns array of objects
     supabaseDb: any,
     table: string,
     firstcolumn: string,
@@ -270,14 +247,12 @@ export class SupabaseQueryClass implements dbInterface {
         .range(0, 6)
 
       if (error) {
-        console.error(error)
-        return { error }
+        return { data: null, error }
       } else {
-        console.log({ data })
-        return { data }
+        return { data, error: undefined }
       }
     } catch (err: unknown) {
-      console.error(err)
+      return { data: null, error: err }
     }
   }
 
@@ -299,25 +274,12 @@ export class SupabaseQueryClass implements dbInterface {
         .eq(secondColoumn, toBeFoundSecond)
 
       if (error) {
-        console.error(error)
-        return { error }
-      } else console.log({ data })
-
-      return { data }
+        return { data: null, error }
+      } else return { data, error: undefined }
     } catch (err: unknown) {
-      console.error(err)
+      return { data: null, error: err }
     }
   }
-
-  //       if (error) console.error(error);
-  //       else {
-  //         console.log({ data });
-  //         return data;
-  //       }
-  //     } catch (err: unknown) {
-  //       console.error(err);
-  //     }
-  //   }
 }
 
 export {}

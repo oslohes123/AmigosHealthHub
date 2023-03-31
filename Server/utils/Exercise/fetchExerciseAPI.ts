@@ -4,7 +4,6 @@ const EXERCISE_API_KEY = process.env.EXERCISE_API_KEY as string
 
 export default async function searchAPIForExercise (wordtosearch: string | string[]) {
   const nameFitnessURL = 'https://api.api-ninjas.com/v1/exercises?name=' + String(wordtosearch)
-  console.log(`nameFitnessURL: ${nameFitnessURL}`)
   const response = await fetch(
     nameFitnessURL,
     {

@@ -171,11 +171,11 @@ test(`GET ${wordCloudRoute} with correct ID`, async (t: ExecutionContext) => {
   const expectedArgs = {
     mssg: 'MentalHealthOverview',
     words: [
-      "\"Awful\"",
-      "\"Depressed\"",
-      "\"Mediocre\"",
-      "\"Happy\"",
-      "\"Alright\""
+      '"Awful"',
+      '"Depressed"',
+      '"Mediocre"',
+      '"Happy"',
+      '"Alright"'
     ],
     freq: [
       '3',

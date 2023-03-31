@@ -18,7 +18,6 @@ let randomEmail: string
 test.before(async (t: ExecutionContext) => {
   const uuid = uuidv4()
   randomEmail = `${uuid}@gmail.com`
-  console.log('In before')
 
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
   const { error }: any = await supabaseQuery.insert(supabase, 'User', {

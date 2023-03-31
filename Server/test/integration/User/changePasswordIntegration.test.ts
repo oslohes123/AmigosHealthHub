@@ -47,7 +47,6 @@ test.serial(`POST ${changePasswordRoute} with no fields`, async (t: ExecutionCon
     .set('authorization', token)
     .send({})
 
-  console.log(`response: ${JSON.stringify(response)}`)
   t.true(response.status === 400)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
@@ -62,7 +61,6 @@ test.serial(`POST ${changePasswordRoute} with no email`, async (t: ExecutionCont
       newPassword: 'NewPassword123!'
     })
 
-  console.log(`response: ${JSON.stringify(response)}`)
   t.true(response.status === 400)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
@@ -77,7 +75,6 @@ test.serial(`POST ${changePasswordRoute} with no oldPassword`, async (t: Executi
       newPassword: 'NewPassword123!'
     })
 
-  console.log(`response: ${JSON.stringify(response)}`)
   t.true(response.status === 400)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
@@ -92,7 +89,6 @@ test.serial(`POST ${changePasswordRoute} with no newPassword`, async (t: Executi
       oldPassword: 'OriginalPassword123!'
     })
 
-  console.log(`response: ${JSON.stringify(response)}`)
   t.true(response.status === 400)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
@@ -111,7 +107,6 @@ test.serial(`POST ${changePasswordRoute} with non-existent user email `, async (
       newPassword: 'NewPassword123!'
     })
 
-  console.log(`response: ${JSON.stringify(response)}`)
   t.true(response.status === 400)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: "Email doesn't exist in our database" }))

@@ -32,10 +32,6 @@ test.before(async (t: ExecutionContext) => {
   } else {
     usersID = data[0].id
   }
-  // First call returns an array of objects we get the first one,
-  // that object itself is an array and we get the first element of that array which contains the id of the inserted row
-
-//   calorieGoalID = res.send.firstCall.args[0][0].id
 })
 
 test.after.always(async () => {

@@ -48,7 +48,6 @@ const mockRequest = (sessionData: any) => {
 }
 
 test('Login with missing email', async (t: ExecutionContext) => {
-  console.log('In Login with missing email')
   const req = mockRequest({ password: 'Password123' })
   const res = mockResponse()
 
