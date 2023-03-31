@@ -10,10 +10,11 @@ const databaseQuery = new SupabaseQueryClass()
 // getExerciseHistory by name of exercise
 // for weighted exercise return 2 arrays: array of dates(x-axis), array of weight pulled(y-axis)
 // else return arrayOfCalories, arrayOfDuration, arrayOfDistance
+// create new functions that deal with strength and cardio exercises
 export const getExerciseHistory = async (req: Request, res: Response) => {
   const { nameofexercise, userid } = req.headers
   if (!nameofexercise || !userid) {
-    return res.status(400).json({ mssg: 'Select an exercise!' })
+    return res.status(400).json({ mssg: 'Select an exercise!', dev: 'JSON instance does not follow the JSON schema' })
   }
 
   const arrayOfWeightPulled = []
