@@ -8,7 +8,7 @@ import setUpWorkoutPlan from '../../../utils/Exercise/setUpWorkoutPlanForTests'
 import { deleteAllWorkoutPlansWithExercises } from '../../../utils/Exercise/deleteWorkoutPlans'
 import RouteNamesClass from '../../../utils/routeNamesClass'
 const routeNames = new RouteNamesClass()
-const getAllWorkoutNamesRoute = routeNames.fullGetAllWorkoutNamesURL
+const getWorkoutDetailsRoute = routeNames.fullGetWorkoutURL
 
 let randomEmail: string
 let token: string
@@ -44,59 +44,60 @@ test.after.always('guaranteed cleanup of user and delete exercises', async (t: a
   }
 })
 
-interface getAllWorkoutNamesRequest {
+interface getWorkoutDetailsRequest {
   userid?: string
+  workoutname?: string
 }
-const validRequest: getAllWorkoutNamesRequest = {
-  userid: uuid
+const validRequest: getWorkoutDetailsRequest = {
+  userid: uuid,
+  workoutname: 'Test Workout Plan'
 }
-test.serial('getAllWorkoutNames route is correct', (t: any) => {
-  t.true(getAllWorkoutNamesRoute === '/api/user/workout/getAllWorkoutNames')
+
+test.serial('getWorkoutDetails route is correct', (t: any) => {
+  t.true(getWorkoutDetailsRoute === '/api/user/workout/get')
 })
-test.serial(`GET ${getAllWorkoutNamesRoute} results in error when userid is missing`, async (t: any) => {
+
+test.serial(`GET ${getWorkoutDetailsRoute} results in error when userid is missing`, async (t: any) => {
   const invalidReqWithNoUserid = cloneDeep(validRequest)
   delete invalidReqWithNoUserid.userid
   const response = await request(app)
-    .get(getAllWorkoutNamesRoute)
+    .get(getWorkoutDetailsRoute)
     .set({ authorization: token, ...invalidReqWithNoUserid })
-
   t.true(response.status === 400)
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
-test.serial(`GET ${getAllWorkoutNamesRoute} with userid with no workouts results in error`, async (t: any) => {
+test.serial(`GET ${getWorkoutDetailsRoute} results in error when workoutname is missing`, async (t: any) => {
+  const invalidReqWithNoWorkoutname = cloneDeep(validRequest)
+  delete invalidReqWithNoWorkoutname.workoutname
   const response = await request(app)
-    .get(getAllWorkoutNamesRoute)
-    .set({ authorization: token, ...validRequest })
-
-  t.true(response.status === 200)
-  t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Success!', arrayOfAllWorkouts: [] }))
+    .get(getWorkoutDetailsRoute)
+    .set({ authorization: token, ...invalidReqWithNoWorkoutname })
+  t.true(response.status === 400)
+  t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
-// test with user with a workout
-test.serial(`GET ${getAllWorkoutNamesRoute} with userid with a workout results in success`, async (t: any) => {
+
+test.serial(`GET ${getWorkoutDetailsRoute} with userid with no workouts`, async (t: any) => {
+  const response = await request(app)
+    .get(getWorkoutDetailsRoute)
+    .set({ authorization: token, ...validRequest })
+  t.true(response.status === 400)
+  t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: "User doesn't have a workout of that name!" }))
+})
+
+test.serial(`GET ${getWorkoutDetailsRoute} with userid with a workout results in a success`, async (t: any) => {
   const nameOfWorkout = 'Test Workout'
+  const validAndCorrectReq = cloneDeep(validRequest)
+  validAndCorrectReq.workoutname = nameOfWorkout
   const { errorsSettingUpWorkoutPlan, success } = await setUpWorkoutPlan(uuid, nameOfWorkout)
   if (errorsSettingUpWorkoutPlan || !success) {
     t.fail(errorsSettingUpWorkoutPlan)
   }
   const response = await request(app)
-    .get(getAllWorkoutNamesRoute)
-    .set({ authorization: token, ...validRequest })
+    .get(getWorkoutDetailsRoute)
+    .set({ authorization: token, ...validAndCorrectReq })
 
   t.true(response.status === 200)
-  t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Success!', arrayOfAllWorkouts: [nameOfWorkout] }))
-})
-
-test.serial(`GET ${getAllWorkoutNamesRoute} with userid with 2 workouts results in success`, async (t: any) => {
-  const nameOfWorkout = 'Test Workout 2'
-  const { errorsSettingUpWorkoutPlan, success } = await setUpWorkoutPlan(uuid, nameOfWorkout)
-  if (errorsSettingUpWorkoutPlan || !success) {
-    t.fail(errorsSettingUpWorkoutPlan)
-  }
-  const response = await request(app)
-    .get(getAllWorkoutNamesRoute)
-    .set({ authorization: token, ...validRequest })
-
-  t.true(response.status === 200)
-  t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Success!', arrayOfAllWorkouts: ['Test Workout', nameOfWorkout] }))
+  t.true(response.body.mssg === 'Success!')
+  t.true(response.body.workoutToReturn.length === 1)
 })
