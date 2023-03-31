@@ -24,7 +24,6 @@ export default function deleteAccountWrapper() {
   const deleteAccount = async (password) => {
     setIsLoading(true);
     setError(null);
-    console.log('In deleteAccount');
 
     try {
       const { id } = user;
@@ -32,7 +31,6 @@ export default function deleteAccountWrapper() {
       const { token } = JSON.parse(
         (await AsyncStorage.getItem('user')),
       );
-      console.log(`id in deleteAccount: ${id}`);
       const response = await fetch(
         deleteAccountRoute,
         {
@@ -49,11 +47,9 @@ export default function deleteAccountWrapper() {
       );
 
       const json = await response.json();
-      console.log(`json deletAccounthook: ${JSON.stringify(json)}`);
       if (!response.ok) {
         setIsLoading(false);
         setError(json.mssg);
-        console.log(error);
         if (response.status === 401) { logout(); }
       }
       if (response.ok) {
@@ -63,11 +59,10 @@ export default function deleteAccountWrapper() {
         } catch (error) {
           setError(true);
           setIsLoading(false);
-          console.error(error);
         }
       }
     } catch (error) {
-      console.error(error);
+      setError(true);
     }
   };
   return { deleteAccount, isLoading, error };

@@ -33,7 +33,6 @@ export default function useGetAllExercises() {
     });
 
     const getAllExercisesJSON = await response.json();
-    console.log(`getAllExercisesJSON: ${JSON.stringify(getAllExercisesJSON)}`);
     if (!response.ok) {
       if (response.status === 401) { logout(); }
       setIsLoading(false);

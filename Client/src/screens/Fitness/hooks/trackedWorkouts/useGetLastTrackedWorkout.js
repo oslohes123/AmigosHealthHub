@@ -31,7 +31,6 @@ export default function useGetLastTrackedWorkout() {
     });
 
     const getLastTrackedWorkoutJSON = await response.json();
-    console.log(`getLastTrackedWorkoutJSON: ${JSON.stringify(getLastTrackedWorkoutJSON)}`);
     if (!response.ok) {
       if (response.status === 401) { logout(); }
       setIsLoading(false);

@@ -33,7 +33,6 @@ export default function useGetExerciseHistory() {
     });
 
     const getExerciseHistoryJSON = await response.json();
-    console.log(`getExerciseHistoryJSON: ${JSON.stringify(getExerciseHistoryJSON)}`);
     if (!response.ok) {
       if (response.status === 401) { logout(); }
       setIsLoading(false);

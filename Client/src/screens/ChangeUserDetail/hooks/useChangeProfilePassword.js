@@ -20,20 +20,15 @@ export default function useChangeProfilePassword() {
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useAuthContext();
   const { logout } = useLogout();
-  console.log('In changePassword');
 
   const changePassword = async (old_password, new_password) => {
     setIsLoading(true);
     setError(null);
-    console.log('In changePassword');
-    console.log(`body Of changePassword: ${JSON.stringify({ old_password, new_password })}`);
 
     try {
       // AsyncStorage contains: firstName, email and token
       const { email } = user;
-      console.log(`in changePassword, email: ${email}`);
       const { token } = JSON.parse(await AsyncStorage.getItem('user'));
-      console.log('Change Password:  : Port ');
       const response = await fetch(changePasswordRoute, {
         method: 'POST',
         headers: {
@@ -49,7 +44,6 @@ export default function useChangeProfilePassword() {
         if (response.status === 401) { logout(); }
         setIsLoading(false);
         setError(json.mssg);
-        console.log(error);
       }
       if (response.ok) {
         try {
@@ -60,12 +54,10 @@ export default function useChangeProfilePassword() {
         } catch (error) {
           setError(true);
           setIsLoading(false);
-          console.error('Error Caught By Me!');
-          console.error(error);
         }
       }
     } catch (error) {
-      console.error(error);
+      setError(true);
     }
   };
   return { changePassword, isLoading, error };

@@ -212,7 +212,6 @@ export default function FoodHistory({ navigation }) {
           <Calendar
             testID='calendar'
             style={styles.calendar}
-            onVisibleMonthsChange={(months) => { console.log('now these months are visible', months); }}
             onDayPress={(day) => setSelectDay(day.dateString)}
             maxDate={new Date().toISOString().split('T')[0]}
             markedDates={markedDate}

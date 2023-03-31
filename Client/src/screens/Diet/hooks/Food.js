@@ -27,7 +27,6 @@ export async function getTrackedFood(Date, userID) {
       throw new Error('Response not OK');
     }
   } catch (error) {
-    console.log(`Error: ${error}`);
     return error;
   }
   const data = await response.json();
@@ -52,8 +51,6 @@ export async function getSpecificTrackedFood(LogID) {
     });
     response = await response.json();
   } catch (error) {
-    console.log('Error when getting specific tracked food');
-    console.log(error);
     return error;
   }
   return response[0];
@@ -81,8 +78,6 @@ export async function addTrackedFood(input, userID) {
       }),
     });
   } catch (error) {
-    console.log('Got an error from the server');
-    console.log(error);
     return error;
   }
   return response.status;
@@ -110,7 +105,6 @@ export async function deleteTrackedFood(LogID) {
       throw new Error('Response not OK');
     }
   } catch (error) {
-    console.log(`Error: ${error}`);
     return error;
   }
   return response.status;
@@ -141,8 +135,6 @@ export async function updateTrackedFood(input) {
       }),
     });
   } catch (error) {
-    console.log('Got an error from the server');
-    console.log(error);
     return error;
   }
   return response.status;
@@ -167,8 +159,6 @@ export async function getFood(foodID) {
     });
     response = await response.json();
   } catch (error) {
-    console.log('Got an error from the server');
-    console.log(error);
     return error;
   }
   return response[0];
@@ -195,8 +185,6 @@ export async function getMultipleFood(foodIDs) {
     });
     response = await response.json();
   } catch (error) {
-    console.log('Got an error when getting multiple foods');
-    console.log(error);
     return error;
   }
   return response;

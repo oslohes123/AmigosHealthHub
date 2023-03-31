@@ -17,8 +17,6 @@ export default function useLogin() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { dispatch } = useAuthContext();
-  console.log(`loginRoute:${JSON.stringify(loginRoute)}`);
-  console.log(`loginRoute is equal to what is:${loginRoute === 'http://${ipAddress}:${port}/api/user/login'}`);
   const login = async (email, password) => {
     setIsLoading(true);
     setError(null);

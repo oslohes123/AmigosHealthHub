@@ -15,14 +15,12 @@ if (usingDeployedServer) {
 }
 export default function useGetUserInfo() {
   const { user } = useAuthContext();
-  console.log(`user: ${JSON.stringify(user)}`);
   const [errorUserInfo, setError] = useState(null);
   const [isLoadingUserInfo, setIsLoading] = useState(null);
   const { email, token } = user;
   const { logout } = useLogout();
 
   async function getUserInfo() {
-    // console.log(`full getUserInfo user: ${JSON.stringify(user)}`);
     setIsLoading(true);
     setError(null);
 
@@ -37,10 +35,8 @@ export default function useGetUserInfo() {
         },
       },
     );
-    console.log(JSON.stringify(response));
     if (!response.ok) {
       if (response.status === 401) { logout(); }
-      console.log(`response of getUserInfo: ${JSON.stringify(response)}`);
       setIsLoading(false);
       setError('Not Available');
       return null;

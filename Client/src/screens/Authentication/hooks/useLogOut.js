@@ -6,7 +6,6 @@ export const useLogout = () => {
 
   const logout = async () => {
     // remove user from storage
-    console.log('In logOut function');
     await AsyncStorage.removeItem('user');
 
     // dispatch logout action

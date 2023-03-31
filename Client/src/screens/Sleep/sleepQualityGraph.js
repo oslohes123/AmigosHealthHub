@@ -15,9 +15,7 @@ export default function SleepQaulityGraph() {
   useEffect(() => {
     const fetchData = async () => {
       const sleepData = await getSleep();
-      // console.log(
-      //     `Sleep data is in widget: ${JSON.stringify(sleepData)}`
-      // );
+
       setData(sleepData);
     };
 

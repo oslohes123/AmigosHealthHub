@@ -20,7 +20,6 @@ export default function useChangeProfileDetails() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const { user } = useAuthContext();
-  console.log('In changeProfile');
 
   const changeStats = async (
     firstName,
@@ -37,7 +36,6 @@ export default function useChangeProfileDetails() {
       const { token } = JSON.parse(
         (await AsyncStorage.getItem('user')),
       );
-      console.log(`In useChangeProfileDetails, email: ${email}, token:${token}`);
 
       const response = await fetch(
         changeProfileDetailsRoute,
@@ -63,7 +61,6 @@ export default function useChangeProfileDetails() {
         if (response.status === 401) { logout(); }
         setIsLoading(false);
         setError(json.mssg);
-        console.log(error);
       }
       if (response.ok) {
         try {
@@ -72,12 +69,10 @@ export default function useChangeProfileDetails() {
         } catch (error) {
           setError(true);
           setIsLoading(false);
-          console.error(error);
         }
       }
     } catch (error) {
-      console.log('In useChangeProfileDetails');
-      console.error(error);
+      setError(true);
     }
   };
   return { changeStats, isLoading, error };

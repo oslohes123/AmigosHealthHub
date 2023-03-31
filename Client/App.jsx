@@ -9,7 +9,6 @@ import { AuthContextProvider, useAuthContext } from './src/screens/Authenticatio
 function App() {
   const { user } = useAuthContext();
 
-  console.log(`in app.js, user: ${JSON.stringify(user)}`);
   return user === null ? <AuthContainer /> : <MainContainer />;
 }
 

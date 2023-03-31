@@ -31,8 +31,6 @@ export async function getGeneralCalorieGoal(UserID) {
 
     response = await response.json();
   } catch (error) {
-    console.log('Error when getting calorie goal');
-    console.log(error);
     return error;
   }
   return response;
@@ -62,8 +60,6 @@ export async function addCalorieGoal(UserID, CalorieGoal, Date = currentDate) {
     });
     response = await response.json();
   } catch (error) {
-    console.log('Error when inserting calorie goal');
-    console.log(error);
     return error;
   }
   // Return the response
@@ -151,8 +147,6 @@ export async function updateCalorieGoal(UserID, CalorieGoal, Date = currentDate)
     });
     response = await response.json();
   } catch (error) {
-    console.log('Error when inserting calorie goal');
-    console.log(error);
     return error;
   }
   // Return the response

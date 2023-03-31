@@ -37,14 +37,12 @@ export default function AuthDecisionScreen({ navigation }) {
           <Button
             title="Log into account"
             onPress={() => {
-              console.log('go to log in screen.');
               navigation.navigate('Log In');
             }}
           />
           <Button
             title="Sign up for account"
             onPress={() => {
-              console.log('go to sign up screen.');
               navigation.navigate('Sign Up');
             }}
           />

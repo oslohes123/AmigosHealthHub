@@ -26,17 +26,7 @@ export default function useSignUp() {
   ) => {
     setIsLoading(true);
     setError(null);
-    console.log('In signup');
-    console.log(
-      `body: ${JSON.stringify({
-        email,
-        firstName,
-        lastName,
-        age,
-        password,
-        calories,
-      })}`,
-    );
+
     const response = await fetch(
       signupRoute,
       {

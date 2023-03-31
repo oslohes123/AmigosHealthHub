@@ -54,7 +54,6 @@ export default function Profile({ navigation }) {
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          console.log('Change password Pressed');
           navigation.navigate('Change User Password');
         }}
       >
@@ -65,7 +64,6 @@ export default function Profile({ navigation }) {
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          console.log('Delete account');
           navigation.navigate('Delete Account');
         }}
       >

@@ -32,8 +32,6 @@ export async function genericSearch(value) {
 
     response = await response.json();
   } catch (error) {
-    console.log('Error when getting generic search');
-    console.log(error);
     return error;
   }
   return response;
@@ -60,8 +58,6 @@ export async function specificSearch(value) {
     }
     response = await response.json();
   } catch (error) {
-    console.log('Error when getting specific search');
-    console.log(error);
     return error;
   }
   return response;

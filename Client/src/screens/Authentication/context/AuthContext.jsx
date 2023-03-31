@@ -45,7 +45,6 @@ export const useAuthContext = () => {
   if (!stateAndDispatch) {
     throw Error('AuthContext is being used outside its intended scope.');
   }
-  // console.log(`state and dispatch : ${stateAndDispatch}`);
   return stateAndDispatch;
 };
 export function AuthContextProvider({ children }) {
@@ -60,15 +59,11 @@ export function AuthContextProvider({ children }) {
   // const { logout } = useLogout();
   const [state, dispatch] = useReducer(authReducer, { user: null });
 
-  console.log(`${state.user}`);
   useEffect(() => {
     async function getItem() {
       const user = JSON.parse(await AsyncStorage.getItem('user'));
 
-      console.log(`user: ${JSON.stringify(user)}`);
       if (user) {
-        // console.log(`token: ${user.token}`);
-        console.log('IN AUTHCONTEXTPROVIDER');
         const { token } = user;
         const response = await fetch(
           checkInitialTokenRoute,
@@ -80,7 +75,6 @@ export function AuthContextProvider({ children }) {
             },
           },
         );
-        console.log(`response ln 90: ${JSON.stringify(response)}`);
         // if token exists, then update user state with the token
         if (response.ok) {
           dispatch({ type: 'LOGIN', payload: user });

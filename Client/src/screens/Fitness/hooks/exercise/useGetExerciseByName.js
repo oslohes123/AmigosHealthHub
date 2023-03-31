@@ -33,7 +33,6 @@ export default function useGetExerciseByName() {
     });
 
     const getExerciseByNameJSON = await response.json();
-    // console.log(getExerciseByNameJSON);
     if (!response.ok) {
       if (response.status === 401) { logout(); }
       setIsLoading(false);
