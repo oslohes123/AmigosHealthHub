@@ -72,7 +72,7 @@ test('Attempt to get sleep data without UserID', async (t: any) => {
   await getSleep(req as Request, res as Response)
 
   t.true(res.status.calledWith(400))
-  t.true(res.json.calledWith({ mssg: 'UserID must be provided' }))
+  t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'getSleep req.body does not match the JSON Schema!' }))
 })
 
 test('Attempt to get sleep data without start date', async (t: any) => {
@@ -86,7 +86,7 @@ test('Attempt to get sleep data without start date', async (t: any) => {
 
   t.true(res.status.calledWith(400))
   t.true(
-    res.json.calledWith({ mssg: 'Start and end date must be provided' })
+    res.json.calledWith({ mssg: 'Something went wrong!', dev: 'getSleep req.body does not match the JSON Schema!' })
   )
 })
 
@@ -101,7 +101,7 @@ test('Attempt to get sleep data without end date', async (t: any) => {
 
   t.true(res.status.calledWith(400))
   t.true(
-    res.json.calledWith({ mssg: 'Start and end date must be provided' })
+    res.json.calledWith({ mssg: 'Something went wrong!', dev: 'getSleep req.body does not match the JSON Schema!' })
   )
 })
 

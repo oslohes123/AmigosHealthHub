@@ -14,14 +14,6 @@ export const addSleep = async (req: Request, res: Response) => {
     return res.status(400).json({ mssg: 'Something went wrong!', dev: 'addSleep req.body does not match the JSON Schema!' })
   }
 
-  if (!userID)
-  { return res.status(400).json({ mssg: 'UserID must be provided' }) }
-
-  if (!timestamp)
-  { return res.status(400).json({ mssg: 'timestamp must be provided' }) }
-  if (!hoursSlept)
-  { return res.status(400).json({ mssg: 'hoursSlept must be provided' }) }
-
   const { dataGetSleep, errorGetSleep }: any = await getSleepFunc(userID, timestamp, timestamp)
   if (errorGetSleep) return res.status(400).json({ mssg: 'Something went wrong.', dev: JSON.stringify(errorGetSleep) })
 
@@ -52,14 +44,6 @@ export const getSleep = async (req: Request, res: Response) => {
     return res.status(400).json({ mssg: 'Something went wrong!', dev: 'getSleep req.body does not match the JSON Schema!' })
   }
 
-  if (!userID) {
-    return res.status(400).json({ mssg: 'UserID must be provided' })
-  }
-  if (!startDate || !endDate) {
-    return res
-      .status(400)
-      .json({ mssg: 'Start and end date must be provided' })
-  }
   const start = new Date(startDate)
   const end = new Date(endDate)
   if (start > end) {
@@ -69,7 +53,7 @@ export const getSleep = async (req: Request, res: Response) => {
   }
 
   const { dataGetSleep, errorGetSleep }: any = await getSleepFunc(userID, startDate, endDate)
-  console.log(`getSleep data is: ${JSON.stringify(dataGetSleep)}`)
+
   if (errorGetSleep) {
     return res.status(400).json({ mssg: 'Something went wrong.', dev: JSON.stringify(errorGetSleep) })
   } else if (dataGetSleep.length === 0) {

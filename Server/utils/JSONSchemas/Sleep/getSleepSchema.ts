@@ -8,12 +8,10 @@ export const getSleepSchema =
       format: 'uuid'
     },
     startDate: {
-      type: 'string',
-      format: 'date'
+      type: 'string'
     },
     endDate: {
-      type: 'string',
-      format: 'date'
+      type: 'string'
     }
   },
   required: [

@@ -3,7 +3,7 @@ export const addSleepSchema =
   $schema: 'http://json-schema.org/draft-04/schema#',
   type: 'object',
   properties: {
-    userid: {
+    userID: {
       type: 'string',
       format: 'uuid'
     },
@@ -14,12 +14,11 @@ export const addSleepSchema =
       type: 'integer'
     },
     timestamp: {
-      type: 'string',
-      format: 'date'
+      type: 'string'
     }
   },
   required: [
-    'userid',
+    'userID',
     'hoursSlept',
     'sleepQuality',
     'timestamp'
