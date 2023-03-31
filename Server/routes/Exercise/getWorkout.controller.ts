@@ -36,7 +36,7 @@ export const getWorkoutDetails = async (req: Request, res: Response) => {
   const { userid, workoutname } = req.headers
 
   if (!userid || !workoutname) {
-    return res.status(400).json({ mssg: 'userid nor workoutname can be empty!' })
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' })
   }
   const { data, error }: any = await databaseQuery.match(supabase, 'WorkoutPlans', '*', { userid, workoutname })
   if (error) {
