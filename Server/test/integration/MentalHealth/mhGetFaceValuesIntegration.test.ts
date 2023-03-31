@@ -22,9 +22,6 @@ test.serial.before(async (t: any) => {
   // const uuid = uuidv4();
 
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
-  // const {data, error}:any = await createUser({id: uuid, firstName: "First", lastName:"User",
-  // email:randomEmail, password: hashedPassword, age: 31});
-  console.log('Inserting user')
   const { error }: any = await createUserWithID({
     id: uuid,
     firstName: 'First',
@@ -35,7 +32,6 @@ test.serial.before(async (t: any) => {
   })
 
   if (error) {
-    // console.log(`MHtesterror:${error}`);
     t.fail(`Insering user: ${JSON.stringify(error)}`)
   }
 })
@@ -48,7 +44,6 @@ test.serial.before(async (t: any) => {
   token = createToken(data[0].id)
 })
 test.before(async (t: any) => {
-  console.log('1st executed!')
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '5',
@@ -57,12 +52,10 @@ test.before(async (t: any) => {
   })
 
   if (error) {
-    // console.log(`MHtesterror: ${(error)}`
     t.fail(`inserting 1st mental health:${JSON.stringify(error)}`)
   }
 })
 test.before(async (t: any) => {
-  console.log('2nd executed!')
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '2',
@@ -71,12 +64,10 @@ test.before(async (t: any) => {
   })
 
   if (error) {
-    // console.log(`MHtesterror: ${JSON.stringify(error)}`)
     t.fail(`inserting 2nd mental health:${JSON.stringify(error)}`)
   }
 })
 test.before(async (t: any) => {
-  console.log('3rd executed!')
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '3',
@@ -85,12 +76,10 @@ test.before(async (t: any) => {
   })
 
   if (error) {
-    // console.log(`MHtesterror: ${JSON.stringify(error)}`)
     t.fail(t.fail(`inserting 3rd mental health:${JSON.stringify(error)}`))
   }
 })
 test.before(async (t: any) => {
-  console.log('4th executed!')
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '1',
@@ -99,12 +88,10 @@ test.before(async (t: any) => {
   })
 
   if (error) {
-    // console.log(`MHtesterror: ${JSON.stringify(error)}`)
     t.fail(`MHtesterror4: ${JSON.stringify(error)}`)
   }
 })
 test.before(async (t: any) => {
-  console.log('5th executed!')
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '4',
@@ -113,12 +100,10 @@ test.before(async (t: any) => {
   })
 
   if (error) {
-    // console.log(`MHtesterror: ${JSON.stringify(error)}`)
     t.fail(`MHtesterror5: ${JSON.stringify(error)}`)
   }
 })
 test.before(async (t: any) => {
-  console.log('6th executed!')
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '3',
@@ -127,12 +112,10 @@ test.before(async (t: any) => {
   })
 
   if (error) {
-    // console.log(`MHtesterror: ${JSON.stringify(error)}`)
     t.fail(`MHtesterror6: ${JSON.stringify(error)}`)
   }
 })
 test.before(async (t: any) => {
-  console.log('7th executed!')
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '2',
@@ -141,12 +124,10 @@ test.before(async (t: any) => {
   })
 
   if (error) {
-    // console.log(`MHtesterror: ${JSON.stringify(error)}`)
     t.fail(`MHtesterror7: ${JSON.stringify(error)}`)
   }
 })
 test.before(async (t: any) => {
-  console.log('8th executed!')
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '1',
@@ -155,12 +136,10 @@ test.before(async (t: any) => {
   })
 
   if (error) {
-    // console.log()
     t.fail(`MHtesterror8: ${JSON.stringify(error)}`)
   }
 })
 test.before(async (t: any) => {
-  console.log('9th executed!')
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '1',
@@ -169,13 +148,11 @@ test.before(async (t: any) => {
   })
 
   if (error) {
-    // console.log()
     t.fail(`MHtesterror9: ${JSON.stringify(error)}`)
   }
 })
 
 test.after.always('guaranteed cleanup', async (t: any) => {
-  console.log('test.after.always executed!')
   await deleteUserRow(randomEmail)
 })
 
@@ -211,6 +188,3 @@ test(`GET ${faceGraphRoute} with correct ID`, async (t: any) => {
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify(expectedArgs))
 })
-// test('passing test ', (t: any) => {
-//   t.pass()
-// })

@@ -21,7 +21,6 @@ let token: string
 const todayDate = getDate(moment().format())
 test.serial.before(async (t: any) => {
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
-  console.log('Inserting user')
   const { error }: any = await createUserWithID({
     id: uuid,
     firstName: 'First',
@@ -43,7 +42,6 @@ test.serial.before(async (t: any) => {
   token = createToken(data[0].id)
 })
 test.before(async (t: any) => {
-  console.log('1st executed!')
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '5',
@@ -56,7 +54,6 @@ test.before(async (t: any) => {
   }
 })
 test.before(async (t: any) => {
-  console.log('2nd executed!')
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '2',
@@ -69,7 +66,6 @@ test.before(async (t: any) => {
   }
 })
 test.before(async (t: any) => {
-  console.log('3rd executed!')
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '3',
@@ -82,7 +78,6 @@ test.before(async (t: any) => {
   }
 })
 test.before(async (t: any) => {
-  console.log('4th executed!')
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '1',
@@ -95,7 +90,6 @@ test.before(async (t: any) => {
   }
 })
 test.before(async (t: any) => {
-  console.log('5th executed!')
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '4',
@@ -108,7 +102,6 @@ test.before(async (t: any) => {
   }
 })
 test.before(async (t: any) => {
-  console.log('6th executed!')
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '3',
@@ -121,7 +114,6 @@ test.before(async (t: any) => {
   }
 })
 test.before(async (t: any) => {
-  console.log('7th executed!')
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '2',
@@ -134,7 +126,6 @@ test.before(async (t: any) => {
   }
 })
 test.before(async (t: any) => {
-  console.log('8th executed!')
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '1',
@@ -147,7 +138,6 @@ test.before(async (t: any) => {
   }
 })
 test.before(async (t: any) => {
-  console.log('9th executed!')
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '1',
@@ -161,7 +151,6 @@ test.before(async (t: any) => {
 })
 
 test.after.always('guaranteed cleanup', async (t: any) => {
-  console.log('test.after.always executed!')
   await deleteUserRow(randomEmail)
 })
 
@@ -169,7 +158,7 @@ test(`GET ${wordCloudRoute} with incorrect ID`, async (t: any) => {
   const response = await request(app)
     .get(wordCloudRoute)
     .set({ authorization: token, userid: wrongUUID })
-  console.log(`test1: ${JSON.stringify(response.body)}`)
+
   t.true(response.status === 400)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' }))
@@ -195,13 +184,7 @@ test(`GET ${wordCloudRoute} with correct ID`, async (t: any) => {
       '1'
     ]
   }
-  console.log(`test2: ${JSON.stringify(response.body)}`)
-  console.log(`test3: ${todayDate}`)
   t.true(response.status === 200)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify(expectedArgs))
 })
-
-// test('passing test ', (t: any) => {
-//   t.pass()
-// })
