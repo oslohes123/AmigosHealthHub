@@ -67,7 +67,7 @@ test('testing wrong Search code', async (t: ExecutionContext) => {
   }, {})
   const res = mockResponse()
   await generalSearch(req as Request, res as Response)
-  t.true(res.status.calledWith(500))
+  t.true(res.status.calledWith(400))
 })
 
 test('Testing specific search', async (t: ExecutionContext) => {
