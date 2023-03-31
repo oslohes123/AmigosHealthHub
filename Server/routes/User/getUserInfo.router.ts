@@ -1,6 +1,6 @@
 import { getInfo } from './getUserInfo.controller'
 import { checkToken } from '../../middleware/checkToken'
-import RouteNamesClass from '../../utils/routeNamesClass'
+import RouteNamesClass from '../../utils/General/routeNamesClass'
 const express = require('express')
 const getUserInfoRouter = express.Router()
 getUserInfoRouter.use(express.json())

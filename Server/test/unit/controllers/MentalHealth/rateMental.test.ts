@@ -1,6 +1,6 @@
 import { insertMentalData } from '../../../../routes/MentalHealth/rateMental.controller'
 import { v4 as uuidv4 } from 'uuid'
-import { createHashedPassword, createUserWithID, deleteUserRow } from '../../../../utils/userFunctions'
+import { createHashedPassword, createUserWithID, deleteUserRow } from '../../../../utils/User/userFunctions'
 import type { Request, Response } from 'express'
 
 import test from 'ava'

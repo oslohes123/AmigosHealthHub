@@ -1,9 +1,9 @@
 import app from '../../../index'
 import { v4 as uuidv4 } from 'uuid'
-import supabase from '../../../utils/supabaseSetUp'
-import { SupabaseQueryClass } from '../../../utils/databaseInterface'
-import { createHashedPassword, createToken } from '../../../utils/userFunctions'
-import RouteNamesClass from '../../../utils/routeNamesClass'
+import supabase from '../../../utils/General/supabaseSetUp'
+import { SupabaseQueryClass } from '../../../utils/General/databaseInterface'
+import { createHashedPassword, createToken } from '../../../utils/User/userFunctions'
+import RouteNamesClass from '../../../utils/General/routeNamesClass'
 import test from 'ava'
 import { type ExecutionContext } from 'ava'
 import request from 'supertest'
@@ -48,7 +48,6 @@ test.before(async (t: ExecutionContext) => {
   secondUserEmail = `${uuid2}@gmail.com`
 
   hashedPassword2 = await createHashedPassword('User2Password123!')
-  console.log('In second user creation')
   await supabaseQuery.insert(supabase, 'User', {
     firstName: 'Second',
     lastName: 'User',
@@ -57,11 +56,9 @@ test.before(async (t: ExecutionContext) => {
     age: 30
   })
 
-  const { data, error }: any = await supabaseQuery.selectWhere(supabase, 'User'
+  const { error }: any = await supabaseQuery.selectWhere(supabase, 'User'
     , 'email', secondUserEmail, 'id')
 
-  // token2 = createToken(data[0].id)
-  console.log(data)
   if (error) {
     t.fail('Inserting second user failed!')
   }
@@ -78,7 +75,6 @@ test(`POST ${changeStatsRoute} with no fields`, async (t: ExecutionContext) => {
     .set('authorization', token1)
     .send({})
 
-  console.log(`response: ${JSON.stringify(response)}`)
   t.true(response.status === 400)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
@@ -95,7 +91,6 @@ test(`POST ${changeStatsRoute} with missing first name`, async (t: ExecutionCont
       age: 0
     })
 
-  console.log(`response: ${JSON.stringify(response)}`)
   t.true(response.status === 400)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
@@ -112,7 +107,6 @@ test(`POST ${changeStatsRoute} with missing last name`, async (t: ExecutionConte
       age: 0
     })
 
-  console.log(`response: ${JSON.stringify(response)}`)
   t.true(response.status === 400)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
@@ -129,7 +123,6 @@ test(`POST ${changeStatsRoute} with missing prevEmail`, async (t: ExecutionConte
       age: 0
     })
 
-  console.log(`response: ${JSON.stringify(response)}`)
   t.true(response.status === 400)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
@@ -146,7 +139,6 @@ test(`POST ${changeStatsRoute} with missing newEmail`, async (t: ExecutionContex
       age: 0
     })
 
-  console.log(`response: ${JSON.stringify(response)}`)
   t.true(response.status === 400)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
@@ -163,7 +155,6 @@ test(`POST ${changeStatsRoute} with missing age`, async (t: ExecutionContext) =>
       newEmail: 'newEmail@example.com'
     })
 
-  console.log(`response: ${JSON.stringify(response)}`)
   t.true(response.status === 400)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
@@ -181,7 +172,6 @@ test(`POST ${changeStatsRoute} with bad newEmail structure`, async (t: Execution
       age: 30
     })
 
-  console.log(`response: ${JSON.stringify(response)}`)
   t.true(response.status === 400)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Invalid New Email' }))
@@ -199,7 +189,6 @@ test(`POST ${changeStatsRoute} with newEmail that already exists`, async (t: Exe
       age: 30
     })
 
-  console.log(`response: ${JSON.stringify(response)}`)
   t.true(response.status === 400)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Email Already Exists' }))
@@ -224,7 +213,6 @@ test(`POST ${changeStatsRoute} with new available email`, async (t: ExecutionCon
     t.fail('selecting a user went wrong!')
   }
 
-  console.log(`response: ${JSON.stringify(response)}`)
   t.true(response.status === 200)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Successful New Email' }))

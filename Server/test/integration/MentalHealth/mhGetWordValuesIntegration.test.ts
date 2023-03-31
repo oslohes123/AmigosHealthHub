@@ -1,10 +1,10 @@
 import app from '../../../index'
-import { createToken, createHashedPassword, getUserByEmail, deleteUserRow, createUserWithID } from '../../../utils/userFunctions'
-import { getDate } from '../../../utils/convertTimeStamptz'
+import { createToken, createHashedPassword, getUserByEmail, deleteUserRow, createUserWithID } from '../../../utils/User/userFunctions'
+import { getDate } from '../../../utils/General/convertTimeStamptz'
 import moment from 'moment'
 import { v4 as uuidv4 } from 'uuid'
-import RouteNamesClass from '../../../utils/routeNamesClass'
-import { createMentalHealthUser } from '../../../utils/asyncMentalHealthFunctions'
+import RouteNamesClass from '../../../utils/General/routeNamesClass'
+import { createMentalHealthUser } from '../../../utils/MentalHealth/asyncMentalHealthFunctions'
 
 import request from 'supertest'
 import test from 'ava'
@@ -171,11 +171,11 @@ test(`GET ${wordCloudRoute} with correct ID`, async (t: ExecutionContext) => {
   const expectedArgs = {
     mssg: 'MentalHealthOverview',
     words: [
-      "\"Awful\"",
-      "\"Depressed\"",
-      "\"Mediocre\"",
-      "\"Happy\"",
-      "\"Alright\""
+      '"Awful"',
+      '"Depressed"',
+      '"Mediocre"',
+      '"Happy"',
+      '"Alright"'
     ],
     freq: [
       '3',

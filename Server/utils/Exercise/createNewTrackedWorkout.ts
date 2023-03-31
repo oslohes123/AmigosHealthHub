@@ -1,8 +1,8 @@
-import validateJSONSchema from '../validateJSONSchema'
-import supabase from '../supabaseSetUp'
-import { SupabaseQueryClass } from '../databaseInterface'
+import validateJSONSchema from '../JSONSchemas/validateJSONSchema'
+import supabase from '../General/supabaseSetUp'
+import { SupabaseQueryClass } from '../General/databaseInterface'
 import { schemaForExercisesInNewCompletedWorkout } from '../JSONSchemas/schemaForExercisesInNewCompletedWorkout'
-import { getTimeStamp } from '../convertTimeStamptz'
+import { getTimeStamp } from '../General/convertTimeStamptz'
 import { insertCompletedWorkoutRow, searchExerciseInExercises } from './exerciseFunctions'
 const databaseQuery = new SupabaseQueryClass()
 export const addCompletedWorkoutUnit = async (userid: string, workoutname: string, exercises: any, timestamp: string = getTimeStamp()) => {
@@ -64,7 +64,6 @@ export const addCompletedWorkoutUnit = async (userid: string, workoutname: strin
   }
   // 3.  Create a record in TrackedWorkoutsWithExercises for each exercise in the workoutplan.
   for (let i = 0; i < arrayOfAEIDs.length; i++) {
-    console.log('Record in TrackedWorkoutsWithExercises Executed!')
     const { error }: any = await databaseQuery.insert(supabase, 'TrackedWorkoutsWithExercises', { completedWorkoutID, AEID: arrayOfAEIDs[i] })
     if (error) {
       errorAddCompletedWorkoutsAndSuccess.errorAddCompletedWorkouts = JSON.stringify(error)

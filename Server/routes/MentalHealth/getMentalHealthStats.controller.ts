@@ -1,10 +1,10 @@
 import type { Request, Response } from 'express'
-import supabase from '../../utils/supabaseSetUp'
-import { getWords, getFaces, getDates, average, wordFreq } from '../../utils/mentalHealthFunctions'
-import { getDate } from '../../utils/convertTimeStamptz'
-import { returnLastSeven, returnTodaysWord } from '../../utils/asyncMentalHealthFunctions'
+import supabase from '../../utils/General/supabaseSetUp'
+import { getWords, getFaces, getDates, average, wordFreq } from '../../utils/MentalHealth/mentalHealthFunctions'
+import { getDate } from '../../utils/General/convertTimeStamptz'
+import { returnLastSeven, returnTodaysWord } from '../../utils/MentalHealth/asyncMentalHealthFunctions'
 import moment from 'moment'
-import validateJSONSchema from '../../utils/validateJSONSchema'
+import validateJSONSchema from '../../utils/JSONSchemas/validateJSONSchema'
 import { schemaForRequireduserid } from '../../utils/JSONSchemas/schemaForRequireduserid'
 require('dotenv').config()
 

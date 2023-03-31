@@ -1,8 +1,8 @@
 import { type Request, type Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
-import supabase from '../../../../utils/supabaseSetUp'
-import { SupabaseQueryClass } from '../../../../utils/databaseInterface'
-import { createHashedPassword, createUser } from '../../../../utils/userFunctions'
+import supabase from '../../../../utils/General/supabaseSetUp'
+import { SupabaseQueryClass } from '../../../../utils/General/databaseInterface'
+import { createHashedPassword, createUser } from '../../../../utils/User/userFunctions'
 import test from 'ava'
 import { type ExecutionContext } from 'ava'
 import sinon from 'sinon'
@@ -32,10 +32,6 @@ test.before(async (t: ExecutionContext) => {
   } else {
     usersID = data[0].id
   }
-  // First call returns an array of objects we get the first one,
-  // that object itself is an array and we get the first element of that array which contains the id of the inserted row
-
-//   calorieGoalID = res.send.firstCall.args[0][0].id
 })
 
 test.after.always(async () => {

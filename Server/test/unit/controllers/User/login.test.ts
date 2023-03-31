@@ -1,9 +1,9 @@
 import { type Request, type Response } from 'express'
 import { loginUser } from '../../../../routes/User/authentication.controller'
 import { v4 as uuidv4 } from 'uuid'
-import supabase from '../../../../utils/supabaseSetUp'
-import { SupabaseQueryClass } from '../../../../utils/databaseInterface'
-import { createHashedPassword, createUser } from '../../../../utils/userFunctions'
+import supabase from '../../../../utils/General/supabaseSetUp'
+import { SupabaseQueryClass } from '../../../../utils/General/databaseInterface'
+import { createHashedPassword, createUser } from '../../../../utils/User/userFunctions'
 import test from 'ava'
 import { type ExecutionContext } from 'ava'
 const sinon = require('sinon')
@@ -48,7 +48,6 @@ const mockRequest = (sessionData: any) => {
 }
 
 test('Login with missing email', async (t: ExecutionContext) => {
-  console.log('In Login with missing email')
   const req = mockRequest({ password: 'Password123' })
   const res = mockResponse()
 

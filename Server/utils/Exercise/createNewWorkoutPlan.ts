@@ -1,7 +1,7 @@
 import addExerciseToExercises from './addExerciseToExercises'
-import supabase from '../supabaseSetUp'
-import { SupabaseQueryClass } from '../databaseInterface'
-import validateJSONSchema from '../validateJSONSchema'
+import supabase from '../General/supabaseSetUp'
+import { SupabaseQueryClass } from '../General/databaseInterface'
+import validateJSONSchema from '../JSONSchemas/validateJSONSchema'
 import { exercisesForWorkoutPlanTestSchema } from '../JSONSchemas/schemaForExercisesInCreatingAWorkoutPlan'
 const databaseQuery = new SupabaseQueryClass()
 /**

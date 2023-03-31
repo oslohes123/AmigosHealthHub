@@ -1,9 +1,9 @@
 import { type Request, type Response, type NextFunction } from 'express'
 import { v4 as uuidv4 } from 'uuid'
-import { checkTokenHelper } from '../../../utils/checkTokenHelpers'
-import supabase from '../../../utils/supabaseSetUp'
-import { SupabaseQueryClass } from '../../../utils/databaseInterface'
-import { createHashedPassword, createToken, deleteUserRow } from '../../../utils/userFunctions'
+import { checkTokenHelper } from '../../../utils/General/checkTokenHelpers'
+import supabase from '../../../utils/General/supabaseSetUp'
+import { SupabaseQueryClass } from '../../../utils/General/databaseInterface'
+import { createHashedPassword, createToken, deleteUserRow } from '../../../utils/User/userFunctions'
 import test from 'ava'
 import { type ExecutionContext } from 'ava'
 const sinon = require('sinon')

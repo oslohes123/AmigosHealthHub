@@ -1,10 +1,9 @@
 import { type Request, type Response, type NextFunction } from 'express'
-import { checkTokenHelper } from '../utils/checkTokenHelpers'
+import { checkTokenHelper } from '../utils/General/checkTokenHelpers'
 const dotenv = require('dotenv')
 dotenv.config()
 
 export const checkToken = async (req: Request, res: Response, next: NextFunction) => {
-  console.log('Middleware Executed!')
   return await checkTokenHelper(req, res, next)
 }
 

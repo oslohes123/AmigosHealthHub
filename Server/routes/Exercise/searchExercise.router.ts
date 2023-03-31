@@ -1,5 +1,5 @@
 import { getExerciseByName, searchForExercise } from './searchExercise.controller'
-import RouteNamesClass from '../../utils/routeNamesClass'
+import RouteNamesClass from '../../utils/General/routeNamesClass'
 import { checkToken } from '../../middleware/checkToken'
 const express = require('express')
 const exerciseRouter = express.Router()

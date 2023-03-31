@@ -3,11 +3,11 @@ import { type ExecutionContext } from 'ava'
 import sinon from 'sinon'
 import { type Request, type Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
-import { createUserWithID, deleteUserRow, createHashedPassword } from '../../../../utils/userFunctions'
+import { createUserWithID, deleteUserRow, createHashedPassword } from '../../../../utils/User/userFunctions'
 import { deleteTrackedWorkout } from '../../../../routes/Exercise/completedWorkouts.controller'
 import cloneDeep from 'lodash/cloneDeep'
 import { setUpCompletedWorkoutForTests } from '../../../../utils/Exercise/setUpCompletedWorkoutForTests'
-import { getTime, getTodaysDate, getDate } from '../../../../utils/convertTimeStamptz'
+import { getTime, getTodaysDate, getDate } from '../../../../utils/General/convertTimeStamptz'
 import { deleteMultipleExercises } from '../../../../utils/Exercise/insertAndDeleteMultipleExercises'
 
 let randomEmail: string

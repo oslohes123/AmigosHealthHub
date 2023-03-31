@@ -9,15 +9,19 @@ import transformNutrientSearchInterface from '../../utils/Food/parseNutritionSea
 import type genericSearchInterface from '../../interfaces/Food/genericSearchInterface'
 import type specificFoodNutritionInterface from '../../interfaces/Food/specificFoodNutritionInterface'
 import { isBranded } from '../../utils/Food/genericOrBrandedIdentifier'
-import validateJSONSchema from './../../utils/validateJSONSchema'
+import validateJSONSchema from '../../utils/JSONSchemas/validateJSONSchema'
 import * as searchSchema from '../../utils/JSONSchemas/Food/searchSchema'
 require('dotenv').config()
 
+/**
+ * A general search function that can be used to search for food items, branded food items, and food nutrients.
+ * @param req
+ * @param res
+ * @returns Food items, branded food items, and food nutrients. or an error message.
+ */
 export const generalSearch = async (req: Request, res: Response) => {
   // const {value:inputData,code}:SearchCriteria = req.query.value
   if (!validateJSONSchema(req.params, searchSchema.generalSearch)) {
-    
-    
     return res.status(400).json({ message: 'Invalid JSON Schema', whatWeGot: req.params, schema: searchSchema.generalSearch })
   }
   const inputData = req.params.value

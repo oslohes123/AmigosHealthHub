@@ -1,6 +1,11 @@
 import type BrandedSearchInterface from '../../interfaces/Food/api_interfaces/brandedSearchInterface'
 import type specificFoodNutritionInterface from '../../interfaces/Food/specificFoodNutritionInterface'
 
+/**
+ * transforms the data from the branded search api into a specificFoodNutritionInterface
+ * @param data
+ * @returns specificFoodNutritionInterface
+ */
 export default function transformBrandedSearchInterface (data: BrandedSearchInterface): specificFoodNutritionInterface {
   const food = data.foods[0]
   return {

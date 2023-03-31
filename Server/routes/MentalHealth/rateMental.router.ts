@@ -6,7 +6,7 @@ rateMentalRouter.use(express.json());
 import { insertMentalData } from "./rateMental.controller";
 import { checkToken } from "../../middleware/checkToken";
 rateMentalRouter.use(checkToken);
-import RouteNamesClass from "../../utils/routeNamesClass";
+import RouteNamesClass from "../../utils/General/routeNamesClass";
 const routeNames = new RouteNamesClass()
 //Routes
 rateMentalRouter.post(routeNames.partialRateMental, insertMentalData);

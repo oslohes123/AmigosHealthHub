@@ -1,9 +1,9 @@
 import app from '../../../index'
 import { v4 as uuidv4 } from 'uuid'
-import supabase from '../../../utils/supabaseSetUp'
-import { SupabaseQueryClass } from '../../../utils/databaseInterface'
-import { createHashedPassword } from '../../../utils/userFunctions'
-import RouteNamesClass from '../../../utils/routeNamesClass'
+import supabase from '../../../utils/General/supabaseSetUp'
+import { SupabaseQueryClass } from '../../../utils/General/databaseInterface'
+import { createHashedPassword } from '../../../utils/User/userFunctions'
+import RouteNamesClass from '../../../utils/General/routeNamesClass'
 import request from 'supertest'
 import test from 'ava'
 import { type ExecutionContext } from 'ava'
@@ -18,7 +18,6 @@ let randomEmail: string
 test.before(async (t: ExecutionContext) => {
   const uuid = uuidv4()
   randomEmail = `${uuid}@gmail.com`
-  console.log('In before')
 
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
   const { error }: any = await supabaseQuery.insert(supabase, 'User', {

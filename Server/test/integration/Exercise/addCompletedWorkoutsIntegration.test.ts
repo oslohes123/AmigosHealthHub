@@ -3,9 +3,9 @@ import test from 'ava'
 import { type ExecutionContext } from 'ava'
 import request from 'supertest'
 import { v4 as uuidv4 } from 'uuid'
-import { createUserWithID, deleteUserRow, createHashedPassword, createToken } from '../../../utils/userFunctions'
+import { createUserWithID, deleteUserRow, createHashedPassword, createToken } from '../../../utils/User/userFunctions'
 import { selectAllActualExercises, selectAllCompletedWorkoutNames, selectAllTrackedWorkoutsWithExercises } from '../../../utils/Exercise/exerciseFunctions'
-import RouteNamesClass from '../../../utils/routeNamesClass'
+import RouteNamesClass from '../../../utils/General/routeNamesClass'
 const routeNames = new RouteNamesClass()
 
 const addCompletedWorkoutRoute = routeNames.fullAddCompletedWorkoutURL

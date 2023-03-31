@@ -1,5 +1,5 @@
-import supabase from '../supabaseSetUp'
-import { SupabaseQueryClass } from '../databaseInterface'
+import supabase from '../General/supabaseSetUp'
+import { SupabaseQueryClass } from '../General/databaseInterface'
 const databaseQuery = new SupabaseQueryClass()
 
 export async function deleteAllWorkoutPlansWithExercises (userID: string) {
@@ -10,7 +10,6 @@ export async function deleteAllWorkoutPlansWithExercises (userID: string) {
     return deleteError
   }
   else {
-    console.log(`workoutPlanIDs: ${JSON.stringify(workoutPlanIDs)}`)
     for (let i = 0; i < workoutPlanIDs.length; i++) {
       const { error }: any = await databaseQuery.deleteFrom(supabase, 'WorkoutPlansWithExercises', 'WorkoutPlanID', workoutPlanIDs[i])
       if (error) {
@@ -30,7 +29,6 @@ export async function getAllWorkoutPlanIDs (userID: string) {
     workoutPlanIDsAndError.errorWorkoutPlanIDs = error
     return workoutPlanIDsAndError
   }
-  console.log(`data in getAllWorkoutPlanIDs: ${JSON.stringify(data)}`)
   if (data.length === 0) {
     workoutPlanIDsAndError.workoutPlanIDs = []
     return workoutPlanIDsAndError
@@ -41,7 +39,6 @@ export async function getAllWorkoutPlanIDs (userID: string) {
       arrayOfWorkoutPlanIDs.push(data[i].WorkoutPlanID)
     }
     workoutPlanIDsAndError.workoutPlanIDs = arrayOfWorkoutPlanIDs
-    console.log(`arrayOfWorkoutPlanIDs: ${JSON.stringify(arrayOfWorkoutPlanIDs)}`)
     return workoutPlanIDsAndError
   }
 }

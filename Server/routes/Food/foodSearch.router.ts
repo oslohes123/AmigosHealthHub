@@ -1,6 +1,6 @@
 import { checkToken } from '../../middleware/checkToken'
 import { generalSearch } from './foodSearch.controller'
-import RouteNames from '../../utils/routeNamesClass'
+import RouteNames from '../../utils/General/routeNamesClass'
 
 const express = require('express')
 const FoodSearchRouter = express.Router()

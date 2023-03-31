@@ -1,10 +1,10 @@
 import { dateValues, faceValues, todaysValue, wordValues } from '../../../../routes/MentalHealth/getMentalHealthStats.controller'
 import { v4 as uuidv4 } from 'uuid'
-import { createHashedPassword, createUserWithID, deleteUserRow } from '../../../../utils/userFunctions'
-import { getDate } from '../../../../utils/convertTimeStamptz'
+import { createHashedPassword, createUserWithID, deleteUserRow } from '../../../../utils/User/userFunctions'
+import { getDate } from '../../../../utils/General/convertTimeStamptz'
 import moment from 'moment'
 import type { Request, Response } from 'express'
-import { createMentalHealthUser } from '../../../../utils/asyncMentalHealthFunctions'
+import { createMentalHealthUser } from '../../../../utils/MentalHealth/asyncMentalHealthFunctions'
 
 import test from 'ava'
 import { type ExecutionContext } from 'ava'

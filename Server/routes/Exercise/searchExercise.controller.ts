@@ -1,5 +1,5 @@
 import { type Request, type Response } from 'express'
-import { removeDuplicates } from '../../utils/arrayManipulation'
+import { removeDuplicates } from '../../utils/General/arrayManipulation'
 import searchAPIForExercise from '../../utils/Exercise/fetchExerciseAPI'
 /**
  * Given a name, return all exercise matches from the fitness API
@@ -45,7 +45,6 @@ export const getExerciseByName = async (req: Request, res: Response) => {
     const exerciseInformation = await response.json()
 
     if (response.ok) {
-      console.log(`exerciseInformation: ${JSON.stringify(exerciseInformation)}`)
       if (exerciseInformation.length > 0) {
         return res.status(200).json({ mssg: 'Exercise Matched!', exerciseInformation: exerciseInformation[0] })
       }

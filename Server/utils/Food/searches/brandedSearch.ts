@@ -3,6 +3,12 @@
 import type brandedSearchInterface from '../../../interfaces/Food/api_interfaces/brandedSearchInterface'
 import { baseUrl } from '../../../constants'
 import authHeaders from './headersObject'
+
+/**
+ * Searches the branded food database for a specific food item
+ * @param nix_item_id
+ * @returns brandedSearchInterface
+ */
 export default async function brandedSearch (nix_item_id: string): Promise<brandedSearchInterface> {
   return await (await fetch(baseUrl + 'search/item?nix_item_id=' + nix_item_id, {
     method: 'GET',

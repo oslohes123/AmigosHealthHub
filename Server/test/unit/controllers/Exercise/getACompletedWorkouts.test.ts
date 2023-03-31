@@ -3,10 +3,10 @@ import { type ExecutionContext } from 'ava'
 import sinon from 'sinon'
 import { type Request, type Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
-import { createHashedPassword, createUserWithID, deleteUserRow } from '../../../../utils/userFunctions'
+import { createHashedPassword, createUserWithID, deleteUserRow } from '../../../../utils/User/userFunctions'
 import { getACompletedWorkout } from '../../../../routes/Exercise/completedWorkouts.controller'
 import { deleteMultipleExercises } from '../../../../utils/Exercise/insertAndDeleteMultipleExercises'
-import { getTime, getDate } from '../../../../utils/convertTimeStamptz'
+import { getTime, getDate } from '../../../../utils/General/convertTimeStamptz'
 import { setUpCompletedWorkoutForTests } from '../../../../utils/Exercise/setUpCompletedWorkoutForTests'
 const uuid = uuidv4()
 const randomEmail = `${uuid}@example.com`

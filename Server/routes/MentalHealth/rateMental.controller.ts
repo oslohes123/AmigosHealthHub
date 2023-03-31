@@ -1,9 +1,9 @@
-import supabase from '../../utils/supabaseSetUp'
-import { SupabaseQueryClass } from '../../utils/databaseInterface'
+import supabase from '../../utils/General/supabaseSetUp'
+import { SupabaseQueryClass } from '../../utils/General/databaseInterface'
 import type { Request, Response } from 'express'
-import { getTodaysDate } from '../../utils/convertTimeStamptz'
+import { getTodaysDate } from '../../utils/General/convertTimeStamptz'
 import { rateMentalSchema } from '../../utils/JSONSchemas/Mental Health/rateMentalHealthSchema'
-import validateJSONSchema from '../../utils/validateJSONSchema'
+import validateJSONSchema from '../../utils/JSONSchemas/validateJSONSchema'
 const databaseQuery = new SupabaseQueryClass()
 
 // check if todays date is equal to the date of the most recent values provided by the user that is logged in

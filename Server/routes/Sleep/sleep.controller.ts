@@ -1,8 +1,8 @@
 import { type Request, type Response } from 'express'
-import { addSleepFunc, getSleepFunc } from '../../utils/sleepFunctions'
-import supabase from '../../utils/supabaseSetUp'
-import { SupabaseQueryClass } from '../../utils/databaseInterface'
-import validateJSONSchema from '../../utils/validateJSONSchema'
+import { addSleepFunc, getSleepFunc } from '../../utils/Sleep/sleepFunctions'
+import supabase from '../../utils/General/supabaseSetUp'
+import { SupabaseQueryClass } from '../../utils/General/databaseInterface'
+import validateJSONSchema from '../../utils/JSONSchemas/validateJSONSchema'
 import { addSleepSchema } from '../../utils/JSONSchemas/Sleep/addSleepSchema'
 import { getSleepSchema } from '../../utils/JSONSchemas/Sleep/getSleepSchema'
 const databaseQuery = new SupabaseQueryClass()

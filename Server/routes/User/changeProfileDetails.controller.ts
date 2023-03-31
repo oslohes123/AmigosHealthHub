@@ -1,15 +1,13 @@
 import { type Request, type Response } from 'express'
-import { createHashedPassword, getUserByID, getUserByEmail, updateUser, verifyPassword, deleteUserRowByID } from '../../utils/userFunctions'
-import { isEmail, isStrongPassword } from '../../utils/validators'
+import { createHashedPassword, getUserByID, getUserByEmail, updateUser, verifyPassword, deleteUserRowByID } from '../../utils/User/userFunctions'
+import { isEmail, isStrongPassword } from '../../utils/General/validators'
 import { deleteAllWorkoutPlansWithExercises } from '../../utils/Exercise/deleteWorkoutPlans'
-import validateJSONSchema from '../../utils/validateJSONSchema'
+import validateJSONSchema from '../../utils/JSONSchemas/validateJSONSchema'
 import { schemaForRequireduserid } from '../../utils/JSONSchemas/schemaForRequireduserid'
 require('dotenv').config()
 
 export const changeStats = async (req: Request, res: Response) => {
   const { firstName, lastName, prevEmail, newEmail, age } = req.body
-
-  console.log(JSON.stringify(req.body))
 
   if (!firstName || !lastName || !newEmail || !age) {
     return res.status(400).json({ mssg: 'All Fields Must Be Filled' })
@@ -38,7 +36,6 @@ export const changeStats = async (req: Request, res: Response) => {
     }
 
     if (data.length > 0) {
-      console.log('Email Already Exists')
       return res.status(400).json({ mssg: 'Email Already Exists' })
     }
   }
@@ -96,7 +93,6 @@ export const changePassword = async (req: Request, res: Response) => {
 
 export const deleteAccount = async (req: Request, res: Response) => {
   const { userid, password } = req.body
-  console.log(`deleteAccount req.body: ${JSON.stringify(req.body)}`)
   if (!validateJSONSchema(req.body, schemaForRequireduserid)) {
     return res.status(400).json({ mssg: 'Something went wrong', dev: 'JSON instance does not follow the JSON schema' })
   }

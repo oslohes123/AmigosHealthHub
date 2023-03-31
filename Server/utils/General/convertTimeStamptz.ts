@@ -16,7 +16,6 @@ export const getTime = (date: string) => {
 
 // given an array of timestamps, return the most recent timestamp
 export const mostRecentTimestamp = (arrayOfTimeStamps: string[]): string => {
-  console.log(`arrayOfTimeStamps: ${JSON.stringify(arrayOfTimeStamps)}`)
   let mostRecentTimestamp = 'Initial Date'
   for (let i = 0; i < arrayOfTimeStamps.length; i++) {
     if (i === 0) {
@@ -29,10 +28,6 @@ export const mostRecentTimestamp = (arrayOfTimeStamps: string[]): string => {
   return mostRecentTimestamp
 }
 
-// compareFunction between 2 dates
-// if date1 < date2, -1
-// if date1 == date2, 0
-//
 export const compareTwoDates = (firstTimeStamp: string, secondTimeStamp: string): number => {
   if (new Date(firstTimeStamp) === new Date(secondTimeStamp)) {
     return 0
@@ -46,9 +41,7 @@ export const compareTwoDates = (firstTimeStamp: string, secondTimeStamp: string)
 }
 
 export const sortArrayOfTimeStamps = (arrayOfTimeStamps: string[]): string[] => {
-  console.log(`arrayOfTimeStamps in sortArrayOfTimeStamps: ${JSON.stringify(arrayOfTimeStamps)}`)
   const sortedArrayOfTimeStamps = arrayOfTimeStamps.sort(compareTwoDates)
-  console.log(`SORTED arrayOfTimeStamps: ${JSON.stringify(sortedArrayOfTimeStamps)}`)
   return sortedArrayOfTimeStamps
 }
 

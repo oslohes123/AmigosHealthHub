@@ -1,5 +1,5 @@
-import { getTodaysDate } from '../../../../utils/convertTimeStamptz'
-import { average, getFaces, getOccurrences, getWords, wordFreq } from '../../../../utils/mentalHealthFunctions'
+import { getTodaysDate } from '../../../../utils/General/convertTimeStamptz'
+import { average, getFaces, getOccurrences, getWords, wordFreq } from '../../../../utils/MentalHealth/mentalHealthFunctions'
 import test from 'ava'
 import { type ExecutionContext } from 'ava'
 

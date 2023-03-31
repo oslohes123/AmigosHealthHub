@@ -3,13 +3,13 @@ import { type ExecutionContext } from 'ava'
 import app from '../../../index'
 import request from 'supertest'
 import { v4 as uuidv4 } from 'uuid'
-import { createUserWithID, deleteUserRow, createHashedPassword, createToken } from '../../../utils/userFunctions'
+import { createUserWithID, deleteUserRow, createHashedPassword, createToken } from '../../../utils/User/userFunctions'
 import cloneDeep from 'lodash/cloneDeep'
 import { setUpCompletedWorkoutForTests } from '../../../utils/Exercise/setUpCompletedWorkoutForTests'
 // import { selectAllActualExercises, selectAllCompletedWorkoutNames, selectAllTrackedWorkoutsWithExercises } from '../../../../utils/Exercise/exerciseFunctions'
-import { getTodaysDate } from '../../../utils/convertTimeStamptz'
+import { getTodaysDate } from '../../../utils/General/convertTimeStamptz'
 import { deleteMultipleExercises } from '../../../utils/Exercise/insertAndDeleteMultipleExercises'
-import RouteNamesClass from '../../../utils/routeNamesClass'
+import RouteNamesClass from '../../../utils/General/routeNamesClass'
 const routeNames = new RouteNamesClass()
 const getWorkoutHistoryByDateRoute = routeNames.fullGetWorkoutHistoryByDateURL
 let token: string

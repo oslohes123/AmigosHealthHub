@@ -1,5 +1,5 @@
 import { checkToken } from '../../middleware/checkToken'
-import RouteNamesClass from '../../utils/routeNamesClass'
+import RouteNamesClass from '../../utils/General/routeNamesClass'
 import { addTrackedFood, getTrackedFood, updateTrackedFood, deleteTrackedFood, getFood, getSpecificTrackedFood, getMultipleFood } from './foodDatabase.controller'
 
 const express = require('express')

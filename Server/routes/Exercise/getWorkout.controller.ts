@@ -1,7 +1,7 @@
 import { type Request, type Response } from 'express'
-import supabase from '../../utils/supabaseSetUp'
-import { SupabaseQueryClass } from '../../utils/databaseInterface'
-import validateJSONSchema from '../../utils/validateJSONSchema'
+import supabase from '../../utils/General/supabaseSetUp'
+import { SupabaseQueryClass } from '../../utils/General/databaseInterface'
+import validateJSONSchema from '../../utils/JSONSchemas/validateJSONSchema'
 import { schemaForRequireduserid } from '../../utils/JSONSchemas/schemaForRequireduserid'
 import { getWorkoutPlanByID } from '../../utils/Exercise/exerciseFunctions'
 const databaseQuery = new SupabaseQueryClass()
@@ -17,7 +17,6 @@ export const getAllWorkoutNames = async (req: Request, res: Response) => {
   }
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'WorkoutPlans', 'userid', userid, 'workoutname')
   if (error) {
-    console.log(error)
     return res.status(400).json({ mssg: 'Error selecting from WorkoutPlans table', error })
   }
   else {
@@ -40,10 +39,8 @@ export const getWorkoutDetails = async (req: Request, res: Response) => {
   }
   const { data, error }: any = await databaseQuery.match(supabase, 'WorkoutPlans', '*', { userid, workoutname })
   if (error) {
-    console.log(error)
     return res.status(400).json({ mssg: 'Matching WorkoutPlans went wrong!' })
   }
-  console.log(`ln17 data in getWorkout.controller: ${JSON.stringify(data)}`)
   if (data.length === 0) {
     return res.status(400).json({ mssg: "User doesn't have a workout of that name!" })
   }

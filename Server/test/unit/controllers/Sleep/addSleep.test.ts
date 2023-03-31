@@ -1,8 +1,8 @@
 import { addSleep } from '../../../../routes/Sleep/sleep.controller'
-import { SupabaseQueryClass } from '../../../../utils/databaseInterface'
-import supabase from '../../../../utils/supabaseSetUp'
+import { SupabaseQueryClass } from '../../../../utils/General/databaseInterface'
+import supabase from '../../../../utils/General/supabaseSetUp'
 import { v4 as uuidv4 } from 'uuid'
-import { createHashedPassword } from '../../../../utils/userFunctions'
+import { createHashedPassword } from '../../../../utils/User/userFunctions'
 import type { Request, Response } from 'express'
 import test from 'ava'
 import { type ExecutionContext } from 'ava'
@@ -15,7 +15,6 @@ const randomEmail = `${uuid}@gmail.com`
 
 test.serial.before(async (t: ExecutionContext) => {
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
-  // console.log('Inserting user')
   const { error }: any = await databaseQuery.insert(supabase, 'User', {
     id: uuid,
     firstName: 'addSleep',
@@ -25,7 +24,6 @@ test.serial.before(async (t: ExecutionContext) => {
     age: 20
   })
   if (error) {
-    // console.log(`MHtesterror:${error}`);
     t.fail(`Inserting user: ${JSON.stringify(error)}`)
   }
 })

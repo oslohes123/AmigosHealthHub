@@ -2,10 +2,10 @@ import app from '../../../index'
 import test from 'ava'
 import request from 'supertest'
 import { v4 as uuidv4 } from 'uuid'
-import { createUserWithID, deleteUserRow, createHashedPassword, createToken } from '../../../utils/userFunctions'
-import RouteNamesClass from '../../../utils/routeNamesClass'
-import supabase from '../../../utils/supabaseSetUp'
-import { SupabaseQueryClass } from '../../../utils/databaseInterface'
+import { createUserWithID, deleteUserRow, createHashedPassword, createToken } from '../../../utils/User/userFunctions'
+import RouteNamesClass from '../../../utils/General/routeNamesClass'
+import supabase from '../../../utils/General/supabaseSetUp'
+import { SupabaseQueryClass } from '../../../utils/General/databaseInterface'
 
 const routeNames = new RouteNamesClass()
 const getSleepRoute = routeNames.fullGetSleepURL
@@ -53,7 +53,6 @@ test.serial.before(async (t: any) => {
     sleepQuality: 10
   })
   if (error) {
-    // console.log(`MHtesterror:${error}`);
     t.fail(`Inserting user: ${JSON.stringify(error)}`)
   }
 })

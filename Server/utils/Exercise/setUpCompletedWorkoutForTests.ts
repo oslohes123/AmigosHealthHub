@@ -1,6 +1,6 @@
 import { insertMultipleExercises } from './insertAndDeleteMultipleExercises'
 import { addCompletedWorkoutUnit } from './createNewTrackedWorkout'
-import { getTimeStamp } from '../convertTimeStamptz'
+import { getTimeStamp } from '../General/convertTimeStamptz'
 export function getExercisesForTests (uuid: string) {
   return {
     exercises: [

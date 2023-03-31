@@ -1,8 +1,14 @@
-import { SupabaseQueryClass } from '../../utils/databaseInterface'
-import supabase from '../../utils/supabaseSetUp'
+import { SupabaseQueryClass } from '../General/databaseInterface'
+import supabase from '../General/supabaseSetUp'
 require('dotenv').config()
 const databaseQuery = new SupabaseQueryClass()
 
+/**
+ * Insert a new calorie goal
+ * @param UserID
+ * @param CalorieGoal
+ * @returns Error or success message
+ */
 export const createCalorieGoal = async (UserID: string, CalorieGoal: number) => {
   const { data, error }: any = await databaseQuery.insert(
     supabase,
@@ -14,12 +20,8 @@ export const createCalorieGoal = async (UserID: string, CalorieGoal: number) => 
     }
   )
   if (error) {
-    console.log('Error inserting')
-
-    console.log('Error: ', error)
     return { error }
   } else {
-    console.log('calorie goal inserted')
     return { data }
   }
 }

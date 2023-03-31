@@ -3,8 +3,8 @@ import test from 'ava'
 import { type ExecutionContext } from 'ava'
 import request from 'supertest'
 import { v4 as uuidv4 } from 'uuid'
-import RouteNamesClass from '../../../utils/routeNamesClass'
-import { createUserWithID, createHashedPassword, createToken, deleteUserRow } from '../../../utils/userFunctions'
+import RouteNamesClass from '../../../utils/General/routeNamesClass'
+import { createUserWithID, createHashedPassword, createToken, deleteUserRow } from '../../../utils/User/userFunctions'
 import { cloneDeep } from 'lodash'
 const routeNames = new RouteNamesClass()
 const getExerciseByNameRoute = routeNames.fullGetExerciseURL

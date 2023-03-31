@@ -1,5 +1,5 @@
 import { type Request, type Response, type NextFunction } from 'express'
-import { getUserByID } from '../utils/userFunctions'
+import { getUserByID } from '../User/userFunctions'
 const jwtToken = require('jsonwebtoken')
 const dotenv = require('dotenv')
 dotenv.config()
@@ -16,8 +16,6 @@ export const checkTokenHelper = async (req: Request, res: Response, next: NextFu
   } else {
     // Extract token from bearer token
     const token = authorization.split(' ')[1]
-    console.log(`token: ${token}`)
-
     try {
       const { id } = jwtToken.verify(token, process.env.JWTSECRET)
       const { data, error }: any = await getUserByID(id, 'id')
@@ -25,14 +23,12 @@ export const checkTokenHelper = async (req: Request, res: Response, next: NextFu
         return res.status(400).json({ mssg: 'Something went wrong', error })
       }
       if (data.length === 0) {
-        console.log('Request Failed due to Authentication')
         return res.status(401).json({
           mssg: 'Request Failed due to Authentication'
         })
       }
 
       if (next) {
-        console.log('next is being called')
         next()
       } else {
         return res.status(200).json({ mssg: 'Legitimate token' })

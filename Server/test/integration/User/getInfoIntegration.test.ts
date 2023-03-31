@@ -1,9 +1,9 @@
 import app from '../../../index'
-import { createHashedPassword, createToken } from '../../../utils/userFunctions'
+import { createHashedPassword, createToken } from '../../../utils/User/userFunctions'
 import { v4 as uuidv4 } from 'uuid'
-import supabase from '../../../utils/supabaseSetUp'
-import { SupabaseQueryClass } from '../../../utils/databaseInterface'
-import RouteNamesClass from '../../../utils/routeNamesClass'
+import supabase from '../../../utils/General/supabaseSetUp'
+import { SupabaseQueryClass } from '../../../utils/General/databaseInterface'
+import RouteNamesClass from '../../../utils/General/routeNamesClass'
 import request from 'supertest'
 import test from 'ava'
 import { type ExecutionContext } from 'ava'
@@ -49,7 +49,6 @@ test(`GET ${getInfoRoute} with no fields`, async (t: ExecutionContext) => {
     .get(getInfoRoute)
     .set('authorization', token)
 
-  console.log(`response: ${JSON.stringify(response)}`)
   t.true(response.status === 400)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Email must be provided' }))
@@ -67,6 +66,5 @@ test(`GET ${getInfoRoute} with existing user`, async (t: ExecutionContext) => {
   })
   t.true(response.status === 200)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
-  console.log(`response.body: ${JSON.stringify(response.body)}`)
   t.true(JSON.stringify(response.body.user) === expectedResponse)
 })
