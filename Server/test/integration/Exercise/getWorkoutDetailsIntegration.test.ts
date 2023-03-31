@@ -1,6 +1,7 @@
 import app from '../../../index'
 import { v4 as uuidv4 } from 'uuid'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import request from 'supertest'
 import { cloneDeep } from 'lodash'
 import { createHashedPassword, createUserWithID, deleteUserRow, createToken } from '../../../utils/userFunctions'
@@ -13,7 +14,7 @@ const getWorkoutDetailsRoute = routeNames.fullGetWorkoutURL
 let randomEmail: string
 let token: string
 const uuid = uuidv4()
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   randomEmail = `${uuid}@gmail.com`
 
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
@@ -33,7 +34,7 @@ test.before(async (t: any) => {
   token = createToken(uuid)
 })
 
-test.after.always('guaranteed cleanup of user and delete exercises', async (t: any) => {
+test.after.always('guaranteed cleanup of user and delete exercises', async (t: ExecutionContext) => {
   const { errorPresent } = await deleteAllWorkoutPlansWithExercises(uuid)
   if (errorPresent) {
     t.fail(errorPresent)
@@ -53,11 +54,11 @@ const validRequest: getWorkoutDetailsRequest = {
   workoutname: 'Test Workout Plan'
 }
 
-test.serial('getWorkoutDetails route is correct', (t: any) => {
+test.serial('getWorkoutDetails route is correct', (t: ExecutionContext) => {
   t.true(getWorkoutDetailsRoute === '/api/user/workout/get')
 })
 
-test.serial(`GET ${getWorkoutDetailsRoute} results in error when userid is missing`, async (t: any) => {
+test.serial(`GET ${getWorkoutDetailsRoute} results in error when userid is missing`, async (t: ExecutionContext) => {
   const invalidReqWithNoUserid = cloneDeep(validRequest)
   delete invalidReqWithNoUserid.userid
   const response = await request(app)
@@ -67,7 +68,7 @@ test.serial(`GET ${getWorkoutDetailsRoute} results in error when userid is missi
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
-test.serial(`GET ${getWorkoutDetailsRoute} results in error when workoutname is missing`, async (t: any) => {
+test.serial(`GET ${getWorkoutDetailsRoute} results in error when workoutname is missing`, async (t: ExecutionContext) => {
   const invalidReqWithNoWorkoutname = cloneDeep(validRequest)
   delete invalidReqWithNoWorkoutname.workoutname
   const response = await request(app)
@@ -77,7 +78,7 @@ test.serial(`GET ${getWorkoutDetailsRoute} results in error when workoutname is 
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
-test.serial(`GET ${getWorkoutDetailsRoute} with userid with no workouts`, async (t: any) => {
+test.serial(`GET ${getWorkoutDetailsRoute} with userid with no workouts`, async (t: ExecutionContext) => {
   const response = await request(app)
     .get(getWorkoutDetailsRoute)
     .set({ authorization: token, ...validRequest })
@@ -85,7 +86,7 @@ test.serial(`GET ${getWorkoutDetailsRoute} with userid with no workouts`, async 
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: "User doesn't have a workout of that name!" }))
 })
 
-test.serial(`GET ${getWorkoutDetailsRoute} with userid with a workout results in a success`, async (t: any) => {
+test.serial(`GET ${getWorkoutDetailsRoute} with userid with a workout results in a success`, async (t: ExecutionContext) => {
   const nameOfWorkout = 'Test Workout'
   const validAndCorrectReq = cloneDeep(validRequest)
   validAndCorrectReq.workoutname = nameOfWorkout

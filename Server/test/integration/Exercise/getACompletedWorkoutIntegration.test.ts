@@ -5,6 +5,7 @@ import { getTime, getDate } from '../../../utils/convertTimeStamptz'
 import { deleteMultipleExercises } from '../../../utils/Exercise/insertAndDeleteMultipleExercises'
 import RouteNamesClass from '../../../utils/routeNamesClass'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import request from 'supertest'
 import { setUpCompletedWorkoutForTests } from '../../../utils/Exercise/setUpCompletedWorkoutForTests'
 const routeNames = new RouteNamesClass()
@@ -13,7 +14,7 @@ const getACompletedWorkoutRoute = routeNames.fullGetCompletedWorkoutURL
 const uuid = uuidv4()
 const randomEmail = `${uuid}@example.com`
 let token: string
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const hashedPassword = await createHashedPassword('Password123!')
   const { error } = await createUserWithID({
     id: uuid,
@@ -28,7 +29,7 @@ test.before(async (t: any) => {
   }
   token = createToken(uuid)
 })
-test.after.always(async (t: any) => {
+test.after.always(async (t: ExecutionContext) => {
   const { error } = await deleteUserRow(randomEmail)
   if (error) {
     t.fail('Deleting user went wrong!')
@@ -38,10 +39,10 @@ test.after.always(async (t: any) => {
     t.fail(JSON.stringify(errorDeletingMultipleExercises))
   }
 })
-test('getACompletedWorkout route is correct', (t: any) => {
+test('getACompletedWorkout route is correct', (t: ExecutionContext) => {
   t.true(getACompletedWorkoutRoute === '/api/user/completedWorkouts/get')
 })
-test.serial(`GET ${getACompletedWorkoutRoute}  with missing userid returns error`, async (t: any) => {
+test.serial(`GET ${getACompletedWorkoutRoute}  with missing userid returns error`, async (t: ExecutionContext) => {
   const response = await request(app)
     .get(getACompletedWorkoutRoute)
     .set({ authorization: token, workoutname: 'Test Workout', date: '2023-05-13', time: '18:55:33' })
@@ -51,7 +52,7 @@ test.serial(`GET ${getACompletedWorkoutRoute}  with missing userid returns error
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'JSON instance was invalid against its schema' }))
 })
 
-test(`GET ${getACompletedWorkoutRoute}  with missing workoutname returns error`, async (t: any) => {
+test(`GET ${getACompletedWorkoutRoute}  with missing workoutname returns error`, async (t: ExecutionContext) => {
   const response = await request(app)
     .get(getACompletedWorkoutRoute)
     .set({ authorization: token, userid: uuid, date: '2023-05-13', time: '18:55:33' })
@@ -61,7 +62,7 @@ test(`GET ${getACompletedWorkoutRoute}  with missing workoutname returns error`,
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'JSON instance was invalid against its schema' }))
 })
 
-test(`GET ${getACompletedWorkoutRoute}  with missing date returns error`, async (t: any) => {
+test(`GET ${getACompletedWorkoutRoute}  with missing date returns error`, async (t: ExecutionContext) => {
   const response = await request(app)
     .get(getACompletedWorkoutRoute)
     .set({ authorization: token, userid: uuid, workoutname: 'Test Workout', time: '18:55:33' })
@@ -71,7 +72,7 @@ test(`GET ${getACompletedWorkoutRoute}  with missing date returns error`, async 
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'JSON instance was invalid against its schema' }))
 })
 
-test(`GET ${getACompletedWorkoutRoute}  with missing time returns error`, async (t: any) => {
+test(`GET ${getACompletedWorkoutRoute}  with missing time returns error`, async (t: ExecutionContext) => {
   const response = await request(app)
     .get(getACompletedWorkoutRoute)
     .set({ authorization: token, userid: uuid, workoutname: 'Test Workout', date: '2023-05-13' })
@@ -81,7 +82,7 @@ test(`GET ${getACompletedWorkoutRoute}  with missing time returns error`, async 
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'JSON instance was invalid against its schema' }))
 })
 
-test(`GET ${getACompletedWorkoutRoute}  withuserid who does not exist returns error`, async (t: any) => {
+test(`GET ${getACompletedWorkoutRoute}  withuserid who does not exist returns error`, async (t: ExecutionContext) => {
   const fakeUserID = uuidv4()
   const response = await request(app)
     .get(getACompletedWorkoutRoute)
@@ -92,7 +93,7 @@ test(`GET ${getACompletedWorkoutRoute}  withuserid who does not exist returns er
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'A workout of this name at this time and date does not exist for this user!' }))
 })
 
-test(`GET ${getACompletedWorkoutRoute}with user has does not have a workout at the given time and date returns error`, async (t: any) => {
+test(`GET ${getACompletedWorkoutRoute}with user has does not have a workout at the given time and date returns error`, async (t: ExecutionContext) => {
   const response = await request(app)
     .get(getACompletedWorkoutRoute)
     .set({ authorization: token, userid: uuid, workoutname: 'Test Workout', date: '2023-05-13', time: '18:33:22' })
@@ -102,7 +103,7 @@ test(`GET ${getACompletedWorkoutRoute}with user has does not have a workout at t
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'A workout of this name at this time and date does not exist for this user!' }))
 })
 
-test(`GET ${getACompletedWorkoutRoute} with created completed workout returns success`, async (t: any) => {
+test(`GET ${getACompletedWorkoutRoute} with created completed workout returns success`, async (t: ExecutionContext) => {
   const nameOfWorkout = 'Test Tracked Workout'
   const timeOfCreationOfWorkout = '2006-03-26T13:28:10+00:00'
   const dateOfCreationOfWorkout = getDate(timeOfCreationOfWorkout)

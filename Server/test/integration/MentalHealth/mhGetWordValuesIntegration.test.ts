@@ -8,6 +8,7 @@ import { createMentalHealthUser } from '../../../utils/asyncMentalHealthFunction
 
 import request from 'supertest'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 const routeNames = new RouteNamesClass()
 // /**
 //  * Refactor using objects, interfaces to prevent repeated code.
@@ -19,7 +20,7 @@ const wrongUUID = '1a-2345-6b7c-890d-e01f2ghij34k'
 const randomEmail = `${uuid}@gmail.com`
 let token: string
 const todayDate = getDate(moment().format())
-test.serial.before(async (t: any) => {
+test.serial.before(async (t: ExecutionContext) => {
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
   const { error }: any = await createUserWithID({
     id: uuid,
@@ -34,14 +35,14 @@ test.serial.before(async (t: any) => {
   }
 })
 
-test.serial.before(async (t: any) => {
+test.serial.before(async (t: ExecutionContext) => {
   const { data, error }: any = await getUserByEmail(randomEmail)
   if (error) {
     t.fail('Inserting first user failed!')
   }
   token = createToken(data[0].id)
 })
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '5',
@@ -53,7 +54,7 @@ test.before(async (t: any) => {
     t.fail(`inserting 1st mental health:${JSON.stringify(error)}`)
   }
 })
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '2',
@@ -65,7 +66,7 @@ test.before(async (t: any) => {
     t.fail(`inserting 2nd mental health:${JSON.stringify(error)}`)
   }
 })
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '3',
@@ -74,10 +75,10 @@ test.before(async (t: any) => {
   })
 
   if (error) {
-    t.fail(t.fail(`inserting 3rd mental health:${JSON.stringify(error)}`))
+    t.fail(`inserting 3rd mental health:${JSON.stringify(error)}`)
   }
 })
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '1',
@@ -89,7 +90,7 @@ test.before(async (t: any) => {
     t.fail(`MHtesterror4: ${JSON.stringify(error)}`)
   }
 })
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '4',
@@ -101,7 +102,7 @@ test.before(async (t: any) => {
     t.fail(`MHtesterror5: ${JSON.stringify(error)}`)
   }
 })
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '3',
@@ -113,7 +114,7 @@ test.before(async (t: any) => {
     t.fail(`MHtesterror6: ${JSON.stringify(error)}`)
   }
 })
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '2',
@@ -125,7 +126,7 @@ test.before(async (t: any) => {
     t.fail(`MHtesterror7: ${JSON.stringify(error)}`)
   }
 })
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '1',
@@ -137,7 +138,7 @@ test.before(async (t: any) => {
     t.fail(`MHtesterror8: ${JSON.stringify(error)}`)
   }
 })
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '1',
@@ -150,11 +151,11 @@ test.before(async (t: any) => {
   }
 })
 
-test.after.always('guaranteed cleanup', async (t: any) => {
+test.after.always('guaranteed cleanup', async (t: ExecutionContext) => {
   await deleteUserRow(randomEmail)
 })
 
-test(`GET ${wordCloudRoute} with incorrect ID`, async (t: any) => {
+test(`GET ${wordCloudRoute} with incorrect ID`, async (t: ExecutionContext) => {
   const response = await request(app)
     .get(wordCloudRoute)
     .set({ authorization: token, userid: wrongUUID })
@@ -163,7 +164,7 @@ test(`GET ${wordCloudRoute} with incorrect ID`, async (t: any) => {
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' }))
 })
-test(`GET ${wordCloudRoute} with correct ID`, async (t: any) => {
+test(`GET ${wordCloudRoute} with correct ID`, async (t: ExecutionContext) => {
   const response = await request(app)
     .get(wordCloudRoute)
     .set({ authorization: token, userid: uuid })

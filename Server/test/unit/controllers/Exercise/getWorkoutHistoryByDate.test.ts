@@ -1,4 +1,5 @@
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import sinon from 'sinon'
 import { type Request, type Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
@@ -12,7 +13,7 @@ import { deleteMultipleExercises } from '../../../../utils/Exercise/insertAndDel
 
 const uuid = uuidv4()
 const randomEmail = `${uuid}@example.com`
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const hashedPassword = await createHashedPassword('Password123!')
   const { error } = await createUserWithID({
     id: uuid,
@@ -26,7 +27,7 @@ test.before(async (t: any) => {
     t.fail(JSON.stringify(error))
   }
 })
-test.after.always(async (t: any) => {
+test.after.always(async (t: ExecutionContext) => {
   const { error } = await deleteUserRow(randomEmail)
   if (error) {
     t.fail('Deleting user went wrong!')
@@ -58,7 +59,7 @@ const validRequest: getWorkoutHistoryByDateRequest = {
   date: getTodaysDate()
 }
 
-test('getWorkoutHistoryByDate returns error when userid is missing', async (t: any) => {
+test('getWorkoutHistoryByDate returns error when userid is missing', async (t: ExecutionContext) => {
   const invalidRequest = cloneDeep(validRequest)
   delete invalidRequest.userid
   const req = mockRequest(invalidRequest)
@@ -68,7 +69,7 @@ test('getWorkoutHistoryByDate returns error when userid is missing', async (t: a
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
-test('getWorkoutHistoryByDate returns error when date is missing', async (t: any) => {
+test('getWorkoutHistoryByDate returns error when date is missing', async (t: ExecutionContext) => {
   const invalidRequest = cloneDeep(validRequest)
   delete invalidRequest.date
   const req = mockRequest(invalidRequest)
@@ -78,7 +79,7 @@ test('getWorkoutHistoryByDate returns error when date is missing', async (t: any
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
-test.serial('getWorkoutHistoryByDate returns empty arrays with user who has no workouts', async (t: any) => {
+test.serial('getWorkoutHistoryByDate returns empty arrays with user who has no workouts', async (t: ExecutionContext) => {
   const req = mockRequest(validRequest)
   const res = mockResponse()
   await getWorkoutHistoryByDate(req as Request, res as Response)
@@ -88,7 +89,7 @@ test.serial('getWorkoutHistoryByDate returns empty arrays with user who has no w
   t.true(res.json.calledWith({ mssg: 'Success!', arrayOfWorkoutNamesAndIDs: [], graphLabels: [], graphData: [] }))
 })
 
-test.serial('getWorkoutHistoryByDate returns arrays of data with user who has workouts', async (t: any) => {
+test.serial('getWorkoutHistoryByDate returns arrays of data with user who has workouts', async (t: ExecutionContext) => {
   const nameOfWorkout = 'Test Workout Plan'
   const { errorSetUpCompletedWorkoutForTests, successSetUpCompletedWorkoutForTests } = await setUpCompletedWorkoutForTests(uuid, nameOfWorkout)
   if (errorSetUpCompletedWorkoutForTests || !successSetUpCompletedWorkoutForTests) {

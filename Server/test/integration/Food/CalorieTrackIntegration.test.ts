@@ -5,6 +5,7 @@ import { SupabaseQueryClass } from '../../../utils/databaseInterface'
 import { createHashedPassword, createToken } from '../../../utils/userFunctions'
 import RouteNamesClass from '../../../utils/routeNamesClass'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import request from 'supertest'
 const supabaseQuery = new SupabaseQueryClass()
 const routeNames = new RouteNamesClass()
@@ -18,7 +19,7 @@ let userID: string
 
 let testCalorieId: string
 
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const uuid = uuidv4()
   testEmail = `${uuid}@gmail.com`
 
@@ -53,11 +54,11 @@ test.before(async (t: any) => {
   testCalorieId = insertingData[0].id
 })
 
-test.after.always(async (t: any) => {
+test.after.always(async (t: ExecutionContext) => {
   await supabaseQuery.deleteFrom(supabase, 'User', 'email', testEmail)
 })
 
-test(`POST ${foodBase + routeNames.partialCreateCalorieLogURL} create calorie goal`, async (t: any) => {
+test(`POST ${foodBase + routeNames.partialCreateCalorieLogURL} create calorie goal`, async (t: ExecutionContext) => {
   const response = await request(app)
     .post(foodBase + routeNames.partialCreateCalorieLogURL)
     .set('authorization', token)
@@ -70,7 +71,7 @@ test(`POST ${foodBase + routeNames.partialCreateCalorieLogURL} create calorie go
   t.is(response.body[0].Date, '2021-01-01')
 })
 
-test(`GET ${foodBase + routeNames.partialReadCaloriesURL} correctly`, async (t: any) => {
+test(`GET ${foodBase + routeNames.partialReadCaloriesURL} correctly`, async (t: ExecutionContext) => {
   const readURl = '/calorieTrack/General.'
   const response = await request(app)
     .get(foodBase + readURl + userID)
@@ -81,7 +82,7 @@ test(`GET ${foodBase + routeNames.partialReadCaloriesURL} correctly`, async (t: 
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
 })
 
-test('GET Read specific calorie goal', async (t: any) => {
+test('GET Read specific calorie goal', async (t: ExecutionContext) => {
   const readURl = '/calorieTrack/Specific.'
   const response = await request(app)
     .get(foodBase + readURl + testCalorieId)
@@ -92,7 +93,7 @@ test('GET Read specific calorie goal', async (t: any) => {
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
 })
 
-test('POST update specific calorie goal', async (t: any) => {
+test('POST update specific calorie goal', async (t: ExecutionContext) => {
   const response = await request(app)
     .post(foodBase + routeNames.partialUpdateSpecificCaloriesURL)
     .set('authorization', token)
@@ -102,7 +103,7 @@ test('POST update specific calorie goal', async (t: any) => {
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
 })
 
-test('DELETE delete specific calorie goal', async (t: any) => {
+test('DELETE delete specific calorie goal', async (t: ExecutionContext) => {
   const response = await request(app)
     .post(foodBase + routeNames.partialDeleteCalorieLogURL)
     .set('authorization', token)

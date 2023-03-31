@@ -3,8 +3,8 @@ import { v4 as uuidv4 } from 'uuid'
 import supabase from '../../../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../../../utils/databaseInterface'
 import { createHashedPassword, createUser } from '../../../../utils/userFunctions'
-import { type ExecutionContext } from 'ava'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import sinon from 'sinon'
 import { deleteAccount } from '../../../../routes/User/changeProfileDetails.controller'
 const supabaseQuery = new SupabaseQueryClass()
@@ -13,7 +13,7 @@ let randomEmail: string
 let usersID = ''
 const testingPassword: string = 'CorrectPassword123!'
 
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const uuid = uuidv4()
   randomEmail = `${uuid}@gmail.com`
 

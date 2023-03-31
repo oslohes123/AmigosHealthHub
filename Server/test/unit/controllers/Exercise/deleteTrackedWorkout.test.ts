@@ -1,4 +1,5 @@
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import sinon from 'sinon'
 import { type Request, type Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
@@ -11,7 +12,7 @@ import { deleteMultipleExercises } from '../../../../utils/Exercise/insertAndDel
 
 let randomEmail: string
 const uuid = uuidv4()
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   randomEmail = `${uuid}@gmail.com`
 
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
@@ -30,7 +31,7 @@ test.before(async (t: any) => {
   }
 })
 
-test.after.always('guaranteed cleanup of user and delete exercises', async (t: any) => {
+test.after.always('guaranteed cleanup of user and delete exercises', async (t: ExecutionContext) => {
   const { error } = await deleteUserRow(randomEmail)
   if (error) {
     t.fail(`deleteUserRow of ${randomEmail} failed`)
@@ -67,7 +68,7 @@ const validRequest: deleteTrackedWorkoutRequest = {
 }
 // Test deleteTrackedWorkout with missing userid/workoutname/date/time
 
-test('deleteTrackedWorkout results in error when userid is missing', async (t: any) => {
+test('deleteTrackedWorkout results in error when userid is missing', async (t: ExecutionContext) => {
   const cloneValidRequest = cloneDeep(validRequest)
   delete cloneValidRequest.userid
   const req = mockRequest(cloneValidRequest)
@@ -77,7 +78,7 @@ test('deleteTrackedWorkout results in error when userid is missing', async (t: a
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
-test('deleteTrackedWorkout results in error when workoutname is missing', async (t: any) => {
+test('deleteTrackedWorkout results in error when workoutname is missing', async (t: ExecutionContext) => {
   const cloneValidRequest = cloneDeep(validRequest)
   delete cloneValidRequest.workoutname
   const req = mockRequest(cloneValidRequest)
@@ -87,7 +88,7 @@ test('deleteTrackedWorkout results in error when workoutname is missing', async 
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
-test('deleteTrackedWorkout results in error when date is missing', async (t: any) => {
+test('deleteTrackedWorkout results in error when date is missing', async (t: ExecutionContext) => {
   const cloneValidRequest = cloneDeep(validRequest)
   delete cloneValidRequest.date
   t.log(`cloneValidRequest date missing: ${JSON.stringify(cloneValidRequest)}`)
@@ -98,7 +99,7 @@ test('deleteTrackedWorkout results in error when date is missing', async (t: any
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
-test('deleteTrackedWorkout results in error when time is missing', async (t: any) => {
+test('deleteTrackedWorkout results in error when time is missing', async (t: ExecutionContext) => {
   const cloneValidRequest = cloneDeep(validRequest)
   delete cloneValidRequest.time
   const req = mockRequest(cloneValidRequest)
@@ -108,7 +109,7 @@ test('deleteTrackedWorkout results in error when time is missing', async (t: any
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
-test.serial('deleteTrackedWorkout results in error when user has no completed workouts', async (t: any) => {
+test.serial('deleteTrackedWorkout results in error when user has no completed workouts', async (t: ExecutionContext) => {
   const fakeWorkoutRequest = cloneDeep(validRequest)
 
   const req = mockRequest(fakeWorkoutRequest)
@@ -120,7 +121,7 @@ test.serial('deleteTrackedWorkout results in error when user has no completed wo
   t.true(res.json.calledWith({ mssg: 'User does not have any completed workouts!' }))
 })
 
-test.serial('deleteTrackedWorkout results in success when given correct workout details', async (t: any) => {
+test.serial('deleteTrackedWorkout results in success when given correct workout details', async (t: ExecutionContext) => {
   const nameOfWorkout = validRequest.workoutname
   const timestampOfCreationOfWorkout = '2006-03-26T13:28:10+00:00'
   const dateOfCreationOfWorkout = getDate(timestampOfCreationOfWorkout)
@@ -141,7 +142,7 @@ test.serial('deleteTrackedWorkout results in success when given correct workout 
   t.true(res.json.calledWith({ mssg: `Success deleting trackedWorkout ${String(validWorkoutRequest.workoutname)}!` }))
 })
 
-test.serial('deleteTrackedWorkout results in error when user has workout of the same name but at a different given time/date', async (t: any) => {
+test.serial('deleteTrackedWorkout results in error when user has workout of the same name but at a different given time/date', async (t: ExecutionContext) => {
   const nameOfWorkout = validRequest.workoutname
   const { errorSetUpCompletedWorkoutForTests, successSetUpCompletedWorkoutForTests } = await setUpCompletedWorkoutForTests(uuid, nameOfWorkout)
   if (errorSetUpCompletedWorkoutForTests || !successSetUpCompletedWorkoutForTests) {

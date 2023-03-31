@@ -4,12 +4,13 @@ import { createHashedPassword, createUserWithID, deleteUserRow } from '../../../
 import type { Request, Response } from 'express'
 
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 const sinon = require('sinon')
 
 const uuid = uuidv4()
 const randomEmail = `${uuid}@gmail.com`
 
-test.serial.before(async (t: any) => {
+test.serial.before(async (t: ExecutionContext) => {
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
   const { error }: any = await createUserWithID({
     id: uuid,
@@ -24,7 +25,7 @@ test.serial.before(async (t: any) => {
   }
 })
 
-test.after.always('guaranteed cleanup', async (t: any) => {
+test.after.always('guaranteed cleanup', async (t: ExecutionContext) => {
   await deleteUserRow(randomEmail)
 })
 
@@ -40,7 +41,7 @@ const mockRequest = (sessionData: any) => {
     body: sessionData
   }
 }
-test('Attempt to insert data without logging in', async (t: any) => {
+test('Attempt to insert data without logging in', async (t: ExecutionContext) => {
   const req = mockRequest({
     face: 4,
     word: 'Happy',
@@ -53,7 +54,7 @@ test('Attempt to insert data without logging in', async (t: any) => {
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' }))
 })
 
-test('Attempt to insert data with an empty word', async (t: any) => {
+test('Attempt to insert data with an empty word', async (t: ExecutionContext) => {
   const req = mockRequest({
     face: 2,
     word: '',
@@ -66,7 +67,7 @@ test('Attempt to insert data with an empty word', async (t: any) => {
   t.true(res.json.calledOnceWith({ mssg: 'Can\'t submit an empty word' }))
 })
 
-test('Attempt to insert data with a face value too high', async (t: any) => {
+test('Attempt to insert data with a face value too high', async (t: ExecutionContext) => {
   const req = mockRequest({
     face: 6,
     word: 'Ecstatic',
@@ -79,7 +80,7 @@ test('Attempt to insert data with a face value too high', async (t: any) => {
   t.true(res.json.calledOnceWith({ mssg: 'Face value must be between 1-5' }))
 })
 
-test('Attempt to insert data with a face value too low', async (t: any) => {
+test('Attempt to insert data with a face value too low', async (t: ExecutionContext) => {
   const req = mockRequest({
     face: 0,
     word: 'awful',
@@ -92,7 +93,7 @@ test('Attempt to insert data with a face value too low', async (t: any) => {
   t.true(res.json.calledOnceWith({ mssg: 'Face value must be between 1-5' }))
 })
 
-test('Insert correct data into database', async (t: any) => {
+test('Insert correct data into database', async (t: ExecutionContext) => {
   const req = mockRequest({
     face: 1,
     word: 'Awful',

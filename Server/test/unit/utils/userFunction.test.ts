@@ -1,4 +1,5 @@
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import supabase from '../../../utils/supabaseSetUp'
 import { createUser, getUserByEmail, deleteUserRow } from '../../../utils/userFunctions'
 import { type UserInterface } from '../../../utils/userInterface'
@@ -10,14 +11,14 @@ const user: UserInterface = {
   password: 'Password123!',
   age: 30
 }
-test.serial('createUser with invalid parameters results in error', async (t: any) => {
+test.serial('createUser with invalid parameters results in error', async (t: ExecutionContext) => {
   const { error } = await createUser(user, supabase, 'INCORRECT_TABLE_NAME')
   const { data } = await getUserByEmail(user.email, 'firstName, lastName, email, password, age')
   t.true(error !== null)
   t.true(data.length === 0)
 })
 
-test.serial('createUser with valid informationToInsert results in user created', async (t: any) => {
+test.serial('createUser with valid informationToInsert results in user created', async (t: ExecutionContext) => {
   await createUser(user)
   const { data } = await getUserByEmail(user.email, 'firstName, lastName, email, password, age')
 

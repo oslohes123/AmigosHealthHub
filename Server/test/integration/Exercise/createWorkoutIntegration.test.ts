@@ -1,5 +1,6 @@
 import app from '../../../index'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import request from 'supertest'
 import { v4 as uuidv4 } from 'uuid'
 import { createUserWithID, deleteUserRow, createHashedPassword, createToken } from '../../../utils/userFunctions'
@@ -14,7 +15,7 @@ const createWorkoutRoute = routeNames.fullAddWorkoutURL
 let randomEmail: string
 let token: string
 const uuid = uuidv4()
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   randomEmail = `${uuid}@gmail.com`
 
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
@@ -34,7 +35,7 @@ test.before(async (t: any) => {
   token = createToken(uuid)
 })
 
-test.after.always('guaranteed cleanup of user and delete exercises', async (t: any) => {
+test.after.always('guaranteed cleanup of user and delete exercises', async (t: ExecutionContext) => {
   const { errorPresent } = await deleteAllWorkoutPlansWithExercises(uuid)
   if (errorPresent) {
     t.fail(errorPresent)
@@ -55,10 +56,10 @@ const validRequest: createWorkoutRequest = {
   workoutname: 'Test Workoutplan',
   exercises: [{}]
 }
-test('createWorkoutRoute is correct', (t: any) => {
+test('createWorkoutRoute is correct', (t: ExecutionContext) => {
   t.true(createWorkoutRoute === '/api/user/workout/add')
 })
-test.serial(`POST ${createWorkoutRoute} results in error when userid is missing`, async (t: any) => {
+test.serial(`POST ${createWorkoutRoute} results in error when userid is missing`, async (t: ExecutionContext) => {
   const invalidReqWithNoUserid = cloneDeep(validRequest)
   delete invalidReqWithNoUserid.userid
   const response = await request(app)
@@ -69,7 +70,7 @@ test.serial(`POST ${createWorkoutRoute} results in error when userid is missing`
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
-test.serial(`POST ${createWorkoutRoute} results in error when workoutname is missing`, async (t: any) => {
+test.serial(`POST ${createWorkoutRoute} results in error when workoutname is missing`, async (t: ExecutionContext) => {
   const invalidReqWithNoworkoutname = cloneDeep(validRequest)
   delete invalidReqWithNoworkoutname.workoutname
   const response = await request(app)
@@ -80,7 +81,7 @@ test.serial(`POST ${createWorkoutRoute} results in error when workoutname is mis
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
-test.serial(`POST ${createWorkoutRoute} results in error when exercises is missing`, async (t: any) => {
+test.serial(`POST ${createWorkoutRoute} results in error when exercises is missing`, async (t: ExecutionContext) => {
   const invalidReqWithNoExercises = cloneDeep(validRequest)
   delete invalidReqWithNoExercises.exercises
   const response = await request(app)
@@ -91,7 +92,7 @@ test.serial(`POST ${createWorkoutRoute} results in error when exercises is missi
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
-test.serial(`POST ${createWorkoutRoute} results in success with valid inputs`, async (t: any) => {
+test.serial(`POST ${createWorkoutRoute} results in success with valid inputs`, async (t: ExecutionContext) => {
   const validRequestWithValidInputs = cloneDeep(validRequest)
   validRequestWithValidInputs.exercises = [
     {
@@ -123,7 +124,7 @@ test.serial(`POST ${createWorkoutRoute} results in success with valid inputs`, a
   t.true(dataMatchingWorkoutPlanAndUser.length === 1)
 })
 
-test.serial(`POST ${createWorkoutRoute} results in error when trying to create another workoutplan with the same name`, async (t: any) => {
+test.serial(`POST ${createWorkoutRoute} results in error when trying to create another workoutplan with the same name`, async (t: ExecutionContext) => {
   const nameOfWorkout = 'Test Cannot create a Workoutplan with same name'
   const { errorsSettingUpWorkoutPlan, success } = await setUpWorkoutPlan(uuid, nameOfWorkout)
   if (errorsSettingUpWorkoutPlan || !success) {

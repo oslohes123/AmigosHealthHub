@@ -6,6 +6,7 @@ import { SupabaseQueryClass } from '../../../utils/databaseInterface'
 import RouteNamesClass from '../../../utils/routeNamesClass'
 import request from 'supertest'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 const supabaseQuery = new SupabaseQueryClass()
 const routeNames = new RouteNamesClass()
 const getInfoRoute = routeNames.fullGetInfoURL
@@ -13,7 +14,7 @@ const getInfoRoute = routeNames.fullGetInfoURL
 let existingEmail: string
 let hashedPassword: string
 let token: string
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const uuid = uuidv4()
   existingEmail = `${uuid}@gmail.com`
 
@@ -39,11 +40,11 @@ test.before(async (t: any) => {
   }
 })
 
-test.after.always('guaranteed clean up', async (t: any) => {
+test.after.always('guaranteed clean up', async (t: ExecutionContext) => {
   await supabaseQuery.deleteFrom(supabase, 'User', 'email', existingEmail)
 })
 
-test(`GET ${getInfoRoute} with no fields`, async (t: any) => {
+test(`GET ${getInfoRoute} with no fields`, async (t: ExecutionContext) => {
   const response = await request(app)
     .get(getInfoRoute)
     .set('authorization', token)
@@ -54,7 +55,7 @@ test(`GET ${getInfoRoute} with no fields`, async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Email must be provided' }))
 })
 
-test(`GET ${getInfoRoute} with existing user`, async (t: any) => {
+test(`GET ${getInfoRoute} with existing user`, async (t: ExecutionContext) => {
   const response = await request(app)
     .get(getInfoRoute)
     .set({ authorization: token, email: existingEmail })

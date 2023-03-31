@@ -5,6 +5,7 @@ import supabase from '../../../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../../../utils/databaseInterface'
 import { createHashedPassword, createUser } from '../../../../utils/userFunctions'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 const sinon = require('sinon')
 const bcrypt = require('bcrypt')
 const supabaseQuery = new SupabaseQueryClass()
@@ -12,7 +13,7 @@ const supabaseQuery = new SupabaseQueryClass()
 let testEmail: string
 let hashedPassword: string
 
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const uuid = uuidv4()
   testEmail = `${uuid}@gmail.com`
 
@@ -31,7 +32,7 @@ test.before(async (t: any) => {
   }
 })
 
-test.after.always(async (t: any) => {
+test.after.always(async (t: ExecutionContext) => {
   await supabaseQuery.deleteFrom(supabase, 'User', 'email', testEmail)
 })
 
@@ -48,7 +49,7 @@ const mockRequest = (sessionData: any) => {
   }
 }
 
-test.serial('changePassword with no fields should return error', async (t: any) => {
+test.serial('changePassword with no fields should return error', async (t: ExecutionContext) => {
   const req = mockRequest({})
   const res = mockResponse()
   await changePassword(req as Request, res as Response)
@@ -57,7 +58,7 @@ test.serial('changePassword with no fields should return error', async (t: any) 
   t.true(res.json.calledWith({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test.serial('changePassword with no email should return error', async (t: any) => {
+test.serial('changePassword with no email should return error', async (t: ExecutionContext) => {
   const req = mockRequest({
     oldPassword: 'OriginalPassword123!',
     newPassword: 'NewPassword123!'
@@ -69,7 +70,7 @@ test.serial('changePassword with no email should return error', async (t: any) =
   t.true(res.json.calledWith({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test.serial('changePassword with no oldPassword should returns error', async (t: any) => {
+test.serial('changePassword with no oldPassword should returns error', async (t: ExecutionContext) => {
   const req = mockRequest({
     email: testEmail,
     newPassword: 'NewPassword123!'
@@ -81,7 +82,7 @@ test.serial('changePassword with no oldPassword should returns error', async (t:
   t.true(res.json.calledWith({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test.serial('changePassword with no newPassword should returns error', async (t: any) => {
+test.serial('changePassword with no newPassword should returns error', async (t: ExecutionContext) => {
   const req = mockRequest({
     email: testEmail,
     oldPassword: 'OriginalPassword123!'
@@ -93,7 +94,7 @@ test.serial('changePassword with no newPassword should returns error', async (t:
   t.true(res.json.calledWith({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test.serial('changePassword with non-existent user email returns error', async (t: any) => {
+test.serial('changePassword with non-existent user email returns error', async (t: ExecutionContext) => {
   const uuid = uuidv4()
   const randomEmail: string = `${uuid}@gmail.com`
 
@@ -109,7 +110,7 @@ test.serial('changePassword with non-existent user email returns error', async (
   t.true(res.json.calledWith({ mssg: "Email doesn't exist in our database" }))
 })
 
-test.serial('changePassword with incorrect original password results in error', async (t: any) => {
+test.serial('changePassword with incorrect original password results in error', async (t: ExecutionContext) => {
   const req = mockRequest({
     email: testEmail,
     oldPassword: 'IncorrectPassword123!',
@@ -132,7 +133,7 @@ test.serial('changePassword with incorrect original password results in error', 
   t.true(res.json.calledWith({ mssg: "Old password doesn't match!" }))
 })
 
-test.serial('changePassword with correct original password results in success', async (t: any) => {
+test.serial('changePassword with correct original password results in success', async (t: ExecutionContext) => {
   const req = mockRequest({
     email: testEmail,
     oldPassword: 'OriginalPassword123!',

@@ -1,4 +1,5 @@
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import sinon from 'sinon'
 import { type Request, type Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
@@ -9,7 +10,7 @@ import { getTime, getDate } from '../../../../utils/convertTimeStamptz'
 import { setUpCompletedWorkoutForTests } from '../../../../utils/Exercise/setUpCompletedWorkoutForTests'
 const uuid = uuidv4()
 const randomEmail = `${uuid}@example.com`
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const hashedPassword = await createHashedPassword('Password123!')
   const { error } = await createUserWithID({
     id: uuid,
@@ -23,7 +24,7 @@ test.before(async (t: any) => {
     t.fail(JSON.stringify(error))
   }
 })
-test.after.always(async (t: any) => {
+test.after.always(async (t: ExecutionContext) => {
   const { error } = await deleteUserRow(randomEmail)
   if (error) {
     t.fail('Deleting user went wrong!')
@@ -47,7 +48,7 @@ const mockRequest = (sessionData: any) => {
   }
 }
 // test getACompletedWorkout with missing headers (userid, workoutname, date, time)
-test('getACompletedWorkout with missing userid returns error', async (t: any) => {
+test('getACompletedWorkout with missing userid returns error', async (t: ExecutionContext) => {
   const req = mockRequest({ workoutname: 'Test Workout', date: '2023-05-13', time: '18:55:33' })
   const res = mockResponse()
 
@@ -57,7 +58,7 @@ test('getACompletedWorkout with missing userid returns error', async (t: any) =>
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'JSON instance was invalid against its schema' }))
 })
 
-test('getACompletedWorkout with missing workoutname returns error', async (t: any) => {
+test('getACompletedWorkout with missing workoutname returns error', async (t: ExecutionContext) => {
   const req = mockRequest({ userid: uuid, date: '2023-05-13', time: '18:55:33' })
   const res = mockResponse()
 
@@ -67,7 +68,7 @@ test('getACompletedWorkout with missing workoutname returns error', async (t: an
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'JSON instance was invalid against its schema' }))
 })
 
-test('getACompletedWorkout with missing date returns error', async (t: any) => {
+test('getACompletedWorkout with missing date returns error', async (t: ExecutionContext) => {
   const req = mockRequest({ userid: uuid, workoutname: 'Test Workout', time: '18:55:33' })
   const res = mockResponse()
 
@@ -77,7 +78,7 @@ test('getACompletedWorkout with missing date returns error', async (t: any) => {
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'JSON instance was invalid against its schema' }))
 })
 
-test('getACompletedWorkout with missing time returns error', async (t: any) => {
+test('getACompletedWorkout with missing time returns error', async (t: ExecutionContext) => {
   const req = mockRequest({ userid: uuid, workoutname: 'Test Workout', date: '2023-05-13' })
   const res = mockResponse()
 
@@ -88,7 +89,7 @@ test('getACompletedWorkout with missing time returns error', async (t: any) => {
 })
 
 // test getACompletedWorkout with userid who doesn't exist
-test('getACompletedWorkout with userid who does not exist returns error', async (t: any) => {
+test('getACompletedWorkout with userid who does not exist returns error', async (t: ExecutionContext) => {
   const fakeUserID = uuidv4()
   const req = mockRequest({ userid: fakeUserID, workoutname: 'Test Workout', date: '2023-05-13', time: '18:33:22' })
   const res = mockResponse()
@@ -99,7 +100,7 @@ test('getACompletedWorkout with userid who does not exist returns error', async 
   t.true(res.json.calledWith({ mssg: 'A workout of this name at this time and date does not exist for this user!' }))
 })
 // test getACompletedWorkout with userid who has no completed workouts
-test('getACompletedWorkout with user has does not have a workout at the given time and date returns error', async (t: any) => {
+test('getACompletedWorkout with user has does not have a workout at the given time and date returns error', async (t: ExecutionContext) => {
   const req = mockRequest({ userid: uuid, workoutname: 'Test Workout', date: '2023-05-13', time: '18:33:22' })
   const res = mockResponse()
 
@@ -109,7 +110,7 @@ test('getACompletedWorkout with user has does not have a workout at the given ti
   t.true(res.json.calledWith({ mssg: 'A workout of this name at this time and date does not exist for this user!' }))
 })
 // test getACompletedWorkout with userid who has a completed workout
-test('getACompletedWorkout with created completed workout returns success', async (t: any) => {
+test('getACompletedWorkout with created completed workout returns success', async (t: ExecutionContext) => {
   const nameOfWorkout = 'Test Tracked Workout'
   const timeOfCreationOfWorkout = '2006-03-26T13:28:10+00:00'
   const dateOfCreationOfWorkout = getDate(timeOfCreationOfWorkout)

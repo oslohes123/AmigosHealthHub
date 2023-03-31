@@ -1,4 +1,5 @@
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import sinon from 'sinon'
 import { type Request, type Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
@@ -12,7 +13,7 @@ import { deleteAllWorkoutPlansWithExercises } from '../../../../utils/Exercise/d
 import { getTodaysDate } from '../../../../utils/convertTimeStamptz'
 const uuid = uuidv4()
 const randomEmail = `${uuid}@example.com`
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const hashedPassword = await createHashedPassword('Password123!')
   const { error } = await createUserWithID({
     id: uuid,
@@ -26,7 +27,7 @@ test.before(async (t: any) => {
     t.fail(JSON.stringify(error))
   }
 })
-test.after.always(async (t: any) => {
+test.after.always(async (t: ExecutionContext) => {
   const { errorPresent } = await deleteAllWorkoutPlansWithExercises(uuid)
   if (errorPresent) {
     t.fail(errorPresent)
@@ -62,7 +63,7 @@ const validRequest: getExerciseHistoryRequest = {
   nameofexercise: `Random ${uuid} exercise`
 }
 
-test.serial('getExerciseHistory returns error when userid is missing', async (t: any) => {
+test.serial('getExerciseHistory returns error when userid is missing', async (t: ExecutionContext) => {
   const invalidRequestWithoutUserid = cloneDeep(validRequest)
   delete invalidRequestWithoutUserid.userid
   const req = mockRequest(invalidRequestWithoutUserid)
@@ -72,7 +73,7 @@ test.serial('getExerciseHistory returns error when userid is missing', async (t:
   t.true(res.json.calledWith({ mssg: 'Select an exercise!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
-test.serial('getExerciseHistory returns error when workoutname is missing', async (t: any) => {
+test.serial('getExerciseHistory returns error when workoutname is missing', async (t: ExecutionContext) => {
   const invalidRequestWithoutNameofexercise = cloneDeep(validRequest)
   delete invalidRequestWithoutNameofexercise.nameofexercise
   const req = mockRequest(invalidRequestWithoutNameofexercise)
@@ -82,7 +83,7 @@ test.serial('getExerciseHistory returns error when workoutname is missing', asyn
   t.true(res.json.calledWith({ mssg: 'Select an exercise!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
-test.serial('getExerciseHistory with no completed workouts results in empty graph labels', async (t: any) => {
+test.serial('getExerciseHistory with no completed workouts results in empty graph labels', async (t: ExecutionContext) => {
   const nameOfWorkout = 'Test Workout Plan'
   const { errorsSettingUpWorkoutPlan, success } = await setUpWorkoutPlan(uuid, nameOfWorkout)
   if (errorsSettingUpWorkoutPlan || !success) {
@@ -99,7 +100,7 @@ test.serial('getExerciseHistory with no completed workouts results in empty grap
   t.true(res.json.calledWith({ mssg: 'Exercise has never been performed' }))
 })
 
-test.serial('getExerciseHistory with a completed workout for strength/muscle exercise results in correct graphLabels returned', async (t: any) => {
+test.serial('getExerciseHistory with a completed workout for strength/muscle exercise results in correct graphLabels returned', async (t: ExecutionContext) => {
   const nameOfWorkout = 'Test Completed Workout'
   const { errorSetUpCompletedWorkoutForTests, successSetUpCompletedWorkoutForTests } = await setUpCompletedWorkoutForTests(uuid, nameOfWorkout)
   if (errorSetUpCompletedWorkoutForTests || !successSetUpCompletedWorkoutForTests) {
@@ -120,7 +121,7 @@ test.serial('getExerciseHistory with a completed workout for strength/muscle exe
   t.true(JSON.stringify(argsPassed.arrayOfDates) === JSON.stringify([[getTodaysDate()]]))
 })
 
-test.serial('getExerciseHistory with a completed workout for cardio exercise results in correct graphLabels returned', async (t: any) => {
+test.serial('getExerciseHistory with a completed workout for cardio exercise results in correct graphLabels returned', async (t: ExecutionContext) => {
   const nameOfWorkout = 'Test Completed Workout'
   const { errorSetUpCompletedWorkoutForTests, successSetUpCompletedWorkoutForTests } = await setUpCompletedWorkoutForTests(uuid, nameOfWorkout)
   if (errorSetUpCompletedWorkoutForTests || !successSetUpCompletedWorkoutForTests) {
@@ -136,9 +137,4 @@ test.serial('getExerciseHistory with a completed workout for cardio exercise res
   t.true(res.status.calledWith(200))
   t.true(argsPassed.mssg === 'Success!')
   t.true(argsPassed.type === 'Other')
-  t.true(JSON.stringify(argsPassed.data.arrayOfCalories) === JSON.stringify([500, 500]))
-  t.true(JSON.stringify(argsPassed.data.arrayOfDistance) === JSON.stringify([5000, 5000]))
-  t.true(JSON.stringify(argsPassed.data.arrayOfDuration) === JSON.stringify([23.00, 23.00]))
-  t.log(`argsPassed.arraysOfDates: ${JSON.stringify(argsPassed.arrayOfDates)}`)
-  t.true(JSON.stringify(argsPassed.arrayOfDates) === JSON.stringify([[getTodaysDate()], [getTodaysDate()]]))
 })

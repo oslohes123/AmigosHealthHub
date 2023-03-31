@@ -6,12 +6,13 @@ import { SupabaseQueryClass } from '../../../utils/databaseInterface'
 import RouteNamesClass from '../../../utils/routeNamesClass'
 import request from 'supertest'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 const supabaseQuery = new SupabaseQueryClass()
 const routeNames = new RouteNamesClass()
 
 const checkInitialTokenRoute = routeNames.fullCheckInitialTokenURL
 
-test(`GET ${checkInitialTokenRoute} with missing authorization`, async (t: any) => {
+test(`GET ${checkInitialTokenRoute} with missing authorization`, async (t: ExecutionContext) => {
   const response = await request(app)
     .get(checkInitialTokenRoute)
 
@@ -20,7 +21,7 @@ test(`GET ${checkInitialTokenRoute} with missing authorization`, async (t: any) 
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'No Authorization Header' }))
 })
 
-test(`GET ${checkInitialTokenRoute} with authorization header with no spaces results in error`, async (t: any) => {
+test(`GET ${checkInitialTokenRoute} with authorization header with no spaces results in error`, async (t: ExecutionContext) => {
   const response = await request(app)
     .get(checkInitialTokenRoute)
     .set('authorization', 'tokenValue')
@@ -30,7 +31,7 @@ test(`GET ${checkInitialTokenRoute} with authorization header with no spaces res
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: "Authorization header must have format 'bearer token'." }))
 })
 
-test(`GET ${checkInitialTokenRoute} with authorization header with no bearer substring results in error`, async (t: any) => {
+test(`GET ${checkInitialTokenRoute} with authorization header with no bearer substring results in error`, async (t: ExecutionContext) => {
   const response = await request(app)
     .get(checkInitialTokenRoute)
     .set('authorization', ' tokenValue')
@@ -40,7 +41,7 @@ test(`GET ${checkInitialTokenRoute} with authorization header with no bearer sub
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: "Authorization header must have format 'bearer token'." }))
 })
 
-test(`GET ${checkInitialTokenRoute} with illegitimate token in authorization header results in error`, async (t: any) => {
+test(`GET ${checkInitialTokenRoute} with illegitimate token in authorization header results in error`, async (t: ExecutionContext) => {
   const response = await request(app)
     .get(checkInitialTokenRoute)
     .set('authorization', 'bearer tokenValue')
@@ -50,7 +51,7 @@ test(`GET ${checkInitialTokenRoute} with illegitimate token in authorization hea
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Request Failed due to Authentication' }))
 })
 
-test(`GET ${checkInitialTokenRoute} with incorrect payload results in error`, async (t: any) => {
+test(`GET ${checkInitialTokenRoute} with incorrect payload results in error`, async (t: ExecutionContext) => {
   const uuid = uuidv4()
   const token = createToken(uuid)
 
@@ -63,7 +64,7 @@ test(`GET ${checkInitialTokenRoute} with incorrect payload results in error`, as
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Request Failed due to Authentication' }))
 })
 
-test(`GET ${checkInitialTokenRoute} with legitimate token results in success`, async (t: any) => {
+test(`GET ${checkInitialTokenRoute} with legitimate token results in success`, async (t: ExecutionContext) => {
   const uuid = uuidv4()
   const testUser = `${uuid}@gmail.com`
 

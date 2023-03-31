@@ -5,6 +5,7 @@ import { SupabaseQueryClass } from '../../../utils/databaseInterface'
 import { createHashedPassword, createToken } from '../../../utils/userFunctions'
 import RouteNamesClass from '../../../utils/routeNamesClass'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import request from 'supertest'
 const supabaseQuery = new SupabaseQueryClass()
 const routeNames = new RouteNamesClass()
@@ -20,7 +21,7 @@ let token1: string
 const uuid = uuidv4()
 const newEmail = `CHANGED${uuid}@gmail.com`
 
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const uuid1 = uuidv4()
   firstUserEmail = `${uuid1}@gmail.com`
 
@@ -42,7 +43,7 @@ test.before(async (t: any) => {
   }
 })
 
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const uuid2 = uuidv4()
   secondUserEmail = `${uuid2}@gmail.com`
 
@@ -66,12 +67,12 @@ test.before(async (t: any) => {
   }
 })
 
-test.after.always('guaranteed cleanup of users', async (t: any) => {
+test.after.always('guaranteed cleanup of users', async (t: ExecutionContext) => {
   await supabaseQuery.deleteFrom(supabase, 'User', 'email', firstUserEmail)
   await supabaseQuery.deleteFrom(supabase, 'User', 'email', newEmail)
 })
 
-test(`POST ${changeStatsRoute} with no fields`, async (t: any) => {
+test(`POST ${changeStatsRoute} with no fields`, async (t: ExecutionContext) => {
   const response = await request(app)
     .post(changeStatsRoute)
     .set('authorization', token1)
@@ -83,7 +84,7 @@ test(`POST ${changeStatsRoute} with no fields`, async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test(`POST ${changeStatsRoute} with missing first name`, async (t: any) => {
+test(`POST ${changeStatsRoute} with missing first name`, async (t: ExecutionContext) => {
   const response = await request(app)
     .post(changeStatsRoute)
     .set('authorization', token1)
@@ -100,7 +101,7 @@ test(`POST ${changeStatsRoute} with missing first name`, async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test(`POST ${changeStatsRoute} with missing last name`, async (t: any) => {
+test(`POST ${changeStatsRoute} with missing last name`, async (t: ExecutionContext) => {
   const response = await request(app)
     .post(changeStatsRoute)
     .set('authorization', token1)
@@ -117,7 +118,7 @@ test(`POST ${changeStatsRoute} with missing last name`, async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test(`POST ${changeStatsRoute} with missing prevEmail`, async (t: any) => {
+test(`POST ${changeStatsRoute} with missing prevEmail`, async (t: ExecutionContext) => {
   const response = await request(app)
     .post(changeStatsRoute)
     .set('authorization', token1)
@@ -134,7 +135,7 @@ test(`POST ${changeStatsRoute} with missing prevEmail`, async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test(`POST ${changeStatsRoute} with missing newEmail`, async (t: any) => {
+test(`POST ${changeStatsRoute} with missing newEmail`, async (t: ExecutionContext) => {
   const response = await request(app)
     .post(changeStatsRoute)
     .set('authorization', token1)
@@ -151,7 +152,7 @@ test(`POST ${changeStatsRoute} with missing newEmail`, async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test(`POST ${changeStatsRoute} with missing age`, async (t: any) => {
+test(`POST ${changeStatsRoute} with missing age`, async (t: ExecutionContext) => {
   const response = await request(app)
     .post(changeStatsRoute)
     .set('authorization', token1)
@@ -168,7 +169,7 @@ test(`POST ${changeStatsRoute} with missing age`, async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test(`POST ${changeStatsRoute} with bad newEmail structure`, async (t: any) => {
+test(`POST ${changeStatsRoute} with bad newEmail structure`, async (t: ExecutionContext) => {
   const response = await request(app)
     .post(changeStatsRoute)
     .set('authorization', token1)
@@ -186,7 +187,7 @@ test(`POST ${changeStatsRoute} with bad newEmail structure`, async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Invalid New Email' }))
 })
 
-test(`POST ${changeStatsRoute} with newEmail that already exists`, async (t: any) => {
+test(`POST ${changeStatsRoute} with newEmail that already exists`, async (t: ExecutionContext) => {
   const response = await request(app)
     .post(changeStatsRoute)
     .set('authorization', token1)
@@ -204,7 +205,7 @@ test(`POST ${changeStatsRoute} with newEmail that already exists`, async (t: any
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Email Already Exists' }))
 })
 
-test(`POST ${changeStatsRoute} with new available email`, async (t: any) => {
+test(`POST ${changeStatsRoute} with new available email`, async (t: ExecutionContext) => {
   const response = await request(app)
     .post(changeStatsRoute)
     .set('authorization', token1)
@@ -230,7 +231,7 @@ test(`POST ${changeStatsRoute} with new available email`, async (t: any) => {
   t.true(data[0].email === newEmail)
 })
 
-test(`POST ${changeStatsRoute} with same email`, async (t: any) => {
+test(`POST ${changeStatsRoute} with same email`, async (t: ExecutionContext) => {
   const response = await request(app)
     .post(changeStatsRoute)
     .set('authorization', token1)

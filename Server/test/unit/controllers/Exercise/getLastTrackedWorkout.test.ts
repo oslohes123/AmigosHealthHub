@@ -1,6 +1,7 @@
 import { type Request, type Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import sinon from 'sinon'
 import { createHashedPassword, createUserWithID, deleteUserRow } from '../../../../utils/userFunctions'
 import { getLastTrackedWorkout } from '../../../../routes/Exercise/completedWorkouts.controller'
@@ -10,7 +11,7 @@ import { cloneDeep } from 'lodash'
 import { setUpCompletedWorkoutForTests } from '../../../../utils/Exercise/setUpCompletedWorkoutForTests'
 let randomEmail: string
 const uuid = uuidv4()
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   randomEmail = `${uuid}@gmail.com`
 
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
@@ -29,7 +30,7 @@ test.before(async (t: any) => {
   }
 })
 
-test.after.always('guaranteed cleanup of user and delete exercises', async (t: any) => {
+test.after.always('guaranteed cleanup of user and delete exercises', async (t: ExecutionContext) => {
   const { error } = await deleteUserRow(randomEmail)
   if (error) {
     t.fail(`deleteUserRow of ${randomEmail} failed`)
@@ -58,7 +59,7 @@ interface getLastTrackedWorkoutRequest {
 const validRequest: getLastTrackedWorkoutRequest = {
   userid: uuid
 }
-test('getLastTrackedWorkout with missing userid results in error', async (t: any) => {
+test('getLastTrackedWorkout with missing userid results in error', async (t: ExecutionContext) => {
   const invalidRequestWithNoUserid = cloneDeep(validRequest)
   delete invalidRequestWithNoUserid.userid
   const req = mockRequest(invalidRequestWithNoUserid)
@@ -68,7 +69,7 @@ test('getLastTrackedWorkout with missing userid results in error', async (t: any
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
-test.serial('getLastTrackedWorkout with userid with no workouts results in success returns no tracked workouts', async (t: any) => {
+test.serial('getLastTrackedWorkout with userid with no workouts results in success returns no tracked workouts', async (t: ExecutionContext) => {
   const req = mockRequest(validRequest)
   const res = mockResponse()
   await getLastTrackedWorkout(req as Request, res as Response)
@@ -76,7 +77,7 @@ test.serial('getLastTrackedWorkout with userid with no workouts results in succe
   t.true(res.json.calledWith({ mssg: 'Success!', lastTrackedWorkout: 'No Tracked Workouts' }))
 })
 
-test.serial('getLastTrackedWorkout with userid a workout results in correct last tracked workout returned', async (t: any) => {
+test.serial('getLastTrackedWorkout with userid a workout results in correct last tracked workout returned', async (t: ExecutionContext) => {
   const nameOfWorkout = `${uuid}'s FIRST workout`
   const { errorSetUpCompletedWorkoutForTests, successSetUpCompletedWorkoutForTests } = await setUpCompletedWorkoutForTests(uuid, nameOfWorkout)
   if (errorSetUpCompletedWorkoutForTests || !successSetUpCompletedWorkoutForTests) {
@@ -89,7 +90,7 @@ test.serial('getLastTrackedWorkout with userid a workout results in correct last
   t.true(res.json.calledWith({ mssg: 'Success!', lastTrackedWorkout: nameOfWorkout }))
 })
 
-test.serial('getLastTrackedWorkout with userid with muliple workouts results in correct last tracked workout returned', async (t: any) => {
+test.serial('getLastTrackedWorkout with userid with muliple workouts results in correct last tracked workout returned', async (t: ExecutionContext) => {
   const nameOfWorkout = `${uuid}'s SECOND workout`
   const { errorSetUpCompletedWorkoutForTests, successSetUpCompletedWorkoutForTests } = await setUpCompletedWorkoutForTests(uuid, nameOfWorkout)
   if (errorSetUpCompletedWorkoutForTests || !successSetUpCompletedWorkoutForTests) {

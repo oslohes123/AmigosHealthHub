@@ -1,6 +1,7 @@
 import { type Request, type Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import sinon from 'sinon'
 import { cloneDeep } from 'lodash'
 import { createHashedPassword, createUserWithID, deleteUserRow } from '../../../../utils/userFunctions'
@@ -11,7 +12,7 @@ import { matchWorkoutPlanAndUser } from '../../../../utils/Exercise/exerciseFunc
 
 let randomEmail: string
 const uuid = uuidv4()
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   randomEmail = `${uuid}@gmail.com`
 
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
@@ -30,7 +31,7 @@ test.before(async (t: any) => {
   }
 })
 
-test.after.always('guaranteed cleanup of user and delete exercises', async (t: any) => {
+test.after.always('guaranteed cleanup of user and delete exercises', async (t: ExecutionContext) => {
   const { errorPresent } = await deleteAllWorkoutPlansWithExercises(uuid)
   if (errorPresent) {
     t.fail(errorPresent)
@@ -65,7 +66,7 @@ const validRequest: createWorkoutRequest = {
   exercises: [{}]
 }
 
-test.serial('createWorkout results in error when userid is missing', async (t: any) => {
+test.serial('createWorkout results in error when userid is missing', async (t: ExecutionContext) => {
   const invalidReqWithNoUserid = cloneDeep(validRequest)
   delete invalidReqWithNoUserid.userid
   const req = mockRequest(invalidReqWithNoUserid)
@@ -75,7 +76,7 @@ test.serial('createWorkout results in error when userid is missing', async (t: a
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
-test.serial('createWorkout results in error when workoutname is missing', async (t: any) => {
+test.serial('createWorkout results in error when workoutname is missing', async (t: ExecutionContext) => {
   const invalidReqWithNoworkoutname = cloneDeep(validRequest)
   delete invalidReqWithNoworkoutname.workoutname
   const req = mockRequest(invalidReqWithNoworkoutname)
@@ -85,7 +86,7 @@ test.serial('createWorkout results in error when workoutname is missing', async 
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
-test.serial('createWorkout results in error when exercises is missing', async (t: any) => {
+test.serial('createWorkout results in error when exercises is missing', async (t: ExecutionContext) => {
   const invalidReqWithNoExercises = cloneDeep(validRequest)
   delete invalidReqWithNoExercises.exercises
   const req = mockRequest(invalidReqWithNoExercises)
@@ -95,7 +96,7 @@ test.serial('createWorkout results in error when exercises is missing', async (t
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
-test.serial('createWorkout results in success with valid inputs', async (t: any) => {
+test.serial('createWorkout results in success with valid inputs', async (t: ExecutionContext) => {
   validRequest.exercises = [
     {
       sets: null,
@@ -125,7 +126,7 @@ test.serial('createWorkout results in success with valid inputs', async (t: any)
   t.true(dataMatchingWorkoutPlanAndUser.length === 1)
 })
 
-test.serial('createWorkout results in error when trying to create another workoutplan with the same name', async (t: any) => {
+test.serial('createWorkout results in error when trying to create another workoutplan with the same name', async (t: ExecutionContext) => {
   const nameOfWorkout = 'Test Cannot create a Workoutplan with same name'
   const { errorsSettingUpWorkoutPlan, success } = await setUpWorkoutPlan(uuid, nameOfWorkout)
   if (errorsSettingUpWorkoutPlan || !success) {

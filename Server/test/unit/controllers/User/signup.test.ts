@@ -6,8 +6,8 @@ import { v4 as uuidv4 } from 'uuid'
 import supabase from '../../../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../../../utils/databaseInterface'
 import { createHashedPassword, createUser } from '../../../../utils/userFunctions'
-// import test from 'ava'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 const sinon = require('sinon')
 const supabaseQuery = new SupabaseQueryClass()
 const mockResponse = () => {
@@ -25,7 +25,7 @@ const mockRequest = (sessionData: any) => {
 
 let alreadyExistsEmail: string
 let hashedPassword: string
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const uuid = uuidv4()
   alreadyExistsEmail = `${uuid}@gmail.com`
 
@@ -43,12 +43,12 @@ test.before(async (t: any) => {
   }
 })
 
-test.after.always('guaranteed cleanup of user', async (t: any) => {
+test.after.always('guaranteed cleanup of user', async (t: ExecutionContext) => {
   await supabaseQuery.deleteFrom(supabase, 'User', 'email', alreadyExistsEmail)
 })
 // Missing fields for sign up form
 
-test('sign up with no fields should return error', async (t: any) => {
+test('sign up with no fields should return error', async (t: ExecutionContext) => {
   const req = mockRequest({})
   const res = mockResponse()
   await signupUser(req as Request, res as Response)
@@ -57,7 +57,7 @@ test('sign up with no fields should return error', async (t: any) => {
   t.true(res.json.calledWith({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test('sign up with missing password should return error', async (t: any) => {
+test('sign up with missing password should return error', async (t: ExecutionContext) => {
   const req = mockRequest({
     firstName: 'John',
     lastName: 'Doe',
@@ -71,7 +71,7 @@ test('sign up with missing password should return error', async (t: any) => {
   t.true(res.json.calledWith({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test('sign up with missing first name should return error', async (t: any) => {
+test('sign up with missing first name should return error', async (t: ExecutionContext) => {
   const req = mockRequest({
     email: 'johndoe@gmail.com',
     lastName: 'Doe',
@@ -85,7 +85,7 @@ test('sign up with missing first name should return error', async (t: any) => {
   t.true(res.json.calledWith({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test('sign up with missing age should return error', async (t: any) => {
+test('sign up with missing age should return error', async (t: ExecutionContext) => {
   const req = mockRequest({
     firstName: 'John',
     lastName: 'Doe',
@@ -99,7 +99,7 @@ test('sign up with missing age should return error', async (t: any) => {
   t.true(res.json.calledWith({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test('sign up with missing last name should return error', async (t: any) => {
+test('sign up with missing last name should return error', async (t: ExecutionContext) => {
   const req = mockRequest({
     firstName: 'John',
     email: 'johndoe@gmail.com',
@@ -116,7 +116,7 @@ test('sign up with missing last name should return error', async (t: any) => {
 /**
  * Test sign up form with invalid inputs eg. weak password
  */
-test('sign up with invalid email structure', async (t: any) => {
+test('sign up with invalid email structure', async (t: ExecutionContext) => {
   const req = mockRequest(
     {
       firstName: 'John',
@@ -137,7 +137,7 @@ test('sign up with invalid email structure', async (t: any) => {
   t.true(res.json.calledWith({ mssg: 'Invalid Email' }))
 })
 
-test('sign up should return error if first or last name contain non-letter characters', async (t: any) => {
+test('sign up should return error if first or last name contain non-letter characters', async (t: ExecutionContext) => {
   const req = mockRequest(
     {
       firstName: 'John1',
@@ -158,7 +158,7 @@ test('sign up should return error if first or last name contain non-letter chara
   t.true(res.json.calledWith({ mssg: 'First name and last name must only contains letters a-z or A-Z' }))
 })
 
-test('sign up should return error if password is weak', async (t: any) => {
+test('sign up should return error if password is weak', async (t: ExecutionContext) => {
   const req = mockRequest(
     {
       firstName: 'John',
@@ -183,7 +183,7 @@ test('sign up should return error if password is weak', async (t: any) => {
    * Test sign up with taken email
    */
 
-test('sign up with already existing email results in error', async (t: any) => {
+test('sign up with already existing email results in error', async (t: ExecutionContext) => {
   const req = mockRequest(
     {
       firstName: 'Different',
@@ -204,7 +204,7 @@ test('sign up with already existing email results in error', async (t: any) => {
   t.true(res.json.calledWith({ mssg: 'User already exists!' }))
 })
 
-test('sign up with valid details results in success', async (t: any) => {
+test('sign up with valid details results in success', async (t: ExecutionContext) => {
   const uuid = uuidv4()
   const randomEmail = `${uuid}@gmail.com`
 

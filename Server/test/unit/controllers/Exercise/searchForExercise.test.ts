@@ -1,4 +1,5 @@
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import sinon from 'sinon'
 import { type Request, type Response } from 'express'
 import { searchForExercise } from '../../../../routes/Exercise/searchExercise.controller'
@@ -26,7 +27,7 @@ const validRequest: searchForExerciseRequest = {
 
 // test searchForExercise when wordtosearch is empty
 
-test('searchForExercise with empty word results in empty array and success', async (t: any) => {
+test('searchForExercise with empty word results in empty array and success', async (t: ExecutionContext) => {
   const validRequestWithNoWordtosearch = cloneDeep(validRequest)
   delete validRequestWithNoWordtosearch.wordtosearch
   const req = mockRequest(validRequestWithNoWordtosearch)
@@ -36,7 +37,7 @@ test('searchForExercise with empty word results in empty array and success', asy
   t.true(res.json.calledWith({ mssg: 'wordtosearch is empty', searchedWords: [] }))
 })
 
-test('searchForExercise with bench press results in success', async (t: any) => {
+test('searchForExercise with bench press results in success', async (t: ExecutionContext) => {
   const req = mockRequest(validRequest)
   const res = mockResponse()
   await searchForExercise(req as Request, res as Response)
