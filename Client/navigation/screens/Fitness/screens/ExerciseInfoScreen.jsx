@@ -364,7 +364,7 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                           keyboardType="numeric"
                           textAlign="center"
                         />
-                      </View> 
+                      </View>
                     </View>
                   )}
                 </View>
@@ -387,7 +387,7 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                     keyboardType="numeric"
                     textAlign="center"
                   />
-                  )}
+                )}
 
                 <View
                   style={{
@@ -396,7 +396,7 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                     justifyContent:
                     exerciseInfo.type !== 'cardio' ? 'space-evenly' : 'center',
                     alignContent: 'center',
-                    alignSelf: 'center'
+                    alignSelf: 'center',
                   }}
                 >
 

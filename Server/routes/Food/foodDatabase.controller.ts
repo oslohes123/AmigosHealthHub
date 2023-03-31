@@ -83,9 +83,9 @@ export const getTrackedFood = async (req: Request, res: Response) => {
     { UserID: userID, Date: date }
   )
   if (error) {
-    res.status(500).send(error)
+    return res.status(500).send(error)
   } else {
-    res.status(200).send(returnData)
+    return res.status(200).send(returnData)
   }
 }
 export const getSpecificTrackedFood = async (req: Request, res: Response) => {
@@ -101,9 +101,9 @@ export const getSpecificTrackedFood = async (req: Request, res: Response) => {
   )
   if (error) {
     console.log('Error getting specific tracked food!', error)
-    res.status(500).send(error)
+    return res.status(500).send(error)
   } else {
-    res.status(200).send(returnData)
+    return res.status(200).send(returnData)
   }
 }
 export const updateTrackedFood = async (req: Request, res: Response) => {
@@ -120,9 +120,9 @@ export const updateTrackedFood = async (req: Request, res: Response) => {
     LogID
   )
   if (error) {
-    res.status(500).send(error)
+    return res.status(500).send(error)
   } else {
-    res.status(200).send(returnData)
+    return res.status(200).send(returnData)
   }
 }
 export const deleteTrackedFood = async (req: Request, res: Response) => {
@@ -138,9 +138,9 @@ export const deleteTrackedFood = async (req: Request, res: Response) => {
     LogID
   )
   if (error) {
-    res.status(500).send(error)
+    return res.status(500).send(error)
   } else {
-    res.status(200).send(returnData)
+    return res.status(200).send(returnData)
   }
 }
 export const getFood = async (req: Request, res: Response) => {
@@ -156,9 +156,9 @@ export const getFood = async (req: Request, res: Response) => {
     { FoodID }
   )
   if (error) {
-    res.status(500).send(error)
+    return res.status(500).send(error)
   } else {
-    res.status(200).send(returnData)
+    return res.status(200).send(returnData)
   }
 }
 export const getMultipleFood = async (req: Request, res: Response) => {
@@ -175,8 +175,8 @@ export const getMultipleFood = async (req: Request, res: Response) => {
     foodIDs
   )
   if (error) {
-    res.status(500).send(error)
+    return res.status(500).send(error)
   } else {
-    res.status(200).send(data)
+    return res.status(200).send(data)
   }
 }

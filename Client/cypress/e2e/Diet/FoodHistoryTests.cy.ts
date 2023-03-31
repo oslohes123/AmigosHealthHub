@@ -7,10 +7,10 @@ beforeEach(() => {
     cy.get('input[placeholder="Password"]').click().type('Password123!');
     cy.contains('Login').click({force:true})
     cy.get('a[href="/Diet"]').click();
-    // cy.get('input[placeholder="Find food..."]').click().type('apple', {force: true})
-    // cy.contains('apple').click()
-    // cy.get('[data-testid="add"]').click()
-    // cy.get('input[placeholder="Find food..."]').clear({force:true})
+    cy.get('input[placeholder="Find food..."]').click().type('apple', {force: true})
+    cy.contains('apple').click()
+    cy.get('[data-testid="add"]').click()
+    cy.get('input[placeholder="Find food..."]').clear({force:true})
     cy.get('[data-testid="foodHistory"]').click()
 })
 

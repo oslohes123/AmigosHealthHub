@@ -119,7 +119,7 @@ export default function SleepScreen() {
   ]);
 
   const submitSleepData = () => {
-    addSleep(selectedHoursSlept, selectedSleepQuality, timestamp);
+    addSleep(parseInt(selectedHoursSlept, 10), parseInt(selectedSleepQuality, 10), timestamp);
   };
 
   return (
@@ -152,6 +152,7 @@ export default function SleepScreen() {
             </Text>
             <DropDownPicker
               open={openHoursSlept}
+              dropDownDirection="TOP"
               value={selectedHoursSlept}
               items={itemsHoursSlept}
               setOpen={setOpenHoursSlept}
@@ -175,6 +176,7 @@ export default function SleepScreen() {
             />
             <Button
               style={[styles.divider]}
+              testID="addSleepData"
               icon="check"
               mode="outlined"
                             // textColor={theme.color}

@@ -65,35 +65,35 @@ const mockRequest = (sessionData: any) => {
 test('Attempt to get sleep data without UserID', async (t: any) => {
   const req = mockRequest({
     userID: null,
-    startDate: '2023/03/20',
-    endDate: '2023/03/23'
+    startDate: '2023-03-20',
+    endDate: '2023-03-23'
   })
   const res = mockResponse()
   await getSleep(req as Request, res as Response)
 
   t.true(res.status.calledWith(400))
-  t.true(res.json.calledWith({ mssg: 'UserID must be provided' }))
+  t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'getSleep req.body does not match the JSON Schema!' }))
 })
 
 test('Attempt to get sleep data without start date', async (t: any) => {
   const req = mockRequest({
     userID: uuid,
     startDate: null,
-    endDate: '2023/03/23'
+    endDate: '2023-03-23'
   })
   const res = mockResponse()
   await getSleep(req as Request, res as Response)
 
   t.true(res.status.calledWith(400))
   t.true(
-    res.json.calledWith({ mssg: 'Start and end date must be provided' })
+    res.json.calledWith({ mssg: 'Something went wrong!', dev: 'getSleep req.body does not match the JSON Schema!' })
   )
 })
 
 test('Attempt to get sleep data without end date', async (t: any) => {
   const req = mockRequest({
     userID: uuid,
-    startDate: '2023/03/20',
+    startDate: '2023-03-20',
     endDate: null
   })
   const res = mockResponse()
@@ -101,15 +101,15 @@ test('Attempt to get sleep data without end date', async (t: any) => {
 
   t.true(res.status.calledWith(400))
   t.true(
-    res.json.calledWith({ mssg: 'Start and end date must be provided' })
+    res.json.calledWith({ mssg: 'Something went wrong!', dev: 'getSleep req.body does not match the JSON Schema!' })
   )
 })
 
 test('Attempt to get sleep data with invalid dates', async (t: any) => {
   const req = mockRequest({
     userID: uuid,
-    startDate: '2023/03/23',
-    endDate: '2023/03/20'
+    startDate: '2023-03-23',
+    endDate: '2023-03-20'
   })
   const res = mockResponse()
   await getSleep(req as Request, res as Response)
@@ -123,8 +123,8 @@ test('Attempt to get sleep data with invalid dates', async (t: any) => {
 test('Attempt to get sleep data when no data in database', async (t: any) => {
   const req = mockRequest({
     userID: uuid,
-    startDate: '2022/01/10',
-    endDate: '2022/01/20'
+    startDate: '2022-01-10',
+    endDate: '2022-01-20'
   })
   const res = mockResponse()
   await getSleep(req as Request, res as Response)
@@ -136,8 +136,8 @@ test('Attempt to get sleep data when no data in database', async (t: any) => {
 test('Attempt to get sleep data within valid range', async (t: any) => {
   const req = mockRequest({
     userID: uuid,
-    startDate: '2023/03/20',
-    endDate: '2023/03/23'
+    startDate: '2023-03-20',
+    endDate: '2023-03-23'
   })
   const res = mockResponse()
   await getSleep(req as Request, res as Response)

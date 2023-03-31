@@ -13,7 +13,7 @@ const user: UserInterface = {
 test.serial('createUser with invalid parameters results in error', async (t: any) => {
   const { error } = await createUser(user, supabase, 'INCORRECT_TABLE_NAME')
   const { data } = await getUserByEmail(user.email, 'firstName, lastName, email, password, age')
-  t.truthy(error)
+  t.true(error !== null)
   t.true(data.length === 0)
 })
 

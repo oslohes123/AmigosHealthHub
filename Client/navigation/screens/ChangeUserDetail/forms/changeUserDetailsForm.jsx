@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import {
   Button, Text, TextInput, View, SafeAreaView, StyleSheet,
 } from 'react-native';
-import { ActivityIndicator, MD2Colors, Checkbox } from 'react-native-paper';
+import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import React, { useState, useContext, useEffect } from 'react';
 import { Formik } from 'formik';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
@@ -31,7 +31,6 @@ export default function ChangeUserDetailsForm() {
   const [age, setage] = useState(null);
   const { getUserInfo, isLoadingUserInfo, errorUserInfo } = useGetUserInfo();
   const { changeStats, isLoading, error } = useChangeProfileDetails();
-  const [checked, setChecked] = useState(false);
   const navigation = useNavigation();
   const styles = StyleSheet.create({
     head: {
@@ -91,6 +90,7 @@ export default function ChangeUserDetailsForm() {
 
             <Text style={[styles.head, { color }]}>First Name</Text>
             <TextInput
+              testID="firstName"
               style={[globalStyles.input, { color }]}
               placeholder="First Name"
               placeholderTextColor={color}
@@ -104,6 +104,7 @@ export default function ChangeUserDetailsForm() {
             )}
             <Text style={[styles.head, { color }]}>Last Name</Text>
             <TextInput
+              testID="lastName"
               style={[globalStyles.input, { color }]}
               placeholder="Last Name"
               placeholderTextColor={color}
@@ -117,6 +118,7 @@ export default function ChangeUserDetailsForm() {
             )}
             <Text style={[styles.head, { color }]}>Email</Text>
             <TextInput
+              testID="email"
               style={[globalStyles.input, { color }]}
               placeholder="Email"
               placeholderTextColor={color}
@@ -131,6 +133,7 @@ export default function ChangeUserDetailsForm() {
             )}
             <Text style={[styles.head, { color }]}>Age</Text>
             <TextInput
+              testID="age"
               style={[globalStyles.input, { color }]}
               placeholder="Age"
               placeholderTextColor={color}
@@ -143,7 +146,7 @@ export default function ChangeUserDetailsForm() {
               {props.errors.age}
             </Text>
             )}
-  
+
             {/* <View style={{ flexDirection: 'row' }}>
               <Checkbox
                 status={checked ? 'checked' : 'unchecked'}
@@ -154,6 +157,7 @@ export default function ChangeUserDetailsForm() {
               <Text style={{ fontWeight: 'bold', alignSelf: 'center' }}>I will be logged out</Text>
             </View> */}
             <Button
+              testID="saveButton"
               title="Save details"
               onPress={props.handleSubmit}
               disabled={isLoading}

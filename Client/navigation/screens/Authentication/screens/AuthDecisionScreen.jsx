@@ -1,10 +1,10 @@
 import {
-  View, Text, Button, StyleSheet,
+  View, Text, Button, StyleSheet, Switch,
 } from 'react-native';
 import React from 'react';
 // import LottieView from 'lottie-react-native';
-import * as data from '../../../../assets/animation.json';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import * as data from '../../../../assets/animation.json';
 
 const styles = StyleSheet.create({
   container: {

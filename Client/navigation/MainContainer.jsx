@@ -9,7 +9,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { EventRegister } from 'react-native-event-listeners';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -23,6 +23,12 @@ import SettingsNavigation from './screens/Settings/SettingsNavigation';
 import theme from './theme/theme';
 import themeContext from './theme/themeContext';
 
+const styles = {
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+};
 const screenHeight = Dimensions.get('window').height;
 
 // Screen Names
@@ -36,7 +42,7 @@ const settingsName = 'Settings';
 const Tab = createBottomTabNavigator();
 
 export default function MainContainer() {
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     const listener = EventRegister.addEventListener(
@@ -131,10 +137,3 @@ export default function MainContainer() {
     </themeContext.Provider>
   );
 }
-
-const styles = {
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-};

@@ -77,7 +77,7 @@ export default function FitnessScreen({ navigation }) {
     <SafeAreaView style={[styles.container, { backgroundColor: background }]}>
 
       <TouchableOpacity
-        testID='plansWidget'
+        testID="plansWidget"
         onPress={() => {
           navigation.navigate('Workout Plans');
         }}
@@ -97,9 +97,12 @@ export default function FitnessScreen({ navigation }) {
         </LinearGradient>
       </TouchableOpacity>
 
-      <View style={{ flexDirection: 'row', width: screenWidth * 0.95, justifyContent: 'space-between', marginBottom: 10 }}>
+      <View style={{
+        flexDirection: 'row', width: screenWidth * 0.95, justifyContent: 'space-between', marginBottom: 10,
+      }}
+      >
         <TouchableOpacity
-          testID='historyWidget'
+          testID="historyWidget"
           onPress={() => {
             navigation.navigate('Workout History');
           }}
@@ -135,11 +138,11 @@ export default function FitnessScreen({ navigation }) {
           </LinearGradient>
         </TouchableOpacity>
 
-        <TouchableOpacity 
-          testID='statsWidget'
+        <TouchableOpacity
+          testID="statsWidget"
           onPress={() => {
-          navigation.navigate('View Stats');
-        }}
+            navigation.navigate('View Stats');
+          }}
         >
           <LinearGradient
             colors={['blue', 'grey']}

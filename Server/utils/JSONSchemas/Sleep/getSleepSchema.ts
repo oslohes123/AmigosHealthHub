@@ -1,4 +1,4 @@
-export const addSleepSchema =
+export const getSleepSchema =
 {
   $schema: 'http://json-schema.org/draft-04/schema#',
   type: 'object',
@@ -7,21 +7,18 @@ export const addSleepSchema =
       type: 'string',
       format: 'uuid'
     },
-    hoursSlept: {
-      type: 'integer'
+    startDate: {
+      type: 'string',
+      format: 'date'
     },
-    sleepQuality: {
-      type: 'integer'
-    },
-    timestamp: {
+    endDate: {
       type: 'string',
       format: 'date'
     }
   },
   required: [
     'userID',
-    'hoursSlept',
-    'sleepQuality',
-    'timestamp'
+    'startDate',
+    'endDate'
   ]
 }

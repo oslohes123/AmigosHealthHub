@@ -6,7 +6,26 @@ export async function insertCompletedWorkoutRow (id: string, workoutname: string
   const { data, error }: any = await databaseQuery.insert(supabase, 'CompletedWorkouts', { userid: id, workoutname, timestamp })
   return { dataInsertCompletedWorkoutRow: data, errorInsertCompletedWorkoutRow: error }
 }
+// Matches all instances in the WorkoutPlans table given a userid and workoutname
+export async function matchWorkoutPlanAndUser (userid: string, workoutname: string) {
+  const { data, error }: any = await databaseQuery.match(supabase, 'WorkoutPlans', 'WorkoutPlanID', { userid, workoutname })
+  return { dataMatchingWorkoutPlanAndUser: data, errorMatchingWorkoutPlanAndUser: error }
+}
 
+/**
+ * Deletes a workout plan row
+ * @param workoutPlanID id of workoutplan row to delete
+ * @returns errorAndIDs object with deleteError property that contains any errors
+ */
+export async function deleteWorkoutPlanRowByID (workoutPlanID: string) {
+  const errorAndIDs = { deleteError: '' }
+  const { error }: any = await databaseQuery.deleteFrom(supabase, 'WorkoutPlans', 'WorkoutPlanID', workoutPlanID)
+  if (error) {
+    errorAndIDs.deleteError = error
+    return errorAndIDs
+  }
+  return errorAndIDs
+}
 export async function selectAllCompletedWorkoutNames (userid: string, table = 'CompletedWorkouts', database = supabase) {
   const { data, error }: any = await databaseQuery.selectWhere(database, table, 'userid', userid, 'completedWorkoutID, workoutname')
   return { dataSelectAllCompletedWorkoutNames: data, errorSelectAllCompletedWorkoutNames: error }
@@ -20,6 +39,19 @@ export async function selectAllTrackedWorkoutsWithExercises (workoutPlanID: stri
 export async function selectAllActualExercises (userid: string, table = 'ActualExercises', database = supabase) {
   const { data, error }: any = await databaseQuery.selectWhere(database, table, 'userID', userid, 'AEID')
   return { dataSelectAllActualExercises: data, errorSelectAllActualExercises: error }
+}
+// return all exercises from actual exercises that match a given userid and exerciseid
+export async function matchExercise (userid: string | string[], exerciseID: string) {
+  const errorAndIDs: any = { errorPresent: '', exercisesMatch: [{}, {}] }
+  const { data, error }: any = await databaseQuery.match(supabase, 'ActualExercises', '*', { userID: userid, exerciseID })
+  if (error) {
+    errorAndIDs.errorPresent = error
+    return errorAndIDs
+  }
+  else {
+    errorAndIDs.exercisesMatch = data
+    return errorAndIDs
+  }
 }
 
 /**
@@ -233,7 +265,7 @@ export async function getWorkoutByID (completedWorkoutID: string) {
 }
 
 // helper function to getWorkoutDetails
-export async function getWorkoutPlanByID(workoutPlanID: string) {
+export async function getWorkoutPlanByID (workoutPlanID: string) {
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'WorkoutPlansWithExercises', 'WorkoutPlanID', workoutPlanID, '*')
   console.log(`getWorkoutByID: ${JSON.stringify(data)}`)
   const errorAndWorkout: any = { errorPresent: '', workoutToReturn: [] }

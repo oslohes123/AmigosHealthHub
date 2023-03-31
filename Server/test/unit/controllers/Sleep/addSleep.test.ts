@@ -49,47 +49,50 @@ const mockRequest = (sessionData: any) => {
 test('Attempt to insert data without UserID', async (t: any) => {
   const req = mockRequest({
     userID: null,
-    timestamp: '20/03/2023',
-    hoursSlept: 7
+    timestamp: '20-03-2023',
+    hoursSlept: 7,
+    sleepQuality: 7
   })
   const res = mockResponse()
   await addSleep(req as Request, res as Response)
 
   t.true(res.status.calledWith(400))
-  t.true(res.json.calledWith({ mssg: 'UserID must be provided' }))
+  t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'addSleep req.body does not match the JSON Schema!' }))
 })
 
 test('Attempt to insert data without timestamp', async (t: any) => {
   const req = mockRequest({
     userID: uuid,
     timestamp: null,
-    hoursSlept: 7
+    hoursSlept: 7,
+    sleepQuality: 7
   })
   const res = mockResponse()
   await addSleep(req as Request, res as Response)
 
   t.true(res.status.calledWith(400))
-  t.true(res.json.calledWith({ mssg: 'timestamp must be provided' }))
+  t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'addSleep req.body does not match the JSON Schema!' }))
 })
 
 test('Attempt to insert data without hoursSlept', async (t: any) => {
   const req = mockRequest({
     userID: uuid,
-    timestamp: '20/03/2023',
-    hoursSlept: null
+    timestamp: '20-03-2023',
+    hoursSlept: null,
+    sleepQuality: 7
   })
   const res = mockResponse()
   await addSleep(req as Request, res as Response)
 
   t.true(res.status.calledWith(400))
-  t.true(res.json.calledWith({ mssg: 'hoursSlept must be provided' }))
+  t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'addSleep req.body does not match the JSON Schema!' }))
 })
 
 test('Successful insertion of sleep data', async (t: any) => {
   const req = mockRequest({
     userID: uuid,
     sleepQuality: 3,
-    timestamp: '2023/03/22',
+    timestamp: '2023-03-22',
     hoursSlept: 6
   })
   const res = mockResponse()
