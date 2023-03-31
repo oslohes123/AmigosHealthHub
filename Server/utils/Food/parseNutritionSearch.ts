@@ -1,6 +1,11 @@
 import type NutrientSearchInterface from '../../interfaces/Food/api_interfaces/nutrientSearchInterface'
 import type specificFoodNutritionInterface from '../../interfaces/Food/specificFoodNutritionInterface'
 
+/**
+ * transforms the data from the nutrient search api into a specificFoodNutritionInterface
+ * @param data
+ * @returns specificFoodNutritionInterface
+ */
 export default function transformNutrientSearchInterface (data: NutrientSearchInterface): specificFoodNutritionInterface {
   const food = data.foods[0]
   return {

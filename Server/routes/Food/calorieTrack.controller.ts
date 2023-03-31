@@ -6,6 +6,12 @@ import * as calorieSchemas from '../../utils/JSONSchemas/Food/calorieSchemas'
 require('dotenv').config()
 const databaseQuery = new SupabaseQueryClass()
 
+/**
+ * Insert a new calorie goal
+ * @param req
+ * @param res
+ * @returns Error or success message
+ */
 export const insertCalorieGoal = async (req: Request, res: Response) => {
   const { UserID, CalorieGoal, Date } = req.body
 
@@ -32,6 +38,12 @@ export const insertCalorieGoal = async (req: Request, res: Response) => {
   }
 }
 
+/**
+ * Delete a specific calorie goal
+ * @param req
+ * @param res
+ * @returns Error or success message
+ */
 export const readSpecificCalorieGoal = async (req: Request, res: Response) => {
   const { id } = req.params
   if (!validateJSONSchema(req.params, calorieSchemas.readSpecificCalorieGoals)) {
@@ -53,6 +65,12 @@ export const readSpecificCalorieGoal = async (req: Request, res: Response) => {
   }
 }
 
+/**
+ * Read all calorie goals for a specific user
+ * @param req
+ * @param res
+ * @returns Error or success message
+ */
 export const readAllCalorieGoals = async (req: Request, res: Response) => {
   const { UserID } = req.params
   if (!validateJSONSchema(req.params, calorieSchemas.readAllCalorieGoals)) {
@@ -74,6 +92,13 @@ export const readAllCalorieGoals = async (req: Request, res: Response) => {
   }
 }
 
+/**
+ * Update a specific calorie goal
+ * @param req
+ * @param res
+ * @returns Error or success message
+ *
+ * */
 export const updateSpecificCalorieGoal = async (req: Request, res: Response) => {
   const { CalorieGoal, id } = req.body
   if (!validateJSONSchema(req.body, calorieSchemas.updateCalorieGoal)) {
@@ -95,6 +120,12 @@ export const updateSpecificCalorieGoal = async (req: Request, res: Response) => 
   }
 }
 
+/**
+ * Delete a specific calorie goal
+ * @param req
+ * @param res
+ * @returns Error or success message
+ */
 export const deleteSpecificCalorieGoal = async (req: Request, res: Response) => {
   const { id } = req.body
   if (!validateJSONSchema(req.body, calorieSchemas.deleteSpecificCalorieGoal)) {

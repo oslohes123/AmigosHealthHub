@@ -7,12 +7,15 @@ import * as foodSchemas from '../../utils/JSONSchemas/Food/foodDatabaseSchemas'
 require('dotenv').config()
 const databaseQuery = new SupabaseQueryClass()
 
+/**
+ * Add tracked food for a user
+ * @param req
+ * @param res
+ * @returns Error or success message
+ */
 export const addTrackedFood = async (req: Request, res: Response) => {
   const Data: FoodInput = req.body
   if (!validateJSONSchema(req.body, foodSchemas.addTrackedFood)) {
-    
-    
-
     return res.status(400).send({ mssg: 'Invalid JSON Schema', whatWeGot: req.body, schema: foodSchemas.addTrackedFood })
   }
   // First match to see if the food is already in the Food table
@@ -23,7 +26,6 @@ export const addTrackedFood = async (req: Request, res: Response) => {
     { FoodID: Data.input.foodIdentifier }
   )
   if (matchingDataError) {
-    
     return res.status(500).send(matchingDataError)
   } else {
     // If the food is not in the Food table, insert it
@@ -45,7 +47,6 @@ export const addTrackedFood = async (req: Request, res: Response) => {
         }
       )
       if (insertFoodError) {
-        
         return res.status(500).send(insertFoodError)
       }
     }
@@ -66,11 +67,17 @@ export const addTrackedFood = async (req: Request, res: Response) => {
     }
   )
   if (error) {
-    
     return res.status(500).send(error)
   }
   return res.status(200).send(returnData)
 }
+
+/**
+ * Get a tracked food for a user
+ * @param req
+ * @param res
+ * @returns Error or success message
+ */
 export const getTrackedFood = async (req: Request, res: Response) => {
   const { date, userID } = req.params
   if (!validateJSONSchema(req.params, foodSchemas.getTrackedFood)) {
@@ -88,6 +95,13 @@ export const getTrackedFood = async (req: Request, res: Response) => {
     return res.status(200).send(returnData)
   }
 }
+
+/**
+ * get specific tracked food for a user
+ * @param req
+ * @param res
+ * @returns Error or success message
+ */
 export const getSpecificTrackedFood = async (req: Request, res: Response) => {
   const { LogID } = req.params
   if (!validateJSONSchema(req.params, foodSchemas.getSpecificTrackedFood)) {
@@ -100,12 +114,18 @@ export const getSpecificTrackedFood = async (req: Request, res: Response) => {
     { LogID }
   )
   if (error) {
-    
     return res.status(500).send(error)
   } else {
     return res.status(200).send(returnData)
   }
 }
+
+/**
+ * update a specific tracked food for a user
+ * @param req
+ * @param res
+ * @returns Error or success message
+ */
 export const updateTrackedFood = async (req: Request, res: Response) => {
   const { Quantity, Measure, LogID, Calories } = req.body
   if (!validateJSONSchema(req.body, foodSchemas.updateTrackedFood)) {
@@ -125,6 +145,13 @@ export const updateTrackedFood = async (req: Request, res: Response) => {
     return res.status(200).send(returnData)
   }
 }
+
+/**
+ * Delete a tracked food for a user
+ * @param req
+ * @param res
+ * @returns Error or success message
+ */
 export const deleteTrackedFood = async (req: Request, res: Response) => {
   const { LogID } = req.body
   if (!validateJSONSchema(req.body, foodSchemas.deleteTrackedFood)) {
@@ -143,6 +170,13 @@ export const deleteTrackedFood = async (req: Request, res: Response) => {
     return res.status(200).send(returnData)
   }
 }
+
+/**
+ * Get a food from the database
+ * @param req
+ * @param res
+ * @returns Error or success message
+ */
 export const getFood = async (req: Request, res: Response) => {
   const { FoodID } = req.params
   if (!validateJSONSchema(req.params, foodSchemas.getFood)) {
@@ -161,6 +195,13 @@ export const getFood = async (req: Request, res: Response) => {
     return res.status(200).send(returnData)
   }
 }
+
+/**
+ * Get multiple foods from the database using their FoodIDs
+ * @param req
+ * @param res
+ * @returns Error or success message
+ */
 export const getMultipleFood = async (req: Request, res: Response) => {
   const { foodIDs } = req.body
   if (!validateJSONSchema(req.body, foodSchemas.getMultipleFood)) {
