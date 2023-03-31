@@ -56,7 +56,6 @@ test.serial(`GET ${getWorkoutFrequencyRoute} returns error when userid is missin
     .get(getWorkoutFrequencyRoute)
     .set({ authorization: token, ...invalidRequest })
 
-  t.log(`response in getWorkoutFreq integration test: ${JSON.stringify(response)}`)
   t.true(response.status === 400)
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })

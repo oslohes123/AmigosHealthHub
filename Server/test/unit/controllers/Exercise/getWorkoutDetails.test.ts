@@ -103,7 +103,6 @@ test.serial('getWorkoutDetails with userid with a workout results in a success',
   const res = mockResponse()
   await getWorkoutDetails(req as Request, res as Response)
   const argsPassed = res.json.getCall(0).args[0]
-  t.log(`argsPassed in getWorkoutDetails: ${JSON.stringify(argsPassed)}`)
   t.true(res.status.calledWith(200))
   t.true(argsPassed.mssg === 'Success!')
   t.true(argsPassed.workoutToReturn.length === 1)

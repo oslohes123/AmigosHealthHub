@@ -125,7 +125,6 @@ test('getACompletedWorkout with created completed workout returns success', asyn
 
   await getACompletedWorkout(req as Request, res as Response)
   const argsPassed = res.json.getCall(0).args[0]
-  t.log(`argsPassed in getACompletedWorkout: ${JSON.stringify(argsPassed)}`)
   t.true(argsPassed.mssg === 'Success!')
   t.true(res.status.calledWith(200))
   t.true(argsPassed.workoutToReturn.length === 2)

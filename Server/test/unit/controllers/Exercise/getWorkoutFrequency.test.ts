@@ -66,8 +66,6 @@ test.serial('getWorkoutFrequency with user with no workouts results in success a
   const req = mockRequest(validRequest)
   const res = mockResponse()
   await getWorkoutFrequency(req as Request, res as Response)
-  const argsPassed = res.json.getCall(0).args[0]
-  t.log(`argsPassed in getWorkoutFrequency: ${JSON.stringify(argsPassed)}`)
   t.true(res.status.calledWith(200))
   t.true(res.json.calledWith({ mssg: 'Success!', graphLabels: [], graphData: [] }))
 })
@@ -81,8 +79,6 @@ test.serial('getWorkoutFrequency with user with 1 workout returns array of size 
   const req = mockRequest(validRequest)
   const res = mockResponse()
   await getWorkoutFrequency(req as Request, res as Response)
-  const argsPassed = res.json.getCall(0).args[0]
-  t.log(`argsPassed in getWorkoutFrequency 1 workout: ${JSON.stringify(argsPassed)}`)
   t.true(res.status.calledWith(200))
   t.true(res.json.calledWith({ mssg: 'Success!', graphLabels: [nameOfWorkout], graphData: [1] }))
 })
@@ -96,8 +92,6 @@ test.serial('getWorkoutFrequency with user with 2 workouts returns correct graph
   const req = mockRequest(validRequest)
   const res = mockResponse()
   await getWorkoutFrequency(req as Request, res as Response)
-  const argsPassed = res.json.getCall(0).args[0]
-  t.log(`argsPassed in getWorkoutFrequency 2 workout: ${JSON.stringify(argsPassed)}`)
   t.true(res.status.calledWith(200))
   t.true(res.json.calledWith({ mssg: 'Success!', graphLabels: ['Workout Plan 1', nameOfWorkout], graphData: [1, 1] }))
 })

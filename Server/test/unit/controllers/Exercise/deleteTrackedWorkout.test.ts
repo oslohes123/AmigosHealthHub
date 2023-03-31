@@ -91,7 +91,6 @@ test('deleteTrackedWorkout results in error when workoutname is missing', async 
 test('deleteTrackedWorkout results in error when date is missing', async (t: ExecutionContext) => {
   const cloneValidRequest = cloneDeep(validRequest)
   delete cloneValidRequest.date
-  t.log(`cloneValidRequest date missing: ${JSON.stringify(cloneValidRequest)}`)
   const req = mockRequest(cloneValidRequest)
   const res = mockResponse()
   await deleteTrackedWorkout(req as Request, res as Response)
@@ -115,8 +114,6 @@ test.serial('deleteTrackedWorkout results in error when user has no completed wo
   const req = mockRequest(fakeWorkoutRequest)
   const res = mockResponse()
   await deleteTrackedWorkout(req as Request, res as Response)
-  const argsPassed = res.json.getCall(0).args[0]
-  t.log(`deleteTrackedWorkout argsPassed: ${JSON.stringify(argsPassed)}`)
   t.true(res.status.calledWith(400))
   t.true(res.json.calledWith({ mssg: 'User does not have any completed workouts!' }))
 })
@@ -136,8 +133,6 @@ test.serial('deleteTrackedWorkout results in success when given correct workout 
   const req = mockRequest(validWorkoutRequest)
   const res = mockResponse()
   await deleteTrackedWorkout(req as Request, res as Response)
-  const argsPassed = res.json.getCall(0).args[0]
-  t.log(`deleteTrackedWorkout success test argsPassed: ${JSON.stringify(argsPassed)}`)
   t.true(res.status.calledWith(200))
   t.true(res.json.calledWith({ mssg: `Success deleting trackedWorkout ${String(validWorkoutRequest.workoutname)}!` }))
 })
@@ -154,7 +149,6 @@ test.serial('deleteTrackedWorkout results in error when user has workout of the 
   const res = mockResponse()
   await deleteTrackedWorkout(req as Request, res as Response)
   const argsPassed = res.json.getCall(0).args[0]
-  t.log(`deleteTrackedWorkout last test argsPassed: ${JSON.stringify(argsPassed)}`)
   t.true(res.status.calledWith(400))
   t.true(res.json.calledWith({ mssg: 'A workout of this name at this time and date does not exist for this user!' }))
 })

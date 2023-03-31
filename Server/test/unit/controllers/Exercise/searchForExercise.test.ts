@@ -42,7 +42,6 @@ test('searchForExercise with bench press results in success', async (t: Executio
   const res = mockResponse()
   await searchForExercise(req as Request, res as Response)
   const argsPassed = res.json.getCall(0).args[0]
-  t.log(`argsPassed in searchForExercise: ${JSON.stringify(argsPassed)}`)
   t.true(res.status.calledWith(200))
   t.true(argsPassed.mssg === 'Successful Search!')
   t.true(argsPassed.searchedWords.length > 0)

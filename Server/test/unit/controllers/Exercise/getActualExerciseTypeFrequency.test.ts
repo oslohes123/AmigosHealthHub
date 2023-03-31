@@ -82,8 +82,6 @@ test.serial('getActualExerciseTypeFrequency with user with 1 workout returns arr
   const req = mockRequest(validRequest)
   const res = mockResponse()
   await getActualExerciseTypeFrequency(req as Request, res as Response)
-  const argsPassed = res.json.getCall(0).args[0]
-  t.log(`argsPassed in getActualExerciseTypeFrequency 1 workout: ${JSON.stringify(argsPassed)}`)
   t.true(res.status.calledWith(200))
   t.true(res.json.calledWith({ mssg: 'Success!', graphLabels: ['strength', 'cardio'], graphData: [1, 1] }))
 })
@@ -97,8 +95,6 @@ test.serial('getActualExerciseTypeFrequency with user with 2 workouts returns co
   const req = mockRequest(validRequest)
   const res = mockResponse()
   await getActualExerciseTypeFrequency(req as Request, res as Response)
-  const argsPassed = res.json.getCall(0).args[0]
-  t.log(`argsPassed in getActualExerciseTypeFrequency 2 workout: ${JSON.stringify(argsPassed)}`)
   t.true(res.status.calledWith(200))
   t.true(res.json.calledWith({ mssg: 'Success!', graphLabels: ['strength', 'cardio'], graphData: [2, 2] }))
 })

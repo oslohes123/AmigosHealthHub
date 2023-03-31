@@ -148,12 +148,10 @@ test(`POST ${addCompletedWorkoutRoute} with correct inputs adds a completed work
         }
       ]
     })
-  t.log(`response in integration test: ${JSON.stringify(response)}`)
   const { dataSelectAllCompletedWorkoutNames, errorSelectAllCompletedWorkoutNames }: any = await selectAllCompletedWorkoutNames(uuid)
   if (errorSelectAllCompletedWorkoutNames) {
     t.fail('Error selecting workouts done by user')
   }
-  t.log(`dataSelectAllCompletedWorkoutNames in integration test: ${JSON.stringify(dataSelectAllCompletedWorkoutNames)}`)
   const { dataSelectAllTrackedWorkoutsWithExercises, errorSelectAllTrackedWorkoutsWithExercises }: any = await selectAllTrackedWorkoutsWithExercises(dataSelectAllCompletedWorkoutNames[0].completedWorkoutID)
   if (errorSelectAllTrackedWorkoutsWithExercises) {
     t.fail('Selecting Tracked Workouts with exercises went wrong!')

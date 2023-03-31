@@ -75,8 +75,6 @@ test.serial('getAllWorkoutNames with userid with no workouts results in ', async
   const req = mockRequest(validRequest)
   const res = mockResponse()
   await getAllWorkoutNames(req as Request, res as Response)
-  const argsPassed = res.json.getCall(0).args[0]
-  t.log(`argsPassed in getAllWorkoutNames: ${JSON.stringify(argsPassed)}`)
   t.true(res.status.calledWith(200))
   t.true(res.json.calledWith({ mssg: 'Success!', arrayOfAllWorkouts: [] }))
 })
@@ -90,8 +88,6 @@ test.serial('getAllWorkoutNames with userid with a workout results in ', async (
   const req = mockRequest(validRequest)
   const res = mockResponse()
   await getAllWorkoutNames(req as Request, res as Response)
-  const argsPassed = res.json.getCall(0).args[0]
-  t.log(`argsPassed in getAllWorkoutNames: ${JSON.stringify(argsPassed)}`)
   t.true(res.status.calledWith(200))
   t.true(res.json.calledWith({ mssg: 'Success!', arrayOfAllWorkouts: [nameOfWorkout] }))
 })
@@ -105,8 +101,6 @@ test.serial('getAllWorkoutNames with userid with 2 workouts results in success',
   const req = mockRequest(validRequest)
   const res = mockResponse()
   await getAllWorkoutNames(req as Request, res as Response)
-  const argsPassed = res.json.getCall(0).args[0]
-  t.log(`argsPassed in getAllWorkoutNames: ${JSON.stringify(argsPassed)}`)
   t.true(res.status.calledWith(200))
   t.true(res.json.calledWith({ mssg: 'Success!', arrayOfAllWorkouts: ['Test Workout', nameOfWorkout] }))
 })

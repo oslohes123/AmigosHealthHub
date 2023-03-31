@@ -76,7 +76,6 @@ test.serial('getCaloriesToday with user with a valid workoutplan returns the cor
   const req = mockRequest({ userid: uuid })
   const res = mockResponse()
   await getCaloriesToday(req as Request, res as Response)
-  t.log(`ln100: ${JSON.stringify(res.json.getCall(0).args[0])}`)
   t.true(res.status.calledWith(200))
   t.true(res.json.calledWith({ mssg: 'Success', totalCaloriesBurnt: 1000 }))
   // delete all workoutplans

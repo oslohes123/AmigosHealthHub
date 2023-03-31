@@ -60,7 +60,6 @@ test.serial(`GET ${getAllCompletedWorkoutsRoute}with no workouts returns success
     .get(getAllCompletedWorkoutsRoute)
     .set({ authorization: token, userid: uuid })
 
-  t.log(`test res: ${JSON.stringify(response)}`)
   t.true(response.status === 200)
   t.true(response.body.mssg === 'Got All Completed Workouts!')
   t.true(JSON.stringify(response.body.workoutsNamesAndDates) === '[]')

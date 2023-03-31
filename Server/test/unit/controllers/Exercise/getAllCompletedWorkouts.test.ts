@@ -56,8 +56,6 @@ test.serial('getAllCompletedWorkouts with missing userid results in error', asyn
   const req = mockRequest({})
   const res = mockResponse()
   await getAllCompletedWorkouts(req as Request, res as Response)
-  const argsPassed = res.json.getCall(0).args[0]
-  t.log(`argsPassed in getAllCompletedWorkouts: ${JSON.stringify(argsPassed)}`)
   t.true(res.status.calledWith(400))
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'JSON instance was invalid against its schema' }))
 })
@@ -65,11 +63,9 @@ test.serial('getAllCompletedWorkouts with missing userid results in error', asyn
 test.serial('getAllCompletedWorkouts with no workouts returns success and empty array', async (t: ExecutionContext) => {
   const req = mockRequest({ userid: uuid })
   const res = mockResponse()
-  t.log(`req in unit getAllCompletedWorkouts: ${JSON.stringify(req)}`)
   await getAllCompletedWorkouts(req as Request, res as Response)
   const argsPassed = res.json.getCall(0).args[0]
   t.true(res.status.calledWith(200))
-  t.log(`argsPassed in getAllCompletedWorkouts: ${JSON.stringify(argsPassed)}`)
   t.true(argsPassed.mssg === 'Got All Completed Workouts!')
   t.true(JSON.stringify(argsPassed.workoutsNamesAndDates) === '[]')
 })
@@ -85,7 +81,6 @@ test.serial('getAllCompletedWorkouts with workouts returns success and ordered a
   await getAllCompletedWorkouts(req as Request, res as Response)
   const argsPassed = res.json.getCall(0).args[0]
   t.true(res.status.calledWith(200))
-  t.log(`argsPassed in last test of getAllCompletedWorkouts: ${JSON.stringify(argsPassed)}`)
   t.true(argsPassed.mssg === 'Got All Completed Workouts!')
   t.true(argsPassed.workoutsNamesAndDates.length === 1)
   t.true(argsPassed.workoutsNamesAndDates[0].workoutname === 'Test Tracked Workout')

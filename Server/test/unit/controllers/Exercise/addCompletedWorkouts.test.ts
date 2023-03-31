@@ -105,7 +105,6 @@ test('addCompletedWorkouts with bad timestamp format results in error', async (t
 })
 
 test('addCompletedWorkouts with correct inputs adds a completed workout', async (t: ExecutionContext) => {
-  t.log(`exercisesWorkoutPlan.exercises: ${JSON.stringify(exercisesWorkoutPlan)}`)
   const req = mockRequest({
     userid: uuid,
     workoutname: 'Test Track Workout Name',
@@ -133,15 +132,11 @@ test('addCompletedWorkouts with correct inputs adds a completed workout', async 
     ]
   })
   const res = mockResponse()
-  t.log(`addCompletedWorkout Test req.body: ${JSON.stringify(req.body)}`)
   await addCompletedWorkouts(req as Request, res as Response)
-  const argsPassed = res.json.getCall(0).args[0]
-  t.log(`argsPassed in addCompletedWorkouts: ${JSON.stringify(argsPassed)}`)
   const { dataSelectAllCompletedWorkoutNames, errorSelectAllCompletedWorkoutNames }: any = await selectAllCompletedWorkoutNames(uuid)
   if (errorSelectAllCompletedWorkoutNames) {
     t.fail('Error selecting workouts done by user')
   }
-  t.log(`dataSelectAllCompletedWorkoutNames: ${JSON.stringify(dataSelectAllCompletedWorkoutNames)}`)
   const { dataSelectAllTrackedWorkoutsWithExercises, errorSelectAllTrackedWorkoutsWithExercises }: any = await selectAllTrackedWorkoutsWithExercises(dataSelectAllCompletedWorkoutNames[0].completedWorkoutID)
   if (errorSelectAllTrackedWorkoutsWithExercises) {
     t.fail('Selecting Tracked Workouts with exercises went wrong!')

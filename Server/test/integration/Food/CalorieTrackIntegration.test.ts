@@ -47,8 +47,6 @@ test.before(async (t: ExecutionContext) => {
     Date: todaysDate
   })
   if (insertingError !== undefined) {
-    t.log('Error insesrting is ', insertingError)
-    t.log('Result of data ', insertingData)
     t.fail('Inserting first user failed!')
   }
   testCalorieId = insertingData[0].id
@@ -63,7 +61,6 @@ test(`POST ${foodBase + routeNames.partialCreateCalorieLogURL} create calorie go
     .post(foodBase + routeNames.partialCreateCalorieLogURL)
     .set('authorization', token)
     .send({ CalorieGoal: 999, UserID: userID, Date: '2021-01-01' })
-  t.log(response.body)
   t.true(response.status === 200)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.is(response.body[0].UserID, userID)

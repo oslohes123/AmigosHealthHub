@@ -94,8 +94,6 @@ test.serial('getExerciseHistory with no completed workouts results in empty grap
   const req = mockRequest(validRequestWithExistingNameOfExercise)
   const res = mockResponse()
   await getExerciseHistory(req as Request, res as Response)
-  const argsPassed = res.json.getCall(0).args[0]
-  t.log(`argsPassed in getExerciseHistory: ${JSON.stringify(argsPassed)}`)
   t.true(res.status.calledWith(400))
   t.true(res.json.calledWith({ mssg: 'Exercise has never been performed' }))
 })
@@ -112,12 +110,10 @@ test.serial('getExerciseHistory with a completed workout for strength/muscle exe
   const res = mockResponse()
   await getExerciseHistory(req as Request, res as Response)
   const argsPassed = res.json.getCall(0).args[0]
-  t.log(`argsPassed in getExerciseHistory: ${JSON.stringify(argsPassed)}`)
   t.true(res.status.calledWith(200))
   t.true(argsPassed.mssg === 'Success!')
   t.true(argsPassed.type === 'muscle/strength')
   t.true(JSON.stringify(argsPassed.data.arrayOfWeightPulled) === JSON.stringify([276]))
-  t.log(`argsPassed.arraysOfDates: ${JSON.stringify(argsPassed.arrayOfDates)}`)
   t.true(JSON.stringify(argsPassed.arrayOfDates) === JSON.stringify([[getTodaysDate()]]))
 })
 
@@ -133,7 +129,6 @@ test.serial('getExerciseHistory with a completed workout for cardio exercise res
   const res = mockResponse()
   await getExerciseHistory(req as Request, res as Response)
   const argsPassed = res.json.getCall(0).args[0]
-  t.log(`argsPassed in last getExerciseHistory: ${JSON.stringify(argsPassed)}`)
   t.true(res.status.calledWith(200))
   t.true(argsPassed.mssg === 'Success!')
   t.true(argsPassed.type === 'Other')

@@ -83,8 +83,6 @@ test.serial('getWorkoutHistoryByDate returns empty arrays with user who has no w
   const req = mockRequest(validRequest)
   const res = mockResponse()
   await getWorkoutHistoryByDate(req as Request, res as Response)
-  const argsPassed = res.json.getCall(0).args[0]
-  t.log(`argsPassed in getWorkoutHistoryByDate:${JSON.stringify(argsPassed)} `)
   t.true(res.status.calledWith(200))
   t.true(res.json.calledWith({ mssg: 'Success!', arrayOfWorkoutNamesAndIDs: [], graphLabels: [], graphData: [] }))
 })
@@ -99,9 +97,6 @@ test.serial('getWorkoutHistoryByDate returns arrays of data with user who has wo
   const res = mockResponse()
   await getWorkoutHistoryByDate(req as Request, res as Response)
   const argsPassed = res.json.getCall(0).args[0]
-  t.log(`argsPassed in getWorkoutHistoryByDate:${JSON.stringify(argsPassed)} `)
-  t.log(`argsPassed.graphLabels:${JSON.stringify(argsPassed.graphLabels)} `)
-  t.log(`argsPassed.graphData:${JSON.stringify(argsPassed.graphData)} `)
   t.true(res.status.calledWith(200))
   t.true(argsPassed.mssg === 'Success!')
   t.true(JSON.stringify(argsPassed.graphLabels) === JSON.stringify([`Test Curl ${uuid}`, `Slow Jog ${uuid}`]))

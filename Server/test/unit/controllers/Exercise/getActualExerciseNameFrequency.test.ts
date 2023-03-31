@@ -82,8 +82,6 @@ test.serial('getActualExerciseNameFrequency with user with 1 workout returns arr
   const req = mockRequest(validRequest)
   const res = mockResponse()
   await getActualExerciseNameFrequency(req as Request, res as Response)
-  const argsPassed = res.json.getCall(0).args[0]
-  t.log(`argsPassed in getActualExerciseNameFrequency workout: ${JSON.stringify(argsPassed)}`)
   t.true(res.status.calledWith(200))
   t.true(res.json.calledWith({ mssg: 'Success!', graphLabels: [`Test Curl ${uuid}`, `Slow Jog ${uuid}`], graphData: [1, 1] }))
 })
@@ -97,8 +95,6 @@ test.serial('getActualExerciseNameFrequency with user with 2 workouts returns co
   const req = mockRequest(validRequest)
   const res = mockResponse()
   await getActualExerciseNameFrequency(req as Request, res as Response)
-  const argsPassed = res.json.getCall(0).args[0]
-  t.log(`argsPassed in getWorkoutFrequency 2 workout: ${JSON.stringify(argsPassed)}`)
   t.true(res.status.calledWith(200))
   t.true(res.json.calledWith({ mssg: 'Success!', graphLabels: [`Test Curl ${uuid}`, `Slow Jog ${uuid}`], graphData: [2, 2] }))
 })
