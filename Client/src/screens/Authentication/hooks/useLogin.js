@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuthContext } from '../context/AuthContext';
+
 const ipAddress = process.env.IP_ADDRESS;
 const port = process.env.PORT;
 const serverURL = process.env.URL;
@@ -20,7 +21,7 @@ export default function useLogin() {
   const login = async (email, password) => {
     setIsLoading(true);
     setError(null);
-  
+
     const response = await fetch(
       loginRoute,
       {

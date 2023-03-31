@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuthContext } from '../../Authentication/context/AuthContext';
+import { useLogout } from '../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
 const ipAddress = process.env.IP_ADDRESS;
@@ -20,6 +21,7 @@ export default function useSubmit() {
   // get the current users ID thats currently logged in
   const { user } = useAuthContext();
   const { id } = user;
+  const { logout } = useLogout();
 
   const submit = async (face, word) => {
     setIsLoading(true);
@@ -42,6 +44,7 @@ export default function useSubmit() {
     // get the response and test if it returns an ok or error response
     const json = await response.json();
     if (!response.ok) {
+      if (response.status === 401) { logout(); }
       setIsLoading(false);
       setError(json.mssg);
     }

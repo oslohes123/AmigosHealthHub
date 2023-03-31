@@ -6,7 +6,6 @@ import { useLogout } from '../../../Authentication/hooks/useLogOut';
 const serverURL = process.env.URL;
 const ipAddress = process.env.IP_ADDRESS;
 const port = process.env.PORT;
-// const getWorkoutHistoryByDateRoute = `${serverURL}/api/user/completedWorkouts/workoutHistoryByDate`;
 const usingDeployedServer = process.env.USING_DEPLOYED_SERVER;
 const partialGetWorkoutHistoryByDateRoute = '/api/user/completedWorkouts/workoutHistoryByDate';
 let getWorkoutHistoryByDateRoute;

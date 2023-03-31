@@ -1,6 +1,7 @@
 // Get the most recent word values to place into the wordcloud
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuthContext } from '../../Authentication/context/AuthContext';
+import { useLogout } from '../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
 // const wordValuesRoute = `${serverURL}/api/user/mentalHealth/wordcloud`;
@@ -19,6 +20,8 @@ export default function useGetWordValues() {
   // get the current users ID thats currently logged in
   const { user } = useAuthContext();
   const userID = user.id;
+  const { logout } = useLogout();
+
   // make a get request to get the most recent 7(max) word values
   const getWordValues = async () => {
     const { token } = JSON.parse(
@@ -33,6 +36,7 @@ export default function useGetWordValues() {
     );
     const json = await response.json();
     if (!response.ok) {
+      if (response.status === 401) { logout(); }
       return [0];
     }
     // if the response shows there was no error, return the words

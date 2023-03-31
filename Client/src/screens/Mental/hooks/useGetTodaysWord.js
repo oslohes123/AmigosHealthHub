@@ -2,6 +2,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState } from 'react';
 import { useAuthContext } from '../../Authentication/context/AuthContext';
+import { useLogout } from '../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
 // const todaysWordRoute = `${serverURL}/api/user/mentalHealth/todaysWord`;
@@ -21,6 +22,8 @@ export default function useGetTodaysWord() {
   // get the current users ID thats currently logged in
   const { user } = useAuthContext();
   const userID = user.id;
+  const { logout } = useLogout();
+
   // make a get request to get the recent word
   const getTodaysWord = async () => {
     const { token } = JSON.parse(
@@ -37,6 +40,7 @@ export default function useGetTodaysWord() {
     );
     const json = await response.json();
     if (!response.ok) {
+      if (response.status === 401) { logout(); }
       setIsLoading(false);
       setError(json.mssg);
       return null;

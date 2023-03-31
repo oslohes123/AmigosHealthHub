@@ -1,6 +1,7 @@
 // get the most recent face values and return it when the hook is called
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuthContext } from '../../Authentication/context/AuthContext';
+import { useLogout } from '../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
 // const faceValuesRoute = `${serverURL}/api/user/mentalHealth/faceGraph`;
@@ -18,6 +19,8 @@ export default function useGetFaceValues() {
   // get the current users ID thats currently logged in
   const { user } = useAuthContext();
   const userID = user.id;
+  const { logout } = useLogout();
+
   // make a get request to get the most recent 7(max) face values
   const getFaceValues = async () => {
     const { token } = JSON.parse(
@@ -32,6 +35,7 @@ export default function useGetFaceValues() {
     );
     const json = await response.json();
     if (!response.ok) {
+      if (response.status === 401) { logout(); }
       return [0];
     }
     if (response.ok) {

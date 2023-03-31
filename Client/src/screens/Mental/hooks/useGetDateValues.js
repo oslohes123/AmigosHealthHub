@@ -1,6 +1,7 @@
 // Get the date values for the most recent 7 (max) submissions to put into x-axis of the line graph
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuthContext } from '../../Authentication/context/AuthContext';
+import { useLogout } from '../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
 // const dateValuesRoute = `${serverURL}/api/user/mentalHealth/dateValues`;
@@ -18,6 +19,7 @@ export default function useuseGetDateValues() {
   // get the current users ID thats currently logged in
   const { user } = useAuthContext();
   const userID = user.id;
+  const { logout } = useLogout();
 
   const getDateValues = async () => {
     const { token } = JSON.parse(
@@ -33,6 +35,7 @@ export default function useuseGetDateValues() {
     );
     const json = await response.json();
     if (!response.ok) {
+      if (response.status === 401) { logout(); }
       return [0];
     }
     if (response.ok) {

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAuthContext } from '../../Authentication/context/AuthContext';
+import { useLogout } from '../../Authentication/hooks/useLogOut';
 
 const serverURL = process.env.URL;
 const ipAddress = process.env.IP_ADDRESS;
@@ -18,6 +19,7 @@ export default function useAddSleep() {
   const { user } = useAuthContext();
   const { id } = user;
   const { token } = user;
+  const { logout } = useLogout();
 
   const addSleep = async (
     hoursSleptInput,
@@ -45,6 +47,7 @@ export default function useAddSleep() {
 
     const responseJSON = await response.json();
     if (!response.ok) {
+      if (response.status === 401) { logout(); }
       setIsLoading(false);
       setError(responseJSON.mssg);
     } else if (response.ok) {
