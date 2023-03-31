@@ -2,14 +2,12 @@ import test from 'ava'
 import sinon from 'sinon'
 import { type Request, type Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
-import { createUserWithID, deleteUserRow, createHashedPassword } from '../../../utils/userFunctions'
+import { createUserWithID, deleteUserRow, createHashedPassword } from '../../../../utils/userFunctions'
 import cloneDeep from 'lodash/cloneDeep'
-import { getTime, getTodaysDate, getDate } from '../../../utils/convertTimeStamptz'
-import { deleteMultipleExercises } from '../../../utils/Exercise/insertAndDeleteMultipleExercises'
-import setUpWorkoutPlan from '../../../utils/Exercise/setUpWorkoutPlanForTests'
-import { deleteWorkoutPlan } from '../../../routes/Exercise/createWorkout.controller'
-import { deleteAllWorkoutPlansWithExercises } from '../../../utils/Exercise/deleteWorkoutPlans'
-import { matchWorkoutPlanAndUser } from '../../../utils/Exercise/exerciseFunctions'
+import setUpWorkoutPlan from '../../../../utils/Exercise/setUpWorkoutPlanForTests'
+import { deleteWorkoutPlan } from '../../../../routes/Exercise/createWorkout.controller'
+import { deleteAllWorkoutPlansWithExercises } from '../../../../utils/Exercise/deleteWorkoutPlans'
+import { matchWorkoutPlanAndUser } from '../../../../utils/Exercise/exerciseFunctions'
 
 let randomEmail: string
 const uuid = uuidv4()
@@ -37,9 +35,9 @@ test.after.always('guaranteed cleanup of user and delete exercises', async (t: a
   if (errorPresent) {
     t.fail(errorPresent)
   }
-  const { errorDeletingMultipleExercises }: any = await deleteMultipleExercises([{ name: `Test Curl ${uuid}` }, { name: `Slow Jog ${uuid}` }])
-  if (errorDeletingMultipleExercises) {
-    t.fail(JSON.stringify(errorDeletingMultipleExercises))
+  const { error } = await deleteUserRow(randomEmail)
+  if (error) {
+    t.fail(`deleteUserRow of ${randomEmail} failed`)
   }
 })
 
