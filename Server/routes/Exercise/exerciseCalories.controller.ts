@@ -1,9 +1,9 @@
 import { type Request, type Response } from 'express'
-import supabase from '../../utils/supabaseSetUp'
-import { SupabaseQueryClass } from '../../utils/databaseInterface'
-import { getDate, getTodaysDate } from '../../utils/convertTimeStamptz'
+import supabase from '../../utils/General/supabaseSetUp'
+import { SupabaseQueryClass } from '../../utils/General/databaseInterface'
+import { getDate, getTodaysDate } from '../../utils/General/convertTimeStamptz'
 import { schemaForRequireduserid } from '../../utils/JSONSchemas/schemaForRequireduserid'
-import validateJSONSchema from '../../utils/validateJSONSchema'
+import validateJSONSchema from '../../utils/JSONSchemas/validateJSONSchema'
 const databaseQuery = new SupabaseQueryClass()
 
 export const getCaloriesToday = async (req: Request, res: Response) => {

@@ -3,14 +3,14 @@ import { type ExecutionContext } from 'ava'
 import sinon from 'sinon'
 import { type Request, type Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
-import { createHashedPassword, createUserWithID, deleteUserRow } from '../../../../utils/userFunctions'
+import { createHashedPassword, createUserWithID, deleteUserRow } from '../../../../utils/User/userFunctions'
 import cloneDeep from 'lodash/cloneDeep'
 import setUpWorkoutPlan from '../../../../utils/Exercise/setUpWorkoutPlanForTests'
 import { deleteMultipleExercises } from '../../../../utils/Exercise/insertAndDeleteMultipleExercises'
 import { setUpCompletedWorkoutForTests } from '../../../../utils/Exercise/setUpCompletedWorkoutForTests'
 import { getExerciseHistory } from '../../../../routes/Exercise/exerciseHistory.controller'
 import { deleteAllWorkoutPlansWithExercises } from '../../../../utils/Exercise/deleteWorkoutPlans'
-import { getTodaysDate } from '../../../../utils/convertTimeStamptz'
+import { getTodaysDate } from '../../../../utils/General/convertTimeStamptz'
 const uuid = uuidv4()
 const randomEmail = `${uuid}@example.com`
 test.before(async (t: ExecutionContext) => {

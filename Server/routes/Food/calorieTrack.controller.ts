@@ -1,7 +1,7 @@
 import { type Request, type Response } from 'express'
-import { SupabaseQueryClass } from '../../utils/databaseInterface'
-import supabase from '../../utils/supabaseSetUp'
-import validateJSONSchema from './../../utils/validateJSONSchema'
+import { SupabaseQueryClass } from '../../utils/General/databaseInterface'
+import supabase from '../../utils/General/supabaseSetUp'
+import validateJSONSchema from '../../utils/JSONSchemas/validateJSONSchema'
 import * as calorieSchemas from '../../utils/JSONSchemas/Food/calorieSchemas'
 require('dotenv').config()
 const databaseQuery = new SupabaseQueryClass()

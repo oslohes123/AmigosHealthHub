@@ -1,4 +1,4 @@
-import { createToken } from '../../../../utils/userFunctions'
+import { createToken } from '../../../../utils/User/userFunctions'
 import { v4 as uuidv4 } from 'uuid'
 require('dotenv').config()
 import test from 'ava'

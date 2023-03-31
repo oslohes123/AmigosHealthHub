@@ -1,8 +1,8 @@
 import test from 'ava'
 import { type ExecutionContext } from 'ava'
-import supabase from '../../../utils/supabaseSetUp'
-import { createUser, getUserByEmail, deleteUserRow } from '../../../utils/userFunctions'
-import { type UserInterface } from '../../../utils/userInterface'
+import supabase from '../../../utils/General/supabaseSetUp'
+import { createUser, getUserByEmail, deleteUserRow } from '../../../utils/User/userFunctions'
+import { type UserInterface } from '../../../utils/General/userInterface'
 
 const user: UserInterface = {
   firstName: 'John',

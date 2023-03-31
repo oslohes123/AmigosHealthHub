@@ -1,5 +1,5 @@
 import { getWorkoutDetails, getAllWorkoutNames } from './getWorkout.controller'
-import RouteNamesClass from '../../utils/routeNamesClass'
+import RouteNamesClass from '../../utils/General/routeNamesClass'
 import { checkToken } from '../../middleware/checkToken'
 const express = require('express')
 const getWorkoutRouter = express.Router()

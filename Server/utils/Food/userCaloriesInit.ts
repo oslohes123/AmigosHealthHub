@@ -1,5 +1,5 @@
-import { SupabaseQueryClass } from '../../utils/databaseInterface'
-import supabase from '../../utils/supabaseSetUp'
+import { SupabaseQueryClass } from '../General/databaseInterface'
+import supabase from '../General/supabaseSetUp'
 require('dotenv').config()
 const databaseQuery = new SupabaseQueryClass()
 

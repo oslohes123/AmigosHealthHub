@@ -1,7 +1,7 @@
 import app from '../../../index'
 import { v4 as uuidv4 } from 'uuid'
-import { createHashedPassword, createToken, createUserWithID, deleteUserRow, getUserByEmail } from '../../../utils/userFunctions'
-import RouteNamesClass from '../../../utils/routeNamesClass'
+import { createHashedPassword, createToken, createUserWithID, deleteUserRow, getUserByEmail } from '../../../utils/User/userFunctions'
+import RouteNamesClass from '../../../utils/General/routeNamesClass'
 
 import request from 'supertest'
 import test from 'ava'

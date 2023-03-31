@@ -30,7 +30,7 @@ import getUserInfoRouter from './routes/User/getUserInfo.router'
 
 // Check initial token Route
 import checkInitialTokenRouter from './routes/User/checkInitialToken.router'
-import RouteNamesClass from './utils/routeNamesClass'
+import RouteNamesClass from './utils/General/routeNamesClass'
 import exerciseHistoryRouter from './routes/Exercise/exerciseHistory.router'
 import exerciseRouter from './routes/Exercise/searchExercise.router'
 // exerciseCalories Routes

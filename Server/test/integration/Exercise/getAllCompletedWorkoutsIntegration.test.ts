@@ -3,10 +3,10 @@ import { v4 as uuidv4 } from 'uuid'
 import request from 'supertest'
 import test from 'ava'
 import { type ExecutionContext } from 'ava'
-import { createHashedPassword, createUserWithID, deleteUserRow, createToken } from '../../../utils/userFunctions'
+import { createHashedPassword, createUserWithID, deleteUserRow, createToken } from '../../../utils/User/userFunctions'
 import { setUpCompletedWorkoutForTests } from '../../../utils/Exercise/setUpCompletedWorkoutForTests'
 import { deleteMultipleExercises } from '../../../utils/Exercise/insertAndDeleteMultipleExercises'
-import RouteNamesClass from '../../../utils/routeNamesClass'
+import RouteNamesClass from '../../../utils/General/routeNamesClass'
 const routeNames = new RouteNamesClass()
 const getAllCompletedWorkoutsRoute = routeNames.fullGetAllCompletedWorkoutURL
 let randomEmail: string

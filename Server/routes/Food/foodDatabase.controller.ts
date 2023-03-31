@@ -1,8 +1,8 @@
 import { type Request, type Response } from 'express'
-import { SupabaseQueryClass } from '../../utils/databaseInterface'
-import supabase from '../../utils/supabaseSetUp'
+import { SupabaseQueryClass } from '../../utils/General/databaseInterface'
+import supabase from '../../utils/General/supabaseSetUp'
 import type FoodInput from './../../interfaces/Food/foodInterfaces'
-import validateJSONSchema from './../../utils/validateJSONSchema'
+import validateJSONSchema from '../../utils/JSONSchemas/validateJSONSchema'
 import * as foodSchemas from '../../utils/JSONSchemas/Food/foodDatabaseSchemas'
 require('dotenv').config()
 const databaseQuery = new SupabaseQueryClass()

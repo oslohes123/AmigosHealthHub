@@ -9,7 +9,7 @@ import transformNutrientSearchInterface from '../../utils/Food/parseNutritionSea
 import type genericSearchInterface from '../../interfaces/Food/genericSearchInterface'
 import type specificFoodNutritionInterface from '../../interfaces/Food/specificFoodNutritionInterface'
 import { isBranded } from '../../utils/Food/genericOrBrandedIdentifier'
-import validateJSONSchema from './../../utils/validateJSONSchema'
+import validateJSONSchema from '../../utils/JSONSchemas/validateJSONSchema'
 import * as searchSchema from '../../utils/JSONSchemas/Food/searchSchema'
 require('dotenv').config()
 

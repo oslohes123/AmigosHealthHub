@@ -1,5 +1,5 @@
-import supabase from '../supabaseSetUp'
-import { SupabaseQueryClass } from '../databaseInterface'
+import supabase from '../General/supabaseSetUp'
+import { SupabaseQueryClass } from '../General/databaseInterface'
 const databaseQuery = new SupabaseQueryClass()
 
 export async function insertCompletedWorkoutRow (id: string, workoutname: string, timestamp: string, table = 'CompletedWorkouts', database = supabase) {
@@ -233,15 +233,6 @@ export async function getWorkoutByID (completedWorkoutID: string) {
         delete arrayOfPossibleExercises[i].exerciseID
         delete arrayOfPossibleExercises[i].userID
         arrayOfPossibleExercises[i].exercise = data[0]
-      }
-    }
-    for (let i = 0; i < arrayOfPossibleExercises.length; i++) {
-      const { data, error }: any = await databaseQuery.selectWhere(supabase, 'ActualExercises', 'AEID', arrayOfPossibleExercises[i].AEID, '*')
-      if (error) errorAndWorkout.errorPresent = error
-      else {
-        // arrayOfPossibleExercises[i].exercise = data[0];
-        console.log(`data ln65 getWorkout: ${JSON.stringify(data)}`)
-        console.log(`arrayOfPossibleExercises ln 66: ${JSON.stringify(arrayOfPossibleExercises)}`)
       }
     }
 

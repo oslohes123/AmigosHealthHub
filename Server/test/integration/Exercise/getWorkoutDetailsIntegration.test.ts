@@ -4,10 +4,10 @@ import test from 'ava'
 import { type ExecutionContext } from 'ava'
 import request from 'supertest'
 import { cloneDeep } from 'lodash'
-import { createHashedPassword, createUserWithID, deleteUserRow, createToken } from '../../../utils/userFunctions'
+import { createHashedPassword, createUserWithID, deleteUserRow, createToken } from '../../../utils/User/userFunctions'
 import setUpWorkoutPlan from '../../../utils/Exercise/setUpWorkoutPlanForTests'
 import { deleteAllWorkoutPlansWithExercises } from '../../../utils/Exercise/deleteWorkoutPlans'
-import RouteNamesClass from '../../../utils/routeNamesClass'
+import RouteNamesClass from '../../../utils/General/routeNamesClass'
 const routeNames = new RouteNamesClass()
 const getWorkoutDetailsRoute = routeNames.fullGetWorkoutURL
 

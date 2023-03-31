@@ -1,5 +1,5 @@
 import { type Request, type Response } from 'express'
-import { removeDuplicates } from '../../utils/arrayManipulation'
+import { removeDuplicates } from '../../utils/General/arrayManipulation'
 import searchAPIForExercise from '../../utils/Exercise/fetchExerciseAPI'
 /**
  * Given a name, return all exercise matches from the fitness API

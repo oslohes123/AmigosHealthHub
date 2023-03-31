@@ -1,7 +1,7 @@
 // const userFunctions = require('../controllers/changeProfileDetails');
 import { changeStats, changePassword, deleteAccount } from './changeProfileDetails.controller'
 import { checkToken } from '../../middleware/checkToken'
-import RouteNamesClass from '../../utils/routeNamesClass'
+import RouteNamesClass from '../../utils/General/routeNamesClass'
 const express = require('express')
 const changeProfileDetailsRouter = express.Router()
 changeProfileDetailsRouter.use(express.json())

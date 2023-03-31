@@ -1,8 +1,8 @@
 import { type Request, type Response } from 'express'
-import { createHashedPassword, getUserByID, getUserByEmail, updateUser, verifyPassword, deleteUserRowByID } from '../../utils/userFunctions'
-import { isEmail, isStrongPassword } from '../../utils/validators'
+import { createHashedPassword, getUserByID, getUserByEmail, updateUser, verifyPassword, deleteUserRowByID } from '../../utils/User/userFunctions'
+import { isEmail, isStrongPassword } from '../../utils/General/validators'
 import { deleteAllWorkoutPlansWithExercises } from '../../utils/Exercise/deleteWorkoutPlans'
-import validateJSONSchema from '../../utils/validateJSONSchema'
+import validateJSONSchema from '../../utils/JSONSchemas/validateJSONSchema'
 import { schemaForRequireduserid } from '../../utils/JSONSchemas/schemaForRequireduserid'
 require('dotenv').config()
 

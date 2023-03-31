@@ -1,6 +1,6 @@
 import { addSleep, getSleep } from './sleep.controller'
 
-import RouteNamesClass from '../../utils/routeNamesClass'
+import RouteNamesClass from '../../utils/General/routeNamesClass'
 
 import { checkToken } from '../../middleware/checkToken'
 

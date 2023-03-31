@@ -1,5 +1,5 @@
 import { createWorkout, deleteWorkoutPlan } from './createWorkout.controller'
-import RouteNamesClass from '../../utils/routeNamesClass'
+import RouteNamesClass from '../../utils/General/routeNamesClass'
 import { checkToken } from '../../middleware/checkToken'
 const express = require('express')
 const createWorkoutRouter = express.Router()

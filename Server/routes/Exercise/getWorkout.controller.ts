@@ -1,7 +1,7 @@
 import { type Request, type Response } from 'express'
-import supabase from '../../utils/supabaseSetUp'
-import { SupabaseQueryClass } from '../../utils/databaseInterface'
-import validateJSONSchema from '../../utils/validateJSONSchema'
+import supabase from '../../utils/General/supabaseSetUp'
+import { SupabaseQueryClass } from '../../utils/General/databaseInterface'
+import validateJSONSchema from '../../utils/JSONSchemas/validateJSONSchema'
 import { schemaForRequireduserid } from '../../utils/JSONSchemas/schemaForRequireduserid'
 import { getWorkoutPlanByID } from '../../utils/Exercise/exerciseFunctions'
 const databaseQuery = new SupabaseQueryClass()

@@ -2,8 +2,8 @@ import app from '../../../index'
 import test from 'ava'
 import request from 'supertest'
 import { v4 as uuidv4 } from 'uuid'
-import { createUserWithID, deleteUserRow, createHashedPassword, createToken } from '../../../utils/userFunctions'
-import RouteNamesClass from '../../../utils/routeNamesClass'
+import { createUserWithID, deleteUserRow, createHashedPassword, createToken } from '../../../utils/User/userFunctions'
+import RouteNamesClass from '../../../utils/General/routeNamesClass'
 const routeNames = new RouteNamesClass()
 
 const addSleepRoute = routeNames.fullAddSleepURL

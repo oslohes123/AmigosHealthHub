@@ -1,5 +1,5 @@
-import supabase from './supabaseSetUp'
-import { SupabaseQueryClass } from './databaseInterface'
+import supabase from '../General/supabaseSetUp'
+import { SupabaseQueryClass } from '../General/databaseInterface'
 import type { MentalHealthUserInterface } from './MentalHealthUserInterface'
 const databaseQuery = new SupabaseQueryClass()
 

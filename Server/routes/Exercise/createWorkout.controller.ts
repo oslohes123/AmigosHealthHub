@@ -2,7 +2,7 @@ import { type Request, type Response } from 'express'
 // import supabase from '../../utils/supabaseSetUp'
 // import { SupabaseQueryClass } from '../../utils/databaseInterface'
 import { schemaForCreateWorkoutJSON } from '../../utils/JSONSchemas/schemaForCreateWorkoutJSON'
-import validateJSONSchema from '../../utils/validateJSONSchema'
+import validateJSONSchema from '../../utils/JSONSchemas/validateJSONSchema'
 import createNewWorkoutPlan from '../../utils/Exercise/createNewWorkoutPlan'
 import { deleteWorkoutPlanRowByID, matchWorkoutPlanAndUser } from '../../utils/Exercise/exerciseFunctions'
 // const databaseQuery = new SupabaseQueryClass()

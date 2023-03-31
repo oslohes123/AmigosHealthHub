@@ -1,8 +1,8 @@
-import validateJSONSchema from '../validateJSONSchema'
-import supabase from '../supabaseSetUp'
-import { SupabaseQueryClass } from '../databaseInterface'
+import validateJSONSchema from '../JSONSchemas/validateJSONSchema'
+import supabase from '../General/supabaseSetUp'
+import { SupabaseQueryClass } from '../General/databaseInterface'
 import { schemaForExercisesInNewCompletedWorkout } from '../JSONSchemas/schemaForExercisesInNewCompletedWorkout'
-import { getTimeStamp } from '../convertTimeStamptz'
+import { getTimeStamp } from '../General/convertTimeStamptz'
 import { insertCompletedWorkoutRow, searchExerciseInExercises } from './exerciseFunctions'
 const databaseQuery = new SupabaseQueryClass()
 export const addCompletedWorkoutUnit = async (userid: string, workoutname: string, exercises: any, timestamp: string = getTimeStamp()) => {

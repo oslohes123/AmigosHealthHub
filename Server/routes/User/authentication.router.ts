@@ -1,5 +1,5 @@
 import { loginUser, signupUser } from './authentication.controller'
-import RouteNamesClass from '../../utils/routeNamesClass'
+import RouteNamesClass from '../../utils/General/routeNamesClass'
 const express = require('express')
 const authRouter = express.Router()
 authRouter.use(express.json())

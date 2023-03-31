@@ -1,5 +1,5 @@
-import supabase from '../supabaseSetUp'
-import { SupabaseQueryClass } from '../databaseInterface'
+import supabase from '../General/supabaseSetUp'
+import { SupabaseQueryClass } from '../General/databaseInterface'
 const databaseQuery = new SupabaseQueryClass()
 
 export async function deleteAllWorkoutPlansWithExercises (userID: string) {

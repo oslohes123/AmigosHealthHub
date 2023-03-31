@@ -1,5 +1,5 @@
 import { type Request, type Response, type NextFunction } from 'express'
-import { getUserByID } from '../utils/userFunctions'
+import { getUserByID } from '../User/userFunctions'
 const jwtToken = require('jsonwebtoken')
 const dotenv = require('dotenv')
 dotenv.config()

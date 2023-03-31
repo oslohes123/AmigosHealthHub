@@ -3,11 +3,11 @@ import test from 'ava'
 import { type ExecutionContext } from 'ava'
 import request from 'supertest'
 import { v4 as uuidv4 } from 'uuid'
-import { createHashedPassword, createUserWithID, deleteUserRow, createToken } from '../../../utils/userFunctions'
+import { createHashedPassword, createUserWithID, deleteUserRow, createToken } from '../../../utils/User/userFunctions'
 import cloneDeep from 'lodash/cloneDeep'
 import { deleteMultipleExercises } from '../../../utils/Exercise/insertAndDeleteMultipleExercises'
 import { setUpCompletedWorkoutForTests } from '../../../utils/Exercise/setUpCompletedWorkoutForTests'
-import RouteNamesClass from '../../../utils/routeNamesClass'
+import RouteNamesClass from '../../../utils/General/routeNamesClass'
 const routeNames = new RouteNamesClass()
 const getLastTrackedWorkoutRoute = routeNames.fullLastTrackedWorkoutURL
 
