@@ -5,6 +5,7 @@ import supabase from '../../../../utils/supabaseSetUp'
 import { SupabaseQueryClass } from '../../../../utils/databaseInterface'
 import { createHashedPassword } from '../../../../utils/userFunctions'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 const sinon = require('sinon')
 const supabaseQuery = new SupabaseQueryClass()
 
@@ -23,7 +24,7 @@ const mockRequest = (sessionData: any) => {
 
 let existingEmail: string
 let hashedPassword: string
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const uuid = uuidv4()
   existingEmail = `${uuid}@gmail.com`
 
@@ -41,11 +42,11 @@ test.before(async (t: any) => {
   }
 })
 
-test.after.always(async (t: any) => {
+test.after.always(async (t: ExecutionContext) => {
   await supabaseQuery.deleteFrom(supabase, 'User', 'email', existingEmail)
 })
 
-test('getInfo with no fields results in error', async (t: any) => {
+test('getInfo with no fields results in error', async (t: ExecutionContext) => {
   const req = mockRequest({})
   const res = mockResponse()
   await getInfo(req as Request, res as Response)
@@ -54,7 +55,7 @@ test('getInfo with no fields results in error', async (t: any) => {
   t.true(res.json.calledWith({ mssg: 'Email must be provided' }))
 })
 
-test('getInfo with non-existent user results in error', async (t: any) => {
+test('getInfo with non-existent user results in error', async (t: ExecutionContext) => {
   const randomEmail = `${uuidv4()}@gmail.com`
   const req = mockRequest({
     email: randomEmail
@@ -66,7 +67,7 @@ test('getInfo with non-existent user results in error', async (t: any) => {
   t.true(res.json.calledWith({ mssg: 'User not found!' }))
 })
 
-test('getInfo with existing user results in success', async (t: any) => {
+test('getInfo with existing user results in success', async (t: ExecutionContext) => {
   const req = mockRequest({
     email: existingEmail
   })

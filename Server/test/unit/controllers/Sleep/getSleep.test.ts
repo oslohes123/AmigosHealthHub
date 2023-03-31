@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { createHashedPassword } from '../../../../utils/userFunctions'
 import type { Request, Response } from 'express'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 const sinon = require('sinon')
 
 const databaseQuery = new SupabaseQueryClass()
@@ -13,7 +14,7 @@ const uuid = uuidv4()
 const sleepID = uuidv4()
 const randomEmail = `${uuid}@gmail.com`
 
-test.serial.before(async (t: any) => {
+test.serial.before(async (t: ExecutionContext) => {
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
   // console.log('Inserting user')
   const { error }: any = await databaseQuery.insert(supabase, 'User', {
@@ -30,7 +31,7 @@ test.serial.before(async (t: any) => {
   }
 })
 
-test.serial.before(async (t: any) => {
+test.serial.before(async (t: ExecutionContext) => {
   // console.log('Inserting user')
   const { error }: any = await databaseQuery.insert(supabase, 'Sleep Data', {
     sleepid: sleepID,
@@ -45,7 +46,7 @@ test.serial.before(async (t: any) => {
   }
 })
 
-test.after.always('guaranteed cleanup', async (t: any) => {
+test.after.always('guaranteed cleanup', async (t: ExecutionContext) => {
   await databaseQuery.deleteFrom(supabase, 'User', 'id', uuid)
 })
 
@@ -62,7 +63,7 @@ const mockRequest = (sessionData: any) => {
   }
 }
 
-test('Attempt to get sleep data without UserID', async (t: any) => {
+test('Attempt to get sleep data without UserID', async (t: ExecutionContext) => {
   const req = mockRequest({
     userID: null,
     startDate: '2023-03-20',
@@ -75,7 +76,7 @@ test('Attempt to get sleep data without UserID', async (t: any) => {
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'getSleep req.body does not match the JSON Schema!' }))
 })
 
-test('Attempt to get sleep data without start date', async (t: any) => {
+test('Attempt to get sleep data without start date', async (t: ExecutionContext) => {
   const req = mockRequest({
     userID: uuid,
     startDate: null,
@@ -90,7 +91,7 @@ test('Attempt to get sleep data without start date', async (t: any) => {
   )
 })
 
-test('Attempt to get sleep data without end date', async (t: any) => {
+test('Attempt to get sleep data without end date', async (t: ExecutionContext) => {
   const req = mockRequest({
     userID: uuid,
     startDate: '2023-03-20',
@@ -105,7 +106,7 @@ test('Attempt to get sleep data without end date', async (t: any) => {
   )
 })
 
-test('Attempt to get sleep data with invalid dates', async (t: any) => {
+test('Attempt to get sleep data with invalid dates', async (t: ExecutionContext) => {
   const req = mockRequest({
     userID: uuid,
     startDate: '2023-03-23',
@@ -120,7 +121,7 @@ test('Attempt to get sleep data with invalid dates', async (t: any) => {
   )
 })
 
-test('Attempt to get sleep data when no data in database', async (t: any) => {
+test('Attempt to get sleep data when no data in database', async (t: ExecutionContext) => {
   const req = mockRequest({
     userID: uuid,
     startDate: '2022-01-10',
@@ -133,7 +134,7 @@ test('Attempt to get sleep data when no data in database', async (t: any) => {
   t.true(res.json.calledWith({ mssg: 'Data not found!' }))
 })
 
-test('Attempt to get sleep data within valid range', async (t: any) => {
+test('Attempt to get sleep data within valid range', async (t: ExecutionContext) => {
   const req = mockRequest({
     userID: uuid,
     startDate: '2023-03-20',

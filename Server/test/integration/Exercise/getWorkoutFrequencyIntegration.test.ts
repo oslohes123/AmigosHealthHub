@@ -1,5 +1,6 @@
 import app from '../../../index'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import request from 'supertest'
 import { v4 as uuidv4 } from 'uuid'
 import { createHashedPassword, createUserWithID, deleteUserRow, createToken } from '../../../utils/userFunctions'
@@ -12,7 +13,7 @@ const getWorkoutFrequencyRoute = routeNames.fullGetWorkoutFrequencyURL
 const uuid = uuidv4()
 const randomEmail = `${uuid}@example.com`
 let token: string
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const hashedPassword = await createHashedPassword('Password123!')
   const { error } = await createUserWithID({
     id: uuid,
@@ -27,7 +28,7 @@ test.before(async (t: any) => {
   }
   token = createToken(uuid)
 })
-test.after.always(async (t: any) => {
+test.after.always(async (t: ExecutionContext) => {
   const { error } = await deleteUserRow(randomEmail)
   if (error) {
     t.fail('Deleting user went wrong!')
@@ -44,10 +45,10 @@ interface getWorkoutFrequencyRequest {
 const validRequest: getWorkoutFrequencyRequest = {
   userid: uuid
 }
-test.serial('getWorkoutFrequency route is correct', (t: any) => {
+test.serial('getWorkoutFrequency route is correct', (t: ExecutionContext) => {
   t.true(getWorkoutFrequencyRoute === '/api/user/completedWorkouts/workoutFreq')
 })
-test.serial(`GET ${getWorkoutFrequencyRoute} returns error when userid is missing`, async (t: any) => {
+test.serial(`GET ${getWorkoutFrequencyRoute} returns error when userid is missing`, async (t: ExecutionContext) => {
   const invalidRequest = cloneDeep(validRequest)
   delete invalidRequest.userid
 
@@ -55,11 +56,10 @@ test.serial(`GET ${getWorkoutFrequencyRoute} returns error when userid is missin
     .get(getWorkoutFrequencyRoute)
     .set({ authorization: token, ...invalidRequest })
 
-  t.log(`response in getWorkoutFreq integration test: ${JSON.stringify(response)}`)
   t.true(response.status === 400)
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
-test.serial(`GET ${getWorkoutFrequencyRoute} with user with no workouts results in success and empty arrays`, async (t: any) => {
+test.serial(`GET ${getWorkoutFrequencyRoute} with user with no workouts results in success and empty arrays`, async (t: ExecutionContext) => {
   const response = await request(app)
     .get(getWorkoutFrequencyRoute)
     .set({ authorization: token, ...validRequest })
@@ -68,7 +68,7 @@ test.serial(`GET ${getWorkoutFrequencyRoute} with user with no workouts results 
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Success!', graphLabels: [], graphData: [] }))
 })
 
-test.serial(`GET ${getWorkoutFrequencyRoute} with user with 1 workout returns array of size 1`, async (t: any) => {
+test.serial(`GET ${getWorkoutFrequencyRoute} with user with 1 workout returns array of size 1`, async (t: ExecutionContext) => {
   const nameOfWorkout = 'Workout Plan 1'
   const { errorSetUpCompletedWorkoutForTests, successSetUpCompletedWorkoutForTests } = await setUpCompletedWorkoutForTests(uuid, nameOfWorkout)
   if (errorSetUpCompletedWorkoutForTests || !successSetUpCompletedWorkoutForTests) {
@@ -81,7 +81,7 @@ test.serial(`GET ${getWorkoutFrequencyRoute} with user with 1 workout returns ar
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Success!', graphLabels: [nameOfWorkout], graphData: [1] }))
 })
 
-test.serial(`GET ${getWorkoutFrequencyRoute} with user with 2 workouts returns correct graph labels and data`, async (t: any) => {
+test.serial(`GET ${getWorkoutFrequencyRoute} with user with 2 workouts returns correct graph labels and data`, async (t: ExecutionContext) => {
   const nameOfWorkout = 'Workout Plan 2'
   const { errorSetUpCompletedWorkoutForTests, successSetUpCompletedWorkoutForTests } = await setUpCompletedWorkoutForTests(uuid, nameOfWorkout)
   if (errorSetUpCompletedWorkoutForTests || !successSetUpCompletedWorkoutForTests) {

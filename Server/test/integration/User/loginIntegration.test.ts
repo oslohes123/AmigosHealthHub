@@ -6,6 +6,7 @@ import { createHashedPassword } from '../../../utils/userFunctions'
 import RouteNamesClass from '../../../utils/routeNamesClass'
 import request from 'supertest'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 const supabaseQuery = new SupabaseQueryClass()
 const routeNames = new RouteNamesClass()
 /**
@@ -14,7 +15,7 @@ const routeNames = new RouteNamesClass()
 const loginRoute = routeNames.fullLoginURL
 let randomEmail: string
 
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const uuid = uuidv4()
   randomEmail = `${uuid}@gmail.com`
   console.log('In before')
@@ -32,11 +33,11 @@ test.before(async (t: any) => {
   }
 })
 
-test.after.always('guaranteed cleanup of users', async (t: any) => {
+test.after.always('guaranteed cleanup of users', async (t: ExecutionContext) => {
   await supabaseQuery.deleteFrom(supabase, 'User', 'email', randomEmail)
 })
 
-test(`POST ${loginRoute} with missing email`, async (t: any) => {
+test(`POST ${loginRoute} with missing email`, async (t: ExecutionContext) => {
   const response = await request(app)
     .post(loginRoute)
     .send({ password: 'Password123' })
@@ -46,7 +47,7 @@ test(`POST ${loginRoute} with missing email`, async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test(`POST ${loginRoute} with missing password`, async (t: any) => {
+test(`POST ${loginRoute} with missing password`, async (t: ExecutionContext) => {
   const response = await request(app)
     .post(loginRoute)
     .send({ email: 'testemail@gmail.com' })
@@ -56,7 +57,7 @@ test(`POST ${loginRoute} with missing password`, async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test(`POST ${loginRoute} with missing password and email`, async (t: any) => {
+test(`POST ${loginRoute} with missing password and email`, async (t: ExecutionContext) => {
   const response = await request(app)
     .post(loginRoute)
     .send({})
@@ -66,7 +67,7 @@ test(`POST ${loginRoute} with missing password and email`, async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'All Fields Must Be Filled' }))
 })
 
-test(`POST ${loginRoute} with non-existent email`, async (t: any) => {
+test(`POST ${loginRoute} with non-existent email`, async (t: ExecutionContext) => {
   const response = await request(app)
     .post(loginRoute)
     .send({
@@ -79,7 +80,7 @@ test(`POST ${loginRoute} with non-existent email`, async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Incorrect Email' }))
 })
 
-test(`POST ${loginRoute} with correct email and password`, async (t: any) => {
+test(`POST ${loginRoute} with correct email and password`, async (t: ExecutionContext) => {
   const response = await request(app)
     .post(loginRoute)
     .send({

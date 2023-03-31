@@ -1,5 +1,6 @@
 import app from '../../../index'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import request from 'supertest'
 import { v4 as uuidv4 } from 'uuid'
 import RouteNamesClass from '../../../utils/routeNamesClass'
@@ -11,7 +12,7 @@ const getExerciseByNameRoute = routeNames.fullGetExerciseURL
 let randomEmail: string
 const uuid = uuidv4()
 let token: string
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   randomEmail = `${uuid}@gmail.com`
 
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
@@ -31,7 +32,7 @@ test.before(async (t: any) => {
   token = createToken(uuid)
 })
 
-test.after.always('guaranteed cleanup of user and delete exercises', async (t: any) => {
+test.after.always('guaranteed cleanup of user and delete exercises', async (t: ExecutionContext) => {
   const { error } = await deleteUserRow(randomEmail)
   if (error) {
     t.fail(`deleteUserRow of ${randomEmail} failed`)
@@ -44,10 +45,10 @@ interface getExerciseByNameRequest {
 const validRequest: getExerciseByNameRequest = {
   exercisename: 'bench press'
 }
-test('getExerciseByName route is correct', (t: any) => {
+test('getExerciseByName route is correct', (t: ExecutionContext) => {
   t.true(getExerciseByNameRoute === '/api/user/exercise/get')
 })
-test(`GET ${getExerciseByNameRoute} with missing exercisename results in error`, async (t: any) => {
+test(`GET ${getExerciseByNameRoute} with missing exercisename results in error`, async (t: ExecutionContext) => {
   const invalidReqWithNoExercisename = cloneDeep(validRequest)
   delete invalidReqWithNoExercisename.exercisename
   const response = await request(app)
@@ -57,7 +58,7 @@ test(`GET ${getExerciseByNameRoute} with missing exercisename results in error`,
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong', dev: 'JSON instance does not follow JSON schema' }))
 })
 
-test(`GET ${getExerciseByNameRoute} with correct exercisename results in success`, async (t: any) => {
+test(`GET ${getExerciseByNameRoute} with correct exercisename results in success`, async (t: ExecutionContext) => {
   const response = await request(app)
     .get(getExerciseByNameRoute)
     .set({ authorization: token, ...validRequest })
@@ -67,7 +68,7 @@ test(`GET ${getExerciseByNameRoute} with correct exercisename results in success
   t.true(response.body.exerciseInformation.name === 'Dumbbell Bench Press')
 })
 
-test(`GET ${getExerciseByNameRoute} with random and incorrect exercisename results in error`, async (t: any) => {
+test(`GET ${getExerciseByNameRoute} with random and incorrect exercisename results in error`, async (t: ExecutionContext) => {
   const invalidRequest = cloneDeep(validRequest)
   invalidRequest.exercisename = 'asdad1d12wdasdaasdsd'
   const response = await request(app)

@@ -1,4 +1,5 @@
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import sinon from 'sinon'
 import { type Request, type Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
@@ -10,7 +11,7 @@ import { selectAllActualExercises, selectAllCompletedWorkoutNames, selectAllTrac
 
 let randomEmail: string
 const uuid = uuidv4()
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   randomEmail = `${uuid}@gmail.com`
 
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
@@ -29,7 +30,7 @@ test.before(async (t: any) => {
   }
 })
 
-test.after.always('guaranteed cleanup of user and delete exercises', async (t: any) => {
+test.after.always('guaranteed cleanup of user and delete exercises', async (t: ExecutionContext) => {
   const { error } = await deleteUserRow(randomEmail)
   if (error) {
     t.fail(`deleteUserRow of ${randomEmail} failed`)
@@ -71,14 +72,14 @@ const exercisesWorkoutPlan = [
   }
 ]
 // test for missing userid results in error
-test('addCompletedWorkouts with missing userid results in error', async (t: any) => {
+test('addCompletedWorkouts with missing userid results in error', async (t: ExecutionContext) => {
   const req = mockRequest({ workoutname: 'Test Track Workout Name', exercises: exercisesWorkoutPlan })
   const res = mockResponse()
   await addCompletedWorkouts(req as Request, res as Response)
   t.true(res.status.calledWith(400))
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
-test('addCompletedWorkouts with missing workoutname results in error', async (t: any) => {
+test('addCompletedWorkouts with missing workoutname results in error', async (t: ExecutionContext) => {
   const req = mockRequest({ userid: uuid, exercises: exercisesWorkoutPlan })
   const res = mockResponse()
   await addCompletedWorkouts(req as Request, res as Response)
@@ -86,7 +87,7 @@ test('addCompletedWorkouts with missing workoutname results in error', async (t:
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
-test('addCompletedWorkouts with missing exercises results in error', async (t: any) => {
+test('addCompletedWorkouts with missing exercises results in error', async (t: ExecutionContext) => {
   const req = mockRequest({ userid: uuid, workoutname: 'Test Track Workout Name' })
   const res = mockResponse()
   await addCompletedWorkouts(req as Request, res as Response)
@@ -94,7 +95,7 @@ test('addCompletedWorkouts with missing exercises results in error', async (t: a
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
-test('addCompletedWorkouts with bad timestamp format results in error', async (t: any) => {
+test('addCompletedWorkouts with bad timestamp format results in error', async (t: ExecutionContext) => {
   const req = mockRequest({ userid: uuid, workoutname: 'Test Track Workout Name', exercises: exercisesWorkoutPlan, timestamp: uuid })
   const res = mockResponse()
   await addCompletedWorkouts(req as Request, res as Response)
@@ -103,8 +104,7 @@ test('addCompletedWorkouts with bad timestamp format results in error', async (t
   t.true(argsPassed.mssg === 'Something went wrong!')
 })
 
-test('addCompletedWorkouts with correct inputs adds a completed workout', async (t: any) => {
-  t.log(`exercisesWorkoutPlan.exercises: ${JSON.stringify(exercisesWorkoutPlan)}`)
+test('addCompletedWorkouts with correct inputs adds a completed workout', async (t: ExecutionContext) => {
   const req = mockRequest({
     userid: uuid,
     workoutname: 'Test Track Workout Name',
@@ -132,15 +132,11 @@ test('addCompletedWorkouts with correct inputs adds a completed workout', async 
     ]
   })
   const res = mockResponse()
-  t.log(`addCompletedWorkout Test req.body: ${JSON.stringify(req.body)}`)
   await addCompletedWorkouts(req as Request, res as Response)
-  const argsPassed = res.json.getCall(0).args[0]
-  t.log(`argsPassed in addCompletedWorkouts: ${JSON.stringify(argsPassed)}`)
   const { dataSelectAllCompletedWorkoutNames, errorSelectAllCompletedWorkoutNames }: any = await selectAllCompletedWorkoutNames(uuid)
   if (errorSelectAllCompletedWorkoutNames) {
     t.fail('Error selecting workouts done by user')
   }
-  t.log(`dataSelectAllCompletedWorkoutNames: ${JSON.stringify(dataSelectAllCompletedWorkoutNames)}`)
   const { dataSelectAllTrackedWorkoutsWithExercises, errorSelectAllTrackedWorkoutsWithExercises }: any = await selectAllTrackedWorkoutsWithExercises(dataSelectAllCompletedWorkoutNames[0].completedWorkoutID)
   if (errorSelectAllTrackedWorkoutsWithExercises) {
     t.fail('Selecting Tracked Workouts with exercises went wrong!')

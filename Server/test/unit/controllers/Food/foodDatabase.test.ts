@@ -17,7 +17,7 @@ let LogID: string
 let FoodID: string
 
 const todaysDate = new Date().toISOString().split('T')[0]
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const uuid = uuidv4()
   randomEmail = `${uuid}@gmail.com`
 

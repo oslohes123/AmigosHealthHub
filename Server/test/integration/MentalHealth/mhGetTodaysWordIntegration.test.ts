@@ -7,6 +7,7 @@ import RouteNamesClass from '../../../utils/routeNamesClass'
 import { createMentalHealthUser } from '../../../utils/asyncMentalHealthFunctions'
 
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import request from 'supertest'
 const routeNames = new RouteNamesClass()
 
@@ -19,7 +20,7 @@ const wrongUUID = '1a-2345-6b7c-890d-e01f2ghij34k'
 const randomEmail = `${uuid}@gmail.com`
 let token: string
 const todayDate = getDate(moment().format())
-test.serial.before(async (t: any) => {
+test.serial.before(async (t: ExecutionContext) => {
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
   const { error }: any = await createUserWithID({
     id: uuid,
@@ -34,14 +35,14 @@ test.serial.before(async (t: any) => {
   }
 })
 
-test.serial.before(async (t: any) => {
+test.serial.before(async (t: ExecutionContext) => {
   const { data, error }: any = await getUserByEmail(randomEmail)
   if (error) {
     t.fail('Inserting first user failed!')
   }
   token = createToken(data[0].id)
 })
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '1',
@@ -54,11 +55,11 @@ test.before(async (t: any) => {
   }
 })
 
-test.after.always('guaranteed cleanup', async (t: any) => {
+test.after.always('guaranteed cleanup', async (t: ExecutionContext) => {
   await deleteUserRow(randomEmail)
 })
 
-test(`GET ${todaysWordRoute} with incorrect ID`, async (t: any) => {
+test(`GET ${todaysWordRoute} with incorrect ID`, async (t: ExecutionContext) => {
   const response = await request(app)
     .get(todaysWordRoute)
     .set({ authorization: token, userid: wrongUUID })
@@ -68,7 +69,7 @@ test(`GET ${todaysWordRoute} with incorrect ID`, async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' }))
 })
 //  })
-test(`GET ${todaysWordRoute} with correct ID`, async (t: any) => {
+test(`GET ${todaysWordRoute} with correct ID`, async (t: ExecutionContext) => {
   const response = await request(app)
     .get(todaysWordRoute)
     .set({ authorization: token, userid: uuid })

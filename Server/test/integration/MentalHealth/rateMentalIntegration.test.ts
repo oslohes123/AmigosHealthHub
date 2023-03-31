@@ -5,6 +5,7 @@ import RouteNamesClass from '../../../utils/routeNamesClass'
 
 import request from 'supertest'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 const routeNames = new RouteNamesClass()
 // /**
 //  * Refactor using objects, interfaces to prevent repeated code.
@@ -14,7 +15,7 @@ const rateMentalRoute = routeNames.fullRateMentalURL
 const uuid = uuidv4()
 const randomEmail = `${uuid}@gmail.com`
 let token: string
-test.serial.before(async (t: any) => {
+test.serial.before(async (t: ExecutionContext) => {
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
   const { error }: any = await createUserWithID({
     id: uuid,
@@ -30,7 +31,7 @@ test.serial.before(async (t: any) => {
   }
 })
 
-test.serial.before(async (t: any) => {
+test.serial.before(async (t: ExecutionContext) => {
   const { data, error }: any = await getUserByEmail(randomEmail)
   if (error) {
     t.fail('Inserting first user failed!')
@@ -38,11 +39,11 @@ test.serial.before(async (t: any) => {
   token = createToken(data[0].id)
 })
 
-test.after.always('guaranteed cleanup', async (t: any) => {
+test.after.always('guaranteed cleanup', async (t: ExecutionContext) => {
   await deleteUserRow(randomEmail)
 })
 
-test(`POST ${rateMentalRoute} has middleware execute`, async (t: any) => {
+test(`POST ${rateMentalRoute} has middleware execute`, async (t: ExecutionContext) => {
   const response = await request(app)
     .post(rateMentalRoute)
     .send({ face: 4, word: 'Happy', userid: null })
@@ -53,7 +54,7 @@ test(`POST ${rateMentalRoute} has middleware execute`, async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' }))
 })
 
-test(`POST ${rateMentalRoute} with no word inputted`, async (t: any) => {
+test(`POST ${rateMentalRoute} with no word inputted`, async (t: ExecutionContext) => {
   const response = await request(app)
     .post(rateMentalRoute)
     .send({ face: 4, word: '', userid: uuid })
@@ -64,7 +65,7 @@ test(`POST ${rateMentalRoute} with no word inputted`, async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: "Can't submit an empty word" }))
 })
 
-test(`POST ${rateMentalRoute} with face value too low`, async (t: any) => {
+test(`POST ${rateMentalRoute} with face value too low`, async (t: ExecutionContext) => {
   const response = await request(app)
     .post(rateMentalRoute)
     .send({ face: 0, word: 'Depressed', userid: uuid })
@@ -75,7 +76,7 @@ test(`POST ${rateMentalRoute} with face value too low`, async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Face value must be between 1-5' }))
 })
 
-test(`POST ${rateMentalRoute} with face value too high`, async (t: any) => {
+test(`POST ${rateMentalRoute} with face value too high`, async (t: ExecutionContext) => {
   const response = await request(app)
     .post(rateMentalRoute)
     .send({ face: 6, word: 'Ecstatic', userid: uuid })
@@ -86,7 +87,7 @@ test(`POST ${rateMentalRoute} with face value too high`, async (t: any) => {
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Face value must be between 1-5' }))
 })
 
-test(`POST ${rateMentalRoute} with correct input`, async (t: any) => {
+test(`POST ${rateMentalRoute} with correct input`, async (t: ExecutionContext) => {
   const response = await request(app)
     .post(rateMentalRoute)
     .send({ face: 4, word: 'Happy', userid: uuid })

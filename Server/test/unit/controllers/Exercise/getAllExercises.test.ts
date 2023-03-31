@@ -1,6 +1,7 @@
 import { type Request, type Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import sinon from 'sinon'
 import { cloneDeep } from 'lodash'
 import { createHashedPassword, createUserWithID, deleteUserRow } from '../../../../utils/userFunctions'
@@ -10,7 +11,7 @@ import { getAllExercises } from '../../../../routes/Exercise/exerciseHistory.con
 
 let randomEmail: string
 const uuid = uuidv4()
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   randomEmail = `${uuid}@gmail.com`
 
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
@@ -29,7 +30,7 @@ test.before(async (t: any) => {
   }
 })
 
-test.after.always('guaranteed cleanup of user and delete exercises', async (t: any) => {
+test.after.always('guaranteed cleanup of user and delete exercises', async (t: ExecutionContext) => {
   const { error } = await deleteUserRow(randomEmail)
   if (error) {
     t.fail(`deleteUserRow of ${randomEmail} failed`)
@@ -59,7 +60,7 @@ const validRequest: getAllExercisesRequest = {
   userid: uuid
 }
 
-test.serial('getAllExercises results in error when userid is missing', async (t: any) => {
+test.serial('getAllExercises results in error when userid is missing', async (t: ExecutionContext) => {
   const cloneValidRequest = cloneDeep(validRequest)
   delete cloneValidRequest.userid
   const req = mockRequest(cloneValidRequest)
@@ -69,7 +70,7 @@ test.serial('getAllExercises results in error when userid is missing', async (t:
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' }))
 })
 
-test.serial('getAllExercises results in empty arrayOfExerciseNames when userid has no completed workouts', async (t: any) => {
+test.serial('getAllExercises results in empty arrayOfExerciseNames when userid has no completed workouts', async (t: ExecutionContext) => {
   const req = mockRequest(validRequest)
   const res = mockResponse()
   await getAllExercises(req as Request, res as Response)
@@ -77,7 +78,7 @@ test.serial('getAllExercises results in empty arrayOfExerciseNames when userid h
   t.true(res.json.calledWith({ mssg: 'Success!', arrayOfExerciseNames: [] }))
 })
 
-test.serial('getAllExercises results in populated arrayOfExerciseNames when userid has completed workouts', async (t: any) => {
+test.serial('getAllExercises results in populated arrayOfExerciseNames when userid has completed workouts', async (t: ExecutionContext) => {
   const nameOfWorkout = 'Test Completed Workout'
   const req = mockRequest(validRequest)
   const res = mockResponse()

@@ -1,5 +1,6 @@
 import app from '../../../index'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import request from 'supertest'
 import { v4 as uuidv4 } from 'uuid'
 import RouteNamesClass from '../../../utils/routeNamesClass'
@@ -11,7 +12,7 @@ const searchForExerciseRoute = routeNames.fullSearchExerciseURL
 let randomEmail: string
 const uuid = uuidv4()
 let token: string
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   randomEmail = `${uuid}@gmail.com`
 
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
@@ -31,7 +32,7 @@ test.before(async (t: any) => {
   token = createToken(uuid)
 })
 
-test.after.always('guaranteed cleanup of user and delete exercises', async (t: any) => {
+test.after.always('guaranteed cleanup of user and delete exercises', async (t: ExecutionContext) => {
   const { error } = await deleteUserRow(randomEmail)
   if (error) {
     t.fail(`deleteUserRow of ${randomEmail} failed`)
@@ -45,12 +46,12 @@ const validRequest: searchForExerciseRequest = {
   wordtosearch: 'bench press'
 }
 
-test('searchForExerciseRoute is correct', (t: any) => {
+test('searchForExerciseRoute is correct', (t: ExecutionContext) => {
   t.true(searchForExerciseRoute === '/api/user/exercise/search')
 })
 // test searchForExercise when wordtosearch is empty
 
-test(`GET ${searchForExerciseRoute} with empty word results in empty array and success`, async (t: any) => {
+test(`GET ${searchForExerciseRoute} with empty word results in empty array and success`, async (t: ExecutionContext) => {
   const validRequestWithNoWordtosearch = cloneDeep(validRequest)
   delete validRequestWithNoWordtosearch.wordtosearch
   const response = await request(app)
@@ -60,7 +61,7 @@ test(`GET ${searchForExerciseRoute} with empty word results in empty array and s
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'wordtosearch is empty', searchedWords: [] }))
 })
 
-test(`GET ${searchForExerciseRoute} with bench press results in success`, async (t: any) => {
+test(`GET ${searchForExerciseRoute} with bench press results in success`, async (t: ExecutionContext) => {
   const response = await request(app)
     .get(searchForExerciseRoute)
     .set({ authorization: token, ...validRequest })

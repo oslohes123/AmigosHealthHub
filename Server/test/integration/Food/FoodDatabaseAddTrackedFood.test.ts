@@ -5,6 +5,7 @@ import { SupabaseQueryClass } from '../../../utils/databaseInterface'
 import { createHashedPassword, createToken } from '../../../utils/userFunctions'
 import RouteNamesClass from '../../../utils/routeNamesClass'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 import request from 'supertest'
 const supabaseQuery = new SupabaseQueryClass()
 const routeNames = new RouteNamesClass()
@@ -15,7 +16,7 @@ let hashedPassword: string
 let token: string
 let userID: string
 
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const uuid = uuidv4()
   testEmail = `${uuid}@gmail.com`
 
@@ -37,11 +38,11 @@ test.before(async (t: any) => {
   userID = data[0].id
 })
 
-test.after.always(async (t: any) => {
+test.after.always(async (t: ExecutionContext) => {
   await supabaseQuery.deleteFrom(supabase, 'User', 'email', testEmail)
 })
 
-test(`POST ${AddTrackedFoodRoute} with no fields`, async (t: any) => {
+test(`POST ${AddTrackedFoodRoute} with no fields`, async (t: ExecutionContext) => {
   const response = await request(app)
     .post(AddTrackedFoodRoute)
     .set('authorization', token)
@@ -53,7 +54,7 @@ test(`POST ${AddTrackedFoodRoute} with no fields`, async (t: any) => {
   t.true(responseJSON.mssg === 'Invalid JSON Schema')
 })
 
-test(`POST ${AddTrackedFoodRoute} correctly`, async (t: any) => {
+test(`POST ${AddTrackedFoodRoute} correctly`, async (t: ExecutionContext) => {
   const testFood = {
     input: {
       foodIdentifier: 'food_1',

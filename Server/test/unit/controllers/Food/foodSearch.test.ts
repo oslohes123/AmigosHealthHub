@@ -5,14 +5,14 @@ import { SupabaseQueryClass } from '../../../../utils/databaseInterface'
 import { createHashedPassword, createUser } from '../../../../utils/userFunctions'
 import { clientSearchMethods } from '../../../../constants'
 import { generalSearch } from './../../../../routes/Food/foodSearch.controller'
-import { type ExecutionContext } from 'ava'
 import test from 'ava'
+import { type ExecutionContext } from 'ava'
 const sinon = require('sinon')
 const supabaseQuery = new SupabaseQueryClass()
 
 let randomEmail: string
 
-test.before(async (t: any) => {
+test.before(async (t: ExecutionContext) => {
   const uuid = uuidv4()
   randomEmail = `${uuid}@gmail.com`
 

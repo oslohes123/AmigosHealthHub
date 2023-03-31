@@ -15,13 +15,13 @@ beforeEach(() => {
 
 describe("Check navigate to sleep dashboard", () => {
   it("Should from navigate to sleep dashboard" ,() => {
-    cy.contains('Add sleep data').click()
+    cy.get('[data-testid="addSleepButton"]').click() 
   })
 })
 
 describe("Check user can add data for their sleep", () => {
   it("Should add data for users sleep" ,() => {
-    cy.contains('Add sleep data').click()
+    cy.get('[data-testid="addSleepButton"]').click() 
     cy.contains('Add sleep data.').click()
     cy.get('[data-testid="addSleepData"]').click()
   })
