@@ -51,7 +51,7 @@ export default class RouteNamesClass {
   readonly partialDeleteWorkout = '/delete'
   readonly fullDeleteWorkoutURL = this.workoutBaseURL + this.partialDeleteWorkout
   readonly partialGetAllWorkoutNames = '/getAllWorkoutNames'
-  readonly fullGetAllWorkoutNames = this.workoutBaseURL + this.partialGetAllWorkoutNames
+  readonly fullGetAllWorkoutNamesURL = this.workoutBaseURL + this.partialGetAllWorkoutNames
 
   // Calories Routes
   readonly partialGetCaloriesToday = '/getToday'
@@ -74,8 +74,8 @@ export default class RouteNamesClass {
   readonly fullGetExerciseTypeFrequencyURL = this.completedWorkoutBaseURL + this.partialGetExerciseTypeFrequency
   readonly partialGetWorkoutHistoryByDate = '/workoutHistoryByDate'
   readonly fullGetWorkoutHistoryByDateURL = this.completedWorkoutBaseURL + this.partialGetWorkoutHistoryByDate
-  readonly partialLastCompletedWorkout = '/lastTrackedWorkout'
-  readonly fullLastCompletedWorkoutURL = this.completedWorkoutBaseURL + this.partialLastCompletedWorkout
+  readonly partialLastTrackedWorkout = '/lastTrackedWorkout'
+  readonly fullLastTrackedWorkoutURL = this.completedWorkoutBaseURL + this.partialLastTrackedWorkout
 
   // Sleep Routes
   readonly partialAddSleepURL = '/add'

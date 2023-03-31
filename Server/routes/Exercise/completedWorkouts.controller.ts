@@ -22,8 +22,6 @@ export const getACompletedWorkout = async (req: Request, res: Response) => {
   if (error) {
     return res.status(400).json({ mssg: 'Something went wrong!', error })
   }
-  console.log(`getACompletedWorkout: ${JSON.stringify(data)}`)
-
   // Break down each completed workouts' timestamp and match that with the one given in the headers
   let selectedWorkout
   for (let i = 0; i < data.length; i++) {
@@ -79,7 +77,6 @@ export const getAllCompletedWorkouts = async (req: Request, res: Response) => {
 
 export const addCompletedWorkouts = async (req: Request, res: Response) => {
   const { userid, workoutname, exercises } = req.body
-  console.log(`req.body in addCompletedWorkouts: ${JSON.stringify(req.body)}`)
   let { timestamp } = req.body
   if (!validateJSONSchema(req.body, schemaForNewTrackedWorkout)) {
     return res.status(400).json({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' })
@@ -104,7 +101,6 @@ export const deleteTrackedWorkout = async (req: Request, res: Response) => {
   if (error) {
     return res.status(400).json({ mssg: 'Something went wrong!', error })
   }
-  console.log(`getACompletedWorkout: ${JSON.stringify(data)}`)
   if (data.length === 0) {
     return res.status(400).json({ mssg: 'User does not have any completed workouts!' })
   }
@@ -121,7 +117,6 @@ export const deleteTrackedWorkout = async (req: Request, res: Response) => {
   const workoutPlanToDel = selectedWorkout
 
   const { errorHere, AEIDs } = await selectAEIDs(workoutPlanToDel)
-  console.log(`AEIDs ln 282: ${JSON.stringify(AEIDs)}`)
   if (errorHere) {
     return res.status(400).json({ mssg: 'Fail to selectAEIDs', errorHere })
   }
@@ -153,10 +148,6 @@ export const getWorkoutFrequency = async (req: Request, res: Response) => {
     return res.status(400).json({ mssg: 'Something went wrong!', error })
   }
   else {
-    console.log(`data ln 392: ${JSON.stringify(data)}`)
-    // if(data.length === 0){
-    //     return res.status(200).json({mssg:`Success!`, workouts: data});
-    // }
     const arrayOfWorkoutNames = []
     for (let i = 0; i < data.length; i++) {
       arrayOfWorkoutNames.push(data[i].workoutname)
@@ -186,14 +177,11 @@ export const getActualExerciseNameFrequency = async (req: Request, res: Response
   if (errorGetAllExerciseIDs) {
     return res.status(400).json({ mssg: 'Something went wrong!', errorGetAllExerciseIDs })
   }
-  console.log(`exerciseIDs: ${JSON.stringify(exerciseIDs)}`)
 
   const { errorGetExerciseNames, exerciseNames } = await getExerciseNames(exerciseIDs)
   if (errorGetExerciseNames) {
     return res.status(400).json({ mssg: 'Something went wrong!', errorGetExerciseNames })
   }
-  console.log(`exerciseNames: ${JSON.stringify(exerciseNames)}`)
-
   const graphLabelsAndData = countElementsInArray(exerciseNames)
   const graphLabels = Object.keys(graphLabelsAndData)
   const graphData = Object.values(graphLabelsAndData)
@@ -215,14 +203,10 @@ export const getActualExerciseTypeFrequency = async (req: Request, res: Response
   if (errorGetAllExerciseIDs) {
     return res.status(400).json({ mssg: 'Something went wrong!', errorGetAllExerciseIDs })
   }
-  console.log(`exerciseIDs: ${JSON.stringify(exerciseIDs)}`)
-
   const { errorGetExerciseTypes, exerciseTypes } = await getExerciseTypes(exerciseIDs)
   if (errorGetExerciseTypes) {
     return res.status(400).json({ mssg: 'Something went wrong!', errorGetExerciseTypes })
   }
-  console.log(`exerciseTypes: ${JSON.stringify(exerciseTypes)}`)
-
   const graphLabelsAndData = countElementsInArray(exerciseTypes)
   const graphLabels = Object.keys(graphLabelsAndData)
   const graphData = Object.values(graphLabelsAndData)
@@ -239,7 +223,6 @@ export const getWorkoutHistoryByDate = async (req: Request, res: Response) => {
   if (error) {
     return res.status(400).json({ mssg: 'Something went wrong!', error })
   }
-  console.log(`data ln 510: ${JSON.stringify(data)}`)
   const arrayOfWorkoutsOnDate = []
   const arrayOfWorkoutNamesAndIDs = []
   const arrayOfCompletedWorkoutIDs = []
@@ -250,10 +233,6 @@ export const getWorkoutHistoryByDate = async (req: Request, res: Response) => {
       arrayOfCompletedWorkoutIDs.push(data[i].completedWorkoutID)
     }
   }
-  console.log(`arrayOfWorkoutsOnDate: ${JSON.stringify(arrayOfWorkoutsOnDate)}`)
-  console.log(`arrayOfWorkoutNames: ${JSON.stringify(arrayOfWorkoutNamesAndIDs)}`)
-  console.log(`arrayOfCompletedWorkoutIDs: ${JSON.stringify(arrayOfCompletedWorkoutIDs)}`)
-
   const { errorHere, AEIDs } = await getAEIDsFromCompletedWorkoutIDs(arrayOfCompletedWorkoutIDs)
   if (errorHere) {
     return res.status(400).json({ mssg: 'Something went wrong!', errorHere })
@@ -268,13 +247,10 @@ export const getWorkoutHistoryByDate = async (req: Request, res: Response) => {
   if (errorGetExerciseNames) {
     return res.status(400).json({ mssg: 'Something went wrong!', errorGetExerciseNames })
   }
-  console.log(`exerciseNames: ${JSON.stringify(exerciseNames)}`)
 
   const graphLabelsAndData = countElementsInArray(exerciseNames)
   const graphLabels = Object.keys(graphLabelsAndData)
   const graphData = Object.values(graphLabelsAndData)
-  console.log(`graphLabels: ${JSON.stringify(graphLabels)}`)
-  console.log(`graphData: ${JSON.stringify(graphData)}`)
 
   return res.status(200).json({ mssg: 'Success!', arrayOfWorkoutNamesAndIDs, graphLabels, graphData })
 }
@@ -282,13 +258,12 @@ export const getWorkoutHistoryByDate = async (req: Request, res: Response) => {
 export const getLastTrackedWorkout = async (req: Request, res: Response) => {
   const { userid } = req.headers
   if (!validateJSONSchema(req.headers, schemaForRequireduserid)) {
-    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' })
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' })
   }
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'CompletedWorkouts', 'userid', userid, 'workoutname, timestamp')
   if (error) {
     return res.status(400).json({ mssg: 'Something went wrong!', error })
   }
-  console.log(`data ln 581: ${JSON.stringify(data)}`)
   if (data.length === 0) {
     return res.status(200).json({ mssg: 'Success!', lastTrackedWorkout: 'No Tracked Workouts' })
   }

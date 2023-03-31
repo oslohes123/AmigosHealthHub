@@ -1,5 +1,5 @@
 import {
-  TouchableOpacity, Text, View, StyleSheet, Dimensions,
+  Text, View, StyleSheet, Dimensions,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
@@ -51,45 +51,39 @@ export default function WordOfTheDayWidget() {
       setWordStates();
     }
   }, [navigation, isFocused]);
-  const pressHandler = () => {
-    navigation.navigate("Mental", {screen: 'Review Your Day'});
-  };
 
   return (
+    <View style={styles.container}>
+      <LinearGradient
+          // Button Linear Gradient
+          // colors={["#00BFFF", "#0040ff"]}
+        colors={['#00ffc8', '#0040ff']}
+        style={styles.widget}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+      >
+        <Text style={styles.header}>
+          Word of the day
+        </Text>
 
-    <TouchableOpacity onPress={pressHandler}>
-      <View style={styles.container}>
-        <LinearGradient
-            // Button Linear Gradient
-            // colors={["#00BFFF", "#0040ff"]}
-          colors={['#00ffc8', '#0040ff']}
-          style={styles.widget}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-        >
-          <Text style={styles.header}>
-            Word of the day
-          </Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          {errorTodaysWord && <Text>{errorTodaysWord}</Text>}
+          {!errorTodaysWord && todaysWord && (
+          <Text style={styles.number}>{todaysWord}</Text>)}
+          <Ionicons style={{ alignSelf: 'flex-end' }} name="bookmarks-outline" size={30} color="#fff" />
+        </View>
 
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            {errorTodaysWord && <Text>{errorTodaysWord}</Text>}
-            {!errorTodaysWord && todaysWord && (
-            <Text style={styles.number}>{todaysWord}</Text>)}
-            <Ionicons style={{ alignSelf: 'flex-end' }} name="bookmarks-outline" size={30} color="#fff" />
-          </View>
-
-          {isLoading && (
-          <>
-            {/* <Text>Refreshing.....</Text> */}
-            <ActivityIndicator
-              animating
-              size={25}
-              color={MD2Colors.greenA400}
-            />
-          </>
-          )}
-        </LinearGradient>
-      </View>
-    </TouchableOpacity>
+        {isLoading && (
+        <>
+          {/* <Text>Refreshing.....</Text> */}
+          <ActivityIndicator
+            animating
+            size={25}
+            color={MD2Colors.greenA400}
+          />
+        </>
+        )}
+      </LinearGradient>
+    </View>
   );
 }

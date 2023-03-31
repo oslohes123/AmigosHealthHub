@@ -355,13 +355,14 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                   kcal
                 </Text>
                 <TextInput
+                  testID={`${item.exercise.name} calories_input`}
                   style={[styles.textInput, { borderColor: color }]}
                   placeholder="Calories (kcal)"
                   color={color}
                   placeholderTextColor={color}
                   keyboardType="numeric"
                   textAlign="center"
-                  value={dataToTrack[item.PEID] && dataToTrack[item.PEID].calories !== null && dataToTrack[item.PEID].calories !== undefined ? `${dataToTrack[item.PEID].calories}` : ``}
+                  value={dataToTrack[item.PEID] && dataToTrack[item.PEID].calories !== null && dataToTrack[item.PEID].calories !== undefined ? `${dataToTrack[item.PEID].calories}` : ''}
                   onChangeText={(caloriesText) => {
                     setDataToTrack(
                       {
@@ -373,97 +374,98 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                 />
               </View>
               <View style={styles.statsRows}>
-                    <Text
-                      style={[
-                        styles.statsText,
-                        { color, alignSelf: 'center' },
-                      ]}
-                    >
-                      Duration:
-                      {' '}
-                      {Math.trunc(Number(item.duration))}
-                      &apos;
-                      {' '}
-                      {Math.trunc((Number(item.duration) - Math.trunc(Number(item.duration))) * 60)}
-                      &quot;
-                    </Text>
-                    <View style={{ flexDirection: 'row', width: styles.textInput.width, justifyContent: 'space-between' }}>
-                      <TextInput
-                        style={[
-                          styles.textInput,
-                          { borderColor: color, color, width: styles.textInput.width / 2.3 },
-                        ]}
-                        placeholder="Mins"
-                        placeholderTextColor={color}
-                        keyboardType="numeric"
-                        textAlign="center"
-                        value={dataToTrack[item.PEID] && dataToTrack[item.PEID].mins !== null && dataToTrack[item.PEID].mins !== undefined? `${dataToTrack[item.PEID].mins}` : `${0}`}
-                        onChangeText={(minsText) => {
-                          setDataToTrack(
-                            {
-                              ...dataToTrack,
-                              [item.PEID]: { ...dataToTrack[item.PEID], mins: minsText },
-                            },
-                          );
-                        }}
-                      />
-                      <Text style={{ color, alignSelf: 'center', fontWeight: 'bold' }}>:</Text>
-                      <TextInput
-                        style={[
-                          styles.textInput,
-                          { borderColor: color, color, width: styles.textInput.width / 2.3 },
-                        ]}
-                        placeholder="Secs"
-                        placeholderTextColor={color}
-                        keyboardType="numeric"
-                        textAlign="center"
-                        value={dataToTrack[item.PEID] && dataToTrack[item.PEID].secs !== null && dataToTrack[item.PEID].secs !== undefined ? `${dataToTrack[item.PEID].secs}` : `${0}`}
-                        onChangeText={(secsText) => {
-                          setDataToTrack(
-                            {
-                              ...dataToTrack,
-                              [item.PEID]: { ...dataToTrack[item.PEID], secs: secsText },
-                            },
-                          );
-                        }}
-                      />
-                    </View>
-                  </View>
+                <Text
+                  style={[
+                    styles.statsText,
+                    { color, alignSelf: 'center' },
+                  ]}
+                >
+                  Duration:
+                  {' '}
+                  {Math.trunc(Number(item.duration))}
+                  &apos;
+                  {' '}
+                  {Math.trunc((Number(item.duration) - Math.trunc(Number(item.duration))) * 60)}
+                  &quot;
+                </Text>
+                <View style={{ flexDirection: 'row', width: styles.textInput.width, justifyContent: 'space-between' }}>
+                  <TextInput
+                    testID={`${item.exercise.name} mins_input`}
+                    style={[
+                      styles.textInput,
+                      { borderColor: color, color, width: styles.textInput.width / 2.3 },
+                    ]}
+                    placeholder="Mins"
+                    placeholderTextColor={color}
+                    keyboardType="numeric"
+                    textAlign="center"
+                    value={dataToTrack[item.PEID] && dataToTrack[item.PEID].mins !== null && dataToTrack[item.PEID].mins !== undefined ? `${dataToTrack[item.PEID].mins}` : `${0}`}
+                    onChangeText={(minsText) => {
+                      setDataToTrack(
+                        {
+                          ...dataToTrack,
+                          [item.PEID]: { ...dataToTrack[item.PEID], mins: minsText },
+                        },
+                      );
+                    }}
+                  />
+                  <Text style={{ color, alignSelf: 'center', fontWeight: 'bold' }}>:</Text>
+                  <TextInput
+                    testID={`${item.exercise.name} secs_input`}
+                    style={[
+                      styles.textInput,
+                      { borderColor: color, color, width: styles.textInput.width / 2.3 },
+                    ]}
+                    placeholder="Secs"
+                    placeholderTextColor={color}
+                    keyboardType="numeric"
+                    textAlign="center"
+                    value={dataToTrack[item.PEID] && dataToTrack[item.PEID].secs !== null && dataToTrack[item.PEID].secs !== undefined ? `${dataToTrack[item.PEID].secs}` : `${0}`}
+                    onChangeText={(secsText) => {
+                      setDataToTrack(
+                        {
+                          ...dataToTrack,
+                          [item.PEID]: { ...dataToTrack[item.PEID], secs: secsText },
+                        },
+                      );
+                    }}
+                  />
+                </View>
+              </View>
 
               {item.exercise.type === 'cardio' ? (
-                <>
-                  <View style={styles.statsRows}>
-                    <Text
-                      style={[
-                        styles.statsText,
-                        { color, alignSelf: 'center' },
-                      ]}
-                    >
-                      Distance:
-                      {' '}
-                      {item.distance}
-                      {' '}
-                      m
-                    </Text>
-                    <TextInput
-                      style={[styles.textInput, { borderColor: color }]}
-                      placeholder="Distance (m)"
-                      color={color}
-                      placeholderTextColor={color}
-                      keyboardType="numeric"
-                      textAlign="center"
-                      value={dataToTrack[item.PEID] && dataToTrack[item.PEID].distance !== undefined && dataToTrack[item.PEID].distance !== null ? `${dataToTrack[item.PEID].distance}` : `${''}`}
-                      onChangeText={(distanceText) => {
-                        setDataToTrack(
-                          {
-                            ...dataToTrack,
-                            [item.PEID]: { ...dataToTrack[item.PEID], distance: distanceText },
-                          },
-                        );
-                      }}
-                    />
-                  </View>
-                </>
+                <View style={styles.statsRows}>
+                  <Text
+                    style={[
+                      styles.statsText,
+                      { color, alignSelf: 'center' },
+                    ]}
+                  >
+                    Distance:
+                    {' '}
+                    {(item.distance >= 1) ? item.distance : `${Number(item.distance) / 1000}`}
+                    {' '}
+                    {(item.distance >= 1) ? 'km' : 'm'}
+                  </Text>
+                  <TextInput
+                    testID={`${item.exercise.name} distance_input`}
+                    style={[styles.textInput, { borderColor: color }]}
+                    placeholder="Distance (km)"
+                    color={color}
+                    placeholderTextColor={color}
+                    keyboardType="numeric"
+                    textAlign="center"
+                    value={dataToTrack[item.PEID] && dataToTrack[item.PEID].distance !== undefined && dataToTrack[item.PEID].distance !== null ? `${dataToTrack[item.PEID].distance}` : `${''}`}
+                    onChangeText={(distanceText) => {
+                      setDataToTrack(
+                        {
+                          ...dataToTrack,
+                          [item.PEID]: { ...dataToTrack[item.PEID], distance: distanceText },
+                        },
+                      );
+                    }}
+                  />
+                </View>
               ) : (
                 <>
 
@@ -497,6 +499,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                       {setsToArray(item.sets).map((unusedParam, index) => (
                         <View style={[{ justifyContent: 'space-evenly', paddingVertical: 5 }]} key={`${item.PEID}reps${index}`}>
                           <TextInput
+                            testID={`${item.exercise.name} reps ${index}`}
                             style={[styles.textInput,
                               { borderColor: color, width: styles.textInput.width * 0.95 }]}
                             placeholder="Reps"
@@ -504,7 +507,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                             placeholderTextColor={color}
                             keyboardType="numeric"
                             textAlign="center"
-                            value={repsInArray[item.PEID] && repsInArray[item.PEID][index] != undefined && repsInArray[item.PEID][index] != undefined ? `${repsInArray[item.PEID][index]}` : `${''}`}
+                            value={repsInArray[item.PEID] && repsInArray[item.PEID][index] !== undefined && repsInArray[item.PEID][index] !== undefined ? `${repsInArray[item.PEID][index]}` : `${''}`}
                             onChangeText={(repsText) => {
                               addRepsToArray(item.PEID, repsText, index);
                             }}
@@ -529,6 +532,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                       {setsToArray(item.sets).map((unusedParam, index) => (
                         <View style={[{ justifyContent: 'space-evenly', paddingVertical: 5 }]} key={`${item.PEID}weight${index}`}>
                           <TextInput
+                            testID={`${item.exercise.name} weight ${index}`}
                             render
                             style={[styles.textInput,
                               { borderColor: color, width: styles.textInput.width * 0.95 }]}
@@ -537,7 +541,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
                             placeholderTextColor={color}
                             keyboardType="numeric"
                             textAlign="center"
-                            value={weightInArray[item.PEID] && weightInArray[item.PEID][index] != undefined && weightInArray[item.PEID][index] != null ? `${weightInArray[item.PEID][index]}` : `${''}`}
+                            value={weightInArray[item.PEID] && weightInArray[item.PEID][index] !== undefined && weightInArray[item.PEID][index] != null ? `${weightInArray[item.PEID][index]}` : `${''}`}
                             onChangeText={(weightText) => {
                               addWeightToArray(item.PEID, weightText, index);
                             }}
@@ -554,6 +558,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
       </ScrollView>
       <View style={styles.bottomButtons}>
         <FAB
+          testID="delete_plan_button"
           icon="delete"
           style={styles.fab}
           label="Delete Plan"
@@ -563,6 +568,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
           }}
         />
         <FAB
+          testID="track_plan_button"
           icon="check"
           style={styles.fab}
           label="Track Plan"
@@ -571,7 +577,6 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
             const copyDataToTrack = dataToTrack;
             const copyDataKeys = Object.keys(copyDataToTrack);
 
-            
             copyDataKeys.forEach((key) => {
               if (key in repsInArray) {
                 copyDataToTrack[key].reps = repsInArray[key];
@@ -599,10 +604,12 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
             });
 
             const submittableState = Object.values(copyDataToTrack).map((obj) => {
-              if ((!Number.isNaN(Number(obj.sets)) && Number(obj.sets) > 0 && obj.sets != null && obj.sets != ""
-              && obj.reps != "[]" && obj.reps != null &&  obj.reps != "" && obj.weight != "[]" && obj.weight != null && obj.reps != "" && (obj.reps).length === (obj.weight).length)
-              || (Number(obj.duration) > 0 && Number(obj.duration) != null && Number(obj.duration) != null && !Number.isNaN(Number(obj.duration)))
-              || (Number(obj.distance) > 0 && Number(obj.distance) != null && Number(obj.distance) != null && !Number.isNaN(Number(obj.distance)))) {
+              if ((!Number.isNaN(Number(obj.sets)) && Number(obj.sets) > 0 && obj.sets != null && obj.sets !== ''
+              && obj.reps !== '[]' && obj.reps != null && obj.reps !== '' && obj.weight !== '[]' && obj.weight != null && obj.reps !== '' && (obj.reps).length === (obj.weight).length)
+              || (Number(obj.duration) > 0 && Number(obj.duration) != null
+              && Number(obj.duration) != null && !Number.isNaN(Number(obj.duration)))
+              || (Number(obj.distance) > 0 && Number(obj.distance) != null
+              && Number(obj.distance) != null && !Number.isNaN(Number(obj.distance)))) {
                 return true;
               }
               return false;
@@ -623,6 +630,7 @@ export default function WorkoutPlanInfoScreen({ route, navigation }) {
       </View>
 
       <Snackbar
+        testID="snackbar"
         visible={snackbarVisible}
         onDismiss={() => setSnackbarVisible(!snackbarVisible)}
         action={{

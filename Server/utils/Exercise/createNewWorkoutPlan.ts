@@ -49,7 +49,7 @@ export default async function createNewWorkoutPlan (userid: string, workoutname:
 
   const { data, error }: any = await databaseQuery.match(supabase, 'WorkoutPlans', '*', { userid, workoutname })
   if (error) {
-    errorsAndSuccess.errorsCreatingNewWorkoutPlan = error
+    errorsAndSuccess.errorsCreatingNewWorkoutPlan = JSON.stringify(error)
     return errorsAndSuccess
   }
   if (data.length > 0) {
@@ -59,7 +59,7 @@ export default async function createNewWorkoutPlan (userid: string, workoutname:
   else {
     const { data, error }: any = await databaseQuery.insert(supabase, 'WorkoutPlans', { userid, workoutname })
     if (error) {
-      errorsAndSuccess.errorsCreatingNewWorkoutPlan = error
+      errorsAndSuccess.errorsCreatingNewWorkoutPlan = JSON.stringify(error)
       return errorsAndSuccess
     }
     const workoutPlanID = data[0].WorkoutPlanID
@@ -73,7 +73,7 @@ export default async function createNewWorkoutPlan (userid: string, workoutname:
     for (let i = 0; i < numberOfExercises; i++) {
       const { data, error }: any = await databaseQuery.match(supabase, 'PossibleExercises', 'PEID', exercises[i])
       if (error) {
-        errorsAndSuccess.errorsCreatingNewWorkoutPlan = error
+        errorsAndSuccess.errorsCreatingNewWorkoutPlan = JSON.stringify(error)
         return errorsAndSuccess
       }
 
@@ -84,7 +84,7 @@ export default async function createNewWorkoutPlan (userid: string, workoutname:
       else {
         const { data, error }: any = await databaseQuery.insert(supabase, 'PossibleExercises', exercises[i])
         if (error) {
-          errorsAndSuccess.errorsCreatingNewWorkoutPlan = error
+          errorsAndSuccess.errorsCreatingNewWorkoutPlan = JSON.stringify(error)
           return errorsAndSuccess
         }
         workoutPEIDs.push(data[0].PEID)
@@ -98,7 +98,7 @@ export default async function createNewWorkoutPlan (userid: string, workoutname:
     for (let j = 0; j < workoutPEIDs.length; j++) {
       const { error }: any = await databaseQuery.insert(supabase, 'WorkoutPlansWithExercises', { WorkoutPlanID: workoutPlanID, PEID: workoutPEIDs[j] })
       if (error) {
-        errorsAndSuccess.errorsCreatingNewWorkoutPlan = error
+        errorsAndSuccess.errorsCreatingNewWorkoutPlan = JSON.stringify(error)
         return errorsAndSuccess
       }
     }

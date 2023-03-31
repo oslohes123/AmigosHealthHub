@@ -6,7 +6,26 @@ export async function insertCompletedWorkoutRow (id: string, workoutname: string
   const { data, error }: any = await databaseQuery.insert(supabase, 'CompletedWorkouts', { userid: id, workoutname, timestamp })
   return { dataInsertCompletedWorkoutRow: data, errorInsertCompletedWorkoutRow: error }
 }
+// Matches all instances in the WorkoutPlans table given a userid and workoutname
+export async function matchWorkoutPlanAndUser (userid: string, workoutname: string) {
+  const { data, error }: any = await databaseQuery.match(supabase, 'WorkoutPlans', 'WorkoutPlanID', { userid, workoutname })
+  return { dataMatchingWorkoutPlanAndUser: data, errorMatchingWorkoutPlanAndUser: error }
+}
 
+/**
+ * Deletes a workout plan row
+ * @param workoutPlanID id of workoutplan row to delete
+ * @returns errorAndIDs object with deleteError property that contains any errors
+ */
+export async function deleteWorkoutPlanRowByID (workoutPlanID: string) {
+  const errorAndIDs = { deleteError: '' }
+  const { error }: any = await databaseQuery.deleteFrom(supabase, 'WorkoutPlans', 'WorkoutPlanID', workoutPlanID)
+  if (error) {
+    errorAndIDs.deleteError = error
+    return errorAndIDs
+  }
+  return errorAndIDs
+}
 export async function selectAllCompletedWorkoutNames (userid: string, table = 'CompletedWorkouts', database = supabase) {
   const { data, error }: any = await databaseQuery.selectWhere(database, table, 'userid', userid, 'completedWorkoutID, workoutname')
   return { dataSelectAllCompletedWorkoutNames: data, errorSelectAllCompletedWorkoutNames: error }
@@ -227,6 +246,43 @@ export async function getWorkoutByID (completedWorkoutID: string) {
       }
     }
 
+    errorAndWorkout.workoutToReturn = arrayOfPossibleExercises
+  }
+  return errorAndWorkout
+}
+
+// helper function to getWorkoutDetails
+export async function getWorkoutPlanByID (workoutPlanID: string) {
+  const { data, error }: any = await databaseQuery.selectWhere(supabase, 'WorkoutPlansWithExercises', 'WorkoutPlanID', workoutPlanID, '*')
+  console.log(`getWorkoutByID: ${JSON.stringify(data)}`)
+  const errorAndWorkout: any = { errorPresent: '', workoutToReturn: [] }
+  if (error) errorAndWorkout.errorPresent = error
+  else {
+    const arrayOfPEID = []
+    for (let i = 0; i < data.length; i++) {
+      arrayOfPEID.push(data[i].PEID)
+    }
+
+    const arrayOfPossibleExercises = []
+    for (let j = 0; j < arrayOfPEID.length; j++) {
+      const { data, error }: any = await databaseQuery.selectWhere(supabase, 'PossibleExercises', 'PEID', arrayOfPEID[j], '*')
+      if (error) errorAndWorkout.errorPresent = error
+      else {
+        arrayOfPossibleExercises.push(data[0])
+        console.log(`data ln50 getWorkout: ${JSON.stringify(data)}`)
+        console.log(`arrayOfPossibleExercises ln: ${JSON.stringify(arrayOfPossibleExercises)}`)
+      }
+    }
+
+    for (let i = 0; i < arrayOfPossibleExercises.length; i++) {
+      const { data, error }: any = await databaseQuery.selectWhere(supabase, 'Exercises', 'ExerciseID', arrayOfPossibleExercises[i].exerciseID, '*')
+      if (error) errorAndWorkout.errorPresent = error
+      else {
+        delete arrayOfPossibleExercises[i].exerciseID
+        delete arrayOfPossibleExercises[i].userID
+        arrayOfPossibleExercises[i].exercise = data[0]
+      }
+    }
     errorAndWorkout.workoutToReturn = arrayOfPossibleExercises
   }
   return errorAndWorkout

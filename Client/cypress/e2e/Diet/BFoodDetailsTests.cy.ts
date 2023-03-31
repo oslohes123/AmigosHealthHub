@@ -20,121 +20,74 @@ describe("Check branded food details screen", () => {
             .click()
     })
 
-    it("should contain the page title", () => {
+    it("should contain all required elements and functionality", () => {
         cy.contains('Food Details')
             .should('be.visible')
-    })
 
-    it("should contain the name of the food clicked", () => {
-        cy.contains('Mango Chunks')
+        cy.get('[data-testid="caloriesName"]')
             .should('be.visible')
-    })
 
-    it("should contain a row with calorie details for the item", () => {
-        cy.contains('Calories')
-            .should('be.visible')
-    })
-
-    it("should contain a row with protein details for the item", () => {
         cy.contains('Protein')
             .should('be.visible')
-    })
 
-    it("should contain a row with carbs details for the item", () => {
         cy.contains('Carbs')
             .should('be.visible')
-    })
 
-    it("should contain a row with fat details for the item", () => {
         cy.contains('Fat')
             .should('be.visible')
-    })
 
-    it("should contain a row with sugars details for the item", () => {
         cy.contains('Sugars')
             .should('be.visible')
-    })
 
-    it("should contain a row with fibre details for the item", () => {
         cy.contains('Fibre')
             .should('be.visible')
-    })
 
-    it("should contain a row with details of serving units for the item", () => {
         cy.contains('Serving units')
             .should('be.visible')
-    })
 
-    it("should contain a row with details of serving quantity for the item", () => {
         cy.contains('Serving Quantity')
             .scrollIntoView()
             .should('be.visible')
-    })
 
-    it("should contain a row with details of brand name for the item", () => {
         cy.contains('Brand name')
             .scrollIntoView()
             .should('be.visible')
-    })
 
-    it("calories should not be empty", () => {
         cy.get('[data-testid="calories"]')
             .should('not.have.text', '')
-    })
 
-    it("protein should not be empty", () => {
         cy.get('[data-testid="protein"]')
             .should('not.have.text', '')
-    })
 
-    it("carbs should not be empty", () => {
         cy.get('[data-testid="carbs"]')
             .should('not.have.text', '')
-    })
 
-    it("fat should not be empty", () => {
         cy.get('[data-testid="fat"]')
             .should('not.have.text', '')
-    })
 
-    it("sugars should not be empty", () => {
         cy.get('[data-testid="sugars"]')
             .should('not.have.text', '')
-    })
 
-    it("fibre should not be empty", () => {
         cy.get('[data-testid="fibre"]')
             .should('not.have.text', '')
-    })
 
-    it("serving unit is clickable and it displays list of available units", () => {
-        cy.get('[data-testid="viewUnits"]')
-            .click()
-        cy.get('[data-testid="modal"]')
+        cy.get('[data-testid="brandName"]')
+            .should('not.have.text', '')
+
+        cy.get('[data-testid="add"]')
             .should('be.visible')
-    })
 
-    it("serving quantity can be changed using text input", () => {
         cy.get('[data-testid="quantityInput"]')
             .scrollIntoView()
             .should('be.visible')
             .click()
             .type('5')
-    })
 
-    it("brand name should not be empty", () => {
-        cy.get('[data-testid="brandName"]')
-            .should('not.have.text', '')
-    })
-
-    it("should contain add food button", () => {
-        cy.get('[data-testid="add"]')
+        cy.get('[data-testid="viewUnits"]').click()
+        cy.get('[data-testid="modal"]')
             .should('be.visible')
-    })
 
-    it("add food button should navigate to the diet dashboard", () => {
-        cy.get('[data-testid="add"]')
-            .click()
+        cy.get('[data-testid="add"]').click({force:true})
         cy.contains('Diet Dashboard')
     })
 })

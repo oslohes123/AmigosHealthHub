@@ -1,5 +1,5 @@
 import {
-  TouchableOpacity, Text, View, StyleSheet, Dimensions,
+  Text, View, StyleSheet, Dimensions,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
@@ -54,35 +54,28 @@ export default function CaloriesRemaining() {
     }
   }, [navigation, isFocused]);
 
-  const pressHandler = () => {
-    navigation.navigate("Diet", {screen: 'Food History'});
-  };
-
   return (
+    <View>
+      <LinearGradient
+        colors={['#00ffc8', '#0040ff']}
+        style={styles.widget}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+      >
+        <Text style={styles.header}>
+          Calories remaining
+        </Text>
 
-    <TouchableOpacity onPress={pressHandler}>
-      <View>
-        <LinearGradient
-          colors={['#00ffc8', '#0040ff']}
-          style={styles.widget}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-        >
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text style={styles.header}>
-            Calories remaining
+            {caloriesRemaining !== undefined && (
+              <Text style={styles.number}>{caloriesRemaining}</Text>
+            )}
           </Text>
+          <Ionicons name="fast-food-outline" size={30} color="#fff" />
+        </View>
 
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={styles.header}>
-              {caloriesRemaining !== undefined && (
-                <Text style={styles.number}>{caloriesRemaining}</Text>
-              )}
-            </Text>
-            <Ionicons name="fast-food-outline" size={30} color="#fff" />
-          </View>
-
-        </LinearGradient>
-      </View>
-    </TouchableOpacity>
+      </LinearGradient>
+    </View>
   );
 }

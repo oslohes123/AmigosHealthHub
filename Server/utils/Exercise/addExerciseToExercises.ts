@@ -22,7 +22,7 @@ export default async function addExerciseToExercises (type: string, name: string
     if (data.length === 0) {
       const { data, error }: any = await databaseQuery.insert(supabase, 'Exercises', { type, name, muscle, difficulty, instructions, equipment })
       if (error) {
-        errorAndIDs.errorPresent = error
+        errorAndIDs.errorPresent = JSON.stringify(error)
         return errorAndIDs
       }
       else {

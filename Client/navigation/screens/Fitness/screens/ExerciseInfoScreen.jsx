@@ -106,14 +106,16 @@ export default function ExerciseInfoScreen({ route, navigation }) {
             {exerciseInfo.name ? exerciseInfo.name : 'No name data'}
           </Text>
           <FAB
+            testID="save_exercise_button"
             label="Add"
             style={{ marginHorizontal: 5 }}
             onPress={() => {
               if (
                 (exerciseInfo.type === 'cardio'
                 && (distance != null && distance.trim() !== '' && !Number.isNaN(Number(distance)) && Number(distance) >= 0
-                || durationMins != null && durationMins.trim() !== '' && !Number.isNaN(Number(durationMins)) && Number(durationMins) >= 0
-                && durationSecs != null && durationSecs.trim() !== '' && !Number.isNaN(Number(durationSecs)) && Number(durationSecs) >= 0 && Number(durationSecs) <= 60))
+                && durationMins != null && durationMins.trim() !== '' && !Number.isNaN(Number(durationMins)) && Number(durationMins) >= 0
+                && durationSecs != null && durationSecs.trim() !== '' && !Number.isNaN(Number(durationSecs)) && Number(durationSecs) >= 0
+                && Number(durationSecs) <= 60))
               || (exerciseInfo.type !== 'cardio'
                 && weight != null && weight.trim() !== '' && !Number.isNaN(Number(weight)) && Number(weight) >= 0
                 && reps != null && reps.trim() !== '' && !Number.isNaN(Number(reps)) && Number(reps) >= 0
@@ -320,6 +322,7 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                   {exerciseInfo.type !== 'cardio' ? (
                     <>
                       <TextInput
+                        testID="sets_input"
                         style={[
                           styles.textInput,
                           { borderColor: color, color },
@@ -332,6 +335,7 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                         textAlign="center"
                       />
                       <TextInput
+                        testID="reps_input"
                         style={[
                           styles.textInput,
                           { borderColor: color, color },
@@ -348,6 +352,7 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                     <View style={{ flexDirection: 'row' }}>
                       <View>
                         <TextInput
+                          testID="distance_input"
                           style={[
                             styles.textInput,
                             { borderColor: color, color },
@@ -359,13 +364,14 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                           keyboardType="numeric"
                           textAlign="center"
                         />
-                      </View> 
+                      </View>
                     </View>
                   )}
                 </View>
 
                 {exerciseInfo.type !== 'cardio' && (
                   <TextInput
+                    testID="weight_input"
                     style={[
                       styles.textInput,
                       {
@@ -381,7 +387,7 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                     keyboardType="numeric"
                     textAlign="center"
                   />
-                  )}
+                )}
 
                 <View
                   style={{
@@ -390,12 +396,13 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                     justifyContent:
                     exerciseInfo.type !== 'cardio' ? 'space-evenly' : 'center',
                     alignContent: 'center',
-                    alignSelf: 'center'
+                    alignSelf: 'center',
                   }}
                 >
 
                   <View style={{ flexDirection: 'row' }}>
                     <TextInput
+                      testID="mins_input"
                       style={[
                         styles.textInput,
                         { borderColor: color, color, width: screenWidth * 0.1 },
@@ -409,6 +416,7 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                     />
                     <Text style={{ color, alignSelf: 'center', fontWeight: 'bold' }}>:</Text>
                     <TextInput
+                      testID="secs_input"
                       style={[
                         styles.textInput,
                         { borderColor: color, color, width: screenWidth * 0.1 },
@@ -423,6 +431,7 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                   </View>
 
                   <TextInput
+                    testID="calories_input"
                     style={[
                       styles.textInput,
                       {
@@ -466,6 +475,7 @@ export default function ExerciseInfoScreen({ route, navigation }) {
                 </Text>
 
                 <Checkbox
+                  testID="warm_up_set_checkbox"
                   status={warmUpSet ? 'checked' : 'indeterminate'}
                   onPress={() => {
                     setWarmUpSet(!warmUpSet);
@@ -479,6 +489,7 @@ export default function ExerciseInfoScreen({ route, navigation }) {
       </>
       )}
       <Snackbar
+        testID="snackbar"
         visible={snackbarVisible}
         onDismiss={() => setSnackbarVisible(!snackbarVisible)}
         action={{

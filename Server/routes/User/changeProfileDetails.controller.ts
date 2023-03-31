@@ -1,15 +1,10 @@
 import { type Request, type Response } from 'express'
 import { createHashedPassword, getUserByID, getUserByEmail, updateUser, verifyPassword, deleteUserRowByID } from '../../utils/userFunctions'
 import { isEmail, isStrongPassword } from '../../utils/validators'
-import supabase from '../../utils/supabaseSetUp'
-import { SupabaseQueryClass } from '../../utils/databaseInterface'
 import { deleteAllWorkoutPlansWithExercises } from '../../utils/Exercise/deleteWorkoutPlans'
 import validateJSONSchema from '../../utils/validateJSONSchema'
 import { schemaForRequireduserid } from '../../utils/JSONSchemas/schemaForRequireduserid'
 require('dotenv').config()
-
-const bcrypt = require('bcrypt')
-const databaseQuery = new SupabaseQueryClass()
 
 export const changeStats = async (req: Request, res: Response) => {
   const { firstName, lastName, prevEmail, newEmail, age } = req.body

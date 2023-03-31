@@ -74,6 +74,7 @@ export default function WorkoutPlansScreen({ navigation }) {
     >
       <Provider>
         <ScrollView
+          testID="plans_scrollView"
           style={[styles.scrollView, { borderColor: color }]}
           showsVerticalScrollIndicator={false}
           bounces={false}
@@ -90,6 +91,7 @@ export default function WorkoutPlansScreen({ navigation }) {
           {results
             && results.map((item) => (
               <TouchableOpacity
+                testID={item}
                 style={[styles.textBorder, { borderColor: color }]}
                 key={item}
                 onPress={() => { navigation.navigate('Workout Plan Information', item); }}
@@ -106,6 +108,7 @@ export default function WorkoutPlansScreen({ navigation }) {
 
         <View>
           <FAB
+            testID="create_plan_button"
             icon="plus"
             style={styles.fab}
             label="Create Plan"

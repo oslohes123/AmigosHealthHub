@@ -5,6 +5,7 @@ import {
 } from '@react-navigation/native';
 import {
   Keyboard,
+  Dimensions,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
@@ -28,6 +29,7 @@ const styles = {
     fontWeight: 'bold',
   },
 };
+const screenHeight = Dimensions.get('window').height;
 
 // Screen Names
 
@@ -104,7 +106,6 @@ export default function MainContainer() {
                 headerTitleStyle: styles.header,
                 tabBarShowLabel: false,
                 tabBarStyle: {
-                  paddingTop: 10,
                   backgroundColor: '#c2e7fe',
                 },
               })}

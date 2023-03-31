@@ -67,9 +67,9 @@ export const generalSearch = async (req: Request, res: Response) => {
       data = `The code was incorrect as ${code} use literal searchMethods for correct code`
       result = {
         items: [],
-        errorMessage: `Invalid code: ${code}. Use 0 for genericSearches and 1 for specificSearches.`
+        errorMessage: 'Invalid code'
       }
-      res.status(500).json(result)
+      return res.status(400).json(result)
   }
-  res.status(200).json(result)
+  return res.status(200).json(result)
 }

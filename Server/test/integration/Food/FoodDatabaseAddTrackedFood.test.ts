@@ -9,7 +9,6 @@ import request from 'supertest'
 const supabaseQuery = new SupabaseQueryClass()
 const routeNames = new RouteNamesClass()
 const AddTrackedFoodRoute = routeNames.fullAddTrackedFoodURL
-const todaysDate = new Date().toISOString().split('T')[0]
 
 let testEmail: string
 let hashedPassword: string
@@ -42,7 +41,7 @@ test.after.always(async (t: any) => {
   await supabaseQuery.deleteFrom(supabase, 'User', 'email', testEmail)
 })
 
-test.serial(`POST ${AddTrackedFoodRoute} with no fields`, async (t: any) => {
+test(`POST ${AddTrackedFoodRoute} with no fields`, async (t: any) => {
   const response = await request(app)
     .post(AddTrackedFoodRoute)
     .set('authorization', token)
@@ -54,7 +53,7 @@ test.serial(`POST ${AddTrackedFoodRoute} with no fields`, async (t: any) => {
   t.true(responseJSON.mssg === 'Invalid JSON Schema')
 })
 
-test.serial(`POST ${AddTrackedFoodRoute} correctly`, async (t: any) => {
+test(`POST ${AddTrackedFoodRoute} correctly`, async (t: any) => {
   const testFood = {
     input: {
       foodIdentifier: 'food_1',

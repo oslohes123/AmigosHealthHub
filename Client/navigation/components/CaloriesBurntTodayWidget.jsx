@@ -1,5 +1,5 @@
 import {
-  TouchableOpacity, Text, View, StyleSheet, Dimensions
+  Text, View, StyleSheet, Dimensions
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
@@ -60,46 +60,40 @@ export default function CaloriesBurntTodayWidget() {
       caloriesBurnt();
     }
   }, [navigation, isFocused]);
-  const pressHandler = () => {
-    navigation.navigate("Fitness", {screen: 'Workout History'});
-  };
 
   return (
+    <View style={styles.container}>
+      <LinearGradient
+        colors={['#00ffc8', '#0040ff']}
+        style={styles.widget}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+      >
+        <Text style={styles.header}>
+          Calories Burnt Today
+        </Text>
 
-    <TouchableOpacity onPress={pressHandler}>
-      <View style={styles.container}>
-        <LinearGradient
-          colors={['#00ffc8', '#0040ff']}
-          style={styles.widget}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-        >
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text style={styles.header}>
-            Calories Burnt Today
+            {error && <Text>{error}</Text>}
+            {!error && getCaloriesBurnt && (
+              <Text style={styles.number}>{getCaloriesBurnt}</Text>
+            )}
           </Text>
+          <Ionicons name="bicycle-outline" size={30} color="#fff" />
+        </View>
 
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={styles.header}>
-              {error && <Text>{error}</Text>}
-              {!error && getCaloriesBurnt && (
-                <Text style={styles.number}>{getCaloriesBurnt}</Text>
-              )}
-            </Text>
-            <Ionicons name="bicycle-outline" size={30} color="#fff" />
-          </View>
-
-          {isLoading && (
-            <>
-              {/* <Text>Refreshing.....</Text> */}
-              <ActivityIndicator
-                animating
-                size={25}
-                color={MD2Colors.greenA400}
-              />
-            </>
-          )}
-        </LinearGradient>
-      </View>
-    </TouchableOpacity>
+        {isLoading && (
+          <>
+            {/* <Text>Refreshing.....</Text> */}
+            <ActivityIndicator
+              animating
+              size={25}
+              color={MD2Colors.greenA400}
+            />
+          </>
+        )}
+      </LinearGradient>
+    </View>
   );
 }
