@@ -23,7 +23,7 @@ ASHLEY (Ashley) TYAGI
 Our project uses various NPM packages in order to develop and build the application 
 They can be found [here](https://www.npmjs.com/)
 <br>
-Here is a list which has been lifted from our packages.json files for the [Client](https://github.com/oslohes123/AmigosHealthApp/blob/12015eb60bd4042202956d662e6eb6dfe522c3fa/Client/package.json)
+Here is a list which has been lifted from our package.json files for the [Client](https://github.com/oslohes123/AmigosHealthApp/blob/12015eb60bd4042202956d662e6eb6dfe522c3fa/Client/package.json)
 and for the [Server](https://github.com/oslohes123/AmigosHealthApp/blob/12015eb60bd4042202956d662e6eb6dfe522c3fa/Server/package.json)
 
 <details> 
