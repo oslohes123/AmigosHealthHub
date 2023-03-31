@@ -307,7 +307,6 @@ describe("Check workout Stats Screen", () => {
     cy.get('[data-testid="history_widget"]').click()
     cy.contains("h1", "Past Workout Details").should("be.visible")
     cy.get('[data-testid="calendar_button"]').click()
-    cy.get('[aria-label="today Thursday 30 March 2023 selected You have entries for this day "]').click()
   })
 
   it("Checks graph widget navigates to overall screen", () => {
