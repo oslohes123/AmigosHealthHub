@@ -6,7 +6,6 @@ import { createUserWithID, deleteUserRow, createHashedPassword } from '../../../
 import { deleteTrackedWorkout } from '../../../../routes/Exercise/completedWorkouts.controller'
 import cloneDeep from 'lodash/cloneDeep'
 import { setUpCompletedWorkoutForTests } from '../../../../utils/Exercise/setUpCompletedWorkoutForTests'
-// import { selectAllActualExercises, selectAllCompletedWorkoutNames, selectAllTrackedWorkoutsWithExercises } from '../../../../utils/Exercise/exerciseFunctions'
 import { getTime, getTodaysDate, getDate } from '../../../../utils/convertTimeStamptz'
 import { deleteMultipleExercises } from '../../../../utils/Exercise/insertAndDeleteMultipleExercises'
 
