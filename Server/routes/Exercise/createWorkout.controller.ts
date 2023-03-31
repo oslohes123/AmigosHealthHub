@@ -1,26 +1,27 @@
 import { type Request, type Response } from 'express'
-import supabase from '../../utils/supabaseSetUp'
-import { SupabaseQueryClass } from '../../utils/databaseInterface'
+// import supabase from '../../utils/supabaseSetUp'
+// import { SupabaseQueryClass } from '../../utils/databaseInterface'
 import { schemaForCreateWorkoutJSON } from '../../utils/JSONSchemas/schemaForCreateWorkoutJSON'
 import validateJSONSchema from '../../utils/validateJSONSchema'
 import createNewWorkoutPlan from '../../utils/Exercise/createNewWorkoutPlan'
-import { deleteWorkoutPlanRowByID } from '../../utils/Exercise/exerciseFunctions'
-const databaseQuery = new SupabaseQueryClass()
+import { deleteWorkoutPlanRowByID, matchWorkoutPlanAndUser } from '../../utils/Exercise/exerciseFunctions'
+// const databaseQuery = new SupabaseQueryClass()
 
 export const deleteWorkoutPlan = async (req: Request, res: Response) => {
   const { userid, workoutname } = req.body
   if (!userid || !workoutname) {
-    return res.status(400).json({ mssg: 'Either userid or workoutname is missing!' })
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' })
   }
 
-  const { data, error }: any = await databaseQuery.match(supabase, 'WorkoutPlans', 'WorkoutPlanID', { userid, workoutname })
-  if (error) {
-    return res.status(400).json({ mssg: error })
+  // const { data, error }: any = await databaseQuery.match(supabase, 'WorkoutPlans', 'WorkoutPlanID', { userid, workoutname })
+  const { dataMatchingWorkoutPlanAndUser, errorMatchingWorkoutPlanAndUser } = await matchWorkoutPlanAndUser(userid, workoutname)
+  if (errorMatchingWorkoutPlanAndUser) {
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: errorMatchingWorkoutPlanAndUser })
   }
-  if (data.length === 0) {
+  if (dataMatchingWorkoutPlanAndUser.length === 0) {
     return res.status(400).json({ mssg: 'User does not have a plan of that name!' })
   }
-  const workoutPlanToDel = data[0].WorkoutPlanID
+  const workoutPlanToDel = dataMatchingWorkoutPlanAndUser[0].WorkoutPlanID
 
   const { deleteError } = await deleteWorkoutPlanRowByID(workoutPlanToDel)
   if (deleteError) {
