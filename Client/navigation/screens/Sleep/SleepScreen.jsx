@@ -119,7 +119,7 @@ export default function SleepScreen() {
   ]);
 
   const submitSleepData = () => {
-    addSleep(selectedHoursSlept, selectedSleepQuality, timestamp);
+    addSleep(parseInt(selectedHoursSlept, 10), parseInt(selectedSleepQuality, 10), timestamp);
   };
 
   return (

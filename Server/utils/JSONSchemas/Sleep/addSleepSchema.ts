@@ -14,7 +14,8 @@ export const addSleepSchema =
       type: 'integer'
     },
     timestamp: {
-      type: 'string'
+      type: 'string',
+      format: 'date'
     }
   },
   required: [

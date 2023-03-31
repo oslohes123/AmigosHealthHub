@@ -49,7 +49,7 @@ const mockRequest = (sessionData: any) => {
 test('Attempt to insert data without UserID', async (t: any) => {
   const req = mockRequest({
     userID: null,
-    timestamp: '20/03/2023',
+    timestamp: '20-03-2023',
     hoursSlept: 7,
     sleepQuality: 7
   })
@@ -77,7 +77,7 @@ test('Attempt to insert data without timestamp', async (t: any) => {
 test('Attempt to insert data without hoursSlept', async (t: any) => {
   const req = mockRequest({
     userID: uuid,
-    timestamp: '20/03/2023',
+    timestamp: '20-03-2023',
     hoursSlept: null,
     sleepQuality: 7
   })
@@ -92,7 +92,7 @@ test('Successful insertion of sleep data', async (t: any) => {
   const req = mockRequest({
     userID: uuid,
     sleepQuality: 3,
-    timestamp: '2023/03/22',
+    timestamp: '2023-03-22',
     hoursSlept: 6
   })
   const res = mockResponse()
