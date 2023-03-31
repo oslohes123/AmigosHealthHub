@@ -15,7 +15,6 @@ const todayDate = getDate(moment().format())
 
 test.serial.before(async (t: any) => {
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
-  console.log('Inserting user')
   const { error }: any = await createUserWithID({
     id: uuid,
     firstName: 'First',
@@ -30,7 +29,6 @@ test.serial.before(async (t: any) => {
 })
 
 test.before(async (t: any) => {
-  console.log('1st executed!')
   const { error }: any = await createMentalHealthUser({ user_id: uuid, face_id: '5', created_at: '2020-03-01 00:00:00+00', todays_word: 'Happy' })
 
   if (error) {
@@ -38,7 +36,6 @@ test.before(async (t: any) => {
   }
 })
 test.before(async (t: any) => {
-  console.log('2nd executed!')
   const { error }: any = await createMentalHealthUser({ user_id: uuid, face_id: '2', created_at: '2020-03-02 00:00:00+00', todays_word: 'Sad' })
 
   if (error) {
@@ -46,7 +43,6 @@ test.before(async (t: any) => {
   }
 })
 test.before(async (t: any) => {
-  console.log('3rd executed!')
   const { error }: any = await createMentalHealthUser({ user_id: uuid, face_id: '3', created_at: '2020-03-03 00:00:00+00', todays_word: 'Alright' })
 
   if (error) {
@@ -54,14 +50,12 @@ test.before(async (t: any) => {
   }
 })
 test.before(async (t: any) => {
-  console.log('4th executed!')
   const { error }: any = await createMentalHealthUser({ user_id: uuid, face_id: '1', created_at: '2020-03-04 00:03:00+00', todays_word: 'Awful' })
   if (error) {
     t.fail(`MHtesterror4: ${JSON.stringify(error)}`)
   }
 })
 test.before(async (t: any) => {
-  console.log('5th executed!')
   const { error }: any = await createMentalHealthUser({ user_id: uuid, face_id: '4', created_at: '2020-03-05 00:00:00+00', todays_word: 'Happy' })
 
   if (error) {
@@ -69,7 +63,6 @@ test.before(async (t: any) => {
   }
 })
 test.before(async (t: any) => {
-  console.log('6th executed!')
   const { error }: any = await createMentalHealthUser({ user_id: uuid, face_id: '3', created_at: '2020-03-06 00:00:00+00', todays_word: 'Mediocre' })
 
   if (error) {
@@ -77,7 +70,6 @@ test.before(async (t: any) => {
   }
 })
 test.before(async (t: any) => {
-  console.log('7th executed!')
   const { error }: any = await createMentalHealthUser({ user_id: uuid, face_id: '2', created_at: '2020-03-07 00:00:00+00', todays_word: 'Depressed' })
 
   if (error) {
@@ -85,7 +77,6 @@ test.before(async (t: any) => {
   }
 })
 test.before(async (t: any) => {
-  console.log('8th executed!')
   const { error }: any = await createMentalHealthUser({ user_id: uuid, face_id: '1', created_at: '2020-03-08 00:00:00+00', todays_word: 'Awful' })
 
   if (error) {
@@ -93,7 +84,6 @@ test.before(async (t: any) => {
   }
 })
 test.before(async (t: any) => {
-  console.log('9th executed!')
   const { error }: any = await createMentalHealthUser({ user_id: uuid, face_id: '1', created_at: todayDate, todays_word: 'Awful' })
 
   if (error) {
@@ -102,7 +92,6 @@ test.before(async (t: any) => {
 })
 
 test.after.always('guaranteed cleanup', async (t: any) => {
-  console.log('test.after.always executed!')
   await deleteUserRow(randomEmail)
 })
 
@@ -119,32 +108,23 @@ const mockRequest = (sessionData: any) => {
   }
 }
 test('Return last 7 words and their frequencies with incorrect ID', async (t: any) => {
-  console.log('In returning last 7 words and their frequencies')
   const req = mockRequest({
     userid: wrongUUID
   })
   const res = mockResponse()
   await wordValues(req as Request, res as Response)
 
-  const argsPassed = res.json.getCall(0).args[0]
-  console.log(`argspassed incorrectID: ${JSON.stringify(argsPassed)}`)
-
   t.true(res.status.calledWith(400))
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' }))
 })
 
 test('Return last 7 words and their frequencies', async (t: any) => {
-  console.log('In returning last 7 words and their frequencies with new ID')
   const req = mockRequest({
     userid: uuid
   })
   const res = mockResponse()
   await wordValues(req as Request, res as Response)
-  const argsPassedFull = res.json.getCall(0)
-  console.log(`lastsevenFull: ${JSON.stringify(argsPassedFull)}`)
   const argsPassed = res.json.getCall(0).args[0]
-  console.log(`lastseven: ${JSON.stringify(argsPassed)}`)
-
   const expectedArgs = {
     mssg: 'MentalHealthOverview',
     // [
@@ -178,30 +158,22 @@ test('Return last 7 words and their frequencies', async (t: any) => {
   t.true(JSON.stringify(argsPassed) === stringifiedExpectedArgs)
 })
 test('Getting last 7 faces and their average with an incorrect ID should result in an error', async (t: any) => {
-  console.log('In returning last 7 faces and their average')
   const req = mockRequest({
     userid: wrongUUID
   })
   const res = mockResponse()
   await faceValues(req as Request, res as Response)
 
-  const argsPassed = res.json.getCall(0).args[0]
-  console.log(`argspassed incorrectID: ${JSON.stringify(argsPassed)}`)
-
   t.true(res.status.calledWith(400))
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' }))
 })
 test('Return last 7 faces and their average with new ID', async (t: any) => {
-  console.log('In returning last 7 faces and their average with new ID')
   const req = mockRequest({
     userid: uuid
   })
   const res = mockResponse()
   await faceValues(req as Request, res as Response)
-  // console.log(`argsPassedFull: ${JSON.stringify(argsPassedFull)}`)
   const argsPassed = res.json.getCall(0).args[0]
-  // console.log(`argspassed: ${JSON.stringify(argsPassed)}`)
-
   const expectedArgs = {
     mssg: 'Retrieved faces',
     faces: [
@@ -217,9 +189,6 @@ test('Return last 7 faces and their average with new ID', async (t: any) => {
     success: 'successful'
   }
   const stringifiedExpectedArgs = JSON.stringify(expectedArgs)
-  console.log(`argsPassed ln 233:${JSON.stringify(argsPassed)}`)
-  console.log(`stringifiedExpectedArgs ln 233:${stringifiedExpectedArgs}`)
-  t.true(res.status.calledWith(200))
   t.true(res.json.calledOnceWith(argsPassed))
   t.true(JSON.stringify(argsPassed) === stringifiedExpectedArgs)
 })
@@ -237,22 +206,16 @@ test("Return today's word", async (t: any) => {
     word: 'Awful'
   }
   const stringifiedExpectedArgs = JSON.stringify(expectedArgs)
-  console.log(`argsPassed wheretodays_word:${JSON.stringify(argsPassed)}`)
-  console.log(`stringifiedExpectedArgs wheretodays_word:${stringifiedExpectedArgs}`)
   t.true(res.json.calledOnceWith(argsPassed))
   t.true(JSON.stringify(argsPassed) === stringifiedExpectedArgs)
 })
 
 test('Getting last 7 dates with an incorrect ID should result in an error', async (t: any) => {
-  console.log('In returning last 7 dates')
   const req = mockRequest({
     userid: wrongUUID
   })
   const res = mockResponse()
   await dateValues(req as Request, res as Response)
-
-  const argsPassed = res.json.getCall(0).args[0]
-  console.log(`argspasseddatesincorrectID: ${JSON.stringify(argsPassed)}`)
 
   t.true(res.status.calledWith(400))
   t.true(res.json.calledWith({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' }))
@@ -281,12 +244,6 @@ test('Return last 7 dates', async (t: any) => {
     success: 'successful'
   }
   const stringifiedExpectedArgs = JSON.stringify(expectedArgs)
-  console.log(`last7dates: ${JSON.stringify(argsPassed)}`)
-  console.log(`stringifiedExpectedArgs last7dates: ${stringifiedExpectedArgs}`)
   t.true(res.json.calledOnceWith(argsPassed))
   t.true(JSON.stringify(argsPassed) === stringifiedExpectedArgs)
 })
-
-// // test('passing test ', (t: any) => {
-//   t.pass()
-// })

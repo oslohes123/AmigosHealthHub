@@ -10,8 +10,8 @@ const databaseQuery = new SupabaseQueryClass()
 export const addTrackedFood = async (req: Request, res: Response) => {
   const Data: FoodInput = req.body
   if (!validateJSONSchema(req.body, foodSchemas.addTrackedFood)) {
-    console.log('We got: ', req.body)
-    console.log('Schema: ', foodSchemas.addTrackedFood)
+    
+    
 
     return res.status(400).send({ mssg: 'Invalid JSON Schema', whatWeGot: req.body, schema: foodSchemas.addTrackedFood })
   }
@@ -23,7 +23,7 @@ export const addTrackedFood = async (req: Request, res: Response) => {
     { FoodID: Data.input.foodIdentifier }
   )
   if (matchingDataError) {
-    console.log('Error matching food to Food table!', matchingDataError)
+    
     return res.status(500).send(matchingDataError)
   } else {
     // If the food is not in the Food table, insert it
@@ -45,7 +45,7 @@ export const addTrackedFood = async (req: Request, res: Response) => {
         }
       )
       if (insertFoodError) {
-        console.log('Error inserting food into Food table!', insertFoodError)
+        
         return res.status(500).send(insertFoodError)
       }
     }
@@ -66,7 +66,7 @@ export const addTrackedFood = async (req: Request, res: Response) => {
     }
   )
   if (error) {
-    console.log('Error inserting food into Tracked Food table!', error)
+    
     return res.status(500).send(error)
   }
   return res.status(200).send(returnData)
@@ -100,7 +100,7 @@ export const getSpecificTrackedFood = async (req: Request, res: Response) => {
     { LogID }
   )
   if (error) {
-    console.log('Error getting specific tracked food!', error)
+    
     return res.status(500).send(error)
   } else {
     return res.status(200).send(returnData)

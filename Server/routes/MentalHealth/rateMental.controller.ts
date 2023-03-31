@@ -10,7 +10,6 @@ const databaseQuery = new SupabaseQueryClass()
 export async function checkExistsToday (id: string) {
   const { data, error }: any = await databaseQuery.selectWhere(supabase, 'Mental Health', 'user_id', id, 'created_at')
   if (error) {
-    console.error(error)
     return true
   }
   else if (data.length === 0) {

@@ -98,7 +98,7 @@ export const updateSpecificCalorieGoal = async (req: Request, res: Response) => 
 export const deleteSpecificCalorieGoal = async (req: Request, res: Response) => {
   const { id } = req.body
   if (!validateJSONSchema(req.body, calorieSchemas.deleteSpecificCalorieGoal)) {
-    return res.status(400).send({ mssg: 'Invalid JSON Schema', whatWeGot: req.body, schema: calorieSchemas.deleteSpecificCalorieGoal })
+    return res.status(400).json({ mssg: 'Invalid JSON Schema', whatWeGot: req.body, schema: calorieSchemas.deleteSpecificCalorieGoal })
   }
   const { data, error }: any = await databaseQuery.deleteFrom(
     supabase,
@@ -107,8 +107,8 @@ export const deleteSpecificCalorieGoal = async (req: Request, res: Response) => 
     id
   )
   if (error) {
-    return res.status(500).send(error)
+    return res.status(500).json(error)
   } else {
-    return res.status(200).send(data)
+    return res.status(200).json(data)
   }
 }

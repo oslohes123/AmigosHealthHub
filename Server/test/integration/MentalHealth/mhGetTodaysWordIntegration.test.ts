@@ -30,7 +30,6 @@ test.serial.before(async (t: any) => {
     age: 31
   })
   if (error) {
-    // console.log(`MHtesterror:${error}`);
     t.fail(`Inserting user: ${JSON.stringify(error)}`)
   }
 })
@@ -43,7 +42,6 @@ test.serial.before(async (t: any) => {
   token = createToken(data[0].id)
 })
 test.before(async (t: any) => {
-  console.log('9th executed!')
   const { error }: any = await createMentalHealthUser({
     user_id: uuid,
     face_id: '1',
@@ -57,7 +55,6 @@ test.before(async (t: any) => {
 })
 
 test.after.always('guaranteed cleanup', async (t: any) => {
-  console.log('test.after.always executed!')
   await deleteUserRow(randomEmail)
 })
 
@@ -66,7 +63,6 @@ test(`GET ${todaysWordRoute} with incorrect ID`, async (t: any) => {
     .get(todaysWordRoute)
     .set({ authorization: token, userid: wrongUUID })
 
-  console.log(`incorrectIDError: ${JSON.stringify(response.body)}`)
   t.true(response.status === 400)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Something went wrong!', dev: 'userid does not follow the schema' }))
@@ -80,12 +76,7 @@ test(`GET ${todaysWordRoute} with correct ID`, async (t: any) => {
     mssg: 'success',
     word: 'Awful'
   }
-  console.log(`correcttodaysword ${JSON.stringify(response.body)}`)
   t.true(response.status === 200)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify(expectedArgs))
 })
-
-// test('passing test ', (t: any) => {
-//   t.pass()
-// })
