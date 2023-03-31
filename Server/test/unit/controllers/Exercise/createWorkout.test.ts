@@ -7,7 +7,6 @@ import { createHashedPassword, createUserWithID, deleteUserRow } from '../../../
 import setUpWorkoutPlan from '../../../../utils/Exercise/setUpWorkoutPlanForTests'
 import { deleteAllWorkoutPlansWithExercises } from '../../../../utils/Exercise/deleteWorkoutPlans'
 import { createWorkout } from '../../../../routes/Exercise/createWorkout.controller'
-import { deleteMultipleExercises } from '../../../../utils/Exercise/insertAndDeleteMultipleExercises'
 import { matchWorkoutPlanAndUser } from '../../../../utils/Exercise/exerciseFunctions'
 
 let randomEmail: string
