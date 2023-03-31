@@ -14,12 +14,8 @@ export const createCalorieGoal = async (UserID: string, CalorieGoal: number) => 
     }
   )
   if (error) {
-    console.log('Error inserting')
-
-    console.log('Error: ', error)
     return { error }
   } else {
-    console.log('calorie goal inserted')
     return { data }
   }
 }

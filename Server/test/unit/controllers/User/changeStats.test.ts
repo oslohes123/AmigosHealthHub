@@ -42,24 +42,22 @@ test.before(async (t: ExecutionContext) => {
   secondUserEmail = `${uuid2}@gmail.com`
 
   hashedPassword2 = await createHashedPassword('User2Password123!')
-  console.log('In second user creation')
-  const { data, error }: any = await supabaseQuery.insert(supabase, 'User', {
+  const { error }: any = await supabaseQuery.insert(supabase, 'User', {
     firstName: 'Second',
     lastName: 'User',
     email: secondUserEmail,
     password: hashedPassword2,
     age: 30
   })
-  console.log(data)
   if (error) {
     t.fail('Inserting second user failed!')
   }
 })
 
 test.after.always('guaranteed cleanup of user', async (t: ExecutionContext) => {
-  await supabaseQuery.deleteFrom(supabase, 'User', 'email', firstUserEmail);
-  await supabaseQuery.deleteFrom(supabase, 'User', 'email', newEmail);
-});
+  await supabaseQuery.deleteFrom(supabase, 'User', 'email', firstUserEmail)
+  await supabaseQuery.deleteFrom(supabase, 'User', 'email', newEmail)
+})
 
 const mockResponse = () => {
   const res: any = {}
@@ -231,8 +229,6 @@ test('changeStats with same email results in success', async (t: ExecutionContex
   if (error) {
     t.fail(`Selecting ${firstUserEmail} failed!`)
   }
-  console.log(`data in changeStats: ${JSON.stringify(data)}`)
-
   t.true(res.status.calledWith(200))
   t.true(res.json.calledWith({ mssg: 'Successful Update' }))
   t.true(data[0].firstName === 'Changedfirst')

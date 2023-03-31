@@ -7,7 +7,6 @@ export const addSleepFunc = async (
   database = supabase,
   table = 'Sleep Data'
 ) => {
-//   console.log(`Sleep data TO ADD: ${sleepData}`)
   const { data, error }: any = await databaseQuery.insert(
     database,
     table,
@@ -23,10 +22,6 @@ export const getSleepFunc = async (
   database = supabase,
   table = 'Sleep Data'
 ) => {
-//   console.log(
-//         `Getting sleep data from ${startDate} to ${endDate} for user ${userID}`
-//   )
-
   const columnSelected = '*'
   const { data, error }: any = await databaseQuery.selectWhereRange(
     database,

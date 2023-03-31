@@ -4,7 +4,6 @@ const dotenv = require('dotenv')
 dotenv.config()
 
 export const checkToken = async (req: Request, res: Response, next: NextFunction) => {
-  console.log('Middleware Executed!')
   return await checkTokenHelper(req, res, next)
 }
 

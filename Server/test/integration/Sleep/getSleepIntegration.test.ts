@@ -53,7 +53,6 @@ test.serial.before(async (t: any) => {
     sleepQuality: 10
   })
   if (error) {
-    // console.log(`MHtesterror:${error}`);
     t.fail(`Inserting user: ${JSON.stringify(error)}`)
   }
 })

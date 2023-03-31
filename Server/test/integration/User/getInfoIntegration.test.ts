@@ -49,7 +49,6 @@ test(`GET ${getInfoRoute} with no fields`, async (t: ExecutionContext) => {
     .get(getInfoRoute)
     .set('authorization', token)
 
-  console.log(`response: ${JSON.stringify(response)}`)
   t.true(response.status === 400)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
   t.true(JSON.stringify(response.body) === JSON.stringify({ mssg: 'Email must be provided' }))
@@ -67,6 +66,5 @@ test(`GET ${getInfoRoute} with existing user`, async (t: ExecutionContext) => {
   })
   t.true(response.status === 200)
   t.true(response.headers['content-type'] === 'application/json; charset=utf-8')
-  console.log(`response.body: ${JSON.stringify(response.body)}`)
   t.true(JSON.stringify(response.body.user) === expectedResponse)
 })

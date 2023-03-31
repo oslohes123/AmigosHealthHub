@@ -15,7 +15,6 @@ const randomEmail = `${uuid}@gmail.com`
 
 test.serial.before(async (t: ExecutionContext) => {
   const hashedPassword = await createHashedPassword('CorrectPassword123!')
-  // console.log('Inserting user')
   const { error }: any = await databaseQuery.insert(supabase, 'User', {
     id: uuid,
     firstName: 'addSleep',
@@ -25,7 +24,6 @@ test.serial.before(async (t: ExecutionContext) => {
     age: 20
   })
   if (error) {
-    // console.log(`MHtesterror:${error}`);
     t.fail(`Inserting user: ${JSON.stringify(error)}`)
   }
 })

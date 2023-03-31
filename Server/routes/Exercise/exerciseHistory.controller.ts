@@ -7,10 +7,7 @@ import validateJSONSchema from '../../utils/validateJSONSchema'
 import { schemaForRequireduserid } from '../../utils/JSONSchemas/schemaForRequireduserid'
 import { matchExercise } from '../../utils/Exercise/exerciseFunctions'
 const databaseQuery = new SupabaseQueryClass()
-// getExerciseHistory by name of exercise
-// for weighted exercise return 2 arrays: array of dates(x-axis), array of weight pulled(y-axis)
-// else return arrayOfCalories, arrayOfDuration, arrayOfDistance
-// create new functions that deal with strength and cardio exercises
+
 export const getExerciseHistory = async (req: Request, res: Response) => {
   const { nameofexercise, userid } = req.headers
   if (!nameofexercise || !userid) {
@@ -29,44 +26,32 @@ export const getExerciseHistory = async (req: Request, res: Response) => {
   }
 
   else {
-    console.log(`exerciseID data: ${JSON.stringify(data)}`)
     const exerciseID = data[0].ExerciseID
     const typeOfExercise = data[0].type
-    console.log(`typeOfExercise: ${JSON.stringify(typeOfExercise)}`)
     const { errorPresent, exercisesMatch } = await matchExercise(userid, exerciseID)
     if (errorPresent) {
       return res.status(400).json({ mssg: 'Something went wrong', errorPresent })
     }
     else {
-      // exercisesMatch: [{"AEID":"e0cc18ef-29d2-46e0-a4d8-62eaeeda0526","userID":"e9eae359-87cc-482c-8b08-0c4ce7d32c01","exerciseID":"b2265c54-7d15-4f40-9661-2043857db62f","sets":null,"duration":60,"distance":5000,"warmUpSet":false,"calories":50,"weight":null,"reps":null}]
-      console.log(`exercisesMatch: ${JSON.stringify(exercisesMatch)}`)
       if (exercisesMatch.length > 0) {
         if (typeOfExercise === 'muscle' || typeOfExercise === 'strength') {
           const arrayOfCompletedWorkoutIDs = []
           const arrayOfAEIDs = []
-          // for each exercise, get the corresponding TrackedWorkoutWithExercises, then get its completedWorkoutID
           for (let i = 0; i < exercisesMatch.length; i++) {
             const AEID = exercisesMatch[i].AEID
             arrayOfAEIDs.push(AEID)
-            // const { data, error }: any = await databaseQuery.selectWhere(supabase, 'TrackedWorkoutsWithExercises', 'AEID', AEID, 'completedWorkoutID')
             const { data, error }: any = await databaseQuery.selectWhere(supabase, 'TrackedWorkoutsWithExercises', 'AEID', AEID, '*')
             if (error) {
               return res.status(400).json({ mssg: 'Sorry, something went wrong!' })
             }
-            console.log(`data ln68 of exerciseHistory: ${JSON.stringify(data)}`)
 
             if (data.length > 0) {
               arrayOfCompletedWorkoutIDs.push(data[0].completedWorkoutID)
             }
             else {
-              console.log('ln 68 of exerciseHistory!')
               return res.status(400).json({ mssg: 'Exercise has never been performed' })
             }
-            console.log(`ln72: ${JSON.stringify(data)}`)
           }
-          // Not removing duplicates in case of the same workout twice in a day
-          //  arrayOfCompletedWorkoutIDs = removeDuplicates(arrayOfCompletedWorkoutIDs);
-          console.log(`arrayOfCompletedWorkoutIDs: ${JSON.stringify(arrayOfCompletedWorkoutIDs)}`)
 
           for (let j = 0; j < arrayOfCompletedWorkoutIDs.length; j++) {
             const { data, error }: any = await databaseQuery.match(supabase, 'CompletedWorkouts', 'timestamp', { userid, completedWorkoutID: arrayOfCompletedWorkoutIDs[j] })
@@ -74,7 +59,6 @@ export const getExerciseHistory = async (req: Request, res: Response) => {
               return res.status(400).json({ mssg: 'Failure Matching', error })
             }
             else {
-              console.log(`ln72: ${JSON.stringify(data)}`)
               if (data.length > 0) {
                 arrayOfDates.push(data[0].timestamp)
               }
@@ -93,7 +77,6 @@ export const getExerciseHistory = async (req: Request, res: Response) => {
             }
             else {
               if (data.length > 0) {
-                console.log(`weight pulled: ${JSON.stringify(data)}`)
                 const numberOfSets = data[0].sets
                 const reps = data[0].reps
                 const weight = data[0].weight
@@ -101,7 +84,6 @@ export const getExerciseHistory = async (req: Request, res: Response) => {
                   let weightPulled: number = 0
                   for (let j = 0; j < numberOfSets; j++) {
                     weightPulled = weightPulled + (reps[j] * weight[j])
-                    console.log(`weightPulled: ${weightPulled}`)
                   }
                   arrayOfWeightPulled.push(weightPulled)
                 }
@@ -116,28 +98,20 @@ export const getExerciseHistory = async (req: Request, res: Response) => {
         else {
           const arrayOfCompletedWorkoutIDs = []
           const arrayOfAEIDs = []
-          // for each exercise, get the corresponding TrackedWorkoutWithExercises, then get its completedWorkoutID
           for (let i = 0; i < exercisesMatch.length; i++) {
             const AEID = exercisesMatch[i].AEID
-            console.log(`AEID LN129: ${AEID}`)
             arrayOfAEIDs.push(AEID)
             const { data, error }: any = await databaseQuery.selectWhere(supabase, 'TrackedWorkoutsWithExercises', 'AEID', AEID, '*')
             if (error) {
-              console.log('ln 131 of exerciseHistory!')
               return res.status(400).json({ mssg: 'Sorry, something went wrong!' })
             }
             if (data.length > 0) {
               arrayOfCompletedWorkoutIDs.push(data[0].completedWorkoutID)
             }
             else {
-              console.log('ln 138 of exerciseHistory!')
               return res.status(400).json({ mssg: 'Exercise has never been performed' })
             }
-            console.log(`ln53: ${JSON.stringify(data)}`)
           }
-          // Not removing duplicates in case of the same workout twice in a day
-          //  arrayOfCompletedWorkoutIDs = removeDuplicates(arrayOfCompletedWorkoutIDs);
-          console.log(`arrayOfCompletedWorkoutIDs: ${JSON.stringify(arrayOfCompletedWorkoutIDs)}`)
 
           for (let j = 0; j < arrayOfCompletedWorkoutIDs.length; j++) {
             const { data, error }: any = await databaseQuery.match(supabase, 'CompletedWorkouts', 'timestamp', { userid, completedWorkoutID: arrayOfCompletedWorkoutIDs[j] })
@@ -145,7 +119,6 @@ export const getExerciseHistory = async (req: Request, res: Response) => {
               return res.status(400).json({ mssg: 'Failure Matching', error })
             }
             else {
-              console.log(`ln72: ${JSON.stringify(data)}`)
               if (data.length > 0) {
                 arrayOfDates.push(data[0].timestamp)
               }
@@ -162,7 +135,6 @@ export const getExerciseHistory = async (req: Request, res: Response) => {
             }
             else {
               if (data.length > 0) {
-                console.log(`data ln187: ${JSON.stringify(data)}`)
                 const calories = data[0].calories
                 const duration = data[0].duration
                 const distance = data[0].distance
@@ -178,14 +150,10 @@ export const getExerciseHistory = async (req: Request, res: Response) => {
         }
       }
       else {
-        // Replace to return 2 empty arrays
-        console.log('ln 131 of exerciseHistory!')
         return res.status(400).json({ mssg: 'Exercise has never been performed' })
       }
     }
     arrayOfDates = arrayOfDates.map((x) => [getDate(x)])
-    // arrayOfWeightPulled = arrayOfWeightPulled.map((x) => [x])
-    console.log(`arrayOfDates ln219: ${JSON.stringify(arrayOfDates)}`)
     if (typeOfExercise === 'muscle' || typeOfExercise === 'strength') {
       return res.status(200).json({ mssg: 'Success!', type: 'muscle/strength', arrayOfDates, data: { arrayOfWeightPulled } })
     }
@@ -207,7 +175,6 @@ export const getAllExercises = async (req: Request, res: Response) => {
   if (error) {
     return res.status(400).json({ mssg: 'Something went wrong', error })
   }
-  console.log(`Selecting all actualexercise ids of a user: ${JSON.stringify(data)}`)
 
   let arrayOfExerciseIDs = []
   for (let i = 0; i < data.length; i++) {
@@ -222,7 +189,6 @@ export const getAllExercises = async (req: Request, res: Response) => {
     }
     arrayOfExerciseIDs[i] = data[0].name
   }
-  console.log(`arrayOfExerciseIDs: ${JSON.stringify(arrayOfExerciseIDs)}`)
   const arrayOfExerciseNames = arrayOfExerciseIDs
   return res.status(200).json({ mssg: 'Success!', arrayOfExerciseNames })
 }
