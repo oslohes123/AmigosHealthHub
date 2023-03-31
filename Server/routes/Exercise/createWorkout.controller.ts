@@ -4,16 +4,8 @@ import { SupabaseQueryClass } from '../../utils/databaseInterface'
 import { schemaForCreateWorkoutJSON } from '../../utils/JSONSchemas/schemaForCreateWorkoutJSON'
 import validateJSONSchema from '../../utils/validateJSONSchema'
 import createNewWorkoutPlan from '../../utils/Exercise/createNewWorkoutPlan'
+import { deleteWorkoutPlanRowByID } from '../../utils/Exercise/exerciseFunctions'
 const databaseQuery = new SupabaseQueryClass()
-const deleteWorkoutPlanByID = async (workoutPlanID: string) => {
-  const errorAndIDs = { deleteError: '' }
-  const { error }: any = await databaseQuery.deleteFrom(supabase, 'WorkoutPlans', 'WorkoutPlanID', workoutPlanID)
-  if (error) {
-    errorAndIDs.deleteError = error
-    return errorAndIDs
-  }
-  return errorAndIDs
-}
 
 export const deleteWorkoutPlan = async (req: Request, res: Response) => {
   const { userid, workoutname } = req.body
@@ -30,7 +22,7 @@ export const deleteWorkoutPlan = async (req: Request, res: Response) => {
   }
   const workoutPlanToDel = data[0].WorkoutPlanID
 
-  const { deleteError } = await deleteWorkoutPlanByID(workoutPlanToDel)
+  const { deleteError } = await deleteWorkoutPlanRowByID(workoutPlanToDel)
   if (deleteError) {
     return res.status(400).json({ mssg: 'Fail to delete WorkoutPlanByID', deleteError })
   }
@@ -52,7 +44,7 @@ export const deleteWorkoutPlan = async (req: Request, res: Response) => {
 export const createWorkout = async (req: Request, res: Response) => {
   const { userid, workoutname, exercises } = req.body
   if (!validateJSONSchema(req.body, schemaForCreateWorkoutJSON)) {
-    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'req.body does not match the JSON Schema!' })
+    return res.status(400).json({ mssg: 'Something went wrong!', dev: 'JSON instance does not follow the JSON schema' })
   }
   const { errorsCreatingNewWorkoutPlan, success }: any = await createNewWorkoutPlan(userid, workoutname, { exercises })
   if (errorsCreatingNewWorkoutPlan) {
