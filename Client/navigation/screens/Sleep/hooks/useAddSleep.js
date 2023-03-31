@@ -26,11 +26,6 @@ export default function useAddSleep() {
   ) => {
     setIsLoading(true);
 
-    console.log(`full addSleep user: ${JSON.stringify(user)}`);
-    console.log(`id in addSleep: ${id}`);
-    console.log(
-      `useAddSleep data-> hoursslept ${hoursSleptInput}, sleepquality ${sleepQualityInput}, timestamp ${timestampInput}`,
-    );
     const response = await fetch(
       addSleepRoute,
       {
@@ -47,13 +42,11 @@ export default function useAddSleep() {
         }),
       },
     );
-    console.log(`respornse of addSleep: ${JSON.stringify(response)}`);
+
     const responseJSON = await response.json();
-    console.log(responseJSON);
     if (!response.ok) {
       setIsLoading(false);
       setError(responseJSON.mssg);
-      console.log('Error in get sleep');
     } else if (response.ok) {
       setError(null);
       setIsLoading(false);
