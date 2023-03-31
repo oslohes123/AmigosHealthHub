@@ -69,7 +69,7 @@ export const generalSearch = async (req: Request, res: Response) => {
         items: [],
         errorMessage: 'Invalid code'
       }
-      res.status(400).json(result)
+      return res.status(400).json(result)
   }
-  res.status(200).json(result)
+  return res.status(200).json(result)
 }
