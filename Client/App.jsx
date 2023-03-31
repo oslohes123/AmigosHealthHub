@@ -2,9 +2,9 @@ import 'react-native-url-polyfill/auto';
 
 import React from 'react';
 
-import MainContainer from './navigation/MainContainer';
-import AuthContainer from './navigation/AuthContainer';
-import { AuthContextProvider, useAuthContext } from './navigation/screens/Authentication/context/AuthContext';
+import MainContainer from './src/MainContainer';
+import AuthContainer from './src/AuthContainer';
+import { AuthContextProvider, useAuthContext } from './src/screens/Authentication/context/AuthContext'
 
 function App() {
   const { user } = useAuthContext();
