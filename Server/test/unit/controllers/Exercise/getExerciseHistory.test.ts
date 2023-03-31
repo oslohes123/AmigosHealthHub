@@ -4,9 +4,12 @@ import { type Request, type Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
 import { createHashedPassword, createUserWithID, deleteUserRow } from '../../../../utils/userFunctions'
 import cloneDeep from 'lodash/cloneDeep'
+import setUpWorkoutPlan from '../../../../utils/Exercise/setUpWorkoutPlanForTests'
 import { deleteMultipleExercises } from '../../../../utils/Exercise/insertAndDeleteMultipleExercises'
 import { setUpCompletedWorkoutForTests } from '../../../../utils/Exercise/setUpCompletedWorkoutForTests'
 import { getExerciseHistory } from '../../../../routes/Exercise/exerciseHistory.controller'
+import { deleteAllWorkoutPlansWithExercises } from '../../../../utils/Exercise/deleteWorkoutPlans'
+import { getTodaysDate } from '../../../../utils/convertTimeStamptz'
 const uuid = uuidv4()
 const randomEmail = `${uuid}@example.com`
 test.before(async (t: any) => {
@@ -24,6 +27,10 @@ test.before(async (t: any) => {
   }
 })
 test.after.always(async (t: any) => {
+  const { errorPresent } = await deleteAllWorkoutPlansWithExercises(uuid)
+  if (errorPresent) {
+    t.fail(errorPresent)
+  }
   const { error } = await deleteUserRow(randomEmail)
   if (error) {
     t.fail('Deleting user went wrong!')
@@ -74,3 +81,64 @@ test.serial('getExerciseHistory returns error when workoutname is missing', asyn
   t.true(res.status.calledWith(400))
   t.true(res.json.calledWith({ mssg: 'Select an exercise!', dev: 'JSON instance does not follow the JSON schema' }))
 })
+
+test.serial('getExerciseHistory with no completed workouts results in empty graph labels', async (t: any) => {
+  const nameOfWorkout = 'Test Workout Plan'
+  const { errorsSettingUpWorkoutPlan, success } = await setUpWorkoutPlan(uuid, nameOfWorkout)
+  if (errorsSettingUpWorkoutPlan || !success) {
+    t.fail(errorsSettingUpWorkoutPlan)
+  }
+  const validRequestWithExistingNameOfExercise = cloneDeep(validRequest)
+  validRequestWithExistingNameOfExercise.nameofexercise = 'Jog'
+  const req = mockRequest(validRequestWithExistingNameOfExercise)
+  const res = mockResponse()
+  await getExerciseHistory(req as Request, res as Response)
+  const argsPassed = res.json.getCall(0).args[0]
+  t.log(`argsPassed in getExerciseHistory: ${JSON.stringify(argsPassed)}`)
+  t.true(res.status.calledWith(400))
+  t.true(res.json.calledWith({ mssg: 'Exercise has never been performed' }))
+})
+
+test.serial('getExerciseHistory with a completed workout for strength/muscle exercise results in correct graphLabels returned', async (t: any) => {
+  const nameOfWorkout = 'Test Completed Workout'
+  const { errorSetUpCompletedWorkoutForTests, successSetUpCompletedWorkoutForTests } = await setUpCompletedWorkoutForTests(uuid, nameOfWorkout)
+  if (errorSetUpCompletedWorkoutForTests || !successSetUpCompletedWorkoutForTests) {
+    t.fail('Error setting up completed workout for tests')
+  }
+  const validRequestWithExistingNameOfExercise = cloneDeep(validRequest)
+  validRequestWithExistingNameOfExercise.nameofexercise = `Test Curl ${uuid}`
+  const req = mockRequest(validRequestWithExistingNameOfExercise)
+  const res = mockResponse()
+  await getExerciseHistory(req as Request, res as Response)
+  const argsPassed = res.json.getCall(0).args[0]
+  t.log(`argsPassed in getExerciseHistory: ${JSON.stringify(argsPassed)}`)
+  t.true(res.status.calledWith(200))
+  t.true(argsPassed.mssg === 'Success!')
+  t.true(argsPassed.type === 'muscle/strength')
+  t.true(JSON.stringify(argsPassed.data.arrayOfWeightPulled) === JSON.stringify([276]))
+  t.log(`argsPassed.arraysOfDates: ${JSON.stringify(argsPassed.arrayOfDates)}`)
+  t.true(JSON.stringify(argsPassed.arrayOfDates) === JSON.stringify([[getTodaysDate()]]))
+})
+
+// test.serial('getExerciseHistory with a completed workout for cardio exercise results in correct graphLabels returned', async (t: any) => {
+//   const nameOfWorkout = 'Test Completed Workout'
+//   const { errorSetUpCompletedWorkoutForTests, successSetUpCompletedWorkoutForTests } = await setUpCompletedWorkoutForTests(uuid, nameOfWorkout)
+//   if (errorSetUpCompletedWorkoutForTests || !successSetUpCompletedWorkoutForTests) {
+//     t.fail('Error setting up completed workout for tests')
+//   }
+//   const validRequestWithExistingNameOfExercise = cloneDeep(validRequest)
+//   validRequestWithExistingNameOfExercise.nameofexercise = `Test Curl ${uuid}`
+//   const req = mockRequest(validRequestWithExistingNameOfExercise)
+//   const res = mockResponse()
+//   await getExerciseHistory(req as Request, res as Response)
+//   const argsPassed = res.json.getCall(0).args[0]
+//   t.log(`argsPassed in last getExerciseHistory: ${JSON.stringify(argsPassed)}`)
+//   t.true(res.status.calledWith(200))
+//   t.true(argsPassed.mssg === 'Success!')
+//   t.true(argsPassed.type === 'Other')
+//   t.true(JSON.stringify(argsPassed.data.arrayOfCalories) === JSON.stringify([500, 500]))
+//   t.true(JSON.stringify(argsPassed.data.arrayOfDistance) === JSON.stringify([5000, 5000]))
+//   t.true(JSON.stringify(argsPassed.data.arrayOfDuration) === JSON.stringify([23.00, 23.00]))
+//   t.log(`argsPassed.arraysOfDates: ${JSON.stringify(argsPassed.arrayOfDates)}`)
+//   t.true(JSON.stringify(argsPassed.arrayOfDates) === JSON.stringify([[getTodaysDate()]]))
+// })
