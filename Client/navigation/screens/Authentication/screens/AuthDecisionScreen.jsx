@@ -1,12 +1,10 @@
 import {
   View, Text, Button, StyleSheet, Switch,
 } from 'react-native';
-import React, { useState, useContext } from 'react';
+import React from 'react';
 // import LottieView from 'lottie-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { EventRegister } from 'react-native-event-listeners';
 import * as data from '../../../../assets/animation.json';
-import themeContext from '../../../theme/themeContext';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,8 +23,6 @@ const styles = StyleSheet.create({
 });
 
 export default function AuthDecisionScreen({ navigation }) {
-  const theme = useContext(themeContext);
-  const [darkMode, setDarkMode] = useState(true);
   return (
     <View style={styles.container}>
       <View style={styles.animation}>
@@ -52,16 +48,6 @@ export default function AuthDecisionScreen({ navigation }) {
               navigation.navigate('Sign Up');
             }}
           />
-          <View style={styles.themeView}>
-            <Text style={[styles.text, { color: theme.color }]}>Dark Mode</Text>
-            <Switch
-              value={darkMode}
-              onValueChange={(value) => {
-                setDarkMode(value);
-                EventRegister.emit('ChangeTheme', value);
-              }}
-            />
-          </View>
         </SafeAreaView>
       </View>
     </View>
