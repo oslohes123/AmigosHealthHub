@@ -5,7 +5,7 @@
 
 ![Screenshot 1](./doc_screenshots/home_dashboard.png)
 
-### Demo Video
+## Demo Video
 
 A 7 minute video demonstrating the majority of HealthHub's features:
 
